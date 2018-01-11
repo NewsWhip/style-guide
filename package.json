@@ -1,7 +1,11 @@
 {
-    "name": "nwstyle-guide",
+    "name": "nw-style-guide",
     "version": "0.0.0",
     "license": "MIT",
+    "author": {
+        "email": "garethdn@gmail.com",
+        "name": "Gareth Nolan"
+    },
     "scripts": {
         "ng": "ng",
         "start": "ng serve",
