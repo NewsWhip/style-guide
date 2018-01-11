@@ -111,6 +111,29 @@ $zindex-modal-background:  1040 !default;
 $zindex-modal:             1050 !default;
 
 // Forms
+$input-bg:                       #000 !default;
+$input-bg-disabled:              #000 !default;
+$input-color:                    get-color("gray", 4x-light) !default;
+$input-border:                   #000 !default;
+
+// TODO: Rename `$input-border-radius` to `$input-border-radius-base` in v4
+// This has no effect on `<select>`s in some browsers, due to the limited stylability of `<select>`s in CSS.
+$input-border-radius:            3px !default;
+$input-border-radius-large:      3px !default;
+$input-border-radius-small:      3px !default;
+$input-border-focus:             #66afe9 !default;
+$input-color-placeholder:        get-color("gray", light) !default;
+$input-height-base:              ($line-height-computed + ($padding-base-vertical * 2) + 2) !default;
+$input-height-large:             (ceil($font-size-large * $line-height-large) + ($padding-large-vertical) + 8) !default;
+$input-height-small:             (floor($font-size-small * $line-height-small) + ($padding-small-vertical * 2) + 2) !default;
+$form-group-margin-bottom:       15px !default;
+$legend-color:                   get-color("gray") !default;
+$legend-border-color:            #e5e5e5 !default;
+$input-group-addon-bg:           #232323 !default;
+$input-group-addon-border-color: $input-border !default;
+
+//** Disabled cursor for form controls and buttons.
+$cursor-disabled:                not-allowed !default;
 
 // Dropdowns
 $dropdown-bg:               black;
@@ -148,6 +171,4 @@ $pre-border-color:            get-color('gray', 4x-light) !default;;
 $pre-scrollable-max-height:   340px !default;
 
 // Misc
-$cursor-disabled:   not-allowed !default;
 $body-bg:           get-color('gray', light) !default;
-// $body-bg:           #383838;
