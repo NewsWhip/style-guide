@@ -10,7 +10,8 @@ $alt-base: #ffcc33 !default;
 $gray-color-settings: (
     "name": "gray",
     "color": $gray-base,
-    "light-steps": (12, 24, 36, 48, 60, 72),
+    // "light-steps": (12, 24, 36, 48, 60, 72),
+    "light-steps": (12, 20, 36, 48, 60, 72),
     "dark-steps": (-8)
 );
 
