@@ -148,5 +148,5 @@ $pre-scrollable-max-height:   340px !default;
 
 // Misc
 $cursor-disabled:   not-allowed !default;
-$body-bg:           get-color('gray', light);
+$body-bg:           get-color('gray', light) !default;
 // $body-bg:           #383838;
