@@ -14,7 +14,7 @@
         "lint": "ng lint",
         "e2e": "ng e2e"
     },
-    "private": true,
+    "private": false,
     "devDependencies": {
         "@angular/animations": "^5.0.0",
         "@angular/cli": "1.6.3",
