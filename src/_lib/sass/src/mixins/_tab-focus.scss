@@ -1,0 +1,10 @@
+@mixin tab-focus() {
+    // WebKit-specific. Other browsers will keep their default outline style.
+    // (Initially tried to also force default via `outline: initial`,
+    // but that seems to erroneously remove the outline in Firefox altogether.)
+    outline: none;
+    box-shadow:     2px 2px 0 get-color("primary", light),      // bottom-right
+                    -2px 2px 0 get-color("primary", light),     // bottom-left
+                    2px -2px 0 get-color("primary", light),     // top-right
+                    -2px -2px 0 get-color("primary", light);    // top-left
+  }

@@ -1,0 +1,158 @@
+<div>
+    <h2>Dropdowns</h2>
+
+    <div style="display: flex; flex-direction: row;">
+        <div style="flex: 1">
+            <h3>Left aligned secondary dropdown</h3>
+
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Left aligned
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                    <li><a href="#">Action</a></li>
+                    <li><a href="#">Another action</a></li>
+                    <li><a href="#">Something else here</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="#">Separated link</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div style="flex: 1; text-align:right;">
+            <h3>Right aligned ghost dropdown</h3>
+
+            <div class="dropdown">
+                <button class="btn btn-ghost dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Right aligned
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
+                    <li><a href="#">Action</a></li>
+                    <li><a href="#">Another action</a></li>
+                    <li><a href="#">Something else here</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="#">Separated link</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <h3>Disabled dropdown</h3>
+
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" disabled>
+            Disabled
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+            <li><a href="#">Action</a></li>
+        </ul>
+    </div>
+
+    <hr>
+
+    <h3>Dropdown with headers and dividers</h3>
+
+    <div class="dropdown">
+        <button class="btn btn-ghost dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Headers and divider
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+            <li class="dropdown-header">Header 1</li>
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Another action</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="#">Separated link</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li class="dropdown-header">Header 2</li>
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Another action</a></li>
+        </ul>
+    </div>
+
+    <hr>
+
+    <h3>Dropdown with disabled menu items</h3>
+
+    <div class="dropdown">
+        <button class="btn btn-ghost dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Disabled menu items
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+            <li class="dropdown-header">Enabled items</li>
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Another action</a></li>
+            <li role="separator" class="divider"></li>
+            <li class="dropdown-header">Disabled items</li>
+            <li class="disabled"><a>Action</a></li>
+            <li class="disabled"><a>Another action</a></li>
+        </ul>
+    </div>
+
+    <hr>
+
+    <h3>Dropup menu</h3>
+
+    <div class="dropup">
+        <button class="btn btn-ghost dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Dropup menu
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Another action</a></li>
+        </ul>
+    </div>
+
+    <hr>
+
+    <h3>Dropdown minimum width</h3>
+
+    <div class="dropdown" style="margin-bottom: 20px">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Min width
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+            <li><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">4</a></li>
+        </ul>
+    </div>
+
+    <i class="fa fa-exclamation-circle"></i>
+    <em>
+        All dropdowns have a minimum width of <code>160px</code>
+    </em>
+
+    <hr>
+
+    <h3>Dropdown full width</h3>
+
+    <div class="full-width-container">
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                This button opens a full width menu
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-block" aria-labelledby="dropdownMenu1">
+                <li><a href="#">Menu item 1</a></li>
+                <li><a href="#">Menu item 2</a></li>
+                <li><a href="#">Menu item 3</a></li>
+                <li><a href="#">Menu item 4</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <i class="fa fa-exclamation-circle"></i>
+    <em>
+        <code>.dropdown-menu-block</code> will make the dropdown menu the same width as the parent container
+    </em>
+</div>

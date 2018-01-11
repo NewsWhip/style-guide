@@ -1,0 +1,81 @@
+<div>
+    <h2>Buttons</h2>
+
+    <h3>Sizes</h3>
+
+    <div class="standalone-buttons">
+        <button class="btn btn-primary btn-{{size}}" *ngFor="let size of sizes">
+            .{{size}}
+        </button>
+
+        <hr>
+
+        <h3>Variations</h3>
+
+        <div style="width: 300px;">
+            <button class="btn btn-primary btn-{{defaultBtnSize}} btn-block">
+                .btn-block
+            </button>
+        </div>
+
+        <button class="btn btn-primary btn-{{defaultBtnSize}} btn-round">
+            <i class="fa fa-plus"></i>
+        </button>
+
+        <button class="btn btn-primary btn-{{defaultBtnSize}}">
+            <i class="fa fa-facebook"></i> With icon
+        </button>
+
+        <hr>
+
+        <h3>States</h3>
+
+        <button class="btn btn-primary btn-{{defaultBtnSize}} disabled" disabled>
+            .disabled
+        </button>
+
+        <button class="btn btn-primary btn-{{defaultBtnSize}} active">
+            .active
+        </button>
+
+        <hr>
+
+        <h3>Colors</h3>
+
+        <button class="btn btn-{{color}} btn-{{defaultBtnSize}}" *ngFor="let color of btnNames">
+            .btn-{{color}}
+        </button>
+    </div>
+
+    <hr>
+
+    <h3>Button groups</h3>
+
+    <div style="margin-bottom: 20px;">
+        <div class="btn-group" role="group">
+            <button type="button" class="btn btn-ghost btn-md">Left</button>
+            <button type="button" class="btn btn-ghost btn-md" disabled>Disabled</button>
+            <button type="button" class="btn btn-ghost btn-md">Right</button>
+            <button type="button" class="btn btn-ghost btn-md"><i class="fa fa-ellipsis-h"></i></button>
+        </div>
+    </div>
+
+    <div style="margin-bottom: 20px;">
+        <div class="btn-group" role="group">
+            <button type="button" class="btn btn-secondary btn-{{defaultBtnSize}}">Tab 1</button>
+            <button type="button" class="btn btn-secondary active btn-{{defaultBtnSize}}">Tab 2 Active</button>
+            <button type="button" class="btn btn-secondary btn-{{defaultBtnSize}}">Tab 3</button>
+            <button type="button" class="btn btn-secondary btn-{{defaultBtnSize}}" disabled>Tab 4 Disabled</button>
+        </div>
+    </div>
+
+    <div style="margin-bottom: 20px;">
+        <div class="btn-group" role="group">
+            <button type="button" class="btn btn-primary btn-{{defaultBtnSize}}">Tab 1</button>
+            <button type="button" class="btn btn-primary active btn-{{defaultBtnSize}}">Tab 2 Active</button>
+            <button type="button" class="btn btn-primary btn-{{defaultBtnSize}}">Tab 3</button>
+            <button type="button" class="btn btn-primary btn-{{defaultBtnSize}}" disabled>Tab 4 Disabled</button>
+        </div>
+    </div>
+
+</div>

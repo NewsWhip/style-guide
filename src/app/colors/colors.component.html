@@ -1,0 +1,19 @@
+<div>
+    <h2>Colors</h2>
+
+    <div *ngFor="let colorName of colorNames; let cIndex = index;">
+        <h3 style="text-transform: capitalize">{{colorName}}</h3>
+
+        <div class="color-variants">
+            <div class="color" *ngFor="let shade of shades; let sIndex = index;">
+                <code *ngIf="showColorCodes" class="hex text-center" [innerHTML]="getColors(splash)">
+                </code>
+                <div #splash class="splash bg-{{colorName}}-{{shade}}"></div>
+
+                <code class="sass-code">
+                    get-color("{{colorName}}", <strong>{{shade}}</strong>)
+                </code>
+            </div>
+        </div>
+    </div>
+</div>

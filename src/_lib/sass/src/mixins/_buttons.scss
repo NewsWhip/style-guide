@@ -1,0 +1,67 @@
+@mixin button-variant($color, $color-hover, $background, $bg-hover, $border: $background, $border-hover: $bg-hover) {
+    color: $color;
+    background-color: $background;
+    border-color: $border;
+
+    &:hover {
+        color: $color-hover;
+        background-color: $bg-hover;
+        border-color: $border-hover;
+    }
+    &:active,
+    &.active {
+        color: $color-hover;
+        background-color: darken($bg-hover, 10%);
+        border-color: darken($border-hover, 10%);
+
+        &:hover,
+        &:focus,
+        &.focus {
+            color: $color-hover;
+            background-color: darken($bg-hover, 10%);
+            border-color: darken($border-hover, 10%);
+        }
+    }
+    // Override active button state for dropdown toggles
+    &:active,
+    &.active,
+    .open > &.dropdown-toggle {
+        color: $color-hover;
+        background-color: $bg-hover;
+        border-color: $border-hover;
+    }
+    &.disabled,
+    &[disabled],
+    fieldset[disabled] & {
+        &:hover,
+        &:focus,
+        &.focus {
+            color: $color;
+            background-color: $background;
+            border-color: $border;
+        }
+    }
+
+    .badge {
+        color: $background;
+        background-color: $color;
+    }
+}
+
+// Button sizes
+@mixin button-size($padding-vertical, $padding-horizontal, $font-size, $line-height, $border-radius) {
+    padding: $padding-vertical $padding-horizontal;
+    font-size: $font-size;
+    line-height: $line-height;
+    border-radius: $border-radius;
+}
+
+@mixin button-round($font-size, $line-height, $padding-vertical) {
+    padding: 0;
+    font-size: $font-size * 1.5;
+    font-weight: 100;
+    width: ceil($font-size * $line-height) + ($padding-vertical * 2) + 1;
+    height: ceil($font-size * $line-height) + ($padding-vertical * 2) + 1;
+    border-radius: 50%;
+    position: relative;
+}

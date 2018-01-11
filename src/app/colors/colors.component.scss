@@ -1,0 +1,49 @@
+app-colors {
+    .color-variants {
+        display: flex;
+        flex-direction: row;
+
+        .color {
+            flex: 1;
+            margin-right: 10px;
+            margin-bottom: 10px;
+
+            &:last-child {
+                margin-right: 0;
+            }
+
+            .splash {
+                height: 80px;
+            }
+        }
+    }
+
+    .hex {
+        font-size: 10px;
+        display: block;
+        border-bottom-right-radius: 0;
+        border-bottom-left-radius: 0;
+        padding: 5px 0;
+    }
+
+    .sass-code {
+        font-size: 10px;
+        display: block;
+        border-top-left-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+    @each $color-settings in $color-settings-maps {
+        $name: map-get($color-settings, name);
+
+        .bg-#{$name}-base { background: get-color($name, base) };
+        .bg-#{$name}-dark { background: get-color($name, dark) };
+        .bg-#{$name}-light { background: get-color($name, light) };
+        .bg-#{$name}-x-light { background: get-color($name, x-light) };
+        .bg-#{$name}-2x-light { background: get-color($name, 2x-light) };
+        .bg-#{$name}-3x-light { background: get-color($name, 3x-light) };
+        .bg-#{$name}-4x-light { background: get-color($name, 4x-light) };
+        .bg-#{$name}-5x-light { background: get-color($name, 5x-light) };
+    }
+
+}
