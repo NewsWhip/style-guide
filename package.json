@@ -15,9 +15,6 @@
         "e2e": "ng e2e"
     },
     "private": true,
-    "peerDependencies": {
-        "bootstrap-sass": "^3.3.7"
-    },
     "devDependencies": {
         "@angular/animations": "^5.0.0",
         "@angular/cli": "1.6.3",
@@ -34,6 +31,7 @@
         "@types/jasmine": "~2.5.53",
         "@types/jasminewd2": "~2.0.2",
         "@types/node": "~6.0.60",
+        "bootstrap-sass": "^3.3.7",
         "codelyzer": "^4.0.1",
         "core-js": "^2.4.1",
         "font-awesome": "^4.7.0",

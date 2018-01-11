@@ -10,6 +10,8 @@
     white-space: nowrap;
     @include button-size($padding-base-vertical, $padding-base-horizontal, $font-size-base, $line-height-base, $btn-border-radius-base);
     user-select: none;
+    border-style: solid;
+    border-width: 1px;
 
     &:hover,
     &:focus,
