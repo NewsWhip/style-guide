@@ -19,9 +19,9 @@ app-root {
 
     .side-nav-menu {
         position: fixed;
-        width: 250px;
+        width: 200px;
         height: 100vh;
-        background: #000000;
+        background: get-color("gray", dark);
         overflow-y: scroll;
 
         .app-logo {
@@ -33,8 +33,8 @@ app-root {
     .app-body-container {
         flex: 1;
         padding: 20px;
-        margin-left: 250px;
-        width: calc(100% - 250px);
+        margin-left: 200px;
+        width: calc(100% - 200px);
     }
 
 }
