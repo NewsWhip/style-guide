@@ -5,6 +5,7 @@ import { ColorsComponent } from './colors/colors.component';
 import { InteractiveTextComponent } from './interactive-text/interactive-text.component';
 import { HomeComponent } from './home/home.component';
 import { DropdownsComponent } from './dropdowns/dropdowns.component';
+import { TabsComponent } from './tabs/tabs.component';
 
 const appRoutes: Routes = [
     {
@@ -26,6 +27,10 @@ const appRoutes: Routes = [
     {
         path: 'dropdowns',
         component: DropdownsComponent
+    },
+    {
+        path: 'tabs',
+        component: TabsComponent
     }
 ];
 

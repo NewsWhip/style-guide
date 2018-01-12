@@ -87,6 +87,13 @@ a.btn {
         transparent,
         get-color("gray", dark));
 }
+.btn-dropdown {
+    @include button-variant(
+        #ffffff,
+        #ffffff,
+        get-color("gray", base),
+        get-color("gray", dark));
+}
 
 // Button Sizes
 // --------------------------------------------------
@@ -113,10 +120,10 @@ a.btn {
     }
 }
 .btn-xs {
-    @include button-size($padding-xs-vertical, $padding-xs-horizontal, $font-size-xs, $line-height-small, $btn-border-radius-xs);
+    @include button-size($padding-xs-vertical, $padding-xs-horizontal, $font-size-xs, $line-height-xs, $btn-border-radius-xs);
 
     &.btn-round {
-        @include button-round($font-size-xs, $line-height-small, $padding-xs-vertical);
+        @include button-round($font-size-xs, $line-height-xs, $padding-xs-vertical);
     }
 }
 

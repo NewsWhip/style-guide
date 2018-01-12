@@ -9,6 +9,7 @@ import { ColorsComponent } from './colors/colors.component';
 import { InteractiveTextComponent } from './interactive-text/interactive-text.component';
 import { HomeComponent } from './home/home.component';
 import { DropdownsComponent } from './dropdowns/dropdowns.component';
+import { TabsComponent } from './tabs/tabs.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { DropdownsComponent } from './dropdowns/dropdowns.component';
     ColorsComponent,
     InteractiveTextComponent,
     HomeComponent,
-    DropdownsComponent
+    DropdownsComponent,
+    TabsComponent
   ],
   imports: [
     BrowserModule,

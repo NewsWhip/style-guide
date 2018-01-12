@@ -1,12 +1,48 @@
 <div>
     <h2>Dropdowns</h2>
 
+    <h3>Color variations</h3>
+
+    <div style="display: flex; flex-direction: row;">
+        <div style="flex: 1">
+            <div class="dropdown">
+                <button class="btn btn-dropdown dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    .btn-dropdown
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                    <li><a href="#">Action</a></li>
+                    <li><a href="#">Another action</a></li>
+                    <li><a href="#">Something else here</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div style="flex: 1; text-align:right;">
+            <div class="dropdown">
+                <button class="btn btn-ghost dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    .btn-ghost
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
+                    <li><a href="#">Action</a></li>
+                    <li><a href="#">Another action</a></li>
+                    <li><a href="#">Something else here</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="#">Separated link</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
     <div style="display: flex; flex-direction: row;">
         <div style="flex: 1">
             <h3>Left aligned secondary dropdown</h3>
 
             <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button class="btn btn-dropdown dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Left aligned
                     <span class="caret"></span>
                 </button>
@@ -44,7 +80,7 @@
     <h3>Disabled dropdown</h3>
 
     <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" disabled>
+        <button class="btn btn-dropdown dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" disabled>
             Disabled
             <span class="caret"></span>
         </button>
@@ -115,7 +151,7 @@
     <h3>Dropdown minimum width</h3>
 
     <div class="dropdown" style="margin-bottom: 20px">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <button class="btn btn-dropdown dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Min width
             <span class="caret"></span>
         </button>
@@ -138,7 +174,7 @@
 
     <div class="full-width-container">
         <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <button class="btn btn-dropdown dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 This button opens a full width menu
                 <span class="caret"></span>
             </button>

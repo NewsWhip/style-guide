@@ -58,7 +58,7 @@
 
 @mixin button-round($font-size, $line-height, $padding-vertical) {
     padding: 0;
-    font-size: $font-size * 1.5;
+    font-size: $font-size * 1.2;
     font-weight: 100;
     width: ceil($font-size * $line-height) + ($padding-vertical * 2) + 1;
     height: ceil($font-size * $line-height) + ($padding-vertical * 2) + 1;
