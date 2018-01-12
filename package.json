@@ -12,7 +12,8 @@
     "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "ghpages": "ng build --prod --output-path docs --base-href nw-style-guide"
   },
   "private": false,
   "devDependencies": {
