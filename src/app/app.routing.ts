@@ -6,6 +6,7 @@ import { InteractiveTextComponent } from './interactive-text/interactive-text.co
 import { HomeComponent } from './home/home.component';
 import { DropdownsComponent } from './dropdowns/dropdowns.component';
 import { TabsComponent } from './tabs/tabs.component';
+import { BrandingComponent } from './branding/branding.component';
 
 const appRoutes: Routes = [
     {
@@ -31,6 +32,10 @@ const appRoutes: Routes = [
     {
         path: 'tabs',
         component: TabsComponent
+    },
+    {
+        path: 'branding',
+        component: BrandingComponent
     }
 ];
 

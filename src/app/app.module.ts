@@ -10,6 +10,7 @@ import { InteractiveTextComponent } from './interactive-text/interactive-text.co
 import { HomeComponent } from './home/home.component';
 import { DropdownsComponent } from './dropdowns/dropdowns.component';
 import { TabsComponent } from './tabs/tabs.component';
+import { BrandingComponent } from './branding/branding.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { TabsComponent } from './tabs/tabs.component';
     InteractiveTextComponent,
     HomeComponent,
     DropdownsComponent,
-    TabsComponent
+    TabsComponent,
+    BrandingComponent
   ],
   imports: [
     BrowserModule,

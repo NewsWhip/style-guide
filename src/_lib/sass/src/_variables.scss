@@ -742,10 +742,15 @@ $code-bg:                     get-color('gray', dark) !default;
 $kbd-color:                   #fff !default;
 $kbd-bg:                      get-color('gray', dark) !default;
 
-$pre-bg:                      get-color('gray', 2x-light) !default;
-$pre-color:                   get-color('gray', dark) !default;
-$pre-border-color:            get-color('gray', 4x-light) !default;;
-$pre-scrollable-max-height:   340px !default;
+// $pre-bg:                      get-color('gray', 2x-light) !default;
+// $pre-color:                   get-color('gray', dark) !default;
+// $pre-border-color:            get-color('gray', 4x-light) !default;;
+// $pre-scrollable-max-height:   800px !default;
+
+$pre-bg:                      get-color('gray', dark) !default;
+$pre-color:                   get-color('secondary') !default;
+$pre-border-color:            transparent !default;;
+$pre-scrollable-max-height:   800px !default;
 
 
 //== Type
