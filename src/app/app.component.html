@@ -1,29 +1,15 @@
 <div class="side-nav-menu">
-    Sidebar
-
-    <ul>
-        <li>
-            <a routerLink="/">Home</a>
-        </li>
-        <li>
-            <a routerLink="/buttons">Buttons</a>
-        </li>
-        <li>
-            <a routerLink="/colors">Colors</a>
-        </li>
-        <li>
-            <a routerLink="/interactive-text">Interactive text</a>
-        </li>
-        <li>
-            <a routerLink="/dropdowns">Dropdowns</a>
-        </li>
-        <li>
-            <a routerLink="/tabs">Tabs</a>
-        </li>
-        <li>
-            <a routerLink="/branding">Branding</a>
-        </li>
-    </ul>
+    <img class="app-logo" src="assets/images/branding/nw-logo-horizontal.png">
+    <div class="list-group list-group-primary">
+        <a class="list-group-item" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
+        <a class="list-group-item" routerLink="/buttons" routerLinkActive="active" >Buttons</a>
+        <a class="list-group-item" routerLink="/colors" routerLinkActive="active" >Colors</a>
+        <a class="list-group-item" routerLink="/interactive-text" routerLinkActive="active" >Interactive text</a>
+        <a class="list-group-item" routerLink="/dropdowns" routerLinkActive="active" >Dropdowns</a>
+        <a class="list-group-item" routerLink="/tabs" routerLinkActive="active" >Tabs</a>
+        <a class="list-group-item" routerLink="/branding" routerLinkActive="active" >Branding</a>
+        <a class="list-group-item" routerLink="/lists" routerLinkActive="active" >Lists</a>
+    </div>
 </div>
 
 <div class="app-body-container">

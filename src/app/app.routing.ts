@@ -7,6 +7,7 @@ import { HomeComponent } from './home/home.component';
 import { DropdownsComponent } from './dropdowns/dropdowns.component';
 import { TabsComponent } from './tabs/tabs.component';
 import { BrandingComponent } from './branding/branding.component';
+import { ListComponent } from './list/list.component';
 
 const appRoutes: Routes = [
     {
@@ -36,6 +37,10 @@ const appRoutes: Routes = [
     {
         path: 'branding',
         component: BrandingComponent
+    },
+    {
+        path: 'lists',
+        component: ListComponent
     }
 ];
 

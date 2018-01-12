@@ -10,6 +10,7 @@ $fa-font-path : '../node_modules/font-awesome/fonts';
 @import '../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/nav-divider';
 @import '../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/grid';
 @import '../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/grid-framework';
+@import '../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/list-group';
 
 // Import library functions, mixins and variables
 @import "_lib/sass/src/functions/functions";
@@ -21,6 +22,7 @@ $fa-font-path : '../node_modules/font-awesome/fonts';
 @import "../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/code";
 @import "../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/button-groups";
 @import "../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/grid";
+@import "../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/list-group";
 
 // Import the library component styles
 @import "_lib/sass/src/buttons";
@@ -30,6 +32,7 @@ $fa-font-path : '../node_modules/font-awesome/fonts';
 @import "_lib/sass/src/scaffolding";
 @import "_lib/sass/src/dropdowns";
 @import "_lib/sass/src/navs";
+@import "_lib/sass/src/list-group";
 
 // Styles for the demo app only
 @import "app/app.component";

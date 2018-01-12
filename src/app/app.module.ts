@@ -11,6 +11,7 @@ import { HomeComponent } from './home/home.component';
 import { DropdownsComponent } from './dropdowns/dropdowns.component';
 import { TabsComponent } from './tabs/tabs.component';
 import { BrandingComponent } from './branding/branding.component';
+import { ListComponent } from './list/list.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { BrandingComponent } from './branding/branding.component';
     HomeComponent,
     DropdownsComponent,
     TabsComponent,
-    BrandingComponent
+    BrandingComponent,
+    ListComponent
   ],
   imports: [
     BrowserModule,
