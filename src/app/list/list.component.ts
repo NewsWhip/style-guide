@@ -10,9 +10,11 @@ export class ListComponent implements OnInit, AfterViewInit {
 
     @ViewChild('lg') lg: ElementRef;
     @ViewChild('lgPrimary') lgPrimary: ElementRef;
+    @ViewChild('nestedLg') nestedLg: ElementRef;
 
     public listGroupHTML: string;
     public listGroupPrimaryHTML: string;
+    public nestedLgHTML: string;
 
     constructor() { }
 
@@ -25,6 +27,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         setTimeout(() => {
             this.listGroupHTML = html_beautify(this.lg.nativeElement.outerHTML);
             this.listGroupPrimaryHTML = html_beautify(this.lgPrimary.nativeElement.outerHTML);
+            this.nestedLgHTML = html_beautify(this.nestedLg.nativeElement.outerHTML);
         }, 0);
     }
 

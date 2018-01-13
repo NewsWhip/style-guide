@@ -596,9 +596,9 @@ $list-group-active-border:      $list-group-active-bg !default;
 $list-group-active-text-color:  #ffffff !default;
 
 //** Text color of disabled list items
-$list-group-disabled-color:      get-color('gray', x-light) !default;
+$list-group-disabled-color:      rgba(get-color('gray', 4x-light), 0.5) !default;
 //** Background color of disabled list items
-$list-group-disabled-bg:         get-color('gray', 3x-light) !default;
+$list-group-disabled-bg:         transparent !default;
 //** Text color for content within disabled list items
 $list-group-disabled-text-color: $list-group-disabled-color !default;
 

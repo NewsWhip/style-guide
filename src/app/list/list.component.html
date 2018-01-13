@@ -7,7 +7,7 @@
             <h3>Default list</h3>
 
             <ul class="list-group" #lg>
-                <h5 class="list-group-header">Secondary Menu</h5>
+                <h5 class="list-group-header">Default Menu</h5>
 
                 <a href="#" class="list-group-item">Panel 1</a>
                 <a href="#" class="list-group-item">Panel 2</a>
@@ -33,35 +33,77 @@
                 <h5 class="list-group-header">Main Menu</h5>
 
                 <a class="list-group-item"
-                    routerLink="/"
-                    routerLinkActive="active"
-                    [routerLinkActiveOptions]="{exact: true}">Home</a>
+                routerLink="/"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{exact: true}">Home</a>
                 <a class="list-group-item"
-                    routerLink="/buttons"
-                    routerLinkActive="active" >Buttons</a>
+                routerLink="/buttons"
+                routerLinkActive="active" >Buttons</a>
                 <a class="list-group-item"
-                    routerLink="/colors"
-                    routerLinkActive="active" >Colors</a>
+                routerLink="/colors"
+                routerLinkActive="active" >Colors</a>
                 <a class="list-group-item"
-                    routerLink="/interactive-text"
-                    routerLinkActive="active" >Interactive text</a>
+                routerLink="/interactive-text"
+                routerLinkActive="active" >Interactive text</a>
                 <a class="list-group-item"
-                    routerLink="/dropdowns"
-                    routerLinkActive="active" >Dropdowns</a>
+                routerLink="/dropdowns"
+                routerLinkActive="active" >Dropdowns</a>
                 <a class="list-group-item"
-                    routerLink="/tabs"
-                    routerLinkActive="active" >Tabs</a>
+                routerLink="/tabs"
+                routerLinkActive="active" >Tabs</a>
                 <a class="list-group-item"
-                    routerLink="/branding"
-                    routerLinkActive="active" >Branding</a>
+                routerLink="/branding"
+                routerLinkActive="active" >Branding</a>
                 <a class="list-group-item"
-                    routerLink="/lists"
-                    routerLinkActive="active" >Lists</a>
+                routerLink="/lists"
+                routerLinkActive="active" >Lists</a>
             </div>
         </div>
 
         <div class="col-sm-6">
             <pre style="margin-top: 100px;">{{listGroupPrimaryHTML}}</pre>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <h3>Collapsible / expandable items</h3>
+
+            <div class="collapse-expand-container">
+                <div class="list-group" #nestedLg>
+                    <h5 class="list-group-header">Collapse / expand menu</h5>
+
+                    <a href="#" class="list-group-item">Item 1</a>
+
+                    <a href="#folder1" class="list-group-item collapsed" data-toggle="collapse" aria-expanded="false" aria-controls="folder1"><span class="caret"></span>Folder 1</a>
+                    <div class="collapse collapsible" id="folder1">
+                        <a href="#" class="list-group-item">Item 2</a>
+                    </div>
+
+                    <a href="#folder2" class="list-group-item collapsed" data-toggle="collapse" aria-expanded="false" aria-controls="folder2"><span class="caret"></span>Folder 2</a>
+
+                    <div class="collapse collapsible" id="folder2">
+                        <a href="#" class="list-group-item">Item 3</a>
+                        <a href="#" class="list-group-item">Item 4</a>
+                        <a href="#" class="list-group-item">Item 5</a>
+
+                        <a href="#folder3" class="list-group-item collapsed" data-toggle="collapse" aria-expanded="false" aria-controls="folder3"><span class="caret"></span>Folder 3</a>
+
+                        <div class="collapse collapsible" id="folder3">
+                            <a href="#" class="list-group-item">Item 6</a>
+                            <a href="#" class="list-group-item">Item 7</a>
+                            <a href="#" class="list-group-item">Item 8</a>
+                        </div>
+                    </div>
+                    <a href="#" class="list-group-item">Item 9</a>
+                    <a class="list-group-item disabled">Item 10 (disabled)</a>
+                    <a href="#" class="list-group-item">Item 11</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <pre style="margin-top: 60px;">{{nestedLgHTML}}</pre>
         </div>
     </div>
 </div>

@@ -6,6 +6,26 @@
 .list-group-item {
     text-decoration: none;
     padding: 8px 15px;
+
+    &[data-toggle="collapse"] {
+        font-weight: bold;
+
+        .caret {
+            position: absolute;
+            left: -2px;
+            top: 14px;
+            border-width: 5px;
+        }
+
+        &.collapsed {
+            .caret {
+                transform: rotateZ(-90deg);
+            }
+        }
+    }
+}
+.collapsible {
+    margin-left: 15px;
 }
 .list-group-header {
     padding: 5px 15px;
