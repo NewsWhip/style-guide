@@ -6,18 +6,20 @@
         <div class="col-sm-6">
             <h3>Default list</h3>
 
-            <ul class="list-group" #lg>
-                <h5 class="list-group-header">Default Menu</h5>
+            <div class="list-container">
+                <ul class="list-group" #lg>
+                    <h5 class="list-group-header">Default Menu</h5>
 
-                <a href="#" class="list-group-item">Panel 1</a>
-                <a href="#" class="list-group-item">Panel 2</a>
-                <a href="#" class="list-group-item">Panel 3</a>
-                <a href="#" class="list-group-item">Panel 4</a>
-                <a href="#" class="list-group-item">Panel 5</a>
-                <a href="#" class="list-group-item">Panel 6</a>
-                <a href="#" class="list-group-item">Panel 7</a>
-                <a href="#" class="list-group-item">Panel 8</a>
-            </ul>
+                    <a href="#" class="list-group-item">Panel 1</a>
+                    <a href="#" class="list-group-item">Panel 2</a>
+                    <a href="#" class="list-group-item">Panel 3</a>
+                    <a href="#" class="list-group-item">Panel 4</a>
+                    <a href="#" class="list-group-item">Panel 5</a>
+                    <a href="#" class="list-group-item">Panel 6</a>
+                    <a href="#" class="list-group-item">Panel 7</a>
+                    <a href="#" class="list-group-item">Panel 8</a>
+                </ul>
+            </div>
         </div>
 
         <div class="col-sm-6">
@@ -29,34 +31,36 @@
         <div class="col-sm-6">
             <h3>Primary list / nav</h3>
 
-            <div class="list-group list-group-primary" #lgPrimary>
-                <h5 class="list-group-header">Main Menu</h5>
+            <div class="list-container">
+                <div class="list-group list-group-primary" #lgPrimary>
+                    <h5 class="list-group-header">Main Menu</h5>
 
-                <a class="list-group-item"
-                routerLink="/"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{exact: true}">Home</a>
-                <a class="list-group-item"
-                routerLink="/buttons"
-                routerLinkActive="active" >Buttons</a>
-                <a class="list-group-item"
-                routerLink="/colors"
-                routerLinkActive="active" >Colors</a>
-                <a class="list-group-item"
-                routerLink="/interactive-text"
-                routerLinkActive="active" >Interactive text</a>
-                <a class="list-group-item"
-                routerLink="/dropdowns"
-                routerLinkActive="active" >Dropdowns</a>
-                <a class="list-group-item"
-                routerLink="/tabs"
-                routerLinkActive="active" >Tabs</a>
-                <a class="list-group-item"
-                routerLink="/branding"
-                routerLinkActive="active" >Branding</a>
-                <a class="list-group-item"
-                routerLink="/lists"
-                routerLinkActive="active" >Lists</a>
+                    <a class="list-group-item"
+                    routerLink="/"
+                    routerLinkActive="active"
+                    [routerLinkActiveOptions]="{exact: true}">Home</a>
+                    <a class="list-group-item"
+                    routerLink="/buttons"
+                    routerLinkActive="active" >Buttons</a>
+                    <a class="list-group-item"
+                    routerLink="/colors"
+                    routerLinkActive="active" >Colors</a>
+                    <a class="list-group-item"
+                    routerLink="/interactive-text"
+                    routerLinkActive="active" >Interactive text</a>
+                    <a class="list-group-item"
+                    routerLink="/dropdowns"
+                    routerLinkActive="active" >Dropdowns</a>
+                    <a class="list-group-item"
+                    routerLink="/tabs"
+                    routerLinkActive="active" >Tabs</a>
+                    <a class="list-group-item"
+                    routerLink="/branding"
+                    routerLinkActive="active" >Branding</a>
+                    <a class="list-group-item"
+                    routerLink="/lists"
+                    routerLinkActive="active" >Lists</a>
+                </div>
             </div>
         </div>
 
@@ -69,7 +73,7 @@
         <div class="col-sm-6">
             <h3>Collapsible / expandable items</h3>
 
-            <div class="collapse-expand-container">
+            <div class="list-container">
                 <div class="list-group" #nestedLg>
                     <h5 class="list-group-header">Collapse / expand menu</h5>
 
@@ -104,6 +108,68 @@
 
         <div class="col-sm-6">
             <pre style="margin-top: 60px;">{{nestedLgHTML}}</pre>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <h3>Secondary list</h3>
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="list-group list-group-secondary">
+                        <h5 class="list-group-header">Secondary menu 1</h5>
+
+                        <a href="#" class="list-group-item">Item 1</a>
+                        <a href="#" class="list-group-item">Item 2</a>
+                        <a href="#group1" class="list-group-item collapsed" data-toggle="collapse" aria-expanded="false" aria-controls="group1"><span class="caret"></span>Group 1</a>
+
+                        <div class="collapse collapsible" id="group1">
+                            <a href="#" class="list-group-item">Item 1.1</a>
+                            <a href="#" class="list-group-item">Item 1.2</a>
+                            <a href="#" class="list-group-item">Item 1.3</a>
+
+                            <a href="#group2" class="list-group-item collapsed" data-toggle="collapse" aria-expanded="false" aria-controls="group2"><span class="caret"></span>Group 2</a>
+
+                            <div class="collapse collapsible" id="group2">
+                                <a href="#" class="list-group-item">Item 2.1</a>
+                                <a href="#" class="list-group-item">Item 2.2</a>
+                                <a href="#" class="list-group-item">Item 2.3</a>
+                            </div>
+                        </div>
+                        <a href="#" class="list-group-item">Item 3</a>
+                        <a href="#" class="list-group-item">Item 4</a>
+                        <a href="#" class="list-group-item">Item 5</a>
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <div class="list-group list-group-secondary">
+                        <h5 class="list-group-header">Secondary menu 2</h5>
+
+                        <a href="#" class="list-group-item">Item 1</a>
+                        <a href="#" class="list-group-item">Item 2</a>
+                        <a href="#group3" class="list-group-item collapsed" data-toggle="collapse" aria-expanded="false" aria-controls="group3"><span class="caret"></span>Group 1</a>
+
+                        <div class="collapse collapsible" id="group3">
+                            <a href="#" class="list-group-item">Item 1.1</a>
+                            <a href="#" class="list-group-item">Item 1.2</a>
+                            <a href="#" class="list-group-item">Item 1.3</a>
+
+                            <a class="list-group-item collapsed disabled" data-toggle="collapse" aria-expanded="false" aria-controls="group4"><span class="caret"></span>Group 2 (disabled)</a>
+
+                            <div class="collapse collapsible" id="group4">
+                                <a href="#" class="list-group-item">Item 2.1</a>
+                                <a href="#" class="list-group-item">Item 2.2</a>
+                                <a href="#" class="list-group-item">Item 2.3</a>
+                            </div>
+                        </div>
+                        <a href="#" class="list-group-item">Item 3</a>
+                        <a href="#" class="list-group-item">Item 4</a>
+                        <a class="list-group-item disabled">Item 5 (disabled)</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

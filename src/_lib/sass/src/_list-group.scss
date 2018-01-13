@@ -1,12 +1,83 @@
+//
+// List groups
+// --------------------------------------------------
+
+
+// Base class
+//
+// Easily usable on <ul>, <ol>, or <div>.
+
+.list-group {
+    // No need to set list-style: none; since .list-group-item is block level
+    margin-bottom: 20px;
+    padding-left: 0; // reset padding because ul and ol
+}
+
+// Primary list group
 .list-group-primary {
     .list-group-item {
         text-transform: uppercase;
     }
 }
+
+// Secondary list group
+.list-group-secondary {
+    .list-group-item {
+        padding: $padding-base-vertical 22px;
+        background-color: get-color("gray", base);
+        margin-bottom: 1px;
+        font-size: $font-size-base;
+        line-height: $line-height-base;
+        color: #ffffff;
+
+        &:focus {
+            background-color: get-color("gray", base);
+        }
+        &:hover {
+            background-color: get-color("gray", dark);
+        }
+        &[data-toggle="collapse"] {
+            font-weight: normal;
+
+            .caret {
+                left: 3px;
+                top: 13px;
+            }
+        }
+        &.disabled,
+        &.disabled:hover,
+        &.disabled:focus {
+            background-color: rgba(get-color("gray", base), 0.5);
+            color: rgba(#ffffff, 0.5);
+        }
+    }
+    .list-group-header {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+
+// Individual list items
+//
+// Use on `li`s or `div`s within the `.list-group` parent.
+
 .list-group-item {
+    position: relative;
+    display: block;
     text-decoration: none;
     padding: 8px 15px;
+    // Place the border on the list items and negative margin up for better styling
+    margin-bottom: -1px;
+    background-color: $list-group-bg;
+    border: 1px solid $list-group-border;
 
+    // Round the first and last items
+    &:first-child {
+        @include border-top-radius($list-group-border-radius);
+    }
+    &:last-child {
+        @include border-bottom-radius($list-group-border-radius);
+    }
     &[data-toggle="collapse"] {
         font-weight: bold;
 
@@ -16,16 +87,97 @@
             top: 14px;
             border-width: 5px;
         }
-
         &.collapsed {
             .caret {
                 transform: rotateZ(-90deg);
             }
         }
     }
+    // Disabled state
+    &.disabled,
+    &.disabled:hover,
+    &.disabled:focus {
+        background-color: $list-group-disabled-bg;
+        color: $list-group-disabled-color;
+        cursor: $cursor-disabled;
+
+        // Force color to inherit for custom content
+        .list-group-item-heading {
+            color: inherit;
+        }
+        .list-group-item-text {
+            color: $list-group-disabled-text-color;
+        }
+    }
+
+    // Active class on item itself, not parent
+    &.active,
+    &.active:hover,
+    &.active:focus {
+        z-index: 2; // Place active items above their siblings for proper border styling
+        color: $list-group-active-color;
+        background-color: $list-group-active-bg;
+        border-color: $list-group-active-border;
+
+        // Force color to inherit for custom content
+        .list-group-item-heading,
+        .list-group-item-heading > small,
+        .list-group-item-heading > .small {
+            color: inherit;
+        }
+        .list-group-item-text {
+            color: $list-group-active-text-color;
+        }
+    }
+
+    // Contextual variants
+    //
+    // Add modifier classes to change text and background color on individual items.
+    // Organizationally, this must come after the `:hover` states.
+    @include list-group-item-variant(success, $state-success-bg, $state-success-text);
+    @include list-group-item-variant(info, $state-info-bg, $state-info-text);
+    @include list-group-item-variant(warning, $state-warning-bg, $state-warning-text);
+    @include list-group-item-variant(danger, $state-danger-bg, $state-danger-text);
 }
-.collapsible {
-    margin-left: 15px;
+
+// Interactive list items
+//
+// Use anchor or button elements instead of `li`s or `div`s to create interactive items.
+// Includes an extra `.active` modifier class for showing selected items.
+
+a.list-group-item,
+button.list-group-item {
+    color: $list-group-link-color;
+
+    .list-group-item-heading {
+        color: $list-group-link-heading-color;
+    }
+
+    // Hover state
+    &:hover,
+    &:focus {
+        text-decoration: none;
+        color: $list-group-link-hover-color;
+        background-color: $list-group-hover-bg;
+    }
+}
+
+button.list-group-item {
+    width: 100%;
+    text-align: left;
+}
+
+// Custom content options
+//
+// Extra classes for creating well-formatted content within `.list-group-item`s.
+
+.list-group-item-heading {
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+.list-group-item-text {
+    margin-bottom: 0;
+    line-height: 1.3;
 }
 .list-group-header {
     padding: 5px 15px;
@@ -34,4 +186,8 @@
     font-size: $font-size-large;
     font-weight: normal;
     text-transform: uppercase;
+}
+
+.collapsible {
+    margin-left: 15px;
 }

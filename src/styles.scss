@@ -10,7 +10,7 @@ $fa-font-path : '../node_modules/font-awesome/fonts';
 @import '../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/nav-divider';
 @import '../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/grid';
 @import '../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/grid-framework';
-@import '../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/list-group';
+// @import '../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/list-group';
 
 // Import library functions, mixins and variables
 @import "_lib/sass/src/functions/functions";
@@ -22,7 +22,6 @@ $fa-font-path : '../node_modules/font-awesome/fonts';
 @import "../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/code";
 @import "../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/button-groups";
 @import "../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/grid";
-@import "../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/list-group";
 @import "../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/component-animations";
 
 // Import the library component styles
