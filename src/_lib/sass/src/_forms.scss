@@ -1,3 +1,10 @@
+input:disabled,
+.form-control:disabled {
+    opacity: 0.5;
+}
+.form-control:focus {
+    @include tab-focus;
+}
 label {
     font-size: 14px;
     font-weight: normal;
@@ -40,6 +47,9 @@ textarea {
             border-radius: $border-radius-base;
             font-family: FontAwesome;
             text-align: center;
+            transition-property: background;
+            transition-timing-function: ease-in-out;
+            transition-duration: 300ms;
         }
     }
     input {
@@ -75,6 +85,9 @@ textarea {
         height: 4px;
         border: 6px solid #ffffff;
         border-radius: 50%;
+        transition-property: border-color;
+        transition-timing-function: ease-in-out;
+        transition-duration: 300ms;
     }
     input:checked {
         ~ label:before {
@@ -102,8 +115,7 @@ textarea {
                 background-color: get-color("secondary", base);
 
                 .on-off {
-                    right: 0;
-                    left: auto;
+                    left: 36px;
                 }
             }
         }
@@ -132,6 +144,9 @@ textarea {
         color: #ffffff;
         overflow: hidden;
         margin-right: 10px;
+        transition-property: background-color;
+        transition-timing-function: ease-in-out;
+        transition-duration: 300ms;
 
         .on-off {
             display: inline-block;
@@ -143,6 +158,9 @@ textarea {
             width: 26px;
             line-height: 28px;
             border-radius: 50%;
+            transition-property: left;
+            transition-timing-function: ease-in-out;
+            transition-duration: 300ms;
 
             &::before,
             &:after {
