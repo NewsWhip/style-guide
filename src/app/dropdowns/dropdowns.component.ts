@@ -12,6 +12,6 @@ export class DropdownsComponent implements OnInit {
   }
 
   stopProp(e: Event) {
-    e.stopImmediatePropagation();
+    e.preventDefault();
   }
 }

@@ -8,6 +8,7 @@ import { DropdownsComponent } from './dropdowns/dropdowns.component';
 import { TabsComponent } from './tabs/tabs.component';
 import { BrandingComponent } from './branding/branding.component';
 import { ListComponent } from './list/list.component';
+import { FormsComponent } from './forms/forms.component';
 
 const appRoutes: Routes = [
     {
@@ -41,6 +42,10 @@ const appRoutes: Routes = [
     {
         path: 'lists',
         component: ListComponent
+    },
+    {
+        path: 'forms',
+        component: FormsComponent
     }
 ];
 

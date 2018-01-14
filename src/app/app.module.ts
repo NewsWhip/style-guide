@@ -12,6 +12,7 @@ import { DropdownsComponent } from './dropdowns/dropdowns.component';
 import { TabsComponent } from './tabs/tabs.component';
 import { BrandingComponent } from './branding/branding.component';
 import { ListComponent } from './list/list.component';
+import { FormsComponent } from './forms/forms.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { ListComponent } from './list/list.component';
     DropdownsComponent,
     TabsComponent,
     BrandingComponent,
-    ListComponent
+    ListComponent,
+    FormsComponent
   ],
   imports: [
     BrowserModule,

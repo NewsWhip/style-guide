@@ -148,19 +148,19 @@ $btn-border-radius-xs:           $border-radius-xs !default;
 
 //== Forms
 //
-$input-bg:                       #000 !default;
-$input-bg-disabled:              #000 !default;
-$input-color:                    get-color("gray", 4x-light) !default;
-$input-border:                   #000 !default;
+$input-bg:                       #ffffff !default;
+$input-bg-disabled:              #ffffff !default;
+$input-color:                    get-color("gray") !default;
+$input-border:                   #ffffff !default;
 // TODO: Rename `$input-border-radius` to `$input-border-radius-base` in v4
 // This has no effect on `<select>`s in some browsers, due to the limited stylability of `<select>`s in CSS.
 $input-border-radius:            3px !default;
 $input-border-radius-large:      3px !default;
 $input-border-radius-small:      3px !default;
 $input-border-focus:             #66afe9 !default;
-$input-color-placeholder:        get-color("gray", light) !default;
+$input-color-placeholder:        get-color("gray", 3x-light) !default;
 $input-height-base:              ($line-height-computed + ($padding-base-vertical * 2) + 2) !default;
-$input-height-large:             (ceil($font-size-large * $line-height-large) + ($padding-large-vertical) + 8) !default;
+$input-height-large:             (ceil($font-size-large * $line-height-large) + ($padding-large-vertical) + 7) !default;
 $input-height-small:             (floor($font-size-small * $line-height-small) + ($padding-small-vertical * 2) + 2) !default;
 $form-group-margin-bottom:       15px !default;
 $legend-color:                   get-color("gray") !default;
@@ -741,11 +741,6 @@ $code-bg:                     get-color('gray', dark) !default;
 
 $kbd-color:                   #fff !default;
 $kbd-bg:                      get-color('gray', dark) !default;
-
-// $pre-bg:                      get-color('gray', 2x-light) !default;
-// $pre-color:                   get-color('gray', dark) !default;
-// $pre-border-color:            get-color('gray', 4x-light) !default;;
-// $pre-scrollable-max-height:   800px !default;
 
 $pre-bg:                      get-color('gray', dark) !default;
 $pre-color:                   get-color('secondary') !default;
