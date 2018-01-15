@@ -17,6 +17,10 @@ app-root {
     flex-direction: row;
     height: 100%;
 
+    .side-nav {
+        @include scrollbars(.5em, get-color("gray", 2x-light), get-color("gray", 2x-light));
+    }
+
     .side-nav-menu {
         position: fixed;
         width: 200px;
