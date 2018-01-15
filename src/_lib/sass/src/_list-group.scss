@@ -71,6 +71,7 @@
     background-color: $list-group-bg;
     border: 1px solid $list-group-border;
     font-size: $font-size-large;
+    line-height: 19px;
 
     // Round the first and last items
     &:first-child {
