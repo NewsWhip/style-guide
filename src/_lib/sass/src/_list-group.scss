@@ -188,6 +188,9 @@ button.list-group-item {
     font-size: $font-size-large;
     font-weight: normal;
     text-transform: uppercase;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 .collapsible {
