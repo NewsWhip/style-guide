@@ -17,6 +17,7 @@
 .list-group-primary {
     .list-group-item {
         text-transform: uppercase;
+        font-size: 16px;
     }
 }
 
@@ -70,7 +71,7 @@
     margin-bottom: -1px;
     background-color: $list-group-bg;
     border: 1px solid $list-group-border;
-    font-size: $font-size-large;
+    font-size: 14px;
     line-height: 19px;
 
     // Round the first and last items
@@ -86,7 +87,7 @@
         .caret {
             position: absolute;
             left: -2px;
-            top: 14px;
+            top: 16px;
             border-width: 5px;
         }
         &.collapsed {
@@ -130,6 +131,12 @@
         .list-group-item-text {
             color: $list-group-active-text-color;
         }
+    }
+    .list-group-item-icon {
+        position: absolute;
+        left: 0;
+        top: 11px;
+        font-size: 10px;
     }
 
     // Contextual variants
