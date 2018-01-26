@@ -9,6 +9,9 @@ import { TabsComponent } from './tabs/tabs.component';
 import { BrandingComponent } from './branding/branding.component';
 import { ListComponent } from './list/list.component';
 import { FormsComponent } from './forms/forms.component';
+import { ModalsComponent } from "./modals/modals.component";
+import { AlertsComponent } from "./alerts/alerts.component";
+import { PaginationComponent } from "./pagination/pagination.component";
 
 const appRoutes: Routes = [
     {
@@ -46,6 +49,18 @@ const appRoutes: Routes = [
     {
         path: 'forms',
         component: FormsComponent
+    },
+    {
+        path: 'modals',
+        component: ModalsComponent
+    },
+    {
+        path: 'alerts',
+        component: AlertsComponent
+    },
+    {
+        path: 'pagination',
+        component: PaginationComponent
     }
 ];
 

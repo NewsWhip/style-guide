@@ -1,0 +1,37 @@
+<div>
+  <h2>Modals</h2>
+  
+  <h3>Default modal</h3>
+  
+  <button type="button" class="btn btn-primary btn-lg" (click)="modalSize = 'md' "data-toggle="modal" data-target="#defaultModal">
+    Launch default modal
+  </button>
+  
+  <button type="button" class="btn btn-primary btn-lg" (click)="modalSize = 'sm' "data-toggle="modal" data-target="#defaultModal">
+    Launch small modal
+  </button>
+  
+  <button type="button" class="btn btn-primary btn-lg" (click)="modalSize = 'lg' "data-toggle="modal" data-target="#defaultModal">
+    Launch large modal
+  </button>
+  
+  <div class="modal fade" tabindex="-1" role="dialog" id="defaultModal">
+    <div class="modal-dialog modal-{{modalSize}}" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Modal title</h4>
+          <button type="button" class="close btn-unstyled" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>This is some sample modal content</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary btn-lg" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary btn-lg">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

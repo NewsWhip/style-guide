@@ -45,12 +45,12 @@
     border-radius: $border-radius-base;
     box-shadow: 0 6px 12px rgba(0,0,0,.175);
     background-clip: padding-box;
-
+    
     // // Dividers (basically an hr) within the dropdown
     .divider {
         @include nav-divider($dropdown-divider-bg);
     }
-
+    
     // Links within the dropdown menu
     > li > a {
         display: block;
@@ -63,7 +63,7 @@
         text-decoration: none;
         cursor: pointer;
     }
-
+    
     &.dropdown-menu-arrow {
         &:after, &:before {
             border-style: solid;
@@ -112,123 +112,122 @@
     }
 }
 
-//   // Active state
-//   .dropdown-menu > .active > a {
-    //     &,
-    //     &:hover,
-    //     &:focus {
-        //       color: $dropdown-link-active-color;
-        //       text-decoration: none;
-        //       outline: 0;
-        //       background-color: $dropdown-link-active-bg;
-        //     }
-        //   }
+// Active state
+.dropdown-menu > .active > a {
+    &,
+    &:hover,
+    &:focus {
+        color: $dropdown-link-active-color;
+        background-color: $dropdown-link-active-bg;
+    }
+}
 
-        // Disabled state
-        //
-        // Gray out text and ensure the hover/focus state remains gray
-        .dropdown-menu > .disabled > a {
-            &,
-            &:hover,
-            &:focus {
-                opacity: 0.5;
-                cursor: $cursor-disabled;
-                color: $dropdown-link-color;
-            }
-        }
+// Disabled state
+//
+// Gray out text and ensure the hover/focus state remains gray
+.dropdown-menu > .disabled > a {
+    &,
+    &:hover,
+    &:focus {
+        opacity: 0.5;
+        cursor: $cursor-disabled;
+        color: $dropdown-link-color;
+    }
+}
 
-        // Open state for the dropdown
-        .open {
-            // Show the menu
-            > .dropdown-menu {
-                display: block;
-            }
+// Open state for the dropdown
+.open {
+    // Show the menu
+    > .dropdown-menu {
+        display: block;
+    }
+    
+    // Remove the outline when :focus is triggered
+    > a {
+        outline: 0;
+    }
+}
 
-            // Remove the outline when :focus is triggered
-            > a {
-                outline: 0;
-            }
-        }
+// Menu positioning
+//
+// Add extra class to `.dropdown-menu` to flip the alignment of the dropdown
+// menu with the parent.
+.dropdown-menu-right {
+    left: auto; // Reset the default from `.dropdown-menu`
+    right: 0;
+}
+// With v3, we enabled auto-flipping if you have a dropdown within a right
+// aligned nav component. To enable the undoing of that, we provide an override
+// to restore the default dropdown menu alignment.
+//
+// This is only for left-aligning a dropdown menu within a `.navbar-right` or
+// `.pull-right` nav component.
+.dropdown-menu-left {
+    left: 0;
+    right: auto;
+}
 
-        // Menu positioning
-        //
-        // Add extra class to `.dropdown-menu` to flip the alignment of the dropdown
-        // menu with the parent.
-        .dropdown-menu-right {
-            left: auto; // Reset the default from `.dropdown-menu`
-            right: 0;
-        }
-        // With v3, we enabled auto-flipping if you have a dropdown within a right
-        // aligned nav component. To enable the undoing of that, we provide an override
-        // to restore the default dropdown menu alignment.
-        //
-        // This is only for left-aligning a dropdown menu within a `.navbar-right` or
-        // `.pull-right` nav component.
-        .dropdown-menu-left {
-            left: 0;
-            right: auto;
-        }
+.dropdown-menu-block {
+    width: 100%;
+}
 
-        .dropdown-menu-block {
-            width: 100%;
-        }
+// Dropdown section headers
+.dropdown-header {
+    display: block;
+    padding: 3px 16px;
+    padding-top: 8px;
+    font-size: $font-size-base;
+    line-height: $line-height-base;
+    color: $dropdown-header-color;
+    white-space: nowrap; // as with > li > a
+}
 
-        // Dropdown section headers
-        .dropdown-header {
-            display: block;
-            padding: 3px 16px;
-            padding-top: 8px;
-            font-size: $font-size-small;
-            line-height: $line-height-base;
-            color: $dropdown-header-color;
-            white-space: nowrap; // as with > li > a
-        }
+// Backdrop to catch body clicks on mobile, etc.
+.dropdown-backdrop {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    z-index: ($zindex-dropdown - 10);
+}
 
-        // Backdrop to catch body clicks on mobile, etc.
-        .dropdown-backdrop {
-            position: fixed;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            top: 0;
-            z-index: ($zindex-dropdown - 10);
-        }
+// Allow for dropdowns to go bottom up (aka, dropup-menu)
+//
+// Just add .dropup after the standard .dropdown class and you're set, bro.
+// TODO: abstract this so that the navbar fixed styles are not placed here?
 
-        // Allow for dropdowns to go bottom up (aka, dropup-menu)
-        //
-        // Just add .dropup after the standard .dropdown class and you're set, bro.
-        // TODO: abstract this so that the navbar fixed styles are not placed here?
-
-        .dropup,
-        .navbar-fixed-bottom .dropdown {
-            // Reverse the caret
-            .caret {
-                border-top: 0;
-                border-bottom: $caret-width-base dashed;
-                content: "";
-            }
-            // Different positioning for bottom up menu
-            .dropdown-menu {
-                top: auto;
-                bottom: 100%;
-                margin-bottom: 2px;
-            }
-        }
+.dropup,
+.navbar-fixed-bottom .dropdown {
+    // Reverse the caret
+    .caret {
+        border-top: 0;
+        border-bottom: $caret-width-base dashed;
+        content: "";
+    }
+    // Different positioning for bottom up menu
+    .dropdown-menu {
+        top: auto;
+        bottom: 100%;
+        margin-bottom: 2px;
+    }
+}
 
 
-        // Component alignment
-        //
-        // Reiterate per navbar.less and the modified component alignment there.
+// Component alignment
+//
+// Reiterate per navbar.less and the modified component alignment there.
 
-        //   @media (min-width: $grid-float-breakpoint) {
-            //     .navbar-right {
-                //       .dropdown-menu {
-                    //         right: 0; left: auto;
-                    //       }
-                    //       // Necessary for overrides of the default right aligned menu.
-                    //       // Will remove come v4 in all likelihood.
-                    //       .dropdown-menu-left {
-                        //         left: 0; right: auto;
-                        //       }
-                        //     }
-                        //   }
+//   @media (min-width: $grid-float-breakpoint) {
+    //     .navbar-right {
+        //       .dropdown-menu {
+            //         right: 0; left: auto;
+            //       }
+            //       // Necessary for overrides of the default right aligned menu.
+            //       // Will remove come v4 in all likelihood.
+            //       .dropdown-menu-left {
+                //         left: 0; right: auto;
+                //       }
+                //     }
+                //   }
+                

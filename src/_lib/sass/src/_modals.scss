@@ -1,0 +1,26 @@
+.modal {
+    .modal-header {
+        border: none;
+        background-color: get-color("gray", x-light);
+        display: flex;
+        flex-direction: row;
+
+        .modal-title {
+            color: #ffffff;
+            font-size: 20px;
+            font-weight: normal;
+            flex: 1;
+        }
+        .close {
+            font-size: 30px;
+            line-height: 30px;
+            position: relative;
+            top: 2px;
+            right: -12px;
+        }
+    }
+    .modal-footer {
+        padding: 24px;
+        border-top: 2px solid get-color("gray", x-light);
+    }
+}

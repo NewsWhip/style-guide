@@ -29,7 +29,10 @@ textarea {
 }
 .checkbox,
 .radio {
+    line-height: 18px;
+
     label {
+        line-height: 12px;
         padding-left: 0;
         display: inline-flex;
         align-items: center;
@@ -37,12 +40,14 @@ textarea {
         &:before {
             content: "\f00c";
             position: relative;
-            display: inline-block;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
             background: #ffffff;
             color: #ffffff;
             width: 16px;
-            height: 15px;
-            padding-top: 1px;
+            height: 16px;
             margin-right: 8px;
             border-radius: $border-radius-base;
             font-family: FontAwesome;
@@ -81,8 +86,6 @@ textarea {
 .radio {
     label:before {
         content: " ";
-        width: 4px;
-        height: 4px;
         border: 6px solid #ffffff;
         border-radius: 50%;
         transition-property: border-color;
@@ -103,6 +106,7 @@ textarea {
         float: left;
         line-height: 32px;
         cursor: pointer;
+        margin-bottom: 0;
     }
     input {
         width: 0;

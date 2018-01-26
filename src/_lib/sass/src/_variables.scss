@@ -179,10 +179,10 @@ $dropdown-link-color:         #ffffff;
 $dropdown-border:               get-color("gray", 3x-light);
 $dropdown-link-hover-color:     $link-hover-color;
 $dropdown-link-hover-bg:        transparent;
-$dropdown-link-active-color:    $component-active-color !default;
-$dropdown-link-active-bg:       $component-active-bg !default;
-$dropdown-divider-bg:           get-color("gray", 3x-light);
-$dropdown-header-color:         get-color("gray", 2x-light);
+$dropdown-link-active-color:    $link-hover-color !default;
+$dropdown-link-active-bg:       transparent !default;
+$dropdown-divider-bg:           get-color("gray", light);
+$dropdown-header-color:         get-color("gray", 3x-light);
 
 //-- Z-index master list
 //
@@ -369,21 +369,21 @@ $nav-pills-active-link-hover-color:         $component-active-color !default;
 //
 //##
 
-$pagination-color:                     $link-color !default;
-$pagination-bg:                        #fff !default;
-$pagination-border:                    #ddd !default;
+$pagination-color:                     get-color('gray', 4x-light) !default;
+$pagination-bg:                        transparent !default;
+$pagination-border:                    transparent !default;
 
-$pagination-hover-color:               $link-hover-color !default;
-$pagination-hover-bg:                  get-color('gray', 3x-light) !default;
-$pagination-hover-border:              #ddd !default;
+$pagination-hover-color:               get-color('primary', 2x-light) !default;
+$pagination-hover-bg:                  get-color("gray", dark) !default;
+$pagination-hover-border:              get-color("gray", dark) !default;
 
-$pagination-active-color:              #fff !default;
-$pagination-active-bg:                 get-color('primary') !default;
-$pagination-active-border:             get-color('primary') !default;
+$pagination-active-color:              get-color('primary', 2x-light) !default;
+$pagination-active-bg:                 get-color("gray", dark) !default;
+$pagination-active-border:             get-color("gray", dark) !default;
 
-$pagination-disabled-color:            get-color('gray', 2x-light) !default;
-$pagination-disabled-bg:               #fff !default;
-$pagination-disabled-border:           #ddd !default;
+$pagination-disabled-color:            rgba(get-color('gray', 4x-light), 0.5) !default;
+$pagination-disabled-bg:               transparent !default;
+$pagination-disabled-border:           transparent !default;
 
 
 //== Pager
@@ -416,21 +416,21 @@ $jumbotron-heading-font-size:    ceil(($font-size-base * 4.5)) !default;
 //== Form states and alerts
 //
 //## Define colors for form feedback states and, by default, alerts.
-$state-success-text:             blue !default;
-$state-success-bg:               blue !default;
-$state-success-border:           blue !default;
+$state-success-text:             #ffffff !default;
+$state-success-bg:               get-color("secondary", base) !default;
+$state-success-border:           get-color("secondary", base) !default;
 
-$state-info-text:                blue !default;
-$state-info-bg:                  blue !default;
-$state-info-border:              blue !default;
+$state-info-text:                #ffffff !default;
+$state-info-bg:                  get-color("primary", light) !default;
+$state-info-border:              get-color("primary", light) !default;
 
-$state-warning-text:             blue !default;
-$state-warning-bg:               blue !default;
-$state-warning-border:           blue !default;
+$state-warning-text:             get-color("gray", x-light) !default;
+$state-warning-bg:               get-color("alt", light) !default;
+$state-warning-border:           get-color("alt", light) !default;
 
-$state-danger-text:              blue !default;
-$state-danger-bg:                blue !default;
-$state-danger-border:            blue !default;
+$state-danger-text:              #ffffff !default;
+$state-danger-bg:                get-color('tertiary', base) !default;
+$state-danger-border:            get-color('tertiary', base) !default;
 
 
 //== Tooltips
@@ -507,16 +507,16 @@ $label-link-hover-color:      #fff !default;
 //
 //##
 
-$modal-inner-padding:         15px !default;
-$modal-title-padding:         15px !default;
+$modal-inner-padding:         32px !default;
+$modal-title-padding:         16px 32px !default;
 $modal-title-line-height:     $line-height-base !default;
 
-$modal-content-bg:                             #fff !default;
-$modal-content-border-color:                   rgba(0,0,0,.2) !default;
-$modal-content-fallback-border-color:          #999 !default;
+$modal-content-bg:                             $body-bg !default;
+$modal-content-border-color:                   get-color("gray", base) !default;
+$modal-content-fallback-border-color:          get-color("gray", base) !default;
 
 $modal-backdrop-bg:           #000 !default;
-$modal-backdrop-opacity:      .5 !default;
+$modal-backdrop-opacity:      .75 !default;
 $modal-header-border-color:   #e5e5e5 !default;
 $modal-footer-border-color:   $modal-header-border-color !default;
 
@@ -530,8 +530,8 @@ $modal-sm:                    300px !default;
 //## Define alert colors, border radius, and padding.
 
 $alert-padding:               15px !default;
-$alert-border-radius:         $border-radius-base !default;
-$alert-link-font-weight:      bold !default;
+$alert-border-radius:         0 !default;
+$alert-link-font-weight:      normal !default;
 
 $alert-success-bg:            $state-success-bg !default;
 $alert-success-text:          $state-success-text !default;
@@ -730,8 +730,8 @@ $carousel-caption-color:                      #fff !default;
 //
 //##
 
-$close-font-weight:           bold !default;
-$close-color:                 #000 !default;
+$close-font-weight:           lighter !default;
+$close-color:                 #ffffff !default;
 $close-text-shadow:           0 1px 0 #fff !default;
 
 //== Code

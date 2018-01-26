@@ -12,6 +12,9 @@ $fa-font-path : '../node_modules/font-awesome/fonts';
 @import '../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/grid-framework';
 @import '../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/forms';
 @import '../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/image';
+@import '../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/opacity';
+@import '../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/alerts';
+@import '../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/pagination';
 
 // Import library functions, mixins and variables
 @import "_lib/sass/src/functions/functions";
@@ -25,6 +28,9 @@ $fa-font-path : '../node_modules/font-awesome/fonts';
 @import "../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/grid";
 @import "../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/component-animations";
 @import "../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/forms";
+@import "../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/modals";
+@import "../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/alerts";
+@import "../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/pagination";
 
 // Import the library component styles
 @import "_lib/sass/src/buttons";
@@ -36,6 +42,8 @@ $fa-font-path : '../node_modules/font-awesome/fonts';
 @import "_lib/sass/src/navs";
 @import "_lib/sass/src/list-group";
 @import "_lib/sass/src/forms";
+@import "_lib/sass/src/modals";
+@import "_lib/sass/src/close";
 
 // Styles for the demo app only
 @import "app/app.component";
