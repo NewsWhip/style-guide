@@ -58,10 +58,7 @@ textarea {
         }
     }
     input {
-        width: 0;
-        height: 0;
-        position: absolute;
-        left: -99999999px;
+        display: none;
 
         &:checked {
             ~ label {

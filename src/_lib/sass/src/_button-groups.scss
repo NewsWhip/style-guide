@@ -21,3 +21,29 @@
 .dropup .btn-lg .caret {
     border-width: 0 $caret-width-large $caret-width-large;
 }
+.btn-group-responsive {
+	display: flex;
+	flex-direction: row;
+
+	> .btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+		flex-grow: 1;
+        flex-basis: 0;
+        overflow: hidden;
+        padding: 0;
+	}
+}
+.btn-group-responsive-lg {
+    height: ceil($font-size-large * $line-height-large) + ($padding-large-vertical * 2) + 2;
+}
+.btn-group-responsive-md {
+    height: ceil($font-size-base * $line-height-base) + ($padding-base-vertical * 2) + 2;
+}
+.btn-group-responsive-sm {
+    height: ceil($font-size-small * $line-height-small) + ($padding-small-vertical * 2) + 2;
+}
+.btn-group-responsive-xs {
+    height: ceil($font-size-xs * $line-height-xs) + ($padding-xs-vertical * 2) + 2;
+}

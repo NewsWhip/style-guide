@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { ButtonsComponent } from './buttons/buttons.component';
@@ -16,6 +16,7 @@ import { FormsComponent } from './forms/forms.component';
 import { ModalsComponent } from './modals/modals.component';
 import { AlertsComponent } from './alerts/alerts.component';
 import { PaginationComponent } from './pagination/pagination.component';
+import { LabelsComponent } from './labels/labels.component';
 
 @NgModule({
   declarations: [
@@ -31,10 +32,12 @@ import { PaginationComponent } from './pagination/pagination.component';
     FormsComponent,
     ModalsComponent,
     AlertsComponent,
-    PaginationComponent
+    PaginationComponent,
+    LabelsComponent
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     routing,
   ],
   providers: [],

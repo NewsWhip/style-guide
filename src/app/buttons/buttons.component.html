@@ -78,6 +78,28 @@
         </div>
     </div>
 
+    <div style="display: flex; flex-direction: row; align-items: center;">
+        <h4>Reponsive button groups</h4>
+    
+        <select class="form-control" [(ngModel)]="btnGroupSize" [ngModelOptions]="{standalone: true}" style="width: 100px; margin-left: 20px">
+            <option value="10%">10%</option>
+            <option value="25%">25%</option>
+            <option value="50%">50%</option>
+            <option value="75%">75%</option>
+            <option value="100%">100%</option>
+        </select>
+    </div>
+
+    <div class="responsive-container" [style.width]="btnGroupSize">
+        <div class="btn-group btn-group-responsive btn-group-responsive-md" role="group">
+            <button type="button" class="btn btn-dropdown"><i class="fa fa-adjust"></i></button>
+            <button type="button" class="btn btn-dropdown"><i class="fa fa-bell-o"></i></button>
+            <button type="button" class="btn btn-dropdown"><i class="fa fa-sliders"></i></button>
+            <button type="button" class="btn btn-dropdown"><i class="fa fa-star-o"></i></button>
+            <button type="button" class="btn btn-dropdown"><i class="fa fa-bookmark-o"></i></button>
+        </div>
+    </div>
+    
     <h4>Ghost alternative with dropdown</h4>
     <div style="margin-bottom: 20px;">
         <div class="btn-group" role="group">

@@ -9,6 +9,7 @@ export class ButtonsComponent implements OnInit {
     public sizes = ['xs','sm','md','lg'];
     public btnNames = ['primary', 'secondary', 'danger', 'ghost', 'alt'];
     public defaultBtnSize: string = "lg";
+    public btnGroupSize: string = '50%';
 
     constructor() { }
 

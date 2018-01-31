@@ -155,9 +155,17 @@ input[type="button"] {
         width: 100%;
     }
 }
-
 .btn-unstyled {
     background: transparent;
     border: none;
     margin: 0;
+}
+.dropdown,
+.dropup {
+    .btn-block {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
 }

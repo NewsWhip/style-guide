@@ -24,3 +24,13 @@
         border-top: 2px solid get-color("gray", x-light);
     }
 }
+.modal-media {
+    .modal-body {
+        padding: 2px;
+    }
+    iframe,
+    object,
+    video {
+        width: 100%;
+    }
+}

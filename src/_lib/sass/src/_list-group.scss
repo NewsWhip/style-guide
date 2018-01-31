@@ -34,8 +34,15 @@
         &:focus {
             background-color: get-color("gray", base);
         }
-        &:hover {
-            background-color: get-color("gray", dark);
+        &:hover,
+        &.active,
+        &.active:hover,
+        &.active:focus {
+            &,
+            a {
+                background-color: get-color("gray", dark);
+                color: get-color("primary", 2x-light);
+            }
         }
         &[data-toggle="collapse"] {
             font-weight: normal;

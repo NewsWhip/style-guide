@@ -1,0 +1,27 @@
+.label {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: normal;
+    text-transform: uppercase;
+    line-height: 16px;
+    padding: 0 6px;
+    border: 1px solid;
+    border-color: black;
+    background: black;
+    @include border-right-radius(9px);
+    @include border-left-radius(9px);
+
+    &.label-danger {
+        color: #ffffff;
+        background: get-color('tertiary');
+        border-color: get-color('tertiary');
+    }
+    &.label-alt {
+        color: get-color("alt", light);
+        background: get-color("gray", light);
+        border-color: get-color("alt", light);
+    }
+}
