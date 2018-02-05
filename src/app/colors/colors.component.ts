@@ -12,7 +12,8 @@ export class ColorsComponent implements OnInit {
         "primary",
         "secondary",
         "tertiary",
-        "alt"
+        "alt",
+        "coolgray"
     ];
 
     public shades = [
