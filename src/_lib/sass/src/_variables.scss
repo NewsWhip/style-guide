@@ -7,6 +7,7 @@ $primary-base: #3d81ff !default;
 $secondary-base: #3c8f9a !default;
 $tertiary-base: #ff3d64 !default;
 $alt-base: #ffcc33 !default;
+$coolgray-base: #333c4e !default;
 
 $gray-color-settings: (
     "name": "gray",
@@ -44,12 +45,20 @@ $primary-color-settings: (
     "dark-steps": (-8)
 );
 
+$coolgray-color-settings: (
+    "name": "coolgray",
+    "color": $coolgray-base,
+    "light-steps": (8, 16, 36, 48, 60, 72),
+    "dark-steps": (-8)
+);
+
 $color-settings-maps: (
     $gray-color-settings,
     $alt-color-settings,
     $tertiary-color-settings,
     $secondary-color-settings,
-    $primary-color-settings
+    $primary-color-settings,
+    $coolgray-color-settings
 );
 
 //== Scaffolding
