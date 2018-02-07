@@ -11,9 +11,15 @@
     border: 1px solid;
     border-color: black;
     background: black;
+    vertical-align: top;
     @include border-right-radius(9px);
     @include border-left-radius(9px);
 
+    &.label-default {
+        color: get-color("gray", 4x-light);
+        background: get-color("gray", light);
+        border-color: get-color("gray", light);
+    }
     &.label-danger {
         color: #ffffff;
         background: get-color('tertiary');
