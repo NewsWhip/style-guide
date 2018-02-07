@@ -1,0 +1,56 @@
+// Override font-awesome path
+$fa-font-path : '../node_modules/font-awesome/fonts';
+
+@import "node_modules/font-awesome/scss/font-awesome";
+
+// Import only the Bootstrap 3.x mixins we require
+@import 'node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/border-radius';
+@import 'node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/clearfix';
+@import 'node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/vendor-prefixes';
+@import 'node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/nav-divider';
+@import 'node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/grid';
+@import 'node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/grid-framework';
+@import 'node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/forms';
+@import 'node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/image';
+@import 'node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/opacity';
+@import 'node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/alerts';
+@import 'node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/pagination';
+
+// Import library functions, mixins and variables
+@import "_lib/sass/src/functions/functions";
+@import "_lib/sass/src/mixins/mixins";
+@import "_lib/sass/src/variables";
+
+// Import only the Bootstrap 3.x component styles we require
+@import 'node_modules/bootstrap-sass/assets/stylesheets/bootstrap/normalize';
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/code";
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/button-groups";
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/grid";
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/component-animations";
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/forms";
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/modals";
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/alerts";
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/pagination";
+
+// Import the library component styles
+@import "_lib/sass/src/buttons";
+@import "_lib/sass/src/button-groups";
+@import "_lib/sass/src/type";
+@import "_lib/sass/src/links";
+@import "_lib/sass/src/scaffolding";
+@import "_lib/sass/src/dropdowns";
+@import "_lib/sass/src/navs";
+@import "_lib/sass/src/list-group";
+@import "_lib/sass/src/forms";
+@import "_lib/sass/src/modals";
+@import "_lib/sass/src/close";
+@import "_lib/sass/src/labels";
+
+// Styles for the demo app only
+@import "app/app.component";
+@import "app/buttons/buttons.component";
+@import "app/colors/colors.component";
+@import "app/interactive-text/interactive-text.component";
+@import "app/dropdowns/dropdowns.component";
+@import "app/branding/branding.component";
+@import "app/list/list.component";
