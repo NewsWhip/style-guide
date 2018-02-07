@@ -101,6 +101,13 @@ a.btn {
         transparent,
         transparent);
 }
+.btn-nav {
+    @include button-variant(
+        #ffffff,
+        get-color('primary', 2x-light),
+        transparent,
+        transparent);
+}
 
 // Button Sizes
 // --------------------------------------------------
@@ -132,6 +139,10 @@ a.btn {
     &.btn-round {
         @include button-round($font-size-xs, $line-height-xs, $padding-xs-vertical);
     }
+}
+.btn-slim {
+    padding-left: 0;
+    padding-right: 0;
 }
 
 // Block button

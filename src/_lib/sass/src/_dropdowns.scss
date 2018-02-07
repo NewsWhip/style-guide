@@ -210,6 +210,13 @@
         top: auto;
         bottom: 100%;
         margin-bottom: 2px;
+
+        &.dropdown-menu-arrow {
+            &:after, &:before {
+                top: 100%;
+                transform: rotateZ(180deg);
+            }
+        }
     }
 }
 
