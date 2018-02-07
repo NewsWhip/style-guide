@@ -11,7 +11,7 @@
     border: 1px solid;
     border-color: black;
     background: black;
-    vertical-align: top;
+    vertical-align: baseline;
     @include border-right-radius(9px);
     @include border-left-radius(9px);
 
