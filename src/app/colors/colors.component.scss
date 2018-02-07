@@ -5,6 +5,7 @@ app-colors {
 
         .color {
             flex: 1;
+            max-width: 50%;
             margin-right: 10px;
             margin-bottom: 10px;
 
@@ -31,6 +32,7 @@ app-colors {
         display: block;
         border-top-left-radius: 0;
         border-bottom-right-radius: 0;
+        text-align: center;
     }
 
     @each $color-settings in $color-settings-maps {
@@ -44,6 +46,13 @@ app-colors {
         .bg-#{$name}-3x-light { background: get-color($name, 3x-light) };
         .bg-#{$name}-4x-light { background: get-color($name, 4x-light) };
         .bg-#{$name}-5x-light { background: get-color($name, 5x-light) };
+    }
+
+    .bg-yellow {
+        background: $yellow;
+    }
+    .bg-green {
+        background: $green;
     }
 
 }
