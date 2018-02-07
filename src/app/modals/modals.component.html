@@ -14,6 +14,10 @@
   <button type="button" class="btn btn-primary btn-lg" (click)="modalSize = 'lg' "data-toggle="modal" data-target="#defaultModal">
     Launch large modal
   </button>
+
+  <button type="button" class="btn btn-primary btn-lg" (click)="modalSize = 'fullscreen' "data-toggle="modal" data-target="#defaultModal">
+    Launch fullscreen modal
+  </button>
   
   <div class="modal fade" tabindex="-1" role="dialog" id="defaultModal">
     <div class="modal-dialog modal-{{modalSize}}" role="document">

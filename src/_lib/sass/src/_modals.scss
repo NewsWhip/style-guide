@@ -34,3 +34,17 @@
         width: 100%;
     }
 }
+.modal-fullscreen {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+
+    .modal-content {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+    .modal-body {
+        flex: 1;
+    }
+}
