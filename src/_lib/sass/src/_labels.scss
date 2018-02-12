@@ -12,8 +12,8 @@
     border-color: black;
     background: black;
     vertical-align: baseline;
-    @include border-right-radius(9px);
-    @include border-left-radius(9px);
+    @include border-right-radius(3px);
+    @include border-left-radius(3px);
 
     &.label-default {
         color: get-color("gray", 4x-light);
@@ -30,4 +30,18 @@
         background: get-color("gray", light);
         border-color: get-color("alt", light);
     }
+    &.label-new {
+        color: #ffffff;
+        background: get-color("tertiary");
+        border-color: get-color("tertiary");
+    }
+    &.label-beta {
+        color: get-color("gray");
+        background: get-color("alt");
+        border-color: get-color("alt");
+    }
 }
+ .label-round {
+     @include border-right-radius(9px);
+     @include border-left-radius(9px);
+ }
