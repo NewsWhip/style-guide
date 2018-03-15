@@ -16,8 +16,7 @@
 // Primary list group
 .list-group-primary {
     .list-group-item {
-        text-transform: uppercase;
-        font-size: 16px;
+        font-size: $font-size-large;
     }
 }
 
@@ -203,8 +202,8 @@ button.list-group-item {
     padding: 5px 19px;
     margin: 5px 0;
     color: get-color("gray", 3x-light);
-    font-size: $font-size-large;
-    font-weight: normal;
+    font-size: $font-size-base;
+    font-weight: 300;
     text-transform: uppercase;
 }
 
