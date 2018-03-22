@@ -17,6 +17,7 @@ import { ModalsComponent } from './modals/modals.component';
 import { AlertsComponent } from './alerts/alerts.component';
 import { PaginationComponent } from './pagination/pagination.component';
 import { LabelsComponent } from './labels/labels.component';
+import { TablesComponent } from './tables/tables.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { LabelsComponent } from './labels/labels.component';
     ModalsComponent,
     AlertsComponent,
     PaginationComponent,
-    LabelsComponent
+    LabelsComponent,
+    TablesComponent
   ],
   imports: [
     BrowserModule,

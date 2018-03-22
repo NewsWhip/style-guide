@@ -13,6 +13,7 @@ import { ModalsComponent } from "./modals/modals.component";
 import { AlertsComponent } from "./alerts/alerts.component";
 import { PaginationComponent } from "./pagination/pagination.component";
 import { LabelsComponent } from "./labels/labels.component";
+import {TablesComponent} from './tables/tables.component';
 
 const appRoutes: Routes = [
     {
@@ -66,6 +67,10 @@ const appRoutes: Routes = [
     {
         path: 'labels',
         component: LabelsComponent
+    },
+    {
+        path: 'tables',
+        component: TablesComponent
     }
 ];
 
