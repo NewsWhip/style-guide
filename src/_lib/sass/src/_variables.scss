@@ -464,12 +464,12 @@ $state-danger-border:            get-color('tertiary', base) !default;
 //##
 
 //** Tooltip max width
-$tooltip-max-width:           200px !default;
+$tooltip-max-width:           300px !default;
 //** Tooltip text color
-$tooltip-color:               #fff !default;
+$tooltip-color:               get-color("gray", base) !default;
 //** Tooltip background color
-$tooltip-bg:                  #000 !default;
-$tooltip-opacity:             .9 !default;
+$tooltip-bg:                  #fff !default;
+$tooltip-opacity:             1 !default;
 
 //** Tooltip arrow width
 $tooltip-arrow-width:         5px !default;

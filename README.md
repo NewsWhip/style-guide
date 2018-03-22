@@ -58,6 +58,7 @@ If you wish to import only specific parts of the style guide you first need to i
 - `bootstrap/button-groups`
 - `bootstrap/forms`
 - `bootstrap/modals`
+- `bootstrap/tooltip`
 
 ### Drop-in replacements
 

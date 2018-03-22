@@ -1,0 +1,11 @@
+.tooltip {
+    .tooltip-inner {
+        padding: 16px;
+        text-align: left;
+        border-radius: 0;
+    }
+}
+.tooltip-signal {
+    border-bottom: 1px dashed get-color("gray", 3x-light);
+    cursor: help;
+}
