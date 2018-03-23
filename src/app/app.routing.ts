@@ -14,6 +14,7 @@ import { AlertsComponent } from "./alerts/alerts.component";
 import { PaginationComponent } from "./pagination/pagination.component";
 import { LabelsComponent } from "./labels/labels.component";
 import {TablesComponent} from './tables/tables.component';
+import { TooltipsComponent } from './tooltips/tooltips.component';
 
 const appRoutes: Routes = [
     {
@@ -71,6 +72,10 @@ const appRoutes: Routes = [
     {
         path: 'tables',
         component: TablesComponent
+    },
+    {
+        path: 'tooltips',
+        component: TooltipsComponent
     }
 ];
 
