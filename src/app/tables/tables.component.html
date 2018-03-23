@@ -1,38 +1,61 @@
 <h2>Tables</h2>
-<table>
+
+<table class="table">
+    <thead>
     <tr>
-        <td>Table Cell</td>
-        <td>Table Cell</td>
-        <td>Table Cell</td>
-        <td>Table Cell</td>
-        <td>Table Cell</td>
+        <th colspan="5">
+            <h2>Heading one</h2>
+        </th>
     </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let x of [1,2,3]">
+        <td *ngFor="let i of [1,2,3,4,5]">Table Cell</td>
+    </tr>
+    </tbody>
+    <tfoot>
     <tr>
-        <td>Table Cell</td>
-        <td>Table Cell</td>
-        <td>Table Cell</td>
-        <td>Table Cell</td>
-        <td>Table Cell</td>
+        <td colspan="5">Footer</td>
     </tr>
+    </tfoot>
+</table>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th colspan="5">
+                <h2>Heading one</h2>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let x of [1,2,3]">
+            <td *ngFor="let i of [1,2,3,4,5]">Table Cell</td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="5">Footer</td>
+        </tr>
+    </tfoot>
+</table>
+
+<table class="table table-striped">
+    <thead>
     <tr>
-        <td>Table Cell</td>
-        <td>Table Cell</td>
-        <td>Table Cell</td>
-        <td>Table Cell</td>
-        <td>Table Cell</td>
+        <th colspan="5">
+            <h2>Heading one</h2>
+        </th>
     </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let x of [1,2,3]">
+        <td *ngFor="let i of [1,2,3,4,5]">Table Cell</td>
+    </tr>
+    </tbody>
+    <tfoot>
     <tr>
-        <td>Table Cell</td>
-        <td>Table Cell</td>
-        <td>Table Cell</td>
-        <td>Table Cell</td>
-        <td>Table Cell</td>
+        <td colspan="5">Footer</td>
     </tr>
-    <tr>
-        <td>Table Cell</td>
-        <td>Table Cell</td>
-        <td>Table Cell</td>
-        <td>Table Cell</td>
-        <td>Table Cell</td>
-    </tr>
+    </tfoot>
 </table>
