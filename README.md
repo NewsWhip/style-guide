@@ -59,6 +59,8 @@ If you wish to import only specific parts of the style guide you first need to i
 - `bootstrap/forms`
 - `bootstrap/modals`
 - `bootstrap/tooltip`
+- `bootstrap/table`
+- `bootstrap/pagination`
 
 ### Drop-in replacements
 

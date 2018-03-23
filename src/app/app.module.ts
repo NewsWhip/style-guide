@@ -17,6 +17,7 @@ import { ModalsComponent } from './modals/modals.component';
 import { AlertsComponent } from './alerts/alerts.component';
 import { PaginationComponent } from './pagination/pagination.component';
 import { LabelsComponent } from './labels/labels.component';
+import { TablesComponent } from './tables/tables.component';
 import { TooltipsComponent } from './tooltips/tooltips.component';
 
 @NgModule({
@@ -35,6 +36,7 @@ import { TooltipsComponent } from './tooltips/tooltips.component';
     AlertsComponent,
     PaginationComponent,
     LabelsComponent,
+    TablesComponent,
     TooltipsComponent
   ],
   imports: [

@@ -149,20 +149,20 @@ $caret-width-large:         8px !default;
 
 //== Tables
 //
-$table-cell-padding:            8px !default;
+$table-cell-padding:            8px 16px !default;
 //** Padding for cells in `.table-condensed`.
-$table-condensed-cell-padding:  5px !default;
+$table-condensed-cell-padding:  4px 8px !default;
 
 //** Default background color used for all tables.
-$table-bg:                      transparent !default;
+$table-bg:                      get-color('gray', x-light) !default;
 //** Background color used for `.table-striped`.
-$table-bg-accent:               get-color('gray', 4x-light) !default;
+$table-bg-accent:               rgba(#000, 0.08) !default;
 //** Background color used for `.table-hover`.
 $table-bg-hover:                get-color('gray', 3x-light) !default;
 $table-bg-active:               $table-bg-hover !default;
 
 //** Border color for table and cell borders.
-$table-border-color:            get-color('gray', 2x-light) !default;
+$table-border-color:            get-color('gray', light) !default;
 
 //== Buttons
 //

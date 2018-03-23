@@ -1,0 +1,40 @@
+.table {
+    font-size: 14px;
+    text-align: left;
+    line-height: 17px;
+    color: get-color('gray', 5x-light);
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.5);
+
+    > thead, > tbody, > tfoot {
+        > tr {
+            > th,
+            > td {
+                vertical-align: middle;
+            }
+        }
+    }
+
+    > thead > tr > th {
+        text-transform: uppercase;
+        font-weight: normal;
+        padding:{
+            top:16px;
+            bottom:16px;
+        }
+    }
+
+    > tfoot > tr > td {
+        border-top-width:2px;
+    }
+
+    /* Optional Border Class */
+    td.no-border {
+        &,
+        + td {
+            border:{
+                left:none;
+                right:none;
+            }
+        }
+    }
+}
