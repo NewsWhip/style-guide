@@ -3,9 +3,11 @@
 <table class="table">
     <thead>
     <tr>
-        <th colspan="5">
-            Regular Table
-        </th>
+        <th>Regular Table</th>
+        <th>Header Two <i class="fa fa-sort"></i></th>
+        <th>Header Three <i class="fa fa-sort-asc"></i></th>
+        <th>Header Four <i class="fa fa-sort-desc"></i></th>
+        <th>Header Five</th>
     </tr>
     </thead>
     <tbody>
@@ -30,7 +32,11 @@
     </thead>
     <tbody>
         <tr *ngFor="let x of [1,2,3]">
-            <td *ngFor="let i of [1,2,3,4,5]">Table Cell</td>
+            <td>Table Cell</td>
+            <td>Table Cell</td>
+            <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec consequat aliquet egestas. Morbi vel dignissim felis. Suspendisse ac justo cursus, tincidunt neque ut, pharetra ante. Vivamus id tempus nisl, sit amet ornare quam. Fusce vulputate justo dapibus nibh ultrices bibendum. Nulla augue metus, hendrerit in felis ut, cursus malesuada eros. Quisque ullamcorper rutrum cursus. Vivamus rutrum mollis tortor, in rutrum sapien tincidunt in. Praesent nec enim mollis, rhoncus velit at</td>
+            <td>Table Cell</td>
+            <td>Table Cell</td>
         </tr>
     </tbody>
     <tfoot>
@@ -55,7 +61,41 @@
     </tbody>
     <tfoot>
     <tr>
-        <td colspan="5">Footer</td>
+        <td colspan="5"><nav aria-label="Page navigation">
+            <ul class="pagination pull-right">
+                <li disabled class="disabled">
+                    <a aria-label="First">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li disabled class="disabled">
+                    <a aria-label="Previous">
+                        <span aria-hidden="true">&lsaquo;</span>
+                    </a>
+                </li>
+                <li class="active"><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+                <li><a href="#">6</a></li>
+                <li><a href="#">7</a></li>
+                <li><a href="#">8</a></li>
+                <li><a href="#">9</a></li>
+                <li><a href="#">10</a></li>
+                <li>
+                    <a href="#" aria-label="Next">
+                        <span aria-hidden="true">&rsaquo;</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" aria-label="Last">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        </td>
     </tr>
     </tfoot>
 </table>
