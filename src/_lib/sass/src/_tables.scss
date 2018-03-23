@@ -24,16 +24,12 @@
     }
 
     > tfoot > tr > td {
-        border-top:2px solid $table-border-color;
+        border-top-width:2px;
     }
 
     /* Optional Border Class */
     td.no-border {
-        border:{
-            left:none;
-            right:none;
-        }
-
+        &,
         + td {
             border:{
                 left:none;
