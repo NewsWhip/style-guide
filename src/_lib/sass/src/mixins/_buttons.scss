@@ -57,6 +57,9 @@
 }
 
 @mixin button-round($font-size, $line-height, $padding-vertical) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     padding: 0;
     font-size: $font-size * 1.2;
     font-weight: 100;
