@@ -13,7 +13,9 @@
             }
         }
     }
-
+    &.table-striped > tbody > tr > td {
+        border-top: none;
+    }
     > thead > tr > th {
         text-transform: uppercase;
         font-weight: normal;
