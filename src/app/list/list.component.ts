@@ -1,6 +1,7 @@
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 
 declare var html_beautify: any;
+declare var $: any;
 
 @Component({
     selector: 'app-list',
@@ -22,7 +23,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit() {
-        console.log(this.lg);
+        $('[data-toggle="tooltip"]').tooltip();
 
         setTimeout(() => {
             this.listGroupHTML = html_beautify(this.lg.nativeElement.outerHTML);

@@ -799,4 +799,4 @@ $dl-horizontal-offset:        $component-offset-horizontal !default;
 //** Point at which .dl-horizontal becomes horizontal
 $dl-horizontal-breakpoint:    $grid-float-breakpoint !default;
 //** Horizontal line color.
-$hr-border:                   get-color('gray', 3x-light) !default;
+$hr-border:                   get-color("gray", base) !default;
