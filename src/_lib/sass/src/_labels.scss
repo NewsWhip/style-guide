@@ -25,8 +25,8 @@
     }
     &.label-alt {
         color: get-color("alt", light);
-        background: get-color("gray", light);
-        border-color: get-color("alt", light);
+        background: get-color("gray", dark);
+        border-color: get-color("gray", dark);
     }
     &.label-new {
         color: #ffffff;
@@ -40,6 +40,7 @@
     }
 }
  .label-round {
+     padding: 0 7px;
      @include border-right-radius(9px);
      @include border-left-radius(9px);
  }
