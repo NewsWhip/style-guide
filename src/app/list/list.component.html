@@ -11,13 +11,35 @@
                     <h5 class="list-group-header">Default Menu</h5>
 
                     <a href="#" class="list-group-item">Panel 1</a>
-                    <a href="#" class="list-group-item active">Panel 2 (active)</a>
+                    <a href="#" class="list-group-item active">
+                        Panel 2 (active)
+
+                        <div class="list-group-item-actions">
+                            <a class="nw-link nw-link-inline" href="javascript:;" data-toggle="tooltip" data-placement="auto right" title="Example item icon">
+                                <i class="fa fa-info-circle"></i>
+                            </a>
+                        </div>
+                    </a>
                     <a href="#" class="list-group-item">Panel 3</a>
                     <a href="#" class="list-group-item">Panel 4 (w/ badge) <span class="label label-danger">New</span></a>
                     <a href="#" class="list-group-item">Panel 5</a>
                     <a class="list-group-item disabled">Panel 6 (disabled)</a>
                     <a href="#" class="list-group-item">Panel 7</a>
-                    <a href="#" class="list-group-item">Panel 8</a>
+                    <div style="position: relative">
+                        <a class="list-group-item" href="javascript:;">
+                            Panel 8
+                        </a>
+                        <div class="dropdown list-group-item-actions">
+                            <button aria-expanded="false" aria-haspopup="true" class="btn btn-ghost-alt dropdown-toggle" data-toggle="dropdown" id="dropdownMenu1" type="button">
+                                <i aria-hidden="true" class="fa fa-plus-circle"></i>
+                            </button>
+                            <ul aria-labelledby="dropdownMenu1" class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
+                                <li><a href="#">Action</a></li>
+                                <li><a href="#">Another action</a></li>
+                                <li><a href="#">Something else here</a></li>
+                            </ul>
+                        </div>
+                    </div>
                 </ul>
             </div>
         </div>
@@ -33,7 +55,14 @@
 
             <div class="list-container">
                 <div class="list-group list-group-primary" #lgPrimary>
-                    <h5 class="list-group-header">Main Menu</h5>
+                    <h5 class="list-group-header">
+                        Main Menu
+                        <div class="list-group-header-actions">
+                            <a class="nw-link nw-link-inline" href="javascript:;" data-toggle="tooltip" data-placement="auto right" title="Example header icon">
+                                <i class="fa fa-info-circle"></i>
+                            </a>
+                        </div>
+                    </h5>
 
                     <a class="list-group-item"
                     routerLink="/"
@@ -73,7 +102,21 @@
 
             <div class="list-container">
                 <div class="list-group" #nestedLg>
-                    <h5 class="list-group-header">Collapse / expand menu</h5>
+                    <h5 class="list-group-header">
+                        Collapse / expand menu
+                        <div class="list-group-header-actions">
+                            <div class="dropdown">
+                                <button aria-expanded="false" aria-haspopup="true" class="btn btn-ghost-alt dropdown-toggle" data-toggle="dropdown" id="dropdownMenu1" type="button">
+                                    <i aria-hidden="true" class="fa fa-plus-circle"></i>
+                                </button>
+                                <ul aria-labelledby="dropdownMenu1" class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
+                                    <li><a href="#">Action</a></li>
+                                    <li><a href="#">Another action</a></li>
+                                    <li><a href="#">Something else here</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </h5>
 
                     <a href="#" class="list-group-item">Item 1</a>
 
@@ -82,19 +125,32 @@
                         <a href="#" class="list-group-item">Item 2</a>
                     </div>
 
-                    <a href="#folder2" class="list-group-item collapsed" data-toggle="collapse" aria-expanded="false" aria-controls="folder2"><span class="caret"></span>Folder 2</a>
-
-                    <div class="collapse collapsible" id="folder2">
-                        <a href="#" class="list-group-item">Item 3</a>
-                        <a href="#" class="list-group-item">Item 4</a>
-                        <a href="#" class="list-group-item">Item 5</a>
-
-                        <a href="#folder3" class="list-group-item collapsed" data-toggle="collapse" aria-expanded="false" aria-controls="folder3"><span class="caret"></span>Folder 3</a>
-
-                        <div class="collapse collapsible" id="folder3">
-                            <a href="#" class="list-group-item">Item 6</a>
-                            <a href="#" class="list-group-item">Item 7</a>
-                            <a href="#" class="list-group-item">Item 8</a>
+                    <div style="position: relative">
+                        <a href="#folder2" class="list-group-item collapsed" data-toggle="collapse" aria-expanded="false" aria-controls="folder2"><span class="caret"></span>Folder 2</a>
+    
+                        <div class="dropdown list-group-item-actions">
+                            <button aria-expanded="false" aria-haspopup="true" class="btn btn-ghost-alt dropdown-toggle" data-toggle="dropdown" id="dropdownMenu1" type="button">
+                                <i aria-hidden="true" class="fa fa-plus-circle"></i>
+                            </button>
+                            <ul aria-labelledby="dropdownMenu1" class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
+                                <li><a href="#">Action</a></li>
+                                <li><a href="#">Another action</a></li>
+                                <li><a href="#">Something else here</a></li>
+                            </ul>
+                        </div>
+    
+                        <div class="collapse collapsible" id="folder2">
+                            <a href="#" class="list-group-item">Item 3</a>
+                            <a href="#" class="list-group-item">Item 4</a>
+                            <a href="#" class="list-group-item">Item 5</a>
+    
+                            <a href="#folder3" class="list-group-item collapsed" data-toggle="collapse" aria-expanded="false" aria-controls="folder3"><span class="caret"></span>Folder 3</a>
+    
+                            <div class="collapse collapsible" id="folder3">
+                                <a href="#" class="list-group-item">Item 6</a>
+                                <a href="#" class="list-group-item">Item 7</a>
+                                <a href="#" class="list-group-item">Item 8</a>
+                            </div>
                         </div>
                     </div>
                     <a href="#" class="list-group-item">
