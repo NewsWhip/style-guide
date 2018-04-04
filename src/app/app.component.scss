@@ -1,3 +1,5 @@
+$sidebar-width: 230px;
+
 body {
     margin: 0;
     padding: 0 0 90px 0;
@@ -23,7 +25,7 @@ app-root {
 
     .side-nav-menu {
         position: fixed;
-        width: 200px;
+        width: $sidebar-width;
         height: 100vh;
         background: get-color("gray", dark);
         overflow-y: scroll;
@@ -37,8 +39,8 @@ app-root {
     .app-body-container {
         flex: 1;
         padding: 20px;
-        margin-left: 200px;
-        width: calc(100% - 200px);
+        margin-left: $sidebar-width;
+        width: calc(100% - $sidebar-width);
     }
 
 }

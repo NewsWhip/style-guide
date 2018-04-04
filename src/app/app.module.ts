@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
 import { AppComponent } from './app.component';
 import { ButtonsComponent } from './buttons/buttons.component';
@@ -43,6 +44,7 @@ import { TooltipsComponent } from './tooltips/tooltips.component';
     BrowserModule,
     FormsModule,
     routing,
+    TooltipModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
