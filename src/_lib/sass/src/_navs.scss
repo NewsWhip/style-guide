@@ -26,7 +26,6 @@
             &:hover,
             &:focus {
                 text-decoration: none;
-                background-color: $nav-link-hover-bg;
                 color: #ffffff;
             }
         }
@@ -78,20 +77,26 @@
 
 // Give the tabs something to sit on
 .nav-tabs {
-    border-bottom: 1px solid $nav-tabs-border-color;
     > li {
         float: left;
         // Make the list-items overlay the bottom border
-        margin-bottom: -1px;
+        // margin-bottom: -1px;
 
         // Actual tabs (as links)
         > a {
-            margin-right: 2px;
+            margin: 0 8px;
+            padding-left: 0;
+            padding-right: 0;
             line-height: $line-height-base;
-            border: 1px solid transparent;
-            border-radius: $border-radius-base $border-radius-base 0 0;
+            font-size: 16px;
+            color: get-color("gray", 2x-light);
+            border-bottom-width: 3px;
+            border-bottom-style: solid; 
+            border-bottom-color: transparent;
+            transition: border-bottom-color 0.3s ease-in-out;
+
             &:hover {
-                border-color: $nav-tabs-link-hover-border-color $nav-tabs-link-hover-border-color $nav-tabs-border-color;
+                
             }
         }
 
@@ -101,9 +106,7 @@
             &:hover,
             &:focus {
                 color: $nav-tabs-active-link-hover-color;
-                background-color: $nav-tabs-active-link-hover-bg;
-                border: 1px solid $nav-tabs-active-link-hover-border-color;
-                border-bottom-color: transparent;
+                border-bottom-color: get-color("primary", dark);
                 cursor: default;
             }
         }
@@ -127,6 +130,11 @@
             border-radius: $nav-pills-border-radius;
             background-color: get-color("gray", base);
             text-decoration: none;
+
+            &:hover,
+            &:focus, {
+                background-color: $nav-link-hover-bg;
+            }
         }
         &:not(:first-child):not(:last-child) {
             > a {

@@ -3,39 +3,94 @@
     text-align: left;
     line-height: 17px;
     color: get-color('gray', 5x-light);
-    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.5);
+    margin-bottom: 0;
 
-    > thead, > tbody, > tfoot {
+    &.table-striped > tbody > tr > td {
+        border-top: none;
+    }
+    &.table-skeleton {
+        background: transparent;
+
+        > thead, 
+        > tbody, 
+        > tfoot {
+            > tr {
+                > th,
+                > td {
+                    border-color: get-color("gray", x-light);
+                    border-bottom-width: 1px;
+                    border-bottom-style: solid; 
+
+                    &:first-child {
+                        border-left: none;
+                    }
+                    &:last-child {
+                        border-right: none;
+                    }
+                }
+            }
+        }
+        > tbody {
+            > tr > td {
+                border-left: 1px solid get-color("gray", x-light);
+                border-right: 1px solid get-color("gray", x-light);
+            }
+        }
+        > thead, 
+        > tfoot {
+            tr {
+                > th,
+                > td {
+                    border-width: 2px;
+                    border-left: none;
+                    border-right: none;
+                }
+            }
+        }
+        > tfoot {
+            tr {
+                > th,
+                > td {
+                    border-bottom: none;
+                }
+            }
+        }
+    }
+    > thead, 
+    > tbody, 
+    > tfoot {
         > tr {
             > th,
             > td {
                 vertical-align: middle;
             }
+            &.no-border {
+                > th,
+                > td {
+                    border-left: none;
+                    border-right: none;
+                }
+            }
         }
-    }
-    &.table-striped > tbody > tr > td {
-        border-top: none;
     }
     > thead > tr > th {
         text-transform: uppercase;
         font-weight: normal;
-        padding:{
-            top:16px;
-            bottom:16px;
+        padding: {
+            top: 16px;
+            bottom: 16px;
         }
     }
-
     > tfoot > tr > td {
-        border-top-width:2px;
+        border-top-width: 2px;
     }
-
     /* Optional Border Class */
     td.no-border {
         &,
         + td {
-            border:{
-                left:none;
-                right:none;
+            border: {
+                left: none !important;
+                right: none !important;
             }
         }
     }

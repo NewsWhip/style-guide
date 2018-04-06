@@ -123,14 +123,14 @@ $headings-color:          inherit !default;
 
 //== Common
 //
-$padding-base-vertical:     6px !default;
-$padding-base-horizontal:   12px !default;
-$padding-large-vertical:    6px !default;
-$padding-large-horizontal:  55px !default;
-$padding-small-vertical:    5px !default;
+$padding-xs-vertical:       4px !default;
+$padding-xs-horizontal:     8px !default;
+$padding-small-vertical:    8px !default;
 $padding-small-horizontal:  32px !default;
-$padding-xs-vertical:       2px !default;
-$padding-xs-horizontal:     24px !default;
+$padding-base-vertical:     16px !default;
+$padding-base-horizontal:   12px !default;
+$padding-large-vertical:    24px !default;
+$padding-large-horizontal:  55px !default;
 
 $border-radius-base:        3px !default;
 $border-radius-small:       3px !default;
@@ -379,7 +379,7 @@ $nav-tabs-border-color:                     #ddd !default;
 $nav-tabs-link-hover-border-color:          get-color('gray', 3x-light) !default;
 
 $nav-tabs-active-link-hover-bg:             $body-bg !default;
-$nav-tabs-active-link-hover-color:          get-color('gray', light) !default;
+$nav-tabs-active-link-hover-color:          white !default;
 $nav-tabs-active-link-hover-border-color:   #ddd !default;
 
 $nav-tabs-justified-link-border-color:            #ddd !default;
@@ -491,7 +491,7 @@ $popover-border-color:                rgba(0,0,0,.2) !default;
 $popover-fallback-border-color:       #ccc !default;
 
 //** Popover title background color
-$popover-title-bg:                    darken($popover-bg, 3%) !default;
+$popover-title-bg:                    get-color("gray", base) !default;
 
 //** Popover arrow width
 $popover-arrow-width:                 10px !default;
@@ -785,7 +785,7 @@ $text-muted:                  get-color('gray', x-light) !default;
 //** Abbreviations and acronyms border color
 $abbr-border-color:           get-color('gray', x-light) !default;
 //** Headings small color
-$headings-small-color:        get-color('gray', x-light) !default;
+$headings-small-color:        get-color('gray', 3x-light) !default;
 //** Blockquote small color
 $blockquote-small-color:      get-color('gray', x-light) !default;
 //** Blockquote font size

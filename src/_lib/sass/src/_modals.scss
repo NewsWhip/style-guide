@@ -1,4 +1,7 @@
 .modal {
+    // Revert Bootstraps padding-right: 17px when there is a scrollbar
+    padding-right: 0 !important;
+
     .modal-header {
         border: none;
         background-color: get-color("gray", x-light);
@@ -36,6 +39,10 @@
     }
     &.in .modal-dialog { transform: translate3d(0,0,0); }
 }
+// Revert Bootstraps padding-right: 17px when there is a scrollbar
+body.modal-open {
+    padding-right: 0 !important;
+}
 .modal-media {
     .modal-body {
         padding: 2px;
@@ -55,8 +62,10 @@
         height: 100vh;
         display: flex;
         flex-direction: column;
+        @include scrollbars();
     }
     .modal-body {
         flex: 1;
+        overflow-y: auto;
     }
 }

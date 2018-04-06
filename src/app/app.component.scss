@@ -18,7 +18,7 @@ app-root {
     height: 100%;
 
     .side-nav {
-        @include scrollbars(.5em, get-color("gray", 2x-light), get-color("gray", 2x-light));
+        @include scrollbars();
     }
 
     .side-nav-menu {

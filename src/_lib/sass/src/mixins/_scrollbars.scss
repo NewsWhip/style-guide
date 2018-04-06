@@ -1,4 +1,4 @@
-@mixin scrollbars($size: .5em, $foreground-color: white, $background-color: white) {
+@mixin scrollbars($size: .5em, $foreground-color: get-color("gray", 2x-light), $background-color: get-color("gray", 2x-light)) {
     // For Google Chrome
     ::-webkit-scrollbar {
         width:  $size;
