@@ -35,6 +35,9 @@
         padding: 0;
 	}
 }
+.btn-group-responsive-xl {
+    height: ceil($font-size-xl * $line-height-xl) + ($padding-xl-vertical * 2) + 2;
+}
 .btn-group-responsive-lg {
     height: ceil($font-size-large * $line-height-large) + ($padding-large-vertical * 2) + 2;
 }
@@ -43,7 +46,4 @@
 }
 .btn-group-responsive-sm {
     height: ceil($font-size-small * $line-height-small) + ($padding-small-vertical * 2) + 2;
-}
-.btn-group-responsive-xs {
-    height: ceil($font-size-xs * $line-height-xs) + ($padding-xs-vertical * 2) + 2;
 }

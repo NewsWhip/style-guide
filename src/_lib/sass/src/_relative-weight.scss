@@ -14,14 +14,6 @@
         font-size: $font-size-base;
         line-height: $line-height-base;
     }
-    &.rel-weight-lg {
-        .rel-weight-bar {
-            padding-top: $padding-large-vertical;
-            padding-bottom: $padding-large-vertical;
-            font-size: $font-size-large;
-            line-height: $line-height-large;
-        }
-    }
     &.rel-weight-sm {
         .rel-weight-bar {
             padding-top: $padding-small-vertical;
@@ -30,12 +22,12 @@
             line-height: $line-height-small;
         }
     }
-    &.rel-weight-xs {
+    &.rel-weight-lg {
         .rel-weight-bar {
-            padding-top: $padding-xs-vertical;
-            padding-bottom: $padding-xs-vertical;
-            font-size: $font-size-xs;
-            line-height: $line-height-xs;
+            padding-top: $padding-large-vertical;
+            padding-bottom: $padding-large-vertical;
+            font-size: $font-size-large;
+            line-height: $line-height-large;
         }
     }
 }

@@ -21,8 +21,8 @@
             display: block;
             padding: $nav-link-padding;
             color: get-color("gray", 4x-light);
-            font-size: $font-size-small;
-            line-height: $line-height-small;
+            font-size: 14px;
+            line-height: 1;
             &:hover,
             &:focus {
                 text-decoration: none;
