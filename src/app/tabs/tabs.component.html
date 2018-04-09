@@ -1,6 +1,8 @@
 <div>
     <h2>Tabs</h2>
 
+    <h3>Nav Pills</h3>
+
     <div>
         <ul class="nav nav-pills">
             <li role="presentation" class="active"><a href="#">Tab 1 active</a></li>
@@ -10,4 +12,13 @@
         </ul>
     </div>
 
+    <h3>Nav Tabs</h3>
+
+    <div>
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" *ngFor="let tab of navTabs" [class.active]="selectedTab === tab" (click)="selectedTab = tab">
+                <a href="javascript:;" [attr.aria-controls]="tab" role="tab">{{tab}}</a>
+            </li>
+        </ul>    
+    </div>
 </div>

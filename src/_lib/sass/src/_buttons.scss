@@ -124,6 +124,13 @@ a.btn {
 // Button Sizes
 // --------------------------------------------------
 
+.btn-xl {
+    @include button-size($padding-xl-vertical, $padding-xl-horizontal, $font-size-xl, $line-height-xl, $btn-border-radius-xl);
+
+    &.btn-round {
+        @include button-round($font-size-xl, $line-height-xl, $padding-xl-vertical);
+    }
+}
 .btn-lg {
     @include button-size($padding-large-vertical, $padding-large-horizontal, $font-size-large, $line-height-large, $btn-border-radius-large);
 
@@ -143,13 +150,6 @@ a.btn {
 
     &.btn-round {
         @include button-round($font-size-small, $line-height-small, $padding-small-vertical);
-    }
-}
-.btn-xs {
-    @include button-size($padding-xs-vertical, $padding-xs-horizontal, $font-size-xs, $line-height-xs, $btn-border-radius-xs);
-
-    &.btn-round {
-        @include button-round($font-size-xs, $line-height-xs, $padding-xs-vertical);
     }
 }
 .btn-slim {

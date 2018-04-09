@@ -1,0 +1,45 @@
+<div>
+  <h2>Relative Weighting</h2>
+
+  <p>Used in situations where we want to display the score / importance / relevance of one entity in comparison to another</p>
+
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="rel-weight" *ngFor="let score of scores">
+        <div class="rel-weight-bar" [style.width]="getWeight(score) + '%'">
+          {{score}}
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-6"></div>
+  </div>
+
+  <h3>Alternative sizes</h3>
+
+  <div class="row">
+    <div class="col-sm-6">
+      <h4><code>.rel-weight</code></h4>
+      <div class="rel-weight">
+        <div class="rel-weight-bar" style="width: 33%">
+          33
+        </div>
+      </div>
+
+      <h4><code>.rel-weight-sm</code></h4>
+      <div class="rel-weight rel-weight-sm">
+        <div class="rel-weight-bar" style="width: 52%">
+          52
+        </div>
+      </div>
+
+      <h4><code>.rel-weight-lg</code></h4>
+      <div class="rel-weight rel-weight-lg">
+        <div class="rel-weight-bar" style="width: 13%">
+          13
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6"></div>
+  </div>
+</div>

@@ -38,6 +38,12 @@
         background: get-color("alt");
         border-color: get-color("alt");
     }
+    &.label-op {
+        text-transform: initial;
+        color: #ffffff;
+        background: get-color("secondary", base);
+        border-color: get-color("secondary", base);
+    }
 }
  .label-round {
      padding: 0 7px;

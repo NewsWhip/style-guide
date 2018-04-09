@@ -15,6 +15,7 @@ import { PaginationComponent } from "./pagination/pagination.component";
 import { LabelsComponent } from "./labels/labels.component";
 import { TablesComponent } from './tables/tables.component';
 import { TooltipsComponent } from './tooltips/tooltips.component';
+import { RelativeWeightComponent } from "./relative-weight/relative-weight.component";
 
 const appRoutes: Routes = [
     {
@@ -76,6 +77,10 @@ const appRoutes: Routes = [
     {
         path: 'tooltips',
         component: TooltipsComponent
+    },
+    {
+        path: 'relative-weighting',
+        component: RelativeWeightComponent
     }
 ];
 

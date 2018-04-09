@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ButtonsComponent implements OnInit {
 
-    public sizes = ['xs','sm','md','lg'];
+    public sizes = ['sm','md','lg'];
     public btnNames = ['primary', 'secondary', 'danger', 'ghost', 'alt'];
     public defaultBtnSize: string = "lg";
     public btnGroupSize: string = '50%';

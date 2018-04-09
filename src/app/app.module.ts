@@ -19,6 +19,7 @@ import { PaginationComponent } from './pagination/pagination.component';
 import { LabelsComponent } from './labels/labels.component';
 import { TablesComponent } from './tables/tables.component';
 import { TooltipsComponent } from './tooltips/tooltips.component';
+import { RelativeWeightComponent } from './relative-weight/relative-weight.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { TooltipsComponent } from './tooltips/tooltips.component';
     PaginationComponent,
     LabelsComponent,
     TablesComponent,
-    TooltipsComponent
+    TooltipsComponent,
+    RelativeWeightComponent
   ],
   imports: [
     BrowserModule,

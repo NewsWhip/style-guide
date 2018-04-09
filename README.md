@@ -52,6 +52,8 @@ If you wish to import only specific parts of the style guide you first need to i
 ### New
 
 - `links`
+- `relative-weight`
+- `shadows`
 
 ### Overrides
 

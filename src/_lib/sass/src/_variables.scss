@@ -95,10 +95,10 @@ $font-family-serif:       Georgia, "Times New Roman", Times, serif !default;
 $font-family-monospace:   Menlo, Monaco, Consolas, "Courier New", monospace !default;
 $font-family-base:        $font-family-sans-serif !default;
 
+$font-size-small:         12px !default;
 $font-size-base:          12px !default;
 $font-size-large:         16px;
-$font-size-small:         14px !default;
-$font-size-xs:            11px !default;
+$font-size-xl:            16px !default;
 
 $font-size-h1:            floor(($font-size-base * 2.6)) !default; // ~36px
 $font-size-h2:            floor(($font-size-base * 2.15)) !default; // ~30px
@@ -108,10 +108,10 @@ $font-size-h5:            $font-size-base !default;
 $font-size-h6:            ceil(($font-size-base * 0.85)) !default; // ~12px
 
 //** Unit-less `line-height` for use in components like buttons.
-$line-height-base:        1.5 !default; // 20/14
-$line-height-large:       1.66666 !default; // extra decimals for Win 8.1 Chrome
-$line-height-small:       1.45 !default;
-$line-height-xs:          1.15 !default;
+$line-height-small:       1.2 !default;
+$line-height-base:        1.2 !default;
+$line-height-large:       1.15 !default; // extra decimals for Win 8.1 Chrome
+$line-height-xl:          1.2 !default;
 //** Computed "line-height" (`font-size` * `line-height`) for use with `margin`, `padding`, etc.
 $line-height-computed:    floor(($font-size-base * $line-height-base)) !default; // ~20px
 
@@ -123,18 +123,19 @@ $headings-color:          inherit !default;
 
 //== Common
 //
-$padding-base-vertical:     6px !default;
-$padding-base-horizontal:   12px !default;
-$padding-large-vertical:    6px !default;
-$padding-large-horizontal:  55px !default;
-$padding-small-vertical:    5px !default;
-$padding-small-horizontal:  32px !default;
-$padding-xs-vertical:       2px !default;
-$padding-xs-horizontal:     24px !default;
+$padding-small-vertical:    4px !default;
+$padding-small-horizontal:  8px !default;
+$padding-base-vertical:     8px !default;
+$padding-base-horizontal:   8px !default;
+$padding-large-vertical:    10px !default;
+$padding-large-horizontal:  24px !default;
+$padding-xl-vertical:       24px !default;
+$padding-xl-horizontal:     32px !default;
 
 $border-radius-base:        3px !default;
 $border-radius-small:       3px !default;
 $border-radius-large:       3px !default;
+$border-radius-xl:          3px !default;
 $border-radius-xs:          3px !default;
 
 //** Global color for active items (e.g., navs or dropdowns).
@@ -168,9 +169,9 @@ $table-border-color:            get-color('gray', light) !default;
 //
 $btn-font-weight:                normal;
 $btn-border-radius-base:         $border-radius-base !default;
-$btn-border-radius-large:        $border-radius-large !default;
 $btn-border-radius-small:        $border-radius-small !default;
-$btn-border-radius-xs:           $border-radius-xs !default;
+$btn-border-radius-large:        $border-radius-large !default;
+$btn-border-radius-xl:           $border-radius-xl !default;
 
 //== Forms
 //
@@ -186,7 +187,7 @@ $input-border-radius-small:      3px !default;
 $input-border-focus:             #66afe9 !default;
 $input-color-placeholder:        get-color("gray", 3x-light) !default;
 $input-height-base:              ($line-height-computed + ($padding-base-vertical * 2) + 2) !default;
-$input-height-large:             (ceil($font-size-large * $line-height-large) + ($padding-large-vertical) + 7) !default;
+$input-height-large:             (ceil($font-size-large * $line-height-large) + ($padding-large-vertical) + 11) !default;
 $input-height-small:             (floor($font-size-small * $line-height-small) + ($padding-small-vertical * 2) + 2) !default;
 $form-group-margin-bottom:       15px !default;
 $legend-color:                   get-color("gray") !default;
@@ -367,7 +368,7 @@ $navbar-inverse-toggle-border-color:        #333 !default;
 
 //=== Shared nav styles
 // Add plus 1 to each paddong because there are no border on nav pills
-$nav-link-padding:                          $padding-small-vertical + 1 $padding-small-horizontal + 1 !default;
+$nav-link-padding:                          $padding-base-vertical + 1 $padding-base-horizontal + 1 !default;
 $nav-link-hover-bg:                         get-color("gray", dark) !default;
 
 $nav-disabled-link-color:                   rgba(get-color("gray", 4x-light), 0.5) !default;
@@ -379,7 +380,7 @@ $nav-tabs-border-color:                     #ddd !default;
 $nav-tabs-link-hover-border-color:          get-color('gray', 3x-light) !default;
 
 $nav-tabs-active-link-hover-bg:             $body-bg !default;
-$nav-tabs-active-link-hover-color:          get-color('gray', light) !default;
+$nav-tabs-active-link-hover-color:          white !default;
 $nav-tabs-active-link-hover-border-color:   #ddd !default;
 
 $nav-tabs-justified-link-border-color:            #ddd !default;
@@ -491,7 +492,7 @@ $popover-border-color:                rgba(0,0,0,.2) !default;
 $popover-fallback-border-color:       #ccc !default;
 
 //** Popover title background color
-$popover-title-bg:                    darken($popover-bg, 3%) !default;
+$popover-title-bg:                    get-color("gray", base) !default;
 
 //** Popover arrow width
 $popover-arrow-width:                 10px !default;
@@ -785,7 +786,7 @@ $text-muted:                  get-color('gray', x-light) !default;
 //** Abbreviations and acronyms border color
 $abbr-border-color:           get-color('gray', x-light) !default;
 //** Headings small color
-$headings-small-color:        get-color('gray', x-light) !default;
+$headings-small-color:        get-color('gray', 3x-light) !default;
 //** Blockquote small color
 $blockquote-small-color:      get-color('gray', x-light) !default;
 //** Blockquote font size
