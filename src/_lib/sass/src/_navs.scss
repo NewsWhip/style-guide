@@ -84,7 +84,7 @@
 
         // Actual tabs (as links)
         > a {
-            margin: 0 8px;
+            margin: 0 16px;
             padding-left: 0;
             padding-right: 0;
             line-height: $line-height-base;
@@ -94,10 +94,12 @@
             border-bottom-style: solid; 
             border-bottom-color: transparent;
             transition: border-bottom-color 0.3s ease-in-out;
-
-            &:hover {
-                
-            }
+        }
+        &:first-child > a {
+            margin-left: 0;
+        }
+        &:last-child > a {
+            margin-right: 0;
         }
 
         // Active state, and its :hover to override normal :hover
