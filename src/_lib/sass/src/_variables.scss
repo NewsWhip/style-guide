@@ -81,6 +81,7 @@ $brand-danger:  get-color("tertiary") !default;
 //== Scaffolding
 //
 //## Settings for some of the most global styles.
+// $body-bg:               #fff !default;
 $body-bg:               get-color('gray', light) !default;
 $text-color:            #ffffff !default;
 $link-color:            #ffffff !default;
@@ -178,13 +179,13 @@ $btn-border-radius-xl:           $border-radius-xl !default;
 $input-bg:                       #ffffff !default;
 $input-bg-disabled:              #ffffff !default;
 $input-color:                    get-color("gray") !default;
-$input-border:                   #ffffff !default;
+$input-border:                   get-color("gray", 5x-light) !default;
 // TODO: Rename `$input-border-radius` to `$input-border-radius-base` in v4
 // This has no effect on `<select>`s in some browsers, due to the limited stylability of `<select>`s in CSS.
 $input-border-radius:            3px !default;
 $input-border-radius-large:      3px !default;
 $input-border-radius-small:      3px !default;
-$input-border-focus:             #66afe9 !default;
+$input-border-focus:             get-color("primary", light) !default;
 $input-color-placeholder:        get-color("gray", 3x-light) !default;
 $input-height-base:              ($line-height-computed + ($padding-base-vertical * 2) + 2) !default;
 $input-height-large:             (ceil($font-size-large * $line-height-large) + ($padding-large-vertical) + 11) !default;
@@ -455,7 +456,7 @@ $state-warning-text:             get-color("gray", x-light) !default;
 $state-warning-bg:               get-color("alt", light) !default;
 $state-warning-border:           get-color("alt", light) !default;
 
-$state-danger-text:              #ffffff !default;
+$state-danger-text:              get-color("tertiary", x-light) !default;
 $state-danger-bg:                get-color('tertiary', base) !default;
 $state-danger-border:            get-color('tertiary', base) !default;
 

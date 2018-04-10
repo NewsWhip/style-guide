@@ -1,0 +1,14 @@
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+.help-block {
+    display: none;
+}
+.has-error {
+    .help-block {
+        display: block;
+    }
+}

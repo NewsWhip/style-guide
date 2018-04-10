@@ -1,25 +1,45 @@
 <div>
-    <h2>Forms</h2>
+    <div class="row">
+        <div class="header col-sm-6">
+            <h2>Forms</h2>
+            <div class="switch">
+                <input type="checkbox" id="error-switch" [(ngModel)]="showErrors">
+                <label for="error-switch" class="switch-toggle">
+                    <span class="on-off"></span>
+                </label>
+                <label for="error-switch">
+                    Show Error State
+                </label>
+            </div>
+        </div>
+    </div>
 
     <div class="row">
         <div class="col-sm-6">
             <form>
-                <div class="form-group">
+                <div class="form-group" [class.has-error]="showErrors">
                     <label for="emailAddress1">Default email address</label>
                     <input type="email" class="form-control" id="emailAddress1" placeholder="Email">
+                    <span class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>
                 </div>
 
-                <div class="form-group form-group-lg">
+                <div class="form-group form-group-lg" [class.has-error]="showErrors">
                     <label for="emailAddress2">Large email address (disabled)</label>
                     <input type="email" class="form-control" id="emailAddress2" placeholder="Email" disabled>
+                    <span class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>
+                    <span class="help-block">
+                        A second block of help text that breaks onto a new line and may extend beyond one line.
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam ab sint corrupti, ullam obcaecati iste quo quod nobis deleniti, aspernatur temporibus consectetur veritatis praesentium corporis reiciendis libero laboriosam doloremque soluta!
+                    </span>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" [class.has-error]="showErrors">
                     <label for="textarea">Textarea</label>
                     <textarea class="form-control" name="textarea" id="textarea" rows="10" placeholder="Textarea"></textarea>
+                    <span class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" [class.has-error]="showErrors">
                     <label for="options">Default select input</label>
                     <select class="form-control" name="options" id="options">
                         <option>Selection number 1</option>
@@ -43,9 +63,10 @@
                             <option>Selection number 3.3</option>
                         </optgroup>
                     </select>
+                    <span class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>
                 </div>
 
-                <div class="form-group form-group-lg">
+                <div class="form-group form-group-lg" [class.has-error]="showErrors">
                     <label for="options">Large select input</label>
                     <select class="form-control" name="options" id="options">
                         <option>Selection number 1</option>
@@ -69,9 +90,10 @@
                             <option>Selection number 3.3</option>
                         </optgroup>
                     </select>
+                    <span class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" [class.has-error]="showErrors">
                     <div class="row">
                         <div class="col-sm-4">
                             <div class="checkbox">
@@ -80,6 +102,7 @@
                                     Checkbox
                                 </label>
                             </div>
+                            
                         </div>
                         <div class="col-sm-4">
                             <div class="checkbox">
@@ -100,7 +123,7 @@
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" [class.has-error]="showErrors">
                     <div class="row">
                         <div class="col-sm-4">
                             <div class="radio">
@@ -179,5 +202,27 @@
                 </div>
             </form>
         </div>
+
+        <!-- <div class="col-sm-6">
+            <form>
+                <div class="form-group has-error">
+                    <label for="emailAddress1">Default input with error</label>
+                    <input type="email" class="form-control" id="emailAddress1" placeholder="Email">
+                    <span class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>
+                </div>
+
+                <div class="form-group form-group-lg has-error">
+                    <label for="emailAddress2">Large input with error</label>
+                    <input type="email" class="form-control" id="emailAddress2" placeholder="Email">
+                    <span class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>
+                </div>
+
+                <div class="form-group has-error">
+                    <label for="textarea">Textarea</label>
+                    <textarea class="form-control" name="textarea" id="textarea" rows="10" placeholder="Textarea"></textarea>
+                    <span class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>
+                </div>
+            </form>
+        </div> -->
     </div>
 </div>
