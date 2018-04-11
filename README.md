@@ -54,15 +54,16 @@ If you wish to import only specific parts of the style guide you first need to i
 - `links`
 - `relative-weight`
 - `shadows`
+- `toasts`
 
 ### Overrides
 
 - `bootstrap/button-groups`
-- `bootstrap/forms`
 - `bootstrap/modals`
 - `bootstrap/tooltip`
 - `bootstrap/table`
 - `bootstrap/pagination`
+- `bootstrap/type`
 
 ### Drop-in replacements
 
@@ -73,6 +74,8 @@ If you wish to import only specific parts of the style guide you first need to i
 - `bootstrap/list-group`
 - `bootstrap/navs`
 - `bootstrap/scaffolding`
+- `bootstrap/popovers`
+- `bootstrap/forms`
 
 ---
 

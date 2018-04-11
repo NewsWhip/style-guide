@@ -134,6 +134,10 @@ MIT
 MIT
 MIT
 
+@angular/animations@5.2.9
+MIT
+MIT
+
 @angular/platform-browser-dynamic@5.2.9
 MIT
 MIT

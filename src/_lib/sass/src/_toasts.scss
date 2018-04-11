@@ -1,0 +1,45 @@
+.toasts-container {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: $zindex-toast;
+}
+.toast {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    position: relative;
+    margin: 8px auto;
+    padding: 8px 24px;
+    max-width: 500px;
+    background: get-color("gray", light);
+    color: #ffffff;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 600;
+
+    &.toast-success {
+        background: get-color("secondary", base);
+    }
+    &.toast-error {
+        background: get-color("tertiary", base);
+    }
+    .toast-message {
+        flex: 1;
+        align-self: center;
+        margin: 0;
+        line-height: 19px;
+    }
+    .toast-icon {
+        font-size: 24px;
+        margin-right: 16px;
+    }
+    .close {
+        position: relative;
+        // Negate the unstyled button padding
+        right: -6px;
+    }
+}
