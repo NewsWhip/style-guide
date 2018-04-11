@@ -607,10 +607,10 @@ input[type="checkbox"] {
         margin-bottom: 0;
     }
     input {
+        position: absolute;
         width: 0;
         height: 0;
-        position: absolute;
-        left: -99999999px;
+        opacity: 0;
         
         &:checked {
             ~ label.switch-toggle {
