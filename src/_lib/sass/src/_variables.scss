@@ -225,6 +225,8 @@ $zindex-tooltip:           1070 !default;
 $zindex-navbar-fixed:      1030 !default;
 $zindex-modal-background:  1040 !default;
 $zindex-modal:             1050 !default;
+// Position the toast above the modal, but below popovers and tooltips
+$zindex-toast:             1055 !default;
 
 
 //== Media queries breakpoints

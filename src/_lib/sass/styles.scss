@@ -71,7 +71,6 @@
 //
 // Overrides
 @import "src/button-groups";
-@import "src/forms";
 @import "src/modals";
 @import "src/tooltip";
 @import "src/tables";
@@ -87,8 +86,10 @@
 @import "src/navs";
 @import "src/scaffolding";
 @import "src/popovers";
+@import "src/forms";
 
 // Additions
 @import "src/links";
 @import "src/relative-weight";
 @import "src/shadows";
+@import "src/toasts";
