@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
@@ -20,6 +21,7 @@ import { LabelsComponent } from './labels/labels.component';
 import { TablesComponent } from './tables/tables.component';
 import { TooltipsComponent } from './tooltips/tooltips.component';
 import { RelativeWeightComponent } from './relative-weight/relative-weight.component';
+import { ToastsComponent } from './toasts/toasts.component';
 
 @NgModule({
   declarations: [
@@ -39,12 +41,14 @@ import { RelativeWeightComponent } from './relative-weight/relative-weight.compo
     LabelsComponent,
     TablesComponent,
     TooltipsComponent,
-    RelativeWeightComponent
+    RelativeWeightComponent,
+    ToastsComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     routing,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -16,6 +16,7 @@ import { LabelsComponent } from "./labels/labels.component";
 import { TablesComponent } from './tables/tables.component';
 import { TooltipsComponent } from './tooltips/tooltips.component';
 import { RelativeWeightComponent } from "./relative-weight/relative-weight.component";
+import { ToastsComponent } from "./toasts/toasts.component";
 
 const appRoutes: Routes = [
     {
@@ -81,6 +82,10 @@ const appRoutes: Routes = [
     {
         path: 'relative-weighting',
         component: RelativeWeightComponent
+    },
+    {
+        path: 'toasts',
+        component: ToastsComponent
     }
 ];
 
