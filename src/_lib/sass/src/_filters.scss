@@ -1,0 +1,57 @@
+.filter {
+    display: inline-flex;
+    background: get-color("primary", 2x-light);
+    height: $input-height-base;
+    line-height: $input-height-base;
+    padding: 0 $padding-base-horizontal;
+    margin-right: 4px;
+    margin-bottom: 4px;
+    font-weight: 600;
+    font-size: $font-size-base;
+    color: get-color("gray", base);
+    @include border-left-radius($input-height-base / 2);
+    @include border-right-radius($input-height-base / 2);
+
+    .close {
+        color: get-color("gray", x-light);
+        font-size: 160%;
+        // Negate the 6px padding on the close button
+        position: relative;
+        right: -6px;
+        margin-left: -6px;
+
+        &:hover {
+            color: get-color("gray", base);
+        }
+    }
+    &.filter-sm {
+        padding: 0 $padding-small-horizontal;
+        font-size: $font-size-small;
+        height: $input-height-small;
+        line-height: $input-height-small;
+        @include border-left-radius($input-height-small / 2);
+        @include border-right-radius($input-height-small / 2);
+        
+    }
+    &.filter-lg {
+        padding: 0 $padding-large-horizontal;
+        font-size: $font-size-large;
+        height: $input-height-large;
+        line-height: $input-height-large;
+        @include border-left-radius($input-height-large / 2);
+        @include border-right-radius($input-height-large / 2);
+    }
+    &.disabled, 
+    .close:disabled {
+        opacity: 0.5;
+        cursor: $cursor-disabled;
+    }
+    &.filter-excluded {
+        .filter-label {
+            text-decoration: line-through;
+        }
+    }
+    &:last-child {
+        margin-right: 0;
+    }
+}

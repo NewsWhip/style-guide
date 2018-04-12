@@ -17,6 +17,7 @@ import { TablesComponent } from './tables/tables.component';
 import { TooltipsComponent } from './tooltips/tooltips.component';
 import { RelativeWeightComponent } from "./relative-weight/relative-weight.component";
 import { ToastsComponent } from "./toasts/toasts.component";
+import { FilterComponent } from "./filter/filter.component";
 
 const appRoutes: Routes = [
     {
@@ -86,6 +87,10 @@ const appRoutes: Routes = [
     {
         path: 'toasts',
         component: ToastsComponent
+    },
+    {
+        path: 'filters',
+        component: FilterComponent
     }
 ];
 

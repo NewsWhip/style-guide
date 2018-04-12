@@ -55,6 +55,7 @@ If you wish to import only specific parts of the style guide you first need to i
 - `relative-weight`
 - `shadows`
 - `toasts`
+- `filters`
 
 ### Overrides
 

@@ -22,6 +22,7 @@ import { TablesComponent } from './tables/tables.component';
 import { TooltipsComponent } from './tooltips/tooltips.component';
 import { RelativeWeightComponent } from './relative-weight/relative-weight.component';
 import { ToastsComponent } from './toasts/toasts.component';
+import { FilterComponent } from './filter/filter.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { ToastsComponent } from './toasts/toasts.component';
     TablesComponent,
     TooltipsComponent,
     RelativeWeightComponent,
-    ToastsComponent
+    ToastsComponent,
+    FilterComponent
   ],
   imports: [
     BrowserModule,
