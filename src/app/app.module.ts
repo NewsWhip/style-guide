@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { NwPickerModule } from '../_lib/modules/picker/picker.module';
 
 import { AppComponent } from './app.component';
 import { ButtonsComponent } from './buttons/buttons.component';
@@ -50,7 +51,8 @@ import { TypographyComponent } from './typography/typography.component';
     BrowserModule,
     FormsModule,
     routing,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    NwPickerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

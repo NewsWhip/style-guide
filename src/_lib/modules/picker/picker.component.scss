@@ -1,0 +1,249 @@
+.nw-picker {
+    position: relative;
+
+	@include scrollbars();
+
+	.search-input {
+
+		~ .dropdown-icon, ~ .reset-icon {
+			position: absolute;
+			right: 10px;
+			font-size: 22px;
+			font-weight: 100;
+			cursor: pointer;
+            top: 50%;
+			transform: translateY(-50%);
+		}
+
+		~ .reset-icon {
+			font-size: 24px;
+		}
+
+		&:focus {
+		    padding-left: 30px;
+
+			~ .dropdown-icon {
+				display: none;
+			}
+
+			~ .search-icon {
+				display: initial;
+			}
+
+			&::-moz-placeholder { color: transparent; }
+			&:-ms-input-placeholder { color: transparent; } // Internet Explorer 10+
+			&::-webkit-input-placeholder  { color: transparent; } // Safari and Chrome
+		}
+
+		&::-moz-placeholder { font-style: normal; font-weight: normal; color: #c2bcb8; }
+		&:-ms-input-placeholder { font-style: normal; font-weight: normal; color: #c2bcb8; } // Internet Explorer 10+
+		&::-webkit-input-placeholder  { font-style: normal; font-weight: normal; color: #c2bcb8; } // Safari and Chrome
+
+	}
+
+	.search-icon {
+		display: none;
+		position: absolute;
+		top: 50%;
+        transform: translateY(-50%);
+		left: 5px;
+		fill: white;
+		width: 22px;
+		height: 22px;
+	}
+
+    .scroll-container {
+        overflow-y: auto;
+		max-height: 400px;
+	}
+	
+	.clear-selections {
+		font-size: 14px;
+	}
+
+    .search-results {
+        position: absolute;
+        width: 100%;
+		padding: 3px 0;
+		margin-bottom: 24px;
+	    background: #0c0c0c;
+		z-index: 10;
+
+		.search-result, .parent {
+			position: relative;
+	        margin: 0 3px;
+		    padding: 7px 10px;
+			font-size: 16px;
+		    color: $list-group-link-color;
+		    cursor: pointer;
+	        margin-bottom: 1px;
+
+			&:hover {
+				background: $component-active-bg;
+
+				.drilldown {
+					background: #424242;
+				}
+
+				.drilldown, .drillup {
+					color: $list-group-link-color;
+				}
+			}
+
+			.item-label {
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+			    flex: 1;
+			}
+
+			.result-item {
+				display: flex;
+				flex-direction: row;
+
+				&.has-children {
+					margin-right: 35px;
+				}
+			}
+
+			&.item-selection-list {
+			    font-size: 14px;
+
+				&.is-empty {
+					cursor: auto;
+
+					&:hover {
+						background: initial;
+					}
+				}
+			}
+
+			.toggle-include, .toggle-exclude {
+				width: 21px;
+				height: 21px;
+				margin-right: 13px;
+				color: rgba(#fff, 0.15);
+				display: inline-block;
+				text-align: center;
+			    border-width: 1px;
+			    border-style: solid;
+			    font-size: 14px;
+			    background: transparent;
+			}
+
+			.toggle-include {
+				border-color: $brand-primary;
+			}
+
+			.toggle-exclude {
+				border-color: $brand-danger;
+			}
+
+			&.active {
+
+			    .toggle-include {
+					color: #fff;
+		    		background: $brand-primary;
+			    }
+			}
+
+			&.excluded {
+
+				.item-label {
+					text-decoration: line-through;
+				}
+
+
+			    .toggle-exclude {
+					color: #fff;
+					background: $brand-danger;
+			    }
+			}
+
+			.exclude-item {
+				float: right;
+				position: relative;
+				right: 35px;
+				top: -2px;
+			}
+		}
+
+		.parent {
+
+		    // border-bottom: 1px solid $border-color;
+
+			.result-item {
+				margin-left: 26px;
+			    display: block;
+			}
+
+		}
+
+		@media (max-width: $screen-sm) {
+		    position: fixed;
+		    top: 0;
+		    left: 0;
+		    height: 100%;
+		    padding: 0;
+		    max-height: initial;
+		    overflow-y: auto;
+		    z-index: 100;
+		}
+
+		.results-header {
+			display: none;
+			height: 50px;
+			line-height: 45px;
+			background: #2A2A2A;
+			padding: 0 12px;
+			width: 100%;
+			font-size: 32px;
+
+			.nav-back {
+				margin-right: 20px;
+				position: relative;
+				top: 3px;
+				font-size: 38px;
+				float: left;
+			}
+
+			h3 {
+				display: inline;
+				font-size: 18px;
+			    position: relative;
+			    top: -2px;
+			}
+
+			@media (max-width: $screen-sm) {
+				display: block;
+			}
+		}
+
+        .results-footer {
+            padding: 5px;
+            // border-top: 1px solid $border-color;
+            text-align: right;
+        }
+	}
+
+	.drilldown, .drillup {
+		position: absolute;
+		display: inline-block;
+		right: 0;
+		top: 0;
+		bottom: 0;
+		line-height: 38px;
+	    padding: 0 12px;
+	    color: #999999;
+	}
+
+	.drilldown:hover {
+	    background: #4f4f4f !important;
+    }
+
+	.drillup {
+		left: 0;
+		right: initial;
+	}
+
+}
