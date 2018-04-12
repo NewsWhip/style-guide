@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { InteractiveTextComponent } from './interactive-text.component';
+import { TypographyComponent } from './typography.component';
 
-describe('InteractiveTextComponent', () => {
-  let component: InteractiveTextComponent;
-  let fixture: ComponentFixture<InteractiveTextComponent>;
+describe('TypographyComponent', () => {
+  let component: TypographyComponent;
+  let fixture: ComponentFixture<TypographyComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ InteractiveTextComponent ]
+      declarations: [ TypographyComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(InteractiveTextComponent);
+    fixture = TestBed.createComponent(TypographyComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

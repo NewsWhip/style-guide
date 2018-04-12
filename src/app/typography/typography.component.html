@@ -1,0 +1,72 @@
+<div>
+  <h2 class="page-header">Typography</h2>
+
+  <div>
+    <h3>Interactive Text</h3>
+
+    <p>
+      The interactive text elements control only the color, text-decoration and cursor properties of the text. Font-weight, family
+      and size are inherited.
+    </p>
+
+    <p>
+      <code>:hover</code> styles take precedence over
+      <code>:visited</code> styles
+    </p>
+
+    <hr>
+
+    <div>
+      <h1>
+        <a routerLink="/interactive-text" class="nw-link nw-link-primary">
+          h1 primary interactive text
+        </a>
+      </h1>
+
+      <i class="fa fa-exclamation-circle"></i>
+      <em>Includes
+        <code>:visited</code> styling</em>
+    </div>
+
+    <hr>
+
+    <div>
+      <h2>
+        <a routerLink="/interactive-text" class="nw-link nw-link-secondary">
+          h2 secondary interactive text
+        </a>
+      </h2>
+
+      <i class="fa fa-exclamation-circle"></i>
+      <em>Does NOT include
+        <code>:visited</code> styling</em>
+    </div>
+
+    <hr>
+
+    <div>
+      <p>
+        Tertiary interactive text is
+        <span class="nw-link nw-link-tertiary">displayed inline</span> like this
+      </p>
+
+      <i class="fa fa-exclamation-circle"></i>
+      <em>Does NOT include
+        <code>:visited</code> styling</em>
+    </div>
+
+    <hr>
+
+    <div>
+      <p>
+        Inline interactive text is
+        <a routerLink="/interactive-text" class="nw-link nw-link-inline">displayed inline</a> like this.
+        <br/> Used for inline URLs and also shows a visited state.
+      </p>
+
+      <i class="fa fa-exclamation-circle"></i>
+      <em>Includes
+        <code>:visited</code> styling</em>
+    </div>
+  </div>
+</div>

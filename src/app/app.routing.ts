@@ -2,7 +2,6 @@ import { ModuleWithProviders, Injectable } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ButtonsComponent } from './buttons/buttons.component';
 import { ColorsComponent } from './colors/colors.component';
-import { InteractiveTextComponent } from './interactive-text/interactive-text.component';
 import { HomeComponent } from './home/home.component';
 import { DropdownsComponent } from './dropdowns/dropdowns.component';
 import { TabsComponent } from './tabs/tabs.component';
@@ -18,6 +17,7 @@ import { TooltipsComponent } from './tooltips/tooltips.component';
 import { RelativeWeightComponent } from "./relative-weight/relative-weight.component";
 import { ToastsComponent } from "./toasts/toasts.component";
 import { FilterComponent } from "./filter/filter.component";
+import { TypographyComponent } from "./typography/typography.component";
 
 const appRoutes: Routes = [
     {
@@ -31,10 +31,6 @@ const appRoutes: Routes = [
     {
         path: 'colors',
         component: ColorsComponent
-    },
-    {
-        path: 'interactive-text',
-        component: InteractiveTextComponent
     },
     {
         path: 'dropdowns',
@@ -91,6 +87,10 @@ const appRoutes: Routes = [
     {
         path: 'filters',
         component: FilterComponent
+    },
+    {
+        path: 'typography',
+        component: TypographyComponent
     }
 ];
 

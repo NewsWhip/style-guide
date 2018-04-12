@@ -42,7 +42,6 @@
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/print";
 
 // Core CSS (only the required components)
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/type";
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/code";
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/grid";
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/tables";
@@ -75,7 +74,6 @@
 @import "src/tooltip";
 @import "src/tables";
 @import "src/pagination";
-@import "src/type";
 
 // Replacements
 @import "src/buttons";
@@ -87,6 +85,7 @@
 @import "src/scaffolding";
 @import "src/popovers";
 @import "src/forms";
+@import "src/type";
 
 // Additions
 @import "src/links";

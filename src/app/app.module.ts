@@ -7,7 +7,6 @@ import { AppComponent } from './app.component';
 import { ButtonsComponent } from './buttons/buttons.component';
 import { routing } from './app.routing';
 import { ColorsComponent } from './colors/colors.component';
-import { InteractiveTextComponent } from './interactive-text/interactive-text.component';
 import { HomeComponent } from './home/home.component';
 import { DropdownsComponent } from './dropdowns/dropdowns.component';
 import { TabsComponent } from './tabs/tabs.component';
@@ -23,13 +22,13 @@ import { TooltipsComponent } from './tooltips/tooltips.component';
 import { RelativeWeightComponent } from './relative-weight/relative-weight.component';
 import { ToastsComponent } from './toasts/toasts.component';
 import { FilterComponent } from './filter/filter.component';
+import { TypographyComponent } from './typography/typography.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ButtonsComponent,
     ColorsComponent,
-    InteractiveTextComponent,
     HomeComponent,
     DropdownsComponent,
     TabsComponent,
@@ -44,7 +43,8 @@ import { FilterComponent } from './filter/filter.component';
     TooltipsComponent,
     RelativeWeightComponent,
     ToastsComponent,
-    FilterComponent
+    FilterComponent,
+    TypographyComponent
   ],
   imports: [
     BrowserModule,

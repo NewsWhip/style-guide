@@ -13,7 +13,7 @@
     @include border-right-radius($input-height-base / 2);
 
     .close {
-        color: get-color("gray", x-light);
+        color: get-color("primary", base);
         font-size: 160%;
         // Negate the 6px padding on the close button
         position: relative;
@@ -21,7 +21,7 @@
         margin-left: -6px;
 
         &:hover {
-            color: get-color("gray", base);
+            color: get-color("primary", dark);
         }
     }
     &.filter-sm {
