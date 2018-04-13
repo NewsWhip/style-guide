@@ -15,7 +15,7 @@
     "e2e": "ng e2e",
     "ghpages": "ng build --prod --output-path docs  --base-href /style-guide/",
     "copy:package_file": "cp -R package.json distribution",
-    "preversion": "npm run set:private",
+    "preversion": "npm run unset:private",
     "postversion": "npm run set:private && npm run copy:package_file",
     "set:private": "json -I -f package.json -e 'this.private=true'",
     "unset:private": "json -I -f package.json -e 'this.private=false'"
