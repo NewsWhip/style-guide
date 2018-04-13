@@ -15,7 +15,8 @@
     "e2e": "ng e2e",
     "ghpages": "ng build --prod --output-path docs  --base-href /style-guide/",
     "copy:package_file": "cp -R package.json distribution",
-    "postversion": "npm run copy:package_file"
+    "preversion": "npm config set private false",
+    "postversion": "npm run copy:package_file && npm config set private false"
   },
   "private": true,
   "devDependencies": {
