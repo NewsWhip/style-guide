@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { NwPickerModule } from '../_lib/modules/picker/picker.module';
+import { NwPickerModule, NwPickerComponent, IPickerItem } from '../../distribution/picker';
 
 import { AppComponent } from './app.component';
 import { ButtonsComponent } from './buttons/buttons.component';
@@ -24,6 +24,7 @@ import { RelativeWeightComponent } from './relative-weight/relative-weight.compo
 import { ToastsComponent } from './toasts/toasts.component';
 import { FilterComponent } from './filter/filter.component';
 import { TypographyComponent } from './typography/typography.component';
+import { PickerComponent } from './picker/picker.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { TypographyComponent } from './typography/typography.component';
     RelativeWeightComponent,
     ToastsComponent,
     FilterComponent,
-    TypographyComponent
+    TypographyComponent,
+    PickerComponent
   ],
   imports: [
     BrowserModule,

@@ -56,6 +56,7 @@ If you wish to import only specific parts of the style guide you first need to i
 - `shadows`
 - `toasts`
 - `filters`
+- `picker`
 
 ### Overrides
 
