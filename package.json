@@ -6,9 +6,6 @@
     "email": "garethdn@gmail.com",
     "name": "Gareth Nolan"
   },
-  "files": [
-    "distribution/"
-  ],
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
