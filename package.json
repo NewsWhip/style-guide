@@ -14,11 +14,6 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "ghpages": "ng build --prod --output-path docs  --base-href /style-guide/",
-    "package": "npm run clean && npm run compile && npm run copy",
-    "clean": "rm -rf distribution",
-    "compile": "ngc -p src/_lib/modules/picker/tsconfig.build.json",
-    "copy": "npm run copy:sass",
-    "copy:sass": "cp -R src/_lib/sass distribution",
     "copy:package_file": "cp -R package.json distribution",
     "postversion": "npm run copy:package_file"
   },

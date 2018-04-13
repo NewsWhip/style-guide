@@ -16,3 +16,7 @@ done
 # Copy SASS files
 echo "Copying SASS files"
 cp -R src/_lib/sass distribution
+
+# Copy readme
+echo "Copying README"
+cp README.md distribution
