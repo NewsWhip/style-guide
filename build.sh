@@ -11,14 +11,14 @@ on_success() {
     echo -ne '\n'
 }
 on_complete() {
-    rc=$?; 
-    if [[ $rc != 0 ]]; then 
+    rc=$?;
+    if [[ $rc != 0 ]]; then
         echo -ne '\n'
         exit $rc;
     fi
 
     if [[ $rc == 0 ]]; then
-        on_success; 
+        on_success;
     fi
 }
 
@@ -45,6 +45,8 @@ echo -ne "Copying README"
 cp README.md distribution
 on_complete
 
+echo ""
 echo "=========================="
 echo -ne "${GREEN}Library built successfully${NC}\n"
 echo "=========================="
+echo ""
