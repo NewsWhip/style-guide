@@ -103,7 +103,7 @@ If you wish to import only specific parts of the style guide you first need to i
 13. Merge to master
 14. Checkout master
 15. Publish the updated package to npm repository
-    - `npm publish`
+    - `./release.sh`
 
 ### Github pages
 
