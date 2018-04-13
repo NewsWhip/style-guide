@@ -1,6 +1,6 @@
 {
   "name": "nw-style-guide",
-  "version": "0.0.22",
+  "version": "0.0.23",
   "license": "MIT",
   "author": {
     "email": "garethdn@gmail.com",
@@ -20,7 +20,7 @@
     "set:private": "json -I -f package.json -e 'this.private=true'",
     "unset:private": "json -I -f package.json -e 'this.private=false'"
   },
-  "private": true,
+  "private": false,
   "devDependencies": {
     "@angular/animations": "^5.0.0",
     "@angular/cli": "^1.6.3",
