@@ -25,7 +25,7 @@ fi
 if [[ $rc == 0 ]]; then
     echo ""
     echo "=========================="
-    echo -ne " ${GREEN}Package successfully published${NC}"
+    echo -ne " ${GREEN}Package successfully published${NC}\n"
     echo "=========================="
     echo ""
 fi
