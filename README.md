@@ -15,7 +15,7 @@ In your SASS file:
 @import './variables.scss';
 
 // Import the entire NewsWhip style guide
-@import "node_modules/nw-style-guide/src/_lib/sass/styles.scss";
+@import "node_modules/nw-style-guide/sass/styles.scss";
 ```
 
 This functions as a drop-in replacement for the styles of Bootstrap SASS 3.x.
@@ -26,13 +26,13 @@ If you wish to import only specific parts of the style guide you first need to i
 
 ```scss
 // Import the core (required) files
-@import "node_modules/nw-style-guide/src/_lib/sass/src/functions/functions";
-@import "node_modules/nw-style-guide/src/_lib/sass/src/mixins/mixins";
-@import "node_modules/nw-style-guide/src/_lib/sass/src/variables";
+@import "node_modules/nw-style-guide/sass/src/functions/functions";
+@import "node_modules/nw-style-guide/sass/src/mixins/mixins";
+@import "node_modules/nw-style-guide/sass/src/variables";
 
 // Now you include the specific section of the style guide you require
-@import "node_modules/nw-style-guide/src/_lib/sass/src/labels";
-@import "node_modules/nw-style-guide/src/_lib/sass/src/forms";
+@import "node_modules/nw-style-guide/sass/src/labels";
+@import "node_modules/nw-style-guide/sass/src/forms";
 ```
 
 ## Components
