@@ -17,7 +17,7 @@
     "copy:package_file": "cp -R package.json distribution",
     "postversion": "npm run copy:package_file"
   },
-  "private": false,
+  "private": true,
   "devDependencies": {
     "@angular/animations": "^5.0.0",
     "@angular/cli": "^1.6.3",
