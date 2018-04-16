@@ -225,7 +225,9 @@ input[type="search"] {
 // Indent the labels to position radios/checkboxes as hanging controls.
 
 .radio,
-.checkbox {
+.radio-inline,
+.checkbox,
+.checkbox-inline {
     position: relative;
     display: block;
     margin-top: 10px;
@@ -255,38 +257,75 @@ input[type="search"] {
             margin-right: 8px;
             border-radius: $border-radius-base;
             font-family: FontAwesome;
+            font-size: 12px;
             text-align: center;
             transition-property: background;
             transition-timing-function: ease-in-out;
             transition-duration: 300ms;
         }
     }
-}
-.radio input[type="radio"],
-.radio-inline input[type="radio"],
-.checkbox input[type="checkbox"],
-.checkbox-inline input[type="checkbox"] {
-    position: absolute;
-    margin-left: -20px;
-    margin-top: 4px \9;
-    opacity: 0;
-  
-    &:checked {
-        ~ label {
-            &:before {
-                background: get-color("primary", base);
+    input[type="radio"],
+    input[type="checkbox"] {
+        position: absolute;
+        margin-left: -20px;
+        margin-top: 4px \9;
+        display: none;
+    
+        &:checked {
+            ~ label {
+                &:before {
+                    background: get-color("primary", base);
+                }
+            }
+        }
+        &:disabled {
+            ~ label {
+                cursor: not-allowed;
+                opacity: 0.5;
+            }
+        }
+        &:focus {
+            ~ label:before {
+                @include form-control-focus($input-border-focus, 2px);
             }
         }
     }
-    &:disabled {
-        ~ label {
-            cursor: not-allowed;
-            opacity: 0.5;
+}
+
+.checkbox,
+.checkbox-inline {
+    label {
+        &:before {
+            border: 1px solid $input-border;
+            box-shadow: inset 0 1px 2px 0 rgba(0,0,0,0.15);
         }
     }
-    &:focus {
-        ~ label:before {
-            @include form-control-focus($input-border-focus, 2px);
+    input:checked {
+        ~ label {
+            &:before {
+                border: 1px solid transparent;
+            }
+        }
+    }
+    &.checkbox-exclusion {
+        label {
+            &:before {
+                content: "\f00d";
+            }
+        }
+        input[type="checkbox"]:checked {
+            ~ label {
+                &:before {
+                    background: get-color("tertiary", base);
+                }
+            }
+        }
+    }
+    &.checkbox-placeholder {
+        input[type="checkbox"]:not(:checked) {
+            ~ label:before {
+                color: get-color("gray", 4x-light);
+            }
         }
     }
 }

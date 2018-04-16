@@ -8,7 +8,7 @@ import * as _ from 'lodash';
 	selector: 'nw-angular-picker',
 	template: `
 		<div class="nw-picker">
-			<! -- START: NOT xs screen -->
+			<!-- START: NOT xs screen -->
 			<input type="text" #inputEl
 				class="form-control search-input {{inputClasses}} hidden-xs text-ellipsis"
 				[formControl]="searchTerm"
@@ -17,72 +17,58 @@ import * as _ from 'lodash';
                 (keyup.escape)="inputEl.blur()"
 				placeholder="{{getPlaceholderText()}}"/>
 
-			<span class="search-icon" #ref><ng-content select=".custom-search-icon"></ng-content></span> 
-
-			<span *ngIf="ref.children.length == 0" class="search-icon">
-				<i class="fa fa-search" aria-hidden="true"></i>
-			</span>
-
 			<i (click)="showResults();inputEl.focus()" class="caret dropdown-icon hidden-xs"></i>
-			<! -- END: NOT xs screen -->
+			<!-- END: NOT xs screen -->
 
-
-			<! -- START: IS xs screen -->
-			<div (click)="showResults()" class="form-control hidden-sm hidden-md hidden-lg text-ellipsis">{{getPlaceholderText()}}</div>
+			<!-- START: IS xs screen -->
+			<div (click)="showResults()" class="form-control search-input hidden-sm hidden-md hidden-lg text-ellipsis">{{getPlaceholderText()}}</div>
 			<i (click)="showResults()" class="caret dropdown-icon hidden-sm hidden-md hidden-lg"></i>
-			<! -- END: IS xs screen -->
+			<!-- END: IS xs screen -->
 
 
-			<span *ngIf="searchTerm.value"
+			<button *ngIf="searchTerm.value"
 				(mousedown)="preventBlur($event)"
-				(click)="onReset($event);inputEl.focus()" class="reset-icon">&times;</span>
+				(click)="onReset($event);inputEl.focus()" class="close reset-icon">&times;</button>
 
 			<div class="search-results" *ngIf="canViewResults"
 				[@slideUpIn]="isMobileDisplay ? 'in' : false"
 				(mousedown)="preventBlur($event)">
 
-				<div class="parent" *ngIf="parentId && displayItems.length && !searchTerm.value.length" 
-					(click)="ascend(getParentItem(parentId))">
-
-					<span class="drillup">
-						<i class="fa fa-chevron-left" aria-hidden="true"></i>
-					</span>
-					<span class="result-item">{{getParentItem(parentId).displayName}}</span>
+				<!-- Navigate up the tree -->
+				<div class="results-actions" *ngIf="parentId && displayItems.length && !searchTerm.value.length">
+					<a href="javascript:;" class="nw-link nw-link-tertiary" (click)="ascend(getParentItem(parentId))">
+						<i class="fa fa-long-arrow-left" aria-hidden="true"></i>
+						{{getParentItem(parentId).displayName}}
+					</a>
 				</div>
 
-                <div class="scroll-container"
-                    #searchResultsScrollEl
+                <div class="scroll-container" #searchResultsScrollEl
                     [style.max-height]="getMaxHeight(searchResultsScrollEl)">
     				<div class="results-header">
-    					<span class="nav-back" style="cursor:pointer" (click)="closeResults()">&times;</span>
+    					<button class="close" (click)="closeResults()" style="color: #000">&times;</button>
     				</div>
 
-    				<ng-container *ngIf="shouldShowSelections && !selectionsAreShowing && parentId == null && !searchTerm.value.length">
-    					<div class="search-result item-selection-list" *ngIf="getSelections().length" (click)="selectionsAreShowing = true; edit.emit()">
-    						<span class="result-item">
-    							<span style="flex:1">Edit selections...</span>
-    							<span class="clear-selections pull-right" (click)="clearSelections($event)">Clear all</span>
-    						</span>
-    					</div>
+    				<div class="results-actions" *ngIf="shouldShowSelections && !selectionsAreShowing && parentId == null && !searchTerm.value.length">
+    					<ng-container *ngIf="getSelections().length">
+							<a href="javascript:;" class="nw-link nw-link-tertiary" (click)="selectionsAreShowing = true; edit.emit()">Edit selections</a>
+							<a href="javascript:;" class="nw-link nw-link-tertiary" (click)="clearSelections($event)">Clear selections</a>
+    					</ng-container>
 
-    					<div class="search-result item-selection-list is-empty" *ngIf="!getSelections().length">
-    						<span class="result-item"><em class="pull-left">No selections</em></span>
-    					</div>
-    				</ng-container>
+    					<ng-container *ngIf="!getSelections().length">
+    						<em>No selections</em>
+    					</ng-container>
+    				</div>
 
-    				<!-- DISPLAY THE SELECTED ITEMS -->
-    				<ng-container *ngIf="selectionsAreShowing">
-    					<div class="parent" (click)="selectionsAreShowing = false">
-    						<span class="drillup">
-    							<i class="fa fa-chevron-left" aria-hidden="true"></i>
-    						</span>
-    						<span class="result-item">
-    							Back
-    							<span class="clear-selections pull-right" *ngIf="getSelections().length" (click)="clearSelections($event)">Clear all</span>
-    						</span>
-    					</div>
-
-    					<div class="selected-items">
+					<!-- DISPLAY THE SELECTED ITEMS -->
+					<ng-container *ngIf="selectionsAreShowing">
+						<div class="results-actions">
+							<a href="javascript:;" class="nw-link nw-link-tertiary" (click)="selectionsAreShowing = false">
+								<i class="fa fa-long-arrow-left" aria-hidden="true"></i> Back
+							</a>
+							<a href="javascript:;" class="nw-link nw-link-tertiary" *ngIf="getSelections().length" (click)="clearSelections($event)">Clear all</a>
+						</div>
+					
+						<div class="selected-items">
     						<div class="search-result"
     							[ngClass]="{ 'active': item.added, 'excluded': item.excluded }"
     							*ngFor="let item of getSelections()">
@@ -90,31 +76,33 @@ import * as _ from 'lodash';
     							<span class="result-item">
     								<span class="item-label">{{item.displayName}}</span>
 
-    								<span class="clear-selection pull-right" (click)="clearSelection(item)">
-    									&#x58;
-    								</span>
+    								<button class="close" style="color: #000000" (click)="clearSelection(item)">
+    									&times;
+    								</button>
     							</span>
 
     						</div>
     					</div>
-    				</ng-container>
+					</ng-container>
 
     				<ng-container *ngIf="!selectionsAreShowing">
-    					<div class="search-result"
-    						(click)="toggleItemInclusion(item, $event)"
-    						[ngClass]="{ 'active': item.added, 'excluded': item.excluded, 'has-children': hasChildren(item.id) }"
-    						*ngFor="let item of displayItems">
+						<div class="search-result" *ngFor="let item of displayItems"
+							[class.active]="item.added"
+							[class.excluded]="item.excluded"
+							[class.has-children]="hasChildren(item.id)">
 
-    						<span class="result-item">
-    							<div class="toggle-include" (click)="toggleItemInclusion(item, $event)" *ngIf="isMultiSelect">
-    								<i class="fa fa-check"></i>
-    							</div>
+							<span class="result-item">
+								<div class="checkbox checkbox-placeholder" *ngIf="isMultiSelect">
+									<input id="include-{{item.id}}" type="checkbox" (click)="toggleItemInclusion(item, $event)" [checked]="item.added">
+									<label for="include-{{item.id}}"></label>
+								</div>
 
-    							<div class="toggle-exclude" *ngIf="canExclude && isMultiSelect" (click)="toggleItemExclusion(item, $event)">
-    								<i class="fa fa-times"></i>
-    							</div>
+								<div class="checkbox checkbox-exclusion checkbox-placeholder" *ngIf="canExclude && isMultiSelect">
+									<input id="exclude-{{item.id}}" type="checkbox" (click)="toggleItemExclusion(item, $event)" [checked]="item.excluded">
+									<label for="exclude-{{item.id}}"></label>
+								</div>
 
-								<span class="item-label" title="{{item.displayName}}">
+								<span class="item-label" title="{{item.displayName}}" (click)="toggleItemInclusion(item, $event)">
 									{{item.displayName}}
 									<ng-container *ngIf="searchTerm.value.length && item.searchValues?.length">
 										<span> - 
@@ -122,18 +110,17 @@ import * as _ from 'lodash';
 										</span>
 									</ng-container>
 								</span>
+
+								<button class="btn btn-ghost drilldown" *ngIf="hasChildren(item.id)" (click)="setDisplayItemsFromParentId(item.id, $event); desc.emit(getParentItem(parentId))">
+									<i class="fa fa-chevron-right" aria-hidden="true"></i>
+								</button>
                             </span>
 
-    						<span *ngIf="hasChildren(item.id)" class="drilldown" (click)="setDisplayItemsFromParentId(item.id, $event); desc.emit(getParentItem(parentId))">
-    							<i class="fa fa-chevron-right" aria-hidden="true"></i>
-    						</span>
     					</div>
 
 
-                        <div class="search-result" *ngIf="displayItems.length < 1">
-                            <span class="result-item">
-                                <em class="item-label">No results</em>
-                            </span>
+                        <div class="results-actions" *ngIf="displayItems.length < 1">
+							<em>No results</em>
                         </div>
     				</ng-container>
                 </div>
@@ -375,6 +362,10 @@ export class NwPickerComponent {
 		this.canViewResults = true;
 
 		this.setDisplayItemsFromParentId(this.parentId);
+	}
+
+	close() {
+		this.inputEl.nativeElement.blur();
 	}
 
 	closeResults($event) {
