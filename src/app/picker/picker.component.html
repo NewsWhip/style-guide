@@ -1,0 +1,15 @@
+<div>
+  <h1 class="page-header">Picker / Searchable dropdown</h1>
+
+  <div class="row">
+    <div class="col-md-3 col-sm-12">
+      <div>
+        <nw-angular-picker [items]="countries" #picker>
+          <div class="results-footer text-right">
+            <button class="btn btn-primary" (click)="picker.close()">Done</button>
+          </div>
+        </nw-angular-picker>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,6 +1,6 @@
 {
   "name": "nw-style-guide",
-  "version": "0.0.20",
+  "version": "0.0.24",
   "license": "MIT",
   "author": {
     "email": "garethdn@gmail.com",
@@ -13,9 +13,12 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "ghpages": "ng build --prod --output-path docs  --base-href /style-guide/"
+    "ghpages": "ng build --prod --output-path docs  --base-href /style-guide/",
+    "g:module": "ng g module --app=1",
+    "g:component": "ng g component --app=1",
+    "g:directive": "ng g directive --app=1"
   },
-  "private": false,
+  "private": true,
   "devDependencies": {
     "@angular/animations": "^5.0.0",
     "@angular/cli": "^1.6.3",
@@ -38,6 +41,7 @@
     "font-awesome": "^4.7.0",
     "jasmine-core": "~2.6.2",
     "jasmine-spec-reporter": "~4.1.0",
+    "json": "^9.0.6",
     "karma": "~1.7.0",
     "karma-chrome-launcher": "~2.1.1",
     "karma-cli": "~1.0.1",

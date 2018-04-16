@@ -1,0 +1,114 @@
+nw-angular-picker {
+	@include scrollbars();
+
+	.nw-picker {
+		position: relative;
+	}
+	.search-input {
+		cursor: pointer;
+
+		&:not(:focus) {
+			@extend .btn-dropdown;
+			@include placeholder(#ffffff);
+			font-size: inherit;
+		}
+		~ .dropdown-icon, ~ .reset-icon {
+			position: absolute;
+			right: 10px;
+			font-size: 24px;
+			font-weight: 100;
+            top: 50%;
+			transform: translateY(-50%);
+			cursor: pointer;
+		}
+		~ .reset-icon {
+			color: #000000;
+			right: 5px;
+		}
+	}
+    .scroll-container {
+        overflow-y: auto;
+		max-height: 400px;
+	}
+	.results-actions {
+		display: flex;
+		justify-content: space-between;
+		padding: 0 8px;
+		line-height: 32px;
+		color: #000000;
+		border-bottom: 1px solid get-color("gray", 4x-light);
+	}
+    .search-results {
+        position: absolute;
+        width: 100%;
+		margin-bottom: 24px;
+	    background: #ffffff;
+		z-index: 10;
+
+		.search-result, .parent {
+			position: relative;
+		    padding-left: 8px;
+			font-size: 14px;
+		    color: get-color("gray", dark);
+		    cursor: pointer;
+
+			&:hover {
+				background: get-color("primary", 3x-light);
+			}
+			.item-label {
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+			    flex: 1;
+			}
+			.btn-ghost:not(:hover) {
+				color: get-color("gray", 2x-light);
+			}
+			.result-item {
+				display: flex;
+				flex-direction: row;
+				align-items: center;
+				line-height: 32px;
+
+				.checkbox {
+					margin: 0;
+				}
+			}
+			&.excluded {
+				.item-label {
+					text-decoration: line-through;
+				}
+			}
+			.drilldown {
+				@include border-left-radius(0);
+			}
+		}
+		@media (max-width: $screen-sm) {
+		    position: fixed;
+		    top: 0;
+		    left: 0;
+		    height: 100%;
+		    padding: 0;
+		    max-height: initial;
+		    overflow-y: auto;
+		    z-index: 100;
+		}
+		.results-header {
+			display: none;
+			height: 50px;
+			line-height: 45px;
+			padding: 0 12px;
+			width: 100%;
+			font-size: 32px;
+			border-bottom: 1px solid get-color("gray", 4x-light);
+
+			@media (max-width: $screen-sm) {
+				display: flex;
+			}
+		}
+        .results-footer {
+            padding: 8px;
+            border-top: 1px solid get-color("gray", 4x-light);
+        }
+	}
+}
