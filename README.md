@@ -105,6 +105,20 @@ If you wish to import only specific parts of the style guide you first need to i
 15. Publish the updated package to npm repository
     - `./release.sh`
 
+### Development
+
+We use several npm scripts to generate modules, components and directives. The following is an example of creating a tabs module, component, and directive.
+
+`> npm run g:module tabs`
+
+`> npm run g:component tabs`
+
+`> npm run g:directive tabs`
+ 
+This is now what our `src` directory looks like
+
+![src directory](https://i.imgur.com/BjSjf41.png)
+
 ### Github pages
 
 We use Github pages to continuously deploy the application. When Github detects a change to the `/docs` folder in master, a redeployment takes place.
