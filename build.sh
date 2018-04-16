@@ -4,7 +4,7 @@ NGC="node_modules/.bin/ngc"
 cd "src/_lib/modules"
 modules=( $(find . -maxdepth 1 -type d -printf '%P\n') )
 cd "../../.."
-git 
+
 GREEN='\033[0;32m'
 RED='\033[0;31m'
 NC='\033[0m'
