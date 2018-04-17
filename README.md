@@ -138,7 +138,8 @@ This script does a few things:
    - Copies the `sass` folder 
    - Copies the `README.md`
 2. Copies the `package.json` file
-3. Updates the copied `package.json` private property to `false`
+3. Updates the copied `package.json` private property to `false`  
+(Setting "private": true in package.json is a precaution to prevent accidental publication of private repositories. The npm will refuse to publish it.)  
 4. Publishes the `distribution` folder to npm
 
 _Publication will fail if the version in `package.json` has not been updated_.
