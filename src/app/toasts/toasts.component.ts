@@ -17,9 +17,9 @@ import { trigger, transition, style, animate, keyframes } from "@angular/animati
       ]),
       transition(':leave', [
           animate("0.8s linear", keyframes([
-            style({ opacity: 0, transform: 'translate3d(0, -500px, 0)', offset: 0.8 }),
+            style({ opacity: 0, top: 0, transform: 'translate3d(0, -500px, 0)', offset: 0.8 }),
             // Give the element no apparent height to cause stacked items to animate to their new positions
-            style({ height: 0, padding: 0, margin: 0, offset: 1 })
+            style({ height: 0, offset: 1 })
           ]))
       ])
     ])
@@ -99,9 +99,9 @@ transition(':enter', [
 ]),
 transition(':leave', [
     animate("0.8s linear", keyframes([
-      style({ opacity: 0, transform: 'translate3d(0, -500px, 0)', offset: 0.8 }),
+      style({ opacity: 0, top: 0, transform: 'translate3d(0, -500px, 0)', offset: 0.8 }),
       // Give the element no apparent height to cause stacked items to animate to their new positions
-      style({ height: 0, padding: 0, margin: 0, offset: 1 })
+      style({ height: 0, offset: 1 })
     ]))
 ])
     `)
