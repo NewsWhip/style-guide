@@ -9,14 +9,14 @@
       "outDir": "dist",
       "assets": [
         {
-            "glob": "**/*",
-            "input": "./assets/",
-            "output": "./assets/"
+          "glob": "**/*",
+          "input": "./assets/",
+          "output": "./assets/"
         },
         {
-            "glob": "favicon.ico",
-            "input": "./",
-            "output": "./"
+          "glob": "README.md",
+          "input": "../",
+          "output": "./assets/"
         }
       ],
       "index": "index.html",

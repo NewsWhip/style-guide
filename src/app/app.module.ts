@@ -3,6 +3,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NwPickerModule } from '../_lib/modules/picker/picker.module';
+import { MarkdownModule } from 'ngx-md';
 
 import { AppComponent } from './app.component';
 import { ButtonsComponent } from './buttons/buttons.component';
@@ -54,7 +55,8 @@ import { PickerComponent } from './picker/picker.component';
     FormsModule,
     routing,
     BrowserAnimationsModule,
-    NwPickerModule
+    NwPickerModule,
+    MarkdownModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MarkdownService } from 'ngx-md';
 
 @Component({
   selector: 'app-home',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  constructor(private _markdown: MarkdownService) { }
 
   ngOnInit() {
+    this._markdown.renderer.heading = (text: string, level: number) => {
+      return `<h${level} ${level === 1 ? 'class="page-header"' : ''}>${text}</h${level}>`
+    }
   }
 
 }
