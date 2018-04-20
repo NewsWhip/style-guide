@@ -42,7 +42,7 @@
     height: ceil($font-size-large * $line-height-large) + ($padding-large-vertical * 2) + 2;
 }
 .btn-group-responsive-md {
-    height: ceil($font-size-base * $line-height-base) + ($padding-base-vertical * 2) + 2;
+    height: ceil(14px * $line-height-base) + ($padding-base-vertical * 2) + 2;
 }
 .btn-group-responsive-sm {
     height: ceil($font-size-small * $line-height-small) + ($padding-small-vertical * 2) + 2;
