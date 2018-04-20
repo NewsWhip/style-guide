@@ -13,7 +13,7 @@ $gray-color-settings: (
     "name": "gray",
     "color": $gray-base,
     // "light-steps": (12, 24, 36, 48, 60, 72),
-    "light-steps": (8, 16, 36, 48, 60, 72),
+    "light-steps": (8, 16, 36, 48, 60, 72, 78),
     "dark-steps": (-8)
 );
 
@@ -110,7 +110,7 @@ $font-size-h6:            ceil(($font-size-base * 0.85)) !default; // ~12px
 
 //** Unit-less `line-height` for use in components like buttons.
 $line-height-small:       1.2 !default;
-$line-height-base:        1.2 !default;
+$line-height-base:        1 !default;
 $line-height-large:       1.15 !default; // extra decimals for Win 8.1 Chrome
 $line-height-xl:          1.2 !default;
 //** Computed "line-height" (`font-size` * `line-height`) for use with `margin`, `padding`, etc.
@@ -127,7 +127,7 @@ $headings-color:          inherit !default;
 $padding-small-vertical:    4px !default;
 $padding-small-horizontal:  8px !default;
 $padding-base-vertical:     8px !default;
-$padding-base-horizontal:   8px !default;
+$padding-base-horizontal:   12px !default;
 $padding-large-vertical:    10px !default;
 $padding-large-horizontal:  24px !default;
 $padding-xl-vertical:       24px !default;

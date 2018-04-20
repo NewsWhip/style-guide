@@ -46,6 +46,10 @@ app-colors {
         .bg-#{$name}-3x-light { background: get-color($name, 3x-light) };
         .bg-#{$name}-4x-light { background: get-color($name, 4x-light) };
         .bg-#{$name}-5x-light { background: get-color($name, 5x-light) };
+
+        @if $name == 'gray' {
+            .bg-#{$name}-6x-light { background: get-color($name, 6x-light) };
+        }
     }
 
     .bg-yellow {

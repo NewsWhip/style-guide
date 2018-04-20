@@ -96,8 +96,7 @@
     box-shadow:     #{$size} #{$size} 0 $color,      // bottom-right
                     -#{$size} #{$size} 0 $color,     // bottom-left
                     #{$size} -#{$size} 0 $color,     // top-right
-                    -#{$size} -#{$size} 0 $color,    // top-left
-                    inset 0 1px 2px 0 rgba(0,0,0,0.15);
+                    -#{$size} -#{$size} 0 $color;    // top-left
 }
 
 // Form control sizing

@@ -8,19 +8,10 @@
         background-color: $bg-hover;
         border-color: $border-hover;
     }
-    &:active,
     &.active {
         color: $color-hover;
         background-color: darken($bg-hover, 10%);
         border-color: darken($border-hover, 10%);
-
-        &:hover,
-        &:focus,
-        &.focus {
-            color: $color-hover;
-            background-color: darken($bg-hover, 10%);
-            border-color: darken($border-hover, 10%);
-        }
     }
     // Override active button state for dropdown toggles
     &:active,
@@ -29,6 +20,7 @@
         color: $color-hover;
         background-color: $bg-hover;
         border-color: $border-hover;
+        box-shadow: none;
     }
     &.disabled,
     &[disabled],

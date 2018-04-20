@@ -24,7 +24,8 @@ export class ColorsComponent implements OnInit {
         "2x-light",
         "3x-light",
         "4x-light",
-        "5x-light"
+        "5x-light",
+        "6x-light"
     ];
 
     public standaloneColors = [

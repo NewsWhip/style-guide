@@ -43,6 +43,11 @@
                 @return lighten(map-get($color-settings, color), $lighten-by);
             }
 
+            @if $shade == 6x-light {
+                $lighten-by: nth(map-get($color-settings, light-steps), 7);
+                @return lighten(map-get($color-settings, color), $lighten-by);
+            }
+
             @error "Error: `#{$shade}` is not a valid value for $shade.";
             @return false;
         }

@@ -13,22 +13,23 @@
     border-style: solid;
     border-width: 1px;
 
-    &:hover,
-    &:focus,
-    &.focus {
-        text-decoration: none;
-    }
-
     &:focus,
     &.focus {
         outline: none;
         @include tab-focus();
     }
 
-    &:active,
-    &.active {
-        outline: 0;
+    &:hover {
+        text-decoration: none;
+        outline: none;
+        box-shadow: none;
+    }
+
+    &:active {
+        outline: none;
+        box-shadow: none;
         border-style: solid;
+        transform: translateY(1px);
     }
 
     &.disabled,
@@ -66,7 +67,7 @@ a.btn {
         #ffffff,
         #ffffff,
         get-color("gray", x-light),
-        get-color("gray", 2x-light));
+        get-color("gray", base));
 }
 .btn-danger {
     @include button-variant(
@@ -143,10 +144,10 @@ a.btn {
     }
 }
 .btn-md {
-    @include button-size($padding-base-vertical, $padding-base-horizontal, $font-size-base, $line-height-base, $btn-border-radius-base);
+    @include button-size($padding-base-vertical, $padding-base-horizontal, 14px, $line-height-base, $btn-border-radius-base);
 
     &.btn-round {
-        @include button-round($font-size-base, $line-height-base, $padding-base-vertical);
+        @include button-round(14px, $line-height-base, $padding-base-vertical);
     }
 }
 .btn-sm {
