@@ -10,7 +10,6 @@ nw-angular-picker {
 		&:not(:focus) {
 			@extend .btn-dropdown;
 			@include placeholder(#ffffff);
-			font-size: inherit;
 		}
 		~ .dropdown-icon, ~ .reset-icon {
 			position: absolute;
