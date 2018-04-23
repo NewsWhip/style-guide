@@ -87,16 +87,16 @@ mark,
 }
 
 // Alignment
-.text-left           { text-align: left; }
-.text-right          { text-align: right; }
-.text-center         { text-align: center; }
-.text-justify        { text-align: justify; }
-.text-nowrap         { white-space: nowrap; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+.text-center { text-align: center; }
+.text-justify { text-align: justify; }
+.text-nowrap { white-space: nowrap; }
 
 // Transformation
-.text-lowercase      { text-transform: lowercase; }
-.text-uppercase      { text-transform: uppercase; }
-.text-capitalize     { text-transform: capitalize; }
+.text-lowercase { text-transform: lowercase; }
+.text-uppercase, .text-upper { text-transform: uppercase; }
+.text-capitalize { text-transform: capitalize; }
 .text-ellipsis {
 	white-space: nowrap;
   overflow: hidden;
