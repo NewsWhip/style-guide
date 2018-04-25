@@ -2,8 +2,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { NwPickerModule } from '../_lib/modules/picker/picker.module';
+import { PortalModule } from '@angular/cdk/portal';
 import { MarkdownModule } from 'ngx-md';
+
+import { NwPickerModule } from '../_lib/modules/picker/picker.module';
+import { ToastsModule, ToastsService } from '../_lib/modules/toasts';
 
 import { AppComponent } from './app.component';
 import { ButtonsComponent } from './buttons/buttons.component';
@@ -56,9 +59,11 @@ import { PickerComponent } from './picker/picker.component';
     routing,
     BrowserAnimationsModule,
     NwPickerModule,
-    MarkdownModule.forRoot()
+    ToastsModule.forRoot(),
+    MarkdownModule.forRoot(),
+    PortalModule
   ],
-  providers: [],
+  providers: [ToastsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

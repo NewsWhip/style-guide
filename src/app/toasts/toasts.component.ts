@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { trigger, transition, style, animate, keyframes } from "@angular/animations";
+import { ToastsService } from "../../_lib/modules/toasts";
 
 @Component({
   selector: 'app-toasts',
@@ -35,7 +36,10 @@ export class ToastsComponent {
     'This message is a total of fifty characters long..'
   ];
 
-  constructor(private _sanitizer: DomSanitizer) {
+  constructor(
+    private _sanitizer: DomSanitizer,
+    private _toaster: ToastsService) {
+      
     this.toasts = [];
   }
 
