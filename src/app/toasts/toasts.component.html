@@ -3,12 +3,6 @@
 
   <div class="row">
     <div class="col-md-8 col-sm-12">
-      <div class="alert alert-warning">
-        This feature is currently <strong>styles only</strong>. The onus is on the developer to include the animations below as well as
-        any logic required for showing / hiding / dismissing and queuing notifications This should be converted to an Angular module to include
-        functionality and logic.
-      </div>
-
       <div>
         <button class="btn btn-primary" (click)="addSuccess()">Success</button>
         <button class="btn btn-danger" (click)="addError()">Error</button>
@@ -25,10 +19,13 @@
         </ul>
       </div>
 
-      <div style="margin-top: 32px;">
-        <p>This feature uses the following Angular animations</p>
+      <div>
+        <h3>Usage</h3>
 
-        <pre><code [innerHTML]="ngAnimations"></code></pre>
+        <p>This module requires the dependency <code>@angular/cdk</code> to dynamically render content</p>
+
+        <markdown path="assets/modules/toasts/README.md"></markdown>
+
       </div>
     </div>
   </div>
