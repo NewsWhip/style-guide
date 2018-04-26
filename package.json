@@ -1,6 +1,6 @@
 {
   "name": "nw-style-guide",
-  "version": "0.0.35",
+  "version": "0.0.37",
   "license": "MIT",
   "author": {
     "email": "garethdn@gmail.com",
@@ -16,11 +16,20 @@
     "ghpages": "ng build --prod --output-path docs  --base-href /style-guide/",
     "g:module": "ng g module --app=1",
     "g:component": "ng g component --app=1",
-    "g:directive": "ng g directive --app=1"
+    "g:directive": "ng g directive --app=1",
+    "g:service": "ng g service --app=1"
   },
   "private": true,
+  "peerDependencies": {
+    "@angular/animations": "^5.0.0",
+    "@angular/cdk": "^5.2.5",
+    "@angular/common": "^5.0.0",
+    "@angular/core": "^5.0.0",
+    "@angular/forms": "^5.0.0"
+  },
   "devDependencies": {
     "@angular/animations": "^5.0.0",
+    "@angular/cdk": "^5.2.5",
     "@angular/cli": "^1.6.3",
     "@angular/common": "^5.0.0",
     "@angular/compiler": "^5.0.0",
