@@ -6,7 +6,7 @@ import { PortalModule } from '@angular/cdk/portal';
 import { MarkdownModule } from 'ngx-md';
 
 import { NwPickerModule } from '../_lib/modules/picker/picker.module';
-import { ToastsModule, Toaster } from '../_lib/modules/toasts';
+import { ToastsModule } from '../_lib/modules/toasts';
 
 import { AppComponent } from './app.component';
 import { ButtonsComponent } from './buttons/buttons.component';
@@ -63,7 +63,6 @@ import { PickerComponent } from './picker/picker.component';
     MarkdownModule.forRoot(),
     PortalModule
   ],
-  providers: [Toaster],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
