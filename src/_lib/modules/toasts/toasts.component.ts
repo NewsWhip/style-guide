@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { trigger, transition, animate, style, keyframes } from "@angular/animations";
 import { IToast } from "./IToast";
 import { Toaster } from "./toasts.service";
@@ -23,14 +23,15 @@ import { Toaster } from "./toasts.service";
                 ]))
             ])
         ])
-    ]
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ToastsComponent {
 
     public toasts: IToast[] = [];
     public toastTimeout: number = 3000;
 
-    constructor() { }
+    constructor(private _cdRef: ChangeDetectorRef) { }
 
     success(message: string) {
         let toast: IToast = {
@@ -52,10 +53,11 @@ export class ToastsComponent {
 
     show(toast: IToast) {
         this.toasts.push(toast);
+        this._cdRef.detectChanges();
 
         setTimeout(() => {
             this.removeToast(toast)
-        }, this.toastTimeout)
+        }, this.toastTimeout);
     }
 
     dismiss(toast: IToast) {
@@ -64,7 +66,11 @@ export class ToastsComponent {
 
     removeToast(toast: IToast) {
         let index = this.toasts.indexOf(toast);
-        this.toasts.splice(index, 1);
+
+        if (index > -1) {
+            this.toasts.splice(index, 1);
+            this._cdRef.detectChanges();
+        }
     }
 
 }
