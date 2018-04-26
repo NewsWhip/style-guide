@@ -2,8 +2,7 @@
 NGC="node_modules/.bin/ngc"
 
 cd "src/_lib/modules"
-# modules=( $(find . -maxdepth 1 -type d -printf '%P\n') )
-modules=($(ls -d */))
+modules=( $(find . -maxdepth 1 -type d -printf '%P\n') )
 
 cd "../../.."
 
