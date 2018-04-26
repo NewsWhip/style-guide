@@ -24,7 +24,7 @@ export class ToastsComponent {
   }
 
   addSuccess() {
-    this._toaster.success('Some successful message');
+    this._toaster.success('A successful message');
   }
 
   addError() {

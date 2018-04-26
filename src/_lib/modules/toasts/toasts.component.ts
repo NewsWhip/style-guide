@@ -44,7 +44,7 @@ export class ToastsComponent {
 
     success(message: string) {
         let toast: IToast = {
-            message: 'Some successful message',
+            message: message,
             typeId: 'success',
             isDismissable: false
         };
@@ -53,7 +53,7 @@ export class ToastsComponent {
 
     error(message: string) {
         let toast: IToast = {
-            message: 'Some error message',
+            message: message,
             typeId: 'error',
             isDismissable: true
         };
