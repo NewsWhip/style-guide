@@ -1,7 +1,7 @@
 *app.module.ts*
 
 ```javascript
-import { ToastsModule, Toaster } from 'nw-style-guide/toasts';
+import { ToastsModule } from 'nw-style-guide/toasts';
 
 ...........
 ...........
@@ -13,7 +13,6 @@ import { ToastsModule, Toaster } from 'nw-style-guide/toasts';
     .....
     ToastsModule.forRoot()
     ],
-    providers: [Toaster],
     bootstrap: [AppComponent]
 })
 export class AppModule { }
