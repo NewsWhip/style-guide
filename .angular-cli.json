@@ -17,6 +17,11 @@
           "glob": "README.md",
           "input": "../",
           "output": "./assets/"
+        },
+        {
+          "glob": "**/README.md",
+          "input": "_lib",
+          "output": "./assets/"
         }
       ],
       "index": "index.html",
