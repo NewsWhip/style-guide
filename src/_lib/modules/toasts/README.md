@@ -1,7 +1,6 @@
 *app.module.ts*
 
 ```javascript
-import { PortalModule } from '@angular/cdk/portal';
 import { ToastsModule, Toaster } from 'nw-style-guide/toasts';
 
 ...........
@@ -12,7 +11,6 @@ import { ToastsModule, Toaster } from 'nw-style-guide/toasts';
     imports: [
     .....
     .....
-    PortalModule,
     ToastsModule.forRoot()
     ],
     providers: [Toaster],
