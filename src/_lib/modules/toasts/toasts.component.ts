@@ -5,7 +5,16 @@ import { Toaster } from "./toasts.service";
 
 @Component({
     selector: 'nw-toasts',
-    templateUrl: './toasts.component.html',
+    template: `
+        <div class="toasts-container">
+            <div class="toast toast-{{toast.typeId}}" *ngFor="let toast of toasts" [@slideInOut]>
+                <i class="fa fa-check toast-icon" *ngIf="toast.typeId === 'success'"></i>
+                <i class="fa fa-exclamation toast-icon" *ngIf="toast.typeId === 'error'"></i>
+                <p class="toast-message">{{toast.message}}</p>
+                <button class="close" *ngIf="toast.isDismissable" (click)="dismiss(toast)">&times;</button>
+            </div>
+        </div>
+    `,
     animations: [
         trigger('slideInOut', [
             transition(':enter', [
