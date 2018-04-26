@@ -2,7 +2,9 @@
 NGC="node_modules/.bin/ngc"
 
 cd "src/_lib/modules"
-modules=( $(find . -maxdepth 1 -type d -printf '%P\n') )
+# modules=( $(find . -maxdepth 1 -type d -printf '%P\n') )
+modules=($(ls -d */))
+
 cd "../../.."
 
 GREEN='\033[0;32m'

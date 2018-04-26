@@ -1,0 +1,15 @@
+{
+    "extends": "../tsconfig.build.json",
+    "compilerOptions": {
+        "baseUrl": ".",
+        "outDir": "../../../../distribution/toasts",
+        "rootDir": "."
+    },
+    "angularCompilerOptions": {
+        "strictMetadataEmit": false,
+        "skipTemplateCodegen": true
+    },
+    "files": [
+        "./index.ts"
+    ]
+}

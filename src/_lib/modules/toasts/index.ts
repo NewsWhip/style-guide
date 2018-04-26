@@ -1,2 +1,3 @@
 export { ToastsModule } from './toasts.module';
-export { ToastsService } from './toasts.service';
+export { Toaster } from './toasts.service';
+export { IToast } from './IToast';
