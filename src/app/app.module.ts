@@ -29,6 +29,7 @@ import { ToastsComponent } from './toasts/toasts.component';
 import { FilterComponent } from './filter/filter.component';
 import { TypographyComponent } from './typography/typography.component';
 import { PickerComponent } from './picker/picker.component';
+import { TabsModule} from '../_lib/modules/tabs';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,6 @@ import { PickerComponent } from './picker/picker.component';
     ColorsComponent,
     HomeComponent,
     DropdownsComponent,
-    TabsComponent,
     BrandingComponent,
     ListComponent,
     FormsComponent,
@@ -51,7 +51,8 @@ import { PickerComponent } from './picker/picker.component';
     ToastsComponent,
     FilterComponent,
     TypographyComponent,
-    PickerComponent
+    PickerComponent,
+    TabsComponent
   ],
   imports: [
     BrowserModule,
@@ -61,7 +62,8 @@ import { PickerComponent } from './picker/picker.component';
     NwPickerModule,
     ToastsModule.forRoot(),
     MarkdownModule.forRoot(),
-    PortalModule
+    PortalModule,
+    TabsModule
   ],
   bootstrap: [AppComponent]
 })

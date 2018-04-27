@@ -1,0 +1,8 @@
+<div class="ex-tab-control">
+    <ul class="nav nav-control" role="tablist" id="tabs-control">
+        <li role="presentation" *ngFor="let tab of tabs;" [class.active]="activeTab === tab" (click)="activeTab = tab">
+            <a href="javascript:;" [attr.aria-controls]="tab" role="tab">{{tab}}</a>
+        </li>
+    </ul>
+    <div class="animatedBorder" [style.width.px]="setWidth()" [style.left.px]="animateLeftPos()"></div>
+</div>

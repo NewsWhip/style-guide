@@ -28,14 +28,4 @@ export class TabsComponent implements OnInit {
 
   ngOnInit() {
   }
-
-  animateLeftPos(): number {
-      const elm: any = document.getElementById('tabs-control').getElementsByClassName('active')[0].getBoundingClientRect();
-      return elm.left;
-  }
-
-  setWidth(): number {
-      const elm: any = document.getElementById('tabs-control').getElementsByClassName('active')[0].getBoundingClientRect();
-      return elm.width;
-  }
 }
