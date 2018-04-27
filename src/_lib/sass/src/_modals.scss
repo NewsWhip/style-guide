@@ -7,10 +7,11 @@
         background-color: get-color("gray", x-light);
         display: flex;
         flex-direction: row;
+        align-items: center;
         z-index: 1;
 
         .modal-title {
-            color: #ffffff;
+            color: get-color("gray", 5x-light);
             font-size: 20px;
             font-weight: normal;
             flex: 1;
@@ -22,6 +23,10 @@
             top: 2px;
             right: -12px;
         }
+    }
+    .modal-body {
+        font-size: 14px;
+        color: get-color("gray", 4x-light);
     }
     .modal-footer {
         padding: 24px;
