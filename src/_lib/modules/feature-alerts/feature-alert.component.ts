@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-
-import {Component, EventEmitter, Input, Output, ViewChild} from "@angular/core";
-import {FeatureAlertsService} from "./feature-alerts.service";
+import { Component, EventEmitter, Input, Output, ViewChild, OnInit } from "@angular/core";
+import { FeatureAlertsService } from "./feature-alerts.service";
+import { IFeatureAlertParams } from "./IFeatureAlertParams"
 
 @Component({
     selector: '[nw-feature-alert]',
@@ -30,8 +29,7 @@ import {FeatureAlertsService} from "./feature-alerts.service";
         </span>
     `
 })
-
-export class FeatureAlertComponent implements optimizenInit {
+export class FeatureAlertComponent implements OnInit {
     @ViewChild('popTriggerEl') popTriggerEl;
     @Input() params: IFeatureAlertParams;
     @Output() callToActionClick: EventEmitter<any> = new EventEmitter<any>();

@@ -1,3 +1,50 @@
-<p>
-  feature-alerts works!
-</p>
+<div>
+  <h2 class="page-header">Feature Alerts</h2>
+
+  <div class="row">
+    <div class="col-md-8 col-sm-12">
+      <div>
+        <p nw-feature-alert [params]="getFeatureAlertParams1()"
+          (callToActionClick)="onCTAClick1()">
+          Feature Alert Top
+        </p>
+        <p nw-feature-alert [params]="getFeatureAlertParams2()"
+          (callToActionClick)="onCTAClick2()">
+          Feature Alert Right
+        </p>
+        <p nw-feature-alert [params]="getFeatureAlertParams3()"
+          (callToActionClick)="onCTAClick3()">
+          Feature Alert Bottom
+        </p>
+        <p nw-feature-alert [params]="getFeatureAlertParams4()"
+          (callToActionClick)="onCTAClick4()">
+          Feature Alert Left
+        </p>
+        <p nw-feature-alert [params]="getFeatureAlertParams5()"
+          (callToActionClick)="onCTAClick5()">
+          Feature Alert on hover
+        </p>
+      </div>
+      <div>
+        <h3>Implementation details</h3>
+<!--
+        <ul>
+          <li>Toast messages should ideally be limited to no more than 50 characters</li>
+          <li>Successful toast messages should not be manually dismissable</li>
+          <li>The default time to display the toast is 3 seconds</li>
+        </ul> -->
+      </div>
+
+      <div>
+        <h3>Usage</h3>
+
+        <p>This module requires the dependency <code>ngx-bootstrap</code> because the feature alerts rely on
+          its <a href="https://valor-software.com/ngx-bootstrap/#/popover">popover</a> functionality.
+        </p>
+
+        <markdown path="assets/modules/feature-alerts/README.md"></markdown>
+
+      </div>
+    </div>
+  </div>
+</div>
