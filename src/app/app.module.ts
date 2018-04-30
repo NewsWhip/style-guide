@@ -29,6 +29,7 @@ import { ToastsComponent } from './toasts/toasts.component';
 import { FilterComponent } from './filter/filter.component';
 import { TypographyComponent } from './typography/typography.component';
 import { PickerComponent } from './picker/picker.component';
+import { FeatureAlertsComponent } from './feature-alerts/feature-alerts.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { PickerComponent } from './picker/picker.component';
     ToastsComponent,
     FilterComponent,
     TypographyComponent,
-    PickerComponent
+    PickerComponent,
+    FeatureAlertsComponent
   ],
   imports: [
     BrowserModule,
