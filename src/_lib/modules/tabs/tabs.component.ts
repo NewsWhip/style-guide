@@ -1,4 +1,5 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, ContentChild, ContentChildren, ElementRef, HostBinding, Input, OnInit, Renderer2, ViewChild} from '@angular/core';
+import {TabsDirective} from './tabs.directive';
 
 @Component({
   selector: 'nw-tabs',
@@ -8,19 +9,43 @@ import {Component, Input, OnInit} from '@angular/core';
 
 export class TabsComponent implements OnInit {
   @Input() tabs: string[];
+
+  @ViewChild('border') border: ElementRef;
   activeTab: string;
-  constructor() {}
+
+  @ContentChild(TabsDirective)
+  active: TabsDirective;
+
+  constructor(private renderer: Renderer2, private el: ElementRef) {}
+
   ngOnInit() {
       this.activeTab = this.tabs[0];
   }
 
+  @HostBinding('class.active')
+  get click() {
+      let elms: any[] = [];
+      elms = this.el.nativeElement.getElementsByClassName('active');
+
+      elms.map(el => {
+          console.log(el.classList);
+          el.classList.remove('active');
+      });
+
+      return true;
+  }
+
   animateLeftPos(): number {
-    const elm: any = document.getElementById('tabs-control').getElementsByClassName('active')[0].getBoundingClientRect();
-    return elm.left;
+      // Use renderer right here
+      const elm: any = this.el.nativeElement.getElementsByClassName('active')[0].getBoundingClientRect();
+      // this.renderer.setStyle(this.border, 'left', elm.left);
+      return elm.left;
   }
 
   setWidth(): number {
-    const elm: any = document.getElementById('tabs-control').getElementsByClassName('active')[0].getBoundingClientRect();
-    return elm.width;
+      // Use renderer right here
+      const elm: any = this.el.nativeElement.getElementsByClassName('active')[0].getBoundingClientRect();
+      // this.renderer.setStyle(this.border, 'width', elm.width);
+      return elm.width;
   }
 }

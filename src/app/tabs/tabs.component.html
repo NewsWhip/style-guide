@@ -23,6 +23,13 @@
     </div>
 
     <h3>Nav Tabs</h3>
-    <nw-tabs [tabs]="navTabsSecondary"></nw-tabs>
+
+    <nw-tabs [tabs]="navTabsSecondary">
+            <a href="javascript:;" appTabDirective [attr.aria-controls]="'Home'" role="tab" class="active">Home</a>
+            <a href="javascript:;" appTabDirective [attr.aria-controls]="'About'" role="tab">About</a>
+            <a href="javascript:;" appTabDirective [attr.aria-controls]="'News'" role="tab">News</a>
+            <a href="javascript:;" appTabDirective [attr.aria-controls]="'Careers'" role="tab">Careers</a>
+            <a href="javascript:;" appTabDirective [attr.aria-controls]="'Contact'" role="tab">Contact</a>
+    </nw-tabs>
 
 </div>

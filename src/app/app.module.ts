@@ -29,7 +29,7 @@ import { ToastsComponent } from './toasts/toasts.component';
 import { FilterComponent } from './filter/filter.component';
 import { TypographyComponent } from './typography/typography.component';
 import { PickerComponent } from './picker/picker.component';
-import { TabsModule} from '../_lib/modules/tabs';
+import { TabsModule } from '../_lib/modules/tabs';
 
 @NgModule({
   declarations: [
