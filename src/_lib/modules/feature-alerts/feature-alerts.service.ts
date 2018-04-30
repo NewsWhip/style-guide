@@ -1,9 +1,9 @@
 import { Injectable } from "@angular/core";
-import { WindowRef } from "../windowref";
+import { WindowRef } from "./windowref";
 
 @Injectable()
 export class FeatureAlertsService{
-    LOCAL_STORAGE_KEY =  'nwAlerts';
+    LOCAL_STORAGE_KEY = 'nwAlerts';
 
     constructor(private w: WindowRef){}
 

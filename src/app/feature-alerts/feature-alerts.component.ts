@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class FeatureAlertsComponent implements OnInit {
 
   constructor() {
-    console.log('sssssssssssssssssssssaaaa');
+    // console.log('sssssssssssssssssssssaaaa');
   }
 
   ngOnInit() {
@@ -26,7 +26,7 @@ export class FeatureAlertsComponent implements OnInit {
     };
   }
 
-  getFeatureAlertParams1(){
+  getFeatureAlertParams2(){
     return {
         id: 'secondFeatureAlert',
         title: 'Second Alert',

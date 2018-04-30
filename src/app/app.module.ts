@@ -7,6 +7,7 @@ import { MarkdownModule } from 'ngx-md';
 
 import { NwPickerModule } from '../_lib/modules/picker/picker.module';
 import { ToastsModule } from '../_lib/modules/toasts';
+import { FeatureAlertsModule } from '../_lib/modules/feature-alerts';
 
 import { AppComponent } from './app.component';
 import { ButtonsComponent } from './buttons/buttons.component';
@@ -29,6 +30,7 @@ import { ToastsComponent } from './toasts/toasts.component';
 import { FilterComponent } from './filter/filter.component';
 import { TypographyComponent } from './typography/typography.component';
 import { PickerComponent } from './picker/picker.component';
+import { PopoverModule } from "ngx-bootstrap/popover";
 import { FeatureAlertsComponent } from './feature-alerts/feature-alerts.component';
 
 @NgModule({
@@ -63,6 +65,9 @@ import { FeatureAlertsComponent } from './feature-alerts/feature-alerts.componen
     NwPickerModule,
     ToastsModule.forRoot(),
     MarkdownModule.forRoot(),
+    //PopoverModule.forRoot(), //ngx-bootstrap - no longer needed
+    //because in feature-alerts.module.ts we import the PopoverModule.forRoot()
+    FeatureAlertsModule.forRoot(), //relies on ngx-bootstrap PopoverModule
     PortalModule
   ],
   bootstrap: [AppComponent]
