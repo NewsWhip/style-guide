@@ -1,0 +1,60 @@
+$popover-border-color: get-color('gray', 5x-light);
+
+.popover.in{
+  border: 1px solid $popover-border-color;
+  box-shadow: 0 0 8px rgba(0,0,0,.2);
+  font-family: 'Proxima Nova Regular', Arial, sans-serif;
+  z-index: 999;
+}
+
+//overwrite default arrow border color;
+.popover.popover-top.bs-popover-top > .popover-arrow.arrow{
+  border-top-color: $popover-border-color;
+}
+
+.popover.popover-right.bs-popover-right > .popover-arrow.arrow{
+  border-right-color: $popover-border-color;
+}
+
+.popover.popover-bottom.bs-popover-bottom > .popover-arrow.arrow{
+  border-bottom-color: $popover-border-color;
+}
+
+.popover.popover-left.bs-popover-left > .popover-arrow.arrow{
+  border-left-color: $popover-border-color;
+}
+
+.popover-content.popover-body{
+  padding: 24px;
+
+  h5, p, .close{
+    color: get-color('gray');
+  }
+
+  h5{
+    font-family: Proxima Nova SemiBold, Arial, sans-serif;
+    font-size: 16px;
+    margin-bottom: 8px;
+  }
+
+  p{
+    font-size: 14px;
+    line-height: 17px;
+  }
+
+  .close {
+    position: absolute;
+    text-shadow: none;
+    opacity: 1;
+    font-weight: 600;
+    font-size: 30px;
+    top: 3px;
+    right: 12px;
+    text-shadow: none;
+  }
+
+  .btn-primary{
+    margin-top: 16px;
+    width: 127px;
+  }
+}
