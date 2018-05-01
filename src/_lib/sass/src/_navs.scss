@@ -79,22 +79,22 @@
 .nav-tabs {
     > li {
         float: left;
+        margin: 0 12px;
         // Make the list-items overlay the bottom border
         // margin-bottom: -1px;
 
         // Actual tabs (as links)
         > a {
-            margin: 0 16px;
             padding-left: 0;
             padding-right: 0;
             line-height: $line-height-base;
             font-size: 16px;
             color: get-color("gray", 2x-light);
         }
-        &:first-child > a {
+        &:first-child {
             margin-left: 0;
         }
-        &:last-child > a {
+        &:last-child {
             margin-right: 0;
         }
 

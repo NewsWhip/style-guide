@@ -16,7 +16,7 @@ export class TabsComponent implements OnInit {
     public tabCollection = [
         {
             name: 'Home',
-            isActive: false
+            isActive: true
         },
         {
             name: 'About',
@@ -28,7 +28,7 @@ export class TabsComponent implements OnInit {
         },
         {
             name: 'Contact',
-            isActive: true
+            isActive: false
         },
         {
             name: 'Travel',

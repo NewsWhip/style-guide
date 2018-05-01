@@ -15,8 +15,8 @@
     <h3>Nav Tabs</h3>
 
     <nw-tabs>
-        <li *ngFor="let tab of tabCollection" (click)="setSelectedTab(tab)" role="presentation">
-            <a href="javascript:;" nwTab [isActive]="tab.isActive" [attr.aria-controls]="tab.name" role="tab">{{tab.name}}</a>
+        <li *ngFor="let tab of tabCollection" nwTab [isActive]="tab.isActive" (click)="setSelectedTab(tab)" role="presentation">
+            <a href="javascript:;" [attr.aria-controls]="tab.name" role="tab">{{tab.name}}</a>
         </li>
     </nw-tabs>
 
