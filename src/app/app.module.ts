@@ -4,11 +4,9 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { PortalModule } from '@angular/cdk/portal';
 import { MarkdownModule } from 'ngx-md';
-
 import { NwPickerModule } from '../_lib/modules/picker/picker.module';
 import { ToastsModule } from '../_lib/modules/toasts';
 import { FeatureAlertsModule } from '../_lib/modules/feature-alerts';
-
 import { AppComponent } from './app.component';
 import { ButtonsComponent } from './buttons/buttons.component';
 import { routing } from './app.routing';
@@ -30,46 +28,46 @@ import { ToastsComponent } from './toasts/toasts.component';
 import { FilterComponent } from './filter/filter.component';
 import { TypographyComponent } from './typography/typography.component';
 import { PickerComponent } from './picker/picker.component';
-import { PopoverModule } from "ngx-bootstrap/popover";
 import { FeatureAlertsComponent } from './feature-alerts/feature-alerts.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    ButtonsComponent,
-    ColorsComponent,
-    HomeComponent,
-    DropdownsComponent,
-    TabsComponent,
-    BrandingComponent,
-    ListComponent,
-    FormsComponent,
-    ModalsComponent,
-    AlertsComponent,
-    PaginationComponent,
-    LabelsComponent,
-    TablesComponent,
-    TooltipsComponent,
-    RelativeWeightComponent,
-    ToastsComponent,
-    FilterComponent,
-    TypographyComponent,
-    PickerComponent,
-    FeatureAlertsComponent
-  ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    routing,
-    BrowserAnimationsModule,
-    NwPickerModule,
-    ToastsModule.forRoot(),
-    MarkdownModule.forRoot(),
-    //PopoverModule.forRoot(), //ngx-bootstrap - no longer needed
-    //because in feature-alerts.module.ts we import the PopoverModule.forRoot()
-    FeatureAlertsModule.forRoot(), //relies on ngx-bootstrap PopoverModule
-    PortalModule
-  ],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        ButtonsComponent,
+        ColorsComponent,
+        HomeComponent,
+        DropdownsComponent,
+        TabsComponent,
+        BrandingComponent,
+        ListComponent,
+        FormsComponent,
+        ModalsComponent,
+        AlertsComponent,
+        PaginationComponent,
+        LabelsComponent,
+        TablesComponent,
+        TooltipsComponent,
+        RelativeWeightComponent,
+        ToastsComponent,
+        FilterComponent,
+        TypographyComponent,
+        PickerComponent,
+        FeatureAlertsComponent
+    ],
+    imports: [
+        BrowserModule,
+        FormsModule,
+        routing,
+        BrowserAnimationsModule,
+        NwPickerModule,
+        ToastsModule.forRoot(),
+        MarkdownModule.forRoot(),
+        FeatureAlertsModule.forRoot(),
+        PortalModule
+    ],
+    bootstrap: [AppComponent],
+    entryComponents: [
+        ToastsComponent
+    ]
 })
 export class AppModule { }
