@@ -2,8 +2,6 @@
 // Popovers
 // --------------------------------------------------
 
-$popover-border-color: get-color('gray', 5x-light);
-
 .popover {
     position: absolute;
     top: 0;
@@ -22,8 +20,6 @@ $popover-border-color: get-color('gray', 5x-light);
     border: 1px solid $popover-border-color;
     border-radius: 3px;
     box-shadow: 0 0 8px rgba(0,0,0,.2);
-    font-family: 'Proxima Nova Regular', Arial, sans-serif;
-    z-index: 999;
 
     // Offset the popover to account for the popover arrow
     &.top     { margin-top: -$popover-arrow-width; }

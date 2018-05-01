@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FeatureAlertComponent } from './feature-alert.component';
 import { FeatureAlertsService } from './feature-alerts.service';
 import { WindowRef } from './windowref';
-import {PopoverModule} from 'ngx-bootstrap';
+import { PopoverModule } from 'ngx-bootstrap/popover';
 
 @NgModule({
   imports: [
