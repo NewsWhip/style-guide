@@ -1,6 +1,4 @@
-<div class="ex-tab-control">
-    <div class="nav nav-control" role="tablist" id="tabs-control">
-        <ng-content select="a"></ng-content>
-    </div>
-    <div #border class="animatedBorder" [style.width.px]="setWidth()" [style.left.px]="animateLeftPos()"></div>
-</div>
+<ul class="nav nav-tabs" role="tablist">
+    <ng-content></ng-content>
+</ul>
+<div #border class="nav-tabs-active-bar" [ngStyle]="getStyles()"></div>

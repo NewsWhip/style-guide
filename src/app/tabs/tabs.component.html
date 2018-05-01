@@ -14,22 +14,10 @@
 
     <h3>Nav Tabs</h3>
 
-    <div>
-        <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation" *ngFor="let tab of navTabs" [class.active]="selectedTab === tab" (click)="selectedTab = tab">
-                <a href="javascript:;" [attr.aria-controls]="tab" role="tab">{{tab}}</a>
-            </li>
-        </ul>
-    </div>
-
-    <h3>Nav Tabs</h3>
-
-    <nw-tabs [tabs]="navTabsSecondary">
-            <a href="javascript:;" appTabDirective [attr.aria-controls]="'Home'" role="tab" class="active">Home</a>
-            <a href="javascript:;" appTabDirective [attr.aria-controls]="'About'" role="tab">About</a>
-            <a href="javascript:;" appTabDirective [attr.aria-controls]="'News'" role="tab">News</a>
-            <a href="javascript:;" appTabDirective [attr.aria-controls]="'Careers'" role="tab">Careers</a>
-            <a href="javascript:;" appTabDirective [attr.aria-controls]="'Contact'" role="tab">Contact</a>
+    <nw-tabs>
+        <li *ngFor="let tab of tabCollection" (click)="setSelectedTab(tab)" role="presentation">
+            <a href="javascript:;" nwTab [isActive]="tab.isActive" [attr.aria-controls]="tab.name" role="tab">{{tab.name}}</a>
+        </li>
     </nw-tabs>
 
 </div>

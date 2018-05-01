@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TabsComponent } from './tabs.component';
-import { TabsDirective } from './tabs.directive';
+import { TabDirective } from './tab.directive';
 
 @NgModule({
   imports: [
@@ -9,11 +9,11 @@ import { TabsDirective } from './tabs.directive';
   ],
   declarations: [
       TabsComponent,
-      TabsDirective
+      TabDirective
   ],
   exports: [
       TabsComponent,
-      TabsDirective
+      TabDirective
   ]
 })
 export class TabsModule { }

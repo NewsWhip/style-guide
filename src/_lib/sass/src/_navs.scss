@@ -90,10 +90,6 @@
             line-height: $line-height-base;
             font-size: 16px;
             color: get-color("gray", 2x-light);
-            border-bottom-width: 3px;
-            border-bottom-style: solid;
-            border-bottom-color: transparent;
-            transition: border-bottom-color 0.3s ease-in-out;
         }
         &:first-child > a {
             margin-left: 0;
@@ -108,7 +104,6 @@
             &:hover,
             &:focus {
                 color: $nav-tabs-active-link-hover-color;
-                border-bottom-color: get-color("primary", dark);
                 cursor: default;
             }
         }
@@ -282,52 +277,11 @@
     // Remove the top rounded corners here since there is a hard edge above the menu
     @include border-top-radius(0);
 }
-//:host ::ng-deep {
-    .ex-tab-control {
-        .nav-control {
-            > li {
-                float: left;
-                margin: 0 8px;
-                text-align: center;
 
-                // Actual tabs (as links)
-                > a {
-                    padding-left: 0;
-                    padding-right: 0;
-                    line-height: $line-height-base;
-                    font-size: 16px;
-                    color: get-color("gray", 2x-light);
-                }
-                &:first-child > a {
-                    margin-left: 0;
-                }
-                &:last-child > a {
-                    margin-right: 0;
-                }
-
-                // Active state, and its :hover to override normal :hover
-                &.active > a {
-                    &,
-                    &:hover,
-                    &:focus {
-                        color: $nav-tabs-active-link-hover-color;
-                        cursor: default;
-                    }
-                }
-            }
-            // pulling this in mainly for less shorthand
-            &.nav-justified {
-                @extend .nav-justified;
-                @extend .nav-tabs-justified;
-            }
-        }
-        .animatedBorder {
-            left:0;
-            margin:0;
-            height:3px;
-            position: absolute;
-            background-color:#5490ff; // get-color("primary", dark);
-            transition: all ease-in-out 200ms;
-        }
-    }
-//}
+.nav-tabs-active-bar {
+    margin:0;
+    height:3px;
+    position: absolute;
+    background-color: get-color("primary", base);
+    transition: all ease-in-out 200ms;
+}

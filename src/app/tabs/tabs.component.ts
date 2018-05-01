@@ -1,31 +1,52 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-tabs',
-  templateUrl: './tabs.component.html',
-  styleUrls: ['./tabs.component.scss']
+    selector: 'app-tabs',
+    templateUrl: './tabs.component.html',
+    styleUrls: ['./tabs.component.scss']
 })
 export class TabsComponent implements OnInit {
 
-  public navTabs = [
-    'Home',
-    'Profile',
-    'Messages',
-    'Settings'
-  ];
-  public navTabsSecondary = [
-      'Content 1',
-      'Con rewgwre tent 2',
-      'Content 3',
-      'Con rg qwe tent 4',
-      'Con rg qwe te qewfqwf efq eqwf'
-  ];
-  public secondarySelectedTab = 'Content 1';
+    public navTabs = [
+        'Home',
+        'Profile',
+        'Messages',
+        'Settings'
+    ];
+    public tabCollection = [
+        {
+            name: 'Home',
+            isActive: false
+        },
+        {
+            name: 'About',
+            isActive: false
+        },
+        {
+            name: 'Careers',
+            isActive: false
+        },
+        {
+            name: 'Contact',
+            isActive: true
+        },
+        {
+            name: 'Travel',
+            isActive: false
+        }
+    ];
 
-  public selectedTab = 'Home';
+    public selectedTab = 'Home';
 
-  constructor() { }
+    constructor() {
+    }
 
-  ngOnInit() {
-  }
+    ngOnInit() {
+    }
+
+    setSelectedTab(selectedTab: any) {
+        this.tabCollection.forEach(tab => {
+            tab.isActive = tab.name === selectedTab.name;
+        });
+    }
 }
