@@ -19,12 +19,6 @@ $popover-border-color: get-color('gray', 5x-light);
     color: get-color("gray", base);
     background-color: $popover-bg;
     background-clip: padding-box;
-    // border: 1px solid $popover-fallback-border-color;
-    // border: 1px solid $popover-border-color;
-    // border-radius: $border-radius-large;
-    // @include box-shadow(0 5px 10px rgba(0,0,0,.2));
-
-    //from _feature-alerts
     border: 1px solid $popover-border-color;
     border-radius: 3px;
     box-shadow: 0 0 8px rgba(0,0,0,.2);
@@ -107,7 +101,6 @@ $popover-border-color: get-color('gray', 5x-light);
     border-color: transparent;
     border-style: solid;
 }
-
 
 .popover > .arrow {
     border-width: $popover-arrow-outer-width;
