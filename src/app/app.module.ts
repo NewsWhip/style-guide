@@ -65,9 +65,6 @@ import { FeatureAlertsComponent } from './feature-alerts/feature-alerts.componen
         FeatureAlertsModule.forRoot(),
         PortalModule
     ],
-    bootstrap: [AppComponent],
-    entryComponents: [
-        ToastsComponent
-    ]
+    bootstrap: [AppComponent]
 })
 export class AppModule { }

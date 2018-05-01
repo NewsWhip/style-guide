@@ -28,7 +28,6 @@
     &.left    { margin-left: -$popover-arrow-width; }
 }
 
-//xavtodo: is it used anywhere?
 .popover-title {
     margin: 0; // reset heading margin
     padding: 8px 14px;
@@ -46,7 +45,6 @@
     }
 
     h5{
-        //font-family: Proxima Nova SemiBold, Arial, sans-serif;
         font-size: 16px;
         margin-bottom: 8px;
     }
@@ -60,7 +58,6 @@
         position: absolute;
         text-shadow: none;
         opacity: 1;
-        //font-weight: 600;
         font-size: 30px;
         top: 3px;
         right: 12px;
