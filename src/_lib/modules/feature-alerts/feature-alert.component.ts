@@ -1,6 +1,6 @@
-import { Component, EventEmitter, Input, Output, ViewChild, OnInit } from "@angular/core";
-import { FeatureAlertsService } from "./feature-alerts.service";
-import { IFeatureAlertParams } from "./IFeatureAlertParams"
+import { Component, EventEmitter, Input, Output, ViewChild, OnInit } from '@angular/core';
+import { FeatureAlertsService } from './feature-alerts.service';
+import { IFeatureAlertParams } from './IFeatureAlertParams'
 
 @Component({
     selector: '[nw-feature-alert]',
@@ -26,7 +26,7 @@ import { IFeatureAlertParams } from "./IFeatureAlertParams"
             [triggers]="params.triggers"
             [placement]="params.placement"
             [container]="params.container"
-            [containerClass]="params.containerClass"
+            [containerClass]="'feature-alert ' + params.containerClass"
             [popoverContext]="params"
             [isOpen]="isOpen">
             <ng-content></ng-content>

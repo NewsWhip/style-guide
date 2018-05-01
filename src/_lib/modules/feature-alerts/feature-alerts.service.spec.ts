@@ -1,6 +1,5 @@
 import { TestBed, inject } from '@angular/core/testing';
-
-import { FeatureAlertService } from './feature-alerts.service';
+import {FeatureAlertsService} from './feature-alerts.service';
 
 describe('FeatureAlertsService', () => {
   beforeEach(() => {

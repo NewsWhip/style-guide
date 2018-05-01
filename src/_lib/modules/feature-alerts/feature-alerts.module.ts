@@ -8,8 +8,7 @@ import {PopoverModule} from 'ngx-bootstrap';
 @NgModule({
   imports: [
     CommonModule,
-    PopoverModule.forRoot() // thanks to this line we no longer have to
-    // import it in app.module.ts ofthe demo app
+    PopoverModule.forRoot()
   ],
   providers: [WindowRef],
   declarations: [FeatureAlertComponent],
@@ -20,6 +19,6 @@ export class FeatureAlertsModule {
     return {
       ngModule: FeatureAlertsModule,
       providers: [FeatureAlertsService]
-    }
+    };
   }
 }
