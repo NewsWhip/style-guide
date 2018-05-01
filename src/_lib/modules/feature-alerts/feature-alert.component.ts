@@ -5,11 +5,6 @@ import { IFeatureAlertParams } from './IFeatureAlertParams'
 @Component({
     selector: '[nw-feature-alert]',
     template: `
-        <!-- <button type="button" class="btn btn-primary"
-            popover="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." container="body">
-        Live demo
-        </button>-->
-
         <ng-template #popTmpl let-title="title" let-message="message">
             <h5>{{title}}</h5>
             <p>{{message}}</p>
@@ -39,21 +34,19 @@ export class FeatureAlertComponent implements OnInit {
     @Output() callToActionClick: EventEmitter<any> = new EventEmitter<any>();
     isOpen: boolean;
 
-    constructor(private featureAlertsService: FeatureAlertsService){}
+    constructor(private featureAlertsService: FeatureAlertsService) {}
 
-    ngOnInit(){
-        //xavtodo: the logic here will show the pop up even when you want
-        // to display ot on mouseover
+    ngOnInit() {
         this.isOpen = !this.featureAlertsService.wasAlertDismissed(this.params.id);
     }
 
-    onCTAClick(){
+    onCTAClick() {
         this.popTriggerEl.hide();
         this.featureAlertsService.persist(this.params.id);
         this.callToActionClick.emit();
     }
 
-    onClose(){
+    onClose() {
         this.popTriggerEl.hide();
         this.featureAlertsService.persist(this.params.id);
     }

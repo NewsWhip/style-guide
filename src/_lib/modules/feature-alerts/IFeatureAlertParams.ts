@@ -1,9 +1,9 @@
-export interface IFeatureAlertParams{
-    id: string;
+export interface IFeatureAlertParams {
+    id: string;                 // unique id that will be stored in the local storage
     title: string;
     message: string;
-    containerClass: string;
-    triggers: string;         // (space separated) (if separated with : 1st shows popover, 2nd hides popover) mouseenter:mouseleave focus click dblclick keypress:focusout
+    containerClass: string;     // all feature alerts share .feature-alert class but you can add more
+    triggers: string;           // (space separated) mouseenter focus click dblclick keypress
     placement: string;
-    container?: string;    // '' or 'body' or any other DOM container
+    container?: string;         // '' or 'body' or any other DOM container
 }

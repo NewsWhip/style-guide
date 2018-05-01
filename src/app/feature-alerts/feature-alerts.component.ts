@@ -1,97 +1,66 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import {WindowRef} from '../../_lib/modules/feature-alerts/windowref';
 
 @Component({
   selector: 'app-feature-alerts',
   templateUrl: './feature-alerts.component.html',
   styleUrls: ['./feature-alerts.component.scss']
 })
-export class FeatureAlertsComponent implements OnInit {
+export class FeatureAlertsComponent {
+    message: string;
 
-  constructor() {
-    // console.log('sssssssssssssssssssssaaaa');
-  }
+    constructor(private w: WindowRef) {}
 
-  ngOnInit() {
-  }
+    clearLocalStorage() {
+        this.w.nativeWindow.localStorage.clear();
+        this.w.nativeWindow.location.reload();
+    }
 
-  getFeatureAlertParams1(){
-    return {
-        id: 'firstFeatureAlert',
-        title: 'First Alert',
-        message: 'Lorem ipsum dolor sit amet',
-        containerClass: 'border-red',
-        triggers: '',
-        placement: 'top',
-        container: ''
-    };
-  }
+    getFeatureAlertParams1() {
+        return {
+            id: 'secondFeatureAlert',
+            title: 'Second Alert',
+            message: 'Too many feature alerts',
+            containerClass: '',
+            triggers: '',
+            placement: 'right',
+            container: ''
+        };
+    }
 
-  getFeatureAlertParams2(){
-    return {
-        id: 'secondFeatureAlert',
-        title: 'Second Alert',
-        message: 'Too many feature alerts',
-        containerClass: '',
-        triggers: '',
-        placement: 'right',
-        container: ''
-    };
-  }
+    getFeatureAlertParams2() {
+        return {
+            id: 'thirdFeatureAlert',
+            title: 'Third Alert',
+            message: 'Three pinky pigs',
+            containerClass: '',
+            triggers: '',
+            placement: 'bottom',
+            container: ''
+        };
+    }
 
-  getFeatureAlertParams3(){
-    return {
-        id: 'thirdFeatureAlert',
-        title: 'Third Alert',
-        message: 'Three pinky pigs',
-        containerClass: '',
-        triggers: '',
-        placement: 'bottom',
-        container: ''
-    };
-  }
+    getFeatureAlertParams3() {
+        return {
+            id: 'fourthFeatureAlert',
+            title: 'Fourth Alert',
+            message: 'On your left.',
+            containerClass: '',
+            triggers: '',
+            placement: 'left',
+            container: ''
+        };
+    }
 
-  getFeatureAlertParams4(){
-    return {
-        id: 'fourthFeatureAlert',
-        title: 'Fourth Alert',
-        message: 'On your left.',
-        containerClass: '',
-        triggers: '',
-        placement: 'left',
-        container: ''
-    };
-  }
+    onCTAClick1() {
+        this.message = 'Clicked on call to action button in the FIRST feature alert.';
+    }
 
-  getFeatureAlertParams5(){
-    return {
-        id: 'fifthFeatureAlert',
-        title: 'Fifth Alert',
-        message: 'Setting `mouseenter:mouseleave` as triggers',
-        containerClass: '',
-        triggers: 'mouseenter:mouseleave',
-        placement: 'top',
-        container: ''
-    };
-  }
+    onCTAClick2() {
+        this.message = 'Clicked on call to action button in the SECOND feature alert.';
+    }
 
-  onCTAClick1(){
-    console.log('You clicked on the first one');
-  }
-
-  onCTAClick2(){
-    console.log('You clicked on the second one');
-  }
-
-  onCTAClick3(){
-    console.log('You clicked on the third one');
-  }
-
-  onCTAClick4(){
-    console.log('You clicked on the fourth one');
-  }
-
-  onCTAClick5(){
-    console.log('You clicked on the fifth one');
-  }
-
+    onCTAClick3() {
+        this.message = 'Clicked on call to action button in the THIRD feature alert.';
+    }
 }
