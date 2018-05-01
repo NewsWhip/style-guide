@@ -1,10 +1,19 @@
 import { TestBed, inject } from '@angular/core/testing';
 import {FeatureAlertsService} from './feature-alerts.service';
+import {WindowRef} from './windowref';
+
+class WindowRefMock {}
 
 describe('FeatureAlertsService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [FeatureAlertsService]
+      providers: [
+          FeatureAlertsService,
+          {
+              provide: WindowRef,
+              useClass: WindowRefMock
+          }
+      ],
     });
   });
 
