@@ -3,7 +3,12 @@ import { TabDirective } from './tab.directive';
 
 @Component({
   selector: 'nw-tabs',
-  templateUrl: './tabs.component.html',
+  template: `
+      <ul class="nav nav-tabs" role="tablist">
+          <ng-content></ng-content>
+      </ul>
+      <div #border class="nav-tabs-active-bar" [ngStyle]="getStyles()"></div>
+  `,
   styleUrls: ['./tabs.component.scss']
 })
 
