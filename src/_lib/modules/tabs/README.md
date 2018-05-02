@@ -21,7 +21,7 @@ export class AppModule { }
 *my-feature.component.ts*
 
 ```javascript
-import { TabsComponent, ITabs } from "nw-style-guide/tabs";
+import { TabsComponent, ITab } from "nw-style-guide/tabs";
 
 @Component({
     template: `
@@ -38,7 +38,7 @@ export class MyFeature {
 
     constructor() {}
     
-    public yourTabCollection: ITabs[] = [
+    public yourTabCollection: ITab[] = [
         {
             name: 'Home',
             isActive: true
