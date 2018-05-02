@@ -180,6 +180,7 @@
     line-height: $line-height-base;
     color: $dropdown-header-color;
     white-space: nowrap; // as with > li > a
+    text-transform: uppercase;
 }
 
 // Backdrop to catch body clicks on mobile, etc.

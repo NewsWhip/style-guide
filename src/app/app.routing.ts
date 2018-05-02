@@ -19,6 +19,7 @@ import { ToastsComponent } from "./toasts/toasts.component";
 import { FilterComponent } from "./filter/filter.component";
 import { TypographyComponent } from "./typography/typography.component";
 import { PickerComponent } from "./picker/picker.component";
+import { FeatureAlertsComponent } from "./feature-alerts/feature-alerts.component";
 
 const appRoutes: Routes = [
     {
@@ -82,10 +83,6 @@ const appRoutes: Routes = [
         component: RelativeWeightComponent
     },
     {
-        path: 'toasts',
-        component: ToastsComponent
-    },
-    {
         path: 'filters',
         component: FilterComponent
     },
@@ -96,6 +93,14 @@ const appRoutes: Routes = [
     {
         path: 'picker',
         component: PickerComponent
+    },
+    {
+        path: 'toasts',
+        component: ToastsComponent
+    },
+    {
+        path: 'feature-alerts',
+        component: FeatureAlertsComponent
     }
 ];
 

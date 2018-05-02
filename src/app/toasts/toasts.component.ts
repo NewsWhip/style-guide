@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { trigger, transition, style, animate, keyframes } from "@angular/animations";
-import { Toaster } from "../../_lib/modules/toasts";
+import { Toaster } from '../../_lib/modules/toasts';
 import { IToast } from '../../_lib/modules/toasts';
 
 @Component({
@@ -17,11 +15,7 @@ export class ToastsComponent {
     'This message is a total of fifty characters long..'
   ];
 
-  constructor(
-    private _sanitizer: DomSanitizer,
-    private _toaster: Toaster) {
-
-  }
+  constructor(private _toaster: Toaster) {}
 
   addSuccess() {
     this._toaster.success('A successful message');
@@ -32,9 +26,9 @@ export class ToastsComponent {
   }
 
   addRandom() {
-    let isErrorType = Math.random() < 0.5;
+    const isErrorType = Math.random() < 0.5;
 
-    let toast: IToast = {
+    const toast: IToast = {
       message: this.messages[Math.floor(Math.random() * this.messages.length)],
       typeId: isErrorType ? 'error' : 'success',
       isDismissable: isErrorType

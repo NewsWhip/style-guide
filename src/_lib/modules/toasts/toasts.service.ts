@@ -1,6 +1,6 @@
 import { Injectable, ComponentFactoryResolver, ApplicationRef, Injector, Inject, ComponentRef } from '@angular/core';
-import { DOCUMENT } from "@angular/common";
-import { ComponentPortal, DomPortalOutlet } from "@angular/cdk/portal";
+import { DOCUMENT } from '@angular/common';
+import { ComponentPortal, DomPortalOutlet } from '@angular/cdk/portal';
 import { ToastsComponent } from './toasts.component';
 import { IToast } from './IToast';
 
