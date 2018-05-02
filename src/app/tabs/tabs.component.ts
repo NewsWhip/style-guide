@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
     selector: 'app-tabs',
     templateUrl: './tabs.component.html',
     styleUrls: ['./tabs.component.scss']
 })
-export class TabsComponent implements OnInit {
+export class TabsComponent {
 
     public navTabs = [
         'Home',
@@ -35,14 +35,6 @@ export class TabsComponent implements OnInit {
             isActive: false
         }
     ];
-
-    public selectedTab = 'Home';
-
-    constructor() {
-    }
-
-    ngOnInit() {
-    }
 
     setSelectedTab(selectedTab: any) {
         this.tabCollection.forEach(tab => {

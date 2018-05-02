@@ -11,8 +11,6 @@ export class TabsComponent {
 
   @ContentChildren(TabDirective) tabs: QueryList<TabDirective> = new QueryList();
 
-  constructor() {}
-
   getActiveTab(): TabDirective {
       return this.tabs.filter(t => t.isActive)[0];
   }
