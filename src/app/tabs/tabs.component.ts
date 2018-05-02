@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { ITab } from '../../_lib/modules/tabs';
 
 @Component({
     selector: 'app-tabs',
@@ -7,7 +6,7 @@ import { ITab } from '../../_lib/modules/tabs';
     styleUrls: ['./tabs.component.scss']
 })
 export class TabsComponent {
-    public tabCollection: ITab[] = [
+    public tabCollection = [
         {
             name: 'Home',
             isActive: true
@@ -30,7 +29,7 @@ export class TabsComponent {
         }
     ];
 
-    setSelectedTab(selectedTab: ITab) {
+    setSelectedTab(selectedTab) {
         this.tabCollection.forEach(tab => {
             tab.isActive = tab.name === selectedTab.name;
         });

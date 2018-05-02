@@ -1,7 +1,7 @@
 *app.module.ts*
 
 ```javascript
-import { TabModule } from 'nw-style-guide/tabs';
+import { TabsModule } from 'nw-style-guide/tabs';
 
 ...........
 ...........
@@ -21,7 +21,6 @@ export class AppModule { }
 *my-feature.component.ts*
 
 ```javascript
-import { TabsComponent, ITab } from "nw-style-guide/tabs";
 
 @Component({
     template: `
@@ -38,7 +37,7 @@ export class MyFeature {
 
     constructor() {}
     
-    public yourTabCollection: ITab[] = [
+    public yourTabCollection = [
         {
             name: 'Home',
             isActive: true
@@ -61,7 +60,7 @@ export class MyFeature {
         }
     ];
     
-    setSelectedTab(selectedTab: ITab) {
+    setSelectedTab(selectedTab) {
         this.tabCollection.forEach(tab => {
             tab.isActive = tab.name === selectedTab.name;
         });
