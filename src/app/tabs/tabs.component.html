@@ -14,11 +14,13 @@
 
     <h3>Nav Tabs</h3>
 
-    <div>
-        <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation" *ngFor="let tab of navTabs" [class.active]="selectedTab === tab" (click)="selectedTab = tab">
-                <a href="javascript:;" [attr.aria-controls]="tab" role="tab">{{tab}}</a>
-            </li>
-        </ul>    
-    </div>
+    <nw-tabs>
+        <li *ngFor="let tab of tabCollection" nwTab [isActive]="tab.isActive" (click)="setSelectedTab(tab)" role="presentation">
+            <a href="javascript:;" [attr.aria-controls]="tab.name" role="tab">{{tab.name}}</a>
+        </li>
+    </nw-tabs>
+    <h3>Usage</h3>
+    <p>Example usage for the `Nav Tabs` module and recommended structure.</p>
+    <markdown path="assets/modules/tabs/README.md"></markdown>
+
 </div>

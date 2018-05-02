@@ -7,6 +7,7 @@ import { MarkdownModule } from 'ngx-md';
 import { NwPickerModule } from '../_lib/modules/picker/picker.module';
 import { ToastsModule } from '../_lib/modules/toasts';
 import { FeatureAlertsModule } from '../_lib/modules/feature-alerts';
+import { TabsModule } from '../_lib/modules/tabs';
 import { AppComponent } from './app.component';
 import { ButtonsComponent } from './buttons/buttons.component';
 import { routing } from './app.routing';
@@ -31,40 +32,41 @@ import { PickerComponent } from './picker/picker.component';
 import { FeatureAlertsComponent } from './feature-alerts/feature-alerts.component';
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        ButtonsComponent,
-        ColorsComponent,
-        HomeComponent,
-        DropdownsComponent,
-        TabsComponent,
-        BrandingComponent,
-        ListComponent,
-        FormsComponent,
-        ModalsComponent,
-        AlertsComponent,
-        PaginationComponent,
-        LabelsComponent,
-        TablesComponent,
-        TooltipsComponent,
-        RelativeWeightComponent,
-        ToastsComponent,
-        FilterComponent,
-        TypographyComponent,
-        PickerComponent,
-        FeatureAlertsComponent
-    ],
-    imports: [
-        BrowserModule,
-        FormsModule,
-        routing,
-        BrowserAnimationsModule,
-        NwPickerModule,
-        ToastsModule.forRoot(),
-        MarkdownModule.forRoot(),
-        FeatureAlertsModule.forRoot(),
-        PortalModule
-    ],
-    bootstrap: [AppComponent]
+  declarations: [
+    AppComponent,
+    ButtonsComponent,
+    ColorsComponent,
+    HomeComponent,
+    DropdownsComponent,
+    BrandingComponent,
+    ListComponent,
+    FormsComponent,
+    ModalsComponent,
+    AlertsComponent,
+    PaginationComponent,
+    LabelsComponent,
+    TablesComponent,
+    TooltipsComponent,
+    RelativeWeightComponent,
+    ToastsComponent,
+    FilterComponent,
+    TypographyComponent,
+    PickerComponent,
+    TabsComponent,
+    FeatureAlertsComponent
+  ],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    routing,
+    BrowserAnimationsModule,
+    FeatureAlertsModule,
+    NwPickerModule,
+    ToastsModule.forRoot(),
+    MarkdownModule.forRoot(),
+    PortalModule,
+    TabsModule
+  ],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }
