@@ -60,7 +60,7 @@ import { FeatureAlertsComponent } from './feature-alerts/feature-alerts.componen
     FormsModule,
     routing,
     BrowserAnimationsModule,
-      FeatureAlertsModule,
+    FeatureAlertsModule,
     NwPickerModule,
     ToastsModule.forRoot(),
     MarkdownModule.forRoot(),
