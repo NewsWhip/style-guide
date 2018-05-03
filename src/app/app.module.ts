@@ -64,6 +64,7 @@ import { FeatureAlertsComponent } from './feature-alerts/feature-alerts.componen
     NwPickerModule,
     ToastsModule.forRoot(),
     MarkdownModule.forRoot(),
+    FeatureAlertsModule.forRoot(),
     PortalModule,
     TabsModule
   ],
