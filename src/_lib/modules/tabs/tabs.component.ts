@@ -8,8 +8,7 @@ import { TabDirective } from './tab.directive';
           <ng-content></ng-content>
       </ul>
       <div #border class="nav-tabs-active-bar" [ngStyle]="getStyles()"></div>
-  `,
-  styleUrls: ['./tabs.component.scss']
+  `
 })
 
 export class TabsComponent {
