@@ -38,7 +38,6 @@
 //
 // Reset and dependencies
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/normalize";
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/print";
 
 // Core CSS (only the required components)
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/code";
@@ -85,6 +84,7 @@
 @import "src/popovers";
 @import "src/forms";
 @import "src/type";
+@import "src/print";
 
 // Additions
 @import "src/relative-weight";
