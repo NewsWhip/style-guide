@@ -12,8 +12,8 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this._markdown.renderer.heading = (text: string, level: number) => {
-      return `<h${level} ${level === 1 ? 'class="page-header"' : ''}>${text}</h${level}>`
-    }
+      return `<h${level} ${level === 1 ? 'class="page-header"' : ''}>${text}</h${level}>`;
+    };
   }
 
 }

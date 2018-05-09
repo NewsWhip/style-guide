@@ -4,10 +4,10 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { PortalModule } from '@angular/cdk/portal';
 import { MarkdownModule } from 'ngx-md';
-
 import { NwPickerModule } from '../_lib/modules/picker/picker.module';
 import { ToastsModule } from '../_lib/modules/toasts';
-
+import { FeatureAlertsModule } from '../_lib/modules/feature-alerts';
+import { TabsModule } from '../_lib/modules/tabs';
 import { AppComponent } from './app.component';
 import { ButtonsComponent } from './buttons/buttons.component';
 import { routing } from './app.routing';
@@ -29,6 +29,7 @@ import { ToastsComponent } from './toasts/toasts.component';
 import { FilterComponent } from './filter/filter.component';
 import { TypographyComponent } from './typography/typography.component';
 import { PickerComponent } from './picker/picker.component';
+import { FeatureAlertsComponent } from './feature-alerts/feature-alerts.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,6 @@ import { PickerComponent } from './picker/picker.component';
     ColorsComponent,
     HomeComponent,
     DropdownsComponent,
-    TabsComponent,
     BrandingComponent,
     ListComponent,
     FormsComponent,
@@ -51,17 +51,22 @@ import { PickerComponent } from './picker/picker.component';
     ToastsComponent,
     FilterComponent,
     TypographyComponent,
-    PickerComponent
+    PickerComponent,
+    TabsComponent,
+    FeatureAlertsComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     routing,
     BrowserAnimationsModule,
+    FeatureAlertsModule,
     NwPickerModule,
     ToastsModule.forRoot(),
     MarkdownModule.forRoot(),
-    PortalModule
+    FeatureAlertsModule.forRoot(),
+    PortalModule,
+    TabsModule
   ],
   bootstrap: [AppComponent]
 })
