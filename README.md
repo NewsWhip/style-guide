@@ -77,6 +77,7 @@ If you wish to import only specific parts of the style guide you first need to i
 - `bootstrap/popovers`
 - `bootstrap/forms`
 - `bootstrap/type`
+- `bootstrap/print`
 
 ---
 
