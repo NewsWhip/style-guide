@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, ViewChild, OnInit } from '@angular/core';
+import {Component, EventEmitter, Input, Output, ViewChild, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import { FeatureAlertsService } from './feature-alerts.service';
 import { IFeatureAlertParams } from './IFeatureAlertParams'
 
@@ -17,16 +17,24 @@ import { IFeatureAlertParams } from './IFeatureAlertParams'
         </ng-template>
 
         <span [popover]="popTmpl"
-            #popTriggerEl="bs-popover"
-            [triggers]="params.triggers"
-            [placement]="params.placement"
-            [container]="params.container"
-            [containerClass]="'feature-alert ' + params.containerClass"
-            [popoverContext]="params"
-            [isOpen]="isOpen">
+              #popTriggerEl="bs-popover"
+              [triggers]="params.triggers"
+              [placement]="params.placement"
+              [container]="params.container"
+              [containerClass]="'feature-alert ' + params.containerClass"
+              [popoverContext]="params"
+              [isOpen]="isOpen"
+              [class.block]="params.isBlockEl" >
             <ng-content></ng-content>
         </span>
-    `
+    `,
+    styles: [`
+        .block{
+            width: 100%;
+            display: inline-block;
+        }
+    `],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FeatureAlertComponent implements OnInit {
     @ViewChild('popTriggerEl') popTriggerEl;
