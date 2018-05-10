@@ -3,8 +3,7 @@ export interface IFeatureAlertParams {
     title: string;
     message: string;
     placement: string;
-    containerClass?: string;     // all feature alerts share .feature-alert class but you can add more
-                                 // classes to it - they need to be defined in global styles though
+    containerClass?: string;     // all feature alerts have .feature-alert, you can add more classes
     triggers?: string;           // (space separated) mouseenter focus click dblclick keypress
     container?: string;          // '' or 'body' or any other DOM container
     isBlockEl?: boolean;         // true if feature alert anchor is a block element
