@@ -14,3 +14,15 @@ $fa-font-path : '../node_modules/font-awesome/fonts';
 @import "app/dropdowns/dropdowns.component";
 @import "app/branding/branding.component";
 @import "app/list/list.component";
+
+//global styles for the demo app
+
+.feature-alert.feat-alert-for-inline-element{
+    border: 1px solid orange;
+    min-width: 300px;
+}
+
+.feat-alert-max-width-300{
+    max-width: 300px;
+    border: 1px solid black;
+}

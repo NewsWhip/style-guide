@@ -18,37 +18,51 @@ export class FeatureAlertsComponent {
 
     getFeatureAlertParams1() {
         return {
-            id: 'secondFeatureAlert',
-            title: 'Second Alert',
+            id: 'firstFA',
+            title: 'First Alert',
             message: 'Too many feature alerts',
-            containerClass: '',
-            triggers: '',
             placement: 'right',
-            container: ''
+            isBlockEl: true
         };
     }
 
     getFeatureAlertParams2() {
         return {
-            id: 'thirdFeatureAlert',
-            title: 'Third Alert',
-            message: 'Three pinky pigs',
-            containerClass: '',
-            triggers: '',
-            placement: 'bottom',
-            container: ''
+            id: 'secondFA',
+            title: 'Second Alert',
+            message: 'On your left.',
+            placement: 'left',
+            isBlockEl: true
         };
     }
 
     getFeatureAlertParams3() {
         return {
-            id: 'fourthFeatureAlert',
-            title: 'Fourth Alert',
-            message: 'On your left.',
-            containerClass: '',
-            triggers: '',
-            placement: 'left',
-            container: ''
+            id: 'thirdFA',
+            title: 'Second Alert',
+            message: 'The `isBlockEl` flag is not defined here, so the feature alert treats the anchor as inline element.',
+            placement: 'bottom',
+            containerClass: 'feat-alert-max-width-300',
+        };
+    }
+
+    getFeatureAlertParams4() {
+        return {
+            id: 'firstInlineFA',
+            title: 'Inline Feature Alert',
+            message: 'This is inline element.',
+            placement: 'top',
+            containerClass: 'feat-alert-for-inline-element'
+        };
+    }
+
+    getFeatureAlertParams5() {
+        return {
+            id: 'secondInlineFA',
+            title: 'Inline Feature Alert no. 2',
+            message: 'This is another inline element. Enjoy!',
+            placement: 'right',
+            containerClass: 'feat-alert-for-inline-element'
         };
     }
 
@@ -62,5 +76,13 @@ export class FeatureAlertsComponent {
 
     onCTAClick3() {
         this.message = 'Clicked on call to action button in the THIRD feature alert.';
+    }
+
+    onCTAClick4() {
+        this.message = 'Clicked on call to action button in the FIRST INLINE em element.';
+    }
+
+    onCTAClick5() {
+        this.message = 'Clicked on call to action button in the SECOND INLINE em element.';
     }
 }
