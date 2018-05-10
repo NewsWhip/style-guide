@@ -2,9 +2,20 @@ import { Component } from '@angular/core';
 import {WindowRef} from '../../_lib/modules/feature-alerts/windowref';
 
 @Component({
-  selector: 'app-feature-alerts',
-  templateUrl: './feature-alerts.component.html',
-  styleUrls: ['./feature-alerts.component.scss']
+    selector: 'app-feature-alerts',
+    templateUrl: './feature-alerts.component.html',
+    styleUrls: ['./feature-alerts.component.scss'],
+    styles: [`
+        :host >>> .feature-alert.feat-alert-for-inline-element{
+            border: 1px solid black;
+            min-width: 300px;
+        }
+
+        :host >>> .feat-alert-max-width-300{
+            max-width: 300px;
+            border: 1px solid green;
+        }
+    `]
 })
 export class FeatureAlertsComponent {
     message: string;
