@@ -24,7 +24,7 @@ export class TabsComponent {
       if (tab) {
         return {
             width: tab.elRef.nativeElement.getBoundingClientRect().width + 'px',
-            left: tab.elRef.nativeElement.getBoundingClientRect().left + 'px'
+            left: tab.elRef.nativeElement.offsetLeft + 'px'
         };
       }
       return {};
