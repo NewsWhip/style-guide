@@ -18,7 +18,7 @@
 
     <div>
       <h1>
-        <a routerLink="/interactive-text" class="nw-link nw-link-primary">
+        <a [href]="randomLink" target="_blank" class="nw-link nw-link-primary">
           h1 primary interactive text
         </a>
       </h1>
@@ -60,7 +60,7 @@
     <div>
       <p>
         Inline interactive text is
-        <a routerLink="/interactive-text" class="nw-link nw-link-inline">displayed inline</a> like this.
+        <a [href]="randomLink" target="_blank" class="nw-link nw-link-inline">displayed inline</a> like this.
         <br/> Used for inline URLs and also shows a visited state.
       </p>
 
