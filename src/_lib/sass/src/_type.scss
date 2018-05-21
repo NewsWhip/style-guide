@@ -319,7 +319,8 @@ address {
   &.nw-link-primary {
       color: #ffffff;
 
-      &:visited {
+      &:visited,
+      &.visited {
           color: get-color("gray", 4x-light);
       }
   }
@@ -337,7 +338,8 @@ address {
   }
 
   &.nw-link-inline {
-      &:visited {
+      &:visited,
+      &.visited {
           color: get-color("gray", 4x-light);
       }
 
@@ -345,7 +347,8 @@ address {
   }
 
   &:hover,
-  &:hover:visited {
+  &:hover:visited,
+  &:hover.visited {
       color: $link-hover-color;
       cursor: pointer;
   }
