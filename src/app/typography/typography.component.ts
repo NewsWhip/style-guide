@@ -12,4 +12,7 @@ export class TypographyComponent implements OnInit {
   ngOnInit() {
   }
 
+  get randomLink(): string {
+    return `https://www.google.ie/search?q=${Math.random() * (1000 - 99) + 99}`;
+  }
 }
