@@ -157,6 +157,13 @@ a.btn {
         @include button-round($font-size-small, $line-height-small, $padding-small-vertical);
     }
 }
+.btn-xs {
+    @include button-size(0, 7px, 12px, 1.333333333333, 9px);
+
+    &.btn-round {
+        @include button-round(12px, 1.333333333333, 0);
+    }
+}
 .btn-slim {
     padding-left: 0;
     padding-right: 0;
