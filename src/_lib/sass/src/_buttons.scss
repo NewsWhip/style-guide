@@ -106,6 +106,13 @@ a.btn {
         transparent,
         transparent);
 }
+.btn-activate {
+    @include button-variant(
+        #ffffff,
+        #ffffff,
+        get-color("secondary", base),
+        get-color("secondary", dark));
+}
 .btn-nav {
     @include button-variant(
         #ffffff,
