@@ -22,15 +22,19 @@ export class AppModule { }
 
 ```javascript
 import { IFeatureAlertParams } from "nw-style-guide/feature-alerts";
+
 @Component({
-    ....
     <div nw-feature-alert
-         [params]="getFeatureAlertParams()"
-         (callToActionClick)="onCTAClick()">
+        [params]="getFeatureAlertParams()"
+        (callToActionClick)="onCTAClick()">
 
         <span>Any HTML elements or text will be transpiled into nw-feature-alert component template.</span>
     </div>
-    ....
+
+    <button class="btn btn-primary" style="position: relative;" (mouseenter)="hs1.dismiss()">
+        Dismiss on hover
+        <nw-hotspot #hs1 id="testHotspot"></nw-hotspot>
+    </button>
 })
 export class MyFeature {
 

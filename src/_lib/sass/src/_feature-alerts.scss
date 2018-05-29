@@ -2,4 +2,49 @@
     margin-top: 16px;
     width: 127px;
 }
+.hotspot {
+    $hotspot-size: 26px;
+
+    position: absolute;
+    width: $hotspot-size;
+    height: $hotspot-size;
+    padding: 4px;
+    border: 2px solid get-color("tertiary", base);
+    border-radius: 50%;
+    
+    animation-duration: 1s;
+    animation-name: pulse;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-timing-function: ease-in-out;
+
+    &,
+    &.hotspot-left {
+        left: -#{$hotspot-size / 2};
+        top: calc(50% - #{$hotspot-size / 2});
+    }
+    &.hotspot-right {
+        left: calc(100% - #{$hotspot-size / 2});
+    }
+    
+    &:before {
+        content: ' ';
+        width: 100%;
+        height: 100%;
+        display: block;
+        border-radius: 50%;
+        background: get-color("tertiary", base);
+    }
+}
+
+@keyframes pulse {
+    from {
+        opacity: 0.5;
+        transform: scale(1);
+    }
+    to {
+        opacity: 0.75;
+        transform: scale(1.25);
+    }
+}
 

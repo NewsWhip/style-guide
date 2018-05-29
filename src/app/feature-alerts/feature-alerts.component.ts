@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import {WindowRef} from '../../_lib/modules/feature-alerts/windowref';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { WindowRef } from '../../_lib/modules/feature-alerts/windowref';
 
 @Component({
     selector: 'app-feature-alerts',
@@ -15,7 +15,8 @@ import {WindowRef} from '../../_lib/modules/feature-alerts/windowref';
             max-width: 300px;
             border: 1px solid green;
         }
-    `]
+    `],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FeatureAlertsComponent {
     message: string;

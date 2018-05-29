@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output, ViewChild, OnInit, ChangeDetectionStrategy} from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FeatureAlertsService } from './feature-alerts.service';
 import { IFeatureAlertParams } from './IFeatureAlertParams'
 
