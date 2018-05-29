@@ -3,12 +3,12 @@
     width: 127px;
 }
 .hotspot {
-    $hotspot-size: 26px;
+    $hotspot-size: 32px;
 
     position: absolute;
     width: $hotspot-size;
     height: $hotspot-size;
-    padding: 4px;
+    padding: 6px;
     border: 2px solid get-color("tertiary", base);
     border-radius: 50%;
     
@@ -18,6 +18,15 @@
     animation-direction: alternate;
     animation-timing-function: ease-in-out;
 
+    &:before {
+        content: ' ';
+        width: 100%;
+        height: 100%;
+        display: block;
+        border-radius: 50%;
+        background: get-color("tertiary", base);
+    }
+
     &,
     &.hotspot-left {
         left: -#{$hotspot-size / 2};
@@ -26,14 +35,13 @@
     &.hotspot-right {
         left: calc(100% - #{$hotspot-size / 2});
     }
-    
-    &:before {
-        content: ' ';
-        width: 100%;
-        height: 100%;
-        display: block;
-        border-radius: 50%;
-        background: get-color("tertiary", base);
+    &.hotspot-top {
+        left: calc(50% - #{$hotspot-size / 2});
+        top: -#{$hotspot-size / 2};
+    }
+    &.hotspot-bottom {
+        left: calc(50% - #{$hotspot-size / 2});
+        top: calc(100% - #{$hotspot-size / 2});
     }
 }
 
