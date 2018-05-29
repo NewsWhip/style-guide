@@ -4,6 +4,7 @@ import { FeatureAlertComponent } from './feature-alert.component';
 import { FeatureAlertsService } from './feature-alerts.service';
 import { WindowRef } from './windowref';
 import { PopoverModule } from 'ngx-bootstrap/popover';
+import { HotspotComponent } from "./hotspot.component";
 
 @NgModule({
   imports: [
@@ -11,8 +12,8 @@ import { PopoverModule } from 'ngx-bootstrap/popover';
     PopoverModule.forRoot()
   ],
   providers: [WindowRef],
-  declarations: [FeatureAlertComponent],
-  exports: [FeatureAlertComponent]
+  declarations: [FeatureAlertComponent, HotspotComponent],
+  exports: [FeatureAlertComponent, HotspotComponent]
 })
 export class FeatureAlertsModule {
   static forRoot(): ModuleWithProviders {

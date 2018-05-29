@@ -3,8 +3,8 @@
 
     <div class="row">
         <div class="col-md-8 col-sm-12">
+            <h3>Popovers</h3>
             <div>
-
                 <div class="feature-alert-examples">
                     <p nw-feature-alert [params]="getFeatureAlertParams1()"
                        (callToActionClick)="onCTAClick1()">
@@ -38,7 +38,36 @@
                 </p>
 
                 <p class="message">{{message}}</p>
+            </div>
 
+            <h3>Hotspots</h3>
+
+            <div style="margin-bottom: 20px;">
+                <button class="btn btn-primary" style="position: relative;" (mouseenter)="hs1.dismiss()">
+                    Dismiss on hover
+                    <nw-hotspot #hs1 id="testHotspot"></nw-hotspot>
+                </button>
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <button class="btn btn-primary" style="position: relative;" (click)="hs2.dismiss()">
+                    Dismiss on click
+                    <nw-hotspot #hs2  id="testHotspot2" position="right"></nw-hotspot>
+                </button>
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <button class="btn btn-primary" style="position: relative;" (focus)="hs3.dismiss()">
+                    Dismiss on focus
+                    <nw-hotspot #hs3  id="testHotspot3" position="top"></nw-hotspot>
+                </button>
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <button class="btn btn-primary" style="position: relative;" (mouseleave)="hs4.dismiss()">
+                    Dismiss on mouseleave
+                    <nw-hotspot #hs4  id="testHotspot4" position="bottom"></nw-hotspot>
+                </button>
             </div>
 
             <div>
