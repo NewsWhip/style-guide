@@ -5,13 +5,13 @@ import { trigger, transition, animate, style } from "@angular/animations";
 @Component({
     selector: 'nw-hotspot',
     template: `
-        <div [@shrink] *ngIf="isOpen" class="hotspot hotspot-{{position}}"></div>
+        <div [@fadeOut] *ngIf="isOpen" class="hotspot hotspot-{{position}}"></div>
     `,
     animations: [
-        trigger('shrink', [
+        trigger('fadeOut', [
             transition(':leave', [
-                style({ transform: 'scale(1)' }),
-                animate(300, style({ transform: 'scale(0)' }))
+                style({ opacity: 0.5 }),
+                animate(300, style({ opacity: 0 }))
             ])
         ])
     ],
