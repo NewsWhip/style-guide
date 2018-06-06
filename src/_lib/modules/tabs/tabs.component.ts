@@ -4,7 +4,7 @@ import { TabDirective } from './tab.directive';
 @Component({
     selector: 'nw-tabs',
     template: `
-      <ul class="nav nav-tabs nav-{{size}}" role="tablist">
+      <ul class="nav nav-tabs" [ngClass]="tabSizeClass" role="tablist">
           <ng-content></ng-content>
       </ul>
       <div #border class="nav-tabs-active-bar" [ngStyle]="getStyles()"></div>
@@ -24,6 +24,10 @@ export class TabsComponent {
 
     getActiveTab(): TabDirective {
         return this.tabs.filter(t => t.isActive)[0];
+    }
+
+    get tabSizeClass(): string {
+        return `nav-${this.size}`;
     }
 
     getStyles(): Object {
