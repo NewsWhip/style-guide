@@ -24,7 +24,8 @@ export class AppModule { }
 
 @Component({
     template: `
-        <nw-tabs>
+        <!-- Three sizes: sm, md, lg -->
+        <nw-tabs size="md">
             <li *ngFor="let tab of yourTabCollection" nwTab [isActive]="tab.isActive" (click)="setSelectedTab(tab)" role="presentation">
                 <a href="javascript:;" [attr.aria-controls]="tab.name" role="tab">{{tab.name}}</a>
             </li>
