@@ -1,37 +1,39 @@
-import { Component, ContentChildren, QueryList } from '@angular/core';
+import { Component, ContentChildren, QueryList, Input } from '@angular/core';
 import { TabDirective } from './tab.directive';
 
 @Component({
-  selector: 'nw-tabs',
-  template: `
-      <ul class="nav nav-tabs" role="tablist">
+    selector: 'nw-tabs',
+    template: `
+      <ul class="nav nav-tabs nav-{{size}}" role="tablist">
           <ng-content></ng-content>
       </ul>
       <div #border class="nav-tabs-active-bar" [ngStyle]="getStyles()"></div>
   `,
-  styles: [`
-    :host, ul {
-        position: relative;
-    }
+    styles: [`
+        :host, ul {
+            position: relative;
+        }
   `]
 })
 
 export class TabsComponent {
 
-  @ContentChildren(TabDirective) tabs: QueryList<TabDirective> = new QueryList();
+    @Input() size: 'sm' | 'md' | 'lg' = 'md';
 
-  getActiveTab(): TabDirective {
-      return this.tabs.filter(t => t.isActive)[0];
-  }
+    @ContentChildren(TabDirective) tabs: QueryList<TabDirective> = new QueryList();
 
-  getStyles(): Object {
-      const tab: TabDirective = this.getActiveTab();
-      if (tab) {
-        return {
-            width: tab.elRef.nativeElement.getBoundingClientRect().width + 'px',
-            left: tab.elRef.nativeElement.offsetLeft + 'px'
-        };
-      }
-      return {};
-  }
+    getActiveTab(): TabDirective {
+        return this.tabs.filter(t => t.isActive)[0];
+    }
+
+    getStyles(): Object {
+        const tab: TabDirective = this.getActiveTab();
+        if (tab) {
+            return {
+                width: tab.elRef.nativeElement.getBoundingClientRect().width + 'px',
+                left: tab.elRef.nativeElement.offsetLeft + 'px'
+            };
+        }
+        return {};
+    }
 }

@@ -3,7 +3,12 @@ import { Component } from '@angular/core';
 @Component({
     selector: 'app-tabs',
     templateUrl: './tabs.component.html',
-    styleUrls: ['./tabs.component.scss']
+    styles: [`
+        nw-tabs {
+            display: block;
+            margin-bottom: 32px;
+        }
+    `]
 })
 export class TabsComponent {
     public tabCollection = [

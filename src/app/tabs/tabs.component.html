@@ -14,11 +14,27 @@
 
     <h3>Nav Tabs</h3>
 
-    <nw-tabs>
+    <h4>Small</h4>
+    <nw-tabs size="sm">
         <li *ngFor="let tab of tabCollection" nwTab [isActive]="tab.isActive" (click)="setSelectedTab(tab)" role="presentation">
             <a href="javascript:;" [attr.aria-controls]="tab.name" role="tab">{{tab.name}}</a>
         </li>
     </nw-tabs>
+
+    <h4>Medium / default</h4>
+    <nw-tabs size="md">
+        <li *ngFor="let tab of tabCollection" nwTab [isActive]="tab.isActive" (click)="setSelectedTab(tab)" role="presentation">
+            <a href="javascript:;" [attr.aria-controls]="tab.name" role="tab">{{tab.name}}</a>
+        </li>
+    </nw-tabs>
+
+    <h4>Large</h4>
+    <nw-tabs size="lg">
+        <li *ngFor="let tab of tabCollection" nwTab [isActive]="tab.isActive" (click)="setSelectedTab(tab)" role="presentation">
+            <a href="javascript:;" [attr.aria-controls]="tab.name" role="tab">{{tab.name}}</a>
+        </li>
+    </nw-tabs>
+
     <h3>Usage</h3>
     <p>Example usage for the `Nav Tabs` module and recommended structure.</p>
     <markdown path="assets/modules/tabs/README.md"></markdown>

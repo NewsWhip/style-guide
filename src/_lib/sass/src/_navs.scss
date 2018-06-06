@@ -19,10 +19,8 @@
         > a {
             position: relative;
             display: block;
-            padding: $nav-link-padding;
+            @include nav-size($padding-base-vertical, $padding-base-horizontal, 14px, 1);
             color: get-color("gray", 4x-light);
-            font-size: 14px;
-            line-height: 1;
             &:hover,
             &:focus {
                 text-decoration: none;
@@ -80,15 +78,9 @@
     > li {
         float: left;
         margin: 0 12px;
-        // Make the list-items overlay the bottom border
-        // margin-bottom: -1px;
 
         // Actual tabs (as links)
         > a {
-            padding-left: 0;
-            padding-right: 0;
-            line-height: $line-height-base;
-            font-size: 16px;
             color: get-color("gray", 2x-light);
         }
         &:first-child {
@@ -112,6 +104,15 @@
     &.nav-justified {
         @extend .nav-justified;
         @extend .nav-tabs-justified;
+    }
+    &.nav-sm > li > a {
+        @include nav-size($padding-small-vertical + 1, 0, $font-size-small, $line-height-small);
+    }
+    &.nav-md > li > a {
+        @include nav-size($padding-base-vertical + 1, 0, 14px, $line-height-base);
+    }
+    &.nav-lg > li > a {
+        @include nav-size($padding-large-vertical + 1, 0, $font-size-large, $line-height-large);
     }
 }
 
