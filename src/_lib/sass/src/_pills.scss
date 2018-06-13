@@ -1,4 +1,4 @@
-.filter {
+.pill {
     display: inline-flex;
     background: get-color("primary", 2x-light);
     height: $input-height-base;
@@ -24,7 +24,7 @@
             color: get-color("primary", dark);
         }
     }
-    &.filter-sm {
+    &.pill-sm {
         padding: 0 $padding-small-horizontal;
         font-size: $font-size-small;
         height: $input-height-small;
@@ -33,7 +33,7 @@
         @include border-right-radius($input-height-small / 2);
         
     }
-    &.filter-lg {
+    &.pill-lg {
         padding: 0 $padding-large-horizontal;
         font-size: $font-size-large;
         height: $input-height-large;
@@ -46,12 +46,17 @@
         opacity: 0.5;
         cursor: $cursor-disabled;
     }
-    &.filter-excluded {
-        .filter-label {
+    &.pill-excluded {
+        .pill-label {
             text-decoration: line-through;
         }
     }
     &:last-child {
         margin-right: 0;
+    }
+    &.pill-editable {
+        &:hover:not(.disabled) {
+            background: get-color("primary", 3x-light);
+        }
     }
 }
