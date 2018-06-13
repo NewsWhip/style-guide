@@ -26,7 +26,7 @@ import { TablesComponent } from './tables/tables.component';
 import { TooltipsComponent } from './tooltips/tooltips.component';
 import { RelativeWeightComponent } from './relative-weight/relative-weight.component';
 import { ToastsComponent } from './toasts/toasts.component';
-import { FilterComponent } from './filter/filter.component';
+import { DemoPillsComponent } from './pills/pills.component';
 import { TypographyComponent } from './typography/typography.component';
 import { PickerComponent } from './picker/picker.component';
 import { FeatureAlertsComponent } from './feature-alerts/feature-alerts.component';
@@ -49,7 +49,7 @@ import { FeatureAlertsComponent } from './feature-alerts/feature-alerts.componen
     TooltipsComponent,
     RelativeWeightComponent,
     ToastsComponent,
-    FilterComponent,
+    DemoPillsComponent,
     TypographyComponent,
     PickerComponent,
     TabsComponent,

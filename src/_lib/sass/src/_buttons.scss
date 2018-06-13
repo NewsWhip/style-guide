@@ -69,6 +69,13 @@ a.btn {
         get-color("gray", x-light),
         get-color("gray", base));
 }
+.btn-secondary-inverse {
+    @include button-variant(
+        get-color("gray", base),
+        get-color("gray", base),
+        get-color("gray", 6x-light),
+        get-color("gray", 5x-light));
+}
 .btn-danger {
     @include button-variant(
         #ffffff,
