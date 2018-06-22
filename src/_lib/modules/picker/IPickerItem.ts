@@ -1,5 +1,6 @@
 export interface IPickerItem {
   id:any
+  typeId?:any
   parentId:any
   displayName:string
   value:any
