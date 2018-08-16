@@ -1,6 +1,6 @@
-import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
-import { trigger, transition, animate, style, keyframes } from '@angular/animations';
-import { IToast } from './IToast';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component} from '@angular/core';
+import {animate, keyframes, style, transition, trigger} from '@angular/animations';
+import {IToast} from './IToast';
 
 @Component({
     selector: 'nw-toasts',
@@ -37,35 +37,39 @@ import { IToast } from './IToast';
 export class ToastsComponent {
 
     public toasts: IToast[] = [];
-    public toastTimeout: number = 3000;
 
     constructor(private _cdRef: ChangeDetectorRef) { }
 
-    success(message: string) {
+    success(message: string): IToast {
         const toast: IToast = {
             message: message,
             typeId: 'success',
             isDismissable: false
         };
         this.show(toast);
+        return toast;
     }
 
-    error(message: string) {
+    error(message: string): IToast {
         const toast: IToast = {
             message: message,
             typeId: 'error',
             isDismissable: true
         };
         this.show(toast);
+        return toast;
     }
 
-    show(toast: IToast) {
+    show(toast: IToast): IToast {
         this.toasts.push(toast);
         this._cdRef.detectChanges();
 
-        setTimeout(() => {
-            this.removeToast(toast);
-        }, this.toastTimeout);
+        if (toast.autoDismiss) {
+            setTimeout(() => {
+                this.removeToast(toast);
+            }, toast.timeout);
+        }
+        return toast;
     }
 
     dismiss(toast: IToast) {

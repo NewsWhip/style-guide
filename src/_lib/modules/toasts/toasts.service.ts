@@ -9,7 +9,7 @@ export class Toaster {
 
     private _toastPortal: ComponentPortal<ToastsComponent>;
     private _outlet: DomPortalOutlet;
-    private _toastComponentRef: ComponentRef<ToastsComponent>
+    private _toastComponentRef: ComponentRef<ToastsComponent>;
 
     constructor(
         private _cfr: ComponentFactoryResolver,
@@ -38,4 +38,7 @@ export class Toaster {
         this._toastComponentRef.instance.error(message);
     }
 
+    dismiss(toast: IToast): void {
+        this._toastComponentRef.instance.dismiss(toast);
+    }
 }
