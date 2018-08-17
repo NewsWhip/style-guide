@@ -7,6 +7,13 @@
         <button class="btn btn-primary" (click)="addSuccess()">Success</button>
         <button class="btn btn-danger" (click)="addError()">Error</button>
         <button class="btn btn-alt" (click)="addRandom()">Add Random</button>
+        <hr>
+        <button class="btn btn-alt" (click)="addDismissibleOnDemand()">Add dismissible on demand</button>
+        <button class="btn btn-alt" (click)="dismissOnDemand()">Dismiss on demand</button>
+        <br><br>
+        <em>*Note: For simplicity, only one toast at a time is dismissible on demand in this demo,
+            others will stay on screen until you navigate away.</em>
+        <hr>
       </div>
 
       <div>

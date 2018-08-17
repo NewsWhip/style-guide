@@ -3,6 +3,7 @@ import { DOCUMENT } from '@angular/common';
 import { ComponentPortal, DomPortalOutlet } from '@angular/cdk/portal';
 import { ToastsComponent } from './toasts.component';
 import { IToast } from './IToast';
+import { Toast } from './Toast';
 
 @Injectable()
 export class Toaster {
@@ -26,15 +27,15 @@ export class Toaster {
         return this._outlet.attach(this._toastPortal);
     }
 
-    show(toast: IToast) {
+    show(toast: IToast): Toast {
         return this._toastComponentRef.instance.show(toast);
     }
 
-    success(message: string) {
+    success(message: string): Toast {
         return this._toastComponentRef.instance.success(message);
     }
 
-    error(message: string) {
+    error(message: string): Toast {
         return this._toastComponentRef.instance.error(message);
     }
 
