@@ -10,7 +10,7 @@ export class Toaster {
 
     private _toastPortal: ComponentPortal<ToastsComponent>;
     private _outlet: DomPortalOutlet;
-    private _toastComponentRef: ComponentRef<ToastsComponent>;
+    private _toastsComponentRef: ComponentRef<ToastsComponent>;
 
     constructor(
         private _cfr: ComponentFactoryResolver,
@@ -18,7 +18,7 @@ export class Toaster {
         private _injector: Injector,
         @Inject(DOCUMENT) private _document: any) {
 
-        this._toastComponentRef = this._attachOutlet();
+        this._toastsComponentRef = this._attachOutlet();
     }
 
     private _attachOutlet(): ComponentRef<ToastsComponent> {
@@ -28,18 +28,18 @@ export class Toaster {
     }
 
     show(toast: IToast): Toast {
-        return this._toastComponentRef.instance.show(toast);
+        return this._toastsComponentRef.instance.show(toast);
     }
 
     success(message: string): Toast {
-        return this._toastComponentRef.instance.success(message);
+        return this._toastsComponentRef.instance.success(message);
     }
 
     error(message: string): Toast {
-        return this._toastComponentRef.instance.error(message);
+        return this._toastsComponentRef.instance.error(message);
     }
 
     dismiss(toast: IToast): void {
-        this._toastComponentRef.instance.dismiss(toast);
+        this._toastsComponentRef.instance.dismiss(toast);
     }
 }
