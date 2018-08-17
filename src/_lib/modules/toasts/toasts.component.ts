@@ -37,6 +37,7 @@ import {IToast} from './IToast';
 export class ToastsComponent {
 
     public toasts: IToast[] = [];
+    public toastTimeout: number = 3000;
 
     constructor(private _cdRef: ChangeDetectorRef) { }
 
@@ -64,10 +65,10 @@ export class ToastsComponent {
         this.toasts.push(toast);
         this._cdRef.detectChanges();
 
-        if (toast.autoDismiss) {
+        if (!toast.dismissOnDemand) {
             setTimeout(() => {
                 this.removeToast(toast);
-            }, toast.timeout);
+            }, this.toastTimeout);
         }
         return toast;
     }

@@ -27,15 +27,15 @@ export class Toaster {
     }
 
     show(toast: IToast) {
-        this._toastComponentRef.instance.show(toast);
+        return this._toastComponentRef.instance.show(toast);
     }
 
     success(message: string) {
-        this._toastComponentRef.instance.success(message);
+        return this._toastComponentRef.instance.success(message);
     }
 
     error(message: string) {
-        this._toastComponentRef.instance.error(message);
+        return this._toastComponentRef.instance.error(message);
     }
 
     dismiss(toast: IToast): void {
