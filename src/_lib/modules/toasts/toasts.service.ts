@@ -3,13 +3,14 @@ import { DOCUMENT } from '@angular/common';
 import { ComponentPortal, DomPortalOutlet } from '@angular/cdk/portal';
 import { ToastsComponent } from './toasts.component';
 import { IToast } from './IToast';
+import { Toast } from './Toast';
 
 @Injectable()
 export class Toaster {
 
     private _toastPortal: ComponentPortal<ToastsComponent>;
     private _outlet: DomPortalOutlet;
-    private _toastComponentRef: ComponentRef<ToastsComponent>
+    private _toastsComponentRef: ComponentRef<ToastsComponent>;
 
     constructor(
         private _cfr: ComponentFactoryResolver,
@@ -17,7 +18,7 @@ export class Toaster {
         private _injector: Injector,
         @Inject(DOCUMENT) private _document: any) {
 
-        this._toastComponentRef = this._attachOutlet();
+        this._toastsComponentRef = this._attachOutlet();
     }
 
     private _attachOutlet(): ComponentRef<ToastsComponent> {
@@ -26,16 +27,19 @@ export class Toaster {
         return this._outlet.attach(this._toastPortal);
     }
 
-    show(toast: IToast) {
-        this._toastComponentRef.instance.show(toast);
+    show(toast: IToast): Toast {
+        return this._toastsComponentRef.instance.show(toast);
     }
 
-    success(message: string) {
-        this._toastComponentRef.instance.success(message);
+    success(message: string): Toast {
+        return this._toastsComponentRef.instance.success(message);
     }
 
-    error(message: string) {
-        this._toastComponentRef.instance.error(message);
+    error(message: string): Toast {
+        return this._toastsComponentRef.instance.error(message);
     }
 
+    dismiss(toast: IToast): void {
+        this._toastsComponentRef.instance.dismiss(toast);
+    }
 }

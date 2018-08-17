@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Toaster } from '../../_lib/modules/toasts';
 import { IToast } from '../../_lib/modules/toasts';
+import { Toast } from '../../_lib/modules/toasts/Toast';
 
 @Component({
   selector: 'app-toasts',
@@ -14,6 +15,8 @@ export class ToastsComponent {
     'Medium length notification',
     'This message is a total of fifty characters long..'
   ];
+
+  private _dismissibleOnDemandToast: Toast;
 
   constructor(private _toaster: Toaster) {}
 
@@ -35,5 +38,17 @@ export class ToastsComponent {
     };
 
     this._toaster.show(toast);
+  }
+
+  dismissOnDemand() {
+      this._toaster.dismiss(this._dismissibleOnDemandToast);
+  }
+
+  addDismissibleOnDemand() {
+      this._dismissibleOnDemandToast = this._toaster.show({
+          typeId: 'error',
+          message: 'This message is dismissible on demand.',
+          autoDismiss: false
+      });
   }
 }

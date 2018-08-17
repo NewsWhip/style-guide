@@ -1,6 +1,7 @@
-import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
-import { trigger, transition, animate, style, keyframes } from '@angular/animations';
-import { IToast } from './IToast';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component} from '@angular/core';
+import {animate, keyframes, style, transition, trigger} from '@angular/animations';
+import {IToast} from './IToast';
+import {Toast} from './Toast';
 
 @Component({
     selector: 'nw-toasts',
@@ -36,43 +37,45 @@ import { IToast } from './IToast';
 })
 export class ToastsComponent {
 
-    public toasts: IToast[] = [];
-    public toastTimeout: number = 3000;
+    public toasts: Toast[] = [];
 
     constructor(private _cdRef: ChangeDetectorRef) { }
 
-    success(message: string) {
-        const toast: IToast = {
+    success(message: string): Toast {
+        const toast: Toast = new Toast({
             message: message,
             typeId: 'success',
             isDismissable: false
-        };
-        this.show(toast);
+        });
+        return this.show(toast);
     }
 
-    error(message: string) {
-        const toast: IToast = {
+    error(message: string): Toast {
+        const toast: Toast = new Toast({
             message: message,
             typeId: 'error',
             isDismissable: true
-        };
-        this.show(toast);
+        });
+        return this.show(toast);
     }
 
-    show(toast: IToast) {
+    show(toast: Toast): Toast {
         this.toasts.push(toast);
         this._cdRef.detectChanges();
 
-        setTimeout(() => {
-            this.removeToast(toast);
-        }, this.toastTimeout);
+        if (toast.autoDismiss) {
+            setTimeout(() => {
+                this.removeToast(toast);
+            }, toast.dismissTimeout);
+        }
+        return toast;
     }
 
-    dismiss(toast: IToast) {
+    dismiss(toast: Toast) {
         this.removeToast(toast);
     }
 
-    removeToast(toast: IToast) {
+    removeToast(toast: Toast) {
         const index = this.toasts.indexOf(toast);
 
         if (index > -1) {
