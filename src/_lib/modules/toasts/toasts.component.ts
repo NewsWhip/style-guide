@@ -42,33 +42,35 @@ export class ToastsComponent {
     constructor(private _cdRef: ChangeDetectorRef) { }
 
     success(message: string): Toast {
-        const toast: Toast = new Toast({
+        const toast: IToast = {
             message: message,
             typeId: 'success',
             isDismissable: false
-        });
+        };
         return this.show(toast);
     }
 
     error(message: string): Toast {
-        const toast: Toast = new Toast({
+        const toast: IToast = {
             message: message,
             typeId: 'error',
             isDismissable: true
-        });
+        };
         return this.show(toast);
     }
 
-    show(toast: Toast): Toast {
-        this.toasts.push(toast);
+    show(toast: IToast): Toast {
+        const _toast = new Toast(toast);
+
+        this.toasts.push(_toast);
         this._cdRef.detectChanges();
 
-        if (toast.autoDismiss) {
+        if (_toast.autoDismiss) {
             setTimeout(() => {
-                this.removeToast(toast);
-            }, toast.dismissTimeout);
+                this.removeToast(_toast);
+            }, _toast.dismissTimeout);
         }
-        return toast;
+        return _toast;
     }
 
     dismiss(toast: Toast) {
@@ -76,12 +78,16 @@ export class ToastsComponent {
     }
 
     removeToast(toast: Toast) {
-        const index = this.toasts.indexOf(toast);
+        const index = this.getToastIndex(toast);
 
         if (index > -1) {
             this.toasts.splice(index, 1);
             this._cdRef.detectChanges();
         }
+    }
+
+    getToastIndex(toast: Toast): number {
+        return this.toasts.indexOf(toast);
     }
 
 }

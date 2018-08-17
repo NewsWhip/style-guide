@@ -42,4 +42,8 @@ export class Toaster {
     dismiss(toast: IToast): void {
         this._toastsComponentRef.instance.dismiss(toast);
     }
+
+    isToastActive(toast: Toast): boolean {
+        return this._toastsComponentRef.instance.getToastIndex(toast) > -1;
+    }
 }
