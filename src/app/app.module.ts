@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PortalModule } from '@angular/cdk/portal';
 import { MarkdownModule } from 'ngx-md';
 import { NwPickerModule } from '../_lib/modules/picker/picker.module';
@@ -58,6 +58,7 @@ import { FeatureAlertsComponent } from './feature-alerts/feature-alerts.componen
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     routing,
     BrowserAnimationsModule,
     FeatureAlertsModule,
