@@ -2,14 +2,139 @@
   <h2 class="page-header">Typography</h2>
 
   <div>
-    <h3>Interactive Text</h3>
+    <h3 class="nw-text">Type Stack</h3>
 
-    <p>
+    <p class="nw-text">All elements require the class nw-text until all type elements are fully migrated.</p>
+
+    <div class="radio">
+      <input [formControl]="textColor" id="option-light" name="light-dark" type="radio" value="light">
+      <label for="option-light">
+        Light (.nw-text-light)
+      </label>
+    </div>
+    <div class="radio">
+      <input [formControl]="textColor" id="option-dark" name="light-dark" type="radio" value="dark">
+      <label for="option-dark">
+        Dark (.nw-text-dark)
+      </label>
+    </div>
+
+    <table class="table table-bordered box-shadow stack-wrapper" [ngClass]="colorVariant">
+      <thead>
+        <tr>
+          <th>Tag</th>
+          <th>Label</th>
+          <th>Example</th>
+          <th>Classes</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <td>h1</td>
+          <td>Large Display</td>
+          <td>
+            <h1 class="nw-text">{{exampleText}}</h1>
+          </td>
+          <td>nw-text</td>
+        </tr>
+
+        <tr>
+          <td>h3</td>
+          <td>Standard Display</td>
+          <td>
+            <h3 class="nw-text">{{exampleText}}</h3>
+          </td>
+          <td>nw-text</td>
+        </tr>
+
+        <tr>
+          <td>h4</td>
+          <td>Large Heading</td>
+          <td>
+            <h4 class="nw-text">{{exampleText}}</h4>
+          </td>
+          <td>nw-text</td>
+        </tr>
+
+        <tr>
+          <td>h5</td>
+          <td>Standard Heading</td>
+          <td>
+            <h5 class="nw-text">{{exampleText}}</h5>
+          </td>
+          <td>nw-text</td>
+        </tr>
+
+        <tr>
+          <td>p</td>
+          <td>Large Text</td>
+          <td>
+            <p class="nw-text text-large">{{exampleText}}</p>
+          </td>
+          <td>nw-text text-large</td>
+        </tr>
+
+        <tr>
+          <td>p</td>
+          <td>Large All Caps</td>
+          <td>
+            <p class="nw-text text-large text-upper">{{exampleText}}</p>
+          </td>
+          <td>nw-text text-large text-upper</td>
+        </tr>
+
+        <tr>
+          <td>p</td>
+          <td>Standard Text</td>
+          <td>
+            <p class="nw-text">{{exampleText}}</p>
+          </td>
+          <td>nw-text</td>
+        </tr>
+
+        <tr>
+          <td>p</td>
+          <td>Standard All Caps</td>
+          <td>
+            <p class="nw-text text-large">{{exampleText}}</p>
+          </td>
+          <td>nw-text text-large</td>
+        </tr>
+
+        <tr>
+          <td>small</td>
+          <td>Small text</td>
+          <td>
+            <small class="nw-text">{{exampleText}}</small>
+          </td>
+          <td>nw-text</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <hr>
+
+    <h5 class="nw-text">Notes</h5>
+
+    <p class="nw-text">There are currently three font weights available</p>
+
+    <ul>
+      <li>normal</li>
+      <li>bold</li>
+      <li>600 (corresponds to semi-bold)</li>
+    </ul>
+
+    <hr>
+
+    <h3 class="nw-text">Interactive Text</h3>
+
+    <p class="nw-text">
       The interactive text elements control only the color, text-decoration and cursor properties of the text. Font-weight, family
       and size are inherited.
     </p>
 
-    <p>
+    <p class="nw-text">
       <code>:hover</code> styles take precedence over
       <code>:visited</code> styles
     </p>
@@ -17,7 +142,7 @@
     <hr>
 
     <div>
-      <h1>
+      <h1 class="nw-text">
         <a [href]="randomLink" target="_blank" class="nw-link nw-link-primary">
           h1 primary interactive text
         </a>
@@ -31,7 +156,7 @@
     <hr>
 
     <div>
-      <h2>
+      <h2 class="nw-text">
         <a routerLink="/interactive-text" class="nw-link nw-link-secondary">
           h2 secondary interactive text
         </a>
@@ -45,7 +170,7 @@
     <hr>
 
     <div>
-      <p>
+      <p class="nw-text">
         Tertiary interactive text is
         <span class="nw-link nw-link-tertiary">displayed inline</span> like this
       </p>
@@ -58,7 +183,7 @@
     <hr>
 
     <div>
-      <p>
+      <p class="nw-text">
         Inline interactive text is
         <a [href]="randomLink" target="_blank" class="nw-link nw-link-inline">displayed inline</a> like this.
         <br/> Used for inline URLs and also shows a visited state.

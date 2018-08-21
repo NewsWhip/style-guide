@@ -44,6 +44,11 @@ echo -ne "Copying SASS files"
 cp -R src/_lib/sass distribution
 on_complete
 
+# Copy Assets (images and fonts)
+echo -ne "Copying assets (images and fonts)"
+cp -R src/assets distribution
+on_complete
+
 # Copy readme
 echo -ne "Copying README"
 cp README.md distribution

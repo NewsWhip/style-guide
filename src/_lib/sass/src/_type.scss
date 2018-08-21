@@ -353,3 +353,44 @@ address {
       cursor: pointer;
   }
 }
+
+// TEMPORARY CUSTOM nw-text CLASS
+h1, h3, h4, h5,
+.h1, .h3, .h4, .h5 {
+  &.nw-text {
+    line-height: 1.2;
+    margin: 0;
+  }
+}
+
+h1.nw-text, .h1.nw-text { font-weight: normal; font-size: 36px; }
+// No h2 for now
+h3.nw-text, .h3.nw-text { font-weight: normal; font-size: 24px; }
+h4.nw-text, .h4.nw-text { font-weight: bold; font-size: 20px; }
+h5.nw-text, .h5.nw-text { font-weight: bold; font-size: 16px; }
+
+p {
+  &.nw-text {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.4;
+  }
+  &.text-large {
+    font-size: 16px;
+  }
+  &.text-upper {
+    letter-spacing: 0.5px;
+  }
+}
+small, .small {
+  &.nw-text {
+    margin: 0;
+    font-size: 12px;
+  }
+}
+.nw-text-light {
+  color: #ffffff;
+}
+.nw-text-dark {
+  color: get-color("gray", light);
+}
