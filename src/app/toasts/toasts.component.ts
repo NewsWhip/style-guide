@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, TemplateRef } from '@angular/core';
 import { Toaster } from '../../_lib/modules/toasts';
 import { IToast } from '../../_lib/modules/toasts';
 import { Toast } from '../../_lib/modules/toasts/Toast';
@@ -38,6 +38,14 @@ export class ToastsComponent {
     };
 
     this._toaster.show(toast);
+  }
+
+  addCustomToast() {
+    this._toaster.success('<i class="fa fa-snowflake-o"></i> Toast with icon');
+  }
+
+  addTemplateRefToast(ref: TemplateRef<any>) {
+    this._toaster.error(ref);
   }
 
   dismissOnDemand() {

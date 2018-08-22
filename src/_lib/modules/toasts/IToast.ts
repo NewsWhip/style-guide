@@ -1,5 +1,7 @@
+import { TemplateRef } from "@angular/core";
+
 export class IToast {
-    message: string;
+    message: string | TemplateRef<any>;
     typeId: string;
     isDismissable?: boolean;
     autoDismiss?: boolean;

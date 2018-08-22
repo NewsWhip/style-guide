@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, TemplateRef} from '@angular/core';
 import {animate, keyframes, style, transition, trigger} from '@angular/animations';
 import {IToast} from './IToast';
 import {Toast} from './Toast';
@@ -10,7 +10,14 @@ import {Toast} from './Toast';
             <div class="toast toast-{{toast.typeId}}" *ngFor="let toast of toasts" [@slideInOut]>
                 <i class="fa fa-check toast-icon" *ngIf="toast.typeId === 'success'"></i>
                 <i class="fa fa-exclamation toast-icon" *ngIf="toast.typeId === 'error'"></i>
-                <p class="toast-message">{{toast.message}}</p>
+
+                <!-- If templateRef render via ngTemplateOutlet-->
+                <ng-container *ngIf="isTemplateRef(toast.message)">
+                    <ng-container *ngTemplateOutlet="toast.message"></ng-container>
+                </ng-container>
+
+                <p *ngIf="!isTemplateRef(toast.message)" [innerHTML]="toast.message"></p>
+
                 <button class="close" *ngIf="toast.isDismissable" (click)="dismiss(toast)">&times;</button>
             </div>
         </div>
@@ -41,7 +48,11 @@ export class ToastsComponent {
 
     constructor(private _cdRef: ChangeDetectorRef) { }
 
-    success(message: string): Toast {
+    isTemplateRef(value: string | TemplateRef<any>): boolean {
+        return typeof value !== 'string';
+    }
+
+    success(message: string | TemplateRef<any>): Toast {
         const toast: IToast = {
             message: message,
             typeId: 'success',
@@ -50,7 +61,7 @@ export class ToastsComponent {
         return this.show(toast);
     }
 
-    error(message: string): Toast {
+    error(message: string | TemplateRef<any>): Toast {
         const toast: IToast = {
             message: message,
             typeId: 'error',

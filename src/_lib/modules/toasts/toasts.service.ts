@@ -1,4 +1,4 @@
-import { Injectable, ComponentFactoryResolver, ApplicationRef, Injector, Inject, ComponentRef } from '@angular/core';
+import { Injectable, ComponentFactoryResolver, ApplicationRef, Injector, Inject, ComponentRef, TemplateRef } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { ComponentPortal, DomPortalOutlet } from '@angular/cdk/portal';
 import { ToastsComponent } from './toasts.component';
@@ -31,11 +31,11 @@ export class Toaster {
         return this._toastsComponentRef.instance.show(toast);
     }
 
-    success(message: string): Toast {
+    success(message: string | TemplateRef<any>): Toast {
         return this._toastsComponentRef.instance.success(message);
     }
 
-    error(message: string): Toast {
+    error(message: string | TemplateRef<any>): Toast {
         return this._toastsComponentRef.instance.error(message);
     }
 
