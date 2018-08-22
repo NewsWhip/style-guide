@@ -2,6 +2,7 @@ import {ChangeDetectionStrategy, ChangeDetectorRef, Component, TemplateRef} from
 import {animate, keyframes, style, transition, trigger} from '@angular/animations';
 import {IToast} from './IToast';
 import {Toast} from './Toast';
+import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 
 @Component({
     selector: 'nw-toasts',
@@ -16,7 +17,7 @@ import {Toast} from './Toast';
                     <ng-container *ngTemplateOutlet="toast.message"></ng-container>
                 </ng-container>
 
-                <p *ngIf="!isTemplateRef(toast.message)" [innerHTML]="toast.message"></p>
+                <p *ngIf="!isTemplateRef(toast.message)" [innerHTML]="getInnerHTML(toast.message)"></p>
 
                 <button class="close" *ngIf="toast.isDismissable" (click)="dismiss(toast)">&times;</button>
             </div>
@@ -46,10 +47,16 @@ export class ToastsComponent {
 
     public toasts: Toast[] = [];
 
-    constructor(private _cdRef: ChangeDetectorRef) { }
+    constructor(
+        private _cdRef: ChangeDetectorRef,
+        private _domSanitizer: DomSanitizer) { }
 
     isTemplateRef(value: string | TemplateRef<any>): boolean {
         return typeof value !== 'string';
+    }
+
+    getInnerHTML(message: string): SafeHtml {
+        return this._domSanitizer.bypassSecurityTrustHtml(message);
     }
 
     success(message: string | TemplateRef<any>): Toast {
