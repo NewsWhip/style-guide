@@ -7,6 +7,8 @@
         <button class="btn btn-primary" (click)="addSuccess()">Success</button>
         <button class="btn btn-danger" (click)="addError()">Error</button>
         <button class="btn btn-alt" (click)="addRandom()">Add Random</button>
+        <button class="btn btn-alt" (click)="addCustomToast()">Custom HTML</button>
+        <button class="btn btn-alt" (click)="addTemplateRefToast(ref)">Template Ref</button>
         <hr>
         <button class="btn btn-alt" (click)="addDismissibleOnDemand()">Add dismissible on demand</button>
         <button class="btn btn-alt" (click)="dismissOnDemand()">Dismiss on demand</button>
@@ -15,6 +17,16 @@
             others will stay on screen until you navigate away.</em>
         <hr>
       </div>
+
+      <ng-template #ref>
+        <div>
+          <p>Some paragraph text</p>
+          <i class="fa fa-twitter"></i>
+          <div>
+            <a href="https://spike.newswhip.com" class="nw-link nw-link-inline">Navigate to Spike</a>
+          </div>
+        </div>
+      </ng-template>
 
       <div>
         <h3>Implementation details</h3>

@@ -1,7 +1,8 @@
-import {IToast} from './IToast';
+import { TemplateRef } from "@angular/core";
+import { IToast } from './IToast';
 
 export class Toast implements IToast {
-    message: string;
+    message: string | TemplateRef<any>;
     typeId: string;
     isDismissable?: boolean;
     autoDismiss?: boolean = true;
