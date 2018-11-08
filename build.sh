@@ -34,9 +34,23 @@ on_complete
 # Run Angular Compiler for each module
 for module in "${modules[@]}"
 do
-    echo -ne "Building $module module"
-    $NGC -p src/_lib/modules/$module/tsconfig.build.json
-    on_complete
+    TSCONFIG_PATH="src/_lib/modules/$module/tsconfig.build.json"
+
+    # First check that the tsconfig.build.json exists
+    # =============================================================== #
+    # If not we make the assumption that this is not an Angular module
+    # and we simply copy the directory to the distribution folder
+    if [ -e $TSCONFIG_PATH ]
+    then
+        echo -ne "Building $module module"
+        $NGC -p src/_lib/modules/$module/tsconfig.build.json
+        on_complete
+    else
+        echo -ne "$module directory does not contain a tsconfig.build.json file...copying folder to distribution"
+        mkdir -p distribution/$module
+        cp -R src/_lib/modules/$module/. distribution/$module/
+        on_complete
+    fi
 done
 
 # Copy SASS files
