@@ -126,16 +126,16 @@ output {
     border: 1px solid $input-border;
     border-radius: $input-border-radius; // Note: This has no effect on <select>s in some browsers, due to the limited stylability of <select>s in CSS.
     @include transition(border-color ease-in-out .15s, box-shadow ease-in-out .15s);
-    
+
     // Placeholder
     @include placeholder;
-    
+
     // Unstyle the caret on `<select>`s in IE10+.
     &::-ms-expand {
         border: 0;
         background-color: transparent;
     }
-    
+
     // Disabled and read-only inputs
     //
     // HTML5 says that controls under a fieldset > legend:first-child won't be
@@ -146,7 +146,7 @@ output {
     fieldset[disabled] & {
         opacity: 0.5;
     }
-    
+
     &[disabled],
     fieldset[disabled] & {
         cursor: $cursor-disabled;
@@ -196,12 +196,12 @@ input[type="search"] {
         &.form-control {
             line-height: $input-height-base;
         }
-        
+
         &.input-sm,
         .input-group-sm & {
             line-height: $input-height-small;
         }
-        
+
         &.input-lg,
         .input-group-lg & {
             line-height: $input-height-large;
@@ -233,7 +233,7 @@ input[type="search"] {
     margin-top: 10px;
     margin-bottom: 10px;
     line-height: 18px;
-    
+
     label {
         font-weight: normal;
         cursor: pointer;
@@ -270,7 +270,7 @@ input[type="search"] {
         margin-left: -20px;
         margin-top: 4px \9;
         display: none;
-    
+
         &:checked {
             ~ label {
                 &:before {
@@ -413,7 +413,7 @@ input[type="checkbox"] {
     // Remove default margin from `p`
     margin-bottom: 0;
     min-height: ($line-height-computed + $font-size-base);
-    
+
     &.input-lg,
     &.input-sm {
         padding-left: 0;
@@ -490,7 +490,7 @@ input[type="checkbox"] {
 .has-feedback {
     // Enable absolute positioning
     position: relative;
-    
+
     // Ensure icons don't overlap text
     .form-control {
         padding-right: ($input-height-base * 1.25);
@@ -537,7 +537,7 @@ input[type="checkbox"] {
 
 // Reposition feedback icon if input has visible label above
 .has-feedback label {
-    
+
     & ~ .form-control-feedback {
         top: ($line-height-computed + 5); // Height of the `label` and its margin
     }
@@ -571,7 +571,7 @@ input[type="checkbox"] {
 // labels on the left and inputs on the right.
 
 .form-horizontal {
-    
+
     // Consistent vertical alignment of radios and checkboxes
     //
     // Labels also get some reset styles, but that is scoped to a media query below.
@@ -589,12 +589,12 @@ input[type="checkbox"] {
     .checkbox {
         min-height: ($line-height-computed + ($padding-base-vertical + 1));
     }
-    
+
     // Make form groups behave like rows
     .form-group {
         @include make-row;
     }
-    
+
     // Reset spacing and right align labels, but scope to media queries so that
     // labels on narrow viewports stack the same as a default form example.
     @media (min-width: $screen-sm-min) {
@@ -604,7 +604,7 @@ input[type="checkbox"] {
             padding-top: ($padding-base-vertical + 1); // Default padding plus a border
         }
     }
-    
+
     // Validation states
     //
     // Reposition the icon because it's now within a grid column and columns have
@@ -612,7 +612,7 @@ input[type="checkbox"] {
     .has-feedback .form-control-feedback {
         right: floor(($grid-gutter-width / 2));
     }
-    
+
     // Form group sizes
     //
     // Quick utility class for applying `.input-lg` and `.input-sm` styles to the
@@ -637,26 +637,80 @@ input[type="checkbox"] {
 
 .switch {
     @include clearfix;
-    
+
     label {
         float: left;
         line-height: 32px;
         cursor: pointer;
         margin-bottom: 0;
+
+        &.switch-toggle {
+            position: relative;
+            content: " ";
+            display: inline-block;
+            background-color: get-color("gray", base);
+            height: 32px;
+            width: 65px;
+            border-radius: 16px;
+            font-size: 16px;
+            font-weight: lighter;
+            color: #ffffff;
+            overflow: hidden;
+            margin-right: 10px;
+            transition-property: background-color;
+            transition-timing-function: ease-in-out;
+            transition-duration: 300ms;
+
+            .on-off {
+                display: inline-block;
+                position: absolute;
+                top: 3px;
+                left: 3px;
+                background: #ffffff;
+                height: 26px;
+                width: 26px;
+                line-height: 28px;
+                border-radius: 50%;
+                transition-property: left;
+                transition-timing-function: ease-in-out;
+                transition-duration: 300ms;
+                box-shadow: 0px 1px 1px rgba(0,0,0,0.3);
+
+                &::before,
+                &:after {
+                    width: 30px;
+                    display: block;
+                    position: absolute;
+                }
+                &:before {
+                    content: "On";
+                    margin-left: -28px;
+                }
+                &:after {
+                    content: "Off";
+                    margin-left: 32px;
+                }
+                &.no-text {
+                    &:before,
+                    &:after {
+                        content: "";
+                    }
+                }
+            }
+        }
     }
     input {
         position: absolute;
         width: 0;
         height: 0;
         opacity: 0;
-        
+
         &:checked {
             ~ label.switch-toggle {
                 background-color: get-color("secondary", base);
-                
+
                 .on-off {
                     left: 36px;
-                    background: get-color("secondary", 3x-light);
                 }
             }
         }
@@ -672,51 +726,44 @@ input[type="checkbox"] {
             }
         }
     }
-    label.switch-toggle {
-        position: relative;
-        content: " ";
-        display: inline-block;
-        background-color: get-color("gray", base);
-        height: 32px;
-        width: 65px;
-        border-radius: 16px;
-        font-size: 16px;
-        font-weight: lighter;
-        color: #ffffff;
-        overflow: hidden;
-        margin-right: 10px;
-        transition-property: background-color;
-        transition-timing-function: ease-in-out;
-        transition-duration: 300ms;
-        
-        .on-off {
-            display: inline-block;
-            position: absolute;
-            top: 3px;
-            left: 3px;
-            background: get-color("gray", 5x-light);
-            height: 26px;
-            width: 26px;
-            line-height: 28px;
-            border-radius: 50%;
-            transition-property: left;
-            transition-timing-function: ease-in-out;
-            transition-duration: 300ms;
-            
-            &::before,
-            &:after {
-                width: 30px;
-                display: block;
-                position: absolute;
+    &.switch-sm {
+        label {
+            line-height: 24px;
+
+            &.switch-toggle {
+                height: 24px;
+                width: 42px;
+                border-radius: 12px;
+                font-size: 12px;
+
+                .on-off {
+                    height: 18px;
+                    width: 18px;
+                    line-height: 18px;
+                    border-radius: 50%;
+
+                    &:after {
+                        margin-left: 20px;
+                    }
+                    &:before {
+                        margin-left: -20px;
+                    }
+                }
             }
-            &:before {
-                content: "On";
-                margin-left: -28px;
+        }
+        input {
+            &:checked {
+                ~ label.switch-toggle {
+                    .on-off {
+                        left: 21px;
+                    }
+                }
             }
-            &:after {
-                content: "Off";
-                margin-left: 32px;
-            }
+        }
+    }
+    &.switch-pause {
+        .switch-toggle {
+            background-color: get-color("alt", base);
         }
     }
 }
