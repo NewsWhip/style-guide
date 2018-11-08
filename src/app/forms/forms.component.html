@@ -27,7 +27,7 @@
                     <label for="button-group-1">Sample button group</label>
                     <div class="input-group">
                         <input class="form-control" id="button-group-1" type="text" placeholder="Search for a keyword">
-    
+
                         <span class="input-group-btn">
                             <button class="btn btn-primary">
                                 Add
@@ -107,6 +107,7 @@
                 </div>
 
                 <div class="form-group" [class.has-error]="showErrors">
+                    <h3>Checkboxes</h3>
                     <div class="row">
                         <div class="col-sm-4">
                             <div class="checkbox">
@@ -115,7 +116,7 @@
                                     Checkbox
                                 </label>
                             </div>
-                            
+
                         </div>
                         <div class="col-sm-4">
                             <div class="checkbox">
@@ -158,6 +159,7 @@
                 <div class="form-group" [class.has-error]="showErrors">
                     <div class="row">
                         <div class="col-sm-4">
+                            <h3>Radio buttons</h3>
                             <div class="radio">
                                 <input type="radio" id="radio0" name="option" value="option1" checked>
                                 <label for="radio0">
@@ -199,14 +201,15 @@
                                 </label>
                             </div>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="col-sm-8">
+                            <h3>Switches</h3>
                             <div class="switch">
                                 <input type="checkbox" id="switch1" value="option1">
                                 <label for="switch1" class="switch-toggle">
-                                    <span class="on-off"></span>
+                                    <span class="on-off no-text"></span>
                                 </label>
                                 <label for="switch1">
-                                    Switch label
+                                    Switch label  (.no-text)
                                 </label>
                             </div>
 
@@ -227,6 +230,36 @@
                                 </label>
                                 <label for="switch3">
                                     Switch label
+                                </label>
+                            </div>
+
+                            <div class="switch switch-sm">
+                                <input type="checkbox" id="switch4" value="option1">
+                                <label for="switch4" class="switch-toggle">
+                                    <span class="on-off no-text"></span>
+                                </label>
+                                <label for="switch4">
+                                    Switch label small (.no-text)
+                                </label>
+                            </div>
+
+                            <div class="switch switch-pause">
+                                <input type="checkbox" id="switch5" value="option1">
+                                <label for="switch5" class="switch-toggle">
+                                    <span class="on-off no-text"></span>
+                                </label>
+                                <label for="switch5">
+                                    Switch label (.no-text .switch-pause)
+                                </label>
+                            </div>
+
+                            <div class="switch switch-sm switch-pause">
+                                <input type="checkbox" id="switch6" value="option1">
+                                <label for="switch6" class="switch-toggle">
+                                    <span class="on-off no-text"></span>
+                                </label>
+                                <label for="switch6">
+                                    Switch label small (.no-text .switch-pause)
                                 </label>
                             </div>
                         </div>

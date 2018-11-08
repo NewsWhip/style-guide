@@ -45,12 +45,12 @@
     border-radius: $border-radius-base;
     box-shadow: 0 6px 12px rgba(0,0,0,.175);
     background-clip: padding-box;
-    
+
     // // Dividers (basically an hr) within the dropdown
     .divider {
         @include nav-divider($dropdown-divider-bg);
     }
-    
+
     // Links within the dropdown menu
     > li > a {
         display: block;
@@ -63,7 +63,7 @@
         text-decoration: none;
         cursor: pointer;
     }
-    
+
     &.dropdown-menu-arrow {
         &:after, &:before {
             border-style: solid;
@@ -141,7 +141,7 @@
     > .dropdown-menu {
         display: block;
     }
-    
+
     // Remove the outline when :focus is triggered
     > a {
         outline: 0;
@@ -221,21 +221,39 @@
     }
 }
 
+.dropdown-menu-inverse {
+    $dropdown-inverse-link-color: get-color("gray", base);
+    $dropdown-inverese-link-active-bg: get-color("primary", 3x-light);
 
-// Component alignment
-//
-// Reiterate per navbar.less and the modified component alignment there.
+    background: #ffffff;
 
-//   @media (min-width: $grid-float-breakpoint) {
-    //     .navbar-right {
-        //       .dropdown-menu {
-            //         right: 0; left: auto;
-            //       }
-            //       // Necessary for overrides of the default right aligned menu.
-            //       // Will remove come v4 in all likelihood.
-            //       .dropdown-menu-left {
-                //         left: 0; right: auto;
-                //       }
-                //     }
-                //   }
-                
+    > li > a {
+        color: $dropdown-inverse-link-color;
+        cursor: pointer;
+
+        &:hover,
+        &:focus {
+            color: $dropdown-inverse-link-color;
+            background-color: $dropdown-inverese-link-active-bg;
+        }
+    }
+    > .disabled > a {
+        &,
+        &:hover,
+        &:focus {
+            color: $dropdown-inverse-link-color;
+            background-color: transparent;
+        }
+    }
+    > .active > a {
+        &,
+        &:hover,
+        &:focus {
+            color: $dropdown-inverse-link-color;
+            background-color: $dropdown-inverese-link-active-bg;
+        }
+    }
+    .divider {
+        background: get-color("gray", 3x-light);
+    }
+}

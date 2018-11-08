@@ -11,15 +11,15 @@
     &.table-skeleton {
         background: transparent;
 
-        > thead, 
-        > tbody, 
+        > thead,
+        > tbody,
         > tfoot {
             > tr {
                 > th,
                 > td {
                     border-color: get-color("gray", x-light);
                     border-bottom-width: 1px;
-                    border-bottom-style: solid; 
+                    border-bottom-style: solid;
 
                     &:first-child {
                         border-left: none;
@@ -36,7 +36,7 @@
                 border-right: 1px solid get-color("gray", x-light);
             }
         }
-        > thead, 
+        > thead,
         > tfoot {
             tr {
                 > th,
@@ -56,8 +56,8 @@
             }
         }
     }
-    > thead, 
-    > tbody, 
+    > thead,
+    > tbody,
     > tfoot {
         > tr {
             > th,
@@ -98,3 +98,17 @@
         }
     }
 }
+
+.table-tall {
+    > thead,
+    > tbody,
+    > tfoot {
+      > tr {
+        > th,
+        > td {
+          padding-top: 16px;
+          padding-bottom: 16px;
+        }
+      }
+    }
+  }
