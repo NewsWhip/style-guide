@@ -557,6 +557,7 @@ input[type="checkbox"] {
     margin-top: 5px;
     margin-bottom: 10px;
     color: lighten($text-color, 25%); // lighten the text some for contrast
+    font-size: 12px;
 }
 // [converter] extracted as `@mixin form-inline` for libsass compatibility
 .form-inline {
