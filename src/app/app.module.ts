@@ -30,6 +30,7 @@ import { DemoPillsComponent } from './pills/pills.component';
 import { TypographyComponent } from './typography/typography.component';
 import { PickerComponent } from './picker/picker.component';
 import { FeatureAlertsComponent } from './feature-alerts/feature-alerts.component';
+import { AnimationsComponent } from './animations/animations.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { FeatureAlertsComponent } from './feature-alerts/feature-alerts.componen
     TypographyComponent,
     PickerComponent,
     TabsComponent,
-    FeatureAlertsComponent
+    FeatureAlertsComponent,
+    AnimationsComponent
   ],
   imports: [
     BrowserModule,

@@ -20,6 +20,7 @@ import { DemoPillsComponent } from "./pills/pills.component";
 import { TypographyComponent } from "./typography/typography.component";
 import { PickerComponent } from "./picker/picker.component";
 import { FeatureAlertsComponent } from "./feature-alerts/feature-alerts.component";
+import { AnimationsComponent } from "./animations/animations.component";
 
 const appRoutes: Routes = [
     {
@@ -101,6 +102,10 @@ const appRoutes: Routes = [
     {
         path: 'feature-alerts',
         component: FeatureAlertsComponent
+    },
+    {
+        path: 'animations',
+        component: AnimationsComponent
     }
 ];
 
