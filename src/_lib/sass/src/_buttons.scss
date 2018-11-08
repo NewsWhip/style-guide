@@ -106,6 +106,13 @@ a.btn {
         get-color("gray", base),
         get-color("gray", dark));
 }
+.btn-dropdown-inverse {
+    @include button-variant(
+        get-color("gray", base),
+        get-color("gray", base),
+        #ffffff,
+        #ffffff);
+}
 .btn-ghost-alt {
     @include button-variant(
         get-color('gray', 4x-light),
