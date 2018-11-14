@@ -126,10 +126,6 @@
             }
         }
     }
-
-    // Icon Dropdown position
-    // transform: translateY(calc(-100% + 6px));
-
 }
 
 // Hover/Focus state
@@ -251,8 +247,8 @@
             // For nested dropdowns
             .dropdown-submenu > .dropdown-menu {
                 transform: translateY(20%);
-                top: unset;
                 margin-bottom: -2px;
+                top: unset;
             }
         }
     }
