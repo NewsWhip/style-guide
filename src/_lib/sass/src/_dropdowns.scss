@@ -128,7 +128,7 @@
     }
 
     // Icon Dropdown position
-    // Transform: translateY(calc(-100% + 6px));
+    // transform: translateY(calc(-100% + 6px));
 
 }
 
@@ -246,6 +246,13 @@
             &:after, &:before {
                 top: 100%;
                 transform: rotateZ(180deg);
+            }
+
+            // For nested dropdowns
+            .dropdown-submenu > .dropdown-menu {
+                transform: translateY(20%);
+                top: unset;
+                margin-bottom: -2px;
             }
         }
     }
