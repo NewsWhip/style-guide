@@ -35,7 +35,7 @@ label {
     max-width: 100%; // Force IE8 to wrap long content (see https://github.com/twbs/bootstrap/issues/13141)
     margin-bottom: 8px;
     font-weight: normal;
-    color: get-color("gray", 4x-light);
+    color: #ffffff;
 }
 
 
@@ -230,9 +230,7 @@ input[type="search"] {
 .checkbox-inline {
     position: relative;
     display: block;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    line-height: 18px;
+    margin-bottom: 8px;
 
     label {
         font-weight: normal;
@@ -242,18 +240,17 @@ input[type="search"] {
         margin-bottom: 0;
         display: inline-flex;
         align-items: center;
+        color: get-color("gray", 4x-light);
 
         &:before {
             content: "\f00c";
             position: relative;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: center;
             background: #ffffff;
             color: #ffffff;
             width: 16px;
+            min-width: 16px;
             height: 16px;
+            padding-top: 1px;
             margin-right: 8px;
             border-radius: $border-radius-base;
             font-family: FontAwesome;
@@ -345,11 +342,6 @@ input[type="search"] {
             background: white;
         }
     }
-}
-
-.radio + .radio,
-.checkbox + .checkbox {
-    margin-top: -5px; // Move up sibling radios or checkboxes for tighter spacing
 }
 
 // Radios and checkboxes on same line
@@ -644,6 +636,7 @@ input[type="checkbox"] {
         line-height: 32px;
         cursor: pointer;
         margin-bottom: 0;
+        color: get-color("gray", 4x-light);
 
         &.switch-toggle {
             position: relative;
