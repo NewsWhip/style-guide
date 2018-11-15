@@ -100,6 +100,32 @@
             }
         }
     }
+
+    // Nested Dropdown
+    .dropdown-submenu {
+        position:relative;
+
+        &:hover > .dropdown-menu {
+            transition-delay: 0ms;
+            visibility: visible;
+        }
+
+        > .dropdown-menu {
+            transition-property: visibility;
+            transition-delay: 500ms;
+            visibility: hidden;
+            display: block;
+            left: 100%;
+            top: -8px;
+        }
+
+        &.submenu-left {
+            .dropdown-menu {
+                transform: translateX(-100%);
+                left: 0;
+            }
+        }
+    }
 }
 
 // Hover/Focus state
@@ -216,6 +242,11 @@
             &:after, &:before {
                 top: 100%;
                 transform: rotateZ(180deg);
+            }
+            // For nested dropdowns
+            .dropdown-submenu > .dropdown-menu {
+                top: unset;
+                bottom: -8px;
             }
         }
     }
