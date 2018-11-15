@@ -243,12 +243,10 @@
                 top: 100%;
                 transform: rotateZ(180deg);
             }
-
             // For nested dropdowns
             .dropdown-submenu > .dropdown-menu {
-                transform: translateY(20%);
-                margin-bottom: -2px;
                 top: unset;
+                bottom: -8px;
             }
         }
     }

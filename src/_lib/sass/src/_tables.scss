@@ -23,9 +23,11 @@
 
                     &:first-child {
                         border-left: none;
+                        padding-left: 4px;
                     }
                     &:last-child {
                         border-right: none;
+                        padding-right: 4px;
                     }
                 }
             }
@@ -98,17 +100,16 @@
         }
     }
 }
-
 .table-tall {
     > thead,
     > tbody,
     > tfoot {
-      > tr {
-        > th,
-        > td {
-          padding-top: 16px;
-          padding-bottom: 16px;
+        > tr {
+            > th,
+            > td {
+                padding-top: 16px;
+                padding-bottom: 16px;
+            }
         }
-      }
     }
-  }
+}

@@ -1,17 +1,17 @@
 <h2 class="page-header">
     Tables
-    <div class="switch pull-right">
-        <input type="checkbox" id="tall-switch" [(ngModel)]="isTall">
-        <label for="tall-switch" class="switch-toggle">
-            <span class="on-off"></span>
-        </label>
-        <label for="tall-switch">
-            Set tables to "tall"
-        </label>
+
+    <div class="pull-right">
+        <div class="checkbox-inline">
+            <input type="checkbox" id="tall-switch" [(ngModel)]="isTall">
+            <label for="tall-switch">
+                "tall" variant
+            </label>
+        </div>
     </div>
 </h2>
 
-<table class="table" [class.table-tall]="isTall">
+<table class="table" [class.table-tall]="isTall" [class.table-slim]="isSlim">
     <thead>
     <tr>
         <th>Regular Table</th>
@@ -28,7 +28,7 @@
     </tbody>
 </table>
 
-<table class="table table-bordered box-shadow" [class.table-tall]="isTall">
+<table class="table table-bordered box-shadow" [class.table-tall]="isTall" [class.table-slim]="isSlim">
     <thead>
         <tr>
             <th colspan="5">
@@ -52,7 +52,7 @@
     </tfoot>
 </table>
 
-<table class="table table-striped" [class.table-tall]="isTall">
+<table class="table table-striped" [class.table-tall]="isTall" [class.table-slim]="isSlim">
     <thead>
     <tr>
         <th colspan="5">
@@ -106,7 +106,7 @@
     </tfoot>
 </table>
 
-<table class="table table-skeleton" [class.table-tall]="isTall">
+<table class="table table-skeleton" [class.table-tall]="isTall" [class.table-slim]="isSlim">
     <thead>
         <tr>
             <th colspan="3">
@@ -145,7 +145,7 @@
     </tbody>
 </table>
 
-<table class="table table-skeleton" [class.table-tall]="isTall">
+<table class="table table-skeleton" [class.table-tall]="isTall" [class.table-slim]="isSlim">
     <thead>
         <tr>
             <th colspan="3">
