@@ -1,0 +1,54 @@
+<div>
+    <h2 class="page-header">Charts</h2>
+
+    <ng-template #circlePopTemplate let-point="point">
+        <p>{{point[0] | date: 'medium'}}</p>
+        <strong>{{point[1] | number: '1.0-0'}}</strong>
+    </ng-template>
+
+    <form [formGroup]="form">
+        <div formArrayName="selectedMetrics" style="display: flex; flex-direction: row;">
+            <div class="checkbox" style="margin-right: 8px;" *ngFor="let metric of form.controls.selectedMetrics.controls; let i = index">
+                <input id="metric-{{i}}" type="checkbox" [formControlName]="i">
+                <label for="metric-{{i}}">
+                    {{metricNames[i]}}
+                </label>
+            </div>
+        </div>
+    </form>
+
+    <svg style="width: 100%; height: 600px; overflow: visible;"
+        nw-chart
+        [xRange]="xRange"
+        [yRange]="yRange">
+
+        <ng-container *ngFor="let metricName of metricNames">
+            <ng-container *ngIf="isMetricSelected(metricName)">
+                <path [nw-path]="getDataByMetric(metricName)"
+                    stroke="#0084ff"
+                    fill="none"
+                    stroke-width="2px"></path>
+
+                <circle *ngFor="let point of getDataByMetric(metricName); trackBy:circleTrack"
+                    r=5
+                    fill="#0084ff"
+                    [nw-circle]="point"
+                    [popover]="circlePopTemplate"
+                    [popoverContext]="{ point: point }"
+                    container="body"
+                    [outsideClick]="true"></circle>
+            </ng-container>
+        </ng-container>
+
+        <g nw-x-axis
+            fill="none"
+            stroke="#000"
+            [tickCount]="10"
+            [clampTicks]="false"></g>
+
+        <g nw-y-axis
+            fill="none"
+            stroke="#000"
+            [tickCount]="10"></g>
+    </svg>
+</div>
