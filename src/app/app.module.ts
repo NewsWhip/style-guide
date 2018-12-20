@@ -2,12 +2,16 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { PopoverModule } from 'ngx-bootstrap/popover'
 import { PortalModule } from '@angular/cdk/portal';
 import { MarkdownModule } from 'ngx-md';
 import { NwPickerModule } from '../_lib/modules/picker/picker.module';
 import { ToastsModule } from '../_lib/modules/toasts';
 import { FeatureAlertsModule } from '../_lib/modules/feature-alerts';
 import { TabsModule } from '../_lib/modules/tabs';
+import { ChartsModule } from "../_lib/modules/charts/charts.module";
+
+
 import { AppComponent } from './app.component';
 import { ButtonsComponent } from './buttons/buttons.component';
 import { routing } from './app.routing';
@@ -31,6 +35,7 @@ import { TypographyComponent } from './typography/typography.component';
 import { PickerComponent } from './picker/picker.component';
 import { FeatureAlertsComponent } from './feature-alerts/feature-alerts.component';
 import { AnimationsComponent } from './animations/animations.component';
+import { ChartsComponent } from './charts/charts.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +60,8 @@ import { AnimationsComponent } from './animations/animations.component';
     PickerComponent,
     TabsComponent,
     FeatureAlertsComponent,
-    AnimationsComponent
+    AnimationsComponent,
+    ChartsComponent
   ],
   imports: [
     BrowserModule,
@@ -63,13 +69,15 @@ import { AnimationsComponent } from './animations/animations.component';
     ReactiveFormsModule,
     routing,
     BrowserAnimationsModule,
+    PopoverModule.forRoot(),
     FeatureAlertsModule,
     NwPickerModule,
     ToastsModule.forRoot(),
     MarkdownModule.forRoot(),
     FeatureAlertsModule.forRoot(),
     PortalModule,
-    TabsModule
+    TabsModule,
+    ChartsModule
   ],
   bootstrap: [AppComponent]
 })
