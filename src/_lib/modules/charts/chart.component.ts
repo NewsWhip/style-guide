@@ -29,12 +29,10 @@ import { debounceTime } from 'rxjs/operators';
     exportAs: 'nw-chart',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ChartComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy {
+export class ChartComponent implements OnInit, AfterViewInit, OnDestroy {
 
     @Input() width: number = (this._elRef.nativeElement as SVGElement).clientWidth;
-    @Input() height: number = (this._elRef.nativeElement as SVGElement).clientHeight;;
-    @Input() xRange: [number, number] = [0, 0];
-    @Input() yRange: [number, number] = [0, 0];
+    @Input() height: number = (this._elRef.nativeElement as SVGElement).clientHeight;
     @Input() margins: {
         top?: number;
         bottom?: number;
@@ -60,7 +58,6 @@ export class ChartComponent implements OnInit, AfterViewInit, OnChanges, OnDestr
     ngOnInit() {
         this.setDimensions();
         this.setSvg();
-        this.setScales();
         this.setHoverOverlay();
         this.initialize();
 
@@ -71,20 +68,9 @@ export class ChartComponent implements OnInit, AfterViewInit, OnChanges, OnDestr
         this.appendContainer();
     }
 
-    ngOnChanges(changes: SimpleChanges) {
-        if (ChartService._hasRangeChanged(changes.xRange, changes.yRange)) {
-            this.chart.xRange = this.xRange;
-            this.chart.yRange = this.yRange;
-            this.chart.updateDomains();
-        }
-    }
-
     initialize() {
         this.chart.width = this.width;
         this.chart.height = this.height;
-        this.chart.xRange = this.xRange;
-        this.chart.yRange = this.yRange;
-        this.chart.setDomains();
     }
 
     setDimensions(): void {
@@ -113,16 +99,6 @@ export class ChartComponent implements OnInit, AfterViewInit, OnChanges, OnDestr
             .attr("transform", "translate(" + this.margins.left + "," + this.margins.top + ")");
     }
 
-    setScales(): void {
-        this.chart.xScale = scaleTime()
-            .range([0, this.width])
-            .nice();
-
-        this.chart.yScale = scaleLinear()
-            .range([this.height, 0])
-            .nice();
-    }
-
     setHoverOverlay() {
         const self = this;
 
@@ -134,15 +110,15 @@ export class ChartComponent implements OnInit, AfterViewInit, OnChanges, OnDestr
             // TODO: can these events be bound with RxJS?
             .on('mouseout', () => this.nwMouseout.emit())
             .on('mousemove', function() {
-                const position: [number, number] = mouse(this);
-                const coordinates: [number, number] = [
-                    self.chart.xScale.invert(position[0]).valueOf(),
-                    self.chart.yScale.invert(position[1])
-                ];
-                self.nwMousemove.emit({
-                    coordinates,
-                    position
-                })
+                // const position: [number, number] = mouse(this);
+                // const coordinates: [number, number] = [
+                //     self.chart.xScale.invert(position[0]).valueOf(),
+                //     self.chart.yScale.invert(position[1])
+                // ];
+                // self.nwMousemove.emit({
+                //     coordinates,
+                //     position
+                // })
             });
     }
 

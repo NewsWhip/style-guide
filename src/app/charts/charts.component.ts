@@ -1,11 +1,14 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
 import * as moment from 'moment';
+import { scaleTime, scaleLinear } from 'd3-scale';
+import { DecimalPipe } from '@angular/common';
 
 @Component({
     selector: 'app-charts',
     templateUrl: './charts.component.html',
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [DecimalPipe]
 })
 export class ChartsComponent implements OnInit {
 
@@ -86,33 +89,31 @@ export class ChartsComponent implements OnInit {
         }
     };
 
-    public xRange: [number, number];
-    public yRange: [number, number];
-    public randomData: Array<[number, number]>;
-    public chartMargins = {
-        top: 50,
-        bottom: 50,
-        left: 60,
-        right: 60
-    };
-    public metricNames: string[] = [];
-    public form: FormGroup;
-    public xAxisTickFormat: (d: number) => string;
-    public yAxisTickFormat: (d: number) => string;
+    public xDomain: [number, number];
+    public yDomain: [number, number];
+    public xScale = scaleTime();
+    public yScale = scaleLinear();
+    public chartMargins = { top: 50, bottom: 50, left: 60, right: 60 };
+    public xAxisTickFormat = (d) => moment(d).format('h:mma');
+    public yAxisTickFormat = (d) => this._decimalPipe.transform(d, '1.0-0');
     public isHovering: boolean = false;
     public hoverCoordinates: [number, number] = [0,0];
     public hoverPosition: [number, number] = [0,0];
+    public randomData: Array<[number, number]>;
+    public randomYDomain: [number, number]; 
+    
+    public metricNames: string[] = [];
+    public form: FormGroup;
 
-    constructor(private _fb: FormBuilder) { }
+    constructor(
+        private _fb: FormBuilder,
+        private _decimalPipe: DecimalPipe) { }
 
     ngOnInit() {
-        this.xAxisTickFormat = (d) => moment(d).format('h:mma');
-        this.yAxisTickFormat = (d) => (d / 1000).toString() + 'K';
         this.metricNames = this.getMetricNames();
         this.createForm();
-
-        this.setRandomData();
-        this.setRanges();
+        
+        this.generateRandomData()
 
         this.subscribeToFormChange();
     }
@@ -128,7 +129,7 @@ export class ChartsComponent implements OnInit {
 
     subscribeToFormChange() {
         this.form.valueChanges.subscribe(val => {
-            this.setRanges();
+            this.setActiveDomains();
         });
     }
 
@@ -142,8 +143,8 @@ export class ChartsComponent implements OnInit {
         return names;
     }
 
-    setRanges() {
-        let xVals: number[] = [];
+    setActiveDomains() {
+        let xVals: number[] = this.randomData.map(d => d[0]);
         let yVals: number[] = [];
 
         for (const metric in this._timelineData) {
@@ -157,8 +158,8 @@ export class ChartsComponent implements OnInit {
             }
         }
 
-        this.xRange = [Math.min(...xVals), Math.max(...xVals)]
-        this.yRange = [Math.min(...yVals), Math.max(...yVals)]
+        this.xDomain = xVals.length ? [Math.min(...xVals), Math.max(...xVals)] : [0, 0];
+        this.yDomain = yVals.length ? [Math.min(...yVals), Math.max(...yVals)] : [0, 0];
     }
 
     isMetricSelected(metricName: string): boolean {
@@ -183,19 +184,16 @@ export class ChartsComponent implements OnInit {
         return data.sort((a, b) => +a[0] - +b[0]);
     }
 
-    setRandomData(): void {
-        let keys = Object.keys(this._timelineData);
-        let metric = keys[Math.floor(Math.random()*keys.length)];
-
-        this.randomData = this.getDataByMetric(metric);
-    }
-
     onPathAnimationEnd(metric: string) {
         console.log(`${metric} animation ended`)
     }
 
-    circleTrack(index: number, item: [number, number]) {
+    circleTrackValue(index: number, item: [number, number]) {
         return item[0] + item[1];
+    }
+
+    circleTrackIndex(index: number, item: [number, number]) {
+        return index;
     }
 
     onMousemove(event: { coordinates: [number, number], position: [number, number] }) {
@@ -205,9 +203,28 @@ export class ChartsComponent implements OnInit {
     }
 
     onMouseout() {
-        this.hoverCoordinates = [0,0];
-        this.hoverPosition = [0,0];
         this.isHovering = false;
+    }
+
+    generateRandomData(): void {
+        let xDomain: [number, number] = [1545085287756, 1545085287756 + (1000*60*60*24*0.5)]
+        let yDomain: [number, number] = [0, 500];
+        let datapoints: Array<[number, number]> = [];
+
+        for (let index = 0; index < 10; index++) {
+            datapoints.push([this._randomInDomain(xDomain), this._randomInDomain(yDomain)])
+        }
+        this.randomData = datapoints.sort();
+        this.randomYDomain = [
+            0,
+            Math.max(...this.randomData.map(x => x[1]))
+        ];
+
+        this.setActiveDomains();
+    }
+
+    private _randomInDomain(domain: [number, number]): number {
+        return Math.random() * (domain[1] - domain[0]) + domain[0];
     }
 
 }

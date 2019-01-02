@@ -18,6 +18,8 @@ app-charts {
         }
         &.random {
             stroke-dasharray: 2px;
+            stroke-width: 1px;
+            stroke: rgb(255, 136, 0); 
         }
     }
     circle {
@@ -40,11 +42,22 @@ app-charts {
                 stroke: black;
                 fill: none;
                 shape-rendering: crispEdges;
-                stroke-dasharray: 3px;
             }
             text {
                 fill: black;
                 stroke: none;
+            }
+        }
+        &.random-axis {
+            path {
+                stroke-dasharray: 2px;
+                stroke: rgb(255, 136, 0); 
+            }
+        }
+        &.y {
+            .tick:not(:first-of-type) line {
+                stroke-dasharray: 10px 5px;
+                stroke: rgb(182, 182, 182);
             }
         }
     }

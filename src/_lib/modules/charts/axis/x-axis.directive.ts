@@ -2,6 +2,7 @@ import { Directive, ElementRef, Input } from '@angular/core';
 import { axisBottom, axisTop, Axis } from 'd3-axis';
 import { ChartService } from '../chart.service';
 import { AxisBase } from './axis-base';
+import { ScaleTime } from 'd3-scale';
 
 @Directive({
     selector: '[nw-x-axis]',
@@ -10,21 +11,20 @@ import { AxisBase } from './axis-base';
 export class XAxisDirective extends AxisBase {
 
     @Input() align: 'top' | 'bottom' = 'bottom';
+    @Input() domain: [number, number];
+    @Input() scale: ScaleTime<number, number>;
 
     constructor(
         private _chart: ChartService,
         elRef: ElementRef) {
 
-        super(_chart, elRef);
+        super(elRef);
     }
 
-    setAxis() {
+    createAxis() {
         this.axis = this.align === "bottom" ?
-            // TODO: all axis directives need their own scale properties
-            // remove from service
-            // needed for dual/multi-axis graphs
-            axisBottom(this._chart.xScale) :
-            axisTop(this._chart.xScale);
+            axisBottom(this.scale) :
+            axisTop(this.scale);
     }
 
     setTicks() {
@@ -32,7 +32,14 @@ export class XAxisDirective extends AxisBase {
 
         if (this.showGuidlines) {
             this.axis.tickSizeInner(-this._chart.height);
+        } 
+        else {
+            this.axis.tickSizeInner(6);
         }
+    }
+
+    setDomain() {
+        this.scale.domain(this.domain).range([0, this._chart.width]);
     }
 
     render() {

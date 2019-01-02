@@ -1,29 +1,28 @@
-import { Directive, OnInit, Input, ElementRef, OnChanges, SimpleChanges, OnDestroy, Output, EventEmitter } from '@angular/core';
+import { Directive, OnInit, Input, ElementRef, OnChanges, SimpleChanges, OnDestroy, Output, EventEmitter, SimpleChange } from '@angular/core';
 import { select, Selection } from 'd3-selection';
 import { line, Line, curveLinear, CurveFactory } from 'd3-shape';
-import 'd3-transition';
+import { ScaleTime, ScaleLinear } from 'd3-scale';
 import { ChartService } from '../chart.service';
-import { Subscription } from 'rxjs/Subscription';
+import 'd3-transition';
 
 @Directive({
     selector: 'path[nw-path]',
     exportAs: 'nw-path'
 })
-export class PathDirective implements OnInit, OnChanges, OnDestroy {
+export class PathDirective implements OnInit, OnChanges {
 
     @Input('nw-path') data: Array<[number, number]> = [];
-    @Input() curve: CurveFactory = curveLinear;
+    @Input() xDomain: [number, number];
+    @Input() yDomain: [number, number];
+    @Input() xScale: ScaleTime<number, number>;
+    @Input() yScale: ScaleLinear<number, number>;
     @Input() animDuration: number = 1000;
-
-    // TODO: take optional xScale and yScale as inputs
-    // for graphs with multiple domains
-
+    @Input() curve: CurveFactory = curveLinear;
+    
     @Output() animEnd: EventEmitter<null> = new EventEmitter()
 
     public line: Line<[number, number]>;
     public path: Selection<SVGPathElement, Array<[number, number]>, SVGElement, any>;
-
-    private _scaleSub: Subscription;
 
     constructor(
         private _chart: ChartService,
@@ -32,28 +31,31 @@ export class PathDirective implements OnInit, OnChanges, OnDestroy {
     ngOnInit() {
         this.path = select(this._elRef.nativeElement as SVGPathElement);
 
+        this.setDomains();
         this.setLine();
         this.drawLine();
-
-        this.subscribeToScaleChange();
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (this.shouldUpdateLine(changes)) {
+        let isDomainChange = (changes.xDomain || changes.yDomain) && ChartService.haveDomainsChanged(changes.xDomain, changes.yDomain);
+        let isDataChange = changes.data && !changes.data.firstChange && !ChartService.areDatasetsEqual(changes.data.previousValue, changes.data.currentValue);
+   
+        if (isDomainChange || isDataChange) {
+            this.setDomains();
+            this.setLine();
             this.updateLine();
         }
     }
 
-    shouldUpdateLine(changes: SimpleChanges): boolean {
-        return changes.data &&
-            !changes.data.firstChange &&
-            !ChartService.areDatasetsEqual(changes.data.previousValue, changes.data.currentValue)
+    setDomains() {
+        this.xScale.domain(this.xDomain).range([0, this._chart.width]);
+        this.yScale.domain(this.yDomain).range([this._chart.height, 0]);
     }
 
     setLine(): void {
         this.line = line().curve(this.curve)
-            .x(d => this._chart.xScale(d[0]))
-            .y(d => this._chart.yScale(d[1]));
+            .x(d => this.xScale(d[0]))
+            .y(d => this.yScale(d[1]));
     }
 
     drawLine(): void {
@@ -64,23 +66,11 @@ export class PathDirective implements OnInit, OnChanges, OnDestroy {
 
     updateLine(): void {
         this.path
-            // TODO: can this be done without datum?
             .datum(this.data)
             .transition()
             .duration(this.animDuration)
             .attr('d', this.line)
             .on('end', e => this.animEnd.next())
-    }
-
-    subscribeToScaleChange() {
-        this._scaleSub = this._chart.scales$.subscribe(scales => {
-            this.setLine();
-            this.updateLine();
-        })
-    }
-
-    ngOnDestroy() {
-        this._scaleSub.unsubscribe();
     }
 
 }

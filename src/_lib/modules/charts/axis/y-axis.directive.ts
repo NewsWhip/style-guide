@@ -2,6 +2,7 @@ import { Directive, ElementRef, Input } from '@angular/core';
 import { axisLeft, axisRight } from 'd3-axis';
 import { ChartService } from '../chart.service';
 import { AxisBase } from './axis-base';
+import { ScaleLinear } from 'd3-scale';
 
 @Directive({
     selector: '[nw-y-axis]',
@@ -10,18 +11,20 @@ import { AxisBase } from './axis-base';
 export class YAxisDirective extends AxisBase {
 
     @Input() align: 'left' | 'right' = 'left';
+    @Input() domain: [number, number] = [0, 0];
+    @Input() scale: ScaleLinear<number, number>;
 
     constructor(
         private _chart: ChartService,
         elRef: ElementRef) {
 
-        super(_chart, elRef);
+        super(elRef);
     }
 
-    setAxis() {
+    createAxis() {
         this.axis = this.align === "left" ?
-            axisLeft(this._chart.yScale) :
-            axisRight(this._chart.yScale);
+            axisLeft(this.scale) :
+            axisRight(this.scale);
     }
 
     setTicks() {
@@ -30,6 +33,13 @@ export class YAxisDirective extends AxisBase {
         if (this.showGuidlines) {
             this.axis.tickSizeInner(-this._chart.width);
         }
+        else {
+            this.axis.tickSizeInner(6);
+        }
+    }
+
+    setDomain() {
+        this.scale.domain(this.domain).range([this._chart.height, 0]);
     }
 
     render() {

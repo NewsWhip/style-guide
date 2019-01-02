@@ -1,18 +1,21 @@
 import { Directive, Input, OnInit, ElementRef, OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
 import { ChartService } from '../chart.service';
-import { select, Selection } from 'd3';
-import { Subscription } from 'rxjs/Subscription';
+import { select, Selection } from 'd3-selection';
+import { ScaleTime, ScaleLinear } from 'd3-scale';
 
 @Directive({
     selector: 'circle[nw-circle]'
 })
-export class CircleDirective implements OnInit, OnChanges, OnDestroy {
+export class CircleDirective implements OnInit, OnChanges {
 
     @Input('nw-circle') point: [number, number];
+    @Input() xDomain: [number, number];
+    @Input() yDomain: [number, number];
+    @Input() xScale: ScaleTime<number, number>;
+    @Input() yScale: ScaleLinear<number, number>;
+    @Input() animDuration: number = 1000;
 
     public circle: Selection<SVGCircleElement, [number, number], SVGElement, any>;
-
-    private _scaleSub: Subscription;
 
     constructor(
         private _chart: ChartService,
@@ -21,22 +24,23 @@ export class CircleDirective implements OnInit, OnChanges, OnDestroy {
     ngOnInit() {
         this.circle = select(this._elRef.nativeElement as SVGCircleElement);
 
+        this.setDomains();
         this.draw();
-
-        this.subscribeToScaleChange();
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (this.shouldUpdate(changes)) {
+        let isDomainChange = (changes.xDomain || changes.yDomain) && ChartService.haveDomainsChanged(changes.xDomain, changes.yDomain);
+        let isDataChange = changes.point && !changes.point.firstChange && !ChartService.areDatasetsEqual([changes.point.previousValue], [changes.point.currentValue]);
+   
+        if (isDomainChange || isDataChange) {
+            this.setDomains();
             this.update();
         }
     }
 
-    shouldUpdate(changes: SimpleChanges): boolean {
-        return changes &&
-            changes.point &&
-            !changes.point.firstChange &&
-            !ChartService.areDatasetsEqual([changes.point.previousValue], [changes.point.currentValue])
+    setDomains() {
+        this.xScale.domain(this.xDomain).range([0, this._chart.width]);
+        this.yScale.domain(this.yDomain).range([this._chart.height, 0]);
     }
 
     draw(): void {
@@ -47,22 +51,12 @@ export class CircleDirective implements OnInit, OnChanges, OnDestroy {
     update() {
         this.circle
             .transition()
-            .duration(1000)
+            .duration(this.animDuration)
             .attr("transform", this.transform);
     }
 
     get transform(): string {
-        return `translate(${this._chart.xScale(this.point[0])}, ${this._chart.yScale(this.point[1])})`;
-    }
-
-    subscribeToScaleChange() {
-        this._scaleSub = this._chart.scales$.subscribe(scales => {
-            this.update();
-        })
-    }
-
-    ngOnDestroy() {
-        this._scaleSub.unsubscribe();
+        return `translate(${this.xScale(this.point[0])}, ${this.yScale(this.point[1])})`;
     }
 
 }
