@@ -94,14 +94,16 @@ export class ChartsComponent implements OnInit {
     public xScale = scaleTime();
     public yScale = scaleLinear();
     public chartMargins = { top: 50, bottom: 50, left: 60, right: 60 };
-    public xAxisTickFormat = (d) => moment(d).format('h:mma');
-    public yAxisTickFormat = (d) => this._decimalPipe.transform(d, '1.0-0');
+    public xAxisTickFormat = (d: Date) => moment(d).format('h:mma');
+    public yAxisTickFormat = (d: number) => this._decimalPipe.transform(d, '1.0-0');
+
     public isHovering: boolean = false;
-    public hoverCoordinates: [number, number] = [0,0];
     public hoverPosition: [number, number] = [0,0];
+    public mainScaleHoverCoordinates: [Date, number];
+    public randomScaleHoverCoordinates: [Date, number];
     public randomData: Array<[number, number]>;
-    public randomYDomain: [number, number]; 
-    
+    public randomYDomain: [number, number];
+
     public metricNames: string[] = [];
     public form: FormGroup;
 
@@ -112,7 +114,7 @@ export class ChartsComponent implements OnInit {
     ngOnInit() {
         this.metricNames = this.getMetricNames();
         this.createForm();
-        
+
         this.generateRandomData()
 
         this.subscribeToFormChange();
@@ -196,9 +198,17 @@ export class ChartsComponent implements OnInit {
         return index;
     }
 
-    onMousemove(event: { coordinates: [number, number], position: [number, number] }) {
-        this.hoverCoordinates = event.coordinates;
-        this.hoverPosition = event.position;
+    onMousemove(p: [number, number]) {
+        this.hoverPosition = p;
+        this.mainScaleHoverCoordinates = [
+            this.xScale.domain(this.xDomain).invert(p[0]),
+            this.yScale.domain(this.yDomain).invert(p[1])
+        ];
+        this.randomScaleHoverCoordinates = [
+            this.xScale.domain(this.xDomain).invert(p[0]),
+            this.yScale.domain(this.randomYDomain).invert(p[1])
+        ];
+
         this.isHovering = true;
     }
 
@@ -207,7 +217,7 @@ export class ChartsComponent implements OnInit {
     }
 
     generateRandomData(): void {
-        let xDomain: [number, number] = [1545085287756, 1545085287756 + (1000*60*60*24*0.5)]
+        let xDomain: [number, number] = [1545085287756, 1545085287756 + (1000*60*60*24*0.5)];
         let yDomain: [number, number] = [0, 500];
         let datapoints: Array<[number, number]> = [];
 

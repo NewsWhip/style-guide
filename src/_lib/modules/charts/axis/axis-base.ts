@@ -1,11 +1,12 @@
 import { Input, OnInit, OnDestroy, ElementRef, OnChanges, SimpleChanges } from "@angular/core";
 import { Axis, AxisTimeInterval } from 'd3-axis';
-import { ChartService } from "../chart.service";
+import { ChartUtils } from "../chart.utils";
 import { select, Selection } from "d3-selection";
 
 export abstract class AxisBase implements OnInit, OnChanges {
 
-    
+    @Input() width: number;
+    @Input() height: number;
     @Input() tickFormat: (value: number | Date | { valueOf(): number; }) => string
     @Input() tickCount: number | AxisTimeInterval;
     @Input() tickSizeOuter: number = 6;
@@ -27,10 +28,10 @@ export abstract class AxisBase implements OnInit, OnChanges {
     }
 
     ngOnChanges(c: SimpleChanges) {
-        let isDomainChange = ChartService.hasInputChanged(c.domain);
-        let isTickSettingsChange = ChartService.hasInputChanged(c.tickCount) ||
-            ChartService.hasInputChanged(c.tickSizeOuter) ||
-            ChartService.hasInputChanged(c.showGuidlines);
+        let isDomainChange = ChartUtils.hasInputChanged(c.domain);
+        let isTickSettingsChange = ChartUtils.hasInputChanged(c.tickCount) ||
+            ChartUtils.hasInputChanged(c.tickSizeOuter) ||
+            ChartUtils.hasInputChanged(c.showGuidlines);
 
         if (isDomainChange || isTickSettingsChange) {
             this.setDomain();

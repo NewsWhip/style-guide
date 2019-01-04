@@ -1,6 +1,6 @@
 import { Directive, ElementRef, Input } from '@angular/core';
 import { axisLeft, axisRight } from 'd3-axis';
-import { ChartService } from '../chart.service';
+import { ChartUtils } from '../chart.utils';
 import { AxisBase } from './axis-base';
 import { ScaleLinear } from 'd3-scale';
 
@@ -14,10 +14,7 @@ export class YAxisDirective extends AxisBase {
     @Input() domain: [number, number] = [0, 0];
     @Input() scale: ScaleLinear<number, number>;
 
-    constructor(
-        private _chart: ChartService,
-        elRef: ElementRef) {
-
+    constructor(elRef: ElementRef) {
         super(elRef);
     }
 
@@ -31,7 +28,7 @@ export class YAxisDirective extends AxisBase {
         super.setTicks();
 
         if (this.showGuidlines) {
-            this.axis.tickSizeInner(-this._chart.width);
+            this.axis.tickSizeInner(-this.width);
         }
         else {
             this.axis.tickSizeInner(6);
@@ -39,11 +36,11 @@ export class YAxisDirective extends AxisBase {
     }
 
     setDomain() {
-        this.scale.domain(this.domain).range([this._chart.height, 0]);
+        this.scale.domain(this.domain).range([this.height, 0]);
     }
 
     render() {
-        let xTranslation = this.align === "right" ? this._chart.width : 0;
+        let xTranslation = this.align === "right" ? this.width : 0;
 
         this.axisSelection
             .attr('transform', "translate(" + xTranslation + ", 0)")

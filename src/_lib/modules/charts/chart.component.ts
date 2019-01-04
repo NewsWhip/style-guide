@@ -1,7 +1,7 @@
-import { Component, ElementRef, Input, OnInit, ViewChild, AfterViewInit, OnChanges, SimpleChanges, ChangeDetectionStrategy, HostBinding, HostListener, OnDestroy, Output, EventEmitter } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild, AfterViewInit, ChangeDetectionStrategy, HostBinding, HostListener, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { select, Selection, mouse } from 'd3-selection';
 import { scaleTime, scaleLinear } from 'd3-scale';
-import { ChartService } from './chart.service';
+import { ChartUtils } from './chart.utils';
 import { Subject } from 'rxjs/Subject';
 import { Subscription } from 'rxjs/Subscription';
 import { debounceTime } from 'rxjs/operators';
@@ -25,7 +25,7 @@ import { debounceTime } from 'rxjs/operators';
             <ng-content></ng-content>
         </svg:g>
     `,
-    providers: [ChartService],
+    providers: [ChartUtils],
     exportAs: 'nw-chart',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -43,7 +43,7 @@ export class ChartComponent implements OnInit, AfterViewInit, OnDestroy {
     @ViewChild('chartContainer') chartContainer: ElementRef;
     @ViewChild('hoverOverlay') hoverOverlay: ElementRef;
 
-    @Output() nwMousemove: EventEmitter<{ coordinates: [number, number], position: [number, number]}> = new EventEmitter();
+    @Output() nwMousemove: EventEmitter<[number, number]> = new EventEmitter();
     @Output() nwMouseout: EventEmitter<null> = new EventEmitter();
 
     public svg: Selection<SVGElement, any, HTMLElement, any>;
@@ -53,24 +53,18 @@ export class ChartComponent implements OnInit, AfterViewInit, OnDestroy {
 
     constructor(
         private _elRef: ElementRef,
-        public chart: ChartService) {}
+        public chart: ChartUtils) {}
 
     ngOnInit() {
         this.setDimensions();
         this.setSvg();
         this.setHoverOverlay();
-        this.initialize();
 
         this.subscribeToWindowResize();
     }
 
     ngAfterViewInit() {
         this.appendContainer();
-    }
-
-    initialize() {
-        this.chart.width = this.width;
-        this.chart.height = this.height;
     }
 
     setDimensions(): void {
@@ -107,18 +101,10 @@ export class ChartComponent implements OnInit, AfterViewInit, OnDestroy {
             .attr("height", this.height)
             .style('fill', 'none')
             .style('pointer-events', 'all')
-            // TODO: can these events be bound with RxJS?
             .on('mouseout', () => this.nwMouseout.emit())
             .on('mousemove', function() {
-                // const position: [number, number] = mouse(this);
-                // const coordinates: [number, number] = [
-                //     self.chart.xScale.invert(position[0]).valueOf(),
-                //     self.chart.yScale.invert(position[1])
-                // ];
-                // self.nwMousemove.emit({
-                //     coordinates,
-                //     position
-                // })
+                // emits the current mouse position
+                self.nwMousemove.emit(mouse(this))
             });
     }
 
@@ -132,7 +118,7 @@ export class ChartComponent implements OnInit, AfterViewInit, OnDestroy {
     subscribeToWindowResize() {
         this._windowResizeSub = this._windowResize$.asObservable()
             .pipe(debounceTime(500))
-            .subscribe(res => {
+            .subscribe(_ => {
                 this.setViewBox();
             });
     }

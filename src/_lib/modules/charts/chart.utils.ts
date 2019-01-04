@@ -1,10 +1,7 @@
 import { Injectable, SimpleChange } from "@angular/core";
 
 @Injectable()
-export class ChartService {
-
-    public width: number;
-    public height: number;
+export class ChartUtils {
 
     static areDatasetsEqual(a: Array<[number, number]>, b: Array<[number, number]>) {
         return a.length === b.length &&
@@ -18,7 +15,7 @@ export class ChartService {
     }
 
     static hasInputChanged(input: SimpleChange): boolean {
-        return input && 
+        return input &&
             !input.firstChange &&
             input.previousValue !== input.currentValue;
     }

@@ -1,5 +1,5 @@
-import { Directive, Input, OnInit, ElementRef, OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
-import { ChartService } from '../chart.service';
+import { Directive, Input, OnInit, ElementRef, OnChanges, SimpleChanges } from '@angular/core';
+import { ChartUtils } from '../chart.utils';
 import { select, Selection } from 'd3-selection';
 import { ScaleTime, ScaleLinear } from 'd3-scale';
 
@@ -9,6 +9,8 @@ import { ScaleTime, ScaleLinear } from 'd3-scale';
 export class CircleDirective implements OnInit, OnChanges {
 
     @Input('nw-circle') point: [number, number];
+    @Input() width: number;
+    @Input() height: number;
     @Input() xDomain: [number, number];
     @Input() yDomain: [number, number];
     @Input() xScale: ScaleTime<number, number>;
@@ -17,9 +19,7 @@ export class CircleDirective implements OnInit, OnChanges {
 
     public circle: Selection<SVGCircleElement, [number, number], SVGElement, any>;
 
-    constructor(
-        private _chart: ChartService,
-        private _elRef: ElementRef) {}
+    constructor(private _elRef: ElementRef) {}
 
     ngOnInit() {
         this.circle = select(this._elRef.nativeElement as SVGCircleElement);
@@ -29,9 +29,9 @@ export class CircleDirective implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        let isDomainChange = (changes.xDomain || changes.yDomain) && ChartService.haveDomainsChanged(changes.xDomain, changes.yDomain);
-        let isDataChange = changes.point && !changes.point.firstChange && !ChartService.areDatasetsEqual([changes.point.previousValue], [changes.point.currentValue]);
-   
+        let isDomainChange = (changes.xDomain || changes.yDomain) && ChartUtils.haveDomainsChanged(changes.xDomain, changes.yDomain);
+        let isDataChange = changes.point && !changes.point.firstChange && !ChartUtils.areDatasetsEqual([changes.point.previousValue], [changes.point.currentValue]);
+
         if (isDomainChange || isDataChange) {
             this.setDomains();
             this.update();
@@ -39,8 +39,8 @@ export class CircleDirective implements OnInit, OnChanges {
     }
 
     setDomains() {
-        this.xScale.domain(this.xDomain).range([0, this._chart.width]);
-        this.yScale.domain(this.yDomain).range([this._chart.height, 0]);
+        this.xScale.domain(this.xDomain).range([0, this.width]);
+        this.yScale.domain(this.yDomain).range([this.height, 0]);
     }
 
     draw(): void {

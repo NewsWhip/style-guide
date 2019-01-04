@@ -22,26 +22,34 @@
 
             <!-- Axes -->
             <g class="x axis nw-slot-2" nw-x-axis
+                [width]="600"
+                [height]="400"
                 [domain]="xDomain"
                 [scale]="xScale"
                 [tickFormat]="xAxisTickFormat"
                 [tickCount]="8"></g>
 
             <g class="y axis nw-slot-2" nw-y-axis
+                [width]="600"
+                [height]="400"
                 [domain]="yDomain"
                 [scale]="yScale"
                 [tickFormat]="yAxisTickFormat"
                 [showGuidlines]="true"></g>
 
             <g class="y axis random-axis nw-slot-2" nw-y-axis align="right"
+                [width]="600"
+                [height]="400"
                 [domain]="randomYDomain"
                 [scale]="yScale"
                 [tickCount]="4"
                 [showGuidlines]="yDomain[0] === 0 && yDomain[1] === 0"></g>
 
             <!-- Hover lines -->
-            <!-- <path class="hover-path nw-slot-1" *ngIf="isHovering"
-                [nw-path]="[[hoverCoordinates[0], yDomain[0]], [hoverCoordinates[0], yDomain[1]]]"
+            <path class="hover-path nw-slot-1" *ngIf="isHovering"
+                [nw-path]="[[mainScaleHoverCoordinates[0], yDomain[0]], [mainScaleHoverCoordinates[0], yDomain[1]]]"
+                [width]="600"
+                [height]="400"
                 [xDomain]="xDomain"
                 [yDomain]="yDomain"
                 [xScale]="xScale"
@@ -49,16 +57,20 @@
                 [animDuration]="0"></path>
 
             <path class="hover-path nw-slot-1" *ngIf="isHovering"
-                [nw-path]="[[xDomain[0], hoverCoordinates[1]], [xDomain[1], hoverCoordinates[1]]]"
+                [nw-path]="[[xDomain[0], mainScaleHoverCoordinates[1]], [xDomain[1], mainScaleHoverCoordinates[1]]]"
+                [width]="600"
+                [height]="400"
                 [xDomain]="xDomain"
                 [yDomain]="yDomain"
                 [xScale]="xScale"
                 [yScale]="yScale"
-                [animDuration]="0"></path> -->
+                [animDuration]="0"></path>
 
             <!-- Paths -->
             <path class="fb-comments" *ngIf="isMetricSelected('fbComments')"
                 [nw-path]="getDataByMetric('fbComments')"
+                [width]="600"
+                [height]="400"
                 [xDomain]="xDomain"
                 [yDomain]="yDomain"
                 [xScale]="xScale"
@@ -67,6 +79,8 @@
 
             <path class="tw-shares" *ngIf="isMetricSelected('twShares')"
                 [nw-path]="getDataByMetric('twShares')"
+                [width]="600"
+                [height]="400"
                 [xDomain]="xDomain"
                 [yDomain]="yDomain"
                 [xScale]="xScale"
@@ -74,6 +88,8 @@
 
             <path class="fb-total" *ngIf="isMetricSelected('fbTotalEngagement')"
                 [nw-path]="getDataByMetric('fbTotalEngagement')"
+                [width]="600"
+                [height]="400"
                 [xDomain]="xDomain"
                 [yDomain]="yDomain"
                 [xScale]="xScale"
@@ -81,6 +97,8 @@
 
             <path class="random"
                 [nw-path]="randomData"
+                [width]="600"
+                [height]="400"
                 [xDomain]="xDomain"
                 [yDomain]="randomYDomain"
                 [xScale]="xScale"
@@ -90,6 +108,8 @@
             <ng-container *ngIf="isMetricSelected('fbComments')">
                 <circle *ngFor="let point of getDataByMetric('fbComments'); trackBy:circleTrackValue"
                     [nw-circle]="point"
+                    [width]="600"
+                    [height]="400"
                     [xDomain]="xDomain"
                     [yDomain]="yDomain"
                     [xScale]="xScale"
@@ -103,6 +123,8 @@
 
             <circle *ngFor="let point of randomData; trackBy:circleTrackIndex"
                 [nw-circle]="point"
+                [width]="600"
+                [height]="400"
                 [xDomain]="xDomain"
                 [yDomain]="randomYDomain"
                 [xScale]="xScale"
@@ -123,41 +145,23 @@
             <h3 class="nw-text nw-text-light">Hover data</h3>
             <hr>
             <p class="nw-text nw-text-light">
-                {{hoverCoordinates[0] | date: 'medium'}}
+                {{mainScaleHoverCoordinates[0] | date: 'medium'}}
             </p>
             <p class="nw-text nw-text-light">
-                {{hoverCoordinates[1] | number: '1.0-0'}}
+                {{mainScaleHoverCoordinates[1] | number: '1.0-0'}}
+            </p>
+
+            <hr>
+
+            <p class="nw-text nw-text-light">
+                {{randomScaleHoverCoordinates[0] | date: 'medium'}}
+            </p>
+            <p class="nw-text nw-text-light">
+                {{randomScaleHoverCoordinates[1] | number: '1.0-0'}}
             </p>
         </div>
     </div>
 
     <button class="btn btn-md btn-primary" (click)="generateRandomData()">Randomise</button>
 
-    <!-- RESPONSIVE GRAPH -->
-
-    <!-- <div class="row">
-        <div class="col-sm-6">
-            <div class="chart-container">
-                <svg nw-chart
-                    [xDomain]="xDomain"
-                    [yDomain]="yDomain"
-                    [margins]="chartMargins">
-
-                    <path class="fb-comments" *ngIf="isMetricSelected('fbComments')"
-                        [nw-path]="getDataByMetric('fbComments')"
-                        (animEnd)="onPathAnimationEnd('fbComments')"></path>
-
-                    <path class="tw-shares" *ngIf="isMetricSelected('twShares')"
-                        [nw-path]="getDataByMetric('twShares')"></path>
-
-                    <path class="fb-total" *ngIf="isMetricSelected('fbTotalEngagement')"
-                        [nw-path]="getDataByMetric('fbTotalEngagement')"></path>
-
-                    <g class="x axis" nw-x-axis></g>
-                    <g class="y axis" nw-y-axis></g>
-                </svg>
-            </div>
-        </div>
-        <div class="col-sm-6"></div>
-    </div> -->
 </div>

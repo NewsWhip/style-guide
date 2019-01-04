@@ -1,6 +1,6 @@
 import { Directive, ElementRef, Input } from '@angular/core';
 import { axisBottom, axisTop, Axis } from 'd3-axis';
-import { ChartService } from '../chart.service';
+import { ChartUtils } from '../chart.utils';
 import { AxisBase } from './axis-base';
 import { ScaleTime } from 'd3-scale';
 
@@ -14,10 +14,7 @@ export class XAxisDirective extends AxisBase {
     @Input() domain: [number, number];
     @Input() scale: ScaleTime<number, number>;
 
-    constructor(
-        private _chart: ChartService,
-        elRef: ElementRef) {
-
+    constructor(elRef: ElementRef) {
         super(elRef);
     }
 
@@ -31,19 +28,19 @@ export class XAxisDirective extends AxisBase {
         super.setTicks();
 
         if (this.showGuidlines) {
-            this.axis.tickSizeInner(-this._chart.height);
-        } 
+            this.axis.tickSizeInner(-this.height);
+        }
         else {
             this.axis.tickSizeInner(6);
         }
     }
 
     setDomain() {
-        this.scale.domain(this.domain).range([0, this._chart.width]);
+        this.scale.domain(this.domain).range([0, this.width]);
     }
 
     render() {
-        let yTranslation = this.align === "bottom" ? this._chart.height : 0;
+        let yTranslation = this.align === "bottom" ? this.height : 0;
 
         this.axisSelection
             .attr('transform', "translate(0," + yTranslation + ")")
