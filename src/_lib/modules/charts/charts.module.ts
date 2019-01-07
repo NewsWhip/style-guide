@@ -5,6 +5,7 @@ import { PathDirective } from './path/path.directive';
 import { XAxisDirective } from './axis/x-axis.directive';
 import { YAxisDirective } from './axis/y-axis.directive';
 import { CircleDirective } from './circle/circle.directive';
+import { BrushDirective } from './brush/brush.directive';
 
 @NgModule({
     imports: [
@@ -15,14 +16,16 @@ import { CircleDirective } from './circle/circle.directive';
         PathDirective,
         XAxisDirective,
         YAxisDirective,
-        CircleDirective
+        CircleDirective,
+        BrushDirective
     ],
     exports: [
         ChartComponent,
         PathDirective,
         XAxisDirective,
         YAxisDirective,
-        CircleDirective
+        CircleDirective,
+        BrushDirective
     ]
 })
 export class ChartsModule { }

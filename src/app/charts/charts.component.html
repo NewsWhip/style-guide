@@ -13,12 +13,18 @@
     </form>
 
     <div style="display: flex; flex-direction: row;">
-        <svg nw-chart
+        <svg nw-chart nw-brush
             [width]="600"
             [height]="400"
             [margins]="chartMargins"
             (nwMousemove)="onMousemove($event)"
             (nwMouseout)="onMouseout()">
+
+            <g nw-brush *ngIf="showBrush.value"
+                [width]="600"
+                [height]="400"
+                [dimension]="brushType.value"
+                (brushEnd)="onBrushSelection($event)"></g>
 
             <!-- Axes -->
             <g class="x axis nw-slot-2" nw-x-axis
@@ -140,6 +146,41 @@
             <p>{{point[0] | date: 'medium'}}</p>
             <strong>{{point[1] | number: '1.0-0'}}</strong>
         </ng-template>
+
+        <div style="margin-left: 16px;">
+            <div class="checkbox">
+                <input type="checkbox" [formControl]="showBrush" id="show-brush">
+                <label for="show-brush">Show brush</label>
+            </div>
+
+            <ng-container *ngIf="showBrush.value">
+                <div class="radio">
+                    <input type="radio" [formControl]="brushType" id="brush-type-both" value="">
+                    <label for="brush-type-both">Both</label>
+                </div>
+                <div class="radio">
+                    <input type="radio" [formControl]="brushType" id="brush-type-x" value="x">
+                    <label for="brush-type-x">X</label>
+                </div>
+                <div class="radio">
+                    <input type="radio" [formControl]="brushType" id="brush-type-y" value="y">
+                    <label for="brush-type-y">Y</label>
+                </div>
+
+                <div *ngIf="brushBox">
+                    <h5 class="nw-text">X Range</h5>
+                    <p>
+                        {{brushBox[0][0] | date:'medium'}} - {{brushBox[1][0] | date:'medium'}}
+                    </p>
+
+                    <h5 class="nw-text">Y Range</h5>
+
+                    <p>
+                        {{brushBox[1][1] | number: '1.0-0'}} - {{brushBox[0][1] | number: '1.0-0'}}
+                    </p>
+                </div>
+            </ng-container>
+        </div>
 
         <div *ngIf="isHovering" style="margin-left: 16px;">
             <h3 class="nw-text nw-text-light">Hover data</h3>

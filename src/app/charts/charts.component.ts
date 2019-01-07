@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
 import * as moment from 'moment';
-import { scaleTime, scaleLinear } from 'd3-scale';
+import { scaleTime, scaleLinear, ScaleTime, ScaleLinear } from 'd3-scale';
 import { DecimalPipe } from '@angular/common';
 
 @Component({
@@ -107,6 +107,10 @@ export class ChartsComponent implements OnInit {
     public metricNames: string[] = [];
     public form: FormGroup;
 
+    public showBrush: FormControl = new FormControl(false);
+    public brushType: FormControl = new FormControl('');
+    public brushBox: [[Date, number], [Date, number]];
+
     constructor(
         private _fb: FormBuilder,
         private _decimalPipe: DecimalPipe) { }
@@ -200,20 +204,22 @@ export class ChartsComponent implements OnInit {
 
     onMousemove(p: [number, number]) {
         this.hoverPosition = p;
-        this.mainScaleHoverCoordinates = [
-            this.xScale.domain(this.xDomain).invert(p[0]),
-            this.yScale.domain(this.yDomain).invert(p[1])
-        ];
-        this.randomScaleHoverCoordinates = [
-            this.xScale.domain(this.xDomain).invert(p[0]),
-            this.yScale.domain(this.randomYDomain).invert(p[1])
-        ];
+
+        this.mainScaleHoverCoordinates = this.positionToCoordinates(this.xDomain, this.yDomain, p);
+        this.randomScaleHoverCoordinates = this.positionToCoordinates(this.xDomain, this.randomYDomain, p);
 
         this.isHovering = true;
     }
 
     onMouseout() {
         this.isHovering = false;
+    }
+
+    positionToCoordinates(xDomain: [number, number], yDomain: [number, number], position: [number, number]): [Date, number] {
+        return [
+            this.xScale.domain(xDomain).invert(position[0]),
+            this.yScale.domain(yDomain).invert(position[1])
+        ]
     }
 
     generateRandomData(): void {
@@ -235,6 +241,17 @@ export class ChartsComponent implements OnInit {
 
     private _randomInDomain(domain: [number, number]): number {
         return Math.random() * (domain[1] - domain[0]) + domain[0];
+    }
+
+    onBrushSelection(corners: [[number, number], [number, number]]) {
+        if (!corners) {
+            return this.brushBox = null;
+        }
+        this.brushBox = [
+            this.positionToCoordinates(this.xDomain, this.yDomain, corners[0]),
+            this.positionToCoordinates(this.xDomain, this.yDomain, corners[1]),
+        ]
+        console.log(this.brushBox);
     }
 
 }
