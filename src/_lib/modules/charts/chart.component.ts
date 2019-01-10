@@ -1,6 +1,5 @@
 import { Component, ElementRef, Input, OnInit, ViewChild, AfterViewInit, ChangeDetectionStrategy, HostBinding, HostListener, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { select, Selection, mouse } from 'd3-selection';
-import { scaleTime, scaleLinear } from 'd3-scale';
 import { ChartUtils } from './chart.utils';
 import { Subject } from 'rxjs/Subject';
 import { Subscription } from 'rxjs/Subscription';
@@ -68,6 +67,7 @@ export class ChartComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     setDimensions(): void {
+        // TODO: check if this is correct. Right now the SVG elements that is drawn is larger than what is defined by the inputs
         this.width = this.width || (this._elRef.nativeElement as SVGSVGElement).clientWidth - this.margins.left - this.margins.right;
         this.height = this.height || (this._elRef.nativeElement as SVGSVGElement).clientHeight - this.margins.top - this.margins.bottom;
         this.setViewBox();

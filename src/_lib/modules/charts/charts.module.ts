@@ -6,6 +6,7 @@ import { XAxisDirective } from './axis/x-axis.directive';
 import { YAxisDirective } from './axis/y-axis.directive';
 import { CircleDirective } from './circle/circle.directive';
 import { BrushDirective } from './brush/brush.directive';
+import { BarDirective } from './bar/bar.directive';
 
 @NgModule({
     imports: [
@@ -17,7 +18,8 @@ import { BrushDirective } from './brush/brush.directive';
         XAxisDirective,
         YAxisDirective,
         CircleDirective,
-        BrushDirective
+        BrushDirective,
+        BarDirective
     ],
     exports: [
         ChartComponent,
@@ -25,7 +27,8 @@ import { BrushDirective } from './brush/brush.directive';
         XAxisDirective,
         YAxisDirective,
         CircleDirective,
-        BrushDirective
+        BrushDirective,
+        BarDirective
     ]
 })
 export class ChartsModule { }

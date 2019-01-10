@@ -1,7 +1,11 @@
 import { Injectable, SimpleChange } from "@angular/core";
+import { easeCubicInOut } from "d3-ease";
 
 @Injectable()
 export class ChartUtils {
+
+    public static ANIMATION_DURATION: number = 1000;
+    public static ANIMATION_EASING: (normalizedTime: number) => number = easeCubicInOut
 
     static areDatasetsEqual(a: Array<[number, number]>, b: Array<[number, number]>) {
         return a.length === b.length &&

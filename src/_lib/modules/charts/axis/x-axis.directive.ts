@@ -1,6 +1,5 @@
 import { Directive, ElementRef, Input } from '@angular/core';
 import { axisBottom, axisTop, Axis } from 'd3-axis';
-import { ChartUtils } from '../chart.utils';
 import { AxisBase } from './axis-base';
 import { ScaleTime } from 'd3-scale';
 
@@ -12,6 +11,7 @@ export class XAxisDirective extends AxisBase {
 
     @Input() align: 'top' | 'bottom' = 'bottom';
     @Input() domain: [number, number];
+    // TODO: if this is always an instance of ScaleTime, why ask the user to pass it in?
     @Input() scale: ScaleTime<number, number>;
 
     constructor(elRef: ElementRef) {

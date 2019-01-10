@@ -11,7 +11,8 @@ export abstract class AxisBase implements OnInit, OnChanges {
     @Input() tickCount: number | AxisTimeInterval;
     @Input() tickSizeOuter: number = 6;
     @Input() showGuidlines: boolean = false;
-    @Input() animDuration: number = 1000;
+    @Input() animDuration: number = ChartUtils.ANIMATION_DURATION;
+    @Input() easing: (normalizedTime: number) => number = ChartUtils.ANIMATION_EASING;
 
     public axis: Axis<number | Date | { valueOf(): number; }>;
     public axisSelection: Selection<SVGGElement, Array<[number, number]>, SVGElement, any>;
@@ -63,6 +64,7 @@ export abstract class AxisBase implements OnInit, OnChanges {
         this.axisSelection
             .transition()
             .duration(this.animDuration)
+            .ease(this.easing)
             .call(this.axis);
     }
 

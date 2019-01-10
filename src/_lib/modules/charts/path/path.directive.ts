@@ -1,4 +1,4 @@
-import { Directive, OnInit, Input, ElementRef, OnChanges, SimpleChanges, OnDestroy, Output, EventEmitter, SimpleChange } from '@angular/core';
+import { Directive, OnInit, Input, ElementRef, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { select, Selection } from 'd3-selection';
 import { line, Line, curveLinear, CurveFactory } from 'd3-shape';
 import { ScaleTime, ScaleLinear } from 'd3-scale';
@@ -18,10 +18,11 @@ export class PathDirective implements OnInit, OnChanges {
     @Input() yDomain: [number, number];
     @Input() xScale: ScaleTime<number, number>;
     @Input() yScale: ScaleLinear<number, number>;
-    @Input() animDuration: number = 1000;
+    @Input() animDuration: number = ChartUtils.ANIMATION_DURATION;
     @Input() curve: CurveFactory = curveLinear;
+    @Input() easing: (normalizedTime: number) => number = ChartUtils.ANIMATION_EASING;
 
-    @Output() animEnd: EventEmitter<null> = new EventEmitter()
+    @Output() animEnd: EventEmitter<null> = new EventEmitter();
 
     public line: Line<[number, number]>;
     public path: Selection<SVGPathElement, Array<[number, number]>, SVGElement, any>;
@@ -39,8 +40,9 @@ export class PathDirective implements OnInit, OnChanges {
     ngOnChanges(changes: SimpleChanges) {
         let isDomainChange = (changes.xDomain || changes.yDomain) && ChartUtils.haveDomainsChanged(changes.xDomain, changes.yDomain);
         let isDataChange = changes.data && !changes.data.firstChange && !ChartUtils.areDatasetsEqual(changes.data.previousValue, changes.data.currentValue);
+        let isCurveChange = changes.curve && !changes.curve.firstChange && (changes.curve.currentValue !== changes.curve.previousValue);
 
-        if (isDomainChange || isDataChange) {
+        if (isDomainChange || isDataChange || isCurveChange) {
             this.setDomains();
             this.setLine();
             this.updateLine();
@@ -69,6 +71,7 @@ export class PathDirective implements OnInit, OnChanges {
             .datum(this.data)
             .transition()
             .duration(this.animDuration)
+            .ease(this.easing)
             .attr('d', this.line)
             .on('end', e => this.animEnd.next())
     }

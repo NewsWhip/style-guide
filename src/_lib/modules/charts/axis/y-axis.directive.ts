@@ -1,6 +1,5 @@
 import { Directive, ElementRef, Input } from '@angular/core';
 import { axisLeft, axisRight } from 'd3-axis';
-import { ChartUtils } from '../chart.utils';
 import { AxisBase } from './axis-base';
 import { ScaleLinear } from 'd3-scale';
 
@@ -11,7 +10,8 @@ import { ScaleLinear } from 'd3-scale';
 export class YAxisDirective extends AxisBase {
 
     @Input() align: 'left' | 'right' = 'left';
-    @Input() domain: [number, number] = [0, 0];
+    @Input() domain: [number, number];
+    // TODO: if this is always an instance of ScaleLinear, why ask the user to pass it in?
     @Input() scale: ScaleLinear<number, number>;
 
     constructor(elRef: ElementRef) {

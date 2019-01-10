@@ -1,208 +1,577 @@
 <div>
     <h2 class="page-header">Charts</h2>
 
-    <form [formGroup]="form">
-        <div formArrayName="selectedMetrics" style="display: flex; flex-direction: row;">
-            <div class="checkbox" style="margin-right: 8px;" *ngFor="let metric of form.controls.selectedMetrics.controls; let i = index">
-                <input id="metric-{{i}}" type="checkbox" [formControlName]="i">
-                <label for="metric-{{i}}">
-                    {{metricNames[i]}}
-                </label>
+    <div style="margin-bottom: 16px;">
+        <nw-tabs>
+            <li nwTab role="presentation" (click)="setSelectedTab('demo')" [isActive]="selectedTab === 'demo'">
+                <a href="javascript:;" aria-controls="Demo" role="tab">Demo</a>
+            </li>
+            <li nwTab role="presentation" (click)="setSelectedTab('docs')" [isActive]="selectedTab === 'docs'">
+                <a href="javascript:;" aria-controls="Docs" role="tab">Docs</a>
+            </li>
+        </nw-tabs>
+    </div>
+
+    <ng-container *ngIf="selectedTab === 'demo'">
+        <form [formGroup]="form">
+            <div formArrayName="selectedMetrics" style="display: flex; flex-direction: row;">
+                <div class="checkbox" style="margin-right: 8px;" *ngFor="let metric of form.controls.selectedMetrics.controls; let i = index">
+                    <input id="metric-{{i}}" type="checkbox" [formControlName]="i">
+                    <label for="metric-{{i}}">
+                        {{metricNames[i]}}
+                    </label>
+                </div>
             </div>
-        </div>
-    </form>
+        </form>
 
-    <div style="display: flex; flex-direction: row;">
-        <svg nw-chart nw-brush
-            [width]="600"
-            [height]="400"
-            [margins]="chartMargins"
-            (nwMousemove)="onMousemove($event)"
-            (nwMouseout)="onMouseout()">
-
-            <g nw-brush *ngIf="showBrush.value"
+        <div style="display: flex; flex-direction: row;">
+            <svg nw-chart nw-brush
                 [width]="600"
                 [height]="400"
-                [dimension]="brushType.value"
-                (brushEnd)="onBrushSelection($event)"></g>
+                [margins]="chartMargins"
+                (nwMousemove)="onMousemove($event)"
+                (nwMouseout)="onMouseout()">
 
-            <!-- Axes -->
-            <g class="x axis nw-slot-2" nw-x-axis
-                [width]="600"
-                [height]="400"
-                [domain]="xDomain"
-                [scale]="xScale"
-                [tickFormat]="xAxisTickFormat"
-                [tickCount]="8"></g>
+                <g nw-brush *ngIf="showBrush.value"
+                    [width]="600"
+                    [height]="400"
+                    [dimension]="brushType.value"
+                    (brushEnd)="onBrushSelection($event)"></g>
 
-            <g class="y axis nw-slot-2" nw-y-axis
-                [width]="600"
-                [height]="400"
-                [domain]="yDomain"
-                [scale]="yScale"
-                [tickFormat]="yAxisTickFormat"
-                [showGuidlines]="true"></g>
+                <!-- Axes -->
+                <g class="x axis nw-slot-2" nw-x-axis
+                    [width]="600"
+                    [height]="400"
+                    [domain]="xDomain"
+                    [scale]="xScale"
+                    [tickFormat]="xAxisTickFormat"
+                    [tickCount]="xAxisTickCount"></g>
 
-            <g class="y axis random-axis nw-slot-2" nw-y-axis align="right"
-                [width]="600"
-                [height]="400"
-                [domain]="randomYDomain"
-                [scale]="yScale"
-                [tickCount]="4"
-                [showGuidlines]="yDomain[0] === 0 && yDomain[1] === 0"></g>
+                <g class="y axis nw-slot-2" nw-y-axis
+                    [width]="600"
+                    [height]="400"
+                    [domain]="yDomain"
+                    [scale]="yScale"
+                    [tickFormat]="yAxisTickFormat"
+                    [showGuidlines]="true"></g>
 
-            <!-- Hover lines -->
-            <path class="hover-path nw-slot-1" *ngIf="isHovering"
-                [nw-path]="[[mainScaleHoverCoordinates[0], yDomain[0]], [mainScaleHoverCoordinates[0], yDomain[1]]]"
-                [width]="600"
-                [height]="400"
-                [xDomain]="xDomain"
-                [yDomain]="yDomain"
-                [xScale]="xScale"
-                [yScale]="yScale"
-                [animDuration]="0"></path>
+                <g class="y axis random-axis nw-slot-2" nw-y-axis align="right"
+                    [width]="600"
+                    [height]="400"
+                    [domain]="randomYDomain"
+                    [scale]="yScale"
+                    [tickCount]="4"
+                    [showGuidlines]="yDomain[0] === 0 && yDomain[1] === 0"></g>
 
-            <path class="hover-path nw-slot-1" *ngIf="isHovering"
-                [nw-path]="[[xDomain[0], mainScaleHoverCoordinates[1]], [xDomain[1], mainScaleHoverCoordinates[1]]]"
-                [width]="600"
-                [height]="400"
-                [xDomain]="xDomain"
-                [yDomain]="yDomain"
-                [xScale]="xScale"
-                [yScale]="yScale"
-                [animDuration]="0"></path>
-
-            <!-- Paths -->
-            <path class="fb-comments" *ngIf="isMetricSelected('fbComments')"
-                [nw-path]="getDataByMetric('fbComments')"
-                [width]="600"
-                [height]="400"
-                [xDomain]="xDomain"
-                [yDomain]="yDomain"
-                [xScale]="xScale"
-                [yScale]="yScale"
-                (animEnd)="onPathAnimationEnd('fbComments')"></path>
-
-            <path class="tw-shares" *ngIf="isMetricSelected('twShares')"
-                [nw-path]="getDataByMetric('twShares')"
-                [width]="600"
-                [height]="400"
-                [xDomain]="xDomain"
-                [yDomain]="yDomain"
-                [xScale]="xScale"
-                [yScale]="yScale"></path>
-
-            <path class="fb-total" *ngIf="isMetricSelected('fbTotalEngagement')"
-                [nw-path]="getDataByMetric('fbTotalEngagement')"
-                [width]="600"
-                [height]="400"
-                [xDomain]="xDomain"
-                [yDomain]="yDomain"
-                [xScale]="xScale"
-                [yScale]="yScale"></path>
-
-            <path class="random"
-                [nw-path]="randomData"
-                [width]="600"
-                [height]="400"
-                [xDomain]="xDomain"
-                [yDomain]="randomYDomain"
-                [xScale]="xScale"
-                [yScale]="yScale"></path>
-
-            <!-- Circles with popovers -->
-            <ng-container *ngIf="isMetricSelected('fbComments')">
-                <circle *ngFor="let point of getDataByMetric('fbComments'); trackBy:circleTrackValue"
-                    [nw-circle]="point"
+                <!-- Hover lines -->
+                <path class="hover-path nw-slot-1" *ngIf="isHovering"
+                    [nw-path]="[[mainScaleHoverCoordinates[0], yDomain[0]], [mainScaleHoverCoordinates[0], yDomain[1]]]"
                     [width]="600"
                     [height]="400"
                     [xDomain]="xDomain"
                     [yDomain]="yDomain"
                     [xScale]="xScale"
                     [yScale]="yScale"
-                    r=5
-                    [popover]="circlePopTemplate"
-                    [popoverContext]="{ point: point }"
-                    container="body"
-                    [outsideClick]="true"></circle>
-            </ng-container>
+                    [animDuration]="0"></path>
 
-            <circle *ngFor="let point of randomData; trackBy:circleTrackIndex"
-                [nw-circle]="point"
-                [width]="600"
-                [height]="400"
-                [xDomain]="xDomain"
-                [yDomain]="randomYDomain"
-                [xScale]="xScale"
-                [yScale]="yScale"
-                r=5
-                [popover]="circlePopTemplate"
-                [popoverContext]="{ point: point }"
-                container="body"
-                [outsideClick]="true"></circle>
-        </svg>
+                <path class="hover-path nw-slot-1" *ngIf="isHovering"
+                    [nw-path]="[[xDomain[0], mainScaleHoverCoordinates[1]], [xDomain[1], mainScaleHoverCoordinates[1]]]"
+                    [width]="600"
+                    [height]="400"
+                    [xDomain]="xDomain"
+                    [yDomain]="yDomain"
+                    [xScale]="xScale"
+                    [yScale]="yScale"
+                    [animDuration]="0"></path>
 
-        <ng-template #circlePopTemplate let-point="point">
-            <p>{{point[0] | date: 'medium'}}</p>
-            <strong>{{point[1] | number: '1.0-0'}}</strong>
-        </ng-template>
+                <!-- Paths -->
+                <path class="fb-comments" *ngIf="isMetricSelected('fbComments')"
+                    [nw-path]="getDataByMetric('fbComments')"
+                    [width]="600"
+                    [height]="400"
+                    [xDomain]="xDomain"
+                    [yDomain]="yDomain"
+                    [xScale]="xScale"
+                    [yScale]="yScale"
+                    (animEnd)="onPathAnimationEnd('fbComments')"></path>
 
-        <div style="margin-left: 16px;">
-            <div class="checkbox">
-                <input type="checkbox" [formControl]="showBrush" id="show-brush">
-                <label for="show-brush">Show brush</label>
+                <path class="tw-shares" *ngIf="isMetricSelected('twShares')"
+                    [nw-path]="getDataByMetric('twShares')"
+                    [width]="600"
+                    [height]="400"
+                    [xDomain]="xDomain"
+                    [yDomain]="yDomain"
+                    [xScale]="xScale"
+                    [yScale]="yScale"></path>
+
+                <path class="fb-total" *ngIf="isMetricSelected('fbTotalEngagement')"
+                    [nw-path]="getDataByMetric('fbTotalEngagement')"
+                    [width]="600"
+                    [height]="400"
+                    [xDomain]="xDomain"
+                    [yDomain]="yDomain"
+                    [xScale]="xScale"
+                    [yScale]="yScale"></path>
+
+                <path class="random"
+                    [nw-path]="randomData"
+                    [width]="600"
+                    [height]="400"
+                    [xDomain]="xDomain"
+                    [yDomain]="randomYDomain"
+                    [xScale]="xScale"
+                    [yScale]="yScale"
+                    [curve]="randomLineCurve.curve"></path>
+
+                <!-- Circles with popovers -->
+                <ng-container *ngIf="isMetricSelected('fbComments')">
+                    <circle *ngFor="let point of getDataByMetric('fbComments'); trackBy:circleTrackValue"
+                        [nw-circle]="point"
+                        [width]="600"
+                        [height]="400"
+                        [xDomain]="xDomain"
+                        [yDomain]="yDomain"
+                        [xScale]="xScale"
+                        [yScale]="yScale"
+                        r=5
+                        [popover]="circlePopTemplate"
+                        [popoverContext]="{ point: point }"
+                        container="body"
+                        [outsideClick]="true"></circle>
+                </ng-container>
+
+                <ng-container *ngIf="!randomAsBars.value">
+                    <circle *ngFor="let point of randomData; trackBy:circleTrackIndex"
+                        [nw-circle]="point"
+                        [width]="600"
+                        [height]="400"
+                        [xDomain]="xDomain"
+                        [yDomain]="randomYDomain"
+                        [xScale]="xScale"
+                        [yScale]="yScale"
+                        r=5
+                        [popover]="circlePopTemplate"
+                        [popoverContext]="{ point: point }"
+                        container="body"
+                        [outsideClick]="true"></circle>
+                </ng-container>
+
+                <ng-container *ngIf="randomAsBars.value">
+                    <rect *ngFor="let point of randomData; trackBy:circleTrackIndex"
+                        [nw-bar]="point"
+                        [width]="600"
+                        [height]="400"
+                        [xDomain]="xDomain"
+                        [yDomain]="randomYDomain"
+                        [xScale]="xScale"
+                        [yScale]="yScale"
+                        [barWidth]="barWidth.value"
+                        [popover]="circlePopTemplate"
+                        [popoverContext]="{ point: point }"
+                        container="body"
+                        [outsideClick]="true"></rect>
+                </ng-container>
+            </svg>
+
+            <ng-template #circlePopTemplate let-point="point">
+                <p>{{point[0] | date: 'medium'}}</p>
+                <strong>{{point[1] | number: '1.0-0'}}</strong>
+            </ng-template>
+
+            <div style="margin-left: 16px;">
+                <div class="checkbox">
+                    <input type="checkbox" [formControl]="showBrush" id="show-brush">
+                    <label for="show-brush">Show brush</label>
+                </div>
+
+                <ng-container *ngIf="showBrush.value">
+                    <div class="radio">
+                        <input type="radio" [formControl]="brushType" id="brush-type-both" value="">
+                        <label for="brush-type-both">Both</label>
+                    </div>
+                    <div class="radio">
+                        <input type="radio" [formControl]="brushType" id="brush-type-x" value="x">
+                        <label for="brush-type-x">X</label>
+                    </div>
+                    <div class="radio">
+                        <input type="radio" [formControl]="brushType" id="brush-type-y" value="y">
+                        <label for="brush-type-y">Y</label>
+                    </div>
+
+                    <div *ngIf="brushBox">
+                        <h5 class="nw-text">X Range</h5>
+                        <p>
+                            {{brushBox[0][0] | date:'medium'}} - {{brushBox[1][0] | date:'medium'}}
+                        </p>
+
+                        <h5 class="nw-text">Y Range</h5>
+
+                        <p>
+                            {{brushBox[1][1] | number: '1.0-0'}} - {{brushBox[0][1] | number: '1.0-0'}}
+                        </p>
+                    </div>
+                </ng-container>
+
+                <div class="checkbox">
+                    <input type="checkbox" [formControl]="randomAsBars" id="random-as-circles">
+                    <label for="random-as-circles">Use bars for random dataset</label>
+                </div>
+
+                <div class="form-group" *ngIf="randomAsBars.value">
+                    <label for="bar-width">Bar width</label>
+                    <input type="number" [formControl]="barWidth" id="bar-width" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="random-line-curve">Random line curve</label>
+
+                    <select class="form-control" [(ngModel)]="randomLineCurve" id="random-line-curve">
+                        <option *ngFor="let option of randomLineCurvesOptions" [ngValue]="option">
+                            {{option.label}}
+                        </option>
+                    </select>
+                </div>
             </div>
 
-            <ng-container *ngIf="showBrush.value">
-                <div class="radio">
-                    <input type="radio" [formControl]="brushType" id="brush-type-both" value="">
-                    <label for="brush-type-both">Both</label>
-                </div>
-                <div class="radio">
-                    <input type="radio" [formControl]="brushType" id="brush-type-x" value="x">
-                    <label for="brush-type-x">X</label>
-                </div>
-                <div class="radio">
-                    <input type="radio" [formControl]="brushType" id="brush-type-y" value="y">
-                    <label for="brush-type-y">Y</label>
-                </div>
+            <div *ngIf="isHovering" style="margin-left: 16px;">
+                <h3 class="nw-text nw-text-light">Hover data</h3>
+                <hr>
+                <p class="nw-text nw-text-light">
+                    {{mainScaleHoverCoordinates[0] | date: 'medium'}}
+                </p>
+                <p class="nw-text nw-text-light">
+                    {{mainScaleHoverCoordinates[1] | number: '1.0-0'}}
+                </p>
 
-                <div *ngIf="brushBox">
-                    <h5 class="nw-text">X Range</h5>
-                    <p>
-                        {{brushBox[0][0] | date:'medium'}} - {{brushBox[1][0] | date:'medium'}}
-                    </p>
-
-                    <h5 class="nw-text">Y Range</h5>
-
-                    <p>
-                        {{brushBox[1][1] | number: '1.0-0'}} - {{brushBox[0][1] | number: '1.0-0'}}
-                    </p>
-                </div>
-            </ng-container>
+                <p class="nw-text nw-text-light">
+                    {{randomScaleHoverCoordinates[1] | number: '1.0-0'}}
+                </p>
+            </div>
         </div>
 
-        <div *ngIf="isHovering" style="margin-left: 16px;">
-            <h3 class="nw-text nw-text-light">Hover data</h3>
-            <hr>
-            <p class="nw-text nw-text-light">
-                {{mainScaleHoverCoordinates[0] | date: 'medium'}}
-            </p>
-            <p class="nw-text nw-text-light">
-                {{mainScaleHoverCoordinates[1] | number: '1.0-0'}}
-            </p>
-
-            <hr>
-
-            <p class="nw-text nw-text-light">
-                {{randomScaleHoverCoordinates[0] | date: 'medium'}}
-            </p>
-            <p class="nw-text nw-text-light">
-                {{randomScaleHoverCoordinates[1] | number: '1.0-0'}}
-            </p>
+        <div style="margin-top: 8px">
+            <button class="btn btn-md btn-primary" (click)="generateRandomData()">Randomise</button>
+            <button class="btn btn-md btn-primary" (click)="addRandomDataPoint()">Add random point</button>
+            <button class="btn btn-md btn-primary" (click)="resetRandomData()" [disabled]="randomData.length === 10">Reset random data</button>
         </div>
-    </div>
+    </ng-container>
 
-    <button class="btn btn-md btn-primary" (click)="generateRandomData()">Randomise</button>
+    <ng-container *ngIf="selectedTab === 'docs'">
+        <h3 class="nw-text">Importing</h3>
+
+<pre><code>
+{{'import { ChartsModule } from "nw-style-guide/charts";
+
+@NgModule({
+    declarations: [
+        ......
+    ],
+    imports: [
+        ......
+        ......
+        ChartsModule
+    ],
+    bootstrap: [AppComponent]
+})
+export class AppModule { }
+'}}
+</code></pre>
+
+        <h3 class="nw-text">Chart wrapper</h3>
+
+        <p class="nw-text">
+            This component (attached via an attribute selector) will generally wrap all other chart directives and components.
+            This component <strong>must</strong> be attached to an SVG element (<code>SVGSVGElement</code>).
+        </p>
+
+        <p class="nw-text">
+            <code>nw-chart</code> renders it's children with <code>ng-content</code>. If you'd like more control over where your
+            child components and directives are rendered, there are 10 "slots" available. <code>.nw-slot-1</code> to <code>.nw-slot-10</code>.
+        </p>
+
+        <p class="nw-text">
+            The view box of the SVG is based on the width, height and the corresponding margin inputs.
+        </p>
+
+        <div class="row">
+            <div class="col-sm-6">
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <td>Selector</td>
+                            <td><code>[nw-chart]</code></td>
+                        </tr>
+                        <tr>
+                            <td>Exported as</td>
+                            <td><code>nw-chart</code></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col-sm-6">
+<pre><code>&lt;svg nw-chart
+    [width]="600"
+    [height]="400"
+    [margins]="chartMargins"
+    (nwMousemove)="onMousemove($event)"
+    (nwMouseout)="onMouseout()"&gt;
+
+    ....
+    ....
+    ....
+&lt;/svg&gt;</code></pre>
+            </div>
+        </div>
+
+        <h4 class="nw-text">Inputs</h4>
+
+        <table class="table table-bordered">
+            <tbody>
+                <tr>
+                    <td><code>width</code></td>
+                    <td><code>number</code></td>
+                    <td>Optional</td>
+                    <td>If not set, the width is obtained from the <code>clientWidth</code> of the svg the <code>nw-chart</code> is attached to.</td>
+                </tr>
+                <tr>
+                    <td><code>height</code></td>
+                    <td><code>number</code></td>
+                    <td>Optional</td>
+                    <td>If not set, the height is obtained from the <code>clientHeight</code> of the svg the <code>nw-chart</code> is attached to.</td>
+                </tr>
+                <tr>
+                    <td><code>margins</code></td>
+                    <td><code>{{'{ top?: number; bottom?: number; left?: number; right?: number; }'}}</code></td>
+                    <td>Optional</td>
+                    <td>If not set, each margin defaults to <code>0</code>.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h4 class="nw-text">Outputs</h4>
+
+        <table class="table table-bordered">
+            <tbody>
+                <tr>
+                    <td><code>nwMousemove</code></td>
+                    <td><code>[number, number]</code></td>
+                </tr>
+                <tr>
+                    <td><code>nwMouseout</code></td>
+                    <td><code>null</code></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <hr>
+
+        <h3 class="nw-text">X-Axis</h3>
+
+        <div class="row">
+            <div class="col-sm-6">
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <td>Selector</td>
+                            <td><code>[nw-x-axis]</code></td>
+                        </tr>
+                        <tr>
+                            <td>Exported as</td>
+                            <td><code>nw-x-axis</code></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col-sm-6">
+<pre><code>&lt;g class="x axis nw-slot-2" nw-x-axis
+    [width]="600"
+    [height]="400"
+    [domain]="xDomain"
+    [scale]="xScale"
+    [tickFormat]="xAxisTickFormat"
+    [tickCount]="xAxisTickCount">&lt;/g></code></pre>
+            </div>
+        </div>
+
+        <h4 class="nw-text">Inputs</h4>
+
+        <table class="table table-bordered">
+            <tbody>
+                <tr>
+                    <td><code>align</code></td>
+                    <td><code>'top' | 'bottom'</code></td>
+                    <td>Optional</td>
+                    <td>Defaults to <code>'bottom'</code></td>
+                </tr>
+                <tr>
+                    <td><code>domain</code></td>
+                    <td><code>[number, number]</code></td>
+                    <td>Required</td>
+                    <td>The min and max x values of your dataset.</td>
+                </tr>
+                <tr>
+                    <td><code>scale</code></td>
+                    <td><code>ScaleTime&lt;number, number&gt;</code></td>
+                    <td>Required</td>
+                    <td>e.g. <code>scaleTime()</code> imported from <code>d3-scale</code></td>
+                </tr>
+                <tr>
+                    <td><code>width</code></td>
+                    <td><code>number</code></td>
+                    <td>Required</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><code>height</code></td>
+                    <td><code>number</code></td>
+                    <td>Required</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><code>tickFormat</code></td>
+                    <td><code>{{'(value: number | Date | { valueOf(): number; }) => string'}}</code></td>
+                    <td>Required</td>
+                    <td>A function that takes the x value and returns a value you require as a <code>string</code>.</td>
+                </tr>
+                <tr>
+                    <td><code>tickCount</code></td>
+                    <td><code>number | AxisTimeInterval</code></td>
+                    <td>Required</td>
+                    <td>Estimated number of ticks or a D3 <code>AxisTimeInterval</code>.</td>
+                </tr>
+                <tr>
+                    <td><code>tickSizeOuter</code></td>
+                    <td><code>number</code></td>
+                    <td>Optional</td>
+                    <td>Defaults to <code>6</code>. The outer tick size controls the length of the square ends of the domain path, offset from the native position of the axis. Thus, the “outer ticks” are not actually ticks but part of the domain path, and their position is determined by the associated scale’s domain extent. Thus, outer ticks may overlap with the first or last inner tick. An outer tick size of 0 suppresses the square ends of the domain path, instead producing a straight line.</td>
+                </tr>
+                <tr>
+                    <td><code>showGuidlines</code></td>
+                    <td><code>boolean</code></td>
+                    <td>Optional</td>
+                    <td>Defaults to <code>false</code>. Defines whether each tick on the axis is extended along the chart width.</td>
+                </tr>
+                <tr>
+                    <td><code>animDuration</code></td>
+                    <td><code>number</code></td>
+                    <td>Optional</td>
+                    <td>Defaults to <code>1000</code>. Transition speed when the domain or tick inputs change.</td>
+                </tr>
+                <tr>
+                    <td><code>easing</code></td>
+                    <td><code>{{'(normalizedTime: number) => number'}}</code></td>
+                    <td>Optional</td>
+                    <td>Defaults to d3's <code>easeCubicInOut</code>. Specifies the easing transition when the domain or tick inputs change.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <hr>
+
+        <h3 class="nw-text">Y-Axis</h3>
+
+        <div class="row">
+            <div class="col-sm-6">
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <td>Selector</td>
+                            <td><code>[nw-y-axis]</code></td>
+                        </tr>
+                        <tr>
+                            <td>Exported as</td>
+                            <td><code>nw-y-axis</code></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col-sm-6">
+<pre><code>&lt;g class="y axis nw-slot-2" nw-y-axis
+    [width]="600"
+    [height]="400"
+    [domain]="yDomain"
+    [scale]="yScale"
+    [tickFormat]="yAxisTickFormat"
+    [showGuidlines]="true">&lt;/g></code></pre>
+            </div>
+        </div>
+
+        <h4 class="nw-text">Inputs</h4>
+
+        <table class="table table-bordered">
+            <tbody>
+                <tr>
+                    <td><code>align</code></td>
+                    <td><code>'left' | 'right'</code></td>
+                    <td>Optional</td>
+                    <td>Defaults to <code>'left'</code></td>
+                </tr>
+                <tr>
+                    <td><code>domain</code></td>
+                    <td><code>[number, number]</code></td>
+                    <td>Required</td>
+                    <td>The min and max y values of your dataset.</td>
+                </tr>
+                <tr>
+                    <td><code>scale</code></td>
+                    <td><code>ScaleLinear&lt;number, number&gt;</code></td>
+                    <td>Required</td>
+                    <td>e.g. <code>scaleLinear()</code> imported from <code>d3-scale</code></td>
+                </tr>
+                <tr>
+                    <td><code>width</code></td>
+                    <td><code>number</code></td>
+                    <td>Required</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><code>height</code></td>
+                    <td><code>number</code></td>
+                    <td>Required</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><code>tickFormat</code></td>
+                    <td><code>{{'(value: number | Date | { valueOf(): number; }) => string'}}</code></td>
+                    <td>Required</td>
+                    <td>A function that takes the x value and returns a value you require as a <code>string</code>.</td>
+                </tr>
+                <tr>
+                    <td><code>tickCount</code></td>
+                    <td><code>number | AxisTimeInterval</code></td>
+                    <td>Required</td>
+                    <td>Estimated number of ticks or a D3 <code>AxisTimeInterval</code>.</td>
+                </tr>
+                <tr>
+                    <td><code>tickSizeOuter</code></td>
+                    <td><code>number</code></td>
+                    <td>Optional</td>
+                    <td>Defaults to <code>6</code>. The outer tick size controls the length of the square ends of the domain path, offset from the native position of the axis. Thus, the “outer ticks” are not actually ticks but part of the domain path, and their position is determined by the associated scale’s domain extent. Thus, outer ticks may overlap with the first or last inner tick. An outer tick size of 0 suppresses the square ends of the domain path, instead producing a straight line.</td>
+                </tr>
+                <tr>
+                    <td><code>showGuidlines</code></td>
+                    <td><code>boolean</code></td>
+                    <td>Optional</td>
+                    <td>Defaults to <code>false</code>. Defines whether each tick on the axis is extended along the chart width.</td>
+                </tr>
+                <tr>
+                    <td><code>animDuration</code></td>
+                    <td><code>number</code></td>
+                    <td>Optional</td>
+                    <td>Defaults to <code>1000</code>. Transition speed when the domain or tick inputs change.</td>
+                </tr>
+                <tr>
+                    <td><code>easing</code></td>
+                    <td><code>{{'(normalizedTime: number) => number'}}</code></td>
+                    <td>Optional</td>
+                    <td>Defaults to d3's <code>easeCubicInOut</code>. Specifies the easing transition when the domain or tick inputs change.</td>
+                </tr>
+            </tbody>
+        </table>
+
+    </ng-container>
 
 </div>

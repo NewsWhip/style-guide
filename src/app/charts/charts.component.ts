@@ -1,8 +1,11 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
 import * as moment from 'moment';
-import { scaleTime, scaleLinear, ScaleTime, ScaleLinear } from 'd3-scale';
+import { scaleTime, scaleLinear } from 'd3-scale';
 import { DecimalPipe } from '@angular/common';
+import { bisector } from 'd3-array';
+import { AxisTimeInterval } from 'd3-axis';
+import { curveCardinal, curveBasis, curveLinear, curveStep, curveStepAfter, curveStepBefore, CurveFactory } from 'd3-shape'
 
 @Component({
     selector: 'app-charts',
@@ -11,6 +14,8 @@ import { DecimalPipe } from '@angular/common';
     providers: [DecimalPipe]
 })
 export class ChartsComponent implements OnInit {
+
+    public selectedTab: string = "demo";
 
     private _timelineData = {
         "fbComments": {
@@ -101,8 +106,19 @@ export class ChartsComponent implements OnInit {
     public hoverPosition: [number, number] = [0,0];
     public mainScaleHoverCoordinates: [Date, number];
     public randomScaleHoverCoordinates: [Date, number];
+    public numRandomPoints: number = 10;
     public randomData: Array<[number, number]>;
     public randomYDomain: [number, number];
+    public randomAsBars: FormControl = new FormControl(false);
+    public randomLineCurve = {label: 'Linear', curve: curveLinear};
+    public randomLineCurvesOptions = [
+        {label: 'Linear', curve: curveLinear},
+        {label: 'Basis', curve: curveBasis},
+        {label: 'Cardinal', curve: curveCardinal},
+        {label: 'Step', curve: curveStep},
+        {label: 'Step before', curve: curveStepBefore},
+        {label: 'Step after', curve: curveStepAfter}
+    ];
 
     public metricNames: string[] = [];
     public form: FormGroup;
@@ -110,6 +126,9 @@ export class ChartsComponent implements OnInit {
     public showBrush: FormControl = new FormControl(false);
     public brushType: FormControl = new FormControl('');
     public brushBox: [[Date, number], [Date, number]];
+    public barWidth: FormControl = new FormControl(20);
+
+    public xAxisTickCount: number | AxisTimeInterval = 8;
 
     constructor(
         private _fb: FormBuilder,
@@ -215,6 +234,21 @@ export class ChartsComponent implements OnInit {
         this.isHovering = false;
     }
 
+    highlightClosest(data: Array<[number, number]>, coordinates: [Date, number]) {
+        var bisectDate = bisector(d => d[0]).left;
+        var i = bisectDate(data, coordinates[0]); // returns the index to the current data item
+
+        var d0 = data[i - 1]
+        var d1 = data[i];
+        // work out which date value is closest to the mouse
+        var d = +coordinates[0] - d0[0] > d1[0] - +coordinates[0] ? d1 : d0;
+
+        var x = this.xScale(d[0]);
+        var y = this.yScale(d[1]);
+
+        console.log('Closest point', x, y)
+    }
+
     positionToCoordinates(xDomain: [number, number], yDomain: [number, number], position: [number, number]): [Date, number] {
         return [
             this.xScale.domain(xDomain).invert(position[0]),
@@ -227,7 +261,7 @@ export class ChartsComponent implements OnInit {
         let yDomain: [number, number] = [0, 500];
         let datapoints: Array<[number, number]> = [];
 
-        for (let index = 0; index < 10; index++) {
+        for (let index = 0; index < this.numRandomPoints; index++) {
             datapoints.push([this._randomInDomain(xDomain), this._randomInDomain(yDomain)])
         }
         this.randomData = datapoints.sort();
@@ -237,6 +271,26 @@ export class ChartsComponent implements OnInit {
         ];
 
         this.setActiveDomains();
+    }
+
+    addRandomDataPoint(): void {
+        this.numRandomPoints++;
+
+        let maxTime = Math.max(...this.randomData.map(rd => rd[0]));
+
+        this.randomData.push([maxTime + 1000*60*60*2, this._randomInDomain([0, 900])]);
+
+        this.randomYDomain = [
+            0,
+            Math.max(...this.randomData.map(x => x[1]))
+        ];
+
+        this.setActiveDomains();
+    }
+
+    resetRandomData() {
+        this.numRandomPoints = 10;
+        this.generateRandomData();
     }
 
     private _randomInDomain(domain: [number, number]): number {
@@ -252,6 +306,10 @@ export class ChartsComponent implements OnInit {
             this.positionToCoordinates(this.xDomain, this.yDomain, corners[1]),
         ]
         console.log(this.brushBox);
+    }
+
+    setSelectedTab(tab: string) {
+        this.selectedTab = tab;
     }
 
 }

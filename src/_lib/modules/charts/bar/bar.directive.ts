@@ -1,14 +1,14 @@
-import { Directive, Input, OnInit, ElementRef, OnChanges, SimpleChanges } from '@angular/core';
-import { ChartUtils } from '../chart.utils';
+import { Directive, Input, OnInit, OnChanges, ElementRef, SimpleChanges } from '@angular/core';
 import { select, Selection } from 'd3-selection';
 import { ScaleTime, ScaleLinear } from 'd3-scale';
+import { ChartUtils } from '../chart.utils';
 
 @Directive({
-    selector: 'circle[nw-circle]'
+    selector: 'rect[nw-bar]'
 })
-export class CircleDirective implements OnInit, OnChanges {
+export class BarDirective implements OnInit, OnChanges {
 
-    @Input('nw-circle') point: [number, number];
+    @Input('nw-bar') value: [number, number];
     @Input() width: number;
     @Input() height: number;
     @Input() xDomain: [number, number];
@@ -17,13 +17,14 @@ export class CircleDirective implements OnInit, OnChanges {
     @Input() yScale: ScaleLinear<number, number>;
     @Input() animDuration: number = ChartUtils.ANIMATION_DURATION;
     @Input() easing: (normalizedTime: number) => number = ChartUtils.ANIMATION_EASING;
+    @Input() barWidth: number = 20;
 
-    public circle: Selection<SVGCircleElement, [number, number], SVGElement, any>;
+    public rect: Selection<SVGRectElement, [number, number], SVGElement, any>;
 
-    constructor(private _elRef: ElementRef) {}
+    constructor(private _elRef: ElementRef) { }
 
     ngOnInit() {
-        this.circle = select(this._elRef.nativeElement as SVGCircleElement);
+        this.rect = select(this._elRef.nativeElement as SVGRectElement);
 
         this.setDomains();
         this.draw();
@@ -32,10 +33,11 @@ export class CircleDirective implements OnInit, OnChanges {
     ngOnChanges(changes: SimpleChanges) {
         let isDomainChange = (changes.xDomain || changes.yDomain) && ChartUtils.haveDomainsChanged(changes.xDomain, changes.yDomain);
         let isDataChange = changes.point && !changes.point.firstChange && !ChartUtils.areDatasetsEqual([changes.point.previousValue], [changes.point.currentValue]);
+        let barWidthChange = changes.barWidth && !changes.barWidth.firstChange && (changes.barWidth.previousValue !== changes.barWidth.currentValue);
 
-        if (isDomainChange || isDataChange) {
+        if (isDomainChange || isDataChange || barWidthChange) {
             this.setDomains();
-            this.update();
+            this.draw(this.animDuration);
         }
     }
 
@@ -44,21 +46,16 @@ export class CircleDirective implements OnInit, OnChanges {
         this.yScale.domain(this.yDomain).range([this.height, 0]);
     }
 
-    draw(): void {
-        this.circle
-            .attr("transform", this.transform);
-    }
-
-    update() {
-        this.circle
+    draw(animDuration: number = 0) {
+        this.rect
+            .attr('class', 'nw-bar')
             .transition()
-            .duration(this.animDuration)
+            .duration(animDuration)
             .ease(this.easing)
-            .attr("transform", this.transform);
-    }
-
-    get transform(): string {
-        return `translate(${this.xScale(this.point[0])}, ${this.yScale(this.point[1])})`;
+            .attr('x', this.xScale(this.value[0]) - (this.barWidth / 2))
+            .attr('y', this.yScale(this.value[1]))
+            .attr("width", this.barWidth)
+            .attr("height", this.height - this.yScale(this.value[1]));
     }
 
 }
