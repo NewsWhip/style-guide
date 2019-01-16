@@ -1,0 +1,9 @@
+app-modals {
+    .modal.modal-inverse {
+        .radio {
+            label {
+                @extend .nw-text-dark;
+            }
+        }
+    }
+}

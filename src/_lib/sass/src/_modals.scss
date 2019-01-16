@@ -45,7 +45,28 @@
         }
     }
     &.in .modal-dialog { transform: translate3d(0,0,0); }
+
+    &.modal-inverse {
+        .modal-content {
+            background-color: #ffffff;
+        }
+        .modal-header {
+            background-color: get-color("gray", 6x-light);
+     
+            .modal-title,
+            .close {
+                color: get-color("gray", x-light);
+            }
+        }
+        .modal-body {
+            color: get-color("gray", base);
+        }
+        .modal-footer {
+            border-top-color: get-color("gray", 5x-light);
+        }
+    }
 }
+
 // Revert Bootstraps padding-right: 17px when there is a scrollbar
 body.modal-open {
     padding-right: 0 !important;
