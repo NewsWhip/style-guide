@@ -31,6 +31,8 @@ import { TypographyComponent } from './typography/typography.component';
 import { PickerComponent } from './picker/picker.component';
 import { FeatureAlertsComponent } from './feature-alerts/feature-alerts.component';
 import { AnimationsComponent } from './animations/animations.component';
+import { LoaderComponent } from './loader/loader.component';
+import { LoaderModule } from '../_lib/modules/loader';
 
 @NgModule({
   declarations: [
@@ -55,7 +57,8 @@ import { AnimationsComponent } from './animations/animations.component';
     PickerComponent,
     TabsComponent,
     FeatureAlertsComponent,
-    AnimationsComponent
+    AnimationsComponent,
+    LoaderComponent
   ],
   imports: [
     BrowserModule,
@@ -69,7 +72,8 @@ import { AnimationsComponent } from './animations/animations.component';
     MarkdownModule.forRoot(),
     FeatureAlertsModule.forRoot(),
     PortalModule,
-    TabsModule
+    TabsModule,
+    LoaderModule
   ],
   bootstrap: [AppComponent]
 })

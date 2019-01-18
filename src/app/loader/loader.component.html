@@ -1,0 +1,22 @@
+
+<h2 class="page-header">Loader Module</h2>
+
+<div class="row">
+  <div class="col-sm-2">
+    <label for="numberOfDots">Number of dots</label> 
+    <input class="form-control" id="numberOfDots" style="max-width: 150px" type="number" min="1" max="10" [value]="num" 
+      (input)="num = $event.target.valueAsNumber" />
+  </div>
+  <div class="col-sm-2">
+    <label for="loader-size">Loader size</label>
+    <select class="form-control" style="max-width: 150px"
+      (input)="size = $event.target.value">
+      <option value="inline">Inline</option>
+      <option value="full-size">Full Size/Screen</option>
+    </select>
+  </div>
+</div>
+
+<div class="spike-loader">
+  <nw-loader [isLoading]="true"[numOfDots]="num" [size]="size"></nw-loader>
+</div>
