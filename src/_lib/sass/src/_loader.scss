@@ -18,12 +18,11 @@ nw-loader {
     }
   }
   
-  .nw-loader {
+  .loader {
     .dots { display: flex }
     .dots-icon-wrapper {
       display: flex;
     }
-    
     
     &.sm {
       display: inline-block;
