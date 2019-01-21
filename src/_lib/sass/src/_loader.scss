@@ -19,12 +19,11 @@ nw-loader {
   }
   
   .nw-loader {
-    .dot:last-of-type { margin-right: 0 }
     .dots { display: flex }
     .dots-icon-wrapper {
       display: flex;
     }
-  
+    
     
     &.sm {
       display: inline-block;
@@ -36,24 +35,24 @@ nw-loader {
         @include get-dots-animations(moveUpAndDown, .5s);
       }
     }
-
+    
     &.md {
       @extend .overlay-loader-styles;
       
       .dots { transform: translateY(-12px) }
-
+      
       .dot {
         background: get-color("primary");
         @include dot-size-mixin(8px);
         @include get-dots-animations(moveUpAndDown_x2, .6s);
       }
     }
-
+    
     &.lg {
       @extend .overlay-loader-styles;
       
-      .dots { transform: translateY(-24px) }
-
+      .dots { transform: translateY(-16px) }
+      
       .dot {
         background: get-color("primary");
         @include dot-size-mixin(12px);
@@ -61,7 +60,7 @@ nw-loader {
       }
     }
   }
-
+  
   .overlay-loader-styles {
     justify-content: center;
     align-items: center;
