@@ -2,7 +2,6 @@ import { Component, Input } from '@angular/core';
 
 @Component({
     selector: 'nw-loader',
-    styleUrls: ['./loader.component.scss'],
     template: `
       <div *ngIf="isLoading;" class="nw-loader {{size}}" [ngClass]="{visible: isLoading}">
         <div class="dots-icon-wrapper" [ngClass]="{'pos-top': dotsPosTop}">
