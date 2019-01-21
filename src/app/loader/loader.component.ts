@@ -6,9 +6,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./loader.component.scss']
 })
 export class LoaderComponent implements OnInit {
-  public num: number = 6;
-  public size: string = 'inline';
+  private _num: number = 3;
+  public size: string = 'sm';
   constructor() {}
 
   ngOnInit() {}
+
+  get num(): number {
+    return this._num;
+  }
+
+  set num(value: number) {
+    this._num = +value;
+  }
 }

@@ -1,5 +1,5 @@
 nw-loader {
-  @mixin size-mixin($size) {
+  @mixin dot-size-mixin($size) {
     width: $size;
     height: $size;
     border-radius: $size / 2;
@@ -9,84 +9,77 @@ nw-loader {
   @mixin get-dots-animations($animName, $animTime) {
     $maxDots: 10;
     
-    @for $i from 0 through $maxDots - 1 {
+    @for $i from 0 through $maxDots {
       $animDelay: $i * .2s;
       
-      &.dot-#{$i}{
+      &.dot-#{$i} {
         animation: $animName $animTime $animDelay ease-in-out alternate infinite;
       }
     }
   }
   
-  .reporting .main-content .icon-loading,
-  .icon-loading {
-    font-size: 14px;
-    font-family: Verdana, sans-serif;
-    font-weight: normal;
-    color: get-color("gray", 3x-light);
-    position: relative;
-    transform: translateY(-4px);
-  }
-  
   .nw-loader {
-    display: none;
-    &.help { cursor: help; }
-    
+    .dot:last-of-type { margin-right: 0 }
+    .dots { display: flex }
     .dots-icon-wrapper {
       display: flex;
-      &.pos-top {
-        align-self: flex-start;
-        margin-top: 256px;
-      }
     }
   
-    .dot:last-of-type { margin-right: 0; }
-    .dots { display: flex; }
+    
+    &.sm {
+      display: inline-block;
+      .dots { transform: translateY(-4px) }
+      
+      .dot {
+        background: get-color("gray", 3x-light);
+        @include dot-size-mixin(4px);
+        @include get-dots-animations(moveUpAndDown, .5s);
+      }
+    }
+
+    &.md {
+      @extend .overlay-loader-styles;
+      
+      .dots { transform: translateY(-12px) }
+
+      .dot {
+        background: get-color("primary");
+        @include dot-size-mixin(8px);
+        @include get-dots-animations(moveUpAndDown_x2, .6s);
+      }
+    }
+
+    &.lg {
+      @extend .overlay-loader-styles;
+      
+      .dots { transform: translateY(-24px) }
+
+      .dot {
+        background: get-color("primary");
+        @include dot-size-mixin(12px);
+        @include get-dots-animations(moveUpAndDown_x2, .6s);
+      }
+    }
   }
 
-  .nw-loader.full-size {
+  .overlay-loader-styles {
     justify-content: center;
     align-items: center;
     position: absolute;
-    top: 0; //$topBarHeight + $subBarHeight;
+    top: 0; 
     right: 0;
     bottom: 0;
     left: 0;
-    z-index: 901;
-    
-    &.visible {
-      display: flex;
-      background: get-color("gray", light);
-    }
-    
-    .dots { transform: translateY(-12px); }
-    
-    .dot{
-      background: get-color("primary");
-      @include size-mixin(8px);
-      @include get-dots-animations(moveUpAndDown_x2, .6s);
-    }
-  }
-
-  .nw-loader.inline {
-    &.visible{ display: inline-block; }
-    .dots { transform: translateY(-4px); }
-    
-    .dot{
-      background: get-color("gray", 3x-light);
-      @include size-mixin(4px);
-      @include get-dots-animations(moveUpAndDown, .5s);
-    }
+    display: flex;
   }
 
   @keyframes moveUpAndDown {
-    0%{ transform: translateY(0px); }
-    100%{ transform: translateY(8px); }
+    0% { transform: translateY(0px) }
+    100% { transform: translateY(8px) }
   }
 
   @keyframes moveUpAndDown_x2 {
-    0%{ transform: translateY(0px); }
-    100%{ transform: translateY(24px); }
+    0% { transform: translateY(0px) }
+    100% { transform: translateY(24px) }
   }
 }
-
