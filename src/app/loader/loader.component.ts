@@ -6,8 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./loader.component.scss']
 })
 export class LoaderComponent implements OnInit {
-  private _num: number = 3;
-  public size: string = 'sm';
+  private _num: number = 6;
+  public size: string = 'md';
+
   constructor() {}
 
   ngOnInit() {}
