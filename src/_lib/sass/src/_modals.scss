@@ -2,7 +2,7 @@
     // Revert Bootstraps padding-right: 17px when there is a scrollbar
     padding-right: 0 !important;
     .modal-content {
-        border-radius: 0;
+        border-radius: 3px;
     }
     .modal-header {
         border: none;
@@ -11,6 +11,10 @@
         flex-direction: row;
         align-items: center;
         z-index: 1;
+        border: {
+            top-left-radius: 3px;
+            top-right-radius: 3px;
+        }
 
         .modal-title {
             color: get-color("gray", 5x-light);
@@ -19,10 +23,36 @@
             flex: 1;
         }
         .close {
+            padding: 8px 12px;
             font-size: 30px;
             position: relative;
             top: 2px;
             right: -12px;
+        }
+        
+        .btn-close {
+            font-size: 30px;
+            border-radius: 3px;
+            
+            display: flex;
+            align-items: flex-start;
+            
+            span {
+                line-height: 0.5;
+                flex: 1;
+            }
+            
+            &.btn-md {
+                padding: 8px 0;
+                height: 32px;
+                width: 32px;
+            }
+
+            &.btn-lg {
+                padding: 8px 0;
+                height: 40px;
+                width: 40px;
+            }
         }
     }
     .modal-body {
