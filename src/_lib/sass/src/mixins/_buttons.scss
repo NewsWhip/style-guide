@@ -60,3 +60,15 @@
     border-radius: 50%;
     position: relative;
 }
+
+@mixin button-close($font-size, $line-height, $padding-vertical) {
+    width:  ($font-size * $line-height) + ($padding-vertical * 2) + 1 + 1;
+    height: ($font-size * $line-height) + ($padding-vertical * 2) + 1 + 1;
+    padding: 0;
+    line-height: 0.5;
+    text-align: center;
+    &:before {
+        content: '\d7';
+        font-size: 250%;
+    }
+}
