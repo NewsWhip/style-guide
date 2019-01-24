@@ -31,12 +31,27 @@
             color: $color;
             background-color: $background;
             border-color: $border;
+
+            &.btn-close {
+                &:before, &:after {
+                    background-color: $color;
+                }
+            }
         }
     }
-
     .badge {
         color: $background;
         background-color: $color;
+    }
+    &.btn-close {
+        &:before, &:after {
+            background-color: $color;
+        }
+        &:hover {
+            &:before, &:after {
+                background-color: $color-hover;
+            }
+        }
     }
 }
 
@@ -49,28 +64,37 @@
 }
 
 @mixin button-round($font-size, $line-height, $padding-vertical) {
+    @include button-square($font-size, $line-height, $padding-vertical);
+    font-size: $font-size * 1.2;
+    font-weight: 100;
+    border-radius: 50%;
+}
+
+@mixin button-square($font-size, $line-height, $padding-vertical) {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0;
-    font-size: $font-size * 1.2;
-    font-weight: 100;
-    width: ceil($font-size * $line-height) + ($padding-vertical * 2) + 1;
-    height: ceil($font-size * $line-height) + ($padding-vertical * 2) + 1;
-    border-radius: 50%;
     position: relative;
+    padding: 0;
+    width:  floor($font-size * $line-height) + ($padding-vertical * 2) + 1 + 1;
+    height: floor($font-size * $line-height) + ($padding-vertical * 2) + 1 + 1;
 }
 
 @mixin button-close($font-size, $line-height, $padding-vertical) {
-    width:  ($font-size * $line-height) + ($padding-vertical * 2) + 1 + 1;
-    height: ($font-size * $line-height) + ($padding-vertical * 2) + 1 + 1;
-    padding: 0;
+    @include button-square($font-size, $line-height, $padding-vertical);
     line-height: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+
+    &:before, &:after {
+        content: '';
+        height: 2px;
+        width: 60%;
+        position: absolute;
+    }
+
     &:before {
-        content: '\d7';
-        font-size: 250%;
+        transform: rotate(45deg);
+    }
+    &:after {
+        transform: rotate(-45deg);
     }
 }
