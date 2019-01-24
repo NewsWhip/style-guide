@@ -24,7 +24,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h4 class="modal-title">Modal title</h4>
-          <button type="button" class="btn btn-close btn-md" [class.btn-ghost]="!isInverse"  [class.btn-secondary-inverse]="isInverse" data-dismiss="modal" aria-label="Close"></button>
+          <button type="button" class="btn btn-close btn-md" [ngClass]="{'btn-ghost': !isInverse, 'btn-secondary-inverse': isInverse}" data-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <p>This is some sample modal content</p>
