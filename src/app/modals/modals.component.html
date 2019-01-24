@@ -18,15 +18,13 @@
   <button type="button" class="btn btn-primary btn-lg" (click)="modalSize = 'fullscreen' "data-toggle="modal" data-target="#defaultModal">
     Launch fullscreen modal
   </button>
-  
+
   <div [class.modal-inverse]="isInverse" class="modal fade" tabindex="-1" role="dialog" id="defaultModal">
     <div class="modal-dialog modal-{{modalSize}}" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h4 class="modal-title">Modal title</h4>
-          <button type="button" class="close btn-unstyled" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+          <button type="button" class="btn btn-close btn-md" [ngClass]="{'btn-ghost': !isInverse, 'btn-secondary-inverse': isInverse}" data-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <p>This is some sample modal content</p>
