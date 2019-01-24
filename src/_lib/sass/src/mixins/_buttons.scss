@@ -31,12 +31,27 @@
             color: $color;
             background-color: $background;
             border-color: $border;
+
+            &.btn-close {
+                &:before, &:after {
+                    background-color: $color;
+                }
+            }
         }
     }
-
     .badge {
         color: $background;
         background-color: $color;
+    }
+    &.btn-close {
+        &:before, &:after {
+            background-color: $color;
+        }
+        &:hover {
+            &:before, &:after {
+                background-color: $color-hover;
+            }
+        }
     }
 }
 
@@ -72,14 +87,13 @@
     &:before, &:after {
         content: '';
         height: 2px;
-        background-color: #fff;
         width: 60%;
         position: absolute;
     }
 
     &:before {
         transform: rotate(45deg);
-    } 
+    }
     &:after {
         transform: rotate(-45deg);
     }
