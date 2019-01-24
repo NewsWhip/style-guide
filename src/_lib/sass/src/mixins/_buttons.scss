@@ -65,8 +65,10 @@
     width:  ($font-size * $line-height) + ($padding-vertical * 2) + 1 + 1;
     height: ($font-size * $line-height) + ($padding-vertical * 2) + 1 + 1;
     padding: 0;
-    line-height: 0.5;
-    text-align: center;
+    line-height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     &:before {
         content: '\d7';
         font-size: 250%;

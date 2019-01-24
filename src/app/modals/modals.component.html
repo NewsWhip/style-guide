@@ -18,17 +18,22 @@
   <button type="button" class="btn btn-primary btn-lg" (click)="modalSize = 'fullscreen' "data-toggle="modal" data-target="#defaultModal">
     Launch fullscreen modal
   </button>
+
+  <h2 class="page-header">Media Modals</h2>
+  
+  <h3>Media modals</h3>
+  <button type="button" class="btn btn-primary btn-lg" (click)="modalSize = 'fullscreen' "data-toggle="modal" data-target="#mediaModal">
+    Launch fullscreen modal
+  </button>
   
   <div [class.modal-inverse]="isInverse" class="modal fade" tabindex="-1" role="dialog" id="defaultModal">
     <div class="modal-dialog modal-{{modalSize}}" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h4 class="modal-title">Modal title</h4>
-          <button type="button" style="font-size: 30px;" class="btn-close btn-md btn-ghost" data-dismiss="modal" aria-label="Close">
-            <span style="line-height: 0.5;" aria-hidden="true">
-              &times;
-            </span>
-          </button>
+          <!-- Set these styles if is inverse -->
+          <!-- btn btn-close btn-md btn-secondary-inverse -->
+          <button type="button" class="btn btn-close btn-md btn-ghost" data-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <p>This is some sample modal content</p>
@@ -49,6 +54,46 @@
           <button [class.btn-secondary-inverse]="isInverse" type="button" class="btn btn-secondary btn-lg" data-dismiss="modal">Close</button>
           <button type="button" class="btn btn-primary btn-lg">Save</button>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Media Modal -->
+  <div [class.modal-inverse]="isInverse" class="modal fade" tabindex="-1" role="dialog" id="mediaModal">
+    <div class="modal-dialog modal-md" role="document">
+      <div class="modal-content">
+        <!-- <div class="modal-header">
+          <h4 class="modal-title">Modal title</h4>
+          <button type="button" style="font-size: 30px;" class="btn-close btn-md btn-ghost" data-dismiss="modal" aria-label="Close">
+            <span style="line-height: 0.5;" aria-hidden="true">
+              &times;
+            </span>
+          </button>
+        </div> -->
+        <div class="modal-body">
+            <button type="button" style="font-size: 30px;" class="btn-close btn-md btn-ghost" data-dismiss="modal" aria-label="Close">
+                <span style="line-height: 0.5;" aria-hidden="true">
+                  &times;
+                </span>
+              </button>
+          <p>This is some sample modal content</p>
+          <!-- <div class="radio">
+              <input type="radio" id="radio0" name="option" value="option1" (click)="invertModal(false)" checked>
+              <label for="radio0">
+                  Default
+              </label>
+          </div>
+          <div class="radio">
+              <input type="radio" id="radio1" name="option" value="option2" (click)="invertModal(true)">
+              <label for="radio1">
+                  Inverse
+              </label> -->
+          <!-- </div> -->
+        </div>
+        <!-- <div class="modal-footer">
+          <button [class.btn-secondary-inverse]="isInverse" type="button" class="btn btn-secondary btn-lg" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary btn-lg">Save</button>
+        </div> -->
       </div>
     </div>
   </div>

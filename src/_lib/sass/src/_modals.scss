@@ -6,6 +6,7 @@
     }
     .modal-header {
         border: none;
+        padding-right: 16px;
         background-color: get-color("gray", x-light);
         display: flex;
         flex-direction: row;
@@ -22,32 +23,8 @@
             font-weight: normal;
             flex: 1;
         }
-        
-        .btn-close {
-            font-size: 30px;
-            border-radius: 3px;
-            
-            display: flex;
-            align-items: flex-start;
-            
-            span {
-                line-height: 0.5;
-                flex: 1;
-            }
-            
-            &.btn-md {
-                padding: 8px 0;
-                height: 32px;
-                width: 32px;
-            }
-
-            &.btn-lg {
-                padding: 8px 0;
-                height: 40px;
-                width: 40px;
-            }
-        }
     }
+    
     .modal-body {
         font-size: 14px;
         color: get-color("gray", 4x-light);
