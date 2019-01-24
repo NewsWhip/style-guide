@@ -55,19 +55,6 @@
     border-radius: 50%;
 }
 
-@mixin button-close($font-size, $line-height, $padding-vertical) {
-    @include button-square($font-size, $line-height, $padding-vertical);
-    line-height: 0;
-
-    &:before {
-        @include close-character(45deg);
-    }
-
-    &:after {
-        @include close-character(-45deg);
-    }
-}
-
 @mixin button-square($font-size, $line-height, $padding-vertical) {
     display: flex;
     align-items: center;
@@ -78,11 +65,22 @@
     height: floor($font-size * $line-height) + ($padding-vertical * 2) + 1 + 1;
 }
 
-@mixin close-character($rotationDegrees) {
-    content: '';
-    height: 2px;
-    background-color: #fff;
-    width: 60%;
-    position: absolute;
-    transform: rotate($rotationDegrees);
+@mixin button-close($font-size, $line-height, $padding-vertical) {
+    @include button-square($font-size, $line-height, $padding-vertical);
+    line-height: 0;
+
+    &:before, &:after {
+        content: '';
+        height: 2px;
+        background-color: #fff;
+        width: 60%;
+        position: absolute;
+    }
+
+    &:before {
+        transform: rotate(45deg);
+    } 
+    &:after {
+        transform: rotate(-45deg);
+    }
 }
