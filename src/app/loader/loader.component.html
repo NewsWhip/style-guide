@@ -72,6 +72,38 @@
 
 <div class="row" style="margin-top: 24px">
     <div class="col-sm-6">
+        <h4 class="nw-text">Importing</h4>
+        <pre><code>{{"// app.module.ts
+import {LoaderModule} from 'nw-style-guide/loader';
+
+@NgModule({
+    BrowserModule,
+    FormsModule,
+    ....
+    ....
+    LoaderModule
+})"}}</code></pre>
+    </div>
+
+    <div class="col-sm-6"></div>
+</div>
+
+<div class="row" style="margin-top: 24px">
+    <div class="col-sm-6">
+        <h4 class="nw-text">Example</h4>
+        <pre><code>{{'&lt;nw-loader
+    [isLoading]="true"
+    [numOfDots]="3"
+    [isInline]="true"
+    [isColor]="false"
+    size="sm">&lt;/nw-loader>'}}</code></pre>
+    </div>
+
+    <div class="col-sm-6"></div>
+</div>
+
+<div class="row" style="margin-top: 24px">
+    <div class="col-sm-6">
         <h4 class="nw-text">Component</h4>
         <table class="table table-bordered">
             <tbody>
