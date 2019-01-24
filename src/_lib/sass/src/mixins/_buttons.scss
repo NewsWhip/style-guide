@@ -49,28 +49,40 @@
 }
 
 @mixin button-round($font-size, $line-height, $padding-vertical) {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
+    @include button-square($font-size, $line-height, $padding-vertical);
     font-size: $font-size * 1.2;
     font-weight: 100;
-    width: ceil($font-size * $line-height) + ($padding-vertical * 2) + 1;
-    height: ceil($font-size * $line-height) + ($padding-vertical * 2) + 1;
     border-radius: 50%;
-    position: relative;
 }
 
 @mixin button-close($font-size, $line-height, $padding-vertical) {
-    width:  ($font-size * $line-height) + ($padding-vertical * 2) + 1 + 1;
-    height: ($font-size * $line-height) + ($padding-vertical * 2) + 1 + 1;
-    padding: 0;
+    @include button-square($font-size, $line-height, $padding-vertical);
     line-height: 0;
+
+    &:before {
+        @include close-character(45deg);
+    }
+
+    &:after {
+        @include close-character(-45deg);
+    }
+}
+
+@mixin button-square($font-size, $line-height, $padding-vertical) {
     display: flex;
     align-items: center;
     justify-content: center;
-    &:before {
-        content: '\d7';
-        font-size: 250%;
-    }
+    position: relative;
+    padding: 0;
+    width:  floor($font-size * $line-height) + ($padding-vertical * 2) + 1 + 1;
+    height: floor($font-size * $line-height) + ($padding-vertical * 2) + 1 + 1;
+}
+
+@mixin close-character($rotationDegrees) {
+    content: '';
+    height: 2px;
+    background-color: #fff;
+    width: 60%;
+    position: absolute;
+    transform: rotate($rotationDegrees);
 }
