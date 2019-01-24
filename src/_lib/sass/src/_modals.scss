@@ -65,21 +65,40 @@
             border-top-color: get-color("gray", 5x-light);
         }
     }
+
+    &.modal-media {
+        
+        .btn-close {
+            transform: translateX(100%); 
+            position: absolute; 
+            right: -8px; 
+            opacity: 0.5;
+            top: 0; 
+        }
+
+        .modal-content {
+            border: 0;
+            background-color: transparent;
+        
+            .modal-body {
+                padding: 0;
+                line-height: 0;
+                
+                .media-content {
+                    border-radius: 3px;
+                    overflow: hidden;
+                    iframe, img, video, object {
+                        width: 100%;
+                    }
+                }
+            }
+        }
+    }
 }
 
 // Revert Bootstraps padding-right: 17px when there is a scrollbar
 body.modal-open {
     padding-right: 0 !important;
-}
-.modal-media {
-    .modal-body {
-        padding: 2px;
-    }
-    iframe,
-    object,
-    video {
-        width: 100%;
-    }
 }
 .modal-fullscreen {
     margin: 0;
