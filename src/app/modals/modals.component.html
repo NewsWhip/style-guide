@@ -61,28 +61,27 @@
     </div>
   </div>
 
-
   <!-- Media Modal -->
   <div class="modal modal-media fade" tabindex="-1" role="dialog" id="mediaModal">
-      <div class="modal-dialog modal-md" role="document">
-        <div class="modal-content">
-          <div class="modal-body">
-            <button type="button" class="btn btn-lg btn-secondary btn-close" data-dismiss="modal" aria-label="Close"></button>
-            <div class="media-content">
-              <img 
-                *ngIf="isImage"
-                src="https://images.unsplash.com/photo-1519405474421-f6a5fae2db20?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80" 
-                alt="someething">
-              <iframe 
-                *ngIf="!isImage"
-                width="640"
-                height="390"
-                frameborder="0" 
-                src="https://www.youtube.com/embed/IrjmtKWnTYY" 
-                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-            </div>
+    <div class="modal-dialog modal-md" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <button type="button" class="btn btn-lg btn-secondary btn-close" data-dismiss="modal" aria-label="Close"></button>
+          <div class="media-content">
+            <img 
+              *ngIf="isImage"
+              src="https://images.unsplash.com/photo-1519405474421-f6a5fae2db20?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80" 
+              alt="someething">
+            <iframe 
+              *ngIf="!isImage"
+              width="640"
+              height="390"
+              frameborder="0" 
+              src="https://www.youtube.com/embed/IrjmtKWnTYY" 
+              allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
           </div>
         </div>
       </div>
     </div>
+  </div>
 </div>
