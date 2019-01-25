@@ -1,0 +1,164 @@
+
+<h2 class="page-header">Loader Module</h2>
+
+<div class="row">
+    <div class="col-sm-6">
+        <h2 class="nw-text">Overlay loader</h2>
+
+        <div class="row">
+            <div class="col-sm-6">
+                <label for="numberOfDots">Number of dots</label>
+                <select class="form-control" style="max-width: 150px"
+                    (input)="num = $event.target.value">
+                    <option value="3">Three</option>
+                    <option value="6" selected>Six</option>
+                    <option value="9">Nine</option>
+                </select>
+            </div>
+            <div class="col-sm-6">
+                <label for="loader-size">Loader size</label>
+                <select class="form-control" style="max-width: 150px"
+                    (input)="size = $event.target.value">
+                    <option value="sm">Small</option>
+                    <option value="md" selected>Medium</option>
+                    <option value="lg">Large</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="loader-demo">
+          <nw-loader
+            [isLoading]="true"
+            [numOfDots]="num"
+            [size]="size"></nw-loader>
+        </div>
+    </div>
+
+    <div class="col-sm-6">
+        <h2 class="nw-text">Inline loaders</h2>
+
+        <p class="nw-text" style="margin-bottom: 24px;">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+
+            <nw-loader
+                [isLoading]="true"
+                [numOfDots]="3"
+                [isInline]="true"
+                size="sm"></nw-loader>
+        </p>
+
+        <p class="nw-text" style="margin-bottom: 24px;">
+            Esse qui fugit voluptatum pariatur repudiandae officiis
+
+            <nw-loader
+                [isLoading]="true"
+                [numOfDots]="6"
+                [isInline]="true"
+                size="md"></nw-loader>
+        </p>
+
+        <p class="nw-text" style="margin-bottom: 24px;">
+            Perferendis nulla at cumque tempore voluptatem harum distinctio omnis numquam expedita voluptas
+
+            <nw-loader
+                [isLoading]="true"
+                [numOfDots]="3"
+                [isInline]="true"
+                [isColor]="false"
+                size="sm"></nw-loader>
+        </p>
+    </div>
+</div>
+
+<div class="row" style="margin-top: 24px">
+    <div class="col-sm-6">
+        <h4 class="nw-text">Importing</h4>
+        <pre><code>{{"// app.module.ts
+import {LoaderModule} from 'nw-style-guide/loader';
+
+@NgModule({
+    BrowserModule,
+    FormsModule,
+    ....
+    ....
+    LoaderModule
+})"}}</code></pre>
+    </div>
+
+    <div class="col-sm-6"></div>
+</div>
+
+<div class="row" style="margin-top: 24px">
+    <div class="col-sm-6">
+        <h4 class="nw-text">Example</h4>
+        <pre><code>{{'&lt;nw-loader
+    [isLoading]="true"
+    [numOfDots]="3"
+    [isInline]="true"
+    [isColor]="false"
+    size="sm">&lt;/nw-loader>'}}</code></pre>
+    </div>
+
+    <div class="col-sm-6"></div>
+</div>
+
+<div class="row" style="margin-top: 24px">
+    <div class="col-sm-6">
+        <h4 class="nw-text">Component</h4>
+        <table class="table table-bordered">
+            <tbody>
+                <tr>
+                    <td>Selector</td>
+                    <td><code>nw-loader</code></td>
+                </tr>
+                <tr>
+                    <td>Exported as</td>
+                    <td><code>nw-loader</code></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-sm-6"></div>
+</div>
+
+<div class="row" style="margin-top: 24px">
+    <div class="col-sm-6">
+        <h4 class="nw-text">Inputs</h4>
+
+        <table class="table table-bordered">
+            <tbody>
+                <tr>
+                    <td><code>isLoading</code></td>
+                    <td><code>boolean</code></td>
+                    <td>Optional</td>
+                    <td>Show the loader or not. Defaults to <code>false</code></td>
+                </tr>
+                <tr>
+                    <td><code>numOfDots</code></td>
+                    <td><code>number</code></td>
+                    <td>Optional</td>
+                    <td>Defaults to <code>6</code></td>
+                </tr>
+                <tr>
+                    <td><code>size</code></td>
+                    <td><code>'sm' | 'md' | 'lg'</code></td>
+                    <td>Optional</td>
+                    <td>Defaults to <code>md</code></td>
+                </tr>
+                <tr>
+                    <td><code>isColor</code></td>
+                    <td><code>boolean</code></td>
+                    <td>Optional</td>
+                    <td>Defaults to <code>true</code></td>
+                </tr>
+                <tr>
+                    <td><code>isInline</code></td>
+                    <td><code>boolean</code></td>
+                    <td>Optional</td>
+                    <td>Defaults to <code>false</code></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
