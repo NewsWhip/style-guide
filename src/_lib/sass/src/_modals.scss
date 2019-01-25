@@ -67,7 +67,6 @@
     }
 
     &.modal-media {
-        
         .btn-close {
             transform: translateX(100%); 
             position: absolute; 
@@ -75,7 +74,6 @@
             opacity: 0.5;
             top: 0; 
         }
-
         .modal-content {
             border: 0;
             background-color: transparent;
