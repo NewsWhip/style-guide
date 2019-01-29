@@ -18,15 +18,25 @@
   <button type="button" class="btn btn-primary btn-lg" (click)="modalSize = 'fullscreen' "data-toggle="modal" data-target="#defaultModal">
     Launch fullscreen modal
   </button>
+
+  <h2 class="page-header">Media Modals</h2>
   
+  <h3>Media Modal</h3>
+  
+  <button type="button" class="btn btn-primary btn-lg" (click)="isImage = true; modalSize = 'md' "data-toggle="modal" data-target="#mediaModal">
+    Launch image modal
+  </button>
+
+  <button type="button" class="btn btn-primary btn-lg" (click)="isImage = false; modalSize = 'md' "data-toggle="modal" data-target="#mediaModal">
+    Launch video modal
+  </button>  
+
   <div [class.modal-inverse]="isInverse" class="modal fade" tabindex="-1" role="dialog" id="defaultModal">
     <div class="modal-dialog modal-{{modalSize}}" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h4 class="modal-title">Modal title</h4>
-          <button type="button" class="close btn-unstyled" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+          <button type="button" class="btn btn-close btn-md" [ngClass]="{'btn-ghost': !isInverse, 'btn-secondary-inverse': isInverse}" data-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <p>This is some sample modal content</p>
@@ -46,6 +56,30 @@
         <div class="modal-footer">
           <button [class.btn-secondary-inverse]="isInverse" type="button" class="btn btn-secondary btn-lg" data-dismiss="modal">Close</button>
           <button type="button" class="btn btn-primary btn-lg">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Media Modal -->
+  <div class="modal modal-media fade" tabindex="-1" role="dialog" id="mediaModal">
+    <div class="modal-dialog modal-md" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <button type="button" class="btn btn-lg btn-secondary btn-close" data-dismiss="modal" aria-label="Close"></button>
+          <div class="media-content">
+            <img 
+              *ngIf="isImage"
+              src="https://images.unsplash.com/photo-1519405474421-f6a5fae2db20?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80" 
+              alt="someething">
+            <iframe 
+              *ngIf="!isImage"
+              width="640"
+              height="390"
+              frameborder="0" 
+              src="https://www.youtube.com/embed/IrjmtKWnTYY" 
+              allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
         </div>
       </div>
     </div>
