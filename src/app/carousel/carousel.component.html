@@ -1,0 +1,11 @@
+<div style="width: 1030px;">
+    <nw-carousel
+        [itemsPerPage]="4"
+        [totalNumItems]="items.length"
+        pageContainerClass="my-page-container"
+        slideContainerClass="my-slide-container">
+        <ng-container *ngFor="let item of items">
+            <div class="slide" *nw-carousel-slide>Slide {{item}}</div>
+        </ng-container>
+    </nw-carousel>
+</div>
