@@ -19,4 +19,6 @@ export class CarouselComponent implements OnInit {
         return [...Array(30).fill(1)].map((_, i) => i);
     }
 
+    log = console.log
+
 }

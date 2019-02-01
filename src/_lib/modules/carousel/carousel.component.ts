@@ -1,5 +1,9 @@
-import { Component, ChangeDetectionStrategy, Input, ElementRef, ViewChild, Renderer2, ChangeDetectorRef, AfterViewInit } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input, ElementRef, ViewChild, Renderer2, ChangeDetectorRef, AfterViewInit, OnDestroy, OnInit } from '@angular/core';
 import { trigger, transition, style, animate, AUTO_STYLE } from '@angular/animations';
+import { Subscription } from 'rxjs/Subscription';
+import { fromEvent } from "rxjs/observable/fromEvent";
+import { debounceTime } from "rxjs/operators";
+
 
 @Component({
     selector: 'nw-carousel',
@@ -55,7 +59,7 @@ import { trigger, transition, style, animate, AUTO_STYLE } from '@angular/animat
         ])
     ]
 })
-export class CarouselComponent implements AfterViewInit {
+export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
 
     @Input() showPageIndicator: boolean = true;
     @Input() showPagination: boolean = true;
@@ -68,9 +72,15 @@ export class CarouselComponent implements AfterViewInit {
     public pages: number[] = [];
     public currPage: number = 0;
 
+    private _windowResizeSub: Subscription;
+
     constructor(
         private _renderer: Renderer2,
         private _cdRef: ChangeDetectorRef) {}
+
+    ngOnInit() {
+        this.subscribeToWindowResize();
+    }
 
     ngAfterViewInit() {
         this.pages = this.getPages();
@@ -126,6 +136,20 @@ export class CarouselComponent implements AfterViewInit {
 
     get maskGradient() {
         return `linear-gradient(to left, rgba(0,0,0,0), ${this.maskColor})`;
+    }
+
+    subscribeToWindowResize() {
+        this._windowResizeSub = fromEvent(window, 'resize')
+            .pipe(debounceTime(200))
+            .subscribe(_ => {
+                this.pages = this.getPages();
+                this.goToPage(0);
+                this._cdRef.detectChanges();
+            })
+    }
+
+    ngOnDestroy() {
+        this._windowResizeSub.unsubscribe();
     }
 
 }
