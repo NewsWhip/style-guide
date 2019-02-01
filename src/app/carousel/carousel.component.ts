@@ -16,7 +16,7 @@ export class CarouselComponent implements OnInit {
     }
 
     getItems(): any[] {
-        return [...Array(50).fill(1)].map((_, i) => i);
+        return [...Array(30).fill(1)].map((_, i) => i);
     }
 
 }

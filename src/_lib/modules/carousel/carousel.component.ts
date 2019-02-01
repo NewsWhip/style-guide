@@ -1,123 +1,131 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input, ContentChildren, QueryList, ViewChildren, ElementRef, AfterViewInit } from '@angular/core';
-import { CarouselSlideDirective } from './carousel-slide.directive';
+import { Component, ChangeDetectionStrategy, Input, ElementRef, ViewChild, Renderer2, ChangeDetectorRef, AfterViewInit } from '@angular/core';
+import { trigger, transition, style, animate, AUTO_STYLE } from '@angular/animations';
 
 @Component({
     selector: 'nw-carousel',
     template: `
-        <div class="nw-carousel">
-            <div class="scroll-container">
-                <div class="page-container" *ngFor="let page of pages" ngClass="page-container-{{page}} {{pageContainerClass}}">
-                    <div *ngFor="let item of slides.toArray() | slice:getSlideIndicesByPage(page)[0]:getSlideIndicesByPage(page)[1] + 1"
-                        class="slide-container"
-                        [ngClass]="slideContainerClass"
-                        #slideEls>
-                        <ng-container [ngTemplateOutlet]="item.templateRef"></ng-container>
-                    </div>
+        <div class="carousel-container">
+            <div class="pagination-container" *ngIf="showPagination">
+                <button class="btn btn-md btn-ghost" (click)="prev()" [class.invisible]="isFirstPage">
+                    <i class="fa fa-chevron-left"></i>
+                </button>
+            </div>
+
+            <ng-content select=".pagination-left"></ng-content>
+
+            <div class="carousel-content">
+                <div class="pagination-masks" *ngIf="showMask && pages.length > 1">
+                    <div class="pagination-mask pagination-mask-start" *ngIf="!isFirstPage" @collapse
+                        [ngStyle]="maskStyles"></div>
+
+                    <div class="pagination-mask pagination-mask-end" *ngIf="!isLastPage" @collapse
+                        [ngStyle]="maskStyles"></div>
+                </div>
+
+                <div class="carousel" #carousel [ngClass]="containerClass">
+                    <ng-content></ng-content>
                 </div>
             </div>
+
+            <div class="pagination-container" *ngIf="showPagination">
+                <button class="btn btn-md btn-ghost" (click)="next()" [class.invisible]="isLastPage">
+                    <i class="fa fa-chevron-right"></i>
+                </button>
+            </div>
+
+            <ng-content select=".pagination-right"></ng-content>
         </div>
 
-        <div class="pagination-container">
-            <button class="btn btn-lg btn-primary" (click)="next()" *ngIf="currPage !== (maxPage - 1)">&gt;</button>
+        <div class="page-indicators" *ngIf="showPageIndicator && pages.length > 1">
+            <a href="javascript:;" class="page-indicator" *ngFor="let page of pages"
+                [class.active]="page === currPage"
+                (click)="goToPage(page)"></a>
         </div>
 
-        <div class="pagination-container">
-            <button class="btn btn-lg btn-primary" (click)="prev()" *ngIf="currPage !== 0">&lt;</button>
-        </div>
+        <ng-content select=".pagination-indicators"></ng-content>
     `,
     changeDetection: ChangeDetectionStrategy.OnPush,
     exportAs: 'nw-carousel',
-    styles: [`
-        .nw-carousel {
-            position: relative;
-            width: 100%;
-            overflow: hidden;
-            white-space: nowrap;
-        }
-        .page-container {
-            display: inline-block;
-            width: 100%;
-            white-space: nowrap;
-            overflow: hidden;
-            border: 1px dashed black;
-            position: relative;
-        }
-        .slide-container {
-            display: inline-block;
-        }
-        .pagination-container {
-            width: 50px;
-            position: relative;
-            top: 400px;
-        }
-        >>> .my-page-container {
-
-        }
-        >>> .my-slide-container {
-
-        }
-    `]
+    animations: [
+        trigger('collapse', [
+            transition(':leave', [
+                style({ width: AUTO_STYLE }),
+                animate(`300ms linear`, style({ width: 0 }))
+            ])
+        ])
+    ]
 })
-export class CarouselComponent implements OnInit, AfterViewInit {
+export class CarouselComponent implements AfterViewInit {
 
-    @Input() currPage: number = 0;
-    @Input() itemsPerPage: number;
-    @Input() totalNumItems: number;
-    @Input() showDots: boolean = true;
-    @Input() pageContainerClass: string;
-    @Input() slideContainerClass: string;
+    @Input() showPageIndicator: boolean = true;
+    @Input() showPagination: boolean = true;
+    @Input() showMask: boolean = true;
+    @Input() maskColor: string = '#ffffff';
+    @Input() containerClass: string;
 
-    @ContentChildren(CarouselSlideDirective) slides: QueryList<CarouselSlideDirective>;
+    @ViewChild('carousel') carousel: ElementRef;
 
-    @ViewChildren('slideEls') slideEls: QueryList<ElementRef>;
+    public pages: number[] = [];
+    public currPage: number = 0;
 
-    public state: string = '';
-    public pages: number[];
-
-    ngOnInit() {
-        this.pages = [...Array(this.maxPage).fill(0)].map((_, i) => i)
-    }
+    constructor(
+        private _renderer: Renderer2,
+        private _cdRef: ChangeDetectorRef) {}
 
     ngAfterViewInit() {
-        this.scrollActiveSlideIntoView();
-    }
+        this.pages = this.getPages();
 
-    getSlideIndicesByPage(page: number): [number, number] {
-        const firstSlideIndex: number = page * this.itemsPerPage;
-
-        return [firstSlideIndex, Math.min(firstSlideIndex + this.itemsPerPage - 1, this.totalNumItems - 1)]
-    }
-
-    scrollActiveSlideIntoView() {
-        let slideToScrollTo = this.state === 'next' ?
-            this.slideEls.toArray()[this.getSlideIndicesByPage(this.currPage)[1]] :
-            this.slideEls.toArray()[this.getSlideIndicesByPage(this.currPage)[0]];
-
-        slideToScrollTo.nativeElement.scrollIntoView({ behavior: 'smooth', inline: 'end' });
+        if (this.showPageIndicator) {
+            this._cdRef.detectChanges();
+        }
     }
 
     next() {
-        this.state = 'next';
-        this.currPage++;
-        this.scrollActiveSlideIntoView();
-
-        console.log('Next:', this.getSlideIndicesByPage(this.currPage))
+        this.goToPage(Math.min(this.pages.length - 1, this.currPage + 1));
     }
 
     prev() {
-        this.state = 'previous';
-        this.currPage--;
-        this.scrollActiveSlideIntoView();
-
-        console.log('Prev:', this.getSlideIndicesByPage(this.currPage))
+        this.goToPage(Math.max(0, this.currPage - 1));
     }
 
-    get maxPage(): number {
-        return Math.ceil(this.totalNumItems / this.itemsPerPage);
+    goToPage(page: number) {
+        this.currPage = page;
+
+        const carouselWidth: number = this.carouselNativeElement.clientWidth;
+        const newScrollPosition: number = page * carouselWidth;
+
+        this._renderer.setProperty(this.carouselNativeElement, 'scrollLeft', newScrollPosition);
+
+        this._cdRef.detectChanges();
     }
 
-    onAnimDone(ev) {
-        console.log(ev);
+    getPages() {
+        let numOfPages: number = Math.ceil(this.carouselNativeElement.scrollWidth / this.carouselNativeElement.clientWidth);
+
+        return [...Array(numOfPages).fill(1)].map((_, i) => i);
+    }
+
+    get carouselNativeElement(): HTMLDivElement {
+        return (this.carousel.nativeElement as HTMLDivElement);
+    }
+
+    get isFirstPage(): boolean {
+        return this.currPage === 0;
+    }
+
+    get isLastPage(): boolean {
+        return this.currPage === this.pages[this.pages.length - 1]
+    }
+
+    get maskStyles() {
+        return {
+            '-webkit-mask-image': `linear-gradient(to left, rgba(0,0,0,0), ${this.maskColor})`,
+            'background-color': `${this.maskColor}`
+        }
+    }
+
+    get maskGradient() {
+        return `linear-gradient(to left, rgba(0,0,0,0), ${this.maskColor})`;
     }
 
 }

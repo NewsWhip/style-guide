@@ -1,0 +1,67 @@
+nw-carousel {
+    .carousel-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        width: 100%;
+    }
+    .carousel-content {
+        position: relative;
+        width: 100%;
+        min-width: 0;
+    }
+    .carousel {
+        position: relative;
+        flex: 1;
+        white-space: nowrap;
+        overflow: hidden;
+        scroll-snap-type: x mandatory;
+        scroll-behavior: smooth;
+    }
+    .pagination-container {
+        flex: 1;
+        .invisible {
+            visibility: hidden;
+        }
+    }
+    .page-indicators {
+        width: 100%;
+        text-align: center;
+
+        .page-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin: 4px;
+            display: inline-block;
+            background-color: get-color("gray", 4x-light);
+
+            &.active,
+            &:hover {
+                background-color: get-color("primary", base);
+            }
+        }
+    }
+    .pagination-masks {
+        width: 100%;
+        position: absolute;
+        height: 100%;
+        z-index: 1;
+
+        .pagination-mask {
+            position: absolute;
+            top: 0;
+            width: 100px;
+            height: 100%;
+
+            &.pagination-mask-start {
+                left: 0;
+            }
+            &.pagination-mask-end {
+                right: 0;
+                transform: rotate(180deg);
+            }
+        }
+    }
+}
