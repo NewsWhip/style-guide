@@ -4,11 +4,7 @@
 
 <div class="row">
     <div class="col-sm-6">
-<pre><code>&lt;nw-carousel maskColor="#373737">
-    &lt;ng-container &#42;ngFor="let item of items">
-        &lt;div class="slide" nwCarouselSlide>Slide {{item}}&lt;/div>
-    &lt;/ng-container>
-&lt;/nw-carousel></code></pre>
+<pre><code [innerText]="getExample1()"></code></pre>
     </div>
 </div>
 
@@ -27,26 +23,7 @@
 
 <div class="row">
     <div class="col-sm-6">
-<pre><code>&lt;nw-carousel maskColor="#373737" #carousel="nw-carousel" [showPageIndicator]="false" [showPagination]="false">
-    &lt;ng-container *ngFor="let item of items">
-        &lt;div class="slide"
-            [style.background-color]="'grey'">Slide {{item}}&lt;/div>
-    &lt;/ng-container>
-
-    &lt;div class="pagination-left">
-        &lt;button class="btn btn-primary btn-md" (click)="carousel.prev()">Prev&lt;/button>
-    &lt;/div>
-
-    &lt;div class="pagination-right">
-        &lt;button class="btn btn-primary btn-md" (click)="carousel.next()">Next&lt;/button>
-    &lt;/div>
-
-    &lt;div class="pagination-indicators" style="width: 100%; text-align: center;">
-        &lt;button class="btn sm btn-primary" *ngFor="let page of carousel.getPages()" (click)="carousel.goToPage(page)" [class.active]="page === carousel.currPage">
-            {{page + 1}}
-        &lt;/button>
-    &lt;/div>
-&lt;/nw-carousel></code></pre>
+        <pre><code [innerText]="getExample2()"></code></pre>
     </div>
 </div>
 
