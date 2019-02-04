@@ -33,6 +33,8 @@ import { FeatureAlertsComponent } from './feature-alerts/feature-alerts.componen
 import { AnimationsComponent } from './animations/animations.component';
 import { LoaderComponent } from './loader/loader.component';
 import { LoaderModule } from '../_lib/modules/loader';
+import { CarouselModule } from '../_lib/modules/carousel/carousel.module';
+import { CarouselComponent } from './carousel/carousel.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +60,8 @@ import { LoaderModule } from '../_lib/modules/loader';
     TabsComponent,
     FeatureAlertsComponent,
     AnimationsComponent,
-    LoaderComponent
+    LoaderComponent,
+    CarouselComponent
   ],
   imports: [
     BrowserModule,
@@ -73,7 +76,8 @@ import { LoaderModule } from '../_lib/modules/loader';
     FeatureAlertsModule.forRoot(),
     PortalModule,
     TabsModule,
-    LoaderModule
+    LoaderModule,
+    CarouselModule
   ],
   bootstrap: [AppComponent]
 })

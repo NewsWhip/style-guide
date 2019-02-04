@@ -22,6 +22,7 @@ import { PickerComponent } from "./picker/picker.component";
 import { FeatureAlertsComponent } from "./feature-alerts/feature-alerts.component";
 import { AnimationsComponent } from "./animations/animations.component";
 import { LoaderComponent } from './loader/loader.component';
+import { CarouselComponent } from './carousel/carousel.component';
 
 const appRoutes: Routes = [
     {
@@ -111,6 +112,10 @@ const appRoutes: Routes = [
     {
         path: 'loader',
         component: LoaderComponent
+    },
+    {
+        path: 'carousel',
+        component: CarouselComponent
     }
 ];
 
