@@ -2,15 +2,20 @@
     // Revert Bootstraps padding-right: 17px when there is a scrollbar
     padding-right: 0 !important;
     .modal-content {
-        border-radius: 0;
+        border-radius: 3px;
     }
     .modal-header {
         border: none;
+        padding-right: 16px;
         background-color: get-color("gray", x-light);
         display: flex;
         flex-direction: row;
         align-items: center;
         z-index: 1;
+        border: {
+            top-left-radius: 3px;
+            top-right-radius: 3px;
+        }
 
         .modal-title {
             color: get-color("gray", 5x-light);
@@ -18,13 +23,8 @@
             font-weight: normal;
             flex: 1;
         }
-        .close {
-            font-size: 30px;
-            position: relative;
-            top: 2px;
-            right: -12px;
-        }
     }
+    
     .modal-body {
         font-size: 14px;
         color: get-color("gray", 4x-light);
@@ -45,20 +45,57 @@
         }
     }
     &.in .modal-dialog { transform: translate3d(0,0,0); }
+
+    &.modal-inverse {
+        .modal-content {
+            background-color: #ffffff;
+        }
+        .modal-header {
+            background-color: get-color("gray", 6x-light);
+     
+            .modal-title,
+            .close {
+                color: get-color("gray", x-light);
+            }
+        }
+        .modal-body {
+            color: get-color("gray", base);
+        }
+        .modal-footer {
+            border-top-color: get-color("gray", 5x-light);
+        }
+    }
+
+    &.modal-media {
+        .btn-close {
+            transform: translateX(100%); 
+            position: absolute; 
+            right: -8px; 
+            opacity: 0.5;
+            top: 0; 
+        }
+        .modal-content {
+            border: 0;
+        
+            .modal-body {
+                padding: 0;
+                line-height: 0;
+                
+                .media-content {
+                    border-radius: 3px;
+                    overflow: hidden;
+                    iframe, img, video, object {
+                        width: 100%;
+                    }
+                }
+            }
+        }
+    }
 }
+
 // Revert Bootstraps padding-right: 17px when there is a scrollbar
 body.modal-open {
     padding-right: 0 !important;
-}
-.modal-media {
-    .modal-body {
-        padding: 2px;
-    }
-    iframe,
-    object,
-    video {
-        width: 100%;
-    }
 }
 .modal-fullscreen {
     margin: 0;

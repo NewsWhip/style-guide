@@ -1,0 +1,65 @@
+nw-loader {
+    $base-dot-size: 8px;
+
+    @mixin get-dots-animations($animTime) {
+        $maxDots: 9;
+
+        @keyframes moveUpAndDown {
+            0% { transform: translateY(0px) }
+            100% { transform: translateY(2em) }
+        }
+
+        @for $i from 1 through $maxDots {
+            $animDelay: $i * .2s;
+
+            &.dot-#{$i} {
+                animation: moveUpAndDown $animTime $animDelay ease-in-out alternate infinite;
+            }
+        }
+    }
+
+    .loader {
+        font-size: $base-dot-size;
+
+        &.loader-inline {
+            display: inline-block;
+        }
+        &:not(.loader-inline) {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+        }
+        .dots-icon-wrapper {
+            display: flex;
+        }
+        .dots {
+            display: flex;
+            transform: translateY(-2em);
+        }
+        .dot {
+            background-color: get-color("gray", 3x-light);
+            width: 1em;
+            height: 1em;
+            border-radius: 0.5em;
+            margin-right: 1em;
+
+            @include get-dots-animations(.5s);
+        }
+        &.loader-color {
+            .dot {
+                background-color: get-color("primary");
+            }
+        }
+        &.loader-sm {
+            font-size: $base-dot-size / 2;
+        }
+        &.loader-lg {
+            font-size: $base-dot-size * 2;
+        }
+    }
+}

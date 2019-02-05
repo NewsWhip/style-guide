@@ -10,7 +10,8 @@ import { ToastsModule } from '../_lib/modules/toasts';
 import { FeatureAlertsModule } from '../_lib/modules/feature-alerts';
 import { TabsModule } from '../_lib/modules/tabs';
 import { ChartsModule } from "../_lib/modules/charts/charts.module";
-
+import { LoaderModule } from '../_lib/modules/loader';
+import { CarouselModule } from '../_lib/modules/carousel/carousel.module';
 
 import { AppComponent } from './app.component';
 import { ButtonsComponent } from './buttons/buttons.component';
@@ -36,6 +37,8 @@ import { PickerComponent } from './picker/picker.component';
 import { FeatureAlertsComponent } from './feature-alerts/feature-alerts.component';
 import { AnimationsComponent } from './animations/animations.component';
 import { ChartsComponent } from './charts/charts.component';
+import { LoaderComponent } from './loader/loader.component';
+import { CarouselComponent } from './carousel/carousel.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +64,9 @@ import { ChartsComponent } from './charts/charts.component';
     TabsComponent,
     FeatureAlertsComponent,
     AnimationsComponent,
-    ChartsComponent
+    ChartsComponent,
+    LoaderComponent,
+    CarouselComponent
   ],
   imports: [
     BrowserModule,
@@ -77,7 +82,9 @@ import { ChartsComponent } from './charts/charts.component';
     FeatureAlertsModule.forRoot(),
     PortalModule,
     TabsModule,
-    ChartsModule
+    ChartsModule,
+    LoaderModule,
+    CarouselModule
   ],
   bootstrap: [AppComponent]
 })
