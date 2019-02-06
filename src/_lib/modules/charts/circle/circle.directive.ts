@@ -1,7 +1,7 @@
 import { Directive, Input, OnInit, ElementRef, OnChanges, SimpleChanges } from '@angular/core';
 import { ChartUtils } from '../chart.utils';
 import { select, Selection } from 'd3-selection';
-import { ScaleTime, ScaleLinear } from 'd3-scale';
+import { ScaleTime, ScaleLinear, scaleTime, scaleLinear } from 'd3-scale';
 
 @Directive({
     selector: 'circle[nw-circle]'
@@ -13,12 +13,12 @@ export class CircleDirective implements OnInit, OnChanges {
     @Input() height: number;
     @Input() xDomain: [number, number];
     @Input() yDomain: [number, number];
-    @Input() xScale: ScaleTime<number, number>;
-    @Input() yScale: ScaleLinear<number, number>;
     @Input() animDuration: number = ChartUtils.ANIMATION_DURATION;
     @Input() easing: (normalizedTime: number) => number = ChartUtils.ANIMATION_EASING;
 
     public circle: Selection<SVGCircleElement, [number, number], SVGElement, any>;
+    public xScale: ScaleTime<number, number> = scaleTime();
+    public yScale: ScaleLinear<number, number> = scaleLinear();
 
     constructor(private _elRef: ElementRef) {}
 

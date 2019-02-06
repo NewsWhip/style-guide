@@ -1,7 +1,7 @@
 import { Directive, OnInit, Input, ElementRef, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { select, Selection } from 'd3-selection';
 import { line, Line, curveLinear, CurveFactory } from 'd3-shape';
-import { ScaleTime, ScaleLinear } from 'd3-scale';
+import { ScaleTime, ScaleLinear, scaleTime, scaleLinear } from 'd3-scale';
 import { ChartUtils } from '../chart.utils';
 import 'd3-transition';
 
@@ -16,8 +16,6 @@ export class PathDirective implements OnInit, OnChanges {
     @Input() height: number;
     @Input() xDomain: [number, number];
     @Input() yDomain: [number, number];
-    @Input() xScale: ScaleTime<number, number>;
-    @Input() yScale: ScaleLinear<number, number>;
     @Input() animDuration: number = ChartUtils.ANIMATION_DURATION;
     @Input() curve: CurveFactory = curveLinear;
     @Input() easing: (normalizedTime: number) => number = ChartUtils.ANIMATION_EASING;
@@ -26,6 +24,8 @@ export class PathDirective implements OnInit, OnChanges {
 
     public line: Line<[number, number]>;
     public path: Selection<SVGPathElement, Array<[number, number]>, SVGElement, any>;
+    public xScale: ScaleTime<number, number> = scaleTime();
+    public yScale: ScaleLinear<number, number> = scaleLinear();
 
     constructor(private _elRef: ElementRef) {}
 

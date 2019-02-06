@@ -39,19 +39,17 @@
                     (brushEnd)="onBrushSelection($event)"></g>
 
                 <!-- Axes -->
-                <g class="x axis nw-slot-2" nw-x-axis
+                <g class="x axis nw-slot-2" nw-x-axis #xAxis="nw-x-axis"
                     [width]="600"
                     [height]="400"
                     [domain]="xDomain"
-                    [scale]="xScale"
                     [tickFormat]="xAxisTickFormat"
                     [tickCount]="xAxisTickCount"></g>
 
-                <g class="y axis nw-slot-2" nw-y-axis
+                <g class="y axis nw-slot-2" nw-y-axis #yAxis="nw-y-axis"
                     [width]="600"
                     [height]="400"
                     [domain]="yDomain"
-                    [scale]="yScale"
                     [tickFormat]="yAxisTickFormat"
                     [showGuidlines]="true"></g>
 
@@ -59,7 +57,6 @@
                     [width]="600"
                     [height]="400"
                     [domain]="randomYDomain"
-                    [scale]="yScale"
                     [tickCount]="4"
                     [showGuidlines]="yDomain[0] === 0 && yDomain[1] === 0"></g>
 
@@ -70,8 +67,6 @@
                     [height]="400"
                     [xDomain]="xDomain"
                     [yDomain]="yDomain"
-                    [xScale]="xScale"
-                    [yScale]="yScale"
                     [animDuration]="0"></path>
 
                 <path class="hover-path nw-slot-1" *ngIf="isHovering"
@@ -80,8 +75,6 @@
                     [height]="400"
                     [xDomain]="xDomain"
                     [yDomain]="yDomain"
-                    [xScale]="xScale"
-                    [yScale]="yScale"
                     [animDuration]="0"></path>
 
                 <!-- Paths -->
@@ -91,8 +84,6 @@
                     [height]="400"
                     [xDomain]="xDomain"
                     [yDomain]="yDomain"
-                    [xScale]="xScale"
-                    [yScale]="yScale"
                     (animEnd)="onPathAnimationEnd('fbComments')"></path>
 
                 <path class="tw-shares" *ngIf="isMetricSelected('twShares')"
@@ -100,18 +91,14 @@
                     [width]="600"
                     [height]="400"
                     [xDomain]="xDomain"
-                    [yDomain]="yDomain"
-                    [xScale]="xScale"
-                    [yScale]="yScale"></path>
+                    [yDomain]="yDomain"></path>
 
                 <path class="fb-total" *ngIf="isMetricSelected('fbTotalEngagement')"
                     [nw-path]="getDataByMetric('fbTotalEngagement')"
                     [width]="600"
                     [height]="400"
                     [xDomain]="xDomain"
-                    [yDomain]="yDomain"
-                    [xScale]="xScale"
-                    [yScale]="yScale"></path>
+                    [yDomain]="yDomain"></path>
 
                 <path class="random"
                     [nw-path]="randomData"
@@ -119,8 +106,6 @@
                     [height]="400"
                     [xDomain]="xDomain"
                     [yDomain]="randomYDomain"
-                    [xScale]="xScale"
-                    [yScale]="yScale"
                     [curve]="randomLineCurve.curve"></path>
 
                 <!-- Circles with popovers -->
@@ -131,8 +116,6 @@
                         [height]="400"
                         [xDomain]="xDomain"
                         [yDomain]="yDomain"
-                        [xScale]="xScale"
-                        [yScale]="yScale"
                         r=5
                         [popover]="circlePopTemplate"
                         [popoverContext]="{ point: point }"
@@ -147,8 +130,6 @@
                         [height]="400"
                         [xDomain]="xDomain"
                         [yDomain]="randomYDomain"
-                        [xScale]="xScale"
-                        [yScale]="yScale"
                         r=5
                         [popover]="circlePopTemplate"
                         [popoverContext]="{ point: point }"
@@ -163,8 +144,6 @@
                         [height]="400"
                         [xDomain]="xDomain"
                         [yDomain]="randomYDomain"
-                        [xScale]="xScale"
-                        [yScale]="yScale"
                         [barWidth]="barWidth.value"
                         [popover]="circlePopTemplate"
                         [popoverContext]="{ point: point }"

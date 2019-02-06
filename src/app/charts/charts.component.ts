@@ -1,11 +1,13 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
 import * as moment from 'moment';
 import { scaleTime, scaleLinear } from 'd3-scale';
 import { DecimalPipe } from '@angular/common';
 import { bisector } from 'd3-array';
 import { AxisTimeInterval } from 'd3-axis';
-import { curveCardinal, curveBasis, curveLinear, curveStep, curveStepAfter, curveStepBefore, CurveFactory } from 'd3-shape'
+import { curveCardinal, curveBasis, curveLinear, curveStep, curveStepAfter, curveStepBefore } from 'd3-shape'
+import { XAxisDirective } from '../../../distribution/charts';
+import { YAxisDirective } from '../../_lib/modules/charts';
 
 @Component({
     selector: 'app-charts',
@@ -96,8 +98,6 @@ export class ChartsComponent implements OnInit {
 
     public xDomain: [number, number];
     public yDomain: [number, number];
-    public xScale = scaleTime();
-    public yScale = scaleLinear();
     public chartMargins = { top: 50, bottom: 50, left: 60, right: 60 };
     public xAxisTickFormat = (d: Date) => moment(d).format('h:mma');
     public yAxisTickFormat = (d: number) => this._decimalPipe.transform(d, '1.0-0');
@@ -122,13 +122,14 @@ export class ChartsComponent implements OnInit {
 
     public metricNames: string[] = [];
     public form: FormGroup;
-
     public showBrush: FormControl = new FormControl(false);
     public brushType: FormControl = new FormControl('');
     public brushBox: [[Date, number], [Date, number]];
     public barWidth: FormControl = new FormControl(20);
-
     public xAxisTickCount: number | AxisTimeInterval = 8;
+
+    @ViewChild('xAxis') xAxis: XAxisDirective;
+    @ViewChild('yAxis') yAxis: YAxisDirective;
 
     constructor(
         private _fb: FormBuilder,
@@ -243,16 +244,16 @@ export class ChartsComponent implements OnInit {
         // work out which date value is closest to the mouse
         var d = +coordinates[0] - d0[0] > d1[0] - +coordinates[0] ? d1 : d0;
 
-        var x = this.xScale(d[0]);
-        var y = this.yScale(d[1]);
+        var x = this.xAxis.scale(d[0]);
+        var y = this.yAxis.scale(d[1]);
 
         console.log('Closest point', x, y)
     }
 
     positionToCoordinates(xDomain: [number, number], yDomain: [number, number], position: [number, number]): [Date, number] {
         return [
-            this.xScale.domain(xDomain).invert(position[0]),
-            this.yScale.domain(yDomain).invert(position[1])
+            this.xAxis.scale.domain(xDomain).invert(position[0]),
+            this.yAxis.scale.domain(yDomain).invert(position[1])
         ]
     }
 

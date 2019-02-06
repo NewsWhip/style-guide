@@ -1,7 +1,7 @@
 import { Directive, ElementRef, Input } from '@angular/core';
 import { axisBottom, axisTop, Axis } from 'd3-axis';
 import { AxisBase } from './axis-base';
-import { ScaleTime } from 'd3-scale';
+import { ScaleTime, scaleTime } from 'd3-scale';
 
 @Directive({
     selector: '[nw-x-axis]',
@@ -11,8 +11,8 @@ export class XAxisDirective extends AxisBase {
 
     @Input() align: 'top' | 'bottom' = 'bottom';
     @Input() domain: [number, number];
-    // TODO: if this is always an instance of ScaleTime, why ask the user to pass it in?
-    @Input() scale: ScaleTime<number, number>;
+
+    public scale: ScaleTime<number, number> = scaleTime();
 
     constructor(elRef: ElementRef) {
         super(elRef);
