@@ -37,7 +37,7 @@ import * as _ from 'lodash';
 				<!-- Navigate up the tree -->
 				<div class="results-actions" *ngIf="parentId && displayItems.length && !searchTerm.value.length">
 					<a href="javascript:;" class="nw-link nw-link-tertiary" (click)="ascend(getParentItem(parentId))">
-						<i class="fa fa-long-arrow-left" aria-hidden="true"></i>
+						<i class="fas fa-long-arrow-alt-left" aria-hidden="true"></i>
 						{{getParentItem(parentId).displayName}}
 					</a>
 				</div>
@@ -63,7 +63,7 @@ import * as _ from 'lodash';
 					<ng-container *ngIf="selectionsAreShowing">
 						<div class="results-actions">
 							<a href="javascript:;" class="nw-link nw-link-tertiary" (click)="selectionsAreShowing = false">
-								<i class="fa fa-long-arrow-left" aria-hidden="true"></i> Back
+								<i class="fas fa-long-arrow-alt-left" aria-hidden="true"></i> Back
 							</a>
 							<a href="javascript:;" class="nw-link nw-link-tertiary" *ngIf="getSelections().length" (click)="clearSelections($event)">Clear all</a>
 						</div>
@@ -112,7 +112,7 @@ import * as _ from 'lodash';
 								</span>
 
 								<button class="btn btn-ghost drilldown" *ngIf="hasChildren(item.id)" (click)="setDisplayItemsFromParentId(item.id, $event); desc.emit(getParentItem(parentId))">
-									<i class="fa fa-chevron-right" aria-hidden="true"></i>
+									<i class="fas fa-chevron-right" aria-hidden="true"></i>
 								</button>
                             </span>
 
