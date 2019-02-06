@@ -4,9 +4,8 @@ import * as moment from 'moment';
 import { DecimalPipe } from '@angular/common';
 import { bisector } from 'd3-array';
 import { AxisTimeInterval } from 'd3-axis';
-import { curveCardinal, curveBasis, curveLinear, curveStep, curveStepAfter, curveStepBefore } from 'd3-shape'
-import { XAxisDirective } from '../../../distribution/charts';
-import { YAxisDirective } from '../../_lib/modules/charts';
+import { curveCardinal, curveBasis, curveLinear, curveStep, curveStepAfter, curveStepBefore } from 'd3-shape';
+import { YAxisDirective, XAxisDirective } from '../../_lib/modules/charts';
 
 @Component({
     selector: 'app-charts',
