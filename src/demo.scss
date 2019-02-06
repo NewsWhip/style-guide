@@ -2,7 +2,8 @@
 $fa-font-path : '../node_modules/font-awesome/fonts';
 
 // Import third-party libs
-@import "node_modules/font-awesome/scss/font-awesome.scss";
+// @import "node_modules/font-awesome/scss/font-awesome.scss";
+@import "../node_modules/@fortawesome/fontawesome-free/css/all.css";
 
 // Import the style guide
 @import "_lib/sass/styles.scss";
