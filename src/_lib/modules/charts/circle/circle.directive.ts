@@ -2,6 +2,7 @@ import { Directive, Input, OnInit, ElementRef, OnChanges, SimpleChanges } from '
 import { ChartUtils } from '../chart.utils';
 import { select, Selection } from 'd3-selection';
 import { ScaleTime, ScaleLinear, scaleTime, scaleLinear } from 'd3-scale';
+import { ChartComponent } from '../chart.component';
 
 @Directive({
     selector: 'circle[nw-circle]'
@@ -9,8 +10,6 @@ import { ScaleTime, ScaleLinear, scaleTime, scaleLinear } from 'd3-scale';
 export class CircleDirective implements OnInit, OnChanges {
 
     @Input('nw-circle') point: [number, number];
-    @Input() width: number;
-    @Input() height: number;
     @Input() xDomain: [number, number];
     @Input() yDomain: [number, number];
     @Input() animDuration: number = ChartUtils.ANIMATION_DURATION;
@@ -20,7 +19,9 @@ export class CircleDirective implements OnInit, OnChanges {
     public xScale: ScaleTime<number, number> = scaleTime();
     public yScale: ScaleLinear<number, number> = scaleLinear();
 
-    constructor(private _elRef: ElementRef) {}
+    constructor(
+        private _elRef: ElementRef,
+        private _chart: ChartComponent) {}
 
     ngOnInit() {
         this.circle = select(this._elRef.nativeElement as SVGCircleElement);
@@ -40,8 +41,8 @@ export class CircleDirective implements OnInit, OnChanges {
     }
 
     setDomains() {
-        this.xScale.domain(this.xDomain).range([0, this.width]);
-        this.yScale.domain(this.yDomain).range([this.height, 0]);
+        this.xScale.domain(this.xDomain).range([0, this._chart.width]);
+        this.yScale.domain(this.yDomain).range([this._chart.height, 0]);
     }
 
     draw(): void {

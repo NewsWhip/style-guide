@@ -25,7 +25,7 @@
         </form>
 
         <div style="display: flex; flex-direction: row;">
-            <svg nw-chart nw-brush
+            <svg nw-chart
                 [width]="600"
                 [height]="400"
                 [margins]="chartMargins"
@@ -33,29 +33,21 @@
                 (nwMouseout)="onMouseout()">
 
                 <g nw-brush *ngIf="showBrush.value"
-                    [width]="600"
-                    [height]="400"
                     [dimension]="brushType.value"
                     (brushEnd)="onBrushSelection($event)"></g>
 
                 <!-- Axes -->
                 <g class="x axis nw-slot-2" nw-x-axis #xAxis="nw-x-axis"
-                    [width]="600"
-                    [height]="400"
                     [domain]="xDomain"
                     [tickFormat]="xAxisTickFormat"
                     [tickCount]="xAxisTickCount"></g>
 
                 <g class="y axis nw-slot-2" nw-y-axis #yAxis="nw-y-axis"
-                    [width]="600"
-                    [height]="400"
                     [domain]="yDomain"
                     [tickFormat]="yAxisTickFormat"
                     [showGuidlines]="true"></g>
 
                 <g class="y axis random-axis nw-slot-2" nw-y-axis align="right"
-                    [width]="600"
-                    [height]="400"
                     [domain]="randomYDomain"
                     [tickCount]="4"
                     [showGuidlines]="yDomain[0] === 0 && yDomain[1] === 0"></g>
@@ -63,16 +55,12 @@
                 <!-- Hover lines -->
                 <path class="hover-path nw-slot-1" *ngIf="isHovering"
                     [nw-path]="[[mainScaleHoverCoordinates[0], yDomain[0]], [mainScaleHoverCoordinates[0], yDomain[1]]]"
-                    [width]="600"
-                    [height]="400"
                     [xDomain]="xDomain"
                     [yDomain]="yDomain"
                     [animDuration]="0"></path>
 
                 <path class="hover-path nw-slot-1" *ngIf="isHovering"
                     [nw-path]="[[xDomain[0], mainScaleHoverCoordinates[1]], [xDomain[1], mainScaleHoverCoordinates[1]]]"
-                    [width]="600"
-                    [height]="400"
                     [xDomain]="xDomain"
                     [yDomain]="yDomain"
                     [animDuration]="0"></path>
@@ -80,30 +68,22 @@
                 <!-- Paths -->
                 <path class="fb-comments" *ngIf="isMetricSelected('fbComments')"
                     [nw-path]="getDataByMetric('fbComments')"
-                    [width]="600"
-                    [height]="400"
                     [xDomain]="xDomain"
                     [yDomain]="yDomain"
                     (animEnd)="onPathAnimationEnd('fbComments')"></path>
 
                 <path class="tw-shares" *ngIf="isMetricSelected('twShares')"
                     [nw-path]="getDataByMetric('twShares')"
-                    [width]="600"
-                    [height]="400"
                     [xDomain]="xDomain"
                     [yDomain]="yDomain"></path>
 
                 <path class="fb-total" *ngIf="isMetricSelected('fbTotalEngagement')"
                     [nw-path]="getDataByMetric('fbTotalEngagement')"
-                    [width]="600"
-                    [height]="400"
                     [xDomain]="xDomain"
                     [yDomain]="yDomain"></path>
 
                 <path class="random"
                     [nw-path]="randomData"
-                    [width]="600"
-                    [height]="400"
                     [xDomain]="xDomain"
                     [yDomain]="randomYDomain"
                     [curve]="randomLineCurve.curve"></path>
@@ -112,8 +92,6 @@
                 <ng-container *ngIf="isMetricSelected('fbComments')">
                     <circle *ngFor="let point of getDataByMetric('fbComments'); trackBy:circleTrackValue"
                         [nw-circle]="point"
-                        [width]="600"
-                        [height]="400"
                         [xDomain]="xDomain"
                         [yDomain]="yDomain"
                         r=5
@@ -126,8 +104,6 @@
                 <ng-container *ngIf="!randomAsBars.value">
                     <circle *ngFor="let point of randomData; trackBy:circleTrackIndex"
                         [nw-circle]="point"
-                        [width]="600"
-                        [height]="400"
                         [xDomain]="xDomain"
                         [yDomain]="randomYDomain"
                         r=5
@@ -140,8 +116,6 @@
                 <ng-container *ngIf="randomAsBars.value">
                     <rect *ngFor="let point of randomData; trackBy:circleTrackIndex"
                         [nw-bar]="point"
-                        [width]="600"
-                        [height]="400"
                         [xDomain]="xDomain"
                         [yDomain]="randomYDomain"
                         [barWidth]="barWidth.value"

@@ -4,6 +4,7 @@ import { line, Line, curveLinear, CurveFactory } from 'd3-shape';
 import { ScaleTime, ScaleLinear, scaleTime, scaleLinear } from 'd3-scale';
 import { ChartUtils } from '../chart.utils';
 import 'd3-transition';
+import { ChartComponent } from '../chart.component';
 
 @Directive({
     selector: 'path[nw-path]',
@@ -12,8 +13,6 @@ import 'd3-transition';
 export class PathDirective implements OnInit, OnChanges {
 
     @Input('nw-path') data: Array<[number, number]> = [];
-    @Input() width: number;
-    @Input() height: number;
     @Input() xDomain: [number, number];
     @Input() yDomain: [number, number];
     @Input() animDuration: number = ChartUtils.ANIMATION_DURATION;
@@ -27,7 +26,9 @@ export class PathDirective implements OnInit, OnChanges {
     public xScale: ScaleTime<number, number> = scaleTime();
     public yScale: ScaleLinear<number, number> = scaleLinear();
 
-    constructor(private _elRef: ElementRef) {}
+    constructor(
+        private _elRef: ElementRef,
+        private _chart: ChartComponent) {}
 
     ngOnInit() {
         this.path = select(this._elRef.nativeElement as SVGPathElement);
@@ -50,8 +51,8 @@ export class PathDirective implements OnInit, OnChanges {
     }
 
     setDomains() {
-        this.xScale.domain(this.xDomain).range([0, this.width]);
-        this.yScale.domain(this.yDomain).range([this.height, 0]);
+        this.xScale.domain(this.xDomain).range([0, this._chart.width]);
+        this.yScale.domain(this.yDomain).range([this._chart.height, 0]);
     }
 
     setLine(): void {

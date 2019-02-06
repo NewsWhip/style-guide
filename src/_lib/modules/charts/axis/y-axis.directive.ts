@@ -2,6 +2,7 @@ import { Directive, ElementRef, Input } from '@angular/core';
 import { axisLeft, axisRight } from 'd3-axis';
 import { AxisBase } from './axis-base';
 import { ScaleLinear, scaleLinear } from 'd3-scale';
+import { ChartComponent } from '../chart.component';
 
 @Directive({
     selector: '[nw-y-axis]',
@@ -14,8 +15,11 @@ export class YAxisDirective extends AxisBase {
 
     public scale: ScaleLinear<number, number> = scaleLinear();
 
-    constructor(elRef: ElementRef) {
-        super(elRef);
+    constructor(
+        elRef: ElementRef,
+        chart: ChartComponent) {
+
+        super(elRef, chart);
     }
 
     createAxis() {

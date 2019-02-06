@@ -2,6 +2,7 @@ import { Directive, ElementRef, Input } from '@angular/core';
 import { axisBottom, axisTop, Axis } from 'd3-axis';
 import { AxisBase } from './axis-base';
 import { ScaleTime, scaleTime } from 'd3-scale';
+import { ChartComponent } from '../chart.component';
 
 @Directive({
     selector: '[nw-x-axis]',
@@ -14,8 +15,11 @@ export class XAxisDirective extends AxisBase {
 
     public scale: ScaleTime<number, number> = scaleTime();
 
-    constructor(elRef: ElementRef) {
-        super(elRef);
+    constructor(
+        elRef: ElementRef,
+        chart: ChartComponent) {
+
+        super(elRef, chart);
     }
 
     createAxis() {

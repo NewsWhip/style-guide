@@ -1,6 +1,7 @@
 import { Directive, ElementRef, OnInit, Input, OnDestroy, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { select, Selection } from 'd3-selection';
 import { brush, BrushBehavior, brushX, brushY } from 'd3-brush';
+import { ChartComponent } from '../chart.component';
 
 @Directive({
     selector: 'svg:g[nw-brush]',
@@ -9,8 +10,6 @@ import { brush, BrushBehavior, brushX, brushY } from 'd3-brush';
 export class BrushDirective implements OnInit, OnDestroy, OnChanges {
 
     @Input() extent: [[number, number], [number, number]];
-    @Input() width: number = (this._elRef.nativeElement as SVGSVGElement).clientWidth;
-    @Input() height: number = (this._elRef.nativeElement as SVGSVGElement).clientHeight;
     @Input() dimension: 'x' | 'y' | '' = '';
 
     @Output() brushEnd: EventEmitter<[[number, number], [number, number]]> = new EventEmitter();
@@ -18,7 +17,9 @@ export class BrushDirective implements OnInit, OnDestroy, OnChanges {
     public brushSelection: Selection<SVGGElement, any, HTMLElement, any>;
     public brush: BrushBehavior<any>;
 
-    constructor(private _elRef: ElementRef) {}
+    constructor(
+        private _elRef: ElementRef,
+        private _chart: ChartComponent) {}
 
     ngOnInit() {
         this.initialize();
@@ -67,7 +68,7 @@ export class BrushDirective implements OnInit, OnDestroy, OnChanges {
     getExtent(): [[number, number], [number, number]] {
         return this.extent || [
             [0, 0],
-            [this.width, this.height]
+            [this._chart.width, this._chart.height]
         ]
     }
 

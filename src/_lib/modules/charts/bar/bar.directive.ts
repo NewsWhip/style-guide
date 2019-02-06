@@ -2,6 +2,7 @@ import { Directive, Input, OnInit, OnChanges, ElementRef, SimpleChanges } from '
 import { select, Selection } from 'd3-selection';
 import { ScaleTime, ScaleLinear, scaleTime, scaleLinear } from 'd3-scale';
 import { ChartUtils } from '../chart.utils';
+import { ChartComponent } from '../chart.component';
 
 @Directive({
     selector: 'rect[nw-bar]'
@@ -9,8 +10,6 @@ import { ChartUtils } from '../chart.utils';
 export class BarDirective implements OnInit, OnChanges {
 
     @Input('nw-bar') value: [number, number];
-    @Input() width: number;
-    @Input() height: number;
     @Input() xDomain: [number, number];
     @Input() yDomain: [number, number];
     @Input() animDuration: number = ChartUtils.ANIMATION_DURATION;
@@ -21,7 +20,9 @@ export class BarDirective implements OnInit, OnChanges {
     public xScale: ScaleTime<number, number> = scaleTime();
     public yScale: ScaleLinear<number, number> = scaleLinear();
 
-    constructor(private _elRef: ElementRef) { }
+    constructor(
+        private _elRef: ElementRef,
+        private _chart: ChartComponent) { }
 
     ngOnInit() {
         this.rect = select(this._elRef.nativeElement as SVGRectElement);
@@ -42,8 +43,8 @@ export class BarDirective implements OnInit, OnChanges {
     }
 
     setDomains() {
-        this.xScale.domain(this.xDomain).range([0, this.width]);
-        this.yScale.domain(this.yDomain).range([this.height, 0]);
+        this.xScale.domain(this.xDomain).range([0, this._chart.width]);
+        this.yScale.domain(this.yDomain).range([this._chart.height, 0]);
     }
 
     draw(animDuration: number = 0) {
@@ -55,7 +56,7 @@ export class BarDirective implements OnInit, OnChanges {
             .attr('x', this.xScale(this.value[0]) - (this.barWidth / 2))
             .attr('y', this.yScale(this.value[1]))
             .attr("width", this.barWidth)
-            .attr("height", this.height - this.yScale(this.value[1]));
+            .attr("height", this._chart.height - this.yScale(this.value[1]));
     }
 
 }

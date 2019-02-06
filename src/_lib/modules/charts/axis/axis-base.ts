@@ -2,11 +2,10 @@ import { Input, OnInit, OnDestroy, ElementRef, OnChanges, SimpleChanges } from "
 import { Axis, AxisTimeInterval } from 'd3-axis';
 import { ChartUtils } from "../chart.utils";
 import { select, Selection } from "d3-selection";
+import { ChartComponent } from "../chart.component";
 
 export abstract class AxisBase implements OnInit, OnChanges {
 
-    @Input() width: number;
-    @Input() height: number;
     @Input() tickFormat: (value: number | Date | { valueOf(): number; }) => string
     @Input() tickCount: number | AxisTimeInterval;
     @Input() tickSizeOuter: number = 6;
@@ -16,11 +15,17 @@ export abstract class AxisBase implements OnInit, OnChanges {
 
     public axis: Axis<number | Date | { valueOf(): number; }>;
     public axisSelection: Selection<SVGGElement, Array<[number, number]>, SVGElement, any>;
+    public width: number;
+    public height: number;
 
-    constructor(private _elRef: ElementRef) {}
+    constructor(
+        private _elRef: ElementRef,
+        public chart: ChartComponent) {}
 
     ngOnInit() {
         this.axisSelection = select(this._elRef.nativeElement as SVGGElement);
+        this.width = this.chart.width;
+        this.height = this.chart.height;
 
         this.createAxis();
         this.setDomain();

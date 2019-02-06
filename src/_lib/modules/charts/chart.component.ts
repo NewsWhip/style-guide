@@ -68,8 +68,8 @@ export class ChartComponent implements OnInit, AfterViewInit, OnDestroy {
 
     setDimensions(): void {
         // TODO: check if this is correct. Right now the SVG elements that is drawn is larger than what is defined by the inputs
-        this.width = this.width || (this._elRef.nativeElement as SVGSVGElement).clientWidth - this.margins.left - this.margins.right;
-        this.height = this.height || (this._elRef.nativeElement as SVGSVGElement).clientHeight - this.margins.top - this.margins.bottom;
+        this.width = this.width - this.margins.left - this.margins.right;
+        this.height = this.height - this.margins.top - this.margins.bottom;
         this.setViewBox();
     }
 
