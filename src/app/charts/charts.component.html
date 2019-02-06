@@ -339,10 +339,7 @@ export class AppModule { }
 
             <div class="col-sm-6">
 <pre><code>&lt;g class="x axis nw-slot-2" nw-x-axis
-    [width]="600"
-    [height]="400"
     [domain]="xDomain"
-    [scale]="xScale"
     [tickFormat]="xAxisTickFormat"
     [tickCount]="xAxisTickCount">&lt;/g></code></pre>
             </div>
@@ -363,24 +360,6 @@ export class AppModule { }
                     <td><code>[number, number]</code></td>
                     <td>Required</td>
                     <td>The min and max x values of your dataset.</td>
-                </tr>
-                <tr>
-                    <td><code>scale</code></td>
-                    <td><code>ScaleTime&lt;number, number&gt;</code></td>
-                    <td>Required</td>
-                    <td>e.g. <code>scaleTime()</code> imported from <code>d3-scale</code></td>
-                </tr>
-                <tr>
-                    <td><code>width</code></td>
-                    <td><code>number</code></td>
-                    <td>Required</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td><code>height</code></td>
-                    <td><code>number</code></td>
-                    <td>Required</td>
-                    <td></td>
                 </tr>
                 <tr>
                     <td><code>tickFormat</code></td>
@@ -443,10 +422,7 @@ export class AppModule { }
 
             <div class="col-sm-6">
 <pre><code>&lt;g class="y axis nw-slot-2" nw-y-axis
-    [width]="600"
-    [height]="400"
     [domain]="yDomain"
-    [scale]="yScale"
     [tickFormat]="yAxisTickFormat"
     [showGuidlines]="true">&lt;/g></code></pre>
             </div>
@@ -467,24 +443,6 @@ export class AppModule { }
                     <td><code>[number, number]</code></td>
                     <td>Required</td>
                     <td>The min and max y values of your dataset.</td>
-                </tr>
-                <tr>
-                    <td><code>scale</code></td>
-                    <td><code>ScaleLinear&lt;number, number&gt;</code></td>
-                    <td>Required</td>
-                    <td>e.g. <code>scaleLinear()</code> imported from <code>d3-scale</code></td>
-                </tr>
-                <tr>
-                    <td><code>width</code></td>
-                    <td><code>number</code></td>
-                    <td>Required</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td><code>height</code></td>
-                    <td><code>number</code></td>
-                    <td>Required</td>
-                    <td></td>
                 </tr>
                 <tr>
                     <td><code>tickFormat</code></td>
