@@ -23,8 +23,8 @@ export class PathDirective implements OnInit, OnChanges {
 
     public line: Line<[number, number]>;
     public path: Selection<SVGPathElement, Array<[number, number]>, SVGElement, any>;
-    public xScale: ScaleTime<number, number> = scaleTime();
-    public yScale: ScaleLinear<number, number> = scaleLinear();
+    public xScale: ScaleTime<number, number>;
+    public yScale: ScaleLinear<number, number>;
 
     constructor(
         private _elRef: ElementRef,
@@ -32,6 +32,8 @@ export class PathDirective implements OnInit, OnChanges {
 
     ngOnInit() {
         this.path = select(this._elRef.nativeElement as SVGPathElement);
+        this.xScale = scaleTime()
+        this.yScale = scaleLinear();
 
         this.setDomains();
         this.setLine();
