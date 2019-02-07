@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Input } from '@angular/core';
+import { Directive, ElementRef, Input, Output, EventEmitter } from '@angular/core';
 import { axisLeft, axisRight } from 'd3-axis';
 import { AxisBase } from './axis-base';
 import { ScaleLinear, scaleLinear } from 'd3-scale';
@@ -12,6 +12,8 @@ export class YAxisDirective extends AxisBase {
 
     @Input() align: 'left' | 'right' = 'left';
     @Input() domain: [number, number];
+
+    @Output() scaleUpdated: EventEmitter<ScaleLinear<number, number>> = new EventEmitter();
 
     public scale: ScaleLinear<number, number> = scaleLinear();
 
@@ -41,6 +43,7 @@ export class YAxisDirective extends AxisBase {
 
     setDomain() {
         this.scale.domain(this.domain).range([this.height, 0]);
+        this.scaleUpdated.emit(this.scale.copy());
     }
 
     render() {

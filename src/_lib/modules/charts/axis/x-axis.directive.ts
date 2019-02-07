@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Input } from '@angular/core';
+import { Directive, ElementRef, Input, Output, EventEmitter } from '@angular/core';
 import { axisBottom, axisTop, Axis } from 'd3-axis';
 import { AxisBase } from './axis-base';
 import { ScaleTime, scaleTime } from 'd3-scale';
@@ -12,6 +12,8 @@ export class XAxisDirective extends AxisBase {
 
     @Input() align: 'top' | 'bottom' = 'bottom';
     @Input() domain: [number, number];
+
+    @Output() scaleUpdated: EventEmitter<ScaleTime<number, number>> = new EventEmitter();
 
     public scale: ScaleTime<number, number> = scaleTime();
 
@@ -41,6 +43,7 @@ export class XAxisDirective extends AxisBase {
 
     setDomain() {
         this.scale.domain(this.domain).range([0, this.width]);
+        this.scaleUpdated.emit(this.scale.copy());
     }
 
     render() {
