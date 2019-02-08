@@ -22,6 +22,8 @@ export class YAxisDirective extends AxisBase {
         chart: ChartComponent) {
 
         super(elRef, chart);
+
+        this.scaleUpdated =  new EventEmitter();
     }
 
     createAxis() {
