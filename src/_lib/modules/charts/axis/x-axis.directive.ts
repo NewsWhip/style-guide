@@ -13,7 +13,7 @@ export class XAxisDirective extends AxisBase {
     @Input() align: 'top' | 'bottom' = 'bottom';
     @Input() domain: [number, number];
 
-    @Output() scaleUpdated: EventEmitter<ScaleTime<number, number>>;
+    @Output() scaleUpdated: EventEmitter<ScaleTime<number, number>> = new EventEmitter();
 
     public scale: ScaleTime<number, number> = scaleTime();
 
@@ -22,8 +22,6 @@ export class XAxisDirective extends AxisBase {
         chart: ChartComponent) {
 
         super(elRef, chart);
-
-        this.scaleUpdated =  new EventEmitter();
     }
 
     createAxis() {
