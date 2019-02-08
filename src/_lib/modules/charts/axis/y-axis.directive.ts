@@ -39,11 +39,12 @@ export class YAxisDirective extends AxisBase {
         else {
             this.axis.tickSizeInner(6);
         }
+
+        this.scaleUpdated.emit(this.scale.copy());
     }
 
     setDomain() {
         this.scale.domain(this.domain).range([this.height, 0]);
-        this.scaleUpdated.emit(this.scale.copy());
     }
 
     render() {

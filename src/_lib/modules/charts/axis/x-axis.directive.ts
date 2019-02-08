@@ -39,11 +39,12 @@ export class XAxisDirective extends AxisBase {
         else {
             this.axis.tickSizeInner(6);
         }
+
+        this.scaleUpdated.emit(this.scale.copy());
     }
 
     setDomain() {
         this.scale.domain(this.domain).range([0, this.width]);
-        this.scaleUpdated.emit(this.scale.copy());
     }
 
     render() {
