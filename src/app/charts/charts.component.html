@@ -88,6 +88,19 @@
                     [yDomain]="randomYDomain"
                     [curve]="randomLineCurve.curve"></path>
 
+                <path style="fill: url(#myGradient); stroke: none" *ngIf="randomArea.value"
+                    [nw-area]="randomData"
+                    [xDomain]="xDomain"
+                    [yDomain]="randomYDomain"
+                    [curve]="randomLineCurve.curve"></path>
+
+                <defs>
+                    <linearGradient id="myGradient" gradientUnits="userSpaceOnUse">
+                        <stop offset="0%"  stop-color="gold" />
+                        <stop offset="100%" stop-color="red" />
+                    </linearGradient>
+                </defs>
+
                 <!-- Circles with popovers -->
                 <ng-container *ngIf="isMetricSelected('fbComments')">
                     <circle *ngFor="let point of getDataByMetric('fbComments'); trackBy:circleTrackValue"
@@ -164,6 +177,11 @@
                         </p>
                     </div>
                 </ng-container>
+
+                <div class="checkbox">
+                    <input type="checkbox" [formControl]="randomArea" id="random-area">
+                    <label for="random-area">Show random area</label>
+                </div>
 
                 <div class="checkbox">
                     <input type="checkbox" [formControl]="randomAsBars" id="random-as-circles">

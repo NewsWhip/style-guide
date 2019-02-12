@@ -108,6 +108,7 @@ export class ChartsComponent implements OnInit {
     public randomData: Array<[number, number]>;
     public randomYDomain: [number, number];
     public randomAsBars: FormControl = new FormControl(false);
+    public randomArea: FormControl = new FormControl(false);
     public randomLineCurve = {label: 'Linear', curve: curveLinear};
     public randomLineCurvesOptions = [
         {label: 'Linear', curve: curveLinear},
