@@ -243,7 +243,7 @@ input[type="search"] {
         color: get-color("gray", 4x-light);
 
         &:before {
-            font-family: "Font Awesome 5 Free";
+            font-family: "Font Awesome 5 Pro";
             font-weight: 900;
             content: "\f00c";
             position: relative;
@@ -255,7 +255,7 @@ input[type="search"] {
             padding-top: 1px;
             margin-right: 8px;
             border-radius: $border-radius-base;
-            font-size: 12px;
+            font-size: 10px;
             text-align: center;
             transition-property: background;
             transition-timing-function: ease-in-out;
