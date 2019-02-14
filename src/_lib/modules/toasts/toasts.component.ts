@@ -9,8 +9,8 @@ import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
     template: `
         <div class="toasts-container">
             <div class="toast toast-{{toast.typeId}}" *ngFor="let toast of toasts" [@slideInOut]>
-                <i class="fa fa-check toast-icon" *ngIf="toast.typeId === 'success'"></i>
-                <i class="fa fa-exclamation toast-icon" *ngIf="toast.typeId === 'error'"></i>
+                <i class="fas fa-check toast-icon" *ngIf="toast.typeId === 'success'"></i>
+                <i class="fas fa-exclamation toast-icon" *ngIf="toast.typeId === 'error'"></i>
 
                 <!-- If templateRef render via ngTemplateOutlet-->
                 <ng-container *ngIf="isTemplateRef(toast.message)">

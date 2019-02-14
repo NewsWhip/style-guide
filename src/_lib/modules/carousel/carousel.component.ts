@@ -11,7 +11,7 @@ import { debounceTime } from "rxjs/operators";
         <div class="carousel-container">
             <div class="pagination-container" *ngIf="showPagination">
                 <button class="btn btn-md btn-ghost" (click)="prev()" [class.invisible]="isFirstPage">
-                    <i class="fa fa-chevron-left"></i>
+                    <i class="fas fa-chevron-left"></i>
                 </button>
             </div>
 
@@ -33,7 +33,7 @@ import { debounceTime } from "rxjs/operators";
 
             <div class="pagination-container" *ngIf="showPagination">
                 <button class="btn btn-md btn-ghost" (click)="next()" [class.invisible]="isLastPage">
-                    <i class="fa fa-chevron-right"></i>
+                    <i class="fas fa-chevron-right"></i>
                 </button>
             </div>
 
