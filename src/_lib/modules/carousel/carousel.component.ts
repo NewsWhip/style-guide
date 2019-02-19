@@ -84,10 +84,7 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
 
     ngAfterViewInit() {
         this.pages = this.getPages();
-
-        if (this.showPageIndicator) {
-            this._cdRef.detectChanges();
-        }
+        this._cdRef.detectChanges();
     }
 
     next() {
