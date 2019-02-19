@@ -1,6 +1,5 @@
-import { Input, OnInit, OnDestroy, ElementRef, OnChanges, SimpleChanges } from "@angular/core";
+import { Input, OnInit, ElementRef, OnChanges, SimpleChanges } from "@angular/core";
 import { Axis, AxisTimeInterval } from 'd3-axis';
-import { AxisDomain } from 'd3-axis';
 import { ChartUtils } from "../chart.utils";
 import { select, Selection } from "d3-selection";
 import { ChartComponent } from "../chart.component";

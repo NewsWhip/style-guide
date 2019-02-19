@@ -1,5 +1,5 @@
 import { Directive, ElementRef, Input, Output, EventEmitter } from '@angular/core';
-import { axisBottom, axisTop, Axis } from 'd3-axis';
+import { axisBottom, axisTop } from 'd3-axis';
 import { AxisBase } from './axis-base';
 import { ScaleTime, scaleTime } from 'd3-scale';
 import { ChartComponent } from '../chart.component';
