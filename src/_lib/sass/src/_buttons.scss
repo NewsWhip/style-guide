@@ -146,6 +146,38 @@ a.btn {
         color: get-color("gray", 3x-light);
     }
 }
+// applying sizes to this element will not do anything
+// as currently this button has a fixed size
+.btn-carousel {
+    @include button-variant(
+        get-color('primary'),
+        get-color('primary', dark),
+        transparent,
+        transparent);
+
+    padding: 16px 0 !important;
+
+    &,
+    &.btn-next {
+        &:before {
+            position: relative;
+            left: -4px;
+            height: 30px;
+            width: 30px;
+            content: '';
+            display: block;
+            border-right: 3px solid get-color("primary");
+            border-bottom: 3px solid get-color("primary");
+            transform: rotate(-45deg) skew(-20deg, -20deg);
+        }
+    }
+    &.btn-prev {
+        &:before {
+            left: 4px;
+            transform: rotate(-225deg) skew(-20deg, -20deg);
+        }
+    }
+}
 
 // Button Sizes
 // --------------------------------------------------

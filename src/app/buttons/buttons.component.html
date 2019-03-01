@@ -30,6 +30,9 @@
             No padding (.btn-no-padding)
         </button>
 
+        <button class="btn btn-carousel btn-prev"></button>
+        <button class="btn btn-carousel"></button>
+
         <hr>
 
         <h3>States</h3>
@@ -92,7 +95,7 @@
 
     <div style="display: flex; flex-direction: row; align-items: center;">
         <h4>Reponsive button groups</h4>
-    
+
         <select class="form-control" [(ngModel)]="btnGroupSize" [ngModelOptions]="{standalone: true}" style="width: 100px; margin-left: 20px">
             <option value="10%">10%</option>
             <option value="25%">25%</option>
@@ -111,7 +114,7 @@
             <button type="button" class="btn btn-dropdown"><i class="far fa-bookmark"></i></button>
         </div>
     </div>
-    
+
     <h4>Ghost alternative with dropdown</h4>
     <div style="margin-bottom: 20px;">
         <div class="btn-group" role="group">
