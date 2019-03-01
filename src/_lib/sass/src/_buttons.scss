@@ -157,8 +157,12 @@ a.btn {
 
     padding: 16px 0 !important;
 
+    &:focus {
+        box-shadow: none;
+    }
+
     &,
-    &.btn-next {
+    &.btn-carousel-next {
         &:before {
             position: relative;
             left: -4px;
@@ -171,7 +175,7 @@ a.btn {
             transform: rotate(-45deg) skew(-20deg, -20deg);
         }
     }
-    &.btn-prev {
+    &.btn-carousel-prev {
         &:before {
             left: 4px;
             transform: rotate(-225deg) skew(-20deg, -20deg);
