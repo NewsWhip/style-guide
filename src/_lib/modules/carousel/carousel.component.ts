@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, Input, ElementRef, ViewChild, Renderer2, ChangeDetectorRef, AfterViewInit, OnDestroy, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input, ElementRef, ViewChild, Renderer2, ChangeDetectorRef, AfterViewInit, OnDestroy, OnInit, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { trigger, transition, style, animate, AUTO_STYLE } from '@angular/animations';
 import { Subscription } from 'rxjs/Subscription';
 import { fromEvent } from "rxjs/observable/fromEvent";
@@ -55,7 +55,7 @@ import { debounceTime } from "rxjs/operators";
         ])
     ]
 })
-export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
+export class CarouselComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy {
 
     @Input() showPageIndicator: boolean = true;
     @Input() showPagination: boolean = true;
@@ -78,6 +78,12 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
 
     ngOnInit() {
         this.subscribeToWindowResize();
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes.currPage && changes.currPage.previousValue !== changes.currPage.currentValue) {
+            this._setScrollPosition(this.currPage);
+        }
     }
 
     ngAfterViewInit() {

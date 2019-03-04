@@ -27,16 +27,18 @@ nw-carousel {
         text-align: center;
 
         .page-indicator {
-            width: 12px;
-            height: 12px;
+            width: 8px;
+            height: 8px;
             border-radius: 50%;
-            margin: 4px;
+            margin: 0 4px;
             display: inline-block;
             background-color: get-color("gray", 4x-light);
 
-            &.active,
-            &:hover {
+            &.active {
                 background-color: get-color("primary", base);
+            }
+            &:hover {
+                background-color: #ffffff;
             }
         }
     }
