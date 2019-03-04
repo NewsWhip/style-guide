@@ -9,6 +9,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class CarouselComponent implements OnInit {
 
     public items: any[] = [];
+    public numItems: number = 30;
 
     constructor(private _domSanitizer: DomSanitizer) { }
 
@@ -17,7 +18,7 @@ export class CarouselComponent implements OnInit {
     }
 
     getItems(): any[] {
-        return [...Array(30).fill(1)].map((_, i) => i);
+        return [...Array(this.numItems).fill(1)].map((_, i) => i);
     }
 
     getExample1() {

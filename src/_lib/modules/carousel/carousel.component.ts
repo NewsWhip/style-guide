@@ -87,7 +87,7 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnChanges, OnDe
     }
 
     ngAfterViewInit() {
-        this.pages = this.getPages();
+        this.updatePages();
         this._cdRef.detectChanges();
 
         if (this.currPage !== 0) {
@@ -123,6 +123,11 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnChanges, OnDe
         return [...Array(numOfPages).fill(1)].map((_, i) => i);
     }
 
+    updatePages(): void {
+        this.pages = this.getPages();
+        this._cdRef.detectChanges();
+    }
+
     get carouselNativeElement(): HTMLDivElement {
         return (this.carousel.nativeElement as HTMLDivElement);
     }
@@ -150,7 +155,7 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnChanges, OnDe
         this._windowResizeSub = fromEvent(window, 'resize')
             .pipe(debounceTime(200))
             .subscribe(_ => {
-                this.pages = this.getPages();
+                this.updatePages();
                 this.goToPage(0);
                 this._cdRef.detectChanges();
             })
