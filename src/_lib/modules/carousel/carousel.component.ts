@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, Input, ElementRef, ViewChild, Renderer2, ChangeDetectorRef, AfterViewInit, OnDestroy, OnInit } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input, ElementRef, ViewChild, Renderer2, ChangeDetectorRef, AfterViewInit, OnDestroy, OnInit, Output, EventEmitter } from '@angular/core';
 import { trigger, transition, style, animate, AUTO_STYLE } from '@angular/animations';
 import { Subscription } from 'rxjs/Subscription';
 import { fromEvent } from "rxjs/observable/fromEvent";
@@ -63,10 +63,12 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
     @Input() maskColor: string = '#ffffff';
     @Input() containerClass: string;
 
+    @Input() currPage: number = 0;
+    @Output() currPageChange: EventEmitter<number> = new EventEmitter();
+
     @ViewChild('carousel') carousel: ElementRef;
 
     public pages: number[] = [];
-    public currPage: number = 0;
 
     private _windowResizeSub: Subscription;
 
@@ -81,6 +83,10 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
     ngAfterViewInit() {
         this.pages = this.getPages();
         this._cdRef.detectChanges();
+
+        if (this.currPage !== 0) {
+            this._setScrollPosition(this.currPage);
+        }
     }
 
     next() {
@@ -93,13 +99,16 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
 
     goToPage(page: number) {
         this.currPage = page;
+        this.currPageChange.emit(this.currPage);
 
+        this._setScrollPosition(page);
+    }
+
+    private _setScrollPosition(page: number): void {
         const carouselWidth: number = this.carouselNativeElement.clientWidth;
         const newScrollPosition: number = page * carouselWidth;
 
         this._renderer.setProperty(this.carouselNativeElement, 'scrollLeft', newScrollPosition);
-
-        this._cdRef.detectChanges();
     }
 
     getPages() {

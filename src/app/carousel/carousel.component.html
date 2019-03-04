@@ -9,7 +9,7 @@
 </div>
 
 <div style="width: 1030px; max-width: 100%;">
-    <nw-carousel maskColor="#373737">
+    <nw-carousel maskColor="#373737" [currPage]="3">
         <ng-container *ngFor="let item of items">
             <div class="slide" nwCarouselSlide snapAlign="center" (click)="log('test')"
                 [style.background-image]="'url(https://picsum.photos/216/120?image=' + item +')'">Slide {{item}}</div>
