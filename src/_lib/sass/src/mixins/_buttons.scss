@@ -7,6 +7,10 @@
         color: $color-hover;
         background-color: $bg-hover;
         border-color: $border-hover;
+
+        &.btn-carousel:before {
+            border-color: $color-hover;
+        }
     }
     &.active {
         color: $color-hover;
@@ -36,6 +40,9 @@
                 &:before, &:after {
                     background-color: $color;
                 }
+            }
+            &.btn-carousel:before {
+                border-color: $color;
             }
         }
     }

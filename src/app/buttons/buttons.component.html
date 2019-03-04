@@ -19,16 +19,19 @@
         </div>
 
         <button class="btn btn-primary btn-{{defaultBtnSize}} btn-round">
-            <i class="fa fa-plus"></i>
+            <i class="fas fa-plus"></i>
         </button>
 
         <button class="btn btn-primary btn-{{defaultBtnSize}}">
-            <i class="fa fa-facebook btn-icon"></i> With icon
+            <i class="fab fa-facebook btn-icon"></i> With icon
         </button>
 
         <button class="btn btn-primary btn-{{defaultBtnSize}} btn-no-padding">
             No padding (.btn-no-padding)
         </button>
+
+        <button class="btn btn-carousel btn-carousel-prev"></button>
+        <button class="btn btn-carousel"></button>
 
         <hr>
 
@@ -68,7 +71,7 @@
             <button type="button" class="btn btn-ghost btn-md">Button 1</button>
             <button type="button" class="btn btn-ghost btn-md" disabled>Button 2 disabled</button>
             <button type="button" class="btn btn-ghost btn-md">Button 3</button>
-            <button type="button" class="btn btn-ghost btn-md"><i class="fa fa-ellipsis-h"></i></button>
+            <button type="button" class="btn btn-ghost btn-md"><i class="fas fa-ellipsis-h"></i></button>
         </div>
     </div>
 
@@ -92,7 +95,7 @@
 
     <div style="display: flex; flex-direction: row; align-items: center;">
         <h4>Reponsive button groups</h4>
-    
+
         <select class="form-control" [(ngModel)]="btnGroupSize" [ngModelOptions]="{standalone: true}" style="width: 100px; margin-left: 20px">
             <option value="10%">10%</option>
             <option value="25%">25%</option>
@@ -104,25 +107,25 @@
 
     <div class="responsive-container" [style.width]="btnGroupSize">
         <div class="btn-group btn-group-responsive btn-group-responsive-md" role="group">
-            <button type="button" class="btn btn-dropdown"><i class="fa fa-adjust"></i></button>
-            <button type="button" class="btn btn-dropdown"><i class="fa fa-bell-o"></i></button>
-            <button type="button" class="btn btn-dropdown"><i class="fa fa-sliders"></i></button>
-            <button type="button" class="btn btn-dropdown"><i class="fa fa-star-o"></i></button>
-            <button type="button" class="btn btn-dropdown"><i class="fa fa-bookmark-o"></i></button>
+            <button type="button" class="btn btn-dropdown"><i class="fas fa-adjust"></i></button>
+            <button type="button" class="btn btn-dropdown"><i class="far fa-bell"></i></button>
+            <button type="button" class="btn btn-dropdown"><i class="fas fa-sliders-h"></i></button>
+            <button type="button" class="btn btn-dropdown"><i class="far fa-star"></i></button>
+            <button type="button" class="btn btn-dropdown"><i class="far fa-bookmark"></i></button>
         </div>
     </div>
-    
+
     <h4>Ghost alternative with dropdown</h4>
     <div style="margin-bottom: 20px;">
         <div class="btn-group" role="group">
-            <button type="button" class="btn btn-ghost-alt btn-lg"><i class="fa fa-adjust"></i></button>
-            <button type="button" class="btn btn-ghost-alt btn-lg"><i class="fa fa-bell-o"></i></button>
-            <button type="button" class="btn btn-ghost-alt btn-lg"><i class="fa fa-sliders"></i></button>
-            <button type="button" class="btn btn-ghost-alt btn-lg" disabled><i class="fa fa-star-o"></i></button>
+            <button type="button" class="btn btn-ghost-alt btn-lg"><i class="fas fa-adjust"></i></button>
+            <button type="button" class="btn btn-ghost-alt btn-lg"><i class="far fa-bell"></i></button>
+            <button type="button" class="btn btn-ghost-alt btn-lg"><i class="fas fa-sliders-h"></i></button>
+            <button type="button" class="btn btn-ghost-alt btn-lg" disabled><i class="far fa-star"></i></button>
             <div class="btn-group" role="group">
                 <div class="dropdown">
                     <button class="btn btn-ghost-alt btn-lg dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
+                        <i class="fas fa-ellipsis-h" aria-hidden="true"></i>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-arrow dropdown-menu-right" aria-labelledby="dropdownMenu1">
                         <li><a href="#">Action</a></li>

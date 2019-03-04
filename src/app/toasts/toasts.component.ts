@@ -42,7 +42,7 @@ export class ToastsComponent {
 
   addCustomToast() {
     this._toaster.error(`
-        <i class="fa fa-snowflake-o"></i> Toast with icon
+        <i class="fas fa-snowflake"></i> Toast with icon
         <a class="nw-link nw-link-inline" onclick="location.reload()">Reload page</a>
     `);
   }

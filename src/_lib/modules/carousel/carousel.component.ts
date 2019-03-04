@@ -10,9 +10,7 @@ import { debounceTime } from "rxjs/operators";
     template: `
         <div class="carousel-container">
             <div class="pagination-container" *ngIf="showPagination">
-                <button class="btn btn-md btn-ghost" (click)="prev()" [class.invisible]="isFirstPage">
-                    <i class="fa fa-chevron-left"></i>
-                </button>
+                <button class="btn btn-carousel btn-carousel-prev" (click)="prev()" [disabled]="isFirstPage"></button>
             </div>
 
             <ng-content select=".pagination-left"></ng-content>
@@ -32,9 +30,7 @@ import { debounceTime } from "rxjs/operators";
             </div>
 
             <div class="pagination-container" *ngIf="showPagination">
-                <button class="btn btn-md btn-ghost" (click)="next()" [class.invisible]="isLastPage">
-                    <i class="fa fa-chevron-right"></i>
-                </button>
+                <button class="btn btn-carousel btn-carousel-next" (click)="next()" [disabled]="isLastPage"></button>
             </div>
 
             <ng-content select=".pagination-right"></ng-content>
@@ -84,10 +80,7 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
 
     ngAfterViewInit() {
         this.pages = this.getPages();
-
-        if (this.showPageIndicator) {
-            this._cdRef.detectChanges();
-        }
+        this._cdRef.detectChanges();
     }
 
     next() {
