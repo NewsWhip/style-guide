@@ -118,7 +118,8 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnChanges, OnDe
     }
 
     getPages() {
-        let numOfPages: number = Math.ceil(this.carouselNativeElement.scrollWidth / this.carouselNativeElement.clientWidth);
+        const estimatedPages: number = +(this.carouselNativeElement.scrollWidth / this.carouselNativeElement.clientWidth).toFixed(1)
+        const numOfPages: number = Math.ceil(estimatedPages);
 
         return [...Array(numOfPages).fill(1)].map((_, i) => i);
     }
@@ -153,7 +154,7 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnChanges, OnDe
 
     subscribeToWindowResize() {
         this._windowResizeSub = fromEvent(window, 'resize')
-            .pipe(debounceTime(200))
+            .pipe(debounceTime(100))
             .subscribe(_ => {
                 this.updatePages();
                 this.goToPage(0);
