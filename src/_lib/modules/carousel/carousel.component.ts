@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, Input, ElementRef, ViewChild, Renderer2, ChangeDetectorRef, AfterViewInit, OnDestroy, OnInit } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input, ElementRef, ViewChild, Renderer2, ChangeDetectorRef, AfterViewInit, OnDestroy, OnInit, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { trigger, transition, style, animate, AUTO_STYLE } from '@angular/animations';
 import { Subscription } from 'rxjs/Subscription';
 import { fromEvent } from "rxjs/observable/fromEvent";
@@ -55,7 +55,7 @@ import { debounceTime } from "rxjs/operators";
         ])
     ]
 })
-export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
+export class CarouselComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy {
 
     @Input() showPageIndicator: boolean = true;
     @Input() showPagination: boolean = true;
@@ -63,10 +63,12 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
     @Input() maskColor: string = '#ffffff';
     @Input() containerClass: string;
 
+    @Input() currPage: number = 0;
+    @Output() currPageChange: EventEmitter<number> = new EventEmitter();
+
     @ViewChild('carousel') carousel: ElementRef;
 
     public pages: number[] = [];
-    public currPage: number = 0;
 
     private _windowResizeSub: Subscription;
 
@@ -78,9 +80,19 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
         this.subscribeToWindowResize();
     }
 
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes.currPage && changes.currPage.previousValue !== changes.currPage.currentValue) {
+            this._setScrollPosition(this.currPage);
+        }
+    }
+
     ngAfterViewInit() {
-        this.pages = this.getPages();
+        this.updatePages();
         this._cdRef.detectChanges();
+
+        if (this.currPage !== 0) {
+            this._setScrollPosition(this.currPage);
+        }
     }
 
     next() {
@@ -93,19 +105,28 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
 
     goToPage(page: number) {
         this.currPage = page;
+        this.currPageChange.emit(this.currPage);
 
+        this._setScrollPosition(page);
+    }
+
+    private _setScrollPosition(page: number): void {
         const carouselWidth: number = this.carouselNativeElement.clientWidth;
         const newScrollPosition: number = page * carouselWidth;
 
         this._renderer.setProperty(this.carouselNativeElement, 'scrollLeft', newScrollPosition);
-
-        this._cdRef.detectChanges();
     }
 
     getPages() {
-        let numOfPages: number = Math.ceil(this.carouselNativeElement.scrollWidth / this.carouselNativeElement.clientWidth);
+        const estimatedPages: number = +(this.carouselNativeElement.scrollWidth / this.carouselNativeElement.clientWidth).toFixed(1)
+        const numOfPages: number = Math.ceil(estimatedPages);
 
         return [...Array(numOfPages).fill(1)].map((_, i) => i);
+    }
+
+    updatePages(): void {
+        this.pages = this.getPages();
+        this._cdRef.detectChanges();
     }
 
     get carouselNativeElement(): HTMLDivElement {
@@ -133,9 +154,9 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
 
     subscribeToWindowResize() {
         this._windowResizeSub = fromEvent(window, 'resize')
-            .pipe(debounceTime(200))
+            .pipe(debounceTime(100))
             .subscribe(_ => {
-                this.pages = this.getPages();
+                this.updatePages();
                 this.goToPage(0);
                 this._cdRef.detectChanges();
             })
