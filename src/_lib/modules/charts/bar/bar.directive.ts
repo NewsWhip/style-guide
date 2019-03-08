@@ -1,13 +1,14 @@
-import { Directive, Input, OnInit, OnChanges, ElementRef, SimpleChanges } from '@angular/core';
+import { Directive, Input, OnInit, OnChanges, ElementRef, SimpleChanges, OnDestroy } from '@angular/core';
 import { select, Selection } from 'd3-selection';
 import { ScaleTime, ScaleLinear, scaleTime, scaleLinear } from 'd3-scale';
 import { ChartUtils } from '../chart.utils';
 import { ChartComponent } from '../chart.component';
+import { Subscription } from "rxjs/Subscription";
 
 @Directive({
     selector: 'rect[nw-bar]'
 })
-export class BarDirective implements OnInit, OnChanges {
+export class BarDirective implements OnInit, OnChanges, OnDestroy {
 
     @Input('nw-bar') value: [number, number];
     @Input() xDomain: [number, number];
@@ -20,15 +21,20 @@ export class BarDirective implements OnInit, OnChanges {
     public xScale: ScaleTime<number, number> = scaleTime();
     public yScale: ScaleLinear<number, number> = scaleLinear();
 
+    private _windowResizeSub: Subscription;
+
     constructor(
         private _elRef: ElementRef,
-        private _chart: ChartComponent) { }
+        private _chart: ChartComponent,
+        private _chartUtils: ChartUtils) { }
 
     ngOnInit() {
         this.rect = select(this._elRef.nativeElement as SVGRectElement);
 
         this.setDomains();
         this.draw();
+
+        this._subscribeToWindowResize();
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -57,6 +63,18 @@ export class BarDirective implements OnInit, OnChanges {
             .attr('y', this.yScale(this.value[1]))
             .attr("width", this.barWidth)
             .attr("height", this._chart.height - this.yScale(this.value[1]));
+    }
+
+    private _subscribeToWindowResize() {
+        this._windowResizeSub = this._chartUtils.windowResize$
+            .subscribe(_ => {
+                this.setDomains();
+                this.draw();
+            });
+    }
+
+    ngOnDestroy() {
+        this._windowResizeSub.unsubscribe();
     }
 
 }
