@@ -9,19 +9,21 @@ import { debounceTime } from 'rxjs/operators';
     selector: 'svg[nw-chart]',
     template: `
         <svg:g #chartContainer>
-            <ng-content select=".nw-slot-1"></ng-content>
-            <ng-content select=".nw-slot-2"></ng-content>
-            <ng-content select=".nw-slot-3"></ng-content>
-            <ng-content select=".nw-slot-4"></ng-content>
-            <ng-content select=".nw-slot-5"></ng-content>
-            <ng-content select=".nw-slot-6"></ng-content>
-            <ng-content select=".nw-slot-7"></ng-content>
-            <ng-content select=".nw-slot-8"></ng-content>
-            <ng-content select=".nw-slot-9"></ng-content>
-            <ng-content select=".nw-slot-10"></ng-content>
+            <svg:g #mouseEventCaptureContainer class="mouse-event-capture-container">
+                <ng-content select=".nw-slot-1"></ng-content>
+                <ng-content select=".nw-slot-2"></ng-content>
+                <ng-content select=".nw-slot-3"></ng-content>
+                <ng-content select=".nw-slot-4"></ng-content>
+                <ng-content select=".nw-slot-5"></ng-content>
+                <ng-content select=".nw-slot-6"></ng-content>
+                <ng-content select=".nw-slot-7"></ng-content>
+                <ng-content select=".nw-slot-8"></ng-content>
+                <ng-content select=".nw-slot-9"></ng-content>
+                <ng-content select=".nw-slot-10"></ng-content>
 
-            <svg:rect #hoverOverlay></svg:rect>
-            <ng-content></ng-content>
+                <svg:rect #hoverOverlay></svg:rect>
+                <ng-content></ng-content>
+            </svg:g>
         </svg:g>
     `,
     providers: [ChartUtils],
@@ -40,6 +42,7 @@ export class ChartComponent implements OnInit, AfterViewInit, OnDestroy {
     } = { top: 0, bottom: 0, left: 0, right: 0 };
 
     @ViewChild('chartContainer') chartContainer: ElementRef;
+    @ViewChild('mouseEventCaptureContainer') mouseEventCaptureContainer: ElementRef;
     @ViewChild('hoverOverlay') hoverOverlay: ElementRef;
 
     @Output() nwMousemove: EventEmitter<[number, number]> = new EventEmitter();
@@ -67,7 +70,6 @@ export class ChartComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     setDimensions(): void {
-        // TODO: check if this is correct. Right now the SVG elements that is drawn is larger than what is defined by the inputs
         this.width = (this.width || (this._elRef.nativeElement as SVGSVGElement).clientWidth) - this.margins.left - this.margins.right;
         this.height = (this.height || (this._elRef.nativeElement as SVGSVGElement).clientHeight) - this.margins.top - this.margins.bottom;
         this.setViewBox();
@@ -96,10 +98,15 @@ export class ChartComponent implements OnInit, AfterViewInit, OnDestroy {
     setHoverOverlay() {
         const self = this;
 
+        // This full height / width rect ensures that all mouse events will
+        // be captured and delegated to the parent mouseEventCaptureContainer
         select(this.hoverOverlay.nativeElement as SVGRectElement)
             .attr("width", this.width)
             .attr("height", this.height)
             .style('fill', 'none')
+            .style('pointer-events', 'all');
+
+        select(this.mouseEventCaptureContainer.nativeElement as SVGGElement)
             .style('pointer-events', 'all')
             .on('mouseout', () => this.nwMouseout.emit())
             .on('mousemove', function() {
