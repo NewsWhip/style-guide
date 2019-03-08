@@ -1,15 +1,16 @@
-import { Directive, Input, ElementRef, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Directive, Input, ElementRef, OnInit, OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
 import { area, Area, CurveFactory, curveLinear } from 'd3-shape';
 import { ChartComponent } from '../chart.component';
 import { ScaleTime, ScaleLinear, scaleTime, scaleLinear } from 'd3-scale';
 import { select, Selection } from 'd3-selection';
 import { ChartUtils } from '../chart.utils';
+import { Subscription } from "rxjs/Subscription";
 
 @Directive({
     selector: 'path[nw-area]',
     exportAs: 'nw-area'
 })
-export class AreaDirective implements OnInit, OnChanges {
+export class AreaDirective implements OnInit, OnChanges, OnDestroy {
 
     @Input('nw-area') data: Array<[number, number]> = [];
     @Input() xDomain: [number, number];
@@ -23,9 +24,12 @@ export class AreaDirective implements OnInit, OnChanges {
     public xScale: ScaleTime<number, number>;
     public yScale: ScaleLinear<number, number>;
 
+    private _windowResizeSub: Subscription;
+
     constructor(
         private _elRef: ElementRef,
-        private _chart: ChartComponent) {}
+        private _chart: ChartComponent,
+        private _chartUtils: ChartUtils) {}
 
     ngOnInit() {
         this.areaSelection = select(this._elRef.nativeElement as SVGPathElement);
@@ -35,6 +39,8 @@ export class AreaDirective implements OnInit, OnChanges {
         this.setDomains();
         this.setArea();
         this.drawArea();
+
+        this._subscribeToWindowResize();
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -74,6 +80,19 @@ export class AreaDirective implements OnInit, OnChanges {
             .duration(this.animDuration)
             .ease(this.easing)
             .attr('d', this.area)
+    }
+
+    private _subscribeToWindowResize() {
+        this._windowResizeSub = this._chartUtils.windowResize$
+            .subscribe(_ => {
+                this.setDomains();
+                this.setArea();
+                this.drawArea();
+            });
+    }
+
+    ngOnDestroy() {
+        this._windowResizeSub.unsubscribe();
     }
 
 }

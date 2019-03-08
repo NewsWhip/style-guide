@@ -1,11 +1,36 @@
 import { Injectable, SimpleChange } from "@angular/core";
 import { easeCubicInOut } from "d3-ease";
+import { Subject } from "rxjs/Subject";
+import { Observable } from "rxjs/Observable";
+import { debounceTime, share } from "rxjs/operators";
+import { fromEvent } from "rxjs/observable/fromEvent";
 
 @Injectable()
 export class ChartUtils {
 
     public static ANIMATION_DURATION: number = 1000;
-    public static ANIMATION_EASING: (normalizedTime: number) => number = easeCubicInOut
+    public static ANIMATION_EASING: (normalizedTime: number) => number = easeCubicInOut;
+
+    private _windowResize$: Subject<number>;
+    public windowResize$: Observable<any>;
+
+    constructor() {
+        this._windowResize$ = new Subject();
+        this.windowResize$ = this._windowResize$.asObservable();
+
+        this._subscribeToWindowResize();
+    }
+
+    private _subscribeToWindowResize() {
+        fromEvent(window, 'resize')
+            .pipe(
+                debounceTime(100),
+                share()
+            )
+            .subscribe(_ => {
+                this._windowResize$.next(window.innerWidth);
+            })
+    }
 
     static areDatasetsEqual(a: Array<[number, number]>, b: Array<[number, number]>) {
         return a.length === b.length &&

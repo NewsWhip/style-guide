@@ -1,10 +1,11 @@
-import { Input, OnInit, ElementRef, OnChanges, SimpleChanges } from "@angular/core";
+import { Input, OnInit, ElementRef, OnChanges, SimpleChanges, OnDestroy } from "@angular/core";
 import { Axis, AxisTimeInterval } from 'd3-axis';
 import { ChartUtils } from "../chart.utils";
 import { select, Selection } from "d3-selection";
 import { ChartComponent } from "../chart.component";
+import { Subscription } from "rxjs/Subscription";
 
-export abstract class AxisBase implements OnInit, OnChanges {
+export abstract class AxisBase implements OnInit, OnChanges, OnDestroy {
 
     @Input() tickFormat: (value: number | Date | { valueOf(): number; }) => string
     @Input() tickCount: number | AxisTimeInterval;
@@ -16,22 +17,23 @@ export abstract class AxisBase implements OnInit, OnChanges {
 
     public axis: Axis<number | Date | { valueOf(): number; }>;
     public axisSelection: Selection<SVGGElement, Array<[number, number]>, SVGElement, any>;
-    public width: number;
-    public height: number;
+
+    private _windowResizeSub: Subscription;
 
     constructor(
         private _elRef: ElementRef,
-        public chart: ChartComponent) {}
+        public chart: ChartComponent,
+        private _chartUtils: ChartUtils) {}
 
     ngOnInit() {
         this.axisSelection = select(this._elRef.nativeElement as SVGGElement);
-        this.width = this.chart.width;
-        this.height = this.chart.height;
 
         this.createAxis();
         this.setDomain();
         this.setTicks();
         this.render();
+
+        this._subscribeToWindowResize();
     }
 
     ngOnChanges(c: SimpleChanges) {
@@ -77,6 +79,19 @@ export abstract class AxisBase implements OnInit, OnChanges {
             .duration(this.animDuration)
             .ease(this.easing)
             .call(this.axis);
+    }
+
+    private _subscribeToWindowResize() {
+        this._windowResizeSub = this._chartUtils.windowResize$
+            .subscribe(_ => {
+                this.setDomain();
+                this.setTicks();
+                this.render();
+            });
+    }
+
+    ngOnDestroy() {
+        this._windowResizeSub.unsubscribe();
     }
 
 }

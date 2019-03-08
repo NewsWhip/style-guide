@@ -1,9 +1,6 @@
-import { Component, ElementRef, Input, OnInit, ViewChild, AfterViewInit, ChangeDetectionStrategy, HostBinding, HostListener, OnDestroy, Output, EventEmitter } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild, AfterViewInit, ChangeDetectionStrategy, Output, EventEmitter } from '@angular/core';
 import { select, Selection, mouse } from 'd3-selection';
 import { ChartUtils } from './chart.utils';
-import { Subject } from 'rxjs/Subject';
-import { Subscription } from 'rxjs/Subscription';
-import { debounceTime } from 'rxjs/operators';
 
 @Component({
     selector: 'svg[nw-chart]',
@@ -30,10 +27,10 @@ import { debounceTime } from 'rxjs/operators';
     exportAs: 'nw-chart',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ChartComponent implements OnInit, AfterViewInit, OnDestroy {
+export class ChartComponent implements OnInit, AfterViewInit {
 
-    @Input() width: number;
-    @Input() height: number;
+    @Input('width') w: number;
+    @Input('height') h: number;
     @Input() margins: {
         top?: number;
         bottom?: number;
@@ -50,38 +47,25 @@ export class ChartComponent implements OnInit, AfterViewInit, OnDestroy {
 
     public svg: Selection<SVGSVGElement, any, HTMLElement, any>;
 
-    private _windowResize$ = new Subject();
-    private _windowResizeSub: Subscription;
-
     constructor(
         private _elRef: ElementRef,
-        public chart: ChartUtils) {}
+        public chartUtils: ChartUtils) {}
 
     ngOnInit() {
-        this.setDimensions();
         this.setSvg();
         this.setHoverOverlay();
-
-        this.subscribeToWindowResize();
     }
 
     ngAfterViewInit() {
         this.appendContainer();
     }
 
-    setDimensions(): void {
-        this.width = (this.width || (this._elRef.nativeElement as SVGSVGElement).clientWidth) - this.margins.left - this.margins.right;
-        this.height = (this.height || (this._elRef.nativeElement as SVGSVGElement).clientHeight) - this.margins.top - this.margins.bottom;
-        this.setViewBox();
+    get width(): number {
+        return (this.w || (this._elRef.nativeElement as SVGSVGElement).clientWidth) - this.margins.left - this.margins.right;
     }
 
-    setViewBox() {
-        this.viewBox = `
-            0
-            0
-            ${this.width + this.margins.left + this.margins.right}
-            ${this.height + this.margins.top + this.margins.bottom}
-        `;
+    get height(): number {
+        return (this.h || (this._elRef.nativeElement as SVGSVGElement).clientHeight) - this.margins.top - this.margins.bottom;
     }
 
     setSvg(): void {
@@ -114,24 +98,4 @@ export class ChartComponent implements OnInit, AfterViewInit, OnDestroy {
                 self.nwMousemove.emit(mouse(this))
             });
     }
-
-    @HostBinding('attr.viewBox') viewBox: string;
-
-    @HostListener('window:resize', ['$event.target'])
-    public onResize(window: Window) {
-        this._windowResize$.next(window.innerWidth);
-    }
-
-    subscribeToWindowResize() {
-        this._windowResizeSub = this._windowResize$.asObservable()
-            .pipe(debounceTime(500))
-            .subscribe(_ => {
-                this.setViewBox();
-            });
-    }
-
-    ngOnDestroy() {
-        this._windowResizeSub.unsubscribe();
-    }
-
 }

@@ -3,6 +3,7 @@ import { axisBottom, axisTop } from 'd3-axis';
 import { AxisBase } from './axis-base';
 import { ScaleTime, scaleTime } from 'd3-scale';
 import { ChartComponent } from '../chart.component';
+import { ChartUtils } from "../chart.utils";
 
 @Directive({
     selector: '[nw-x-axis]',
@@ -19,9 +20,10 @@ export class XAxisDirective extends AxisBase {
 
     constructor(
         elRef: ElementRef,
-        chart: ChartComponent) {
+        chart: ChartComponent,
+        chartUtils: ChartUtils) {
 
-        super(elRef, chart);
+        super(elRef, chart, chartUtils);
     }
 
     createAxis() {
@@ -34,7 +36,7 @@ export class XAxisDirective extends AxisBase {
         super.setTicks();
 
         if (this.showGuidlines) {
-            this.axis.tickSizeInner(-this.height);
+            this.axis.tickSizeInner(-this.chart.height);
         }
         else {
             this.axis.tickSizeInner(6);
@@ -44,11 +46,11 @@ export class XAxisDirective extends AxisBase {
     }
 
     setDomain() {
-        this.scale.domain(this.domain).range([0, this.width]);
+        this.scale.domain(this.domain).range([0, this.chart.width]);
     }
 
     render() {
-        let yTranslation = this.align === "bottom" ? this.height : 0;
+        let yTranslation = this.align === "bottom" ? this.chart.height : 0;
 
         this.axisSelection
             .attr('transform', "translate(0," + yTranslation + ")")

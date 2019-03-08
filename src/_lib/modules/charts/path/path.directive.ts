@@ -1,16 +1,17 @@
-import { Directive, OnInit, Input, ElementRef, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
+import { Directive, OnInit, Input, ElementRef, OnChanges, SimpleChanges, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { select, Selection } from 'd3-selection';
 import { line, Line, curveLinear, CurveFactory } from 'd3-shape';
 import { ScaleTime, ScaleLinear, scaleTime, scaleLinear } from 'd3-scale';
 import { ChartUtils } from '../chart.utils';
 import 'd3-transition';
 import { ChartComponent } from '../chart.component';
+import { Subscription } from "rxjs/Subscription";
 
 @Directive({
     selector: 'path[nw-path]',
     exportAs: 'nw-path'
 })
-export class PathDirective implements OnInit, OnChanges {
+export class PathDirective implements OnInit, OnChanges, OnDestroy {
 
     @Input('nw-path') data: Array<[number, number]> = [];
     @Input() xDomain: [number, number];
@@ -26,9 +27,12 @@ export class PathDirective implements OnInit, OnChanges {
     public xScale: ScaleTime<number, number>;
     public yScale: ScaleLinear<number, number>;
 
+    private _windowResizeSub: Subscription;
+
     constructor(
         private _elRef: ElementRef,
-        private _chart: ChartComponent) {}
+        private _chart: ChartComponent,
+        private _chartUtils: ChartUtils) {}
 
     ngOnInit() {
         this.path = select(this._elRef.nativeElement as SVGPathElement);
@@ -38,6 +42,8 @@ export class PathDirective implements OnInit, OnChanges {
         this.setDomains();
         this.setLine();
         this.drawLine();
+
+        this._subscribeToWindowResize();
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -77,6 +83,18 @@ export class PathDirective implements OnInit, OnChanges {
             .ease(this.easing)
             .attr('d', this.line)
             .on('end', e => this.animEnd.next())
+    }
+
+    private _subscribeToWindowResize() {
+        this._windowResizeSub = this._chartUtils.windowResize$
+            .subscribe(_ => {
+                this.setDomains();
+                this.drawLine();
+            });
+    }
+
+    ngOnDestroy() {
+        this._windowResizeSub.unsubscribe();
     }
 
 }

@@ -1,13 +1,14 @@
-import { Directive, Input, OnInit, ElementRef, OnChanges, SimpleChanges } from '@angular/core';
+import { Directive, Input, OnInit, ElementRef, OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
 import { ChartUtils } from '../chart.utils';
 import { select, Selection } from 'd3-selection';
 import { ScaleTime, ScaleLinear, scaleTime, scaleLinear } from 'd3-scale';
 import { ChartComponent } from '../chart.component';
+import { Subscription } from "rxjs/Subscription";
 
 @Directive({
     selector: 'circle[nw-circle]'
 })
-export class CircleDirective implements OnInit, OnChanges {
+export class CircleDirective implements OnInit, OnChanges, OnDestroy {
 
     @Input('nw-circle') point: [number, number];
     @Input() xDomain: [number, number];
@@ -19,15 +20,20 @@ export class CircleDirective implements OnInit, OnChanges {
     public xScale: ScaleTime<number, number> = scaleTime();
     public yScale: ScaleLinear<number, number> = scaleLinear();
 
+    private _windowResizeSub: Subscription;
+
     constructor(
         private _elRef: ElementRef,
-        private _chart: ChartComponent) {}
+        private _chart: ChartComponent,
+        private _chartUtils: ChartUtils) {}
 
     ngOnInit() {
         this.circle = select(this._elRef.nativeElement as SVGCircleElement);
 
         this.setDomains();
         this.draw();
+
+        this._subscribeToWindowResize();
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -60,6 +66,18 @@ export class CircleDirective implements OnInit, OnChanges {
 
     get transform(): string {
         return `translate(${this.xScale(this.point[0])}, ${this.yScale(this.point[1])})`;
+    }
+
+    private _subscribeToWindowResize() {
+        this._windowResizeSub = this._chartUtils.windowResize$
+            .subscribe(_ => {
+                this.setDomains();
+                this.draw();
+            });
+    }
+
+    ngOnDestroy() {
+        this._windowResizeSub.unsubscribe();
     }
 
 }
