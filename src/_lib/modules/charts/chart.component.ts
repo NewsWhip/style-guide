@@ -6,6 +6,9 @@ import { ChartUtils } from './chart.utils';
     selector: 'svg[nw-chart]',
     template: `
         <svg:g #chartContainer>
+            <!-- Keep axes outside the main rendering container so
+            that we only get mouse events from graphical elements -->
+            <ng-content select="[nw-x-axis],[nw-y-axis]"></ng-content>
             <svg:g #mouseEventCaptureContainer class="mouse-event-capture-container">
                 <ng-content select=".nw-slot-1"></ng-content>
                 <ng-content select=".nw-slot-2"></ng-content>
