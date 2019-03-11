@@ -28,7 +28,8 @@
             <svg nw-chart style="width: 700px; height: 400px;"
                 [margins]="chartMargins"
                 (nwMousemove)="onMousemove($event)"
-                (nwMouseout)="onMouseout()">
+                (nwMouseout)="onMouseout()"
+                (bgClick)="onBgClick()">
 
                 <g nw-brush *ngIf="showBrush.value"
                     [dimension]="brushType.value"
@@ -125,7 +126,7 @@
                 </ng-container>
 
                 <ng-container *ngIf="randomAsBars.value">
-                    <rect *ngFor="let point of randomData; trackBy:circleTrackIndex"
+                    <rect *ngFor="let point of randomData; trackBy:circleTrackIndex" class="nw-bar"
                         [nw-bar]="point"
                         [xDomain]="xDomain"
                         [yDomain]="randomYDomain"

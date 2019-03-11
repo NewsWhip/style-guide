@@ -312,4 +312,8 @@ export class ChartsComponent implements OnInit {
         this.selectedTab = tab;
     }
 
+    onBgClick() {
+        console.info('Background click')
+    }
+
 }

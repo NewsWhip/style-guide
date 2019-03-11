@@ -21,7 +21,7 @@ import { ChartUtils } from './chart.utils';
                 <ng-content select=".nw-slot-9"></ng-content>
                 <ng-content select=".nw-slot-10"></ng-content>
 
-                <svg:rect #hoverOverlay></svg:rect>
+                <svg:rect #hoverOverlay (click)="onBackgroundClick()"></svg:rect>
                 <ng-content></ng-content>
             </svg:g>
         </svg:g>
@@ -47,6 +47,7 @@ export class ChartComponent implements OnInit, AfterViewInit {
 
     @Output() nwMousemove: EventEmitter<[number, number]> = new EventEmitter();
     @Output() nwMouseout: EventEmitter<null> = new EventEmitter();
+    @Output() bgClick: EventEmitter<null> = new EventEmitter();
 
     public svg: Selection<SVGSVGElement, any, HTMLElement, any>;
 
@@ -100,5 +101,9 @@ export class ChartComponent implements OnInit, AfterViewInit {
                 // emits the current mouse position
                 self.nwMousemove.emit(mouse(this))
             });
+    }
+
+    onBackgroundClick() {
+        this.bgClick.emit();
     }
 }

@@ -55,7 +55,6 @@ export class BarDirective implements OnInit, OnChanges, OnDestroy {
 
     draw(animDuration: number = 0) {
         this.rect
-            .attr('class', 'nw-bar')
             .transition()
             .duration(animDuration)
             .ease(this.easing)
