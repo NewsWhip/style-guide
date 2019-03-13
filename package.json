@@ -1,6 +1,6 @@
 {
   "name": "nw-style-guide",
-  "version": "0.0.88",
+  "version": "0.0.89",
   "license": "MIT",
   "author": {
     "email": "garethdn@gmail.com",
@@ -52,6 +52,7 @@
     "core-js": "^2.4.1",
     "jasmine-core": "~2.6.2",
     "jasmine-spec-reporter": "~4.1.0",
+    "jquery": "^3.3.1",
     "json": "^9.0.6",
     "karma": "~1.7.0",
     "karma-chrome-launcher": "~2.1.1",

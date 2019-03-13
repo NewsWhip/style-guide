@@ -105,16 +105,7 @@
     .dropdown-submenu {
         position:relative;
 
-        &:hover > .dropdown-menu {
-            transition-delay: 0ms;
-            visibility: visible;
-        }
-
         > .dropdown-menu {
-            transition-property: visibility;
-            transition-delay: 500ms;
-            visibility: hidden;
-            display: block;
             left: 100%;
             top: -8px;
         }

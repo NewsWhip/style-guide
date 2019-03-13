@@ -35,6 +35,7 @@ import { LoaderComponent } from './loader/loader.component';
 import { LoaderModule } from '../_lib/modules/loader';
 import { CarouselModule } from '../_lib/modules/carousel/carousel.module';
 import { CarouselComponent } from './carousel/carousel.component';
+import { DropdownsModule } from "../_lib/modules/dropdowns/dropdowns.module";
 
 @NgModule({
   declarations: [
@@ -77,7 +78,8 @@ import { CarouselComponent } from './carousel/carousel.component';
     PortalModule,
     TabsModule,
     LoaderModule,
-    CarouselModule
+    CarouselModule,
+    DropdownsModule
   ],
   bootstrap: [AppComponent]
 })
