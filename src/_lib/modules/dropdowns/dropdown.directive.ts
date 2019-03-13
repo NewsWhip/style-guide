@@ -28,6 +28,10 @@ export class DropdownDirective implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnChanges(changes: SimpleChanges) {
+        // autoClose is essentially an optional input. What this means is that if you don't pass a
+        // value to the `autoClose` input the "if" check below will never evaluate to true. This
+        // is why we don't just rely on ngOnChanges to set the value in the service, we also use
+        // ngOnInit to set the initial value, with subsequent input changes handled below
         if (changes.autoClose && !changes.autoClose.firstChange) {
             this._service.autoClose = this.autoClose;
         }
