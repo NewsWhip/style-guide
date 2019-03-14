@@ -144,55 +144,65 @@ export class AppModule \{ \}"}}</code></pre>
         <div class="col-sm-4">
             <h3>Right aligned nested dropdown</h3>
 
-            <div class="dropdown" nwDropdown>
+            <div class="dropdown" nwDropdown [autoClose]="false">
                 <button class="btn btn-dropdown dropdown-toggle" type="button" id="dropdownNestedMenu1" nwDropdownToggle>
-                    Right aligned
+                    Auto close false
                     <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu" nwDropdownMenu aria-labelledby="dropdownNestedMenu1">
                     <li><a href="javascript:;">Action</a></li>
                     <li><a href="javascript:;">Another action</a></li>
-                    <li class="dropdown-submenu" nwDropdown nwDropdownToggle nwTrigger="hover">
-                        <a href="javascript:;">Nested 1<i class="fas fa-caret-right pull-right"></i></a>
 
-                        <ul class="dropdown-menu" nwDropdownMenu>
-                            <li><a href="javascript:;">Nested Dropdown Item 1</a></li>
-                            <li><a href="javascript:;">Nested Dropdown Item 2</a></li>
-                            <li><a href="javascript:;">Nested Dropdown Item 3</a></li>
-                            <li><a href="javascript:;">Nested Dropdown Item 4</a></li>
+                    <!-- Hover example -->
+                    <ul class="dropdown-submenu" nwDropdown>
+                        <li nwDropdownToggle nwTrigger="hover">
+                            <a href="javascript:;">Hover on me<i class="fas fa-caret-right pull-right"></i></a>
 
-                            <li class="divider" role="separator"></li>
-                            <li><a href="javascript:;"><span>Separated item</span></a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown-submenu" nwDropdown nwDropdownToggle nwTrigger="hover">
-                        <a href="javascript:;">Nested 2<i class="fas fa-caret-right pull-right"></i></a>
+                            <ul class="dropdown-menu" nwDropdownMenu>
+                                <li><a href="javascript:;">Nested Dropdown Item 1</a></li>
+                                <li><a href="javascript:;">Nested Dropdown Item 2</a></li>
+                                <li><a href="javascript:;">Nested Dropdown Item 3</a></li>
+                                <li><a href="javascript:;">Nested Dropdown Item 4</a></li>
 
-                        <ul class="dropdown-menu" nwDropdownMenu>
-                            <li><a href="javascript:;">Nested Dropdown Item 1</a></li>
-                            <li><a href="javascript:;">Nested Dropdown Item 2</a></li>
-                            <li><a href="javascript:;">Nested Dropdown Item 3</a></li>
-                            <li><a href="javascript:;">Nested Dropdown Item 4</a></li>
+                                <li class="divider" role="separator"></li>
+                                <li><a href="javascript:;"><span>Separated item</span></a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <!-- Click example -->
+                    <ul class="dropdown-submenu" nwDropdown [autoClose]="'outside'">
+                        <li>
+                            <a href="javascript:;" nwDropdownToggle>Click me<i class="fas fa-caret-right pull-right"></i></a>
 
-                            <li class="divider" role="separator"></li>
-                            <li class="dropdown-submenu" nwDropdown nwDropdownToggle nwTrigger="hover">
-                                <a href="javascript:;">Nested again<i class="fas fa-caret-right pull-right"></i></a>
+                            <ul class="dropdown-menu" nwDropdownMenu>
+                                <li><a href="javascript:;">This menu will close on a click outside it</a></li>
+                                <li><a href="javascript:;">Nested Dropdown Item 1</a></li>
+                                <li><a href="javascript:;">Nested Dropdown Item 2</a></li>
+                                <li><a href="javascript:;">Nested Dropdown Item 3</a></li>
+                                <li><a href="javascript:;">Nested Dropdown Item 4</a></li>
 
-                                <ul class="dropdown-menu" nwDropdownMenu>
-                                    <li><a href="javascript:;">Nested Dropdown Item 1</a></li>
-                                    <li><a href="javascript:;">Nested Dropdown Item 2</a></li>
-                                    <li><a href="javascript:;">Nested Dropdown Item 3</a></li>
-                                    <li><a href="javascript:;">Nested Dropdown Item 4</a></li>
+                                <li class="divider" role="separator"></li>
+                                <li><a href="javascript:;"><span>Separated item</span></a></li>
+                                <!-- Deeply nested -->
+                                <ul class="dropdown-submenu" nwDropdown>
+                                    <li nwDropdownToggle nwTrigger="hover">
+                                        <a href="javascript:;">Hover on me<i class="fas fa-caret-right pull-right"></i></a>
 
-                                    <li class="divider" role="separator"></li>
-                                    <li><a href="javascript:;"><span>Separated item</span></a></li>
+                                        <ul class="dropdown-menu" nwDropdownMenu>
+                                            <li><a href="javascript:;">Nested Dropdown Item 1</a></li>
+                                            <li><a href="javascript:;">Nested Dropdown Item 2</a></li>
+                                            <li><a href="javascript:;">Nested Dropdown Item 3</a></li>
+                                            <li><a href="javascript:;">Nested Dropdown Item 4</a></li>
+
+                                            <li class="divider" role="separator"></li>
+                                            <li><a href="javascript:;"><span>Separated item</span></a></li>
+                                        </ul>
+                                    </li>
                                 </ul>
-                            </li>
-                        </ul>
-                    </li>
-                    <li><a href="javascript:;">Something else here</a></li>
-                    <li role="separator" class="divider"></li>
-                    <li><a href="javascript:;">Separated link</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <li><a href="javascript:;">Another action</a></li>
                 </ul>
             </div>
         </div>
@@ -208,19 +218,22 @@ export class AppModule \{ \}"}}</code></pre>
                 <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownNestedMenu2">
                     <li><a href="#">Action</a></li>
                     <li><a href="#">Another action</a></li>
-                    <li class="dropdown-submenu submenu-left" nwDropdown nwDropdownToggle nwTrigger="hover">
-                        <a href="javascript:;">Nested dropdown<i class="fas fa-caret-right pull-right"></i></a>
+                    <ul class="dropdown-submenu submenu-left" nwDropdown>
+                        <li nwDropdownToggle nwTrigger="hover">
+                            <a href="javascript:;">Nested dropdown<i class="fas fa-caret-right pull-right"></i></a>
 
-                        <ul class="dropdown-menu" nwDropdownMenu>
-                            <li><a href="javascript:;">Nested Dropdown Item 1</a></li>
-                            <li><a href="javascript:;">Nested Dropdown Item 2</a></li>
-                            <li><a href="javascript:;">Nested Dropdown Item 3</a></li>
-                            <li><a href="javascript:;">Nested Dropdown Item 4</a></li>
+                            <ul class="dropdown-menu" nwDropdownMenu>
+                                <li><a href="javascript:;">Nested Dropdown Item 1</a></li>
+                                <li><a href="javascript:;">Nested Dropdown Item 2</a></li>
+                                <li><a href="javascript:;">Nested Dropdown Item 3</a></li>
+                                <li><a href="javascript:;">Nested Dropdown Item 4</a></li>
 
-                            <li class="divider" role="separator"></li>
-                            <li><a href="javascript:;"><span>Separated item</span></a></li>
-                        </ul>
-                    </li>
+                                <li class="divider" role="separator"></li>
+                                <li><a href="javascript:;"><span>Separated item</span></a></li>
+                            </ul>
+                        </li>
+
+                    </ul>
                     <li><a href="#">Something else here</a></li>
                     <li role="separator" class="divider"></li>
                     <li><a href="#">Separated link</a></li>
@@ -447,19 +460,21 @@ export class AppModule \{ \}"}}</code></pre>
                 <ul class="dropdown-menu dropdown-menu-arrow" nwDropdownMenu>
                     <li><a href="#">Menu item 1</a></li>
                     <li><a href="#">Menu item 2</a></li>
-                    <li class="dropdown-submenu" nwDropdown nwDropdownToggle nwTrigger="hover">
-                        <a href="javascript:;">Nested dropdown<i class="fas fa-caret-right pull-right"></i></a>
+                    <ul class="dropdown-submenu" nwDropdown>
+                        <li nwDropdownToggle nwTrigger="hover">
+                            <a href="javascript:;">Nested dropdown<i class="fas fa-caret-right pull-right"></i></a>
 
-                        <ul class="dropdown-menu" nwDropdownMenu>
-                            <li><a href="javascript:;">Nested Dropdown Item 1</a></li>
-                            <li><a href="javascript:;">Nested Dropdown Item 2</a></li>
-                            <li><a href="javascript:;">Nested Dropdown Item 3</a></li>
-                            <li><a href="javascript:;">Nested Dropdown Item 4</a></li>
+                            <ul class="dropdown-menu" nwDropdownMenu>
+                                <li><a href="javascript:;">Nested Dropdown Item 1</a></li>
+                                <li><a href="javascript:;">Nested Dropdown Item 2</a></li>
+                                <li><a href="javascript:;">Nested Dropdown Item 3</a></li>
+                                <li><a href="javascript:;">Nested Dropdown Item 4</a></li>
 
-                            <li class="divider" role="separator"></li>
-                            <li><a href="javascript:;"><span>Separated item</span></a></li>
-                        </ul>
-                    </li>
+                                <li class="divider" role="separator"></li>
+                                <li><a href="javascript:;"><span>Separated item</span></a></li>
+                            </ul>
+                        </li>
+                    </ul>
                     <li><a href="#">Menu item 4</a></li>
                 </ul>
             </div>
@@ -472,23 +487,25 @@ export class AppModule \{ \}"}}</code></pre>
                 <button class="btn-ghost-alt btn-md" nwDropdownToggle>
                     <i class="fas fa-cog"></i>
                 </button>
-                <ul class="dropdown-menu dropdown-menu-arrow">
+                <ul class="dropdown-menu">
                     <li><a href="#">Menu item 1</a></li>
                     <li><a href="#">Menu item 2</a></li>
                     <li><a href="#">Menu item 3</a></li>
-                    <li class="dropdown-submenu" nwDropdown nwDropdownToggle nwTrigger="hover">
-                        <a href="javascript:;">Nested dropdown<i class="fas fa-caret-right pull-right"></i></a>
+                    <ul class="dropdown-submenu" nwDropdown>
+                        <li nwDropdownToggle nwTrigger="hover">
+                            <a href="javascript:;">Nested dropdown<i class="fas fa-caret-right pull-right"></i></a>
 
-                        <ul class="dropdown-menu" nwDropdownMenu>
-                            <li><a href="javascript:;">Nested Dropdown Item 1</a></li>
-                            <li><a href="javascript:;">Nested Dropdown Item 2</a></li>
-                            <li><a href="javascript:;">Nested Dropdown Item 3</a></li>
-                            <li><a href="javascript:;">Nested Dropdown Item 4</a></li>
+                            <ul class="dropdown-menu" nwDropdownMenu>
+                                <li><a href="javascript:;">Nested Dropdown Item 1</a></li>
+                                <li><a href="javascript:;">Nested Dropdown Item 2</a></li>
+                                <li><a href="javascript:;">Nested Dropdown Item 3</a></li>
+                                <li><a href="javascript:;">Nested Dropdown Item 4</a></li>
 
-                            <li class="divider" role="separator"></li>
-                            <li><a href="javascript:;"><span>Separated item</span></a></li>
-                        </ul>
-                    </li>
+                                <li class="divider" role="separator"></li>
+                                <li><a href="javascript:;"><span>Separated item</span></a></li>
+                            </ul>
+                        </li>
+                    </ul>
                     <li><a href="#">Menu item 4</a></li>
                 </ul>
             </div>
@@ -504,19 +521,21 @@ export class AppModule \{ \}"}}</code></pre>
                 <ul class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
                     <li><a href="#">Menu item 1</a></li>
                     <li><a href="#">Menu item 2</a></li>
-                    <li class="dropdown-submenu submenu-left" nwDropdown nwDropdownToggle nwTrigger="hover">
-                        <a href="javascript:;">Nested dropdown<i class="fas fa-caret-right pull-right"></i></a>
+                    <ul class="dropdown-submenu submenu-left" nwDropdown >
+                        <li nwDropdownToggle nwTrigger="hover">
+                            <a href="javascript:;">Nested dropdown<i class="fas fa-caret-right pull-right"></i></a>
 
-                        <ul class="dropdown-menu" nwDropdownMenu>
-                            <li><a href="javascript:;">Nested Dropdown Item 1</a></li>
-                            <li><a href="javascript:;">Nested Dropdown Item 2</a></li>
-                            <li><a href="javascript:;">Nested Dropdown Item 3</a></li>
-                            <li><a href="javascript:;">Nested Dropdown Item 4</a></li>
+                            <ul class="dropdown-menu" nwDropdownMenu>
+                                <li><a href="javascript:;">Nested Dropdown Item 1</a></li>
+                                <li><a href="javascript:;">Nested Dropdown Item 2</a></li>
+                                <li><a href="javascript:;">Nested Dropdown Item 3</a></li>
+                                <li><a href="javascript:;">Nested Dropdown Item 4</a></li>
 
-                            <li class="divider" role="separator"></li>
-                            <li><a href="javascript:;"><span>Separated item</span></a></li>
-                        </ul>
-                    </li>
+                                <li class="divider" role="separator"></li>
+                                <li><a href="javascript:;"><span>Separated item</span></a></li>
+                            </ul>
+                        </li>
+                    </ul>
                     <li><a href="#">Menu item 4</a></li>
                 </ul>
             </div>
