@@ -1,4 +1,4 @@
-import { Directive, Input, HostBinding, OnDestroy, OnInit, OnChanges, SimpleChanges, HostListener, ElementRef, Output, EventEmitter, NgZone, Renderer2 } from '@angular/core';
+import { Directive, Input, HostBinding, OnDestroy, OnInit, OnChanges, SimpleChanges, ElementRef, Output, EventEmitter, NgZone, Renderer2 } from '@angular/core';
 import { DropdownService } from "./dropdown.service";
 import { Observable } from "rxjs/Observable";
 import { Subscription } from "rxjs/Subscription";
@@ -17,7 +17,8 @@ export class DropdownDirective implements OnInit, OnChanges, OnDestroy {
     @HostBinding('class.open') isOpen: boolean;
 
     private _toggleSubscription: Subscription;
-    private _unlisten: Function;
+    private _documentUnlistener: Function;
+    private _escapeUnlistener: Function;
 
     constructor(
         private _service: DropdownService,
@@ -31,9 +32,10 @@ export class DropdownDirective implements OnInit, OnChanges, OnDestroy {
 
         // For performance reasons, bind to document click outside the zone
         this._zone.runOutsideAngular(() => {
-            // Store a reference to the "unlisten" function returned from this method
+            // Store a reference to the "unlisten" functions returned from these methods
             // https://angular.io/api/core/Renderer2#listen
-            this._unlisten = this._renderer.listen('document', 'click', this.onDocumentClick.bind(this));
+            this._documentUnlistener = this._renderer.listen('document', 'click', this.onDocumentClick.bind(this));
+            this._escapeUnlistener = this._renderer.listen('document', 'keydown.escape', this.onEscape.bind(this));
         });
     }
 
@@ -72,17 +74,21 @@ export class DropdownDirective implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    // Regardless of the value of autoClose, always close on escape
-    @HostListener('document:keydown.escape', ['$event'])
-    closeOnEscape(event: KeyboardEvent) {
-        this._service.close();
+    onEscape(event: KeyboardEvent) {
+        if (this.isOpen) {
+            this._zone.run(() => this._service.close())
+        }
     }
 
     ngOnDestroy() {
         this._toggleSubscription.unsubscribe();
 
-        if (this._unlisten) {
-            this._zone.runOutsideAngular(() => this._unlisten());
+        if (this._documentUnlistener) {
+            this._zone.runOutsideAngular(() => this._documentUnlistener());
+        }
+
+        if (this._escapeUnlistener) {
+            this._zone.runOutsideAngular(() => this._escapeUnlistener());
         }
     }
 
