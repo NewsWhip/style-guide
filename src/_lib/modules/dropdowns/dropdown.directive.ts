@@ -1,4 +1,4 @@
-import { Directive, Input, HostBinding, OnDestroy, OnInit, OnChanges, SimpleChanges, ElementRef, Output, EventEmitter, NgZone, Renderer2 } from '@angular/core';
+import { Directive, Input, HostBinding, OnDestroy, OnInit, OnChanges, SimpleChanges, ElementRef, Output, EventEmitter, NgZone, Renderer2, ChangeDetectorRef } from '@angular/core';
 import { DropdownService } from "./dropdown.service";
 import { Observable } from "rxjs/Observable";
 import { Subscription } from "rxjs/Subscription";
@@ -24,7 +24,8 @@ export class DropdownDirective implements OnInit, OnChanges, OnDestroy {
         private _service: DropdownService,
         private _elRef: ElementRef,
         private _zone: NgZone,
-        private _renderer: Renderer2) { }
+        private _renderer: Renderer2,
+        private _cdRef: ChangeDetectorRef) { }
 
     ngOnInit() {
         this._service.autoClose = this.autoClose;
@@ -70,13 +71,19 @@ export class DropdownDirective implements OnInit, OnChanges, OnDestroy {
             .isHTMLElementContainedIn(event.target as HTMLElement, [this._elRef.nativeElement as HTMLElement]);
 
         if (!isEventSourceInside && (this.autoClose === true || this.autoClose === 'outside') && this.isOpen) {
-            this._zone.run(() => this._service.close())
+            this._zone.run(() => {
+                this._service.close();
+                this._cdRef.detectChanges();
+            });
         }
     }
 
     onEscape(event: KeyboardEvent) {
         if (this.isOpen) {
-            this._zone.run(() => this._service.close())
+            this._zone.run(() => {
+                this._service.close();
+                this._cdRef.detectChanges();
+            });
         }
     }
 
