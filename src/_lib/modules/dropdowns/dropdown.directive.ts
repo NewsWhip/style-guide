@@ -11,8 +11,8 @@ import { Subscription } from "rxjs/Subscription";
 export class DropdownDirective implements OnInit, OnChanges, OnDestroy {
 
     @Input() autoClose: boolean | "inside" | "outside" = true;
-    @Input() blurIgnoreEls: HTMLElement[] = [];
-    @Input() blurIgnoreSelectors: string[] = [];
+    @Input() elementsToIgnore: HTMLElement[] = [];
+    @Input() selectorsToIgnore: string[] = [];
 
     @Output() opened: EventEmitter<null> = new EventEmitter();
     @Output() closed: EventEmitter<null> = new EventEmitter();
@@ -75,10 +75,10 @@ export class DropdownDirective implements OnInit, OnChanges, OnDestroy {
         // Don't bother evaluating the source of the event if `shouldClose` is false
         if (shouldClose) {
             const target: HTMLElement = event.target as HTMLElement;
-            const containers: HTMLElement[] = [this._elRef.nativeElement as HTMLElement].concat(this.blurIgnoreEls);
+            const containers: HTMLElement[] = [this._elRef.nativeElement as HTMLElement].concat(this.elementsToIgnore);
             const isEventSourceFromWithinDropdown = this._service.isHTMLElementContainedIn(target, containers);
-            const isEventSourceFromWithinSelectors = this.blurIgnoreSelectors.length ?
-                this._service.isHTMLElementInPath(event, this.blurIgnoreSelectors) :
+            const isEventSourceFromWithinSelectors = this.selectorsToIgnore.length ?
+                this._service.isHTMLElementInPath(event, this.selectorsToIgnore) :
                 false;
 
             if (!isEventSourceFromWithinDropdown && !isEventSourceFromWithinSelectors) {
