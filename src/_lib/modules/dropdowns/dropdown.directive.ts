@@ -9,7 +9,10 @@ import { Subscription } from "rxjs/Subscription";
     providers: [DropdownService]
 })
 export class DropdownDirective implements OnInit, OnChanges, OnDestroy {
+
     @Input() autoClose: boolean | "inside" | "outside" = true;
+    @Input() blurIgnoreEls: HTMLElement[] = [];
+    @Input() blurIgnoreSelectors: string[] = [];
 
     @Output() opened: EventEmitter<null> = new EventEmitter();
     @Output() closed: EventEmitter<null> = new EventEmitter();
@@ -67,14 +70,23 @@ export class DropdownDirective implements OnInit, OnChanges, OnDestroy {
     }
 
     onDocumentClick(event: MouseEvent): void {
-        const isEventSourceInside = this._service
-            .isHTMLElementContainedIn(event.target as HTMLElement, [this._elRef.nativeElement as HTMLElement]);
+        const shouldClose = (this.autoClose === true || this.autoClose === 'outside') && this.isOpen;
 
-        if (!isEventSourceInside && (this.autoClose === true || this.autoClose === 'outside') && this.isOpen) {
-            this._zone.run(() => {
-                this._service.close();
-                this._cdRef.detectChanges();
-            });
+        // Don't bother evaluating the source of the event if `shouldClose` is false
+        if (shouldClose) {
+            const target: HTMLElement = event.target as HTMLElement;
+            const containers: HTMLElement[] = [this._elRef.nativeElement as HTMLElement].concat(this.blurIgnoreEls);
+            const isEventSourceFromWithinDropdown = this._service.isHTMLElementContainedIn(target, containers);
+            const isEventSourceFromWithinSelectors = this.blurIgnoreSelectors.length ?
+                this._service.isHTMLElementInPath(event, this.blurIgnoreSelectors) :
+                false;
+
+            if (!isEventSourceFromWithinDropdown && !isEventSourceFromWithinSelectors) {
+                this._zone.run(() => {
+                    this._service.close();
+                    this._cdRef.detectChanges();
+                });
+            }
         }
     }
 

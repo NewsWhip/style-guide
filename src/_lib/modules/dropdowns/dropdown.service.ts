@@ -22,8 +22,23 @@ export class DropdownService {
         this._toggle$.next(false);
     }
 
-    isHTMLElementContainedIn(element: HTMLElement, array?: HTMLElement[]): boolean {
-        return array ? array.some(item => item.contains(element)) : false;
+    isHTMLElementContainedIn(element: HTMLElement, containers: HTMLElement[]): boolean {
+        return containers
+            // Filter out falsey elements
+            .filter(el => el)
+            .some(item => item.contains(element));
     }
 
+    isHTMLElementInPath(event: any, selectors: string[]) {
+        // Obtain the path from the event source to the document root
+        const path: HTMLElement[] = (event.path || (event.composedPath && event.composedPath()) as HTMLElement[]);
+
+        return path
+            // Map to parentNode so we can use querySelector
+            .map(el => el.parentNode  as HTMLElement)
+            // Filter out undefined parent nodes
+            .filter(p => p)
+            // Check if any of the parentNodes match any of the selectors
+            .some(p => selectors.some(s => Boolean(p.querySelector(s))));
+    }
 }
