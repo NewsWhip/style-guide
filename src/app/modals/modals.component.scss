@@ -7,3 +7,15 @@ app-modals {
         }
     }
 }
+// The only reason this is here is because of the way that modals are
+// rendered in the Style Guide. They are already on the page and we need
+// to force some styles so that they are not blocking the page content
+body:not(.modal-open) {
+    app-modals {
+        .modals {
+            .modal {
+                display: none !important;
+            }
+        }
+    }
+}
