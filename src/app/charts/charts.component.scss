@@ -1,0 +1,101 @@
+app-charts {
+    p,h1,h2,h3,h4,h5 {
+        margin: 8px 0 !important;
+    }
+    svg {
+        background: rgb(216, 215, 233);
+    }
+    path {
+        fill: none;
+        stroke: #000;
+        stroke-width: 2px;
+
+        &.fb-comments {
+            stroke: blue;
+        }
+        &.fb-total {
+            stroke: red;
+        }
+        &.tw-shares {
+            stroke: violet;
+        }
+        &.random {
+            stroke-dasharray: 2px;
+            stroke-width: 1px;
+            stroke: rgb(255, 136, 0);
+        }
+    }
+    circle {
+        fill: white;
+        stroke: #000;
+        stroke-width: 1px;
+        cursor: pointer;
+
+        &:hover {
+            stroke: red;
+            stroke-width: 3px;
+        }
+    }
+    .axis {
+        .domain {
+            stroke: black;
+            stroke-width: 1px;
+        }
+        .tick {
+            line {
+                stroke: black;
+                fill: none;
+                shape-rendering: crispEdges;
+            }
+            text {
+                fill: black;
+                stroke: none;
+            }
+        }
+        &.random-axis {
+            path {
+                stroke-dasharray: 2px;
+                stroke: rgb(255, 136, 0);
+            }
+        }
+        &.y {
+            .tick:not(:first-of-type) line {
+                stroke-dasharray: 10px 5px;
+                stroke: rgb(182, 182, 182);
+            }
+        }
+    }
+    .chart-container {
+        width: 100%;
+        padding-top: 60%;
+        position: relative;
+
+        > svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+    }
+    .hover-path {
+        stroke-dasharray: 2px;
+        stroke: rgb(114, 197, 142)
+    }
+    .sliding-hover-data {
+        position: absolute;
+        border: 1px solid gray;
+        border-radius: 3px;
+    }
+    rect.nw-bar {
+        fill: steelblue;
+        stroke: #fff;
+        stroke-width: 1px;
+        cursor: pointer;
+
+        &:hover {
+            stroke: red;
+            stroke-width: 3px;
+        }
+    }
+}

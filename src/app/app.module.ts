@@ -2,12 +2,17 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { PopoverModule } from 'ngx-bootstrap/popover'
 import { PortalModule } from '@angular/cdk/portal';
 import { MarkdownModule } from 'ngx-md';
 import { NwPickerModule } from '../_lib/modules/picker/picker.module';
 import { ToastsModule } from '../_lib/modules/toasts';
 import { FeatureAlertsModule } from '../_lib/modules/feature-alerts';
 import { TabsModule } from '../_lib/modules/tabs';
+import { ChartsModule } from "../_lib/modules/charts/charts.module";
+import { LoaderModule } from '../_lib/modules/loader';
+import { CarouselModule } from '../_lib/modules/carousel/carousel.module';
+
 import { AppComponent } from './app.component';
 import { ButtonsComponent } from './buttons/buttons.component';
 import { routing } from './app.routing';
@@ -31,9 +36,8 @@ import { TypographyComponent } from './typography/typography.component';
 import { PickerComponent } from './picker/picker.component';
 import { FeatureAlertsComponent } from './feature-alerts/feature-alerts.component';
 import { AnimationsComponent } from './animations/animations.component';
+import { ChartsComponent } from './charts/charts.component';
 import { LoaderComponent } from './loader/loader.component';
-import { LoaderModule } from '../_lib/modules/loader';
-import { CarouselModule } from '../_lib/modules/carousel/carousel.module';
 import { CarouselComponent } from './carousel/carousel.component';
 import { DropdownsModule } from "../_lib/modules/dropdowns/dropdowns.module";
 
@@ -61,6 +65,7 @@ import { DropdownsModule } from "../_lib/modules/dropdowns/dropdowns.module";
     TabsComponent,
     FeatureAlertsComponent,
     AnimationsComponent,
+    ChartsComponent,
     LoaderComponent,
     CarouselComponent
   ],
@@ -70,6 +75,7 @@ import { DropdownsModule } from "../_lib/modules/dropdowns/dropdowns.module";
     ReactiveFormsModule,
     routing,
     BrowserAnimationsModule,
+    PopoverModule.forRoot(),
     FeatureAlertsModule,
     NwPickerModule,
     ToastsModule.forRoot(),
@@ -77,6 +83,7 @@ import { DropdownsModule } from "../_lib/modules/dropdowns/dropdowns.module";
     FeatureAlertsModule.forRoot(),
     PortalModule,
     TabsModule,
+    ChartsModule,
     LoaderModule,
     CarouselModule,
     DropdownsModule
