@@ -10,7 +10,9 @@ nw-loader {
         }
 
         @for $i from 1 through $maxDots {
-            $animDelay: $i * .2s;
+            // Add a negative 1 second offset delay so that the
+            // animation appears to already be running when instantiated
+            $animDelay: -1s + ($i * .2s);
 
             &.dot-#{$i} {
                 animation: moveUpAndDown $animTime $animDelay ease-in-out alternate infinite;

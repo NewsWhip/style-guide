@@ -39,6 +39,7 @@ import { AnimationsComponent } from './animations/animations.component';
 import { ChartsComponent } from './charts/charts.component';
 import { LoaderComponent } from './loader/loader.component';
 import { CarouselComponent } from './carousel/carousel.component';
+import { DropdownsModule } from "../_lib/modules/dropdowns/dropdowns.module";
 
 @NgModule({
   declarations: [
@@ -84,7 +85,8 @@ import { CarouselComponent } from './carousel/carousel.component';
     TabsModule,
     ChartsModule,
     LoaderModule,
-    CarouselModule
+    CarouselModule,
+    DropdownsModule
   ],
   bootstrap: [AppComponent]
 })

@@ -24,7 +24,7 @@
             flex: 1;
         }
     }
-    
+
     .modal-body {
         font-size: 14px;
         color: get-color("gray", 4x-light);
@@ -52,7 +52,7 @@
         }
         .modal-header {
             background-color: get-color("gray", 6x-light);
-     
+
             .modal-title,
             .close {
                 color: get-color("gray", x-light);
@@ -67,23 +67,31 @@
     }
 
     &.modal-media {
+        display: flex !important;
+
+        .modal-dialog {
+            margin: auto;
+            // Take into account the width of close button
+            max-width: calc(100% - 105px);
+        }
         .btn-close {
-            transform: translateX(100%); 
-            position: absolute; 
-            right: -8px; 
+            transform: translateX(100%);
+            position: absolute;
+            right: -8px;
             opacity: 0.5;
-            top: 0; 
+            top: 0;
         }
         .modal-content {
             border: 0;
-        
+
             .modal-body {
                 padding: 0;
                 line-height: 0;
-                
+
                 .media-content {
                     border-radius: 3px;
                     overflow: hidden;
+
                     iframe, img, video, object {
                         width: 100%;
                     }

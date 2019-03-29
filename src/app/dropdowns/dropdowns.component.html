@@ -1,16 +1,38 @@
 <div>
     <h2 class="page-header">Dropdowns</h2>
 
+    <h3>Usage</h3>
+
+    <pre><code>{{"import \{ DropdownsModule \} from 'nw-style-guide/dropdowns';
+
+...........
+...........
+
+@NgModule({
+    declarations: [...],
+    imports: [
+        .....
+        .....
+        DropdownsModule
+    ],
+    bootstrap: [AppComponent]
+})
+export class AppModule \{ \}"}}</code></pre>
+
+    <h3>Example</h3>
+
+    <pre><code>{{complexExample}}</code></pre>
+
     <h3>Color variations</h3>
 
     <div class="row">
         <div class="col-sm-3">
-            <div class="dropdown">
-                <button class="btn btn-dropdown dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <div class="dropdown" nwDropdown>
+                <button class="btn btn-dropdown dropdown-toggle" type="button" id="dropdownMenu1" nwDropdownToggle>
                     .btn-dropdown
                     <span class="caret"></span>
                 </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                <ul class="dropdown-menu" nwDropdownMenu aria-labelledby="dropdownMenu1">
                     <li><a href="#">Action</a></li>
                     <li><a href="#">Another action</a></li>
                     <li><a href="#">Something else here</a></li>
@@ -20,12 +42,12 @@
         </div>
 
         <div class="col-sm-3">
-            <div class="dropdown">
-                <button class="btn btn-ghost dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <div class="dropdown" nwDropdown>
+                <button class="btn btn-ghost dropdown-toggle" type="button" id="dropdownMenu1" nwDropdownToggle>
                     .btn-ghost
                     <span class="caret"></span>
                 </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                <ul class="dropdown-menu" nwDropdownMenu aria-labelledby="dropdownMenu1">
                     <li><a href="#">Action</a></li>
                     <li><a href="#">Another action</a></li>
                     <li><a href="#">Something else here</a></li>
@@ -36,8 +58,8 @@
         </div>
 
         <div class="col-sm-3">
-            <div class="dropdown">
-                <button class="btn btn-nav dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <div class="dropdown" nwDropdown>
+                <button class="btn btn-nav dropdown-toggle" type="button" id="dropdownMenu1" nwDropdownToggle>
                     <div class="btn-contents">
                         <div>
                             .btn-nav
@@ -46,7 +68,7 @@
                         <span class="subtext">Some complimentary text</span>
                     </div>
                 </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                <ul class="dropdown-menu" nwDropdownMenu aria-labelledby="dropdownMenu1">
                     <li><a href="#">Action</a></li>
                     <li><a href="#">Another action</a></li>
                     <li><a href="#">Something else here</a></li>
@@ -57,8 +79,8 @@
         </div>
 
         <div class="col-sm-3 text-right">
-            <div class="dropdown">
-                <button class="btn btn-dropdown-inverse dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <div class="dropdown" nwDropdown>
+                <button class="btn btn-dropdown-inverse dropdown-toggle" type="button" id="dropdownMenu1" nwDropdownToggle>
                     .btn-dropdown-inverse
                     <span class="caret"></span>
                 </button>
@@ -82,12 +104,12 @@
         <div class="col-sm-4">
             <h3>Left aligned secondary dropdown</h3>
 
-            <div class="dropdown">
-                <button class="btn btn-dropdown dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <div class="dropdown" nwDropdown>
+                <button class="btn btn-dropdown dropdown-toggle" type="button" id="dropdownMenu1" nwDropdownToggle>
                     Left aligned
                     <span class="caret"></span>
                 </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                <ul class="dropdown-menu" nwDropdownMenu aria-labelledby="dropdownMenu1">
                     <li><a href="#">Action</a></li>
                     <li><a href="#">Another action</a></li>
                     <li><a href="#">Something else here</a></li>
@@ -100,8 +122,8 @@
         <div class="col-sm-4 text-right">
             <h3>Right aligned ghost dropdown</h3>
 
-            <div class="dropdown">
-                <button class="btn btn-ghost dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <div class="dropdown" nwDropdown>
+                <button class="btn btn-ghost dropdown-toggle" type="button" id="dropdownMenu1" nwDropdownToggle>
                     Right aligned
                     <span class="caret"></span>
                 </button>
@@ -122,30 +144,65 @@
         <div class="col-sm-4">
             <h3>Right aligned nested dropdown</h3>
 
-            <div class="dropdown">
-                <button class="btn btn-dropdown dropdown-toggle" type="button" id="dropdownNestedMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Right aligned
+            <div class="dropdown" nwDropdown [autoClose]="false">
+                <button class="btn btn-dropdown dropdown-toggle" type="button" id="dropdownNestedMenu1" nwDropdownToggle>
+                    Auto close false
                     <span class="caret"></span>
                 </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownNestedMenu1">
+                <ul class="dropdown-menu" nwDropdownMenu aria-labelledby="dropdownNestedMenu1">
                     <li><a href="javascript:;">Action</a></li>
                     <li><a href="javascript:;">Another action</a></li>
-                    <li class="dropdown-submenu">
-                        <a href="javascript:;">Nested dropdown<i class="fas fa-caret-right pull-right"></i></a>
-                        
-                        <ul class="dropdown-menu">
-                            <li><a href="javascript:;">Nested Dropdown Item 1</a></li>
-                            <li><a href="javascript:;">Nested Dropdown Item 2</a></li>
-                            <li><a href="javascript:;">Nested Dropdown Item 3</a></li>
-                            <li><a href="javascript:;">Nested Dropdown Item 4</a></li>
-                            
-                            <li class="divider" role="separator"></li>
-                            <li><a href="javascript:;"><span>Separated item</span></a></li>
-                        </ul>
-                    </li>
-                    <li><a href="javascript:;">Something else here</a></li>
-                    <li role="separator" class="divider"></li>
-                    <li><a href="javascript:;">Separated link</a></li>
+
+                    <!-- Hover example -->
+                    <ul class="dropdown-submenu" nwDropdown>
+                        <li nwDropdownToggle nwTrigger="hover">
+                            <a href="javascript:;">Hover on me<i class="fas fa-caret-right pull-right"></i></a>
+
+                            <ul class="dropdown-menu" nwDropdownMenu>
+                                <li><a href="javascript:;">Nested Dropdown Item 1</a></li>
+                                <li><a href="javascript:;">Nested Dropdown Item 2</a></li>
+                                <li><a href="javascript:;">Nested Dropdown Item 3</a></li>
+                                <li><a href="javascript:;">Nested Dropdown Item 4</a></li>
+
+                                <li class="divider" role="separator"></li>
+                                <li><a href="javascript:;"><span>Separated item</span></a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <!-- Click example -->
+                    <ul class="dropdown-submenu" nwDropdown [autoClose]="'outside'">
+                        <li>
+                            <a href="javascript:;" nwDropdownToggle>Click me<i class="fas fa-caret-right pull-right"></i></a>
+
+                            <ul class="dropdown-menu" nwDropdownMenu>
+                                <li><a href="javascript:;">This menu will close on a click outside it</a></li>
+                                <li><a href="javascript:;">Nested Dropdown Item 1</a></li>
+                                <li><a href="javascript:;">Nested Dropdown Item 2</a></li>
+                                <li><a href="javascript:;">Nested Dropdown Item 3</a></li>
+                                <li><a href="javascript:;">Nested Dropdown Item 4</a></li>
+
+                                <li class="divider" role="separator"></li>
+                                <li><a href="javascript:;"><span>Separated item</span></a></li>
+                                <!-- Deeply nested -->
+                                <ul class="dropdown-submenu" nwDropdown>
+                                    <li nwDropdownToggle nwTrigger="hover">
+                                        <a href="javascript:;">Hover on me<i class="fas fa-caret-right pull-right"></i></a>
+
+                                        <ul class="dropdown-menu" nwDropdownMenu>
+                                            <li><a href="javascript:;">Nested Dropdown Item 1</a></li>
+                                            <li><a href="javascript:;">Nested Dropdown Item 2</a></li>
+                                            <li><a href="javascript:;">Nested Dropdown Item 3</a></li>
+                                            <li><a href="javascript:;">Nested Dropdown Item 4</a></li>
+
+                                            <li class="divider" role="separator"></li>
+                                            <li><a href="javascript:;"><span>Separated item</span></a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </ul>
+                        </li>
+                    </ul>
+                    <li><a href="javascript:;">Another action</a></li>
                 </ul>
             </div>
         </div>
@@ -153,27 +210,30 @@
         <div class="col-sm-4 text-right">
             <h3>Left aligned nested dropdown</h3>
 
-            <div class="dropdown">
-                <button class="btn btn-ghost dropdown-toggle" type="button" id="dropdownNestedMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <div class="dropdown" nwDropdown>
+                <button class="btn btn-ghost dropdown-toggle" type="button" id="dropdownNestedMenu2" nwDropdownToggle>
                     Left aligned nested dropdown
                     <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownNestedMenu2">
                     <li><a href="#">Action</a></li>
                     <li><a href="#">Another action</a></li>
-                    <li class="dropdown-submenu submenu-left">
-                        <a href="javascript:;">Nested dropdown<i class="fas fa-caret-right pull-right"></i></a>
-                        
-                        <ul class="dropdown-menu">
-                            <li><a href="javascript:;">Nested Dropdown Item 1</a></li>
-                            <li><a href="javascript:;">Nested Dropdown Item 2</a></li>
-                            <li><a href="javascript:;">Nested Dropdown Item 3</a></li>
-                            <li><a href="javascript:;">Nested Dropdown Item 4</a></li>
-                            
-                            <li class="divider" role="separator"></li>
-                            <li><a href="javascript:;"><span>Separated item</span></a></li>
-                        </ul>
-                    </li>
+                    <ul class="dropdown-submenu submenu-left" nwDropdown>
+                        <li nwDropdownToggle nwTrigger="hover">
+                            <a href="javascript:;">Nested dropdown<i class="fas fa-caret-right pull-right"></i></a>
+
+                            <ul class="dropdown-menu" nwDropdownMenu>
+                                <li><a href="javascript:;">Nested Dropdown Item 1</a></li>
+                                <li><a href="javascript:;">Nested Dropdown Item 2</a></li>
+                                <li><a href="javascript:;">Nested Dropdown Item 3</a></li>
+                                <li><a href="javascript:;">Nested Dropdown Item 4</a></li>
+
+                                <li class="divider" role="separator"></li>
+                                <li><a href="javascript:;"><span>Separated item</span></a></li>
+                            </ul>
+                        </li>
+
+                    </ul>
                     <li><a href="#">Something else here</a></li>
                     <li role="separator" class="divider"></li>
                     <li><a href="#">Separated link</a></li>
@@ -189,12 +249,12 @@
 
             <h3>Disabled dropdown</h3>
 
-            <div class="dropdown">
-                <button class="btn btn-dropdown dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" disabled>
+            <div class="dropdown" nwDropdown>
+                <button class="btn btn-dropdown dropdown-toggle" type="button" id="dropdownMenu1" nwDropdownToggle disabled>
                     Disabled
                     <span class="caret"></span>
                 </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                <ul class="dropdown-menu" nwDropdownMenu aria-labelledby="dropdownMenu1">
                     <li><a href="#">Action</a></li>
                 </ul>
             </div>
@@ -206,12 +266,12 @@
 
             <h3>Dropdown with headers and dividers</h3>
 
-            <div class="dropdown">
-                <button class="btn btn-ghost dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <div class="dropdown" nwDropdown>
+                <button class="btn btn-ghost dropdown-toggle" type="button" id="dropdownMenu1" nwDropdownToggle>
                     Headers and divider
                     <span class="caret"></span>
                 </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                <ul class="dropdown-menu" nwDropdownMenu aria-labelledby="dropdownMenu1">
                     <li class="dropdown-header">Header 1</li>
                     <li><a href="#">Action</a></li>
                     <li><a href="#">Another action</a></li>
@@ -230,12 +290,12 @@
 
             <h3>Dropdown with disabled menu items</h3>
 
-            <div class="dropdown">
-                <button class="btn btn-ghost dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <div class="dropdown" nwDropdown>
+                <button class="btn btn-ghost dropdown-toggle" type="button" id="dropdownMenu1" nwDropdownToggle>
                     Disabled menu items
                     <span class="caret"></span>
                 </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                <ul class="dropdown-menu" nwDropdownMenu aria-labelledby="dropdownMenu1">
                     <li class="dropdown-header">Enabled items</li>
                     <li><a href="#">Action</a></li>
                     <li><a href="#">Another action</a></li>
@@ -256,12 +316,12 @@
 
             <h3>Dropup menu</h3>
 
-            <div class="dropup">
-                <button class="btn btn-ghost dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <div class="dropup" nwDropdown>
+                <button class="btn btn-ghost dropdown-toggle" type="button" id="dropdownMenu1" nwDropdownToggle>
                     Dropup menu
                     <span class="caret"></span>
                 </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                <ul class="dropdown-menu" nwDropdownMenu aria-labelledby="dropdownMenu1">
                     <li><a href="#">Action</a></li>
                     <li><a href="#">Another action</a></li>
                 </ul>
@@ -273,12 +333,12 @@
 
             <h3>Dropdown minimum width</h3>
 
-            <div class="dropdown" style="margin-bottom: 20px">
-                <button class="btn btn-dropdown dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <div class="dropdown" nwDropdown style="margin-bottom: 20px">
+                <button class="btn btn-dropdown dropdown-toggle" type="button" id="dropdownMenu1" nwDropdownToggle>
                     Min width
                     <span class="caret"></span>
                 </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                <ul class="dropdown-menu" nwDropdownMenu aria-labelledby="dropdownMenu1">
                     <li><a href="#">1</a></li>
                     <li><a href="#">2</a></li>
                     <li><a href="#">3</a></li>
@@ -299,12 +359,12 @@
     <h3>Dropdown full width</h3>
 
     <div class="full-width-container">
-        <div class="dropdown">
-            <button class="btn btn-dropdown dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <div class="dropdown" nwDropdown>
+            <button class="btn btn-dropdown dropdown-toggle" type="button" id="dropdownMenu1" nwDropdownToggle>
                 This button opens a full width menu
                 <span class="caret"></span>
             </button>
-            <ul class="dropdown-menu dropdown-menu-block" aria-labelledby="dropdownMenu1">
+            <ul class="dropdown-menu dropdown-menu-block" aria-labelledby="dropdownMenu1" nwDropdownMenu>
                 <li><a href="#">Menu item 1</a></li>
                 <li><a href="#">Menu item 2</a></li>
                 <li><a href="#">Menu item 3</a></li>
@@ -316,12 +376,12 @@
     <h3>Dropdown with block button</h3>
 
     <div class="full-width-container">
-        <div class="dropdown">
-            <button class="btn btn-dropdown btn-block dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <div class="dropdown" nwDropdown>
+            <button class="btn btn-dropdown btn-block dropdown-toggle" type="button" nwDropdownToggle>
                 Full width button
                 <span class="caret"></span>
             </button>
-            <ul class="dropdown-menu">
+            <ul class="dropdown-menu" nwDropdownMenu>
                 <li><a href="#">Menu item 1</a></li>
                 <li><a href="#">Menu item 2</a></li>
                 <li><a href="#">Menu item 3</a></li>
@@ -341,11 +401,11 @@
         <div class="col-sm-4">
             <h3>Icon dropdowns left</h3>
 
-            <div class="dropdown">
-                <button class="btn-ghost-alt btn-md" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <div class="dropdown" nwDropdown>
+                <button class="btn-ghost-alt btn-md" nwDropdownToggle>
                     <i class="fas fa-cog"></i>
                 </button>
-                <ul class="dropdown-menu dropdown-menu-arrow">
+                <ul class="dropdown-menu dropdown-menu-arrow" nwDropdownMenu>
                     <li><a href="#">Menu item 1</a></li>
                     <li><a href="#">Menu item 2</a></li>
                     <li><a href="#">Menu item 3</a></li>
@@ -357,11 +417,11 @@
         <div class="col-sm-4">
             <h3>Icon dropup</h3>
 
-            <div class="dropup">
-                <button class="btn-ghost-alt btn-md" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <div class="dropup" nwDropdown>
+                <button class="btn-ghost-alt btn-md" nwDropdownToggle>
                     <i class="fas fa-cog"></i>
                 </button>
-                <ul class="dropdown-menu dropdown-menu-arrow">
+                <ul class="dropdown-menu dropdown-menu-arrow" nwDropdownMenu>
                     <li><a href="#">Menu item 1</a></li>
                     <li><a href="#">Menu item 2</a></li>
                     <li><a href="#">Menu item 3</a></li>
@@ -373,11 +433,11 @@
         <div class="col-sm-4 text-right">
             <h3>Icon dropdowns right</h3>
 
-            <div class="dropdown">
-                <button class="btn-ghost-alt btn-md" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <div class="dropdown" nwDropdown>
+                <button class="btn-ghost-alt btn-md" nwDropdownToggle>
                     <i class="fas fa-cog"></i>
                 </button>
-                <ul class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                <ul class="dropdown-menu dropdown-menu-right dropdown-menu-arrow" nwDropdownMenu>
                     <li><a href="#">Menu item 1</a></li>
                     <li><a href="#">Menu item 2</a></li>
                     <li><a href="#">Menu item 3</a></li>
@@ -393,26 +453,28 @@
         <div class="col-sm-4">
             <h3>Icon dropdown with right aligned nested dropdown</h3>
 
-            <div class="dropdown">
-                <button class="btn-ghost-alt btn-md" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <div class="dropdown" nwDropdown>
+                <button class="btn-ghost-alt btn-md" nwDropdownToggle>
                     <i class="fas fa-cog"></i>
                 </button>
-                <ul class="dropdown-menu dropdown-menu-arrow">
+                <ul class="dropdown-menu dropdown-menu-arrow" nwDropdownMenu>
                     <li><a href="#">Menu item 1</a></li>
                     <li><a href="#">Menu item 2</a></li>
-                    <li class="dropdown-submenu">
-                        <a href="javascript:;">Nested dropdown<i class="fas fa-caret-right pull-right"></i></a>
-                        
-                        <ul class="dropdown-menu">
-                            <li><a href="javascript:;">Nested Dropdown Item 1</a></li>
-                            <li><a href="javascript:;">Nested Dropdown Item 2</a></li>
-                            <li><a href="javascript:;">Nested Dropdown Item 3</a></li>
-                            <li><a href="javascript:;">Nested Dropdown Item 4</a></li>
-                            
-                            <li class="divider" role="separator"></li>
-                            <li><a href="javascript:;"><span>Separated item</span></a></li>
-                        </ul>
-                    </li>
+                    <ul class="dropdown-submenu" nwDropdown>
+                        <li nwDropdownToggle nwTrigger="hover">
+                            <a href="javascript:;">Nested dropdown<i class="fas fa-caret-right pull-right"></i></a>
+
+                            <ul class="dropdown-menu" nwDropdownMenu>
+                                <li><a href="javascript:;">Nested Dropdown Item 1</a></li>
+                                <li><a href="javascript:;">Nested Dropdown Item 2</a></li>
+                                <li><a href="javascript:;">Nested Dropdown Item 3</a></li>
+                                <li><a href="javascript:;">Nested Dropdown Item 4</a></li>
+
+                                <li class="divider" role="separator"></li>
+                                <li><a href="javascript:;"><span>Separated item</span></a></li>
+                            </ul>
+                        </li>
+                    </ul>
                     <li><a href="#">Menu item 4</a></li>
                 </ul>
             </div>
@@ -421,27 +483,29 @@
         <div class="col-sm-4">
             <h3>Icon dropup with nested dropdown</h3>
 
-            <div class="dropup">
-                <button class="btn-ghost-alt btn-md" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <div class="dropup" nwDropdown>
+                <button class="btn-ghost-alt btn-md" nwDropdownToggle>
                     <i class="fas fa-cog"></i>
                 </button>
-                <ul class="dropdown-menu dropdown-menu-arrow">
+                <ul class="dropdown-menu">
                     <li><a href="#">Menu item 1</a></li>
                     <li><a href="#">Menu item 2</a></li>
                     <li><a href="#">Menu item 3</a></li>
-                    <li class="dropdown-submenu">
-                        <a href="javascript:;">Nested dropdown<i class="fas fa-caret-right pull-right"></i></a>
-                        
-                        <ul class="dropdown-menu">
-                            <li><a href="javascript:;">Nested Dropdown Item 1</a></li>
-                            <li><a href="javascript:;">Nested Dropdown Item 2</a></li>
-                            <li><a href="javascript:;">Nested Dropdown Item 3</a></li>
-                            <li><a href="javascript:;">Nested Dropdown Item 4</a></li>
-                            
-                            <li class="divider" role="separator"></li>
-                            <li><a href="javascript:;"><span>Separated item</span></a></li>
-                        </ul>
-                    </li>
+                    <ul class="dropdown-submenu" nwDropdown>
+                        <li nwDropdownToggle nwTrigger="hover">
+                            <a href="javascript:;">Nested dropdown<i class="fas fa-caret-right pull-right"></i></a>
+
+                            <ul class="dropdown-menu" nwDropdownMenu>
+                                <li><a href="javascript:;">Nested Dropdown Item 1</a></li>
+                                <li><a href="javascript:;">Nested Dropdown Item 2</a></li>
+                                <li><a href="javascript:;">Nested Dropdown Item 3</a></li>
+                                <li><a href="javascript:;">Nested Dropdown Item 4</a></li>
+
+                                <li class="divider" role="separator"></li>
+                                <li><a href="javascript:;"><span>Separated item</span></a></li>
+                            </ul>
+                        </li>
+                    </ul>
                     <li><a href="#">Menu item 4</a></li>
                 </ul>
             </div>
@@ -450,26 +514,28 @@
         <div class="col-sm-4 text-right">
             <h3>Icon dropdown with left aligned nested dropdown</h3>
 
-            <div class="dropdown">
-                <button class="btn-ghost-alt btn-md" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <div class="dropdown" nwDropdown>
+                <button class="btn-ghost-alt btn-md" nwDropdownToggle>
                     <i class="fas fa-cog"></i>
                 </button>
                 <ul class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
                     <li><a href="#">Menu item 1</a></li>
                     <li><a href="#">Menu item 2</a></li>
-                    <li class="dropdown-submenu submenu-left">
-                        <a href="javascript:;">Nested dropdown<i class="fas fa-caret-right pull-right"></i></a>
-                        
-                        <ul class="dropdown-menu">
-                            <li><a href="javascript:;">Nested Dropdown Item 1</a></li>
-                            <li><a href="javascript:;">Nested Dropdown Item 2</a></li>
-                            <li><a href="javascript:;">Nested Dropdown Item 3</a></li>
-                            <li><a href="javascript:;">Nested Dropdown Item 4</a></li>
-                            
-                            <li class="divider" role="separator"></li>
-                            <li><a href="javascript:;"><span>Separated item</span></a></li>
-                        </ul>
-                    </li>
+                    <ul class="dropdown-submenu submenu-left" nwDropdown >
+                        <li nwDropdownToggle nwTrigger="hover">
+                            <a href="javascript:;">Nested dropdown<i class="fas fa-caret-right pull-right"></i></a>
+
+                            <ul class="dropdown-menu" nwDropdownMenu>
+                                <li><a href="javascript:;">Nested Dropdown Item 1</a></li>
+                                <li><a href="javascript:;">Nested Dropdown Item 2</a></li>
+                                <li><a href="javascript:;">Nested Dropdown Item 3</a></li>
+                                <li><a href="javascript:;">Nested Dropdown Item 4</a></li>
+
+                                <li class="divider" role="separator"></li>
+                                <li><a href="javascript:;"><span>Separated item</span></a></li>
+                            </ul>
+                        </li>
+                    </ul>
                     <li><a href="#">Menu item 4</a></li>
                 </ul>
             </div>
