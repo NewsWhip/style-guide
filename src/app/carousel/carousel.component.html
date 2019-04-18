@@ -8,10 +8,12 @@
     </div>
 </div>
 
+<button class="btn btn-alt" (click)="items.pop()">Remove last slide</button>
+
 <div style="width: 1030px; max-width: 100%;">
     <nw-carousel maskColor="#373737">
         <ng-container *ngFor="let item of items">
-            <div class="slide" nwCarouselSlide snapAlign="center" (click)="log('test')"
+            <div class="slide" nwCarouselSlide snapAlign="center"
                 [style.background-image]="'url(https://picsum.photos/216/120?image=' + item +')'">Slide {{item}}</div>
         </ng-container>
     </nw-carousel>
@@ -28,9 +30,14 @@
 </div>
 
 <div style="width: 100%;">
-    <nw-carousel maskColor="#373737" #carousel="nw-carousel" [showPageIndicator]="false" [showPagination]="false">
+    <nw-carousel
+        maskColor="#373737"
+        #carousel="nw-carousel"
+        [showPageIndicator]="false"
+        [showPagination]="false"
+        noResultsText="Sorry, no data available">
         <ng-container *ngFor="let item of items">
-            <div class="slide"
+            <div class="slide" nwCarouselSlide
                 [style.background-color]="'grey'">Slide {{item}}</div>
         </ng-container>
 
@@ -134,7 +141,6 @@ import {CarouselModule} from 'nw-style-guide/carousel';
 <div class="row" style="margin-top: 24px">
     <div class="col-sm-6">
         <h4 class="nw-text">Carousel Slide Directive</h4>
-        <p class="nw-text">Use of this directive is optional</p>
         <table class="table table-bordered">
             <tbody>
                 <tr>
