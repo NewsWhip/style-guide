@@ -1,9 +1,9 @@
-import { Component, ChangeDetectionStrategy, Input, ElementRef, ViewChild, Renderer2, ChangeDetectorRef, AfterViewInit, OnDestroy, OnInit, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input, ElementRef, ViewChild, Renderer2, ChangeDetectorRef, AfterViewInit, OnDestroy, OnInit, Output, EventEmitter, OnChanges, SimpleChanges, ContentChildren, QueryList, AfterContentInit } from '@angular/core';
 import { trigger, transition, style, animate, AUTO_STYLE } from '@angular/animations';
 import { Subscription } from 'rxjs/Subscription';
 import { fromEvent } from "rxjs/observable/fromEvent";
 import { debounceTime } from "rxjs/operators";
-
+import { CarouselSlideDirective } from "./carousel-slide.directive";
 
 @Component({
     selector: 'nw-carousel',
@@ -26,6 +26,8 @@ import { debounceTime } from "rxjs/operators";
 
                 <div class="carousel" #carousel [ngClass]="containerClass">
                     <ng-content></ng-content>
+
+                    <p *ngIf="slides.length === 0" class="nw-text text-center">{{noResultsText}}</p>
                 </div>
             </div>
 
@@ -55,22 +57,26 @@ import { debounceTime } from "rxjs/operators";
         ])
     ]
 })
-export class CarouselComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy {
+export class CarouselComponent implements OnInit, AfterViewInit, AfterContentInit, OnChanges, OnDestroy {
 
     @Input() showPageIndicator: boolean = true;
     @Input() showPagination: boolean = true;
     @Input() showMask: boolean = true;
     @Input() maskColor: string = '#ffffff';
     @Input() containerClass: string;
-
     @Input() currPage: number = 0;
+    @Input() noResultsText: string = "No results";
+
     @Output() currPageChange: EventEmitter<number> = new EventEmitter();
 
     @ViewChild('carousel') carousel: ElementRef;
 
+    @ContentChildren(CarouselSlideDirective) slides: QueryList<CarouselSlideDirective>
+
     public pages: number[] = [];
 
     private _windowResizeSub: Subscription;
+    private _slidesSub: Subscription;
 
     constructor(
         private _renderer: Renderer2,
@@ -88,11 +94,16 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnChanges, OnDe
 
     ngAfterViewInit() {
         this.updatePages();
-        this._cdRef.detectChanges();
 
         if (this.currPage !== 0) {
             this._setScrollPosition(this.currPage);
         }
+    }
+
+    ngAfterContentInit() {
+        this._slidesSub = this.slides.changes.subscribe(res => {
+            this.updatePages();
+        })
     }
 
     next() {
@@ -156,14 +167,14 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnChanges, OnDe
         this._windowResizeSub = fromEvent(window, 'resize')
             .pipe(debounceTime(100))
             .subscribe(_ => {
-                this.updatePages();
                 this.goToPage(0);
-                this._cdRef.detectChanges();
+                this.updatePages();
             })
     }
 
     ngOnDestroy() {
         this._windowResizeSub.unsubscribe();
+        this._slidesSub.unsubscribe();
     }
 
 }
