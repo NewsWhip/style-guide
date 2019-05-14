@@ -90,7 +90,7 @@ If you wish to import only specific parts of the style guide you first need to i
 5. Build the Github Pages demo in the development branch
     - `> npm run ghpages`
     - Commit with message `build:gpages` + push
-    - `npm version patch` to bump the version. The bump is automatically committed so you just need to push.
+    - `> npm version patch` to bump the version. The bump is automatically committed so you just need to push.
 6. Merge pull request to master
 7. After merging to master, create a new release branch off master
 8. Update the npm package version
