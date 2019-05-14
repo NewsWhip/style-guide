@@ -69,6 +69,13 @@ a.btn {
         get-color("gray", x-light),
         get-color("gray", base));
 }
+.btn-secondary-dark {
+    @include button-variant(
+        #ffffff,
+        #ffffff,
+        get-color("gray", x-light),
+        get-color("gray", dark));
+}
 .btn-secondary-inverse {
     @include button-variant(
         get-color("gray", base),
