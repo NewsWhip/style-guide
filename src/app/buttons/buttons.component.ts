@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
 })
 export class ButtonsComponent{
     public sizes = ['xs', 'sm', 'md', 'lg'];
-    public btnNames = ['primary', 'secondary', 'danger', 'ghost', 'alt', 'activate'];
+    public btnNames = ['primary', 'secondary', 'secondary-dark', 'danger', 'ghost', 'alt', 'activate'];
     public defaultBtnSize: string = 'lg';
     public btnGroupSize: string = '50%';
 }
