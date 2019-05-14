@@ -65,11 +65,11 @@ export class ChartComponent implements OnInit, AfterViewInit {
     }
 
     get width(): number {
-        return (this.w || (this._elRef.nativeElement as SVGSVGElement).clientWidth) - this.margins.left - this.margins.right;
+        return (this.w || (this._elRef.nativeElement as SVGSVGElement).getBoundingClientRect().width) - this.margins.left - this.margins.right;
     }
 
     get height(): number {
-        return (this.h || (this._elRef.nativeElement as SVGSVGElement).clientHeight) - this.margins.top - this.margins.bottom;
+        return (this.h || (this._elRef.nativeElement as SVGSVGElement).getBoundingClientRect().height) - this.margins.top - this.margins.bottom;
     }
 
     setSvg(): void {
