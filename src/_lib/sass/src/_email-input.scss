@@ -1,0 +1,51 @@
+nw-email-input {
+    .emails-container {
+        display: flex;
+        flex-flow: row wrap;
+        position: relative;
+        height: auto;
+        min-height: 40px;
+        padding: 7px 12px 1px 12px;
+
+        &.show-placeholder {
+            &:before {
+                content: attr(data-placeholder-text);
+                display: flex;
+                align-items: center;
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                left: 0;
+                top: 0;
+                padding-left: 13px;
+                color: $input-color-placeholder;
+            }
+        }
+    }
+    .pill {
+        margin-right: 6px;
+        margin-bottom: 6px;
+    }
+    .input-container {
+        display: flex;
+        flex-direction: column;
+    }
+    input {
+        border: none;
+        width: 0;
+        min-width: 100%;
+        max-width: 100%;
+        height: 24px;
+
+        &:focus {
+            outline: none;
+            box-shadow: none;
+        }
+    }
+    .pill-hidden {
+        visibility: hidden;
+        height: 0 !important;
+        margin: 0;
+        font-size: 16px !important;
+    }
+}

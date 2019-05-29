@@ -1,0 +1,22 @@
+<div class="emails-container form-control input-lg" #container
+    [class.show-placeholder]="emails.length < 1 && emailInputControl.value.length < 1"
+    (click)="onContainerClick($event)"
+    (paste)="onPaste($event)"
+    [attr.data-placeholder-text]="placeholder">
+
+    <div class="pill pill-sm" *ngFor="let email of emails; let last = last;"
+        [class.invalid]="!isValid(email)"
+        [class.selected]="last && isPillSelected">
+        <span class="pill-label">{{email}}</span>
+        <button class="close" (click)="removeEmail(email)">×</button>
+    </div>
+
+    <div class="input-container" *ngIf="shouldDisplayInput">
+        <div class="pill pill-sm pill-hidden">{{emailInputControl.value}}</div>
+        <input type="text" #inputEl
+            [formControl]="emailInputControl"
+            (keydown)="onKeydown($event)"
+            (keyup.backspace)="onBackspace()"
+            (blur)="onBlur()">
+    </div>
+</div>
