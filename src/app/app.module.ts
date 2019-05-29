@@ -40,6 +40,8 @@ import { ChartsComponent } from './charts/charts.component';
 import { LoaderComponent } from './loader/loader.component';
 import { CarouselComponent } from './carousel/carousel.component';
 import { DropdownsModule } from "../_lib/modules/dropdowns/dropdowns.module";
+import { EmailInputModule } from "../_lib/modules/email-input/email-input.module";
+import { EmailInputDemoComponent } from "./email-input/email-input-demo.component";
 
 @NgModule({
   declarations: [
@@ -67,7 +69,8 @@ import { DropdownsModule } from "../_lib/modules/dropdowns/dropdowns.module";
     AnimationsComponent,
     ChartsComponent,
     LoaderComponent,
-    CarouselComponent
+    CarouselComponent,
+    EmailInputDemoComponent
   ],
   imports: [
     BrowserModule,
@@ -86,7 +89,8 @@ import { DropdownsModule } from "../_lib/modules/dropdowns/dropdowns.module";
     ChartsModule,
     LoaderModule,
     CarouselModule,
-    DropdownsModule
+    DropdownsModule,
+    EmailInputModule
   ],
   bootstrap: [AppComponent]
 })

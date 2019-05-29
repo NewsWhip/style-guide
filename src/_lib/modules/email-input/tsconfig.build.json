@@ -1,0 +1,15 @@
+{
+    "extends": "../tsconfig.build.json",
+    "compilerOptions": {
+        "baseUrl": ".",
+        "outDir": "../../../../distribution/email-input",
+        "rootDir": "."
+    },
+    "angularCompilerOptions": {
+        "strictMetadataEmit": false,
+        "skipTemplateCodegen": true
+    },
+    "files": [
+        "./index.ts"
+    ]
+}

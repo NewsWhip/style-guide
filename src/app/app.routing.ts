@@ -24,6 +24,7 @@ import { AnimationsComponent } from "./animations/animations.component";
 import { ChartsComponent } from "./charts/charts.component";
 import { LoaderComponent } from './loader/loader.component';
 import { CarouselComponent } from './carousel/carousel.component';
+import { EmailInputDemoComponent } from "./email-input/email-input-demo.component";
 
 const appRoutes: Routes = [
     {
@@ -121,6 +122,10 @@ const appRoutes: Routes = [
     {
         path: 'carousel',
         component: CarouselComponent
+    },
+    {
+        path: 'email-input',
+        component: EmailInputDemoComponent
     }
 ];
 
