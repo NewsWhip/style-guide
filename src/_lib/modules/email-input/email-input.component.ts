@@ -104,7 +104,7 @@ export class EmailInputComponent implements OnInit, OnDestroy {
 
     onTab(event: KeyboardEvent) {
         /**
-         * If the input has a value, add it an an entry.
+         * If the input has a value, add it as an entry.
          *
          * Otherwise, allow the default tab behaviour
          */
@@ -193,9 +193,7 @@ export class EmailInputComponent implements OnInit, OnDestroy {
     }
 
     private focus() {
-        setTimeout(() => {
-            (this.inputEl.nativeElement as HTMLInputElement).focus();
-        }, 0);
+        (this.inputEl.nativeElement as HTMLInputElement).focus();
     }
 
     onBackspace() {
@@ -213,9 +211,11 @@ export class EmailInputComponent implements OnInit, OnDestroy {
         /**
          * In order to be valid, entered emails AND the input value must be valid emails
          */
-        const isValid: boolean = this.emails
+        const emails: string[] = this.emails
             .concat(this.emailInputControl.value)
-            .every(email => this.isValid(email));
+            .filter(value => value.length > 0);
+
+        const isValid: boolean = emails.length > 0 && emails.every(email => this.isValid(email));
 
         this.change.emit({
             isValid: isValid,
