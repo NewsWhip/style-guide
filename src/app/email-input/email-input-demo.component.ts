@@ -9,14 +9,18 @@ import { IValidationChange } from "../../_lib/modules/email-input/models/IValida
 
         <div class="row">
             <div class="col-md-6 col-sm-12">
-                <nw-email-input
-                    [emails]="emails"
-                    placeholder="Custom placeholder text"
-                    (validationChange)="onValidationChange($event)"></nw-email-input>
+                <div class="form-group">
+                    <label for="email-input">Email input</label>
+                    <nw-email-input
+                        [emails]="emails"
+                        placeholder="Custom placeholder text"
+                        inputId="email-input"
+                        (change)="onChange($event)"></nw-email-input>
+                </div>
             </div>
 
             <div class="col-md-6 col-sm-12">
-                <p class="nw-text">Entered emails are: <strong>{{validationState.isValid? 'valid': 'invalid'}}</strong></p>
+                <p class="nw-text">State: <strong>{{validationState.isValid? 'valid': 'invalid'}}</strong></p>
                 <p class="nw-text">Input state: <strong>{{validationState.control?.status}}</strong></p>
                 <p class="nw-text">Input value: <strong>{{validationState.control?.value}}</strong></p>
                 <p class="nw-text">Is pristine: <strong>{{validationState.control?.pristine}}</strong></p>
@@ -33,7 +37,7 @@ export class EmailInputDemoComponent {
 
     constructor(private _cdRef: ChangeDetectorRef) {}
 
-    onValidationChange(event: IValidationChange) {
+    onChange(event: IValidationChange) {
         this.validationState = event;
         this._cdRef.detectChanges();
     }

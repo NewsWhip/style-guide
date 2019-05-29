@@ -19,11 +19,13 @@ import { IValidationChange } from "./models/IValidationChange";
                 <button class="close" (click)="removeEmail(email)">×</button>
             </div>
 
-            <div class="input-container" *ngIf="shouldDisplayInput">
+            <div class="input-container">
+                <!-- pill-hidden is an invisble element that controls the width of the input -->
                 <div class="pill pill-sm pill-hidden">{{emailInputControl.value}}</div>
-                <input type="text" #inputEl
+                <input type="text" #inputEl [id]="inputId"
                     [formControl]="emailInputControl"
                     (keydown)="onKeydown($event)"
+                    (keydown.tab)="onTab($event)"
                     (keyup.backspace)="onBackspace()"
                     (blur)="onBlur()">
             </div>
@@ -35,19 +37,22 @@ import { IValidationChange } from "./models/IValidationChange";
 export class EmailInputComponent implements OnInit, OnDestroy {
 
     @Input() emails: string[] = [];
+    /**
+     * Applied to the HTMLInputElement. Mostly useful for label using the "for" attribute
+     */
+    @Input() inputId: string = "";
     @Input() placeholder: string = '';
 
-    @Output() validationChange: EventEmitter<IValidationChange> = new EventEmitter();
+    @Output() change: EventEmitter<IValidationChange> = new EventEmitter();
 
     @ViewChild('inputEl') inputEl: ElementRef;
     @ViewChild('container') container: ElementRef;
 
     public emailInputControl: FormControl = new FormControl("", Validators.email);
-    public shouldDisplayInput: boolean = false;
     public isPillSelected: boolean = false;
 
     private _validationFormControl: FormControl = new FormControl();
-    private _submitKeys: string[] = [",", "Enter", "Tab", " ", ";"];
+    private _submitKeys: string[] = [",", "Enter", " ", ";"];
     private _valueChangesSub: Subscription;
 
     constructor(private _cdRef: ChangeDetectorRef) { }
@@ -77,7 +82,6 @@ export class EmailInputComponent implements OnInit, OnDestroy {
     }
 
     onBlur() {
-        this.shouldDisplayInput = false;
         this.isPillSelected = false;
         this._addEmail();
     }
@@ -88,12 +92,26 @@ export class EmailInputComponent implements OnInit, OnDestroy {
         if (index > -1) {
             event.preventDefault();
             this._addEmail();
-            this._focus();
+            this.focus();
         }
 
         if (event.key === "Escape") {
-            this._clearControlAndMarkAsPristine();
+            event.stopPropagation();
+            this.emailInputControl.setValue('');
             (this.inputEl.nativeElement as HTMLInputElement).blur();
+        }
+    }
+
+    onTab(event: KeyboardEvent) {
+        /**
+         * If the input has a value, add it an an entry.
+         *
+         * Otherwise, allow the default tab behaviour
+         */
+        if (this.emailInputControl.value.length > 0) {
+            event.preventDefault();
+            this._addEmail();
+            this.focus();
         }
     }
 
@@ -110,14 +128,15 @@ export class EmailInputComponent implements OnInit, OnDestroy {
          * We don't care about events that bubble up from child elements.
          */
         if (event.srcElement === this.container.nativeElement) {
-            this.shouldDisplayInput = true;
-            this._focus();
+            this.focus();
         }
     }
 
     onPaste(event: ClipboardEvent) {
         if (event.clipboardData) {
             event.preventDefault();
+
+            this.emailInputControl.markAsDirty();
 
             const selectionStart: number = (this.inputEl.nativeElement as HTMLInputElement).selectionStart
             const selectionEnd: number = (this.inputEl.nativeElement as HTMLInputElement).selectionEnd;
@@ -150,15 +169,14 @@ export class EmailInputComponent implements OnInit, OnDestroy {
             const lastEmail: string = items[items.length - 1];
 
             if (this.isValid(lastEmail)) {
-                // Uset Set to remove duplicate emails
+                // Use Set to remove duplicate emails
                 this.emails = Array.from(new Set(this.emails.concat(items)));
-                this._clearControlAndMarkAsPristine();
+                this.emailInputControl.setValue('');
             }
             else {
                 items.pop();
-                // Uset Set to remove duplicate emails
+                // Use Set to remove duplicate emails
                 this.emails = Array.from(new Set(this.emails.concat(items)));
-                this.emailInputControl.markAsDirty();
                 this.emailInputControl.setValue(lastEmail);
             }
         }
@@ -171,10 +189,10 @@ export class EmailInputComponent implements OnInit, OnDestroy {
         if (email.length && this.emails.indexOf(email) === -1) {
             this.emails = this.emails.concat(this.emailInputControl.value.trim());
         }
-        this._clearControlAndMarkAsPristine();
+        this.emailInputControl.setValue('');
     }
 
-    private _focus() {
+    private focus() {
         setTimeout(() => {
             (this.inputEl.nativeElement as HTMLInputElement).focus();
         }, 0);
@@ -192,21 +210,18 @@ export class EmailInputComponent implements OnInit, OnDestroy {
     }
 
     private _emitValidationChange() {
-        const isValid: boolean = this.emails.every(email => this.isValid(email));
+        /**
+         * In order to be valid, entered emails AND the input value must be valid emails
+         */
+        const isValid: boolean = this.emails
+            .concat(this.emailInputControl.value)
+            .every(email => this.isValid(email));
 
-        this.validationChange.emit({
+        this.change.emit({
             isValid: isValid,
             emails: this.emails,
             control: this.emailInputControl
         })
-    }
-
-    private _clearControlAndMarkAsPristine(): void {
-        // Mark as pristine before setting the value. If we mark as pristine after setting the
-        // value, `setValue` will trigger the EventEmitter before we have marked the control
-        // as pristine.
-        this.emailInputControl.markAsPristine();
-        this.emailInputControl.setValue('');
     }
 
     ngOnDestroy() {
