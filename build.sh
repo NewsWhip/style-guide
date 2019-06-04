@@ -1,6 +1,12 @@
 #!/bin/bash
 NGC="node_modules/.bin/ngc"
 
+# node-sass is a dependency of angular-cli and is installed when
+# npm install is run in the root of the style guide project
+NODE_SASS="node_modules/.bin/node-sass"
+SCSS_INPUT_FILE="src/_lib/sass/styles.scss"
+CSS_OUTPUT_DIRECTORY="distribution/"
+
 cd "src/_lib/modules"
 modules=( $(find . -maxdepth 1 -type d -printf '%P\n') )
 
@@ -56,6 +62,11 @@ done
 # Copy SASS files
 echo -ne "Copying SASS files"
 cp -R src/_lib/sass distribution
+on_complete
+
+# Compiling SCSS to CSS for CDN delivery
+echo -ne "Compiling SCSS to CSS for CDN delivery"
+$NODE_SASS $SCSS_INPUT_FILE --o $CSS_OUTPUT_DIRECTORY --output-style compressed --quiet
 on_complete
 
 # Copy Assets (images and fonts)
