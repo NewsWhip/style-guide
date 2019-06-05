@@ -105,7 +105,7 @@ If you wish to import only specific parts of the style guide you first need to i
 13. Merge to master
 14. Checkout master
 15. Publish the updated package to the npm repository
-    - `> ./release.sh`
+    - `> npm run package:release`
 
 ### Development
 

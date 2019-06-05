@@ -13,11 +13,14 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
+    "ngc": "ngc",
     "ghpages": "ng build --prod --output-path docs  --base-href /style-guide/",
     "g:module": "ng g module --app=1",
     "g:component": "ng g component --app=1",
     "g:directive": "ng g directive --app=1",
-    "g:service": "ng g service --app=1"
+    "g:service": "ng g service --app=1",
+    "package:build": "node build.js",
+    "package:release": "node release.js"
   },
   "private": true,
   "peerDependencies": {
@@ -53,6 +56,7 @@
     "codelyzer": "^4.0.1",
     "core-js": "^2.4.1",
     "d3": "^5.7.0",
+    "fs-extra": "^8.0.1",
     "jasmine-core": "~2.6.2",
     "jasmine-spec-reporter": "~4.1.0",
     "jquery": "^3.3.1",
@@ -67,6 +71,7 @@
     "ngx-bootstrap": "2.0.4",
     "ngx-md": "^3.1.1",
     "protractor": "~5.1.2",
+    "rimraf": "^2.6.3",
     "rxjs": "^5.5.2",
     "ts-node": "~3.2.0",
     "tslint": "~5.7.0",
