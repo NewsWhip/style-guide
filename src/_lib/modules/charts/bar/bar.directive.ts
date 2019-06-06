@@ -3,7 +3,7 @@ import { select, Selection } from 'd3-selection';
 import { ScaleTime, ScaleLinear, scaleTime, scaleLinear } from 'd3-scale';
 import { ChartUtils } from '../chart.utils';
 import { ChartComponent } from '../chart.component';
-import { Subscription } from "rxjs/Subscription";
+import { Subscription } from 'rxjs';
 
 @Directive({
     selector: 'rect[nw-bar]'

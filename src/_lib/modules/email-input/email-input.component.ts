@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl, Validators } from "@angular/forms";
-import { Subscription } from "rxjs/Subscription";
 import { IValidationChange } from "./models/IValidationChange";
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'nw-email-input',

@@ -15,5 +15,10 @@
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
         "importHelpers": true
+    },
+    "angularCompilerOptions": {
+        "strictMetadataEmit": false,
+        "skipTemplateCodegen": true,
+        "fullTemplateTypeCheck": true
     }
 }

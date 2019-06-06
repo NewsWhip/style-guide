@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PopoverModule } from 'ngx-bootstrap/popover'
 import { PortalModule } from '@angular/cdk/portal';
-import { MarkdownModule } from 'ngx-md';
+import { NgxMdModule } from 'ngx-md';
 import { NwPickerModule } from '../_lib/modules/picker/picker.module';
 import { ToastsModule } from '../_lib/modules/toasts';
 import { FeatureAlertsModule } from '../_lib/modules/feature-alerts';
@@ -82,7 +82,7 @@ import { EmailInputDemoComponent } from "./email-input/email-input-demo.componen
     FeatureAlertsModule,
     NwPickerModule,
     ToastsModule.forRoot(),
-    MarkdownModule.forRoot(),
+    NgxMdModule.forRoot(),
     FeatureAlertsModule.forRoot(),
     PortalModule,
     TabsModule,
