@@ -16,7 +16,7 @@
 .list-group {
     &:not(.list-group-secondary) {
         .collapsible {
-            > .list-group-item {
+            .list-group-item {
                 padding-left: 50px;
             }
         }
