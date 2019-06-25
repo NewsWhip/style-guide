@@ -1,9 +1,8 @@
 import { Component, ChangeDetectionStrategy, Input, ElementRef, ViewChild, Renderer2, ChangeDetectorRef, AfterViewInit, OnDestroy, OnInit, Output, EventEmitter, OnChanges, SimpleChanges, ContentChildren, QueryList, AfterContentInit } from '@angular/core';
 import { trigger, transition, style, animate, AUTO_STYLE } from '@angular/animations';
-import { Subscription } from 'rxjs/Subscription';
-import { fromEvent } from "rxjs/observable/fromEvent";
 import { debounceTime } from "rxjs/operators";
 import { CarouselSlideDirective } from "./carousel-slide.directive";
+import { Subscription, fromEvent } from 'rxjs';
 
 @Component({
     selector: 'nw-carousel',

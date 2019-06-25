@@ -4,7 +4,7 @@ import { ChartComponent } from '../chart.component';
 import { ScaleTime, ScaleLinear, scaleTime, scaleLinear } from 'd3-scale';
 import { select, Selection } from 'd3-selection';
 import { ChartUtils } from '../chart.utils';
-import { Subscription } from "rxjs/Subscription";
+import { Subscription } from 'rxjs';
 
 @Directive({
     selector: 'path[nw-area]',

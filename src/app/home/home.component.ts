@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MarkdownService } from 'ngx-md';
+import { NgxMdService } from 'ngx-md';
 
 @Component({
   selector: 'app-home',
@@ -8,7 +8,7 @@ import { MarkdownService } from 'ngx-md';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private _markdown: MarkdownService) { }
+  constructor(private _markdown: NgxMdService) { }
 
   ngOnInit() {
     this._markdown.renderer.heading = (text: string, level: number) => {

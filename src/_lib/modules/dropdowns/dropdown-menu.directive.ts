@@ -1,10 +1,8 @@
-import { Directive, Input, HostListener, QueryList, OnInit, AfterContentInit, ContentChildren, OnDestroy } from '@angular/core';
+import { Directive, HostListener, QueryList, AfterContentInit, ContentChildren, OnDestroy } from '@angular/core';
 import { DropdownService } from "./dropdown.service";
 import { DropdownDirective } from "./dropdown.directive";
-import { Subscription } from "rxjs/Subscription";
-import { merge } from "rxjs/observable/merge";
 import { map } from "rxjs/operators";
-import { Observable } from "rxjs/Observable";
+import { Subscription, Observable, merge } from 'rxjs';
 
 @Directive({
   selector: '[nwDropdownMenu]',

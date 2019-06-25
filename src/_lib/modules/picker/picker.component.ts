@@ -1,8 +1,9 @@
-import { Component, Input, Output, ChangeDetectorRef, ChangeDetectionStrategy, EventEmitter, trigger, transition, animate, style, state, ViewChild, ElementRef } from '@angular/core';
+import { Component, Input, Output, ChangeDetectorRef, ChangeDetectionStrategy, EventEmitter, ViewChild, ElementRef } from '@angular/core';
+import { trigger, transition, animate, style } from '@angular/animations';
 import { FormControl } from '@angular/forms';
-import { Subscription } from 'rxjs/Subscription'
 import { IPickerItem } from './IPickerItem';
 import * as _ from 'lodash';
+import { Subscription } from 'rxjs';
 
 @Component({
 	selector: 'nw-angular-picker',
@@ -13,7 +14,7 @@ import * as _ from 'lodash';
 				class="form-control search-input {{inputClasses}} hidden-xs text-ellipsis"
 				[formControl]="searchTerm"
 				(focus)="onFocus()"
-                (blur)="closeResults($event)"
+                (blur)="closeResults()"
                 (keyup.escape)="inputEl.blur()"
 				placeholder="{{getPlaceholderText()}}"/>
 
@@ -67,7 +68,7 @@ import * as _ from 'lodash';
 							</a>
 							<a href="javascript:;" class="nw-link nw-link-tertiary" *ngIf="getSelections().length" (click)="clearSelections($event)">Clear all</a>
 						</div>
-					
+
 						<div class="selected-items">
     						<div class="search-result"
     							[ngClass]="{ 'active': item.added, 'excluded': item.excluded }"
@@ -105,7 +106,7 @@ import * as _ from 'lodash';
 								<span class="item-label" title="{{item.displayName}}" (click)="toggleItemInclusion(item, $event)">
 									{{item.displayName}}
 									<ng-container *ngIf="searchTerm.value.length && item.searchValues?.length">
-										<span> - 
+										<span> -
 											<em class="small" *ngFor="let val of item.searchValues; let isLast=last">{{val}}{{isLast ? '' : ', '}}</em>
 										</span>
 									</ng-container>
@@ -368,7 +369,7 @@ export class NwPickerComponent {
 		this.inputEl.nativeElement.blur();
 	}
 
-	closeResults($event) {
+	closeResults() {
 		this.canViewResults = false;
 		this.searchTerm.setValue('');
 		this.closed.emit();

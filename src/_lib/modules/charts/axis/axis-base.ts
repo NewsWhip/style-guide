@@ -3,7 +3,7 @@ import { Axis, AxisTimeInterval } from 'd3-axis';
 import { ChartUtils } from "../chart.utils";
 import { select, Selection } from "d3-selection";
 import { ChartComponent } from "../chart.component";
-import { Subscription } from "rxjs/Subscription";
+import { Subscription } from "rxjs";
 
 export abstract class AxisBase implements OnInit, OnChanges, OnDestroy {
 

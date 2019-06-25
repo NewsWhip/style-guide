@@ -1,10 +1,7 @@
 import { Directive, Input, HostListener, OnInit, ElementRef, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { DropdownService } from "./dropdown.service";
-import { fromEvent } from "rxjs/observable/fromEvent";
-import { debounceTime, takeUntil, filter, tap } from "rxjs/operators";
-import { Subject } from "rxjs/Subject";
-import { Subscription } from "rxjs/Subscription";
-import { Observable } from "rxjs/Observable";
+import { debounceTime, filter, tap } from "rxjs/operators";
+import { Subscription, fromEvent } from 'rxjs';
 
 @Directive({
   selector: '[nwDropdownToggle]',

@@ -1,9 +1,7 @@
 import { Injectable, SimpleChange } from "@angular/core";
 import { easeCubicInOut } from "d3-ease";
-import { Subject } from "rxjs/Subject";
-import { Observable } from "rxjs/Observable";
 import { debounceTime, share } from "rxjs/operators";
-import { fromEvent } from "rxjs/observable/fromEvent";
+import { Subject, Observable, fromEvent } from "rxjs";
 
 @Injectable()
 export class ChartUtils {
