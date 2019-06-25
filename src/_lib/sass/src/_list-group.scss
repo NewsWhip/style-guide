@@ -12,6 +12,17 @@
     padding-left: 0; // reset padding because ul and ol
 }
 
+// .collapsible indentation (currently only supports 2 levels)
+.list-group {
+    &:not(.list-group-secondary) {
+        .collapsible {
+            > .list-group-item {
+                padding-left: 50px;
+            }
+        }
+    }
+}
+
 // Primary list group
 .list-group-primary {
     .list-group-item {
@@ -52,11 +63,21 @@
             }
         }
         &[data-toggle="collapse"] {
-            font-weight: normal;
-
             .caret {
+                position: absolute;
                 left: 3px;
                 top: 13px;
+                border-width: 5px;
+            }
+            &.collapsed {
+                .caret {
+                    transform: rotateZ(-90deg);
+                }
+            }
+            &:before {
+                // No folder icon for .list-group-secondary
+                content: '' !important;
+                position: absolute;
             }
         }
         &.disabled,
@@ -70,17 +91,18 @@
         padding-left: 0;
         padding-right: 0;
     }
+    .collapsible {
+        margin-left: 15px;
+    }
 }
 
 // Individual list items
 //
 // Use on `li`s or `div`s within the `.list-group` parent.
-
 .list-group-item {
     position: relative;
-    padding: 3px 19px;
-    // Place the border on the list items and negative margin up for better styling
-    margin-bottom: -1px;
+    padding: 3px 12px;
+    margin-bottom: 1px;
     background-color: $list-group-bg;
     border: 1px solid $list-group-border;
     font-size: 14px;
@@ -92,7 +114,6 @@
         display: block;
         text-decoration: none;
     }
-
     // Round the first and last items
     &:first-child {
         @include border-top-radius($list-group-border-radius);
@@ -101,17 +122,27 @@
         @include border-bottom-radius($list-group-border-radius);
     }
     &[data-toggle="collapse"] {
-        font-weight: bold;
-
-        .caret {
-            position: absolute;
-            left: 1px;
-            top: 12px;
-            border-width: 5px;
+        &:before {
+            font-family: "Font Awesome 5 Pro";
+            font-weight: 300;
+            content: '\f07c';
+            display: inline-block;
+            margin-right: 8px;
+            width: 18px;
+        }
+        &:hover {
+            &:before {
+                content: '\f07b';
+            }
         }
         &.collapsed {
-            .caret {
-                transform: rotateZ(-90deg);
+            &:before {
+                content: '\f07b';
+            }
+            &:hover {
+                &:before {
+                    content: '\f07c';
+                }
             }
         }
     }
@@ -168,7 +199,7 @@
     justify-content: space-between;
     align-items: center;
     position: relative;
-    padding: 2px 19px;
+    padding: 2px 12px;
     line-height: 24px;
     margin: 0;
     color: get-color("gray", 3x-light);
@@ -179,11 +210,11 @@
 }
 .list-group-item-actions, .list-group-header-actions {
     position: absolute;
-    right: 4px;
+    right: 0px;
     top: 1px;
     text-transform: initial;
     z-index: 11;
-        
+
     &.open,
     &:hover,
     &:focus-within {
@@ -194,7 +225,4 @@
 .list-group-item-actions {
     opacity: 0;
     top: -2px;
-}
-.collapsible {
-    margin-left: 15px;
 }
