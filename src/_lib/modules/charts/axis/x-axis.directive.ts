@@ -4,6 +4,7 @@ import { AxisBase } from './axis-base';
 import { ScaleTime, scaleTime } from 'd3-scale';
 import { ChartComponent } from '../chart.component';
 import { ChartUtils } from "../chart.utils";
+import {select, Selection} from 'd3-selection';
 
 @Directive({
     selector: '[nw-x-axis]',
@@ -49,12 +50,25 @@ export class XAxisDirective extends AxisBase {
         this.scale.domain(this.domain).range([0, this.chart.width]);
     }
 
+    positionLabel() {
+        if (this.label) {
+            const y = this.align === 'top' ? 0 : this.fullheight;
+
+            this.axisLabelSelection
+                .attr('class', this.align)
+                .attr('transform', `translate(${this.fullWidth / 2}, ${y})`)
+                .text(`${this.label}`);
+        }
+    }
+
     render() {
         let yTranslation = this.align === "bottom" ? this.chart.height : 0;
 
         this.axisSelection
             .attr('transform', "translate(0," + yTranslation + ")")
-            .call(this.axis)
+            .call(this.axis);
+
+        this.positionLabel();
     }
 
 }

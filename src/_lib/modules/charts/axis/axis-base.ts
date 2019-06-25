@@ -14,9 +14,11 @@ export abstract class AxisBase implements OnInit, OnChanges, OnDestroy {
     @Input() showGuidlines: boolean = false;
     @Input() animDuration: number = ChartUtils.ANIMATION_DURATION;
     @Input() easing: (normalizedTime: number) => number = ChartUtils.ANIMATION_EASING;
+    @Input() label: string = '';
 
     public axis: Axis<number | Date | { valueOf(): number; }>;
     public axisSelection: Selection<SVGGElement, Array<[number, number]>, SVGElement, any>;
+    public axisLabelSelection: Selection<SVGTextElement, any, HTMLElement, any>;
 
     private _windowResizeSub: Subscription;
 
@@ -31,6 +33,7 @@ export abstract class AxisBase implements OnInit, OnChanges, OnDestroy {
         this.createAxis();
         this.setDomain();
         this.setTicks();
+        this.createLabel();
         this.render();
 
         this._subscribeToWindowResize();
@@ -69,6 +72,11 @@ export abstract class AxisBase implements OnInit, OnChanges, OnDestroy {
         throw new Error("Method not implemented.");
     }
 
+    createLabel() {
+        this.axisLabelSelection = this.chart.svg.append('text')
+            .style('text-anchor', 'middle');
+    }
+
     render(): any {
         throw new Error("Method not implemented.");
     }
@@ -79,6 +87,14 @@ export abstract class AxisBase implements OnInit, OnChanges, OnDestroy {
             .duration(this.animDuration)
             .ease(this.easing)
             .call(this.axis);
+    }
+
+    get fullWidth() {
+        return this.chart.width + this.chart.margins.left + this.chart.margins.right;
+    }
+
+    get fullheight() {
+        return this.chart.height + this.chart.margins.top + this.chart.margins.bottom;
     }
 
     private _subscribeToWindowResize() {
