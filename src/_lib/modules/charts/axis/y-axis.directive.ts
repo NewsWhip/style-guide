@@ -54,7 +54,7 @@ export class YAxisDirective extends AxisBase {
 
             const text = this.axisLabelSelection
                 .attr('class', this.align)
-                .text(`${this.label}`);
+                .text(this.label);
 
             const textH = text.node().getBBox().height;
             const x = this.align === 'left' ? textH : this.fullWidth - textH;

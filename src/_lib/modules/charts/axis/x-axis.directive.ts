@@ -4,7 +4,6 @@ import { AxisBase } from './axis-base';
 import { ScaleTime, scaleTime } from 'd3-scale';
 import { ChartComponent } from '../chart.component';
 import { ChartUtils } from "../chart.utils";
-import {select, Selection} from 'd3-selection';
 
 @Directive({
     selector: '[nw-x-axis]',
@@ -57,7 +56,7 @@ export class XAxisDirective extends AxisBase {
             this.axisLabelSelection
                 .attr('class', this.align)
                 .attr('transform', `translate(${this.fullWidth / 2}, ${y})`)
-                .text(`${this.label}`);
+                .text(this.label);
         }
     }
 
