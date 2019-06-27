@@ -33,7 +33,7 @@ export class LoaderComponent implements OnInit {
     @Input() size: 'sm' | 'md' | 'lg' = 'md';
     @Input() isColor: boolean = true;
     @Input() isInline: boolean = false;
-    @Input() delayMs: number = 300;
+    @Input() delayMs: number = 700;
     @Input() fadeInMs: number = 700;
 
     public animParams: any;
