@@ -93,7 +93,7 @@ export abstract class AxisBase implements OnInit, OnChanges, OnDestroy {
         return this.chart.width + this.chart.margins.left + this.chart.margins.right;
     }
 
-    get fullheight() {
+    get fullHeight() {
         return this.chart.height + this.chart.margins.top + this.chart.margins.bottom;
     }
 

@@ -51,16 +51,17 @@ export class YAxisDirective extends AxisBase {
 
     positionLabel() {
         if (this.label) {
-
-            const text = this.axisLabelSelection
-                .attr('class', this.align)
-                .text(this.label);
-
-            const textH = text.node().getBBox().height;
-            const x = this.align === 'left' ? textH : this.fullWidth - textH;
             const rotationAngle = this.align === 'left' ? '-90' : '90';
+            const y = this.align === 'left' ? 0 : -this.fullWidth;
+            const x  = this.align === 'left' ? -(this.fullHeight / 2) : (this.fullHeight / 2);
 
-            text.attr('transform', `translate(${x}, ${this.fullheight / 2}), rotate(${rotationAngle})`);
+            this.axisLabelSelection
+                .attr('class', this.align)
+                .attr('transform', `rotate(${rotationAngle})`)
+                .attr('y', y)
+                .attr('x', x)
+                .attr('dy', "1em")
+                .text(this.label);
         }
     }
 
