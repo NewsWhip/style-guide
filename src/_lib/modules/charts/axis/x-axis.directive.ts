@@ -49,12 +49,27 @@ export class XAxisDirective extends AxisBase {
         this.scale.domain(this.domain).range([0, this.chart.width]);
     }
 
+    positionLabel() {
+        if (this.label) {
+            const y = this.align === 'top' ? 0 : this.fullHeight;
+            const dy = this.align === 'top' ? "1em" : "-0.5em";
+
+            this.axisLabelSelection
+                .attr('class', this.align)
+                .attr('dy', dy)
+                .attr('transform', `translate(${this.fullWidth / 2}, ${y})`)
+                .text(this.label);
+        }
+    }
+
     render() {
         let yTranslation = this.align === "bottom" ? this.chart.height : 0;
 
         this.axisSelection
             .attr('transform', "translate(0," + yTranslation + ")")
-            .call(this.axis)
+            .call(this.axis);
+
+        this.positionLabel();
     }
 
 }
