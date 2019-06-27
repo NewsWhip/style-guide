@@ -49,12 +49,30 @@ export class YAxisDirective extends AxisBase {
         this.scale.domain(this.domain).range([this.chart.height, 0]);
     }
 
+    positionLabel() {
+        if (this.label) {
+            const rotationAngle = this.align === 'left' ? '-90' : '90';
+            const y = this.align === 'left' ? 0 : -this.fullWidth;
+            const x  = this.align === 'left' ? -(this.fullHeight / 2) : (this.fullHeight / 2);
+
+            this.axisLabelSelection
+                .attr('class', this.align)
+                .attr('transform', `rotate(${rotationAngle})`)
+                .attr('y', y)
+                .attr('x', x)
+                .attr('dy', "1em")
+                .text(this.label);
+        }
+    }
+
     render() {
         let xTranslation = this.align === "right" ? this.chart.width : 0;
 
         this.axisSelection
             .attr('transform', "translate(" + xTranslation + ", 0)")
-            .call(this.axis)
+            .call(this.axis);
+
+        this.positionLabel();
     }
 
 }

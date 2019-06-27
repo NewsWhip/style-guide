@@ -39,16 +39,19 @@
                 <g class="x axis nw-slot-2" nw-x-axis #xAxis="nw-x-axis"
                     [domain]="xDomain"
                     [tickFormat]="xAxisTickFormat"
+                    label="Axis label"
                     [tickCount]="xAxisTickCount"></g>
 
                 <g class="y axis nw-slot-2" nw-y-axis #yAxis="nw-y-axis"
                     [domain]="yDomain"
+                    label="Axis label"
                     [tickFormat]="yAxisTickFormat"
                     [showGuidlines]="true"></g>
 
                 <g class="y axis random-axis nw-slot-2" nw-y-axis align="right"
                     [domain]="randomYDomain"
                     [tickCount]="4"
+                    label="Axis label"
                     [showGuidlines]="yDomain[0] === 0 && yDomain[1] === 0"></g>
 
                 <!-- Hover lines -->
@@ -414,6 +417,12 @@ export class AppModule { }
                     <td>Optional</td>
                     <td>Defaults to d3's <code>easeCubicInOut</code>. Specifies the easing transition when the domain or tick inputs change.</td>
                 </tr>
+                <tr>
+                    <td><code>label</code></td>
+                    <td><code>string</code></td>
+                    <td>Optional</td>
+                    <td>Defaults to empty string.</td>
+                </tr>
             </tbody>
         </table>
 
@@ -496,6 +505,12 @@ export class AppModule { }
                     <td><code>{{'(normalizedTime: number) => number'}}</code></td>
                     <td>Optional</td>
                     <td>Defaults to d3's <code>easeCubicInOut</code>. Specifies the easing transition when the domain or tick inputs change.</td>
+                </tr>
+                <tr>
+                    <td><code>label</code></td>
+                    <td><code>string</code></td>
+                    <td>Optional</td>
+                    <td>Defaults to empty string.</td>
                 </tr>
             </tbody>
         </table>

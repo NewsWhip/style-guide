@@ -120,32 +120,32 @@
 
                     <a href="#" class="list-group-item">Item 1</a>
 
-                    <a href="#folder1" class="list-group-item collapsed" data-toggle="collapse" aria-expanded="false" aria-controls="folder1"><span class="caret"></span>Folder 1</a>
+                    <a href="#folder1" class="list-group-item collapsed" data-toggle="collapse" aria-expanded="false" aria-controls="folder1">Folder 1</a>
                     <div class="collapse collapsible" id="folder1">
                         <a href="#" class="list-group-item">Item 2</a>
                     </div>
 
                     <div style="position: relative">
-                        <a href="#folder2" class="list-group-item collapsed" data-toggle="collapse" aria-expanded="false" aria-controls="folder2"><span class="caret"></span>Folder 2</a>
-    
-                        <div class="dropdown list-group-item-actions">
-                            <button aria-expanded="false" aria-haspopup="true" class="btn btn-ghost-alt dropdown-toggle" data-toggle="dropdown" id="dropdownMenu1" type="button">
-                                <i aria-hidden="true" class="fas fa-plus-circle"></i>
+                        <a href="#folder2" class="list-group-item collapsed active" data-toggle="collapse" aria-expanded="false" aria-controls="folder2">Folder 2</a>
+
+                        <div class="dropdown list-group-item-actions" nwDropdown>
+                            <button aria-expanded="false" aria-haspopup="true" class="btn btn-ghost-alt dropdown-toggle" nwDropdownToggle id="dropdownMenu1" type="button">
+                                <i class="far fa-ellipsis-v"></i>
                             </button>
-                            <ul aria-labelledby="dropdownMenu1" class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
+                            <ul aria-labelledby="dropdownMenu1" class="dropdown-menu dropdown-menu-arrow dropdown-menu-right" nwDropdownMenu>
                                 <li><a href="#">Action</a></li>
                                 <li><a href="#">Another action</a></li>
                                 <li><a href="#">Something else here</a></li>
                             </ul>
                         </div>
-    
+
                         <div class="collapse collapsible" id="folder2">
                             <a href="#" class="list-group-item">Item 3</a>
                             <a href="#" class="list-group-item">Item 4</a>
                             <a href="#" class="list-group-item">Item 5</a>
-    
-                            <a href="#folder3" class="list-group-item collapsed" data-toggle="collapse" aria-expanded="false" aria-controls="folder3"><span class="caret"></span>Folder 3</a>
-    
+
+                            <a href="#folder3" class="list-group-item collapsed" data-toggle="collapse" aria-expanded="false" aria-controls="folder3">Folder 3</a>
+
                             <div class="collapse collapsible" id="folder3">
                                 <a href="#" class="list-group-item">Item 6</a>
                                 <a href="#" class="list-group-item">Item 7</a>
@@ -154,13 +154,11 @@
                         </div>
                     </div>
                     <a href="#" class="list-group-item">
-                        <i class="fas fa-bell list-group-item-icon"></i>
                         Item 9
                     </a>
                     <a href="#" class="list-group-item">Item 10</a>
                     <a class="list-group-item disabled">Item 11 (disabled)</a>
                     <a href="#" class="list-group-item">
-                        <i class="fas fa-bell list-group-item-icon"></i>
                         Item 12
                     </a>
                 </div>

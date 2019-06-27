@@ -6,6 +6,14 @@ A library of components based on Bootstrap Sass 3.x
 
 `npm i --save nw-style-guide`
 
+Alternatively, the styles are available via cdn at
+
+`https://cdn.jsdelivr.net/npm/nw-style-guide@{{version}}/styles.css`
+
+or
+
+`https://unpkg.com/nw-style-guide@{{version}}/styles.css`
+
 ## Usage
 
 In your SASS file:
@@ -89,7 +97,7 @@ If you wish to import only specific parts of the style guide you first need to i
 4. PR is approved
 5. Build the Github Pages demo in the development branch
     - `> npm run ghpages`
-    - Commit with message `build:gpages` + push
+    - Commit with message `build:ghpages` + push
     - `> npm version patch` to bump the version. The bump is automatically committed so you just need to push.
 6. Merge pull request to master
 7. After merging to master, create a new release branch off master
@@ -105,7 +113,7 @@ If you wish to import only specific parts of the style guide you first need to i
 13. Merge to master
 14. Checkout master
 15. Publish the updated package to the npm repository
-    - `> ./release.sh`
+    - `> npm run package:release`
 
 ### Development
 
