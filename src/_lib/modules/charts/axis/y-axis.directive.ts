@@ -56,7 +56,7 @@ export class YAxisDirective extends AxisBase {
             const x  = this.align === 'left' ? -(this.fullHeight / 2) : (this.fullHeight / 2);
 
             this.axisLabelSelection
-                .attr('class', this.align)
+                .attr('class', 'axis-label ' + this.align)
                 .attr('transform', `rotate(${rotationAngle})`)
                 .attr('y', y)
                 .attr('x', x)

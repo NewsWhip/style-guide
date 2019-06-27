@@ -55,7 +55,7 @@ export class XAxisDirective extends AxisBase {
             const dy = this.align === 'top' ? "1em" : "-0.5em";
 
             this.axisLabelSelection
-                .attr('class', this.align)
+                .attr('class', 'axis-label ' + this.align)
                 .attr('dy', dy)
                 .attr('transform', `translate(${this.fullWidth / 2}, ${y})`)
                 .text(this.label);
