@@ -1,12 +1,10 @@
 language: node_js
 node_js:
-  - "8"
-branches:
-  only:
-    - master
+    - "8"
 before_install:
-  - npm config set "@fortawesome:registry" https://npm.fontawesome.com/ && npm config set "//npm.fontawesome.com/:_authToken" ${FONT_AWESOME_TOKEN}
-script: echo "Skipping tests"
+    - npm config set "@fortawesome:registry" https://npm.fontawesome.com/ && npm config set "//npm.fontawesome.com/:_authToken" ${FONT_AWESOME_TOKEN}
+script:
+    - echo "Skipping tests"
 deploy:
     provider: script
     script: npm run ghpages
