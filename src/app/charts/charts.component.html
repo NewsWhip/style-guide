@@ -141,12 +141,18 @@
                 </ng-container>
             </svg>
 
-            <div *ngIf="isHovering" class="my-tooltip"
+            <!--<div *ngIf="isHovering" class="my-tooltip"
                  [ngStyle]="{'transform': 'translate(calc(50% + '+hoverPosition[0]+'px), calc(50% + '+hoverPosition[1]+'px))'}"
                  style="background-color: #2e6d75; position: absolute; top: 0; left: 8px; padding: 8px">
                 <h3 class="nw-text nw-text-light">Hover data</h3>
                 <p class="nw-text nw-text-light">{{hoverPosition[0]}}</p>
                 <p class="nw-text nw-text-light">{{hoverPosition[1]}}</p>
+            </div>-->
+
+            <div *ngIf="isHovering" nwChartTooltip [position]="hoverPosition"
+                 style="background-color: #2e6d75; position: absolute; top: 8px; left: 16px; padding: 8px">
+                <h1>Whoa!</h1>
+                <p>Awesome...</p>
             </div>
 
             <ng-template #circlePopTemplate let-point="point">
