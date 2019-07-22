@@ -122,6 +122,7 @@ export class ChartsComponent implements OnInit {
     public metricNames: string[] = [];
     public form: FormGroup;
     public showBrush: FormControl = new FormControl(false);
+    public showTooltip: FormControl = new FormControl(false);
     public brushType: FormControl = new FormControl('');
     public brushBox: [[Date, number], [Date, number]];
     public barWidth: FormControl = new FormControl(20);

@@ -141,18 +141,11 @@
                 </ng-container>
             </svg>
 
-            <!--<div *ngIf="isHovering" class="my-tooltip"
-                 [ngStyle]="{'transform': 'translate(calc(50% + '+hoverPosition[0]+'px), calc(50% + '+hoverPosition[1]+'px))'}"
-                 style="background-color: #2e6d75; position: absolute; top: 0; left: 8px; padding: 8px">
-                <h3 class="nw-text nw-text-light">Hover data</h3>
-                <p class="nw-text nw-text-light">{{hoverPosition[0]}}</p>
-                <p class="nw-text nw-text-light">{{hoverPosition[1]}}</p>
-            </div>-->
-
-            <div *ngIf="isHovering" nwChartTooltip [position]="hoverPosition"
+            <div *ngIf="isHovering && showTooltip.value" nwChartTooltip [position]="hoverPosition"
                  style="background-color: #2e6d75; position: absolute; top: 8px; left: 16px; padding: 8px">
-                <h1>Whoa!</h1>
-                <p>Awesome...</p>
+                <h3>Whoa! Awesome...</h3>
+                <p>hoverPosition[0]: {{hoverPosition[0]}}</p>
+                <p>hoverPosition[1]: {{hoverPosition[1]}}</p>
             </div>
 
             <ng-template #circlePopTemplate let-point="point">
@@ -197,6 +190,11 @@
                 <div class="checkbox">
                     <input type="checkbox" [formControl]="randomArea" id="random-area">
                     <label for="random-area">Show random area</label>
+                </div>
+
+                <div class="checkbox">
+                    <input type="checkbox" [formControl]="showTooltip" id="show-tooltip">
+                    <label for="show-tooltip">Show tooltip</label>
                 </div>
 
                 <div class="checkbox">
