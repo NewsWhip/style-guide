@@ -13,6 +13,7 @@ export class TooltipDirective implements OnChanges, OnInit {
         left?: number;
         right?: number;
     };
+    @Input() offsetX: number = 16;
     private _width: number;
     private _height: number;
 
@@ -31,7 +32,8 @@ export class TooltipDirective implements OnChanges, OnInit {
             const offsetLeft = changes.position.currentValue[0] + this.chartMargins.left;
             const offsetTop = changes.position.currentValue[1] + this.chartMargins.top;
 
-            const x: string = offsetLeft > this.chartWidth - this._width ? `calc(${offsetLeft - 8}px - 100%)` : `${offsetLeft + 8}px`;
+            const x: string = offsetLeft > this.chartWidth - this._width ?
+                `calc(${offsetLeft - this.offsetX}px - 100%)` : `${offsetLeft + this.offsetX}px`;
             const y: string = offsetTop > this.chartHeight - this._height ? `calc(${offsetTop}px - 100%)` : `${offsetTop}px`;
 
             this._renderer.setStyle(this._elRef.nativeElement, 'transform', `translate(${x}, ${y})`);
