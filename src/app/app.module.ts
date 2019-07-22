@@ -42,7 +42,6 @@ import { CarouselComponent } from './carousel/carousel.component';
 import { DropdownsModule } from "../_lib/modules/dropdowns/dropdowns.module";
 import { EmailInputModule } from "../_lib/modules/email-input/email-input.module";
 import { EmailInputDemoComponent } from "./email-input/email-input-demo.component";
-import { TooltipDirective } from '../_lib/modules/charts/tooltip/tooltip.directive';
 
 @NgModule({
   declarations: [
@@ -71,8 +70,7 @@ import { TooltipDirective } from '../_lib/modules/charts/tooltip/tooltip.directi
     ChartsComponent,
     LoaderComponent,
     CarouselComponent,
-    EmailInputDemoComponent,
-    TooltipDirective
+    EmailInputDemoComponent
   ],
   imports: [
     BrowserModule,
