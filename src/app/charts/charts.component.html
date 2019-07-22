@@ -25,7 +25,7 @@
         </form>
 
         <div style="display: flex; flex-direction: row; position: relative">
-            <svg nw-chart style="width: 700px; height: 400px;"
+            <svg nw-chart #chart="nw-chart" style="width: 700px; height: 400px;"
                 [margins]="chartMargins"
                 (nwMousemove)="onMousemove($event)"
                 (nwMouseout)="onMouseout()"
@@ -141,8 +141,12 @@
                 </ng-container>
             </svg>
 
-            <div *ngIf="isHovering && showTooltip.value" nwChartTooltip [position]="hoverPosition"
-                 style="background-color: #2e6d75; position: absolute; top: 8px; left: 16px; padding: 8px">
+            <div *ngIf="isHovering && showTooltip.value" nwChartTooltip
+                 [position]="hoverPosition"
+                 [chartWidth]="chart.width"
+                 [chartHeight]="chart.height"
+                 [chartMargins]="chartMargins"
+                 style="background-color: #2e6d75; position: absolute; padding: 8px">
                 <h3>Whoa! Awesome...</h3>
                 <p>hoverPosition[0]: {{hoverPosition[0]}}</p>
                 <p>hoverPosition[1]: {{hoverPosition[1]}}</p>
