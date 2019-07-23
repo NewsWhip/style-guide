@@ -142,14 +142,16 @@
             </svg>
 
             <div *ngIf="isHovering && showTooltip.value" nwChartTooltip
+                 class="tooltip in" role="tooltip"
                  [position]="hoverPosition"
                  [chartWidth]="chart.width"
                  [chartHeight]="chart.height"
-                 [chartMargins]="chartMargins"
-                 style="background-color: #2e6d75; position: absolute; padding: 8px">
-                <h3>Whoa! Awesome...</h3>
-                <p>hoverPosition[0]: {{hoverPosition[0]}}</p>
-                <p>hoverPosition[1]: {{hoverPosition[1]}}</p>
+                 [chartMargins]="chartMargins">
+                <div class="tooltip-inner">
+                    <h3>Whoa! Awesome...</h3>
+                    <p>hoverPosition[0]: {{hoverPosition[0]}}</p>
+                    <p>hoverPosition[1]: {{hoverPosition[1]}}</p>
+                </div>
             </div>
 
             <ng-template #circlePopTemplate let-point="point">

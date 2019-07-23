@@ -26,6 +26,7 @@ export class ChartTooltipDirective implements OnChanges, OnInit {
         this._setTooltipSize();
 
         this._renderer.setStyle(this._elRef.nativeElement, 'pointer-events', 'none');
+        this._renderer.setStyle(this._elRef.nativeElement, 'position', 'absolute');
     }
 
     ngOnChanges(changes: SimpleChanges) {
