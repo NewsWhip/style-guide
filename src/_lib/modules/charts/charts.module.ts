@@ -8,7 +8,7 @@ import { CircleDirective } from './circle/circle.directive';
 import { BrushDirective } from './brush/brush.directive';
 import { BarDirective } from './bar/bar.directive';
 import { AreaDirective } from './area/area.directive';
-import {TooltipDirective} from './tooltip/tooltip.directive';
+import { ChartTooltipDirective } from './tooltip/chart-tooltip.directive';
 
 @NgModule({
     imports: [
@@ -23,7 +23,7 @@ import {TooltipDirective} from './tooltip/tooltip.directive';
         BrushDirective,
         BarDirective,
         AreaDirective,
-        TooltipDirective
+        ChartTooltipDirective
     ],
     exports: [
         ChartComponent,
@@ -34,7 +34,7 @@ import {TooltipDirective} from './tooltip/tooltip.directive';
         BrushDirective,
         BarDirective,
         AreaDirective,
-        TooltipDirective
+        ChartTooltipDirective
     ]
 })
 export class ChartsModule { }
