@@ -1,9 +1,9 @@
-import {Directive, ElementRef, Input, OnChanges, OnInit, Renderer2, SimpleChanges} from '@angular/core';
+import {AfterViewInit, Directive, ElementRef, Input, OnChanges, Renderer2, SimpleChanges} from '@angular/core';
 
 @Directive({
     selector: '[nwChartTooltip]'
 })
-export class ChartTooltipDirective implements OnChanges, OnInit {
+export class ChartTooltipDirective implements OnChanges, AfterViewInit {
     @Input() position: [number, number];
     @Input() chartWidth: number;
     @Input() chartHeight: number;
@@ -22,7 +22,7 @@ export class ChartTooltipDirective implements OnChanges, OnInit {
         private _renderer: Renderer2) {
     }
 
-    ngOnInit() {
+    ngAfterViewInit() {
         this._setTooltipSize();
 
         this._renderer.setStyle(this._elRef.nativeElement, 'pointer-events', 'none');
@@ -31,11 +31,6 @@ export class ChartTooltipDirective implements OnChanges, OnInit {
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes.position && changes.position.previousValue !== changes.position.currentValue) {
-            // Setting the tooltip size here, as well as in ngOnInit, prevents this._width & this._height from being undefined
-            // as a result of the first ngOnChanges being called before ngOnInit.
-            // The contents of this method are only executed if this._width or this._height are undefined, which prevents
-            // doing the same work twice, and (hopefully) makes this operation a bit less expensive.
-            this._setTooltipSize();
 
             const offsetLeft = changes.position.currentValue[0] + this.chartMargins.left;
             const offsetTop = changes.position.currentValue[1] + this.chartMargins.top;
