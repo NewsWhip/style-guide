@@ -231,7 +231,7 @@ export class ChartsComponent implements OnInit {
         this.isHovering = true;
     }
 
-    onMouseout() {
+    onMouseleave() {
         this.isHovering = false;
     }
 

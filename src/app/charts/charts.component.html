@@ -28,7 +28,7 @@
             <svg nw-chart #chart="nw-chart" style="width: 700px; height: 400px;"
                 [margins]="chartMargins"
                 (nwMousemove)="onMousemove($event)"
-                (nwMouseout)="onMouseout()"
+                (nwMouseleave)="onMouseleave()"
                 (bgClick)="onBgClick()">
 
                 <g nw-brush *ngIf="showBrush.value"

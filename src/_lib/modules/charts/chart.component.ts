@@ -46,7 +46,7 @@ export class ChartComponent implements OnInit, AfterViewInit {
     @ViewChild('hoverOverlay') hoverOverlay: ElementRef;
 
     @Output() nwMousemove: EventEmitter<[number, number]> = new EventEmitter();
-    @Output() nwMouseout: EventEmitter<null> = new EventEmitter();
+    @Output() nwMouseleave: EventEmitter<null> = new EventEmitter();
     @Output() bgClick: EventEmitter<null> = new EventEmitter();
 
     public svg: Selection<SVGSVGElement, any, HTMLElement, any>;
@@ -96,7 +96,7 @@ export class ChartComponent implements OnInit, AfterViewInit {
 
         select(this.mouseEventCaptureContainer.nativeElement as SVGGElement)
             .style('pointer-events', 'all')
-            .on('mouseout', () => this.nwMouseout.emit())
+            .on('mouseleave', () => this.nwMouseleave.emit())
             .on('mousemove', function() {
                 // emits the current mouse position
                 self.nwMousemove.emit(mouse(this))
