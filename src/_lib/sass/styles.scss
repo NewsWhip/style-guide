@@ -52,7 +52,6 @@
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/pagination";
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/badges";
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/thumbnails";
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/alerts";
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/media";
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/responsive-embed";
 
@@ -85,6 +84,7 @@
 @import "src/forms";
 @import "src/type";
 @import "src/print";
+@import "src/alert";
 
 // Additions
 @import "src/relative-weight";
