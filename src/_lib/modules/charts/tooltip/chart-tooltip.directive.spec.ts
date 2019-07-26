@@ -1,6 +1,6 @@
 import { ChartTooltipDirective } from './chart-tooltip.directive';
 
-describe('TooltipDirective', () => {
+describe('ChartTooltipDirective', () => {
   it('should create an instance', () => {
     const directive = new ChartTooltipDirective();
     expect(directive).toBeTruthy();
