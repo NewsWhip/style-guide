@@ -46,7 +46,7 @@ export class YAxisDirective extends AxisBase {
     }
 
     setDomain() {
-        this.scale.domain(this.domain).range([this.chart.height, 0]);
+        this.scale.domain(this.domain).range([this.chart.height, 0]).nice();
     }
 
     positionLabel() {

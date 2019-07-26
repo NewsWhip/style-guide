@@ -24,11 +24,11 @@
             </div>
         </form>
 
-        <div style="display: flex; flex-direction: row;">
-            <svg nw-chart style="width: 700px; height: 400px;"
+        <div style="display: flex; flex-direction: row; position: relative">
+            <svg nw-chart #chart="nw-chart" style="width: 700px; height: 400px;"
                 [margins]="chartMargins"
                 (nwMousemove)="onMousemove($event)"
-                (nwMouseout)="onMouseout()"
+                (nwMouseleave)="onMouseleave()"
                 (bgClick)="onBgClick()">
 
                 <g nw-brush *ngIf="showBrush.value"
@@ -141,6 +141,19 @@
                 </ng-container>
             </svg>
 
+            <div *ngIf="isHovering && showTooltip.value" nwChartTooltip
+                 class="tooltip in" role="tooltip"
+                 [position]="hoverPosition"
+                 [chartWidth]="chart.width"
+                 [chartHeight]="chart.height"
+                 [chartMargins]="chartMargins">
+                <div class="tooltip-inner">
+                    <h3>Tooltip title</h3>
+                    <p>hoverPosition[0]: {{hoverPosition[0]}}</p>
+                    <p>hoverPosition[1]: {{hoverPosition[1]}}</p>
+                </div>
+            </div>
+
             <ng-template #circlePopTemplate let-point="point">
                 <p>{{point[0] | date: 'medium'}}</p>
                 <strong>{{point[1] | number: '1.0-0'}}</strong>
@@ -183,6 +196,11 @@
                 <div class="checkbox">
                     <input type="checkbox" [formControl]="randomArea" id="random-area">
                     <label for="random-area">Show random area</label>
+                </div>
+
+                <div class="checkbox">
+                    <input type="checkbox" [formControl]="showTooltip" id="show-tooltip">
+                    <label for="show-tooltip">Show tooltip</label>
                 </div>
 
                 <div class="checkbox">
