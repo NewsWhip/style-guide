@@ -118,11 +118,11 @@
   cursor: help;
 }
 
-.tooltip-light + .tooltip > .tooltip-inner {
+.tooltip-light + .tooltip > .tooltip-inner, .tooltip-light > .tooltip-inner {
   color: $tooltip-color-light;
   background-color: $tooltip-bg-light;
 }
-.tooltip-light + .tooltip {
+.tooltip-light + .tooltip, .tooltip-light {
   &.top .tooltip-arrow {
     border-top-color: $tooltip-arrow-color-light;
   }
