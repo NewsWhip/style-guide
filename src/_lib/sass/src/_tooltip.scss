@@ -123,6 +123,7 @@
   color: $tooltip-color-light;
   background-color: $tooltip-bg-light;
   padding:16px;
+  text-align: left;
 }
 .tooltip-light + .tooltip, .tooltip-light {
   &.top .tooltip-arrow {
