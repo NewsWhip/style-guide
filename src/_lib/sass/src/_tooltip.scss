@@ -51,6 +51,7 @@
   height: 0;
   border-color: transparent;
   border-style: solid;
+  box-shadow: 2px 2px 8px 0 rgba(15,15,15,0.7);
 }
 // Note: Deprecated .top-left, .top-right, .bottom-left, and .bottom-right as of v3.3.1
 .tooltip {
@@ -121,6 +122,7 @@
 .tooltip-light + .tooltip > .tooltip-inner, .tooltip-light > .tooltip-inner {
   color: $tooltip-color-light;
   background-color: $tooltip-bg-light;
+  padding:16px;
 }
 .tooltip-light + .tooltip, .tooltip-light {
   &.top .tooltip-arrow {
