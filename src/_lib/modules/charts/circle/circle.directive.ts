@@ -6,7 +6,8 @@ import { ChartComponent } from '../chart.component';
 import { Subscription } from 'rxjs';
 
 @Directive({
-    selector: 'circle[nw-circle]'
+    selector: 'circle[nw-circle]',
+    exportAs: 'nw-circle'
 })
 export class CircleDirective implements OnInit, OnChanges, OnDestroy {
 
@@ -65,7 +66,15 @@ export class CircleDirective implements OnInit, OnChanges, OnDestroy {
     }
 
     get transform(): string {
-        return `translate(${this.xScale(this.point[0])}, ${this.yScale(this.point[1])})`;
+        return `translate(${this.x}, ${this.y})`;
+    }
+
+    get x(): number {
+        return this.xScale(this.point[0]);
+    }
+
+    get y(): number {
+        return this.yScale(this.point[1]);
     }
 
     private _subscribeToWindowResize() {
