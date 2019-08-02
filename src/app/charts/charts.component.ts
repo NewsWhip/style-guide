@@ -1,11 +1,11 @@
-import { Component, OnInit, ChangeDetectionStrategy, ViewChild } from '@angular/core';
+import {Component, OnInit, ChangeDetectionStrategy, ViewChild, ViewChildren, QueryList, ElementRef} from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
 import * as moment from 'moment';
 import { DecimalPipe } from '@angular/common';
 import { bisector } from 'd3-array';
 import { AxisTimeInterval } from 'd3-axis';
 import { curveCardinal, curveBasis, curveLinear, curveStep, curveStepAfter, curveStepBefore } from 'd3-shape';
-import { YAxisDirective, XAxisDirective } from '../../_lib/modules/charts';
+import {YAxisDirective, XAxisDirective, CircleDirective} from '../../_lib/modules/charts';
 
 @Component({
     selector: 'app-charts',
@@ -128,8 +128,10 @@ export class ChartsComponent implements OnInit {
     public barWidth: FormControl = new FormControl(20);
     public xAxisTickCount: number | AxisTimeInterval = 8;
 
+    @ViewChild('clickData') clickData: ElementRef;
     @ViewChild('xAxis') xAxis: XAxisDirective;
     @ViewChild('yAxis') yAxis: YAxisDirective;
+    @ViewChildren('circle') fbCircles: QueryList<CircleDirective>;
 
     constructor(
         private _fb: FormBuilder,
@@ -142,6 +144,15 @@ export class ChartsComponent implements OnInit {
         this.generateRandomData()
 
         this.subscribeToFormChange();
+    }
+
+    ngAfterViewInit() {
+        this.fbCircles.toArray().forEach(c => {
+            c.circle.on('click', () => {
+                console.log(c.x, c.y);
+                this.clickData.nativeElement.innerText = `FB circle clicked, x = ${c.x}, y = ${c.y}`;
+            });
+        });
     }
 
     createForm() {
