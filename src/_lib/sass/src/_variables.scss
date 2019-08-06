@@ -474,6 +474,10 @@ $tooltip-max-width:                 300px !default;
 $tooltip-color:                   #fff !default;
 //** Tooltip background color
 $tooltip-bg:                        get-color("gray", x-light)!default;
+
+//** Tooltip box-shadow color
+$tooltip-box-shadow-color:        rgba(15,15,15,0.7);
+
 $tooltip-opacity:                   1 !default;
 
 //** Tooltip arrow width
@@ -491,7 +495,6 @@ $tooltip-color-light:               get-color("gray", base) !default;
 
 //** Tooltip arrow color
 $tooltip-arrow-color-light:        #fff;
-
 
 //== Popovers
 //
