@@ -39,7 +39,7 @@
   max-width: $tooltip-max-width;
   padding: 8px;
   color: $tooltip-color;
-  text-align: center;
+  text-align: left;
   background-color: $tooltip-bg;
   border-radius: $border-radius-base;
   box-shadow: 2px 2px 8px 0 $tooltip-box-shadow-color;
@@ -122,8 +122,7 @@
 .tooltip-light + .tooltip > .tooltip-inner, .tooltip-light > .tooltip-inner {
   color: $tooltip-color-light;
   background-color: $tooltip-bg-light;
-  padding:16px;
-  text-align: left;
+  padding: 16px;
   box-shadow: none;
 }
 .tooltip-light + .tooltip, .tooltip-light {
