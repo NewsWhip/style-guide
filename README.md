@@ -91,29 +91,21 @@ If you wish to import only specific parts of the style guide you first need to i
 
 ## Development and release process
 
-1. Create a new development branch off master
-2. Implement feature / fix in development branch
+1. Create a new feature branch off master
+2. Implement feature / fix in feature branch
 3. Create pull request
 4. PR is approved
-5. Build the Github Pages demo in the development branch
-    - `> npm run ghpages`
-    - Commit with message `build:ghpages` + push
-    - `> npm version patch` to bump the version. The bump is automatically committed so you just need to push.
+5. Build the Github Pages demo in the feature branch
+    - `npm run ghpages`
+    - Commit with message `build:ghpages`
+    - Push changes
+    - `npm version {{version_type}}` to bump the version. The bump is automatically committed.
+    - Push changes
 6. Merge pull request to master
-7. After merging to master, create a new release branch off master
-8. Update the npm package version
-    - Depending on the type of release this will usually be "major", "minor" or "patch"
-    - Package version is updated by running `> npm version {{version_type}}`
-    - e.g. `> npm version patch` - this will increment the patch part of the package version
-    - more info at https://docs.npmjs.com/cli/version
-9. The update to `package.json` should be auto-committed
-10. Push the package update to your release branch
-11. Create PR
-12. PR approved
-13. Merge to master
-14. Checkout master
-15. Publish the updated package to the npm repository
-    - `> npm run package:release`
+7. After merging to master, checkout master
+8. Publish the new package version to npm with `npm run package:release`
+    - `npm run package:release` first runs the `package:build` script
+    - it then publishes the built files to npm
 
 ### Development
 
