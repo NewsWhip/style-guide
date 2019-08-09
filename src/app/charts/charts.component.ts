@@ -1,4 +1,4 @@
-import {Component, OnInit, ChangeDetectionStrategy, ViewChild, ViewChildren, QueryList, ElementRef} from '@angular/core';
+import {Component, OnInit, ChangeDetectionStrategy, ViewChild, ViewChildren, QueryList} from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
 import * as moment from 'moment';
 import { DecimalPipe } from '@angular/common';
@@ -128,7 +128,6 @@ export class ChartsComponent implements OnInit {
     public barWidth: FormControl = new FormControl(20);
     public xAxisTickCount: number | AxisTimeInterval = 8;
 
-    @ViewChild('clickData') clickData: ElementRef;
     @ViewChild('xAxis') xAxis: XAxisDirective;
     @ViewChild('yAxis') yAxis: YAxisDirective;
     @ViewChildren('circle') fbCircles: QueryList<CircleDirective>;
@@ -144,15 +143,6 @@ export class ChartsComponent implements OnInit {
         this.generateRandomData()
 
         this.subscribeToFormChange();
-    }
-
-    ngAfterViewInit() {
-        this.fbCircles.toArray().forEach(c => {
-            c.circle.on('click', () => {
-                console.log(c.x, c.y);
-                this.clickData.nativeElement.innerText = `FB circle clicked, x = ${c.x}, y = ${c.y}`;
-            });
-        });
     }
 
     createForm() {
