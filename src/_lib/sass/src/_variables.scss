@@ -469,18 +469,32 @@ $state-danger-border:            get-color('tertiary', base) !default;
 //##
 
 //** Tooltip max width
-$tooltip-max-width:           300px !default;
+$tooltip-max-width:                 300px !default;
 //** Tooltip text color
-$tooltip-color:               get-color("gray", base) !default;
+$tooltip-color:                   #fff !default;
 //** Tooltip background color
-$tooltip-bg:                  #fff !default;
-$tooltip-opacity:             1 !default;
+$tooltip-bg:                        get-color("gray", x-light)!default;
+
+//** Tooltip box-shadow color
+$tooltip-box-shadow-color:        rgba(15,15,15,0.7);
+
+$tooltip-opacity:                   1 !default;
 
 //** Tooltip arrow width
-$tooltip-arrow-width:         5px !default;
+$tooltip-arrow-width:               5px !default;
 //** Tooltip arrow color
-$tooltip-arrow-color:         $tooltip-bg !default;
+$tooltip-arrow-color:               $tooltip-bg !default;
 
+//** Variables for tooltip with white background
+
+//** Tooltip light background color
+$tooltip-bg-light:                #fff;
+
+//** Tooltip text color
+$tooltip-color-light:               get-color("gray", base) !default;
+
+//** Tooltip arrow color
+$tooltip-arrow-color-light:        #fff;
 
 //== Popovers
 //
