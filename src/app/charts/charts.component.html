@@ -106,7 +106,7 @@
                 <!-- Circles with popovers -->
                 <ng-container *ngIf="isMetricSelected('fbComments')">
                     <circle *ngFor="let point of getDataByMetric('fbComments'); trackBy:circleTrackValue"
-                        [nw-circle]="point"
+                        [nw-circle]="point" #circle="nw-circle"
                         [xDomain]="xDomain"
                         [yDomain]="yDomain"
                         r=5

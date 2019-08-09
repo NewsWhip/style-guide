@@ -1,11 +1,11 @@
-import { Component, OnInit, ChangeDetectionStrategy, ViewChild } from '@angular/core';
+import {Component, OnInit, ChangeDetectionStrategy, ViewChild, ViewChildren, QueryList} from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
 import * as moment from 'moment';
 import { DecimalPipe } from '@angular/common';
 import { bisector } from 'd3-array';
 import { AxisTimeInterval } from 'd3-axis';
 import { curveCardinal, curveBasis, curveLinear, curveStep, curveStepAfter, curveStepBefore } from 'd3-shape';
-import { YAxisDirective, XAxisDirective } from '../../_lib/modules/charts';
+import {YAxisDirective, XAxisDirective, CircleDirective} from '../../_lib/modules/charts';
 
 @Component({
     selector: 'app-charts',
@@ -130,6 +130,7 @@ export class ChartsComponent implements OnInit {
 
     @ViewChild('xAxis') xAxis: XAxisDirective;
     @ViewChild('yAxis') yAxis: YAxisDirective;
+    @ViewChildren('circle') fbCircles: QueryList<CircleDirective>;
 
     constructor(
         private _fb: FormBuilder,
