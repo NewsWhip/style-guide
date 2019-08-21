@@ -165,10 +165,6 @@
         text-decoration: none;
         color: $list-group-link-hover-color;
         background-color: $list-group-hover-bg;
-
-        & + .list-group-item-actions {
-            opacity: 1;
-        }
     }
     .list-group-item-icon {
         position: absolute;
@@ -221,4 +217,18 @@
 .list-group-item-actions {
     opacity: 0;
     top: -2px;
+
+    &:hover + .list-group-item {
+        color: $list-group-link-hover-color;
+        background-color: $list-group-hover-bg;
+    }
+}
+.list-group-item-with-actions {
+    position: relative;
+
+    &:hover {
+        > .list-group-item-actions {
+            opacity: 1;
+        }
+    }
 }

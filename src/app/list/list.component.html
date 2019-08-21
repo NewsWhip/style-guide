@@ -25,10 +25,7 @@
                     <a href="#" class="list-group-item">Panel 5</a>
                     <a class="list-group-item disabled">Panel 6 (disabled)</a>
                     <a href="#" class="list-group-item">Panel 7</a>
-                    <div style="position: relative">
-                        <a class="list-group-item" href="javascript:;">
-                            Panel 8
-                        </a>
+                    <div class="list-group-item-with-actions">
                         <div class="dropdown list-group-item-actions">
                             <button aria-expanded="false" aria-haspopup="true" class="btn btn-ghost-alt dropdown-toggle" data-toggle="dropdown" id="dropdownMenu1" type="button">
                                 <i aria-hidden="true" class="fas fa-plus-circle"></i>
@@ -39,6 +36,11 @@
                                 <li><a href="#">Something else here</a></li>
                             </ul>
                         </div>
+
+                        <a class="list-group-item" href="javascript:;">
+                            Panel 8
+                        </a>
+
                     </div>
                 </ul>
             </div>
@@ -120,14 +122,12 @@
 
                     <a href="#" class="list-group-item">Item 1</a>
 
-                    <a href="#folder1" class="list-group-item collapsed" data-toggle="collapse" aria-expanded="false" aria-controls="folder1">Folder 1</a>
+                    <a href="#folder1" class="list-group-item collapsed active" data-toggle="collapse" aria-expanded="false" aria-controls="folder1">Folder 1</a>
                     <div class="collapse collapsible" id="folder1">
                         <a href="#" class="list-group-item">Item 2</a>
                     </div>
 
-                    <div style="position: relative">
-                        <a href="#folder2" class="list-group-item collapsed active" data-toggle="collapse" aria-expanded="false" aria-controls="folder2">Folder 2</a>
-
+                    <div class="list-group-item-with-actions">
                         <div class="dropdown list-group-item-actions" nwDropdown>
                             <button aria-expanded="false" aria-haspopup="true" class="btn btn-ghost-alt dropdown-toggle" nwDropdownToggle id="dropdownMenu1" type="button">
                                 <i class="far fa-ellipsis-v"></i>
@@ -138,6 +138,8 @@
                                 <li><a href="#">Something else here</a></li>
                             </ul>
                         </div>
+
+                        <a href="#folder2" class="list-group-item collapsed" data-toggle="collapse" aria-expanded="false" aria-controls="folder2">Folder 2</a>
 
                         <div class="collapse collapsible" id="folder2">
                             <a href="#" class="list-group-item">Item 3</a>
