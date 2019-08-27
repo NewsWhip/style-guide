@@ -635,11 +635,11 @@ $list-group-border:             transparent !default;
 $list-group-border-radius:      0 !default;
 
 //** Background color of single list items on hover
-$list-group-hover-bg:           get-color("gray", base) !default;
+$list-group-hover-bg:           get-color("gray", light) !default;
 //** Text color of active list items
 $list-group-active-color:       #ffffff !default;
 //** Background color of active list items
-$list-group-active-bg:          get-color("gray", base) !default;
+$list-group-active-bg:          get-color("gray", light) !default;
 //** Border color of active list elements
 $list-group-active-border:      $list-group-active-bg !default;
 //** Text color for content within active list items
