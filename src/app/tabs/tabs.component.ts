@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import * as _ from 'lodash';
 
 @Component({
     selector: 'app-tabs',
@@ -38,5 +39,12 @@ export class TabsComponent {
         this.tabCollection.forEach(tab => {
             tab.isActive = tab.name === selectedTab.name;
         });
+    }
+
+    addTab(): void {
+        this.tabCollection.push({
+            name: _.uniqueId('Added '),
+            isActive: false
+        })
     }
 }
