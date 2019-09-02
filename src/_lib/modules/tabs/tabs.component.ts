@@ -28,13 +28,13 @@ import { TabsService } from './tabs.service';
                 <i class="fas fa-chevron-left"></i>
             </button>
         </ng-template>
-  `,
-  providers: [TabsService],
+     `,
+    providers: [TabsService],
     styles: [`
         :host, ul {
             position: relative;
         }
-  `]
+    `]
 })
 
 export class TabsComponent implements OnInit, OnDestroy {
