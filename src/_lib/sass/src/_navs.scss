@@ -77,6 +77,7 @@
 .nav-tabs {
     > li {
         margin: 0 12px;
+        vertical-align: middle;
 
         // Actual tabs (as links)
         > a {
@@ -119,7 +120,8 @@ nw-tabs {
     .scroll-container {
         white-space: nowrap;
         overflow-x: auto;
-        padding-bottom: 2px;
+        // To account for active-tab element
+        padding-bottom: 3px;
         scroll-behavior: smooth;
 
         -ms-overflow-style: none;
@@ -129,24 +131,34 @@ nw-tabs {
             display: none;
         }
     }
-    .prev-page, .next-page {
+    .pagination-container {
         position: absolute;
-        top: 0;
         height: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    }
-    .next-page {
-        right: 0;
-        transform: rotate(180deg);
+        width: 100%;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+
+        .prev-page, .next-page {
+            position: absolute;
+            top: 0;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            pointer-events: all;
+        }
+        .next-page {
+            right: 0;
+            transform: rotate(180deg);
+        }
     }
     .nav-tabs-active-bar {
-        margin: 0 !important;
-        display: block !important;
+        margin: 0;
+        display: block;
         height: 3px;
-        position: absolute !important;
+        position: absolute;
         background-color: get-color("primary", base);
         transition: all ease-in-out 200ms;
     }
