@@ -14,7 +14,7 @@
 
     > li {
         position: relative;
-        display: block;
+        display: inline-block;
 
         > a {
             position: relative;
@@ -76,7 +76,6 @@
 // Give the tabs something to sit on
 .nav-tabs {
     > li {
-        float: left;
         margin: 0 12px;
 
         // Actual tabs (as links)
@@ -113,6 +112,43 @@
     }
     &.nav-lg > li > a {
         @include nav-size($padding-large-vertical + 1, 0, $font-size-large, $line-height-large);
+    }
+}
+
+nw-tabs {
+    .scroll-container {
+        white-space: nowrap;
+        overflow-x: auto;
+        padding-bottom: 2px;
+        scroll-behavior: smooth;
+
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+    }
+    .prev-page, .next-page {
+        position: absolute;
+        top: 0;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .next-page {
+        right: 0;
+        transform: rotate(180deg);
+    }
+    .nav-tabs-active-bar {
+        margin: 0 !important;
+        display: block !important;
+        height: 3px;
+        position: absolute !important;
+        background-color: get-color("primary", base);
+        transition: all ease-in-out 200ms;
     }
 }
 
@@ -277,12 +313,4 @@
     margin-top: -1px;
     // Remove the top rounded corners here since there is a hard edge above the menu
     @include border-top-radius(0);
-}
-
-.nav-tabs-active-bar {
-    margin:0;
-    height:3px;
-    position: absolute;
-    background-color: get-color("primary", base);
-    transition: all ease-in-out 200ms;
 }
