@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import * as _ from 'lodash';
 
 @Component({
     selector: 'app-tabs',
     templateUrl: './tabs.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
     styles: [`
         nw-tabs {
             display: block;
@@ -46,5 +47,10 @@ export class TabsComponent {
             name: _.uniqueId('Added '),
             isActive: false
         })
+    }
+
+    removeLastTab(): void {
+        const index = this.tabCollection.length - 1;
+        this.tabCollection.splice(index, 1);
     }
 }

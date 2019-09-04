@@ -1,4 +1,4 @@
-import { Component, ContentChildren, QueryList, Input, ElementRef, ViewChild, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
+import { Component, ContentChildren, QueryList, Input, ElementRef, ViewChild, OnInit, ChangeDetectorRef, OnDestroy, ChangeDetectionStrategy, AfterContentInit } from '@angular/core';
 import { TabDirective } from './tab.directive';
 import { fromEvent, Subscription, Observable, merge } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
@@ -30,6 +30,7 @@ import { TabsService } from './tabs.service';
         </ng-template>
      `,
     providers: [TabsService],
+    changeDetection: ChangeDetectionStrategy.OnPush,
     styles: [`
         :host, ul {
             position: relative;
@@ -37,7 +38,7 @@ import { TabsService } from './tabs.service';
     `]
 })
 
-export class TabsComponent implements OnInit, OnDestroy {
+export class TabsComponent implements OnInit, AfterContentInit, OnDestroy {
 
     @Input() size: 'sm' | 'md' | 'lg' = 'md';
     @Input() maskColor: string = '#373737';
@@ -48,6 +49,7 @@ export class TabsComponent implements OnInit, OnDestroy {
 
     private _scrollAndResizeSub: Subscription;
     private _activeChangeSub: Subscription;
+    private _tabsChangeSub: Subscription;
     private _paginationTolerance: number = 100;
 
     constructor(
@@ -65,10 +67,24 @@ export class TabsComponent implements OnInit, OnDestroy {
         this.subscribeToActiveChange();
     }
 
+    ngAfterContentInit() {
+        this.subscribeToTabsChange();
+    }
+
     subscribeToActiveChange() {
         this._activeChangeSub = this._tabsService.activeChange.subscribe(tab => {
             this.scrollToTabIfRequired(tab);
-        })
+            this._cdRef.detectChanges();
+        });
+    }
+
+    subscribeToTabsChange() {
+        this._tabsChangeSub = this.tabs.changes.subscribe(tabs => {
+            // Allow the tabs to render before detecting changes
+            setTimeout(() => {
+                this._cdRef.detectChanges();
+            }, 0)
+        });
     }
 
     getActiveTab(): TabDirective {
@@ -145,5 +161,6 @@ export class TabsComponent implements OnInit, OnDestroy {
     ngOnDestroy() {
         this._scrollAndResizeSub.unsubscribe();
         this._activeChangeSub.unsubscribe();
+        this._tabsChangeSub.unsubscribe();
     }
 }
