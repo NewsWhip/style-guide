@@ -256,6 +256,7 @@
   "defaultProject": "nw-style-guide",
   "schematics": {
     "@schematics/angular:component": {
+      "changeDetection": "OnPush",
       "prefix": "app",
       "styleext": "scss"
     },
