@@ -10,8 +10,8 @@ import { TabsService } from './tabs.service';
         <div class="scroll-container" #scrollContainer>
             <ul class="nav nav-tabs" [ngClass]="tabSizeClass" role="tablist">
                 <ng-content></ng-content>
-                <li #border class="nav-tabs-active-bar" [ngStyle]="getActiveStyles()"></li>
             </ul>
+            <span #border class="nav-tabs-active-bar" [ngStyle]="getActiveStyles()"></span>
         </div>
 
         <div class="pagination-container" *ngIf="shouldShowPagination">
