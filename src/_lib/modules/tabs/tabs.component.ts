@@ -10,7 +10,8 @@ import { TabsService } from './tabs.service';
         <div class="scroll-container" #scrollContainer>
             <ul class="nav nav-tabs" [ngClass]="tabSizeClass" role="tablist">
                 <ng-content></ng-content>
-                <li #border class="nav-tabs-active-bar" [ngStyle]="getActiveStyles()"></li>
+
+                <li #activeBar class="nav-tabs-active-bar" [ngStyle]="getActiveStyles()"></li>
             </ul>
         </div>
 
@@ -44,11 +45,13 @@ export class TabsComponent implements OnInit, AfterContentInit, OnDestroy {
     @Input() maskColor: string = '#373737';
 
     @ViewChild('scrollContainer') scrollContainer: ElementRef<HTMLElement>;
+    @ViewChild('activeBar') activeBar: ElementRef<HTMLElement>;
 
     @ContentChildren(TabDirective) tabs: QueryList<TabDirective> = new QueryList();
 
     private _scrollAndResizeSub: Subscription;
     private _activeChangeSub: Subscription;
+    private _transitionEndSub: Subscription;
     private _tabsChangeSub: Subscription;
     private _paginationTolerance: number = 100;
 
@@ -65,6 +68,7 @@ export class TabsComponent implements OnInit, AfterContentInit, OnDestroy {
             .subscribe(_ => this._cdRef.detectChanges());
 
         this.subscribeToActiveChange();
+        this.subscribeToActiveBarTransitionEnd();
     }
 
     ngAfterContentInit() {
@@ -75,33 +79,27 @@ export class TabsComponent implements OnInit, AfterContentInit, OnDestroy {
         this._activeChangeSub = this._tabsService.activeChange.subscribe(tab => {
             this.scrollToTabIfRequired(tab);
 
-            /**
-             * The two bindings we want to update here are `getActiveStyles` and `shouldShowPagination`.
-             * The problem is that there is a transition on the position of the active bar.
-             *
-             * For this reason we call `detectChanges` twice, the second time to ensure `shouldShowPagination`
-             * is correct after the active bar has animated
-             *
-             */
-            this._cdRef.detectChanges();
-
             setTimeout(() => {
                 this._cdRef.detectChanges();
-            }, 100);
+            }, 0);
         });
     }
 
     subscribeToTabsChange() {
         this._tabsChangeSub = this.tabs.changes.subscribe(tabs => {
-            /**
-             * Same reason as above
-             */
-            this._cdRef.detectChanges();
-
             setTimeout(() => {
                 this._cdRef.detectChanges();
-            }, 100);
+            }, 0);
         });
+    }
+
+    subscribeToActiveBarTransitionEnd() {
+        this._transitionEndSub = fromEvent(this.activeBar.nativeElement, 'transitionend')
+            .pipe(debounceTime(50))
+            .subscribe(() => {
+                console.log('transition ended');
+                this._cdRef.detectChanges();
+            })
     }
 
     getActiveTab(): TabDirective {
@@ -178,6 +176,7 @@ export class TabsComponent implements OnInit, AfterContentInit, OnDestroy {
     ngOnDestroy() {
         this._scrollAndResizeSub.unsubscribe();
         this._activeChangeSub.unsubscribe();
+        this._transitionEndSub.unsubscribe();
         this._tabsChangeSub.unsubscribe();
     }
 }
