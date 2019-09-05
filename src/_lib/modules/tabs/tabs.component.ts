@@ -10,10 +10,8 @@ import { TabsService } from './tabs.service';
         <div class="scroll-container" #scrollContainer>
             <ul class="nav nav-tabs" [ngClass]="tabSizeClass" role="tablist">
                 <ng-content></ng-content>
+                <li #border class="nav-tabs-active-bar" [ngStyle]="getActiveStyles()"></li>
             </ul>
-            <div class="active-bar-container" [ngStyle]="getActiveContainerStyles()">
-                <span #border class="nav-tabs-active-bar" [ngStyle]="getActiveBarStyles()"></span>
-            </div>
         </div>
 
         <div class="pagination-container" *ngIf="shouldShowPagination">
@@ -82,10 +80,19 @@ export class TabsComponent implements OnInit, AfterContentInit, OnDestroy {
 
     subscribeToTabsChange() {
         this._tabsChangeSub = this.tabs.changes.subscribe(tabs => {
-            // Allow the tabs to render before detecting changes
+            /**
+             * The two bindings we want to update here are `getActiveStyles` and `shouldShowPagination`.
+             * The problem is that there is a transition on the width and position of the active bar.
+             *
+             * For this reason we call `detectChanges` twice, the second time to ensure `shouldShowPagination`
+             * is correct after the active bar has animated
+             *
+             */
+            this._cdRef.detectChanges();
+
             setTimeout(() => {
                 this._cdRef.detectChanges();
-            }, 0)
+            }, 100)
         });
     }
 
@@ -97,23 +104,13 @@ export class TabsComponent implements OnInit, AfterContentInit, OnDestroy {
         return `nav-${this.size}`;
     }
 
-    getActiveContainerStyles(): { [key: string]: string } {
+    getActiveStyles(): { [key: string]: string } {
         const tab: TabDirective = this.getActiveTab();
 
         if (tab) {
             return {
+                width: tab.elRef.nativeElement.getBoundingClientRect().width + 'px',
                 left: tab.elRef.nativeElement.offsetLeft + 'px'
-            };
-        }
-        return {};
-    }
-
-    getActiveBarStyles(): { [key: string]: string } {
-        const tab: TabDirective = this.getActiveTab();
-
-        if (tab) {
-            return {
-                width: tab.elRef.nativeElement.getBoundingClientRect().width + 'px'
             };
         }
         return {};
