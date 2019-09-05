@@ -11,7 +11,9 @@ import { TabsService } from './tabs.service';
             <ul class="nav nav-tabs" [ngClass]="tabSizeClass" role="tablist">
                 <ng-content></ng-content>
             </ul>
-            <span #border class="nav-tabs-active-bar" [ngStyle]="getActiveStyles()"></span>
+            <div class="active-bar-container" [ngStyle]="getActiveContainerStyles()">
+                <span #border class="nav-tabs-active-bar" [ngStyle]="getActiveBarStyles()"></span>
+            </div>
         </div>
 
         <div class="pagination-container" *ngIf="shouldShowPagination">
@@ -95,13 +97,23 @@ export class TabsComponent implements OnInit, AfterContentInit, OnDestroy {
         return `nav-${this.size}`;
     }
 
-    getActiveStyles(): { [key: string]: string } {
+    getActiveContainerStyles(): { [key: string]: string } {
         const tab: TabDirective = this.getActiveTab();
 
         if (tab) {
             return {
-                width: tab.elRef.nativeElement.getBoundingClientRect().width + 'px',
                 left: tab.elRef.nativeElement.offsetLeft + 'px'
+            };
+        }
+        return {};
+    }
+
+    getActiveBarStyles(): { [key: string]: string } {
+        const tab: TabDirective = this.getActiveTab();
+
+        if (tab) {
+            return {
+                width: tab.elRef.nativeElement.getBoundingClientRect().width + 'px'
             };
         }
         return {};

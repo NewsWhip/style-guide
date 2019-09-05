@@ -38,16 +38,6 @@
         </li>
     </nw-tabs>
 
-    <h4>Test scrolling</h4>
-
-    <div>
-        <nw-tabs size="lg">
-            <li *ngFor="let tab of tabCollection" nwTab [isActive]="tab.isActive" (click)="setSelectedTab(tab)" role="presentation">
-                <a href="javascript:;" [attr.aria-controls]="tab.name" role="tab">{{tab.name}}</a>
-            </li>
-        </nw-tabs>
-    </div>
-
     <h3>Usage</h3>
     <p>Example usage for the `Nav Tabs` module and recommended structure.</p>
     <markdown path="assets/modules/tabs/README.md"></markdown>
