@@ -160,7 +160,7 @@ nw-tabs {
         height: 3px;
         position: absolute;
         background-color: get-color("primary", base);
-        transition: all ease-in-out 200ms;
+        transition: left ease-in-out 200ms;
     }
 }
 
