@@ -131,22 +131,6 @@ nw-tabs {
             display: none;
         }
     }
-    .active-bar-container {
-        display: block;
-        height: 3px;
-        position: relative;
-        transition: all ease-in-out 200ms;
-        width: 0px;
-        overflow: visible;
-
-        .nav-tabs-active-bar {
-            margin: 0;
-            background-color: get-color("primary", base);
-            height: 100%;
-            display: inline-block;
-            position: absolute;
-        }
-    }
     .pagination-container {
         position: absolute;
         height: 100%;
@@ -170,8 +154,15 @@ nw-tabs {
             transform: rotate(180deg);
         }
     }
+    .nav-tabs-active-bar {
+        margin: 0;
+        display: block;
+        height: 3px;
+        position: absolute;
+        background-color: get-color("primary", base);
+        transition: all ease-in-out 200ms;
+    }
 }
-
 
 // Pills
 // -------------------------
@@ -186,7 +177,7 @@ nw-tabs {
             text-decoration: none;
 
             &:hover,
-            &:focus, {
+            &:focus {
                 background-color: $nav-link-hover-bg;
             }
         }
