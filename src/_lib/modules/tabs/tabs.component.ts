@@ -74,15 +74,10 @@ export class TabsComponent implements OnInit, AfterContentInit, OnDestroy {
     subscribeToActiveChange() {
         this._activeChangeSub = this._tabsService.activeChange.subscribe(tab => {
             this.scrollToTabIfRequired(tab);
-            this._cdRef.detectChanges();
-        });
-    }
 
-    subscribeToTabsChange() {
-        this._tabsChangeSub = this.tabs.changes.subscribe(tabs => {
             /**
              * The two bindings we want to update here are `getActiveStyles` and `shouldShowPagination`.
-             * The problem is that there is a transition on the width and position of the active bar.
+             * The problem is that there is a transition on the position of the active bar.
              *
              * For this reason we call `detectChanges` twice, the second time to ensure `shouldShowPagination`
              * is correct after the active bar has animated
@@ -92,7 +87,20 @@ export class TabsComponent implements OnInit, AfterContentInit, OnDestroy {
 
             setTimeout(() => {
                 this._cdRef.detectChanges();
-            }, 100)
+            }, 100);
+        });
+    }
+
+    subscribeToTabsChange() {
+        this._tabsChangeSub = this.tabs.changes.subscribe(tabs => {
+            /**
+             * Same reason as above
+             */
+            this._cdRef.detectChanges();
+
+            setTimeout(() => {
+                this._cdRef.detectChanges();
+            }, 100);
         });
     }
 
