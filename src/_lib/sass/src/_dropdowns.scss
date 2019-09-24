@@ -308,3 +308,18 @@
         background: get-color("gray", 3x-light);
     }
 }
+// Custom popover styling for dropdowns appended to body
+.popover-dropdown {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+
+    .popover-arrow {
+        display: none !important;
+    }
+    .popover-content {
+        padding: 0;
+    }
+}
