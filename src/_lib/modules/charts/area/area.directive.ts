@@ -6,21 +6,28 @@ import { select, Selection } from 'd3-selection';
 import { ChartUtils } from '../chart.utils';
 import { Subscription } from 'rxjs';
 
+type AreaDatum = [number, number] | [number, number, number]
+
 @Directive({
     selector: 'path[nw-area]',
     exportAs: 'nw-area'
 })
 export class AreaDirective implements OnInit, OnChanges, OnDestroy {
 
-    @Input('nw-area') data: Array<[number, number]> = [];
+    /**
+     * Each data entry may have 2 or 3 values. If there are 3 the area is drawn within the bounds.
+     *
+     * If there are 2 the area is drawn to the chart height
+     */
+    @Input('nw-area') data: Array<AreaDatum> = [];
     @Input() xDomain: [number, number];
     @Input() yDomain: [number, number];
     @Input() animDuration: number = ChartUtils.ANIMATION_DURATION;
     @Input() curve: CurveFactory = curveLinear;
     @Input() easing: (normalizedTime: number) => number = ChartUtils.ANIMATION_EASING;
 
-    public areaSelection: Selection<SVGPathElement, Array<[number, number]>, SVGElement, any>;
-    public area: Area<[number, number]>;
+    public areaSelection: Selection<SVGPathElement, Array<AreaDatum>, SVGElement, any>;
+    public area: Area<AreaDatum>;
     public xScale: ScaleTime<number, number>;
     public yScale: ScaleLinear<number, number>;
 
@@ -61,9 +68,9 @@ export class AreaDirective implements OnInit, OnChanges, OnDestroy {
     }
 
     setArea(): void {
-        this.area = area().curve(this.curve)
+        this.area = area<AreaDatum>()
             .x(d => this.xScale(d[0]))
-            .y0(this._chart.height)
+            .y0(d => d[2] ? this.yScale(d[2]) : this._chart.height)
             .y1(d => this.yScale(d[1]));
     }
 

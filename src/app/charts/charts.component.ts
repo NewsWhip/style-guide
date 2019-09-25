@@ -105,7 +105,7 @@ export class ChartsComponent implements OnInit {
     public mainScaleHoverCoordinates: [Date, number];
     public randomScaleHoverCoordinates: [Date, number];
     public numRandomPoints: number = 10;
-    public randomData: Array<[number, number]>;
+    public randomData: Array<[number, number] | [number, number, number]>;
     public randomYDomain: [number, number];
     public randomAsBars: FormControl = new FormControl(false);
     public randomArea: FormControl = new FormControl(false);
@@ -269,8 +269,12 @@ export class ChartsComponent implements OnInit {
         this.randomData = datapoints.sort();
         this.randomYDomain = [
             0,
-            Math.max(...this.randomData.map(x => x[1]))
+            Math.max(...this.randomData.map(x => x[1])),
         ];
+
+        this.randomData.forEach(rd => {
+            rd[2] = rd[1] * 0.5;
+        })
 
         this.setActiveDomains();
     }
