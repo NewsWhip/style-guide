@@ -97,6 +97,7 @@ If you wish to import only specific parts of the style guide you first need to i
 4. PR is approved
 5. Build the Github Pages demo in the feature branch
     - `npm run ghpages`
+    - Make sure to `git add --all` not to end up with untracked files
     - Commit with message `build:ghpages`
     - Push changes
     - `npm version {{version_type}}` to bump the version. The bump is automatically committed.
