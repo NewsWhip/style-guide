@@ -9,126 +9,126 @@ import { Subscription } from 'rxjs';
 	selector: 'nw-angular-picker',
 	template: `
         <div class="nw-picker">
-			<!-- START: NOT xs screen -->
-			<input type="text" #inputEl
-				class="form-control search-input {{inputClasses}} hidden-xs text-ellipsis"
-				[formControl]="searchTerm"
-				(focus)="onFocus()"
+            <!-- START: NOT xs screen -->
+            <input type="text" #inputEl
+                class="form-control search-input {{inputClasses}} hidden-xs text-ellipsis"
+                [formControl]="searchTerm"
+                (focus)="onFocus()"
                 (blur)="closeResults()"
                 (keyup.escape)="inputEl.blur()"
-				placeholder="{{getPlaceholderText()}}"/>
+                placeholder="{{getPlaceholderText()}}"/>
 
-			<i (click)="showResults();inputEl.focus()" class="caret dropdown-icon hidden-xs"></i>
-			<!-- END: NOT xs screen -->
+            <i (click)="showResults();inputEl.focus()" class="caret dropdown-icon hidden-xs"></i>
+            <!-- END: NOT xs screen -->
 
-			<!-- START: IS xs screen -->
-			<div (click)="showResults()" class="form-control search-input hidden-sm hidden-md hidden-lg text-ellipsis">{{getPlaceholderText()}}</div>
-			<i (click)="showResults()" class="caret dropdown-icon hidden-sm hidden-md hidden-lg"></i>
+            <!-- START: IS xs screen -->
+            <div (click)="showResults()" class="form-control search-input hidden-sm hidden-md hidden-lg text-ellipsis">{{getPlaceholderText()}}</div>
+            <i (click)="showResults()" class="caret dropdown-icon hidden-sm hidden-md hidden-lg"></i>
             <!-- END: IS xs screen -->
 
-			<button *ngIf="searchTerm.value"
-				(mousedown)="preventBlur($event)"
-				(click)="onReset($event);inputEl.focus()" class="close reset-icon">&times;</button>
+            <button *ngIf="searchTerm.value"
+                (mousedown)="preventBlur($event)"
+                (click)="onReset($event);inputEl.focus()" class="close reset-icon">&times;</button>
 
-			<div class="search-results" *ngIf="canViewResults"
-				[@slideUpIn]="isMobileDisplay ? 'in' : false"
+            <div class="search-results" *ngIf="canViewResults"
+                [@slideUpIn]="isMobileDisplay ? 'in' : false"
                 (mousedown)="preventBlur($event)">
 
                 <div class="results-header">
                     <button class="close" (click)="closeResults()" style="color: #000">&times;</button>
                 </div>
 
-				<!-- Navigate up the tree -->
-				<div class="results-actions" *ngIf="parentId && displayItems.length && !searchTerm.value.length">
-					<a href="javascript:;" class="nw-link nw-link-tertiary" (click)="ascend(getParentItem(parentId))">
-						<i class="fas fa-long-arrow-alt-left" aria-hidden="true"></i>
-						{{getParentItem(parentId).displayName}}
-					</a>
-				</div>
+                <!-- Navigate up the tree -->
+                <div class="results-actions" *ngIf="parentId && displayItems.length && !searchTerm.value.length">
+                    <a href="javascript:;" class="nw-link nw-link-tertiary" (click)="ascend(getParentItem(parentId))">
+                        <i class="fas fa-long-arrow-alt-left" aria-hidden="true"></i>
+                        {{getParentItem(parentId).displayName}}
+                    </a>
+                </div>
 
                 <div class="scroll-container" #searchResultsScrollEl
                     [style.max-height]="getMaxHeight(searchResultsScrollEl)">
 
-    				<div class="results-actions" *ngIf="shouldShowSelections && !selectionsAreShowing && parentId == null && !searchTerm.value.length">
-    					<ng-container *ngIf="getSelections().length">
-							<a href="javascript:;" class="nw-link nw-link-tertiary" (click)="selectionsAreShowing = true; edit.emit()">Edit selections</a>
-							<a href="javascript:;" class="nw-link nw-link-tertiary" (click)="clearSelections($event)">Clear selections</a>
-    					</ng-container>
+                    <div class="results-actions" *ngIf="shouldShowSelections && !selectionsAreShowing && parentId == null && !searchTerm.value.length">
+                        <ng-container *ngIf="getSelections().length">
+                            <a href="javascript:;" class="nw-link nw-link-tertiary" (click)="selectionsAreShowing = true; edit.emit()">Edit selections</a>
+                            <a href="javascript:;" class="nw-link nw-link-tertiary" (click)="clearSelections($event)">Clear selections</a>
+                        </ng-container>
 
-    					<ng-container *ngIf="!getSelections().length">
-    						<em>No selections</em>
-    					</ng-container>
-    				</div>
+                        <ng-container *ngIf="!getSelections().length">
+                            <em>No selections</em>
+                        </ng-container>
+                    </div>
 
-					<!-- DISPLAY THE SELECTED ITEMS -->
-					<ng-container *ngIf="selectionsAreShowing">
-						<div class="results-actions">
-							<a href="javascript:;" class="nw-link nw-link-tertiary" (click)="selectionsAreShowing = false">
-								<i class="fas fa-long-arrow-alt-left" aria-hidden="true"></i> Back
-							</a>
-							<a href="javascript:;" class="nw-link nw-link-tertiary" *ngIf="getSelections().length" (click)="clearSelections($event)">Clear all</a>
-						</div>
+                    <!-- DISPLAY THE SELECTED ITEMS -->
+                    <ng-container *ngIf="selectionsAreShowing">
+                        <div class="results-actions">
+                            <a href="javascript:;" class="nw-link nw-link-tertiary" (click)="selectionsAreShowing = false">
+                                <i class="fas fa-long-arrow-alt-left" aria-hidden="true"></i> Back
+                            </a>
+                            <a href="javascript:;" class="nw-link nw-link-tertiary" *ngIf="getSelections().length" (click)="clearSelections($event)">Clear all</a>
+                        </div>
 
-						<div class="selected-items">
-    						<div class="search-result"
-    							[ngClass]="{ 'active': item.added, 'excluded': item.excluded }"
-    							*ngFor="let item of getSelections()">
+                        <div class="selected-items">
+                            <div class="search-result"
+                                [ngClass]="{ 'active': item.added, 'excluded': item.excluded }"
+                                *ngFor="let item of getSelections()">
 
-    							<span class="result-item">
-    								<span class="item-label">{{item.displayName}}</span>
+                                <span class="result-item">
+                                    <span class="item-label">{{item.displayName}}</span>
 
-    								<button class="close" style="color: #000000" (click)="clearSelection(item)">
-    									&times;
-    								</button>
-    							</span>
+                                    <button class="close" style="color: #000000" (click)="clearSelection(item)">
+                                        &times;
+                                    </button>
+                                </span>
 
-    						</div>
-    					</div>
-					</ng-container>
+                            </div>
+                        </div>
+                    </ng-container>
 
-    				<ng-container *ngIf="!selectionsAreShowing">
-						<div class="search-result" *ngFor="let item of displayItems"
-							[class.active]="item.added"
-							[class.excluded]="item.excluded"
-							[class.has-children]="hasChildren(item.id)">
+                    <ng-container *ngIf="!selectionsAreShowing">
+                        <div class="search-result" *ngFor="let item of displayItems"
+                            [class.active]="item.added"
+                            [class.excluded]="item.excluded"
+                            [class.has-children]="hasChildren(item.id)">
 
-							<span class="result-item">
-								<div class="checkbox checkbox-placeholder" *ngIf="isMultiSelect">
-									<input id="include-{{item.id}}" type="checkbox" (click)="toggleItemInclusion(item, $event)" [checked]="item.added">
-									<label for="include-{{item.id}}"></label>
-								</div>
+                            <span class="result-item">
+                                <div class="checkbox checkbox-placeholder" *ngIf="isMultiSelect">
+                                    <input id="include-{{item.id}}" type="checkbox" (click)="toggleItemInclusion(item, $event)" [checked]="item.added">
+                                    <label for="include-{{item.id}}"></label>
+                                </div>
 
-								<div class="checkbox checkbox-exclusion checkbox-placeholder" *ngIf="canExclude && isMultiSelect">
-									<input id="exclude-{{item.id}}" type="checkbox" (click)="toggleItemExclusion(item, $event)" [checked]="item.excluded">
-									<label for="exclude-{{item.id}}"></label>
-								</div>
+                                <div class="checkbox checkbox-exclusion checkbox-placeholder" *ngIf="canExclude && isMultiSelect">
+                                    <input id="exclude-{{item.id}}" type="checkbox" (click)="toggleItemExclusion(item, $event)" [checked]="item.excluded">
+                                    <label for="exclude-{{item.id}}"></label>
+                                </div>
 
-								<span class="item-label" title="{{item.displayName}}" (click)="toggleItemInclusion(item, $event)">
-									{{item.displayName}}
-									<ng-container *ngIf="searchTerm.value.length && item.searchValues?.length">
-										<span> -
-											<em class="small" *ngFor="let val of item.searchValues; let isLast=last">{{val}}{{isLast ? '' : ', '}}</em>
-										</span>
-									</ng-container>
-								</span>
+                                <span class="item-label" title="{{item.displayName}}" (click)="toggleItemInclusion(item, $event)">
+                                    {{item.displayName}}
+                                    <ng-container *ngIf="searchTerm.value.length && item.searchValues?.length">
+                                        <span> -
+                                            <em class="small" *ngFor="let val of item.searchValues; let isLast=last">{{val}}{{isLast ? '' : ', '}}</em>
+                                        </span>
+                                    </ng-container>
+                                </span>
 
-								<button class="btn btn-ghost drilldown" *ngIf="hasChildren(item.id)" (click)="setDisplayItemsFromParentId(item.id, $event); desc.emit(getParentItem(parentId))">
-									<i class="fas fa-chevron-right" aria-hidden="true"></i>
-								</button>
+                                <button class="btn btn-ghost drilldown" *ngIf="hasChildren(item.id)" (click)="setDisplayItemsFromParentId(item.id, $event); desc.emit(getParentItem(parentId))">
+                                    <i class="fas fa-chevron-right" aria-hidden="true"></i>
+                                </button>
                             </span>
 
-    					</div>
+                        </div>
 
 
                         <div class="results-actions" *ngIf="displayItems.length < 1">
-							<em>No results</em>
+                            <em>No results</em>
                         </div>
-    				</ng-container>
+                    </ng-container>
                 </div>
 
-				<ng-content select=".results-footer"></ng-content>
-			</div>
-		</div>
+                <ng-content select=".results-footer"></ng-content>
+            </div>
+        </div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	animations: [
