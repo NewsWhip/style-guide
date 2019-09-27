@@ -27,7 +27,12 @@ nw-angular-picker {
 	}
     .scroll-container {
         overflow-y: auto;
-		max-height: 400px;
+        max-height: 400px;
+
+        @media (max-width: $screen-sm) {
+            flex: 1;
+            max-height: unset;
+        }
 	}
 	.results-actions {
 		display: flex;
@@ -83,6 +88,8 @@ nw-angular-picker {
 			}
 		}
 		@media (max-width: $screen-sm) {
+            display: flex;
+            flex-direction: column;
 		    position: fixed;
 		    top: 0;
 		    left: 0;
@@ -102,7 +109,8 @@ nw-angular-picker {
 			border-bottom: 1px solid get-color("gray", 4x-light);
 
 			@media (max-width: $screen-sm) {
-				display: flex;
+                display: flex;
+                justify-content: flex-end;
 			}
 		}
         .results-footer {

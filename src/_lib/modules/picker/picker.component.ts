@@ -8,7 +8,7 @@ import { Subscription } from 'rxjs';
 @Component({
 	selector: 'nw-angular-picker',
 	template: `
-		<div class="nw-picker">
+        <div class="nw-picker">
 			<!-- START: NOT xs screen -->
 			<input type="text" #inputEl
 				class="form-control search-input {{inputClasses}} hidden-xs text-ellipsis"
@@ -24,8 +24,7 @@ import { Subscription } from 'rxjs';
 			<!-- START: IS xs screen -->
 			<div (click)="showResults()" class="form-control search-input hidden-sm hidden-md hidden-lg text-ellipsis">{{getPlaceholderText()}}</div>
 			<i (click)="showResults()" class="caret dropdown-icon hidden-sm hidden-md hidden-lg"></i>
-			<!-- END: IS xs screen -->
-
+            <!-- END: IS xs screen -->
 
 			<button *ngIf="searchTerm.value"
 				(mousedown)="preventBlur($event)"
@@ -33,7 +32,11 @@ import { Subscription } from 'rxjs';
 
 			<div class="search-results" *ngIf="canViewResults"
 				[@slideUpIn]="isMobileDisplay ? 'in' : false"
-				(mousedown)="preventBlur($event)">
+                (mousedown)="preventBlur($event)">
+
+                <div class="results-header">
+                    <button class="close" (click)="closeResults()" style="color: #000">&times;</button>
+                </div>
 
 				<!-- Navigate up the tree -->
 				<div class="results-actions" *ngIf="parentId && displayItems.length && !searchTerm.value.length">
@@ -45,9 +48,6 @@ import { Subscription } from 'rxjs';
 
                 <div class="scroll-container" #searchResultsScrollEl
                     [style.max-height]="getMaxHeight(searchResultsScrollEl)">
-    				<div class="results-header">
-    					<button class="close" (click)="closeResults()" style="color: #000">&times;</button>
-    				</div>
 
     				<div class="results-actions" *ngIf="shouldShowSelections && !selectionsAreShowing && parentId == null && !searchTerm.value.length">
     					<ng-container *ngIf="getSelections().length">
@@ -372,7 +372,8 @@ export class NwPickerComponent {
 	closeResults() {
 		this.canViewResults = false;
 		this.searchTerm.setValue('');
-		this.closed.emit();
+        this.closed.emit();
+        this.chRef.detectChanges();
 	}
 
 	onReset($event?: KeyboardEvent) {
