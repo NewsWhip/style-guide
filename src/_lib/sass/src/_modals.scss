@@ -77,11 +77,18 @@
             }
         }
         .btn-close {
-            transform: translateY(-100%);
             position: absolute;
-            right: 0;
             opacity: 0.5;
-            top: -8px;
+
+            transform: translateX(100%);
+            right: -8px;
+            top: 0;
+
+            @media (max-width: $screen-md) {
+                transform: translateY(-100%);
+                right: 0;
+                top: -8px;
+            }
         }
         .modal-content {
             border: 0;
