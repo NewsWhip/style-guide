@@ -187,10 +187,12 @@
     > li > .dropdown-menu {
         display: block;
     }
-
     // Remove the outline when :focus is triggered
     > a {
         outline: 0;
+    }
+    > .dropdown-backdrop {
+        display: block;
     }
 }
 
@@ -237,6 +239,7 @@
     bottom: 0;
     top: 0;
     z-index: ($zindex-dropdown - 10);
+    display: none;
 }
 
 // Allow for dropdowns to go bottom up (aka, dropup-menu)
