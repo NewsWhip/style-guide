@@ -68,14 +68,14 @@ export class DropdownDirective implements OnInit, OnChanges, OnDestroy {
         });
     }
 
-    onDocumentClick(event: MouseEvent): void {
+    onDocumentClick(event: MouseEvent) {
         const shouldClose = (this.autoClose === true || this.autoClose === 'outside') && this.isOpen;
 
         // Don't bother evaluating the source of the event if `shouldClose` is false
         if (shouldClose) {
             const target: HTMLElement = event.target as HTMLElement;
             const containers: HTMLElement[] = [this._elRef.nativeElement as HTMLElement].concat(this.elementsToIgnore);
-            const isEventSourceFromWithinDropdown = this._service.isHTMLElementContainedIn(target, containers);
+            const isEventSourceFromWithinDropdown = this._service.isHTMLElementContainedIn(target, containers) && !target.classList.contains('dropdown-backdrop');
             const isEventSourceFromWithinSelectors = this.selectorsToIgnore.length ?
                 this._service.isHTMLElementInPath(event, this.selectorsToIgnore) :
                 false;

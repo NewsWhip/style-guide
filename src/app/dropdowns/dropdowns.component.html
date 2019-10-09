@@ -357,12 +357,19 @@ export class AppModule \{ \}"}}</code></pre>
 
     <hr>
 
+    <h3>Dropdown backdrop</h3>
+
+    <p class="nw-text">To render a backdrop to catch background clicks insert an element with the class <code>dropdown-backdrop</code> as the first child of your <code>.dropdown</code> element.</p>
+    <em><i class="fas fa-exclamation-circle"></i> Backdrops should not be used if <code>autoClose</code> is set to <code>false</code></em>
+    <hr>
+
     <h3>Dropdown full width</h3>
 
     <div class="full-width-container">
         <div class="dropdown" nwDropdown>
+            <div class="dropdown-backdrop"></div>
             <button class="btn btn-dropdown dropdown-toggle" type="button" id="dropdownMenu1" nwDropdownToggle>
-                This button opens a full width menu
+                This button opens a full width menu (with a backdrop)
                 <span class="caret"></span>
             </button>
             <ul class="dropdown-menu dropdown-menu-block" aria-labelledby="dropdownMenu1" nwDropdownMenu>
