@@ -31,7 +31,12 @@ export class DropdownToggleDirective implements OnInit, OnDestroy {
 
         if (this.nwTrigger === 'hover') {
             const mouseEnterSub: Subscription = fromEvent(this._elRef.nativeElement as HTMLElement, 'mouseenter')
-                .subscribe(event => this._open())
+            .pipe(
+                tap(_ => this._isMousingOver = true),
+                debounceTime(300),
+                filter(_ => this._isMousingOver)
+            )
+            .subscribe(event => this._open());
 
             const mouseLeaveSub: Subscription = fromEvent(this._elRef.nativeElement as HTMLElement, 'mouseleave')
                 .pipe(
