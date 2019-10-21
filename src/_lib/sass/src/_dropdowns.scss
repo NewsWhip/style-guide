@@ -32,7 +32,7 @@
     top: 100%;
     left: 0;
     z-index: $zindex-dropdown;
-    display: none; // none by default, but block on "open" of the menu
+    visibility: hidden;  // hidden by default, but visible on "open" of the menu
     float: left;
     min-width: 160px;
     padding: 5px 0;
@@ -182,10 +182,13 @@
 // Open state for the dropdown
 .open {
     // Show the menu
-    > .dropdown-menu,
-    // Show the submenu
+    > .dropdown-menu {
+        visibility: visible;
+    }
+     // Show the submenu 
     > li > .dropdown-menu {
-        display: block;
+        visibility: visible;
+        transition-delay: 600ms;
     }
     // Remove the outline when :focus is triggered
     > a {
