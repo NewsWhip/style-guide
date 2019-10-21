@@ -16,7 +16,7 @@ import { Subscription } from 'rxjs';
                 (focus)="onFocus()"
                 (blur)="closeResults()"
                 (keyup.escape)="inputEl.blur()"
-                placeholder="{{getPlaceholderText()}}"/>
+                placeholder="{{getInputPlaceholderText()}}"/>
 
             <i (click)="showResults();inputEl.focus()" class="caret dropdown-icon hidden-xs"></i>
             <!-- END: NOT xs screen -->
@@ -149,6 +149,7 @@ export class NwPickerComponent {
     @Input() items: IPickerItem[];
     @Input() inputClasses: string = '';
     @Input() placeholderText: string = 'Search...';
+    @Input() inputPlaceholderText: string = 'Search...';
     @Input() noSelectionsPlaceholderText: string = 'Search...';
     @Input() initialParentId: any = null;
     @Input() shouldShowSelections: boolean = true;
@@ -386,6 +387,13 @@ export class NwPickerComponent {
         return this.getSelections().length ?
             this.placeholderText :
             this.noSelectionsPlaceholderText;
+    }
+
+    getInputPlaceholderText() {
+        if (document.activeElement === this.inputEl.nativeElement) {
+            return this.inputPlaceholderText;
+        }
+        return this.getPlaceholderText();
     }
 
     getMaxHeight(el: HTMLElement) {

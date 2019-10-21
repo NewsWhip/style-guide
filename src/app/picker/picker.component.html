@@ -1,20 +1,20 @@
 <div>
-  <h1 class="page-header">Picker / Searchable dropdown</h1>
+    <h1 class="page-header">Picker / Searchable dropdown</h1>
 
-  <div class="row">
-    <div class="col-md-3 col-sm-12">
-      <div>
-        <nw-angular-picker [items]="countries" #picker>
-          <div class="results-footer text-right">
-            <button class="btn btn-primary" (click)="picker.closeResults()">Done</button>
-          </div>
-        </nw-angular-picker>
-      </div>
-    </div>
+    <div class="row">
+        <div class="col-md-3 col-sm-12">
+            <div>
+                <nw-angular-picker [items]="countries" #picker inputPlaceholderText="Custom input placeholder text">
+                    <div class="results-footer text-right">
+                        <button class="btn btn-primary" (click)="picker.closeResults()">Done</button>
+                    </div>
+                </nw-angular-picker>
+            </div>
+        </div>
 
-    <div class="col-sm-12">
-      <h2>Example usage</h2>
-      <markdown path="assets/modules/picker/README.md"></markdown>
+        <div class="col-sm-12">
+            <h2>Example usage</h2>
+            <markdown path="assets/modules/picker/README.md"></markdown>
+        </div>
     </div>
-  </div>
 </div>
