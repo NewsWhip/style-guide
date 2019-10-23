@@ -10,19 +10,24 @@ import { Subscription } from 'rxjs';
 	template: `
         <div class="nw-picker">
             <!-- START: NOT xs screen -->
-            <input type="text" #inputEl
-                class="form-control search-input {{inputClasses}} hidden-xs text-ellipsis"
-                [formControl]="searchTerm"
-                (focus)="onFocus()"
-                (blur)="closeResults()"
-                (keyup.escape)="inputEl.blur()"
-                placeholder="{{getInputPlaceholderText()}}"/>
+            <div class="input-container hidden-xs">
+                <input type="text" #inputEl
+                    class="form-control search-input {{inputClasses}} text-ellipsis"
+                    [formControl]="searchTerm"
+                    (focus)="onFocus()"
+                    (blur)="closeResults()"
+                    (keyup.escape)="inputEl.blur()"
+                    [placeholder]="inputPlaceholderText"/>
 
-            <i (click)="showResults();inputEl.focus()" class="caret dropdown-icon hidden-xs"></i>
+                <div class="input-placeholder text-ellipsis" [innerHTML]="getPlaceholderText()"></div>
+
+                <i (click)="showResults();inputEl.focus()" class="caret dropdown-icon"></i>
+            </div>
+
             <!-- END: NOT xs screen -->
 
             <!-- START: IS xs screen -->
-            <div (click)="showResults()" class="form-control search-input hidden-sm hidden-md hidden-lg text-ellipsis">{{getPlaceholderText()}}</div>
+            <div (click)="showResults()" class="form-control search-input hidden-sm hidden-md hidden-lg text-ellipsis" [innerHTML]="getPlaceholderText()"></div>
             <i (click)="showResults()" class="caret dropdown-icon hidden-sm hidden-md hidden-lg"></i>
             <!-- END: IS xs screen -->
 
@@ -40,7 +45,7 @@ import { Subscription } from 'rxjs';
 
                 <!-- Navigate up the tree -->
                 <div class="results-actions" *ngIf="parentId && displayItems.length && !searchTerm.value.length">
-                    <a href="javascript:;" class="nw-link nw-link-tertiary" (click)="ascend(getParentItem(parentId))">
+                    <a href="javascript:;" class="picker-action" (click)="ascend(getParentItem(parentId))">
                         <i class="fas fa-long-arrow-alt-left" aria-hidden="true"></i>
                         {{getParentItem(parentId).displayName}}
                     </a>
@@ -51,8 +56,8 @@ import { Subscription } from 'rxjs';
 
                     <div class="results-actions" *ngIf="shouldShowSelections && !selectionsAreShowing && parentId == null && !searchTerm.value.length">
                         <ng-container *ngIf="getSelections().length">
-                            <a href="javascript:;" class="nw-link nw-link-tertiary" (click)="selectionsAreShowing = true; edit.emit()">Edit selections</a>
-                            <a href="javascript:;" class="nw-link nw-link-tertiary" (click)="clearSelections($event)">Clear selections</a>
+                            <a href="javascript:;" class="picker-action" (click)="selectionsAreShowing = true; edit.emit()">Edit selections</a>
+                            <a href="javascript:;" class="picker-action" (click)="clearSelections($event)">Clear selections</a>
                         </ng-container>
 
                         <ng-container *ngIf="!getSelections().length">
@@ -63,10 +68,10 @@ import { Subscription } from 'rxjs';
                     <!-- DISPLAY THE SELECTED ITEMS -->
                     <ng-container *ngIf="selectionsAreShowing">
                         <div class="results-actions">
-                            <a href="javascript:;" class="nw-link nw-link-tertiary" (click)="selectionsAreShowing = false">
+                            <a href="javascript:;" class="picker-action" (click)="selectionsAreShowing = false">
                                 <i class="fas fa-long-arrow-alt-left" aria-hidden="true"></i> Back
                             </a>
-                            <a href="javascript:;" class="nw-link nw-link-tertiary" *ngIf="getSelections().length" (click)="clearSelections($event)">Clear all</a>
+                            <a href="javascript:;" class="picker-action" *ngIf="getSelections().length" (click)="clearSelections($event)">Clear all</a>
                         </div>
 
                         <div class="selected-items">
@@ -387,13 +392,6 @@ export class NwPickerComponent {
         return this.getSelections().length ?
             this.placeholderText :
             this.noSelectionsPlaceholderText;
-    }
-
-    getInputPlaceholderText() {
-        if (document.activeElement === this.inputEl.nativeElement) {
-            return this.inputPlaceholderText;
-        }
-        return this.getPlaceholderText();
     }
 
     getMaxHeight(el: HTMLElement) {

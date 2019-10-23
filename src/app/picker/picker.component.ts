@@ -1430,6 +1430,32 @@ export class PickerComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+      console.log(this.countries)
+  }
+
+  getPlaceholder(): string {
+    const selections = this.countries
+        .filter(c => c.added || c.excluded);
+
+    const placeholder = selections
+        .slice(0, 3)
+        .map(c => {
+            return c.added ?
+                c.displayName :
+                `<span class="excluded">${c.displayName}</span>`
+        })
+        .join(', ');
+
+    const moreItems: string = selections.length > 3 ?
+        `<span class="more-items">&nbsp;+ ${selections.length - 3} more</span>` :
+        `<span>`;
+
+    return `
+        <span class="custom-placeholder">
+            <span class="selections text-ellipsis">${placeholder}</span>
+            ${moreItems}
+        </span>
+    `;
   }
 
 }

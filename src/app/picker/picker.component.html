@@ -4,7 +4,11 @@
     <div class="row">
         <div class="col-md-3 col-sm-12">
             <div>
-                <nw-angular-picker [items]="countries" #picker inputPlaceholderText="Custom input placeholder text">
+                <em style="margin-bottom: 8px; display: block;">Picker with custom placeholder text</em>
+                <nw-angular-picker #picker
+                    [items]="countries"
+                    [placeholderText]="getPlaceholder()"
+                    inputPlaceholderText="Custom input placeholder text">
                     <div class="results-footer text-right">
                         <button class="btn btn-primary" (click)="picker.closeResults()">Done</button>
                     </div>
