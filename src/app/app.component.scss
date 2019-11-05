@@ -42,7 +42,30 @@ app-root {
     }
 
 }
-
+pre {
+    position: relative;
+    white-space: pre-line;
+}
+code {
+    padding: 0;
+    line-height: 1.2;
+}
+pre.light,
+code.light {
+    background: transparent;
+    color: #ffffff;
+}
 .light-bg {
     background: #fff;
+}
+.demo-tabs {
+    margin-bottom: 32px;
+    display: block;
+}
+.demo-section {
+    margin-bottom: 32px !important;
+
+    h4 {
+        margin-bottom: 8px;
+    }
 }
