@@ -6,65 +6,74 @@ import { Subscription } from 'rxjs';
 @Component({
     selector: 'app-email-input-demo',
     template: `
-        <h2 class="page-header">Email Input</h2>
+        <h2 class="page-header" style="padding-bottom: 0;">
+            Email Input
 
-        <nw-tabs size="md" class="demo-tabs">
-            <li nwTab [isActive]="selectedTab === 'design'" role="presentation">
-                <a [routerLink]="['.']" [queryParams]="{section: 'design'}" role="tab">Design</a>
-            </li>
-            <li nwTab [isActive]="selectedTab === 'api'" role="presentation">
-                <a [routerLink]="['.']" [queryParams]="{section: 'api'}"  role="tab">API</a>
-            </li>
-        </nw-tabs>
+            <p class="nw-text">This is an input that a user can use to input multiple email in a form</p>
+            <small class="nw-text nw-text-light"><strong>Used in</strong> Spike Export PDF to input emails</small>
+
+            <nw-tabs size="md">
+                <li nwTab [isActive]="selectedTab === 'design'" role="presentation">
+                    <a [routerLink]="['.']" [queryParams]="{section: 'design'}" role="tab">Design</a>
+                </li>
+                <li nwTab [isActive]="selectedTab === 'api'" role="presentation">
+                    <a [routerLink]="['.']" [queryParams]="{section: 'api'}"  role="tab">API</a>
+                </li>
+            </nw-tabs>
+        </h2>
 
         <div class="tab-container">
             <div *ngIf="selectedTab === 'design'" class="tab-content">
-                <p class="nw-text text-large" style="margin-bottom: 32px;">
-                    A custom input component that automatically validates inputs as emails and renders them as pills inside the input.
+                <h5 class="nw-text" style="margin-bottom: 16px;">Description</h5>
+
+                <p class="nw-text" style="margin-bottom: 16px;">An email input should be</p>
+
+                <ol style="margin-bottom: 32px;">
+                    <li>
+                        Discoverable<br>
+                        It should be easy to distinguish between elements that can have textual input vs. those that cannot.
+                    </li>
+                    <li>
+                        Clear<br>
+                        Email input states should be clearly differentiated from one another.
+                    </li>
+                    <li>
+                        Efficient<br>
+                        Email inputs should make it easy to understand the requested information and to address any errors.
+                    </li>
+                    <li>
+                        Editable<br>
+                        An email input should be easily editable to enable the user to correct any errors.
+                    </li>
+                </ol>
+
+                <hr>
+
+                <h5 class="nw-text" style="margin-bottom: 16px;">Usage</h5>
+
+                <p class="nw-text" style="margin-bottom: 16px;">
+                    When a user wants to add multiple emails at once they will enter text and then either use a
+                    <strong>comma, semicolon, space, enter or tab to confirm the input</strong>
                 </p>
+
+                <ol style="margin-bottom: 32px;">
+                    <li>If the text is a valid email then create a blue tag as shown below</li>
+                    <li>If the text is an invalid then create a red tag as shown below</li>
+                </ol>
+
+                <hr>
+
+                <h4 class="nw-text" style="margin-bottom: 16px;">Live example</h4>
+
                 <div class="row">
                     <div class="col-md-6 col-sm-12">
                         <div class="form-group">
-                            <label for="email-input">Input label</label>
+                            <label for="email-input">Input Label</label>
                             <nw-email-input
                                 [emails]="emails"
                                 placeholder="Custom placeholder text"
                                 inputId="email-input"
                                 (change)="onChange($event)"></nw-email-input>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="demo-section">
-                    <h4 class="nw-text">Splitting text into pills</h4>
-                    <p class="nw-text">The input text is rendered as a pill through submitting the following keypresses<br>
-                        <kbd>,</kbd>, <kbd>Enter</kbd>, <kbd>Tab</kbd>, <kbd>Space</kbd> or <kbd>;</kbd>.
-                    </p>
-                    <p class="nw-text">Pills are also rendered on input blur and on tab.</p>
-                </div>
-
-                <div class="demo-section">
-                    <h4 class="nw-text">Pasting text</h4>
-                    <p class="nw-text">Text pasted into the input is split into individual email pills wherever a <code>,</code>, <code>;</code> or whitespace is encountered.</p>
-                </div>
-
-                <div class="demo-section">
-                    <div class="row">
-                        <div class="col-md-8 col-sm-12">
-                            <h4 class="nw-text">Notes</h4>
-                            <ul>
-                                <li>The <kbd>Esc</kbd> key clears any text input that has not been rendered as a pill.</li>
-                                <li>When pasting text, if the last email is not valid, the text is entered into the input instead of being rendered as a pill.</li>
-                                <li>The component will remove any duplicate emails and will prevent duplicates from being added.</li>
-                                <li>
-                                    The <kbd>Backspace</kbd> key has three distinct functions
-                                    <ul>
-                                        <li>When pressed while text is in the input, it behaves traditionally.</li>
-                                        <li>When pressed while there is no text in the input, it will select the last pill.</li>
-                                        <li>When pressed while there is a pill selected, it will remove the selected pill.</li>
-                                    </ul>
-                                </li>
-                            </ul>
                         </div>
                     </div>
                 </div>
@@ -159,11 +168,22 @@ import { Subscription } from 'rxjs';
         </div>
 
     `,
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    styles: [`
+        li {
+            font-size: 14px;
+        }
+        ol li {
+            margin-bottom: 16px;
+        }
+    `]
 })
 export class EmailInputDemoComponent implements OnInit {
 
-    public emails: string[] = [];
+    public emails: string[] = [
+        "valid.email@newswhip.com",
+        "invalid.email"
+    ];
     public validationState: IValidationChange;
     public selectedTab: 'design' | 'api' = 'design';
     public properties: { name: string; defaultValue: string; description: string }[];

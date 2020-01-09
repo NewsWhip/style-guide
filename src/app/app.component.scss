@@ -12,7 +12,6 @@ hr {
 }
 
 app-root {
-
     display: flex;
     flex-direction: row;
     height: 100%;
@@ -20,7 +19,6 @@ app-root {
     .side-nav {
         @include scrollbars();
     }
-
     .side-nav-menu {
         position: fixed;
         width: 200px;
@@ -33,14 +31,25 @@ app-root {
             padding: 10px 7px;
         }
     }
-
     .app-body-container {
         flex: 1;
-        padding: 0 16px;
+        padding: 0 32px;
         margin-left: 200px;
         width: calc(100% - 200px);
     }
+    // Page headers should span the full width and negate the container padding
+    .page-header {
+        padding-left: 32px;
+        padding-right: 32px;
+        margin-left: -32px;
+        margin-right: -32px;
 
+        p {
+            margin: 0;
+            line-height: 1;
+            margin-top: 16px;
+        }
+    }
 }
 pre {
     position: relative;
@@ -58,14 +67,14 @@ code.light {
 .light-bg {
     background: #fff;
 }
-.demo-tabs {
-    margin-bottom: 32px;
-    display: block;
-}
 .demo-section {
     margin-bottom: 32px !important;
 
     h4 {
         margin-bottom: 8px;
     }
+}
+ol, ul {
+    padding-left: 0;
+    list-style-position: inside;
 }
