@@ -41,6 +41,9 @@ MIT
 @angular/router
 MIT
 
+clipboard
+MIT
+
 d3-array
 BSD-3-Clause
 Copyright 2010-2016 Mike Bostock
