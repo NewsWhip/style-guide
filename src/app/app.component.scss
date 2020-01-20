@@ -12,7 +12,6 @@ hr {
 }
 
 app-root {
-
     display: flex;
     flex-direction: row;
     height: 100%;
@@ -20,7 +19,6 @@ app-root {
     .side-nav {
         @include scrollbars();
     }
-
     .side-nav-menu {
         position: fixed;
         width: 200px;
@@ -33,16 +31,69 @@ app-root {
             padding: 10px 7px;
         }
     }
-
     .app-body-container {
         flex: 1;
-        padding: 0 16px;
+        padding: 0 32px;
         margin-left: 200px;
         width: calc(100% - 200px);
     }
-
+    .page-header {
+        p {
+            margin: 0;
+            line-height: 1;
+            margin-top: 16px;
+        }
+        // Page headers should span the full width and negate the container padding
+        .tabs-container {
+            background-color: get-color("gray", dark);
+            padding-left: 32px;
+            padding-right: 32px;
+            margin-left: -32px;
+            margin-right: -32px;
+            margin-top: 16px;
+            position: relative;
+            top: 1px;
+        }
+    }
 }
-
+pre {
+    position: relative;
+    white-space: pre-line;
+}
+code {
+    padding: 0;
+    line-height: 1.2;
+}
+pre.light,
+code.light {
+    background: transparent;
+    color: #ffffff;
+}
 .light-bg {
     background: #fff;
+}
+.demo-section {
+    margin-bottom: 32px !important;
+
+    h4 {
+        margin-bottom: 8px;
+    }
+}
+ol.guidelines {
+    list-style: none;
+    counter-reset: item;
+    padding-left: 0;
+
+    li {
+        counter-increment: item;
+
+        &:before {
+            font-weight: bold;
+            font-size: 16px;
+            margin-right: 8px;
+            content: counter(item)'.';
+            width: 1.2em;
+        }
+    }
+
 }

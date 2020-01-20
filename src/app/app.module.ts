@@ -42,6 +42,7 @@ import { CarouselComponent } from './carousel/carousel.component';
 import { DropdownsModule } from "../_lib/modules/dropdowns/dropdowns.module";
 import { EmailInputModule } from "../_lib/modules/email-input/email-input.module";
 import { EmailInputDemoComponent } from "./email-input/email-input-demo.component";
+import { CopyCodeComponent } from './copy-code/copy-code.component';
 
 @NgModule({
   declarations: [
@@ -70,7 +71,8 @@ import { EmailInputDemoComponent } from "./email-input/email-input-demo.componen
     ChartsComponent,
     LoaderComponent,
     CarouselComponent,
-    EmailInputDemoComponent
+    EmailInputDemoComponent,
+    CopyCodeComponent
   ],
   imports: [
     BrowserModule,
