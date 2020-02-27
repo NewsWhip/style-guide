@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Input, Output, EventEmitter } from '@angular/core';
+import { Directive, ElementRef, Input, Output, EventEmitter, NgZone } from '@angular/core';
 import { axisBottom, axisTop } from 'd3-axis';
 import { AxisBase } from './axis-base';
 import { ScaleTime, scaleTime } from 'd3-scale';
@@ -20,10 +20,11 @@ export class XAxisDirective extends AxisBase {
 
     constructor(
         elRef: ElementRef,
+        zone: NgZone,
         chart: ChartComponent,
         chartUtils: ChartUtils) {
 
-        super(elRef, chart, chartUtils);
+        super(elRef, zone, chart, chartUtils);
     }
 
     createAxis() {

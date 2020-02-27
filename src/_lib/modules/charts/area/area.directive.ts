@@ -1,4 +1,4 @@
-import { Directive, Input, ElementRef, OnInit, OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
+import { Directive, Input, ElementRef, OnInit, OnChanges, SimpleChanges, OnDestroy, NgZone } from '@angular/core';
 import { area, Area, CurveFactory, curveLinear } from 'd3-shape';
 import { ChartComponent } from '../chart.component';
 import { ScaleTime, ScaleLinear, scaleTime, scaleLinear } from 'd3-scale';
@@ -35,6 +35,7 @@ export class AreaDirective implements OnInit, OnChanges, OnDestroy {
 
     constructor(
         private _elRef: ElementRef,
+        private _zone: NgZone,
         private _chart: ChartComponent,
         private _chartUtils: ChartUtils) {}
 
@@ -81,12 +82,19 @@ export class AreaDirective implements OnInit, OnChanges, OnDestroy {
     }
 
     updateArea(): void {
-        this.areaSelection
-            .datum(this.data)
-            .transition()
-            .duration(this.animDuration)
-            .ease(this.easing)
-            .attr('d', this.area)
+        /**
+         * Run this outside Angular because of the transition which, in this case, uses
+         * requestAnimationFrame and consequently results in up to 60 calls
+         * to the change detector per second
+         */
+        this._zone.runOutsideAngular(() => {
+            this.areaSelection
+                .datum(this.data)
+                .transition()
+                .duration(this.animDuration)
+                .ease(this.easing)
+                .attr('d', this.area);
+        });
     }
 
     private _subscribeToWindowResize() {
