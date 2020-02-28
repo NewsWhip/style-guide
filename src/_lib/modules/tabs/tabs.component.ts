@@ -1,4 +1,4 @@
-import { Component, ContentChildren, QueryList, Input, ElementRef, ViewChild, OnInit, ChangeDetectorRef, OnDestroy, ChangeDetectionStrategy, AfterContentInit } from '@angular/core';
+import { Component, ContentChildren, QueryList, Input, ElementRef, ViewChild, OnInit, ChangeDetectorRef, OnDestroy, ChangeDetectionStrategy, AfterContentInit, AfterViewInit } from '@angular/core';
 import { TabDirective } from './tab.directive';
 import { fromEvent, Subscription, Observable, merge } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
@@ -11,15 +11,15 @@ import { TabsService } from './tabs.service';
             <ul class="nav nav-tabs" [ngClass]="tabSizeClass" role="tablist">
                 <ng-content></ng-content>
 
-                <li #activeBar class="nav-tabs-active-bar" [ngStyle]="getActiveStyles()"></li>
+                <li #activeBar class="nav-tabs-active-bar" [ngStyle]="activeStyles"></li>
             </ul>
         </div>
 
         <div class="pagination-container" *ngIf="shouldShowPagination">
-            <div class="prev-page" *ngIf="shouldShowPrev" (click)="prev()" [ngStyle]="background">
+            <div class="prev-page" *ngIf="shouldShowPrev" (click)="prev()" [ngStyle]="paginationButtonStyles">
                 <ng-container *ngTemplateOutlet="paginator"></ng-container>
             </div>
-            <div class="next-page" *ngIf="shouldShowNext" (click)="next()" [ngStyle]="background">
+            <div class="next-page" *ngIf="shouldShowNext" (click)="next()" [ngStyle]="paginationButtonStyles">
                 <ng-container *ngTemplateOutlet="paginator"></ng-container>
             </div>
         </div>
@@ -39,7 +39,7 @@ import { TabsService } from './tabs.service';
     `]
 })
 
-export class TabsComponent implements OnInit, AfterContentInit, OnDestroy {
+export class TabsComponent implements OnInit, AfterContentInit, AfterViewInit, OnDestroy {
 
     @Input() size: 'sm' | 'md' | 'lg' = 'md';
     @Input() maskColor: string = '#373737';
@@ -49,64 +49,76 @@ export class TabsComponent implements OnInit, AfterContentInit, OnDestroy {
 
     @ContentChildren(TabDirective) tabs: QueryList<TabDirective> = new QueryList();
 
+    public activeStyles: { [key: string]: string };
+    public paginationButtonStyles: { [key: string]: string };
+    public tabSizeClass: string;
+    public shouldShowPagination: boolean;
+    public scrollEl: HTMLElement;
+    public clientWidth: number;
+
     private _scrollAndResizeSub: Subscription;
     private _activeChangeSub: Subscription;
-    private _transitionEndSub: Subscription;
     private _tabsChangeSub: Subscription;
     private _paginationTolerance: number = 100;
+    private _buttonWidth: number = 35;
 
     constructor(
         private _cdRef: ChangeDetectorRef,
         private _tabsService: TabsService) {}
 
     ngOnInit() {
-        const scrollStop$: Observable<Event> = fromEvent(this.scrollContainer.nativeElement, 'scroll');
+        this.scrollEl = this.scrollContainer.nativeElement;
+        this.paginationButtonStyles = this.getPaginationButtonStyles();
+        this.tabSizeClass = this.getTabSizeClass();
+
+        const scrollStop$: Observable<Event> = fromEvent(this.scrollEl, 'scroll');
         const windowResizeStop$: Observable<Event> = fromEvent(window, 'resize');
 
         this._scrollAndResizeSub = merge(scrollStop$, windowResizeStop$)
             .pipe(debounceTime(50))
-            .subscribe(_ => this._cdRef.detectChanges());
+            .subscribe(_ => {
+                this.clientWidth = this.getClientWidth();
+                this.shouldShowPagination = this._shouldShowPagination();
+                this._cdRef.detectChanges();
+            });
 
         this.subscribeToActiveChange();
-        this.subscribeToActiveBarTransitionEnd();
     }
 
     ngAfterContentInit() {
         this.subscribeToTabsChange();
     }
 
+    ngAfterViewInit() {
+        /**
+         * These methods need the template to be rendered before executing
+         */
+        this.clientWidth = this.getClientWidth();
+        this.activeStyles = this.getActiveStyles();
+        this.shouldShowPagination = this._shouldShowPagination();
+        this._cdRef.detectChanges();
+    }
+
     subscribeToActiveChange() {
         this._activeChangeSub = this._tabsService.activeChange.subscribe(tab => {
             this.scrollToTabIfRequired(tab);
-
-            setTimeout(() => {
-                this._cdRef.detectChanges();
-            }, 0);
+            this.activeStyles = this.getActiveStyles();
+            this._cdRef.detectChanges();
         });
     }
 
     subscribeToTabsChange() {
         this._tabsChangeSub = this.tabs.changes.subscribe(tabs => {
-            setTimeout(() => {
-                this._cdRef.detectChanges();
-            }, 0);
+            this.activeStyles = this.getActiveStyles();
+            this._cdRef.detectChanges();
         });
-    }
-
-    subscribeToActiveBarTransitionEnd() {
-        this._transitionEndSub = fromEvent(this.activeBar.nativeElement, 'transitionend')
-            .pipe(debounceTime(50))
-            .subscribe(() => {
-                console.log('transition ended');
-                this._cdRef.detectChanges();
-            })
     }
 
     getActiveTab(): TabDirective {
         return this.tabs.filter(t => t.isActive)[0];
     }
 
-    get tabSizeClass(): string {
+    getTabSizeClass(): string {
         return `nav-${this.size}`;
     }
 
@@ -122,38 +134,34 @@ export class TabsComponent implements OnInit, AfterContentInit, OnDestroy {
         return {};
     }
 
-    getScrollEl(): HTMLElement {
-        return this.scrollContainer.nativeElement;
-    }
-
-    get background() {
+    getPaginationButtonStyles() {
         return {
             'background': `linear-gradient(to left, rgba(0,0,0,0), ${this.maskColor})`
-        }
+        };
     }
 
-    get clientWidth(): number {
-        return this.getScrollEl().clientWidth;
+    getClientWidth(): number {
+        return this.scrollEl.clientWidth;
     }
 
-    get shouldShowPagination(): boolean {
-        return +(this.getScrollEl().scrollWidth / this.clientWidth).toFixed(1) >= 1;
+    private _shouldShowPagination(): boolean {
+        return +(this.scrollEl.scrollWidth / this.clientWidth).toFixed(1) >= 1;
     }
 
     get shouldShowPrev(): boolean {
-        return this.getScrollEl().scrollLeft >= 1;
+        return this.scrollEl.scrollLeft >= 1;
     }
 
     get shouldShowNext(): boolean {
-        return this.getScrollEl().scrollLeft + this.clientWidth < this.getScrollEl().scrollWidth;
+        return this.scrollEl.scrollLeft + this.clientWidth < this.scrollEl.scrollWidth;
     }
 
     prev(): void {
-        this.getScrollEl().scrollLeft -= (this.clientWidth - this._paginationTolerance);
+        this.scrollEl.scrollLeft -= (this.clientWidth - this._paginationTolerance);
     }
 
     next() {
-        this.getScrollEl().scrollLeft += (this.clientWidth - this._paginationTolerance);
+        this.scrollEl.scrollLeft += (this.clientWidth - this._paginationTolerance);
     }
 
     scrollToTabIfRequired(tab: TabDirective) {
@@ -163,20 +171,19 @@ export class TabsComponent implements OnInit, AfterContentInit, OnDestroy {
             right: offsetLeft + tab.elRef.nativeElement.clientWidth
         };
 
-        const shouldScrollLeft: boolean = position.left < this.getScrollEl().scrollLeft;
-        const shouldScrollRight: boolean = position.right > (this.getScrollEl().scrollLeft +  + this.clientWidth);
+        const shouldScrollLeft: boolean = position.left < (this.scrollEl.scrollLeft + this._buttonWidth);
+        const shouldScrollRight: boolean = position.right > (this.scrollEl.scrollLeft + this.clientWidth - this._buttonWidth);
 
         if (shouldScrollLeft) {
-            this.getScrollEl().scrollLeft = position.left - 30;
+            this.scrollEl.scrollLeft = position.left - this._buttonWidth;
         } else if (shouldScrollRight) {
-            this.getScrollEl().scrollLeft = position.right - this.clientWidth + 12 + 30; // plus 12 for margin
+            this.scrollEl.scrollLeft = position.right - this.clientWidth + this._buttonWidth;
         }
     }
 
     ngOnDestroy() {
         this._scrollAndResizeSub.unsubscribe();
         this._activeChangeSub.unsubscribe();
-        this._transitionEndSub.unsubscribe();
         this._tabsChangeSub.unsubscribe();
     }
 }
