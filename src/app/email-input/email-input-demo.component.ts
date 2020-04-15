@@ -35,7 +35,7 @@ import { Subscription } from 'rxjs';
                             [emails]="emails"
                             placeholder="Custom placeholder text"
                             inputId="email-input"
-                            (change)="onChange($event)"></nw-email-input>
+                            (updated)="onChange($event)"></nw-email-input>
                     </div>
                 </div>
             </div>

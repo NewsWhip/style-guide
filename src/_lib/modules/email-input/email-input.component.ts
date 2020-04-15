@@ -43,7 +43,7 @@ export class EmailInputComponent implements OnInit, OnDestroy {
     @Input() inputId: string = "";
     @Input() placeholder: string = '';
 
-    @Output() change: EventEmitter<IValidationChange> = new EventEmitter();
+    @Output() updated: EventEmitter<IValidationChange> = new EventEmitter();
 
     @ViewChild('inputEl') inputEl: ElementRef;
     @ViewChild('container') container: ElementRef;
@@ -217,7 +217,7 @@ export class EmailInputComponent implements OnInit, OnDestroy {
 
         const isValid: boolean = emails.length > 0 && emails.every(email => this.isValid(email));
 
-        this.change.emit({
+        this.updated.emit({
             isValid: isValid,
             emails: this.emails,
             control: this.emailInputControl
