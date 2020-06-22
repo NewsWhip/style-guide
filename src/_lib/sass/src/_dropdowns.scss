@@ -133,22 +133,7 @@
 .dropdown-submenu {
     > li > a {
         // Links within the dropdown menu
-        display: block;
-        padding: 8px 16px;
-        clear: both;
-        font-weight: normal;
-        line-height: $line-height-base;
-        color: $dropdown-link-color;
-        white-space: nowrap; // prevent links from randomly breaking onto new lines
-        text-decoration: none;
-        cursor: pointer;
-
-        &:hover,
-        &:focus {
-            text-decoration: none;
-            color: $dropdown-link-hover-color;
-            background-color: $dropdown-link-hover-bg;
-        }
+        @include dropdown-menu-link;
     }
 }
 
@@ -156,12 +141,7 @@
 .dropdown-menu,
 .dropdown-submenu {
     > .active > a {
-        &,
-        &:hover,
-        &:focus {
-            color: $dropdown-link-active-color;
-            background-color: $dropdown-link-active-bg;
-        }
+        @include dropdown-menu-link-active;
     }
 }
 
@@ -173,9 +153,7 @@
     &,
     &:hover,
     &:focus {
-        opacity: 0.5;
-        cursor: $cursor-disabled;
-        color: $dropdown-link-color;
+        @include dropdown-menu-link-disabled;
     }
 }
 
@@ -239,11 +217,6 @@
     z-index: ($zindex-dropdown - 10);
     display: none;
 }
-
-// Allow for dropdowns to go bottom up (aka, dropup-menu)
-//
-// Just add .dropup after the standard .dropdown class and you're set, bro.
-// TODO: abstract this so that the navbar fixed styles are not placed here?
 
 .dropup,
 .navbar-fixed-bottom .dropdown {
