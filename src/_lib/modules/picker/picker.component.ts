@@ -318,6 +318,14 @@ export class NwPickerComponent {
 
         item.added = false;
         item.excluded = !item.excluded;
+         // setting flag for duplicate id's as in case of location for selection and deselection on checkbox click
+         if (this.isMultiSelect) {
+            this.items.forEach(pickerItem => {    
+                if(item.id === pickerItem.id){
+                    pickerItem.excluded = item.excluded;
+                }
+            });
+        }
 
         this.toggleDescendants(item, false, false);
         this.toggleAncestors(item, undefined, false);
