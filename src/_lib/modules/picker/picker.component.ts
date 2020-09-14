@@ -296,7 +296,7 @@ export class NwPickerComponent {
       // setting flag for duplicate id's as in case of location for selection and deselection on checkbox click
         if (this.isMultiSelect) {
             this.items.forEach(pickerItem => {    
-                if(item.id === pickerItem.id){
+                if (item.id === pickerItem.id) {
                     pickerItem.added = item.added;
                 }
             });
@@ -321,7 +321,7 @@ export class NwPickerComponent {
          // setting flag for duplicate id's as in case of location for selection and deselection on checkbox click
          if (this.isMultiSelect) {
             this.items.forEach(pickerItem => {    
-                if(item.id === pickerItem.id){
+                if (item.id === pickerItem.id) {
                     pickerItem.excluded = item.excluded;
                 }
             });
