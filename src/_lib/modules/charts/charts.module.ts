@@ -9,10 +9,12 @@ import { BrushDirective } from './brush/brush.directive';
 import { BarDirective } from './bar/bar.directive';
 import { AreaDirective } from './area/area.directive';
 import { ChartTooltipDirective } from './tooltip/chart-tooltip.directive';
+import { ResizeObserverModule } from '../resize-observer';
 
 @NgModule({
     imports: [
-        CommonModule
+        CommonModule,
+        ResizeObserverModule
     ],
     declarations: [
         ChartComponent,

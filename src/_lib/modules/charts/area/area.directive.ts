@@ -31,7 +31,7 @@ export class AreaDirective implements OnInit, OnChanges, OnDestroy {
     public xScale: ScaleTime<number, number>;
     public yScale: ScaleLinear<number, number>;
 
-    private _windowResizeSub: Subscription;
+    private _chartResizeSub: Subscription;
 
     constructor(
         private _elRef: ElementRef,
@@ -47,7 +47,7 @@ export class AreaDirective implements OnInit, OnChanges, OnDestroy {
         this.setArea();
         this.drawArea();
 
-        this._subscribeToWindowResize();
+        this._subscribeToChartResize();
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -89,8 +89,8 @@ export class AreaDirective implements OnInit, OnChanges, OnDestroy {
             .attr('d', this.area)
     }
 
-    private _subscribeToWindowResize() {
-        this._windowResizeSub = this._chartUtils.windowResize$
+    private _subscribeToChartResize() {
+        this._chartResizeSub = this._chartUtils.chartResize$
             .subscribe(_ => {
                 this.setDomains();
                 this.setArea();
@@ -99,7 +99,7 @@ export class AreaDirective implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnDestroy() {
-        this._windowResizeSub.unsubscribe();
+        this._chartResizeSub.unsubscribe();
     }
 
 }

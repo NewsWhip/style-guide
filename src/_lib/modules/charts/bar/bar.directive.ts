@@ -21,7 +21,7 @@ export class BarDirective implements OnInit, OnChanges, OnDestroy {
     public xScale: ScaleTime<number, number> = scaleTime();
     public yScale: ScaleLinear<number, number> = scaleLinear();
 
-    private _windowResizeSub: Subscription;
+    private _chartResizeSub: Subscription;
 
     constructor(
         private _elRef: ElementRef,
@@ -34,7 +34,7 @@ export class BarDirective implements OnInit, OnChanges, OnDestroy {
         this.setDomains();
         this.draw();
 
-        this._subscribeToWindowResize();
+        this._subscribeToChartResize();
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -64,8 +64,8 @@ export class BarDirective implements OnInit, OnChanges, OnDestroy {
             .attr("height", this._chart.height - this.yScale(this.value[1]));
     }
 
-    private _subscribeToWindowResize() {
-        this._windowResizeSub = this._chartUtils.windowResize$
+    private _subscribeToChartResize() {
+        this._chartResizeSub = this._chartUtils.chartResize$
             .subscribe(_ => {
                 this.setDomains();
                 this.draw();
@@ -73,7 +73,7 @@ export class BarDirective implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnDestroy() {
-        this._windowResizeSub.unsubscribe();
+        this._chartResizeSub.unsubscribe();
     }
 
 }
