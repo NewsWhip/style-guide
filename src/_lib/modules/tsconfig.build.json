@@ -11,10 +11,10 @@
             "dom"
         ],
         "skipLibCheck": true,
-        "types": [],
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
-        "importHelpers": true
+        "importHelpers": true,
+        "rootDir": "."
     },
     "angularCompilerOptions": {
         "strictMetadataEmit": false,

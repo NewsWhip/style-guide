@@ -2,7 +2,7 @@
     "extends": "../tsconfig.build.json",
     "compilerOptions": {
         "baseUrl": ".",
-        "outDir": "../../../../distribution/loader",
+        "outDir": "../../../../distribution/resize-observer",
         "rootDir": "."
     },
     "files": [

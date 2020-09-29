@@ -20,7 +20,7 @@ export abstract class AxisBase implements OnInit, OnChanges, OnDestroy {
     public axisSelection: Selection<SVGGElement, Array<[number, number]>, SVGElement, any>;
     public axisLabelSelection: Selection<SVGTextElement, any, HTMLElement, any>;
 
-    private _windowResizeSub: Subscription;
+    private _chartResizeSub: Subscription;
 
     constructor(
         private _elRef: ElementRef,
@@ -36,7 +36,7 @@ export abstract class AxisBase implements OnInit, OnChanges, OnDestroy {
         this.createLabel();
         this.render();
 
-        this._subscribeToWindowResize();
+        this._subscribeToChartResize();
     }
 
     ngOnChanges(c: SimpleChanges) {
@@ -97,8 +97,8 @@ export abstract class AxisBase implements OnInit, OnChanges, OnDestroy {
         return this.chart.height + this.chart.margins.top + this.chart.margins.bottom;
     }
 
-    private _subscribeToWindowResize() {
-        this._windowResizeSub = this._chartUtils.windowResize$
+    private _subscribeToChartResize() {
+        this._chartResizeSub = this._chartUtils.chartResize$
             .subscribe(_ => {
                 this.setDomain();
                 this.setTicks();
@@ -107,7 +107,7 @@ export abstract class AxisBase implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnDestroy() {
-        this._windowResizeSub.unsubscribe();
+        this._chartResizeSub.unsubscribe();
     }
 
 }

@@ -27,7 +27,7 @@ export class PathDirective implements OnInit, OnChanges, OnDestroy {
     public xScale: ScaleTime<number, number>;
     public yScale: ScaleLinear<number, number>;
 
-    private _windowResizeSub: Subscription;
+    private _chartResizeSub: Subscription;
 
     constructor(
         private _elRef: ElementRef,
@@ -43,7 +43,7 @@ export class PathDirective implements OnInit, OnChanges, OnDestroy {
         this.setLine();
         this.drawLine();
 
-        this._subscribeToWindowResize();
+        this._subscribeToChartResize();
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -85,8 +85,8 @@ export class PathDirective implements OnInit, OnChanges, OnDestroy {
             .on('end', e => this.animEnd.next())
     }
 
-    private _subscribeToWindowResize() {
-        this._windowResizeSub = this._chartUtils.windowResize$
+    private _subscribeToChartResize() {
+        this._chartResizeSub = this._chartUtils.chartResize$
             .subscribe(_ => {
                 this.setDomains();
                 this.drawLine();
@@ -94,7 +94,7 @@ export class PathDirective implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnDestroy() {
-        this._windowResizeSub.unsubscribe();
+        this._chartResizeSub.unsubscribe();
     }
 
 }

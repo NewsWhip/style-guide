@@ -5,10 +5,6 @@
         "outDir": "../../../../distribution/dropdowns",
         "rootDir": "."
     },
-    "angularCompilerOptions": {
-        "strictMetadataEmit": false,
-        "skipTemplateCodegen": true
-    },
     "files": [
         "./index.ts"
     ]
