@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { HomeComponent } from './home.component';
-import {NO_ERRORS_SCHEMA} from '@angular/core';
-import {MarkdownService} from 'ngx-md';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { NgxMdService } from 'ngx-md';
 
 class MarkdownServiceMock {}
 
@@ -14,7 +14,7 @@ describe('HomeComponent', () => {
             declarations: [ HomeComponent ],
             schemas: [NO_ERRORS_SCHEMA],
             providers: [{
-                provide: MarkdownService,
+                provide: NgxMdService,
                 useClass: MarkdownServiceMock
             }]
         })
