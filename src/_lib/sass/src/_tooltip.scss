@@ -125,6 +125,12 @@
   padding: 16px;
   box-shadow: none;
 }
+.tooltip-large + .tooltip > .tooltip-inner, .tooltip-large > .tooltip-inner {
+  padding: 12px;
+  line-height: 16px;
+  min-width: 240px;
+}
+
 .tooltip-light + .tooltip, .tooltip-light {
   &.top .tooltip-arrow {
     border-top-color: $tooltip-arrow-color-light;
