@@ -202,6 +202,8 @@ export class NwPickerComponent {
                         return _.includes(value.toLowerCase(), val.toLowerCase());
                     }) || _.includes(item.displayName.toLowerCase(), val.toLowerCase());
                 });
+                // remove duplicate items
+                this.displayItems = this.displayItems.reduce((items, item) => items.find(x => x.id === item.id) ? [...items] : [...items, item], []);
             }
             else {
                 this.setDisplayItemsFromParentId(this.parentId);
