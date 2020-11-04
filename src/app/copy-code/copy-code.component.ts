@@ -21,8 +21,8 @@ import { Toaster } from "../../_lib/modules/toasts";
 })
 export class CopyCodeComponent implements AfterContentInit {
 
-    @ViewChild('copyIcon') copyIcon: ElementRef<HTMLElement>;
-    @ViewChild('code') code: ElementRef<HTMLElement>;
+    @ViewChild('copyIcon', { static: true }) copyIcon: ElementRef<HTMLElement>;
+    @ViewChild('code', { static: true }) code: ElementRef<HTMLElement>;
 
     private _clipboard: Clipboard;
 

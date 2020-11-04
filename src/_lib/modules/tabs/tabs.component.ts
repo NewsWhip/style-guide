@@ -44,8 +44,8 @@ export class TabsComponent implements OnInit, AfterContentInit, OnDestroy {
     @Input() size: 'sm' | 'md' | 'lg' = 'md';
     @Input() maskColor: string = '#373737';
 
-    @ViewChild('scrollContainer') scrollContainer: ElementRef<HTMLElement>;
-    @ViewChild('activeBar') activeBar: ElementRef<HTMLElement>;
+    @ViewChild('scrollContainer', { static: true }) scrollContainer: ElementRef<HTMLElement>;
+    @ViewChild('activeBar', { static: true }) activeBar: ElementRef<HTMLElement>;
 
     @ContentChildren(TabDirective) tabs: QueryList<TabDirective> = new QueryList();
 

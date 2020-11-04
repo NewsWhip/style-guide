@@ -175,7 +175,7 @@ export class NwPickerComponent {
     @Output() desc: EventEmitter<IPickerItem> = new EventEmitter<IPickerItem>();
     @Output() asc: EventEmitter<IPickerItem> = new EventEmitter<IPickerItem>();
 
-    @ViewChild('inputEl') inputEl: ElementRef;
+    @ViewChild('inputEl', { static: true }) inputEl: ElementRef;
 
     public displayItems: IPickerItem[];
     public searchTerm = new FormControl();

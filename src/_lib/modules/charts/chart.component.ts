@@ -46,9 +46,9 @@ export class ChartComponent implements OnInit, AfterViewInit, OnDestroy {
         right?: number;
     } = { top: 0, bottom: 0, left: 0, right: 0 };
 
-    @ViewChild('chartContainer') chartContainer: ElementRef<SVGGElement>;
-    @ViewChild('mouseEventCaptureContainer') mouseEventCaptureContainer: ElementRef<SVGGElement>;
-    @ViewChild('hoverOverlay') hoverOverlay: ElementRef<SVGRectElement>;
+    @ViewChild('chartContainer', { static: true }) chartContainer: ElementRef<SVGGElement>;
+    @ViewChild('mouseEventCaptureContainer', { static: true }) mouseEventCaptureContainer: ElementRef<SVGGElement>;
+    @ViewChild('hoverOverlay', { static: true }) hoverOverlay: ElementRef<SVGRectElement>;
 
     @Output() nwMousemove: EventEmitter<[number, number]> = new EventEmitter();
     @Output() nwMouseleave: EventEmitter<null> = new EventEmitter();
