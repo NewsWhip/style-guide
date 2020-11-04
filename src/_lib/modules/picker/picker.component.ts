@@ -197,11 +197,13 @@ export class NwPickerComponent {
             this.selectionsAreShowing = false;
 
             if (val.length) {
-                this.displayItems = this.items.filter(item => {
+                const displayItems = this.items.filter(item => {
                     return (item.searchValues || []).some(value => {
                         return _.includes(value.toLowerCase(), val.toLowerCase());
                     }) || _.includes(item.displayName.toLowerCase(), val.toLowerCase());
                 });
+                // remove duplicate items
+                this.displayItems = displayItems.reduce((items, item) => items.find(x => x.id === item.id) ? [...items] : [...items, item], []);
             }
             else {
                 this.setDisplayItemsFromParentId(this.parentId);
