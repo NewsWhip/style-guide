@@ -170,13 +170,13 @@
         }
       }
     },
-    "nw-style-guide1": {
+    "nw-style-guide": {
       "root": "src/_lib",
       "sourceRoot": "src/_lib/modules",
       "projectType": "application",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "outputPath": "src/_lib/dist",
             "index": "src/_lib/modules/index.html",
@@ -203,14 +203,14 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "nw-style-guide1:build"
+            "browserTarget": "nw-style-guide:build"
           },
           "configurations": {}
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "nw-style-guide1:build"
+            "browserTarget": "nw-style-guide:build"
           }
         },
         "test": {
@@ -237,7 +237,7 @@
         }
       }
     },
-    "nw-style-guide1-e2e": {
+    "nw-style-guide-e2e": {
       "root": "src/_lib/e2e",
       "sourceRoot": "src/_lib/e2e",
       "projectType": "application",
@@ -246,7 +246,7 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "./protractor.conf.js",
-            "devServerTarget": "nw-style-guide1:serve"
+            "devServerTarget": "nw-style-guide:serve"
           }
         },
         "lint": {
