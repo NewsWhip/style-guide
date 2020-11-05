@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "nw-style-guide": {
+    "demo-app": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -69,18 +69,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "nw-style-guide:build"
+            "browserTarget": "demo-app:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "nw-style-guide:build:production"
+              "browserTarget": "demo-app:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "nw-style-guide:build"
+            "browserTarget": "demo-app:build"
           }
         },
         "test": {
@@ -133,9 +133,19 @@
             ]
           }
         }
+      },
+      "schematics": {
+        "@schematics/angular:component": {
+          "changeDetection": "OnPush",
+          "prefix": "app",
+          "styleext": "scss"
+        },
+        "@schematics/angular:directive": {
+          "prefix": "app"
+        }
       }
     },
-    "nw-style-guide-e2e": {
+    "demo-app-e2e": {
       "root": "e2e",
       "sourceRoot": "e2e",
       "projectType": "application",
@@ -144,7 +154,7 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "./protractor.conf.js",
-            "devServerTarget": "nw-style-guide:serve"
+            "devServerTarget": "demo-app:serve"
           }
         },
         "lint": {
@@ -253,15 +263,5 @@
       }
     }
   },
-  "defaultProject": "nw-style-guide",
-  "schematics": {
-    "@schematics/angular:component": {
-      "changeDetection": "OnPush",
-      "prefix": "app",
-      "styleext": "scss"
-    },
-    "@schematics/angular:directive": {
-      "prefix": "app"
-    }
-  }
+  "defaultProject": "demo-app"
 }
