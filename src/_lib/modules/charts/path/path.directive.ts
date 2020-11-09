@@ -1,11 +1,12 @@
 import { Directive, OnInit, Input, ElementRef, OnChanges, SimpleChanges, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { select, Selection } from 'd3-selection';
 import { line, Line, curveLinear, CurveFactory } from 'd3-shape';
-import { ScaleTime, ScaleLinear, scaleTime, scaleLinear } from 'd3-scale';
+import { ScaleLinear, scaleTime, scaleLinear } from 'd3-scale';
 import { ChartUtils } from '../chart.utils';
 import 'd3-transition';
 import { ChartComponent } from '../chart.component';
 import { Subscription } from 'rxjs';
+import { NwXAxisScale } from '../axis/models/XAxisScale';
 
 @Directive({
     selector: 'path[nw-path]',
@@ -19,13 +20,13 @@ export class PathDirective implements OnInit, OnChanges, OnDestroy {
     @Input() animDuration: number = ChartUtils.ANIMATION_DURATION;
     @Input() curve: CurveFactory = curveLinear;
     @Input() easing: (normalizedTime: number) => number = ChartUtils.ANIMATION_EASING;
+    @Input() xScale: NwXAxisScale = scaleTime();
 
     @Output() animEnd: EventEmitter<null> = new EventEmitter();
 
     public line: Line<[number, number]>;
     public path: Selection<SVGPathElement, Array<[number, number]>, SVGElement, any>;
-    public xScale: ScaleTime<number, number>;
-    public yScale: ScaleLinear<number, number>;
+    public yScale: ScaleLinear<number, number> = scaleLinear();
 
     private _chartResizeSub: Subscription;
 
@@ -36,8 +37,6 @@ export class PathDirective implements OnInit, OnChanges, OnDestroy {
 
     ngOnInit() {
         this.path = select(this._elRef.nativeElement as SVGPathElement);
-        this.xScale = scaleTime()
-        this.yScale = scaleLinear();
 
         this.setDomains();
         this.setLine();
@@ -47,9 +46,9 @@ export class PathDirective implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        let isDomainChange = (changes.xDomain || changes.yDomain) && ChartUtils.haveDomainsChanged(changes.xDomain, changes.yDomain);
-        let isDataChange = changes.data && !changes.data.firstChange && !ChartUtils.areDatasetsEqual(changes.data.previousValue, changes.data.currentValue);
-        let isCurveChange = changes.curve && !changes.curve.firstChange && (changes.curve.currentValue !== changes.curve.previousValue);
+        const isDomainChange = (changes.xDomain || changes.yDomain) && ChartUtils.haveDomainsChanged(changes.xDomain, changes.yDomain);
+        const isDataChange = changes.data && !changes.data.firstChange && !ChartUtils.areDatasetsEqual(changes.data.previousValue, changes.data.currentValue);
+        const isCurveChange = changes.curve && !changes.curve.firstChange && (changes.curve.currentValue !== changes.curve.previousValue);
 
         if (isDomainChange || isDataChange || isCurveChange) {
             this.setDomains();
@@ -59,7 +58,7 @@ export class PathDirective implements OnInit, OnChanges, OnDestroy {
     }
 
     setDomains() {
-        this.xScale.domain(this.xDomain).range([0, this._chart.width]);
+        (this.xScale.domain(this.xDomain) as NwXAxisScale).range([0, this._chart.width]);
         this.yScale.domain(this.yDomain).range([this._chart.height, 0]);
     }
 
@@ -72,7 +71,7 @@ export class PathDirective implements OnInit, OnChanges, OnDestroy {
     drawLine(): void {
         this.path
             .datum(this.data)
-            .attr('d', this.line)
+            .attr('d', this.line);
     }
 
     updateLine(): void {
@@ -82,7 +81,7 @@ export class PathDirective implements OnInit, OnChanges, OnDestroy {
             .duration(this.animDuration)
             .ease(this.easing)
             .attr('d', this.line)
-            .on('end', e => this.animEnd.next())
+            .on('end', e => this.animEnd.next());
     }
 
     private _subscribeToChartResize() {
