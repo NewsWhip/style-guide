@@ -1,9 +1,10 @@
 import { Directive, Input, OnInit, ElementRef, OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
 import { ChartUtils } from '../chart.utils';
 import { select, Selection } from 'd3-selection';
-import { ScaleTime, ScaleLinear, scaleTime, scaleLinear } from 'd3-scale';
+import { ScaleLinear, scaleTime, scaleLinear } from 'd3-scale';
 import { ChartComponent } from '../chart.component';
 import { Subscription } from 'rxjs';
+import { NwXAxisScale } from '../axis/models/XAxisScale';
 
 @Directive({
     selector: 'circle[nw-circle]',
@@ -16,9 +17,9 @@ export class CircleDirective implements OnInit, OnChanges, OnDestroy {
     @Input() yDomain: [number, number];
     @Input() animDuration: number = ChartUtils.ANIMATION_DURATION;
     @Input() easing: (normalizedTime: number) => number = ChartUtils.ANIMATION_EASING;
+    @Input() xScale: NwXAxisScale = scaleTime();
 
     public circle: Selection<SVGCircleElement, [number, number], SVGElement, any>;
-    public xScale: ScaleTime<number, number> = scaleTime();
     public yScale: ScaleLinear<number, number> = scaleLinear();
 
     private _chartResizeSub: Subscription;
@@ -48,7 +49,7 @@ export class CircleDirective implements OnInit, OnChanges, OnDestroy {
     }
 
     setDomains() {
-        this.xScale.domain(this.xDomain).range([0, this._chart.width]);
+        (this.xScale.domain(this.xDomain) as NwXAxisScale).range([0, this._chart.width]);
         this.yScale.domain(this.yDomain).range([this._chart.height, 0]);
     }
 
