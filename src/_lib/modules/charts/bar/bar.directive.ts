@@ -40,7 +40,7 @@ export class BarDirective implements OnInit, OnChanges, OnDestroy {
 
     ngOnChanges(changes: SimpleChanges) {
         const isDomainChange = (changes.xDomain || changes.yDomain) && ChartUtils.haveDomainsChanged(changes.xDomain, changes.yDomain);
-        const isDataChange = changes.point && !changes.point.firstChange && !ChartUtils.areDatasetsEqual([changes.point.previousValue], [changes.point.currentValue]);
+        const isDataChange = changes.value && !changes.value.firstChange && !ChartUtils.areDatasetsEqual([changes.value.previousValue], [changes.value.currentValue]);
         const barWidthChange = changes.barWidth && !changes.barWidth.firstChange && (changes.barWidth.previousValue !== changes.barWidth.currentValue);
 
         if (isDomainChange || isDataChange || barWidthChange) {
