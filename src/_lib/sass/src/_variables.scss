@@ -3,7 +3,7 @@ $nw-font-path: './assets/fonts' !default;
 
 //== Colors
 //
-$gray-base: #232323 !default;
+$gray-base: #12151c !default;
 $primary-base: #3d81ff !default;
 $secondary-base: #3c8f9a !default;
 $tertiary-base: #ff3d64 !default;
@@ -14,8 +14,8 @@ $gray-color-settings: (
     "name": "gray",
     "color": $gray-base,
     // "light-steps": (12, 24, 36, 48, 60, 72),
-    "light-steps": (8, 16, 36, 48, 60, 72, 78),
-    "dark-steps": (-8)
+    "light-steps": (4, 16, 24, 52, 68, 80, 88),
+    "dark-steps": (-4)
 );
 
 $alt-color-settings: (
