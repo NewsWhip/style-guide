@@ -1,21 +1,21 @@
 // Regular / default
 @font-face {
-    font-family: 'ProximaNova';
-    src: url('#{$nw-font-path}/proxima_nova_regular.woff') format('woff');
+    font-family: 'Rubik';
+    src: url('#{$nw-font-path}/Rubik-Regular.ttf') format('ttf');
     font-weight: normal;
     font-style: normal;
 }
 // Bold
 @font-face {
-    font-family: 'ProximaNova';
-    src: url('#{$nw-font-path}/proxima_nova_bold.woff') format('woff');
+    font-family: 'Rubik';
+    src: url('#{$nw-font-path}/Rubik-Bold.ttf') format('ttf');
     font-weight: bold;
     font-style: normal;
 }
 // Semibold
 @font-face {
-    font-family: 'ProximaNova';
-    src: url('#{$nw-font-path}/proxima_nova_semibold.woff') format('woff');
+    font-family: 'Rubik';
+    src: url('#{$nw-font-path}/Rubik-SemiBold.ttf') format('ttf');
     font-weight: 600;
     font-style: normal;
 }
