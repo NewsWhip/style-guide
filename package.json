@@ -29,7 +29,7 @@
     "@angular/common": "^7.2.15",
     "@angular/core": "^7.2.15",
     "@angular/forms": "^7.2.15",
-    "@fortawesome/fontawesome-pro": "^5.9.0",
+    "@fortawesome/fontawesome-pro": "^5.7.2",
     "d3": "^5.7.0",
     "ngx-bootstrap": ">=4.0.0 <6.0.0"
   },
