@@ -8,14 +8,7 @@
 // Bold
 @font-face {
     font-family: 'Rubik';
-    src: url('#{$nw-font-path}/rubik_bold.woff') format('woff');
-    font-weight: bold;
-    font-style: normal;
-}
-// Semibold
-@font-face {
-    font-family: 'Rubik';
-    src: url('#{$nw-font-path}/rubik_medium.woff') format('ttf');
-    font-weight: 600;
+    src: url('#{$nw-font-path}/rubik_medium.woff') format('woff');
+    font-weight: 500;
     font-style: normal;
 }

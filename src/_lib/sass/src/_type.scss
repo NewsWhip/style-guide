@@ -363,11 +363,11 @@ h1, h3, h4, h5,
   }
 }
 
-h1.nw-text, .h1.nw-text { font-weight: normal; font-size: 36px; }
+h1.nw-text, .h1.nw-text { font-weight: 500; font-size: 36px; }
 // No h2 for now
 h3.nw-text, .h3.nw-text { font-weight: normal; font-size: 24px; }
-h4.nw-text, .h4.nw-text { font-weight: bold; font-size: 20px; }
-h5.nw-text, .h5.nw-text { font-weight: bold; font-size: 16px; }
+h4.nw-text, .h4.nw-text { font-weight: 500; font-size: 20px; }
+h5.nw-text, .h5.nw-text { font-weight: 500; font-size: 16px; }
 
 p {
   &.nw-text {
