@@ -5,7 +5,7 @@ const rimraf = require("rimraf");
 const ngcPath = path.join('node_modules', '.bin', 'ngc');
 const nodeSassPath = path.join('node_modules', '.bin', 'node-sass');
 const modulesDirectory = path.join('src', '_lib', 'modules');
-const utils = require('./utils');
+const utils = require('../utils');
 
 const isDirectory = source => fs.lstatSync(source).isDirectory();
 

@@ -19,8 +19,10 @@
     "g:c": "ng g component --app=1",
     "g:d": "ng g directive --app=1",
     "g:s": "ng g service --app=1",
-    "package:build": "node build.js",
-    "package:release": "node release.js"
+    "package:build": "node scripts/build.js",
+    "package:pack": "node scripts/pack.js",
+    "package:compress": "node scripts/compress.js",
+    "package:release": "node scripts/release.js"
   },
   "private": true,
   "peerDependencies": {
