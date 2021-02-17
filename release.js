@@ -30,12 +30,14 @@ const run = () => {
 
     utils.logSeparator();
 
-    process.stdout.write('Publishing package');
+    if (process.argv.indexOf('nopublish') === -1) {
+        process.stdout.write('Publishing package');
 
-    try {
-        execSync(`npm publish ${utils.distPath}`);
-    } catch(err) {
-        throw err;
+        try {
+            execSync(`npm publish ${utils.distPath}`);
+        } catch(err) {
+            throw err;
+        }
     }
 }
 
