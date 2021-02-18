@@ -5,8 +5,6 @@ const jsonPath = path.join('node_modules', '.bin', 'json');
 const utils = require('../utils');
 
 const run = () => {
-    require('./build');
-
     process.stdout.write('Copying package.json file');
 
     const sourceFile = 'package.json';
