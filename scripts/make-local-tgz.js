@@ -6,7 +6,7 @@ const utils = require('../utils');
 const pjson = require('../package.json');
 
 const run = () => {
-    require('./pack');
+    require('./copy-package-file');
 
     process.stdout.write(`Navigating to ${utils.distPath} directory & compressing package \n`);
 
