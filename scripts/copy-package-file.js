@@ -2,11 +2,9 @@ const fs = require('fs-extra');
 const path = require('path');
 const execSync = require('child_process').execSync;
 const jsonPath = path.join('node_modules', '.bin', 'json');
-const utils = require('./utils');
+const utils = require('../utils');
 
 const run = () => {
-    require('./build');
-
     process.stdout.write('Copying package.json file');
 
     const sourceFile = 'package.json';
@@ -29,15 +27,6 @@ const run = () => {
     }
 
     utils.logSeparator();
-
-    process.stdout.write('Publishing package');
-
-    try {
-        execSync(`npm publish ${utils.distPath}`);
-    } catch(err) {
-        throw err;
-    }
 }
 
 run();
-
