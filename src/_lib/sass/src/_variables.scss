@@ -9,6 +9,15 @@ $secondary-base: #3c8f9a !default;
 $tertiary-base: #ff3d64 !default;
 $alt-base: #ffcc33 !default;
 $coolgray-base: #333c4e !default;
+$levels-base: #121417 !default;
+
+// todo DM add docs not to use light-steps
+$levels-color-settings: (
+    "name": "levels",
+    "color": $levels-base,
+    "light-steps": (3, 6, 9, 12, 15, 18),
+    "dark-steps": (-8)
+);
 
 $gray-color-settings: (
     "name": "gray",
@@ -54,6 +63,7 @@ $coolgray-color-settings: (
 );
 
 $color-settings-maps: (
+    $levels-color-settings,
     $gray-color-settings,
     $alt-color-settings,
     $tertiary-color-settings,
@@ -61,6 +71,15 @@ $color-settings-maps: (
     $primary-color-settings,
     $coolgray-color-settings
 );
+
+//== Levels colors
+//
+$level0: get-color("levels"); // #121417
+$level1: get-color("levels", light); // #191b20 (todo DM why is it #191C1F in Colm's design?)
+$level2: get-color("levels", x-light); // #1F2328
+$level3: get-color("levels", 2x-light); // #262A31
+$level4: get-color("levels", 3x-light); // #2D3239
+$level5: get-color("levels", 4x-light); // #343942
 
 //== Colors (Standalone)
 //
@@ -82,12 +101,18 @@ $brand-danger:  get-color("tertiary") !default;
 //== Scaffolding
 //
 //## Settings for some of the most global styles.
-// $body-bg:               #fff !default;
-$body-bg:               get-color('gray', light) !default;
-$text-color:            #ffffff !default;
-$link-color:            #ffffff !default;
-$link-hover-color:      get-color("primary", 2x-light);
+$body-bg:               $level1 !default;
+
+$text-color:            #e2e5e9 !default;
+$text-color-secondary:  rgba($text-color, 0.6) !default;
+$text-color-disabled:   rgba($text-color, 0.4) !default;
+
+$link-color:            $text-color !default;
+$link-hover-color:      get-color("primary", x-light);
 $link-hover-decoration: underline !default;
+
+$divider-color-primary: rgba($text-color, 0.25);
+$divider-color-secondary: rgba($text-color, 0.15);
 
 //== Typography
 //
@@ -203,8 +228,8 @@ $cursor-disabled:                not-allowed !default;
 
 //== Dropdowns
 //
-$dropdown-bg:                 #000000;
-$dropdown-link-color:         #ffffff;
+$dropdown-bg:                   #000000;
+$dropdown-link-color:           rgba($text-color, 0.8);
 $dropdown-border:               get-color("gray", 3x-light);
 $dropdown-link-hover-color:     $link-hover-color;
 $dropdown-link-hover-bg:        transparent;
@@ -326,7 +351,7 @@ $navbar-default-link-hover-color:          #333 !default;
 $navbar-default-link-hover-bg:             transparent !default;
 $navbar-default-link-active-color:         #555 !default;
 $navbar-default-link-active-bg:            darken($navbar-default-bg, 6.5%) !default;
-$navbar-default-link-disabled-color:       #ccc !default;
+$navbar-default-link-disabled-color:       $text-color-disabled !default;
 $navbar-default-link-disabled-bg:          transparent !default;
 
 // Navbar brand label
@@ -375,8 +400,8 @@ $navbar-inverse-toggle-border-color:        #333 !default;
 $nav-link-padding:                          $padding-base-vertical + 1 $padding-base-horizontal + 1 !default;
 $nav-link-hover-bg:                         get-color("gray", dark) !default;
 
-$nav-disabled-link-color:                   rgba(get-color("gray", 4x-light), 0.5) !default;
-$nav-disabled-link-hover-color:             rgba(get-color("gray", 4x-light), 0.5) !default;
+$nav-disabled-link-color:                   $text-color-disabled !default;
+$nav-disabled-link-hover-color:             $text-color-disabled !default;
 
 //== Tabs
 $nav-tabs-border-color:                     #ddd !default;
@@ -412,7 +437,7 @@ $pagination-active-color:              get-color('primary', 2x-light) !default;
 $pagination-active-bg:                 get-color("gray", dark) !default;
 $pagination-active-border:             get-color("gray", dark) !default;
 
-$pagination-disabled-color:            rgba(get-color('gray', 4x-light), 0.5) !default;
+$pagination-disabled-color:            $text-color-disabled !default;
 $pagination-disabled-bg:               transparent !default;
 $pagination-disabled-border:           transparent !default;
 
@@ -635,25 +660,25 @@ $list-group-border:             transparent !default;
 $list-group-border-radius:      0 !default;
 
 //** Background color of single list items on hover
-$list-group-hover-bg:           get-color("gray", light) !default;
+$list-group-hover-bg:           $level4 !default;
 //** Text color of active list items
-$list-group-active-color:       #ffffff !default;
+$list-group-active-color:       $text-color !default;
 //** Background color of active list items
-$list-group-active-bg:          get-color("gray", light) !default;
+$list-group-active-bg:          $level4;
 //** Border color of active list elements
 $list-group-active-border:      $list-group-active-bg !default;
 //** Text color for content within active list items
-$list-group-active-text-color:  #ffffff !default;
+$list-group-active-text-color:  $text-color !default;
 
 //** Text color of disabled list items
-$list-group-disabled-color:      rgba(get-color('gray', 4x-light), 0.5) !default;
+$list-group-disabled-color:      $text-color-disabled !default;
 //** Background color of disabled list items
 $list-group-disabled-bg:         transparent !default;
 //** Text color for content within disabled list items
 $list-group-disabled-text-color: $list-group-disabled-color !default;
 
-$list-group-link-color:         get-color("gray", 4x-light) !default;
-$list-group-link-hover-color:   #ffffff !default;
+$list-group-link-color:         $text-color-secondary !default;
+$list-group-link-hover-color:   $text-color !default;
 $list-group-link-heading-color: #333 !default;
 
 

@@ -11,13 +11,13 @@ h1, h2, h3, h4, h5, h6,
   font-family: $headings-font-family;
   font-weight: $headings-font-weight;
   line-height: $headings-line-height;
-  color: $headings-color;
+  color: $text-color;
 
   small,
   .small {
     font-weight: normal;
     line-height: 1;
-    color: $headings-small-color;
+    color: $text-color-secondary;
   }
 }
 
@@ -70,7 +70,6 @@ p {
   }
 }
 
-
 // Emphasis & misc
 // -------------------------
 
@@ -104,9 +103,9 @@ mark,
 }
 
 // Contextual colors
-.text-muted {
+/*.text-muted {
   color: $text-muted;
-}
+}*/
 
 @include text-emphasis-variant('.text-primary', $brand-primary);
 
@@ -150,8 +149,8 @@ mark,
     font-size: 24px;
     line-height: 1.5;
     font-weight: normal;
-    color: get-color("gray", 5x-light);
-    border-bottom: 1px solid get-color("gray", base);
+    //color: get-color("gray", 5x-light);
+    border-bottom: 1px solid $divider-color-primary;
     padding: 32px 0 16px 0;
     margin-bottom: 32px;
 }
