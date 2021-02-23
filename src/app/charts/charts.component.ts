@@ -5,7 +5,8 @@ import { DecimalPipe } from '@angular/common';
 import { bisector } from 'd3-array';
 import { AxisTimeInterval } from 'd3-axis';
 import { curveCardinal, curveBasis, curveLinear, curveStep, curveStepAfter, curveStepBefore } from 'd3-shape';
-import {YAxisDirective, XAxisDirective, CircleDirective} from '../../_lib/modules/charts';
+import { YAxisDirective, XAxisDirective, CircleDirective } from '../../_lib/modules/charts';
+import { ScaleTime } from 'd3-scale';
 
 @Component({
     selector: 'app-charts',
@@ -253,7 +254,7 @@ export class ChartsComponent implements OnInit {
 
     positionToCoordinates(xDomain: [number, number], yDomain: [number, number], position: [number, number]): [Date, number] {
         return [
-            this.xAxis.scale.domain(xDomain).invert(position[0]),
+            (this.xAxis.scale as ScaleTime<number, number>).domain(xDomain).invert(position[0]),
             this.yAxis.scale.domain(yDomain).invert(position[1])
         ]
     }

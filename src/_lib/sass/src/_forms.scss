@@ -722,39 +722,10 @@ input[type="checkbox"] {
         }
     }
     &.switch-sm {
-        label {
-            line-height: 24px;
-
-            &.switch-toggle {
-                height: 24px;
-                width: 42px;
-                border-radius: 12px;
-                font-size: 12px;
-
-                .on-off {
-                    height: 18px;
-                    width: 18px;
-                    line-height: 18px;
-                    border-radius: 50%;
-
-                    &:after {
-                        margin-left: 20px;
-                    }
-                    &:before {
-                        margin-left: -20px;
-                    }
-                }
-            }
-        }
-        input {
-            &:checked {
-                ~ label.switch-toggle {
-                    .on-off {
-                        left: 21px;
-                    }
-                }
-            }
-        }
+        @include switch(24px);
+    }
+    &.switch-xs {
+        @include switch(18px);
     }
     &.switch-pause {
         .switch-toggle {

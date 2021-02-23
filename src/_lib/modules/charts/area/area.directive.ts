@@ -1,10 +1,11 @@
 import { Directive, Input, ElementRef, OnInit, OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
 import { area, Area, CurveFactory, curveLinear } from 'd3-shape';
 import { ChartComponent } from '../chart.component';
-import { ScaleTime, ScaleLinear, scaleTime, scaleLinear } from 'd3-scale';
+import { ScaleLinear, scaleTime, scaleLinear } from 'd3-scale';
 import { select, Selection } from 'd3-selection';
 import { ChartUtils } from '../chart.utils';
 import { Subscription } from 'rxjs';
+import { NwXAxisScale } from '../axis/models/XAxisScale';
 
 type AreaDatum = [number, number] | [number, number, number]
 
@@ -25,11 +26,11 @@ export class AreaDirective implements OnInit, OnChanges, OnDestroy {
     @Input() animDuration: number = ChartUtils.ANIMATION_DURATION;
     @Input() curve: CurveFactory = curveLinear;
     @Input() easing: (normalizedTime: number) => number = ChartUtils.ANIMATION_EASING;
+    @Input() xScale: NwXAxisScale = scaleTime();
 
     public areaSelection: Selection<SVGPathElement, Array<AreaDatum>, SVGElement, any>;
     public area: Area<AreaDatum>;
-    public xScale: ScaleTime<number, number>;
-    public yScale: ScaleLinear<number, number>;
+    public yScale: ScaleLinear<number, number> = scaleLinear();
 
     private _chartResizeSub: Subscription;
 
@@ -40,8 +41,6 @@ export class AreaDirective implements OnInit, OnChanges, OnDestroy {
 
     ngOnInit() {
         this.areaSelection = select(this._elRef.nativeElement as SVGPathElement);
-        this.xScale = scaleTime()
-        this.yScale = scaleLinear();
 
         this.setDomains();
         this.setArea();
@@ -51,9 +50,9 @@ export class AreaDirective implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        let isDomainChange = (changes.xDomain || changes.yDomain) && ChartUtils.haveDomainsChanged(changes.xDomain, changes.yDomain);
-        let isDataChange = changes.data && !changes.data.firstChange && !ChartUtils.areDatasetsEqual(changes.data.previousValue, changes.data.currentValue);
-        let isCurveChange = changes.curve && !changes.curve.firstChange && (changes.curve.currentValue !== changes.curve.previousValue);
+        const isDomainChange = (changes.xDomain || changes.yDomain) && ChartUtils.haveDomainsChanged(changes.xDomain, changes.yDomain);
+        const isDataChange = changes.data && !changes.data.firstChange && !ChartUtils.areDatasetsEqual(changes.data.previousValue, changes.data.currentValue);
+        const isCurveChange = changes.curve && !changes.curve.firstChange && (changes.curve.currentValue !== changes.curve.previousValue);
 
         if (isDomainChange || isDataChange || isCurveChange) {
             this.setDomains();
@@ -63,7 +62,7 @@ export class AreaDirective implements OnInit, OnChanges, OnDestroy {
     }
 
     setDomains(): void {
-        this.xScale.domain(this.xDomain).range([0, this._chart.width]);
+        (this.xScale.domain(this.xDomain) as NwXAxisScale).range([0, this._chart.width]);
         this.yScale.domain(this.yDomain).range([this._chart.height, 0]);
     }
 
@@ -77,7 +76,7 @@ export class AreaDirective implements OnInit, OnChanges, OnDestroy {
     drawArea(): void {
         this.areaSelection
             .datum(this.data)
-            .attr('d', this.area)
+            .attr('d', this.area);
     }
 
     updateArea(): void {

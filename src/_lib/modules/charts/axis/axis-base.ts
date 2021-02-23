@@ -7,7 +7,7 @@ import { Subscription } from "rxjs";
 
 export abstract class AxisBase implements OnInit, OnChanges, OnDestroy {
 
-    @Input() tickFormat: (value: number | Date | { valueOf(): number; }) => string
+    @Input() tickFormat: (value: number | Date | { valueOf(): number; }) => string;
     @Input() tickCount: number | AxisTimeInterval;
     @Input() tickSizeOuter: number = 6;
     @Input() tickValues: any[];
@@ -40,8 +40,8 @@ export abstract class AxisBase implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnChanges(c: SimpleChanges) {
-        let isDomainChange = ChartUtils.hasInputChanged(c.domain);
-        let isTickSettingsChange = ChartUtils.hasInputChanged(c.tickCount) ||
+        const isDomainChange = ChartUtils.hasInputChanged(c.domain);
+        const isTickSettingsChange = ChartUtils.hasInputChanged(c.tickCount) ||
             ChartUtils.hasInputChanged(c.tickSizeOuter) ||
             ChartUtils.hasInputChanged(c.showGuidlines) ||
             ChartUtils.hasInputChanged(c.tickValues);

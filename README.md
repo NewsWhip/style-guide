@@ -130,12 +130,12 @@ This final step in the release process above is
 We don't want to publish all our assets to npm, only the assets required by the consumer. In order to achieve this we run our release script which builds the required files to the `distribution` folder.
 
 ```shell
-> ./release.sh
+> npm run package:release
 ```
 
 This script does a few things:
 
-1. It runs the `build.sh` script which does the following
+1. It runs the `build.js` script which does the following
    - Cleans the `distribution` folder
    - Compiles each Angular module with `ngc` using the specific `tsconfig.build.json` for that module
    - Copies the `sass` folder 
@@ -161,3 +161,10 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 ### Build
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+
+### Building local versions
+
+Sometimes we won't want to release a beta version for testing changes, namely when making extensive changes that require continuous local testing inside the product. For this purpose we can run the `make-local-tgz` script and use it as follows:  
+- Make a `.tgz` package of Style Guide by running `npm run package:make-local-tgz`.
+- Copy absolute path of newly built `.tgz` package from console logs.
+- Paste it into the product's (e.g. Spike's) `package.json` file in place of the current `nw-style-guide` version to test your SG changes locally, without the need to publish a beta version.
