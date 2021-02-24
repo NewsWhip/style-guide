@@ -1,20 +1,40 @@
 <div>
     <h2 class="page-header">Color palette</h2>
-<!--// todo DM Add Levels, add docs not to use light-steps.-->
     <div *ngFor="let colorName of colorNames; let cIndex = index;">
         <h3 style="text-transform: capitalize">{{colorName}}</h3>
 
-        <div class="color-variants">
-            <div class="color" *ngFor="let shade of shades; let sIndex = index;">
-                <code *ngIf="showColorCodes" class="hex text-center" [innerHTML]="getColors(splash)">
-                </code>
-                <div #splash class="splash bg-{{colorName}}-{{shade}}"></div>
 
-                <code class="sass-code">
-                    get-color("{{colorName}}", <strong>{{shade}}</strong>)
-                </code>
-            </div>
-        </div>
+            <ng-container *ngIf="colorName === 'levels'">
+                <div class="color-variants">
+                    <div *ngFor="let shade of levelsShades; let sIndex = index;" class="color">
+                        <code *ngIf="showColorCodes" [innerHTML]="getColors(splash)" class="hex text-center">
+                        </code>
+                        <div #splash class="splash bg-{{colorName}}-{{shade}}"></div>
+
+                        <code class="sass-code">
+                            <strong>$level{{sIndex}}</strong>
+                        </code>
+                    </div>
+                </div>
+                <em>
+                    "Levels" colours should be used directly through variables <strong>$level0-5</strong> rather than with <code>get-color()</code>,
+                    e.g <code>background-color: $level1;</code>
+                </em>
+            </ng-container>
+
+            <ng-container *ngIf="colorName !== 'levels'">
+                <div class="color-variants">
+                    <div class="color" *ngFor="let shade of shades; let sIndex = index;">
+                        <code *ngIf="showColorCodes" class="hex text-center" [innerHTML]="getColors(splash)">
+                        </code>
+                        <div #splash class="splash bg-{{colorName}}-{{shade}}"></div>
+
+                        <code class="sass-code">
+                            get-color("{{colorName}}", <strong>{{shade}}</strong>)
+                        </code>
+                    </div>
+                </div>
+            </ng-container>
     </div>
 
     <h2 class="page-header">Standalone colors</h2>

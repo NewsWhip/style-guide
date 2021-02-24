@@ -29,6 +29,8 @@ export class ColorsComponent implements OnInit {
         "6x-light"
     ];
 
+    public levelsShades = this.shades.slice(1, 7);
+
     public standaloneColors = [
         "yellow",
         "green"
