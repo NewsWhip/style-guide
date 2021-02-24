@@ -96,11 +96,12 @@
 // Use on `li`s or `div`s within the `.list-group` parent.
 .list-group-item {
     position: relative;
-    padding: 4px 12px;
+    padding: 4px 8px;
     margin-bottom: 1px;
     background-color: $list-group-bg;
+    border-radius: $border-radius-base;
     font-size: 14px;
-    line-height: 20;
+    line-height: 20px;
 
     &,
     > a {
