@@ -1,10 +1,11 @@
-import { Input, OnInit, ElementRef, OnChanges, SimpleChanges, OnDestroy } from "@angular/core";
+import { Input, OnInit, ElementRef, OnChanges, SimpleChanges, OnDestroy, Directive } from "@angular/core";
 import { Axis, AxisTimeInterval } from 'd3-axis';
 import { ChartUtils } from "../chart.utils";
 import { select, Selection } from "d3-selection";
 import { ChartComponent } from "../chart.component";
 import { Subscription } from "rxjs";
 
+@Directive()
 export abstract class AxisBase implements OnInit, OnChanges, OnDestroy {
 
     @Input() tickFormat: (value: number | Date | { valueOf(): number; }) => string;
