@@ -7,8 +7,7 @@ import { Toaster } from './toasts.service';
   imports: [
     CommonModule
   ],
-  declarations: [ToastsComponent],
-  entryComponents: [ToastsComponent]
+  declarations: [ToastsComponent]
 })
 export class ToastsModule {
   static forRoot(): ModuleWithProviders<ToastsModule> {
