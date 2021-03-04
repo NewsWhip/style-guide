@@ -102,11 +102,6 @@ mark,
   text-overflow: ellipsis;
 }
 
-// Contextual colors
-/*.text-muted {
-  color: $text-muted;
-}*/
-
 @include text-emphasis-variant('.text-primary', $brand-primary);
 
 @include text-emphasis-variant('.text-success', $state-success-text);
@@ -149,7 +144,6 @@ mark,
     font-size: 24px;
     line-height: 1.5;
     font-weight: normal;
-    //color: get-color("gray", 5x-light);
     border-bottom: 1px solid $divider-color-primary;
     padding: 32px 0 16px 0;
     margin-bottom: 32px;

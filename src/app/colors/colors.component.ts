@@ -5,7 +5,6 @@ import { Component, OnInit, ElementRef, ViewChildren, QueryList, AfterViewInit, 
     templateUrl: './colors.component.html'
 })
 export class ColorsComponent implements OnInit {
-// todo DM Add Levels, add docs not to use light-steps.
     public showColorCodes: boolean = false;
     public colorNames = [
         "levels",
