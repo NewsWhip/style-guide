@@ -402,15 +402,15 @@ $nav-disabled-link-color:                   $text-color-disabled !default;
 $nav-disabled-link-hover-color:             $text-color-disabled !default;
 
 //== Tabs
-$nav-tabs-border-color:                     #ddd !default;
+$nav-tabs-border-color:                     $divider-color-secondary !default;
 
 $nav-tabs-link-hover-border-color:          get-color('gray', 3x-light) !default;
 
 $nav-tabs-active-link-hover-bg:             $body-bg !default;
-$nav-tabs-active-link-hover-color:          white !default;
-$nav-tabs-active-link-hover-border-color:   #ddd !default;
+$nav-tabs-active-link-hover-color:          $text-color !default;
+$nav-tabs-active-link-hover-border-color:   $divider-color-secondary !default;
 
-$nav-tabs-justified-link-border-color:            #ddd !default;
+$nav-tabs-justified-link-border-color:            $divider-color-secondary !default;
 $nav-tabs-justified-active-link-border-color:     $body-bg !default;
 
 //== Pills
@@ -846,4 +846,4 @@ $dl-horizontal-offset:        $component-offset-horizontal !default;
 //** Point at which .dl-horizontal becomes horizontal
 $dl-horizontal-breakpoint:    $grid-float-breakpoint !default;
 //** Horizontal line color.
-$hr-border:                   get-color("gray", base) !default;
+$hr-border:                   $divider-color-secondary !default;
