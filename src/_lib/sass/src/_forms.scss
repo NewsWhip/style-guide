@@ -35,7 +35,7 @@ label {
     max-width: 100%; // Force IE8 to wrap long content (see https://github.com/twbs/bootstrap/issues/13141)
     margin-bottom: 4px;
     font-weight: normal;
-    color: #ffffff;
+    color: $text-color;
 }
 
 
@@ -240,15 +240,15 @@ input[type="search"] {
         margin-bottom: 0;
         display: inline-flex;
         align-items: center;
-        color: get-color("gray", 4x-light);
+        color: $text-color-secondary;
 
         &:before {
             font-family: "Font Awesome 5 Pro";
             font-weight: 900;
             content: "\f00c";
             position: relative;
-            background: #ffffff;
-            color: #ffffff;
+            background-color: $text-color;
+            color: $text-color;
             width: 16px;
             min-width: 16px;
             height: 16px;
@@ -272,7 +272,7 @@ input[type="search"] {
         &:checked {
             ~ label {
                 &:before {
-                    background: get-color("primary", base);
+                    background-color: get-color("primary", base);
                 }
             }
         }
@@ -321,7 +321,7 @@ input[type="search"] {
     &.checkbox-placeholder {
         input[type="checkbox"]:not(:checked) {
             ~ label:before {
-                color: get-color("gray", 4x-light);
+                color: $text-color-secondary;
             }
         }
     }
@@ -331,7 +331,7 @@ input[type="search"] {
 .radio-inline {
     label:before {
         content: " ";
-        border: 6px solid #ffffff;
+        border: 6px solid $divider-color-secondary;
         border-radius: 50%;
         transition-property: border-color;
         transition-timing-function: ease-in-out;
@@ -637,19 +637,19 @@ input[type="checkbox"] {
         line-height: 32px;
         cursor: pointer;
         margin-bottom: 0;
-        color: get-color("gray", 4x-light);
+        color: $text-color-secondary;
 
         &.switch-toggle {
             position: relative;
             content: " ";
             display: inline-block;
-            background-color: get-color("gray", base);
+            background-color: $level1;
             height: 32px;
             width: 65px;
             border-radius: 16px;
             font-size: 16px;
             font-weight: lighter;
-            color: #ffffff;
+            color: $text-color;
             overflow: hidden;
             margin-right: 10px;
             transition-property: background-color;
@@ -661,7 +661,7 @@ input[type="checkbox"] {
                 position: absolute;
                 top: 3px;
                 left: 3px;
-                background: #ffffff;
+                background-color: $text-color;
                 height: 26px;
                 width: 26px;
                 line-height: 28px;
@@ -669,7 +669,7 @@ input[type="checkbox"] {
                 transition-property: left;
                 transition-timing-function: ease-in-out;
                 transition-duration: 300ms;
-                box-shadow: 0px 1px 1px rgba(0,0,0,0.3);
+                box-shadow: 0 1px 1px rgba(0,0,0,0.3);
 
                 &::before,
                 &:after {

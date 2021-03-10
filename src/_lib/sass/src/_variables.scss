@@ -200,24 +200,24 @@ $btn-border-radius-xl:           $border-radius-xl !default;
 
 //== Forms
 //
-$input-bg:                       #ffffff !default;
-$input-bg-disabled:              #ffffff !default;
-$input-color:                    get-color("gray") !default;
-$input-border:                   get-color("gray", 5x-light) !default;
+$input-bg:                       $text-color !default;
+$input-bg-disabled:              $text-color !default;
+$input-color:                    $level1 !default;
+$input-border:                   $divider-color-secondary !default;
 // TODO: Rename `$input-border-radius` to `$input-border-radius-base` in v4
 // This has no effect on `<select>`s in some browsers, due to the limited stylability of `<select>`s in CSS.
 $input-border-radius:            3px !default;
 $input-border-radius-large:      3px !default;
 $input-border-radius-small:      3px !default;
 $input-border-focus:             get-color("primary", light) !default;
-$input-color-placeholder:        get-color("gray", 3x-light) !default;
+$input-color-placeholder:        $text-color-secondary !default;
 $input-height-base:              ($line-height-computed + ($padding-base-vertical * 2) + 2) !default;
 $input-height-large:             (ceil($font-size-large * $line-height-large) + ($padding-large-vertical) + 11) !default;
 $input-height-small:             (floor($font-size-small * $line-height-small) + ($padding-small-vertical * 2) + 2) !default;
 $form-group-margin-bottom:       24px !default;
-$legend-color:                   get-color("gray") !default;
-$legend-border-color:            #e5e5e5 !default;
-$input-group-addon-bg:           #232323 !default;
+$legend-color:                   $level1 !default;
+$legend-border-color:            $divider-color-secondary !default;
+$input-group-addon-bg:           $level1 !default;
 $input-group-addon-border-color: $input-border !default;
 
 //** Disabled cursor for form controls and buttons.
