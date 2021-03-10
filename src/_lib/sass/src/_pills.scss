@@ -54,6 +54,10 @@
     &.pill-editable {
         &:hover:not(.disabled) {
             background: get-color("primary", 3x-light);
+
+            &.invalid {
+                background-color: get-color("tertiary", 3x-light);
+            }
         }
     }
     &.invalid {
