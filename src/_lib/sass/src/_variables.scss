@@ -180,15 +180,15 @@ $table-cell-padding:            8px 16px !default;
 $table-condensed-cell-padding:  4px 8px !default;
 
 //** Default background color used for all tables.
-$table-bg:                      get-color('gray', x-light) !default;
+$table-bg:                      $level3 !default;
 //** Background color used for `.table-striped`.
-$table-bg-accent:               rgba(#000, 0.08) !default;
+$table-bg-accent:               $level2 !default;
 //** Background color used for `.table-hover`.
-$table-bg-hover:                get-color('gray', 3x-light) !default;
+$table-bg-hover:                $level4 !default;
 $table-bg-active:               $table-bg-hover !default;
 
 //** Border color for table and cell borders.
-$table-border-color:            get-color('gray', light) !default;
+$table-border-color:            $divider-color-secondary !default;
 
 //== Buttons
 //
