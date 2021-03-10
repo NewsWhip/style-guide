@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { RelativeWeightComponent } from './relative-weight.component';
 
@@ -6,7 +6,7 @@ describe('RelativeWeightComponent', () => {
   let component: RelativeWeightComponent;
   let fixture: ComponentFixture<RelativeWeightComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ RelativeWeightComponent ]
     })
