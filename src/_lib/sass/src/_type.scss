@@ -116,7 +116,7 @@ mark,
 
 @include text-emphasis-variant('.text-yellow', $yellow);
 
-@include text-emphasis-variant('.text-verified', #1CCAFD);
+@include text-emphasis-variant('.text-verified', #1CCAFD); // Twitter color
 
 // Contextual backgrounds
 // For now we'll leave these alongside the text classes until v4 when we can
@@ -310,16 +310,16 @@ address {
   text-decoration: none;
 
   &.nw-link-primary {
-      color: #ffffff;
+      color: $text-color;
 
       &:visited,
       &.visited {
-          color: get-color("gray", 4x-light);
+          color: $text-color-secondary;
       }
   }
 
   &.nw-link-secondary {
-      color: get-color("gray", 4x-light);
+      color: $text-color-secondary;
   }
 
   &.nw-link-tertiary {
@@ -333,7 +333,7 @@ address {
   &.nw-link-inline {
       &:visited,
       &.visited {
-          color: get-color("gray", 4x-light);
+          color: $text-color-secondary;
       }
 
       @extend .nw-link-tertiary;
@@ -383,8 +383,8 @@ small, .small {
   }
 }
 .nw-text-light {
-  color: #ffffff;
+  color: $text-color;
 }
 .nw-text-dark {
-  color: get-color("gray", light);
+  color: $level1;
 }

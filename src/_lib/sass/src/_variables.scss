@@ -470,15 +470,15 @@ $jumbotron-heading-font-size:    ceil(($font-size-base * 4.5)) !default;
 //== Form states and alerts
 //
 //## Define colors for form feedback states and, by default, alerts.
-$state-success-text:             #ffffff !default;
+$state-success-text:             $text-color !default;
 $state-success-bg:               get-color("secondary", base) !default;
 $state-success-border:           get-color("secondary", base) !default;
 
-$state-info-text:                #ffffff !default;
+$state-info-text:                $text-color !default;
 $state-info-bg:                  get-color("primary", light) !default;
 $state-info-border:              get-color("primary", light) !default;
 
-$state-warning-text:             get-color("gray", x-light) !default;
+$state-warning-text:             $text-color-secondary !default;
 $state-warning-bg:               get-color("alt", light) !default;
 $state-warning-border:           get-color("alt", light) !default;
 
@@ -518,6 +518,7 @@ $tooltip-color-light:               get-color("gray", base) !default;
 
 //** Tooltip arrow color
 $tooltip-arrow-color-light:        #fff;
+
 
 //== Popovers
 //
