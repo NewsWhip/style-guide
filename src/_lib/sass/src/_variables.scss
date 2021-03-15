@@ -164,9 +164,9 @@ $border-radius-xl:          3px !default;
 $border-radius-xs:          3px !default;
 
 //** Global color for active items (e.g., navs or dropdowns).
-$component-active-color:    #ffffff !default;
+$component-active-color:    $text-color !default;
 //** Global background color for active items (e.g., navs or dropdowns).
-$component-active-bg:       #000000 !default;
+$component-active-bg:       $level1 !default;
 
 //** Width of the `border` for generating carets that indicate dropdowns.
 $caret-width-base:          6px !default;
@@ -339,54 +339,54 @@ $navbar-padding-horizontal:        floor(($grid-gutter-width / 2)) !default;
 $navbar-padding-vertical:          (($navbar-height - $line-height-computed) / 2) !default;
 $navbar-collapse-max-height:       340px !default;
 
-$navbar-default-color:             #777 !default;
-$navbar-default-bg:                #f8f8f8 !default;
-$navbar-default-border:            darken($navbar-default-bg, 6.5%) !default;
+$navbar-default-color:             $text-color !default;
+$navbar-default-bg:                $level1 !default;
+$navbar-default-border:            $divider-color-secondary !default;
 
 // Navbar links
-$navbar-default-link-color:                #777 !default;
-$navbar-default-link-hover-color:          #333 !default;
+$navbar-default-link-color:                $text-color-secondary !default;
+$navbar-default-link-hover-color:          $text-color !default;
 $navbar-default-link-hover-bg:             transparent !default;
-$navbar-default-link-active-color:         #555 !default;
-$navbar-default-link-active-bg:            darken($navbar-default-bg, 6.5%) !default;
+$navbar-default-link-active-color:         $text-color !default;
+$navbar-default-link-active-bg:            transparent !default;
 $navbar-default-link-disabled-color:       $text-color-disabled !default;
 $navbar-default-link-disabled-bg:          transparent !default;
 
 // Navbar brand label
 $navbar-default-brand-color:               $navbar-default-link-color !default;
-$navbar-default-brand-hover-color:         darken($navbar-default-brand-color, 10%) !default;
+$navbar-default-brand-hover-color:         $navbar-default-link-hover-color !default;
 $navbar-default-brand-hover-bg:            transparent !default;
 
 // Navbar toggle
-$navbar-default-toggle-hover-bg:           #ddd !default;
-$navbar-default-toggle-icon-bar-bg:        #888 !default;
-$navbar-default-toggle-border-color:       #ddd !default;
+$navbar-default-toggle-hover-bg:           $level1 !default;
+$navbar-default-toggle-icon-bar-bg:        $level2 !default;
+$navbar-default-toggle-border-color:       $divider-color-secondary !default;
 
 
 //=== Inverted navbar
 // Reset inverted navbar basics
-$navbar-inverse-color:                      lighten(get-color('gray', 2x-light), 15%) !default;
-$navbar-inverse-bg:                         #222 !default;
-$navbar-inverse-border:                     darken($navbar-inverse-bg, 10%) !default;
+$navbar-inverse-color:                      $level1 !default;
+$navbar-inverse-bg:                         $text-color !default;
+$navbar-inverse-border:                     $text-color-secondary !default;
 
 // Inverted navbar links
-$navbar-inverse-link-color:                 lighten(get-color('gray', 2x-light), 15%) !default;
-$navbar-inverse-link-hover-color:           #fff !default;
+$navbar-inverse-link-color:                 $level1 !default;
+$navbar-inverse-link-hover-color:           $level2 !default;
 $navbar-inverse-link-hover-bg:              transparent !default;
 $navbar-inverse-link-active-color:          $navbar-inverse-link-hover-color !default;
-$navbar-inverse-link-active-bg:             darken($navbar-inverse-bg, 10%) !default;
-$navbar-inverse-link-disabled-color:        #444 !default;
+$navbar-inverse-link-active-bg:             transparent !default;
+$navbar-inverse-link-disabled-color:        rgba($level1, 0.4) !default;
 $navbar-inverse-link-disabled-bg:           transparent !default;
 
 // Inverted navbar brand label
 $navbar-inverse-brand-color:                $navbar-inverse-link-color !default;
-$navbar-inverse-brand-hover-color:          #fff !default;
+$navbar-inverse-brand-hover-color:          $level1 !default;
 $navbar-inverse-brand-hover-bg:             transparent !default;
 
 // Inverted navbar toggle
-$navbar-inverse-toggle-hover-bg:            #333 !default;
-$navbar-inverse-toggle-icon-bar-bg:         #fff !default;
-$navbar-inverse-toggle-border-color:        #333 !default;
+$navbar-inverse-toggle-hover-bg:            $text-color-secondary !default;
+$navbar-inverse-toggle-icon-bar-bg:         $text-color !default;
+$navbar-inverse-toggle-border-color:        $text-color-secondary !default;
 
 
 //== Navs
@@ -396,7 +396,7 @@ $navbar-inverse-toggle-border-color:        #333 !default;
 //=== Shared nav styles
 // Add plus 1 to each paddong because there are no border on nav pills
 $nav-link-padding:                          $padding-base-vertical + 1 $padding-base-horizontal + 1 !default;
-$nav-link-hover-bg:                         get-color("gray", dark) !default;
+$nav-link-hover-bg:                         $level1 !default;
 
 $nav-disabled-link-color:                   $text-color-disabled !default;
 $nav-disabled-link-hover-color:             $text-color-disabled !default;
@@ -404,7 +404,7 @@ $nav-disabled-link-hover-color:             $text-color-disabled !default;
 //== Tabs
 $nav-tabs-border-color:                     $divider-color-secondary !default;
 
-$nav-tabs-link-hover-border-color:          get-color('gray', 3x-light) !default;
+$nav-tabs-link-hover-border-color:          $text-color-secondary !default;
 
 $nav-tabs-active-link-hover-bg:             $body-bg !default;
 $nav-tabs-active-link-hover-color:          $text-color !default;
@@ -423,17 +423,17 @@ $nav-pills-active-link-hover-color:         $component-active-color !default;
 //
 //##
 
-$pagination-color:                     get-color('gray', 4x-light) !default;
+$pagination-color:                     $text-color-secondary !default;
 $pagination-bg:                        transparent !default;
 $pagination-border:                    transparent !default;
 
 $pagination-hover-color:               get-color('primary', 2x-light) !default;
-$pagination-hover-bg:                  get-color("gray", dark) !default;
-$pagination-hover-border:              get-color("gray", dark) !default;
+$pagination-hover-bg:                  $level1 !default;
+$pagination-hover-border:              $level1 !default;
 
 $pagination-active-color:              get-color('primary', 2x-light) !default;
-$pagination-active-bg:                 get-color("gray", dark) !default;
-$pagination-active-border:             get-color("gray", dark) !default;
+$pagination-active-bg:                 $level1 !default;
+$pagination-active-border:             $level1 !default;
 
 $pagination-disabled-color:            $text-color-disabled !default;
 $pagination-disabled-bg:               transparent !default;
