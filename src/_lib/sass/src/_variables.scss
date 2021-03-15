@@ -104,6 +104,7 @@ $body-bg:               $level1 !default;
 $text-color:            #e2e5e9 !default;
 $text-color-secondary:  rgba($text-color, 0.6) !default;
 $text-color-disabled:   rgba($text-color, 0.4) !default;
+$text-disabled-inverse: rgba($level1, 0.4) !default;
 
 $link-color:            $text-color !default;
 $link-hover-color:      get-color("primary", x-light);
@@ -210,7 +211,7 @@ $input-border-radius:            3px !default;
 $input-border-radius-large:      3px !default;
 $input-border-radius-small:      3px !default;
 $input-border-focus:             get-color("primary", light) !default;
-$input-color-placeholder:        $text-color-secondary !default;
+$input-color-placeholder:        $text-disabled-inverse !default;
 $input-height-base:              ($line-height-computed + ($padding-base-vertical * 2) + 2) !default;
 $input-height-large:             (ceil($font-size-large * $line-height-large) + ($padding-large-vertical) + 11) !default;
 $input-height-small:             (floor($font-size-small * $line-height-small) + ($padding-small-vertical * 2) + 2) !default;
@@ -375,7 +376,7 @@ $navbar-inverse-link-hover-color:           $level2 !default;
 $navbar-inverse-link-hover-bg:              transparent !default;
 $navbar-inverse-link-active-color:          $navbar-inverse-link-hover-color !default;
 $navbar-inverse-link-active-bg:             transparent !default;
-$navbar-inverse-link-disabled-color:        rgba($level1, 0.4) !default;
+$navbar-inverse-link-disabled-color:        $text-disabled-inverse !default;
 $navbar-inverse-link-disabled-bg:           transparent !default;
 
 // Inverted navbar brand label
