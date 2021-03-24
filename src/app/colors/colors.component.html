@@ -3,16 +3,15 @@
     <div *ngFor="let colorName of colorNames; let cIndex = index;">
         <h3 style="text-transform: capitalize">{{colorName}}</h3>
 
-
             <ng-container *ngIf="colorName === 'levels'">
                 <div class="color-variants">
-                    <div *ngFor="let shade of levelsShades; let sIndex = index;" class="color">
+                    <div *ngFor="let level of levels" class="color">
                         <code *ngIf="showColorCodes" [innerHTML]="getColors(splash)" class="hex text-center">
                         </code>
-                        <div #splash class="splash bg-{{colorName}}-{{shade}}"></div>
+                        <div #splash class="splash bg-{{colorName}}-level{{level}}"></div>
 
                         <code class="sass-code">
-                            <strong>$level{{sIndex}}</strong>
+                            <strong>$level{{level}}</strong>
                         </code>
                     </div>
                 </div>

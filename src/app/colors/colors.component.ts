@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChildren, QueryList, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 
 @Component({
     selector: 'app-colors',
@@ -28,7 +28,7 @@ export class ColorsComponent implements OnInit {
         "6x-light"
     ];
 
-    public levelsShades = this.shades.slice(1, 7);
+    public levels = Array.from(Array(6).keys()); // create array & fill with 0-5
 
     public standaloneColors = [
         "yellow",
@@ -40,7 +40,7 @@ export class ColorsComponent implements OnInit {
     ngOnInit() {
         setTimeout(() => {
             this.showColorCodes = true;
-        }, 100)
+        }, 100);
     }
 
     getColors(splash):string {

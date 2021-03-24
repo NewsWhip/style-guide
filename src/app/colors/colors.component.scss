@@ -52,6 +52,10 @@ app-colors {
         }
     }
 
+    @each $index, $var in $levels-map {
+        .bg-levels-level#{$index} {background-color: $var;}
+    }
+
     .bg-yellow {
         background: $yellow;
     }

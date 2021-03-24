@@ -11,13 +11,6 @@ $alt-base: #ffcc33 !default;
 $coolgray-base: #333c4e !default;
 $levels-base: #121417 !default;
 
-$levels-color-settings: (
-    "name": "levels",
-    "color": $levels-base,
-    "light-steps": (3, 6, 9, 12, 15, 18),
-    "dark-steps": (-8)
-);
-
 $gray-color-settings: (
     "name": "gray",
     "color": $gray-base,
@@ -61,7 +54,7 @@ $coolgray-color-settings: (
 );
 
 $color-settings-maps: (
-    $levels-color-settings,
+    //$levels-color-settings,
     $gray-color-settings,
     $alt-color-settings,
     $tertiary-color-settings,
@@ -72,12 +65,14 @@ $color-settings-maps: (
 
 //== Levels colors
 //
-$level0: get-color("levels"); // #121417
-$level1: get-color("levels", light); // #191b20
-$level2: get-color("levels", x-light); // #1F2328
-$level3: get-color("levels", 2x-light); // #262A31
-$level4: get-color("levels", 3x-light); // #2D3239
-$level5: get-color("levels", 4x-light); // #343942
+$level0: $levels-base; // #121417
+$level1: lighten($levels-base, 3); // #191b20
+$level2: lighten($levels-base, 6); // #1F2328
+$level3: lighten($levels-base, 9); // #262A31
+$level4: lighten($levels-base, 12); // #2D3239
+$level5: lighten($levels-base, 15); // #343942
+// Used in preview app
+$levels-map: (0: $level0, 1: $level1, 2: $level2, 3: $level3, 4: $level4, 5: $level5);
 
 //== Colors (Standalone)
 //
