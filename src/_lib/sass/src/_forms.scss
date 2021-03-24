@@ -340,7 +340,7 @@ input[type="search"] {
     input[type="radio"]:checked {
         ~ label:before {
             border-color: get-color("primary", base);
-            background: white;
+            background: $text-color;
         }
     }
 }

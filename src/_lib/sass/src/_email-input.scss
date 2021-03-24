@@ -42,6 +42,7 @@ nw-email-input {
         max-width: 100%;
         height: 24px;
         margin-bottom: 6px;
+        background-color: $text-color;
 
         &:focus {
             outline: none;
