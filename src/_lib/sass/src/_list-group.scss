@@ -109,13 +109,6 @@
         display: block;
         text-decoration: none;
     }
-    // Round the first and last items
-    &:first-child {
-        @include border-top-radius($list-group-border-radius);
-    }
-    &:last-child {
-        @include border-bottom-radius($list-group-border-radius);
-    }
     &[data-toggle="collapse"] {
         &:before {
             font-family: "Font Awesome 5 Pro";
@@ -158,7 +151,6 @@
         color: $list-group-active-color;
         background-color: $list-group-active-bg;
         border-color: $list-group-active-border;
-        box-shadow: inset 4px 0 0 get-color("primary", base);
     }
     &:hover {
         text-decoration: none;
