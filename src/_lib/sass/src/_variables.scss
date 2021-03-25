@@ -54,7 +54,6 @@ $coolgray-color-settings: (
 );
 
 $color-settings-maps: (
-    //$levels-color-settings,
     $gray-color-settings,
     $alt-color-settings,
     $tertiary-color-settings,
@@ -71,8 +70,6 @@ $level2: lighten($levels-base, 6); // #1F2328
 $level3: lighten($levels-base, 9); // #262A31
 $level4: lighten($levels-base, 12); // #2D3239
 $level5: lighten($levels-base, 15); // #343942
-// Used in preview app
-$levels-map: (0: $level0, 1: $level1, 2: $level2, 3: $level3, 4: $level4, 5: $level5);
 
 //== Colors (Standalone)
 //

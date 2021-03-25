@@ -52,6 +52,8 @@ app-colors {
         }
     }
 
+    $levels-map: (0: $level0, 1: $level1, 2: $level2, 3: $level3, 4: $level4, 5: $level5);
+
     @each $index, $var in $levels-map {
         .bg-levels-level#{$index} {background-color: $var;}
     }
