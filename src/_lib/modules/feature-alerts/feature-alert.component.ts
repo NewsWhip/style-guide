@@ -37,7 +37,7 @@ import { IFeatureAlertParams } from './IFeatureAlertParams'
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FeatureAlertComponent implements OnInit {
-    @ViewChild('popTriggerEl') popTriggerEl;
+    @ViewChild('popTriggerEl', { static: true }) popTriggerEl;
     @Input() params: IFeatureAlertParams;
     @Output() callToActionClick: EventEmitter<any> = new EventEmitter<any>();
     isOpen: boolean;

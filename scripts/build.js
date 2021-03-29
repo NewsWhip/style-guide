@@ -3,7 +3,7 @@ const path = require('path');
 const execSync = require('child_process').execSync;
 const rimraf = require("rimraf");
 const ngcPath = path.join('node_modules', '.bin', 'ngc');
-const nodeSassPath = path.join('node_modules', '.bin', 'node-sass');
+const sass = require('sass');
 const modulesDirectory = path.join('src', '_lib', 'modules');
 const utils = require('../utils');
 
@@ -32,7 +32,7 @@ const clean = () => {
 }
 
 const buildModules = () => {
-    const directories  = fs.readdirSync(modulesDirectory)
+    fs.readdirSync(modulesDirectory)
         .map(name => path.join(modulesDirectory, name))
         .filter(item => isDirectory(item))
         .forEach(directory => buildModule(directory))
@@ -98,14 +98,14 @@ const compileSass = () => {
     process.stdout.write('Compiling SCSS to CSS for CDN delivery');
 
     const sourceFile = path.join('src', '_lib', 'sass', 'styles.scss');
-    const args = [
-        `--o ${utils.distPath}`,
-        `--output-style compressed`,
-        `--quiet`
-    ];
+    const destFile = path.join(utils.distPath, 'styles.css');
 
     try {
-        execSync(`${nodeSassPath} ${sourceFile} ${args.join(' ')}`)
+        const result = sass.renderSync({
+            file: sourceFile,
+            outputStyle: 'compressed'
+        });
+        fs.writeFileSync(destFile, result.css);
         utils.onSuccess();
     } catch(err) {
         utils.onError();

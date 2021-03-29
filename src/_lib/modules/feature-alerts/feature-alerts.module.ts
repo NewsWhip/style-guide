@@ -16,7 +16,7 @@ import { HotspotComponent } from "./hotspot.component";
   exports: [FeatureAlertComponent, HotspotComponent]
 })
 export class FeatureAlertsModule {
-  static forRoot(): ModuleWithProviders {
+  static forRoot(): ModuleWithProviders<FeatureAlertsModule> {
     return {
       ngModule: FeatureAlertsModule,
       providers: [FeatureAlertsService]

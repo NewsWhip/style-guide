@@ -6,3 +6,5 @@ export { YAxisDirective } from './axis/y-axis.directive';
 export { CircleDirective } from './circle/circle.directive';
 export { BrushDirective } from './brush/brush.directive';
 export { BarDirective } from './bar/bar.directive';
+export { AreaDirective } from './area/area.directive';
+export { ChartTooltipDirective } from './tooltip/chart-tooltip.directive';

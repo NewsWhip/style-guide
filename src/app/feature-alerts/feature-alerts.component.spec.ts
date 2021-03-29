@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import {DebugElement, NO_ERRORS_SCHEMA} from '@angular/core';
 import { FeatureAlertsComponent } from './feature-alerts.component';
 
@@ -6,7 +6,7 @@ describe('FeatureAlertsComponent', () => {
     let component: FeatureAlertsComponent;
     let fixture: ComponentFixture<FeatureAlertsComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             declarations: [ FeatureAlertsComponent ],
             schemas: [NO_ERRORS_SCHEMA]
