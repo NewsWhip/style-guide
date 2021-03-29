@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ButtonsComponent } from './buttons.component';
 import {NO_ERRORS_SCHEMA} from '@angular/core';
 
@@ -6,7 +6,7 @@ describe('ButtonsComponent', () => {
     let component: ButtonsComponent;
     let fixture: ComponentFixture<ButtonsComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             declarations: [ ButtonsComponent ],
             schemas: [NO_ERRORS_SCHEMA]
