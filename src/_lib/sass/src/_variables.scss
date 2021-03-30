@@ -75,12 +75,7 @@ $level5: lighten($levels-base, 15); // #343942
 //
 $yellow: #ffe085;
 $green: #139717;
-
-$gray-darker:            lighten($gray-base, 13.5%) !default; // #222
-$gray-dark:              lighten($gray-base, 20%) !default;   // #333
-$gray:                   lighten($gray-base, 33.5%) !default; // #555
-$gray-light:             lighten($gray-base, 46.7%) !default; // #777
-$gray-lighter:           lighten($gray-base, 93.5%) !default; // #eee
+$light-grey: #989a9f;
 
 $brand-primary: get-color("primary") !default;
 $brand-success: $green !default;
