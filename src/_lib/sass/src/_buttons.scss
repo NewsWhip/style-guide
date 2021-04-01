@@ -16,7 +16,6 @@
     &:focus,
     &.focus {
         outline: none;
-        @include tab-focus();
     }
 
     &:hover {
@@ -57,86 +56,74 @@ a.btn {
 // --------------------------------------------------
 .btn-primary {
     @include button-variant(
-        #ffffff,
-        #ffffff,
+        $text-color,
+        $text-color,
         get-color('primary'),
-        get-color('primary', dark));
+        get-color('primary', light));
 }
 .btn-secondary {
     @include button-variant(
-        #ffffff,
-        #ffffff,
-        get-color("gray", x-light),
-        get-color("gray", base));
+        $text-color,
+        $text-color,
+        rgba($text-color, 0.15),
+        rgba($text-color, 0.20));
 }
-.btn-secondary-dark {
-    @include button-variant(
-        #ffffff,
-        #ffffff,
-        get-color("gray", x-light),
-        get-color("gray", dark));
+.btn-secondary-dark { // todo DM remove from Spike, replace with .btn-secondary
+    @extend .btn-secondary;
 }
 .btn-secondary-inverse {
     @include button-variant(
-        get-color("gray", base),
-        get-color("gray", base),
-        get-color("gray", 6x-light),
-        get-color("gray", 5x-light));
+        $level1,
+        $level1,
+        rgba($level0, 0.1),
+        rgba($level0, 0.05));
 }
 .btn-danger {
     @include button-variant(
-        #ffffff,
-        #ffffff,
+        $text-color,
+        $text-color,
         get-color('tertiary'),
-        get-color('tertiary', dark));
+        get-color('tertiary', light));
 }
 .btn-alt {
     @include button-variant(
-        get-color('gray', 4x-light),
+        $text-color,
         get-color('primary', 2x-light),
         transparent,
         transparent,
-        get-color('gray', 4x-light),
+        $text-color,
         get-color('primary', 2x-light));
 }
 .btn-ghost {
     @include button-variant(
-        get-color('gray', 4x-light),
-        get-color('primary', 2x-light),
+        $text-color,
+        $text-color,
         transparent,
-        get-color("gray", dark));
+        rgba($text-color, 0.1));
 }
 .btn-dropdown {
-    @include button-variant(
-        #ffffff,
-        #ffffff,
-        get-color("gray", base),
-        get-color("gray", dark));
+    @extend .btn-secondary;
 }
 .btn-dropdown-inverse {
-    @include button-variant(
-        get-color("gray", base),
-        get-color("gray", base),
-        #ffffff,
-        #ffffff);
+    @extend .btn-secondary-inverse;
 }
 .btn-ghost-alt {
     @include button-variant(
-        get-color('gray', 4x-light),
+        $text-color,
         get-color('primary', 2x-light),
         transparent,
         transparent);
 }
 .btn-activate {
     @include button-variant(
-        #ffffff,
-        #ffffff,
+        $text-color,
+        $text-color,
         get-color("secondary", base),
-        get-color("secondary", dark));
+        get-color("secondary", light));
 }
 .btn-nav {
     @include button-variant(
-        #ffffff,
+        $text-color,
         get-color('primary', 2x-light),
         transparent,
         transparent);
@@ -147,10 +134,10 @@ a.btn {
         font-size: 16px;
         display: flex;
         flex-direction: column;
-        align-items: left;
+        align-items: flex-start;
     }
     .subtext {
-        color: get-color("gray", 3x-light);
+        color: $text-color;
     }
 }
 // applying sizes to this element will not do anything
@@ -158,7 +145,7 @@ a.btn {
 .btn-carousel {
     @include button-variant(
         get-color('primary'),
-        get-color('primary', dark),
+        get-color('primary', light),
         transparent,
         transparent);
 
