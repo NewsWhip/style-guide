@@ -248,7 +248,7 @@ input[type="search"] {
             content: "\f00c";
             position: relative;
             background-color: $text-color;
-            color: $text-color;
+            color: rgba($level0, 0.4);
             width: 16px;
             min-width: 16px;
             height: 16px;
@@ -321,7 +321,7 @@ input[type="search"] {
     &.checkbox-placeholder {
         input[type="checkbox"]:not(:checked) {
             ~ label:before {
-                color: $text-color-secondary;
+                color: rgba($level0, 0.4);
             }
         }
     }
@@ -643,7 +643,7 @@ input[type="checkbox"] {
             position: relative;
             content: " ";
             display: inline-block;
-            background-color: $level1;
+            background-color: rgba($text-color, 0.15);
             height: 32px;
             width: 65px;
             border-radius: 16px;
