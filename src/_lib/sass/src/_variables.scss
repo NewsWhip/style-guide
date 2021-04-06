@@ -491,6 +491,9 @@ $tooltip-color:                     $text-color !default;
 //** Tooltip background color
 $tooltip-bg:                        $level4 !default;
 
+//** Tooltip box-shadow color
+$tooltip-box-shadow-color:          rgba($level0, 0.7);
+
 $tooltip-opacity:                   1 !default;
 
 //** Tooltip arrow width
