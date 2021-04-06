@@ -118,25 +118,6 @@ a.btn {
         get-color("secondary", base),
         get-color("secondary", light));
 }
-.btn-nav {
-    @include button-variant(
-        $text-color,
-        get-color('primary', 2x-light),
-        transparent,
-        transparent);
-
-    padding: 11px 19px;
-
-    .btn-contents {
-        font-size: 16px;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-    }
-    .subtext {
-        color: $text-color;
-    }
-}
 // applying sizes to this element will not do anything
 // as currently this button has a fixed size
 .btn-carousel {
