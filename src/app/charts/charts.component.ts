@@ -128,6 +128,7 @@ export class ChartsComponent implements OnInit {
     public brushBox: [[Date, number], [Date, number]];
     public barWidth: FormControl = new FormControl(20);
     public xAxisTickCount: number | AxisTimeInterval = 8;
+    public showForeignObject: FormControl = new FormControl(false);
 
     @ViewChild('xAxis') xAxis: XAxisDirective;
     @ViewChild('yAxis') yAxis: YAxisDirective;
@@ -321,6 +322,10 @@ export class ChartsComponent implements OnInit {
 
     onBgClick() {
         console.info('Background click')
+    }
+
+    log(msg: string) {
+        console.log(msg);
     }
 
 }
