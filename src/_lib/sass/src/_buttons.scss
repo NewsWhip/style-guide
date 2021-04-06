@@ -68,9 +68,6 @@ a.btn {
         rgba($text-color, 0.15),
         rgba($text-color, 0.20));
 }
-.btn-secondary-dark { // todo DM remove from Spike, replace with .btn-secondary
-    @extend .btn-secondary;
-}
 .btn-secondary-inverse {
     @include button-variant(
         get-color("gray", base),
