@@ -73,10 +73,10 @@ a.btn {
 }
 .btn-secondary-inverse {
     @include button-variant(
-        $level1,
-        $level1,
-        rgba($level0, 0.1),
-        rgba($level0, 0.05));
+        get-color("gray", base),
+        get-color("gray", base),
+        get-color("gray", 6x-light),
+        get-color("gray", 5x-light));
 }
 .btn-danger {
     @include button-variant(
