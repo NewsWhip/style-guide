@@ -487,12 +487,9 @@ $state-danger-border:            get-color('tertiary', base) !default;
 //** Tooltip max width
 $tooltip-max-width:                 300px !default;
 //** Tooltip text color
-$tooltip-color:                   #fff !default;
+$tooltip-color:                     $text-color !default;
 //** Tooltip background color
-$tooltip-bg:                        get-color("gray", x-light)!default;
-
-//** Tooltip box-shadow color
-$tooltip-box-shadow-color:        rgba(15,15,15,0.7);
+$tooltip-bg:                        $level4 !default;
 
 $tooltip-opacity:                   1 !default;
 
@@ -504,13 +501,13 @@ $tooltip-arrow-color:               $tooltip-bg !default;
 //** Variables for tooltip with white background
 
 //** Tooltip light background color
-$tooltip-bg-light:                #fff;
+$tooltip-bg-light:                  $text-color;
 
 //** Tooltip text color
-$tooltip-color-light:               get-color("gray", base) !default;
+$tooltip-color-light:               $level1 !default;
 
 //** Tooltip arrow color
-$tooltip-arrow-color-light:        #fff;
+$tooltip-arrow-color-light:         $text-color;
 
 
 //== Popovers
@@ -518,19 +515,19 @@ $tooltip-arrow-color-light:        #fff;
 //##
 
 //** Popover body background color
-$popover-bg:                          #fff !default;
+$popover-bg:                          $text-color !default;
 
 //** Popover maximum width
 $popover-max-width:                   276px !default;
 
 //** Popover border color
-$popover-border-color:                get-color('gray', 5x-light) !default;
+$popover-border-color:                $text-color !default;
 
 //** Popover fallback border color
-$popover-fallback-border-color:       #ccc !default;
+$popover-fallback-border-color:       $text-color !default;
 
 //** Popover title background color
-$popover-title-bg:                    get-color("gray", base) !default;
+$popover-title-bg:                    $level1 !default;
 
 //** Popover arrow width
 $popover-arrow-width:                 10px !default;

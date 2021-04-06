@@ -14,12 +14,11 @@
     @include reset-text;
     font-size: $font-size-base;
 
-    color: get-color("gray", base);
+    color: $level1;
     background-color: $popover-bg;
     background-clip: padding-box;
     border: 1px solid $popover-border-color;
     border-radius: 3px;
-    box-shadow: 0 0 8px rgba(0,0,0,.2);
 
     // Offset the popover to account for the popover arrow
     &.top     { margin-top: -$popover-arrow-width; }
@@ -41,7 +40,7 @@
     padding: 24px;
 
     h5, p, .close{
-        color: get-color('gray');
+        color: $level1;
     }
 
     h5{
@@ -61,7 +60,6 @@
         font-size: 30px;
         top: 3px;
         right: 12px;
-        text-shadow: none;
     }
 }
 
