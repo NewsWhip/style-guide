@@ -10,6 +10,7 @@ import { BarDirective } from './bar/bar.directive';
 import { AreaDirective } from './area/area.directive';
 import { ChartTooltipDirective } from './tooltip/chart-tooltip.directive';
 import { ResizeObserverModule } from '../resize-observer';
+import { ForeignObjectDirective } from './foreign-object/foreign-object.directive';
 
 @NgModule({
     imports: [
@@ -25,7 +26,8 @@ import { ResizeObserverModule } from '../resize-observer';
         BrushDirective,
         BarDirective,
         AreaDirective,
-        ChartTooltipDirective
+        ChartTooltipDirective,
+        ForeignObjectDirective
     ],
     exports: [
         ChartComponent,
@@ -36,7 +38,8 @@ import { ResizeObserverModule } from '../resize-observer';
         BrushDirective,
         BarDirective,
         AreaDirective,
-        ChartTooltipDirective
+        ChartTooltipDirective,
+        ForeignObjectDirective
     ]
 })
 export class ChartsModule { }

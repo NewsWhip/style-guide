@@ -8,3 +8,4 @@ export { BrushDirective } from './brush/brush.directive';
 export { BarDirective } from './bar/bar.directive';
 export { AreaDirective } from './area/area.directive';
 export { ChartTooltipDirective } from './tooltip/chart-tooltip.directive';
+export { ForeignObjectDirective } from './foreign-object/foreign-object.directive';
