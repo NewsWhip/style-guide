@@ -27,7 +27,7 @@ nw-angular-picker {
             }
         }
         &:not(:focus) {
-            @extend .btn-dropdown;
+            @extend .btn-secondary;
             @include placeholder(transparent);
         }
         ~ .dropdown-icon, ~ .reset-icon {
