@@ -99,7 +99,7 @@ $text-color-disabled:   rgba($text-color, 0.4) !default;
 $text-disabled-inverse: rgba($level1, 0.4) !default;
 
 $link-color:            $text-color !default;
-$link-hover-color:      get-color("primary", x-light);
+$link-hover-color:      $text-color;
 $link-hover-decoration: underline !default;
 
 $divider-color-primary: rgba($text-color, 0.25);
@@ -219,15 +219,15 @@ $cursor-disabled:                not-allowed !default;
 
 //== Dropdowns
 //
-$dropdown-bg:                   #000000;
+$dropdown-bg:                   $level4;
 $dropdown-link-color:           rgba($text-color, 0.8);
-$dropdown-border:               get-color("gray", 3x-light);
+$dropdown-border:               rgba($text-color, 0.075);
 $dropdown-link-hover-color:     $link-hover-color;
-$dropdown-link-hover-bg:        transparent;
+$dropdown-link-hover-bg:        $level5;
 $dropdown-link-active-color:    $link-hover-color !default;
 $dropdown-link-active-bg:       transparent !default;
-$dropdown-divider-bg:           get-color("gray", light);
-$dropdown-header-color:         get-color("gray", 3x-light);
+$dropdown-divider-bg:           $divider-color-secondary;
+$dropdown-header-color:         $text-color-secondary;
 
 //-- Z-index master list
 //

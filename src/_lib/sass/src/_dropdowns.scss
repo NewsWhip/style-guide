@@ -43,7 +43,7 @@
     background-color: $dropdown-bg;
     border: 1px solid $dropdown-border;
     border-radius: $border-radius-base;
-    box-shadow: 0 6px 12px rgba(0,0,0,.175);
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.4);
     background-clip: padding-box;
 
     // // Dividers (basically an hr) within the dropdown
@@ -159,7 +159,7 @@
 
 // Open state for the dropdown
 .open {
-    // Show the menu,// Show the submenu 
+    // Show the menu,// Show the submenu
     > .dropdown-menu, > li > .dropdown-menu {
         display: block;
     }
@@ -247,11 +247,13 @@
 }
 
 .dropdown-menu-inverse {
-    $dropdown-inverse-link-color: get-color("gray", base);
+    $dropdown-inverse-link-color: $level1;
     $dropdown-inverese-link-active-bg: get-color("primary", 3x-light);
 
-    background: #ffffff;
-
+    background-color: $text-color;
+    .dropdown-header {
+        color: rgba($level1, 0.6);
+    }
     > li > a {
         color: $dropdown-inverse-link-color;
         cursor: pointer;
@@ -279,7 +281,7 @@
         }
     }
     .divider {
-        background: get-color("gray", 3x-light);
+        background: rgba($level0, 0.4);
     }
 }
 // Custom popover styling for dropdowns appended to body
