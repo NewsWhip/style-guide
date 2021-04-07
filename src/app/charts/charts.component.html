@@ -139,6 +139,22 @@
                         container="body"
                         [outsideClick]="true"></rect>
                 </ng-container>
+
+                <foreignObject *ngIf="showForeignObject.value"
+                    [nw-foreign-object]
+                    [point]="[1545095807739, 60000]"
+                    [xDomain]="xDomain"
+                    [yDomain]="yDomain"
+                    width="250"
+                    height="150">
+                    <xhtml:div>
+                        <button class="btn btn-primary"
+                            (click)="log('button clicked')">
+                            Button rendered inside SVG
+                        </button>
+                        <p class="nw-text nw-text-dark">Rendered at 60,000 interactions<br/>{{1545095807739 | date:'medium'}}</p>
+                    </xhtml:div>
+                  </foreignObject>
             </svg>
 
             <div *ngIf="isHovering && showTooltip.value" nwChartTooltip
@@ -201,6 +217,11 @@
                 <div class="checkbox">
                     <input type="checkbox" [formControl]="showTooltip" id="show-tooltip">
                     <label for="show-tooltip">Show tooltip</label>
+                </div>
+
+                <div class="checkbox">
+                    <input type="checkbox" [formControl]="showForeignObject" id="show-foreign-object">
+                    <label for="show-foreign-object">Show foreign object</label>
                 </div>
 
                 <div class="checkbox">
