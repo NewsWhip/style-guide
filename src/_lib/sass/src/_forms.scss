@@ -273,6 +273,7 @@ input[type="search"] {
             ~ label {
                 &:before {
                     background-color: get-color("primary", base);
+                    color: $text-color;
                 }
             }
         }
