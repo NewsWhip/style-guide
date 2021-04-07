@@ -25,6 +25,58 @@
     &.right   { margin-left: $popover-arrow-width; }
     &.bottom  { margin-top: $popover-arrow-width; }
     &.left    { margin-left: -$popover-arrow-width; }
+
+    &.popover-dark {
+        border: none;
+        box-shadow: none;
+        background: none;
+
+        .popover-content {
+            max-width: $tooltip-max-width;
+            padding: 16px;
+            color: $tooltip-color;
+            background-color: $tooltip-bg;
+            box-shadow: 2px 2px 8px 0 $tooltip-box-shadow-color;
+            border-radius: $border-radius-base;
+
+            h5, p, .close {
+                color: $text-color;
+            }
+        }
+        .popover-arrow {
+            border-color: transparent;
+
+            &:after {
+                border-color: transparent !important;
+            }
+        }
+        // Using very specific selectors to avoid using !important
+        &.top,
+        &.top-left,
+        &.top-right {
+            margin-top: 0;
+            > .popover-arrow.arrow {
+                border-top-color: $tooltip-arrow-color;
+                bottom: -10px;
+            }
+        }
+        &.right > .popover-arrow.arrow {
+            border-right-color: $tooltip-arrow-color;
+            left: -10px;
+        }
+        &.left > .popover-arrow.arrow {
+            border-left-color: $tooltip-arrow-color;
+            right: -10px;
+        }
+        &.bottom,
+        &.bottom-left,
+        &.bottom-right {
+            > .popover-arrow.arrow {
+                border-bottom-color: $tooltip-arrow-color;
+                top: -10px;
+            }
+        }
+    }
 }
 
 .popover-title {
