@@ -21,7 +21,7 @@ export class DropdownsComponent implements OnInit {
     getPopoverExample(): string {
         return `
 <div class="dropdown">
-    <button class="btn btn-md btn-dropdown"
+    <button class="btn btn-md btn-secondary"
         [popover]="dropdownMenuRef"
         container="body"
         containerClass="popover-dropdown"

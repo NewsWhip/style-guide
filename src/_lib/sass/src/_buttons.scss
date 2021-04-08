@@ -98,12 +98,6 @@ a.btn {
         transparent,
         rgba($text-color, 0.1));
 }
-.btn-dropdown {
-    @extend .btn-secondary;
-}
-.btn-dropdown-inverse {
-    @extend .btn-secondary-inverse;
-}
 .btn-ghost-alt {
     @include button-variant(
         $text-color,
