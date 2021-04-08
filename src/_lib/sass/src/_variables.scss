@@ -579,12 +579,12 @@ $modal-title-padding:         16px 32px !default;
 $modal-title-line-height:     $line-height-base !default;
 
 $modal-content-bg:                             $body-bg !default;
-$modal-content-border-color:                   get-color("gray", base) !default;
-$modal-content-fallback-border-color:          get-color("gray", base) !default;
+$modal-content-border-color:                   rgba($text-color, 0.075) !default;
+$modal-content-fallback-border-color:          $modal-content-border-color !default;
 
 $modal-backdrop-bg:           #000 !default;
 $modal-backdrop-opacity:      .75 !default;
-$modal-header-border-color:   #e5e5e5 !default;
+$modal-header-border-color:   transparent !default;
 $modal-footer-border-color:   $modal-header-border-color !default;
 
 $modal-lg:                    900px !default;
