@@ -93,7 +93,7 @@ a.btn {
 }
 .btn-ghost {
     @include button-variant(
-        $text-color,
+        $text-color-secondary,
         $text-color,
         transparent,
         rgba($text-color, 0.1));
