@@ -250,9 +250,9 @@
     $dropdown-inverse-link-color: $level1;
     $dropdown-inverese-link-active-bg: get-color("primary", 3x-light);
 
-    background-color: $text-color;
+    background-color: #ffffff;
     .dropdown-header {
-        color: rgba($level1, 0.6);
+        color: get-color("gray", x-light);
     }
     > li > a {
         color: $dropdown-inverse-link-color;
