@@ -55,7 +55,7 @@
         .modal-title,
         .modal-body,
         .modal-footer {
-            color: $level1;
+            color: get-color("gray");
         }
     }
 

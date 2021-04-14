@@ -386,5 +386,5 @@ small, .small {
   color: $text-color;
 }
 .nw-text-dark {
-  color: $level1;
+  color: get-color("gray");
 }

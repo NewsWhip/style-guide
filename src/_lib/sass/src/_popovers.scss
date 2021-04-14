@@ -14,7 +14,7 @@
     @include reset-text;
     font-size: $font-size-base;
 
-    color: $level1;
+    color: get-color("gray");
     background-color: $popover-bg;
     background-clip: padding-box;
     border: 1px solid $popover-border-color;
@@ -40,7 +40,7 @@
     padding: 24px;
 
     h5, p, .close{
-        color: $level1;
+        color: get-color("gray");
     }
 
     h5{

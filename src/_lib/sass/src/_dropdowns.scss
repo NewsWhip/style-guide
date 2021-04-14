@@ -252,7 +252,7 @@
 
     background-color: #ffffff;
     .dropdown-header {
-        color: rgba($level1, 0.6);
+        color: get-color("gray", x-light);
     }
     > li > a {
         color: $dropdown-inverse-link-color;

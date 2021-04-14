@@ -5,7 +5,7 @@
 
     &:hover,
     &:active,
-    &.active,{
+    &.active {
         color: $color-hover;
         background-color: $bg-hover-or-active;
         border-color: $border-hover;

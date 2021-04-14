@@ -40,7 +40,7 @@ nw-angular-picker {
             cursor: pointer;
         }
         ~ .reset-icon {
-            color: $level1;
+            color: get-color("gray");
             right: 5px;
         }
     }
@@ -58,7 +58,7 @@ nw-angular-picker {
         justify-content: space-between;
         padding: 0 8px;
         line-height: 32px;
-        color: $level1;
+        color: get-color("gray");
         border-bottom: 1px solid $divider-color-primary;
     }
     .search-results {
@@ -72,7 +72,7 @@ nw-angular-picker {
             position: relative;
             padding-left: 8px;
             font-size: 14px;
-            color: $level1;
+            color: get-color("gray");
             cursor: pointer;
 
             &:hover {
@@ -85,7 +85,7 @@ nw-angular-picker {
                 flex: 1;
             }
             .btn-ghost:not(:hover) {
-                color: $level1;
+                color: get-color("gray");
             }
             .result-item {
                 display: flex;
