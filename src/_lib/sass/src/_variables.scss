@@ -221,7 +221,7 @@ $cursor-disabled:                not-allowed !default;
 //
 $dropdown-bg:                   $level4;
 $dropdown-link-color:           rgba($text-color, 0.8);
-$dropdown-border:               rgba($text-color, 0.075);
+$dropdown-border:               rgba($text-color, 0.15);
 $dropdown-link-hover-color:     $text-color;
 $dropdown-link-hover-bg:        $level5;
 $dropdown-link-active-color:    $text-color !default;
@@ -579,7 +579,7 @@ $modal-title-padding:         16px 32px !default;
 $modal-title-line-height:     $line-height-base !default;
 
 $modal-content-bg:                             $body-bg !default;
-$modal-content-border-color:                   rgba($text-color, 0.075) !default;
+$modal-content-border-color:                   rgba($text-color, 0.15) !default;
 $modal-content-fallback-border-color:          $modal-content-border-color !default;
 
 $modal-backdrop-bg:           #000 !default;
