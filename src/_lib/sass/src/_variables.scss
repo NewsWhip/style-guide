@@ -582,8 +582,8 @@ $modal-content-bg:                             $body-bg !default;
 $modal-content-border-color:                   rgba($text-color, 0.15) !default;
 $modal-content-fallback-border-color:          $modal-content-border-color !default;
 
-$modal-backdrop-bg:           #000 !default;
-$modal-backdrop-opacity:      .75 !default;
+$modal-backdrop-bg:           $level0 !default;
+$modal-backdrop-opacity:      .4 !default;
 $modal-header-border-color:   transparent !default;
 $modal-footer-border-color:   $modal-header-border-color !default;
 
