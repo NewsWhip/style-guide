@@ -9,14 +9,11 @@
 
     .modal-header {
         border: none;
-        border-top-left-radius: 9px;
-        border-top-right-radius: 9px;
         display: flex;
         flex-direction: row;
         align-items: center;
         z-index: 1;
         // override Bootstrap - move padding from modal-header to modal-title
-        //padding: 0;
         position: relative;
 
         .modal-title {
@@ -41,8 +38,6 @@
     }
     .modal-footer {
         padding: 24px;
-        border-bottom-left-radius: 9px;
-        border-bottom-right-radius: 9px;
     }
     // When sliding in the modal, animate it to slide from the right
     &.slide-left .modal-dialog {
