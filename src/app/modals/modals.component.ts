@@ -9,6 +9,7 @@ export class ModalsComponent implements OnInit {
   public modalSize: string = 'md';
   public isInverse: boolean = false;
   public isImage: boolean = false;
+  public showTitle: boolean = true;
 
   constructor() { }
 

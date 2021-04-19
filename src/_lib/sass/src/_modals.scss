@@ -11,11 +11,13 @@
         border: none;
         border-top-left-radius: 9px;
         border-top-right-radius: 9px;
-        padding-right: 16px;
         display: flex;
         flex-direction: row;
         align-items: center;
         z-index: 1;
+        // override Bootstrap - move padding from modal-header to modal-title
+        padding: 0;
+        position: relative;
 
         .modal-title {
             color: $text-color;
@@ -23,6 +25,13 @@
             font-weight: normal;
             flex: 1;
             margin-top: 12px;
+            // override Bootstrap - move padding from modal-header to modal-title
+            padding: 16px 32px;
+        }
+        .btn-close {
+            position: absolute;
+            top: 8px;
+            right: 8px;
         }
     }
 
