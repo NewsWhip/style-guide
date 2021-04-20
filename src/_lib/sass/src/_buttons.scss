@@ -100,7 +100,7 @@ a.btn {
 }
 .btn-ghost-alt {
     @include button-variant(
-        $text-color,
+        $text-color-secondary,
         get-color('primary', 2x-light),
         transparent,
         transparent);
