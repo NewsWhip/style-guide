@@ -357,45 +357,44 @@ address {
 }
 
 // Custom interactive text styling
-.nw-link {
+[class*="nw-link-"] {
     text-decoration: none;
-
-    &.nw-link-primary {
-        color: $text-color;
-
-        &:visited,
-        &.visited {
-            color: $text-color-secondary;
-        }
-    }
-
-    &.nw-link-secondary {
-        color: $text-color-secondary;
-    }
-
-    &.nw-link-tertiary {
-        color: get-color("primary", x-light);
-
-        &:hover {
-            text-decoration: underline;
-        }
-    }
-
-    &.nw-link-inline {
-        &:visited,
-        &.visited {
-            color: $text-color-secondary;
-        }
-
-        @extend .nw-link-tertiary;
-    }
-
     &:hover,
     &:hover:visited,
     &:hover.visited {
         color: $link-hover-color;
         cursor: pointer;
     }
+}
+
+.nw-link-primary {
+    color: $text-color;
+
+    &:visited,
+    &.visited {
+        color: $text-color-secondary;
+    }
+}
+
+.nw-link-secondary {
+    color: $text-color-secondary;
+}
+
+.nw-link-tertiary {
+    color: get-color("primary", x-light);
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.nw-link-inline {
+    &:visited,
+    &.visited {
+        color: $text-color-secondary;
+    }
+
+    @extend .nw-link-tertiary;
 }
 
 // TEMPORARY CUSTOM nw-text CLASS
