@@ -401,39 +401,35 @@ address {
 // TEMPORARY CUSTOM nw-text CLASS
 h1, h3, h4, h5,
 .h1, .h3, .h4, .h5 {
-    &.nw-text {
-        line-height: 1.2;
-        margin: 0;
-    }
+    line-height: 1.2;
+    margin: 0;
 }
 
-h1.nw-text, .h1.nw-text {
+h1, .h1 {
     font-weight: normal;
     font-size: 36px;
 }
 
 // No h2 for now
-h3.nw-text, .h3.nw-text {
+h3, .h3 {
     font-weight: normal;
     font-size: 24px;
 }
 
-h4.nw-text, .h4.nw-text {
+h4, .h4 {
     font-weight: bold;
     font-size: 20px;
 }
 
-h5.nw-text, .h5.nw-text {
+h5, .h5 {
     font-weight: bold;
     font-size: 16px;
 }
 
 p {
-    &.nw-text {
-        margin: 0;
-        font-size: 14px;
-        line-height: 1.4;
-    }
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.4;
 
     &.text-large {
         font-size: 16px;
@@ -445,11 +441,9 @@ p {
 }
 
 small, .small {
-    &.nw-text {
-        margin: 0;
-        font-size: 12px;
-        line-height: 1.4;
-    }
+    margin: 0;
+    font-size: 12px;
+    line-height: 1.4;
 }
 
 .nw-text-light {
