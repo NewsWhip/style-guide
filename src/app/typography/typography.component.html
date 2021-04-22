@@ -2,9 +2,7 @@
   <h2 class="page-header">Typography</h2>
 
   <div>
-    <h3 class="nw-text">Type Stack</h3>
-
-    <p class="nw-text">All elements require the class nw-text until all type elements are fully migrated.</p>
+    <h3>Type Stack</h3>
 
     <div class="radio">
       <input [formControl]="textColor" id="option-light" name="light-dark" type="radio" value="light">
@@ -35,99 +33,99 @@
           <td>h1</td>
           <td>Large Display</td>
           <td>
-            <h1 class="nw-text">{{exampleText}}</h1>
+            <h1>{{exampleText}}</h1>
           </td>
           <td>36px / 1.2 / normal</td>
-          <td>nw-text</td>
+           <td></td>
         </tr>
 
         <tr>
           <td>h3</td>
           <td>Standard Display</td>
           <td>
-            <h3 class="nw-text">{{exampleText}}</h3>
+            <h3>{{exampleText}}</h3>
           </td>
           <td>24px / 1.2 / normal</td>
-          <td>nw-text</td>
+           <td></td>
         </tr>
 
         <tr>
           <td>h4</td>
           <td>Large Heading</td>
           <td>
-            <h4 class="nw-text">{{exampleText}}</h4>
+            <h4>{{exampleText}}</h4>
           </td>
           <td>20px / 1.2 / bold</td>
-          <td>nw-text</td>
+           <td></td>
         </tr>
 
         <tr>
           <td>h5</td>
           <td>Standard Heading</td>
           <td>
-            <h5 class="nw-text">{{exampleText}}</h5>
+            <h5>{{exampleText}}</h5>
           </td>
           <td>16px / 1.2 / bold</td>
-          <td>nw-text</td>
+           <td></td>
         </tr>
 
         <tr>
           <td>p</td>
           <td>Large Text</td>
           <td>
-            <p class="nw-text text-large">{{exampleText}}</p>
+            <p class="text-large">{{exampleText}}</p>
           </td>
           <td>16px / 1.4 / normal</td>
-          <td>nw-text text-large</td>
+          <td> text-large</td>
         </tr>
 
         <tr>
           <td>p</td>
           <td>Large All Caps</td>
           <td>
-            <p class="nw-text text-large text-upper">{{exampleText}}</p>
+            <p class="text-large text-upper">{{exampleText}}</p>
           </td>
           <td>16px / 1.4 / normal</td>
-          <td>nw-text text-large text-upper</td>
+          <td> text-large text-upper</td>
         </tr>
 
         <tr>
           <td>p</td>
           <td>Standard Text</td>
           <td>
-            <p class="nw-text">{{exampleText}}</p>
+            <p>{{exampleText}}</p>
           </td>
           <td>14px / 1.4 / normal</td>
-          <td>nw-text</td>
+           <td></td>
         </tr>
 
         <tr>
           <td>p</td>
           <td>Standard All Caps</td>
           <td>
-            <p class="nw-text text-large">{{exampleText}}</p>
+            <p class="text-large">{{exampleText}}</p>
           </td>
           <td>16px / 1.4 / normal</td>
-          <td>nw-text text-large</td>
+          <td> text-large</td>
         </tr>
 
         <tr>
           <td>small</td>
           <td>Small text</td>
           <td>
-            <small class="nw-text">{{exampleText}}</small>
+            <small>{{exampleText}}</small>
           </td>
           <td>12px / 1.4 / normal</td>
-          <td>nw-text</td>
+           <td></td>
         </tr>
       </tbody>
     </table>
 
     <hr>
 
-    <h5 class="nw-text">Notes</h5>
+    <h5>Notes</h5>
 
-    <p class="nw-text">There are currently three font weights available</p>
+    <p>There are currently three font weights available</p>
 
     <ul>
       <li>normal</li>
@@ -137,14 +135,14 @@
 
     <hr>
 
-    <h3 class="nw-text">Interactive Text</h3>
+    <h3>Interactive Text</h3>
 
-    <p class="nw-text">
+    <p>
       The interactive text elements control only the color, text-decoration and cursor properties of the text. Font-weight, family
       and size are inherited.
     </p>
 
-    <p class="nw-text">
+    <p>
       <code>:hover</code> styles take precedence over
       <code>:visited</code> styles
     </p>
@@ -152,7 +150,7 @@
     <hr>
 
     <div>
-      <h1 class="nw-text">
+      <h1>
         <a [href]="randomLink" target="_blank" class="nw-link nw-link-primary">
           h1 primary interactive text
         </a>
@@ -166,7 +164,7 @@
     <hr>
 
     <div>
-      <h2 class="nw-text">
+      <h2>
         <a routerLink="/interactive-text" class="nw-link nw-link-secondary">
           h2 secondary interactive text
         </a>
@@ -180,7 +178,7 @@
     <hr>
 
     <div>
-      <p class="nw-text">
+      <p>
         Tertiary interactive text is
         <span class="nw-link nw-link-tertiary">displayed inline</span> like this
       </p>
@@ -193,7 +191,7 @@
     <hr>
 
     <div>
-      <p class="nw-text">
+      <p>
         Inline interactive text is
         <a [href]="randomLink" target="_blank" class="nw-link nw-link-inline">displayed inline</a> like this.
         <br/> Used for inline URLs and also shows a visited state.

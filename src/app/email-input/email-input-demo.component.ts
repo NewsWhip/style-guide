@@ -7,10 +7,10 @@ import { Subscription } from 'rxjs';
     selector: 'app-email-input-demo',
     template: `
         <div class="page-header" style="padding-bottom: 0;">
-            <h3 class="nw-text nw-text-light">Email Input</h3>
+            <h3 class="nw-text-light">Email Input</h3>
 
-            <p class="nw-text">This is an input that a user can use to input multiple email in a form</p>
-            <p class="nw-text"><strong>Used in</strong>: Spike Export PDF to input emails</p>
+            <p>This is an input that a user can use to input multiple email in a form</p>
+            <p><strong>Used in</strong>: Spike Export PDF to input emails</p>
 
             <div class="tabs-container">
                 <nw-tabs size="md">
@@ -25,7 +25,7 @@ import { Subscription } from 'rxjs';
         </div>
 
         <div *ngIf="selectedTab === 'design'" class="tab-content">
-            <h4 class="nw-text" style="margin-bottom: 16px;">Live example</h4>
+            <h4 style="margin-bottom: 16px;">Live example</h4>
 
             <div class="row">
                 <div class="col-md-6 col-sm-12">
@@ -42,34 +42,34 @@ import { Subscription } from 'rxjs';
 
             <hr>
 
-            <h3 class="nw-text" style="margin-bottom: 16px;">Description</h3>
+            <h3 style="margin-bottom: 16px;">Description</h3>
 
-            <p class="nw-text" style="margin-bottom: 16px;">An email input should be</p>
+            <p style="margin-bottom: 16px;">An email input should be</p>
 
             <ol style="margin-bottom: 32px;" class="guidelines">
                 <li>
-                    <h5 class="nw-text" style="display: inline-block;">Discoverable</h5>
-                    <p class="nw-text">It should be easy to distinguish between elements that can have textual input vs. those that cannot.</p>
+                    <h5 style="display: inline-block;">Discoverable</h5>
+                    <p>It should be easy to distinguish between elements that can have textual input vs. those that cannot.</p>
                 </li>
                 <li>
-                    <h5 class="nw-text" style="display: inline-block;">Clear</h5>
-                    <p class="nw-text">Email input states should be clearly differentiated from one another.</p>
+                    <h5 style="display: inline-block;">Clear</h5>
+                    <p>Email input states should be clearly differentiated from one another.</p>
                 </li>
                 <li>
-                    <h5 class="nw-text" style="display: inline-block;">Efficient</h5>
-                    <p class="nw-text">Email inputs should make it easy to understand the requested information and to address any errors.</p>
+                    <h5 style="display: inline-block;">Efficient</h5>
+                    <p>Email inputs should make it easy to understand the requested information and to address any errors.</p>
                 </li>
                 <li>
-                    <h5 class="nw-text" style="display: inline-block;">Editable</h5>
-                    <p class="nw-text">An email input should be easily editable to enable the user to correct any errors.</p>
+                    <h5 style="display: inline-block;">Editable</h5>
+                    <p>An email input should be easily editable to enable the user to correct any errors.</p>
                 </li>
             </ol>
 
             <hr>
 
-            <h4 class="nw-text" style="margin-bottom: 16px;">Usage</h4>
+            <h4 style="margin-bottom: 16px;">Usage</h4>
 
-            <p class="nw-text" style="margin-bottom: 16px;">
+            <p style="margin-bottom: 16px;">
                 When a user wants to add multiple emails at once they will enter text and then either use a
                 <strong>comma, semicolon, space, enter or tab to confirm the input</strong>
             </p>
@@ -84,7 +84,7 @@ import { Subscription } from 'rxjs';
             <div class="demo-section">
                 <div class="row">
                     <div class="col-md-8 col-sm-12">
-                        <h4 class="nw-text">Importing</h4>
+                        <h4>Importing</h4>
                         <app-copy-code>{{importModule}}</app-copy-code>
                     </div>
                 </div>
@@ -93,21 +93,21 @@ import { Subscription } from 'rxjs';
             <div class="demo-section">
                 <div class="row">
                     <div class="col-md-8 col-sm-12">
-                        <h4 class="nw-text">Basic example</h4>
+                        <h4>Basic example</h4>
                         <app-copy-code>{{example}}</app-copy-code>
                     </div>
                 </div>
             </div>
             <hr>
             <div class="demo-section">
-                <h4 class="nw-text">Validation</h4>
-                <p class="nw-text">Email validation is handled by Angular's built-in email validator.</p>
+                <h4>Validation</h4>
+                <p>Email validation is handled by Angular's built-in email validator.</p>
             </div>
             <hr>
             <div class="demo-section">
                 <div class="row">
                     <div class="col-md-8 col-sm-12">
-                        <h4 class="nw-text">Properties</h4>
+                        <h4>Properties</h4>
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
@@ -132,7 +132,7 @@ import { Subscription } from 'rxjs';
             </div>
             <hr>
             <div class="demo-section">
-                <h4 class="nw-text">Classes / Interfaces</h4>
+                <h4>Classes / Interfaces</h4>
 
                 <div class="row">
                     <div class="col-md-8 col-sm-12">

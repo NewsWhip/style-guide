@@ -152,7 +152,7 @@
                             (click)="log('button clicked')">
                             Button rendered inside SVG
                         </button>
-                        <p class="nw-text nw-text-dark">Rendered at 60,000 interactions<br/>{{1545095807739 | date:'medium'}}</p>
+                        <p class="nw-text-dark">Rendered at 60,000 interactions<br/>{{1545095807739 | date:'medium'}}</p>
                     </xhtml:div>
                   </foreignObject>
             </svg>
@@ -196,12 +196,12 @@
                     </div>
 
                     <div *ngIf="brushBox">
-                        <h5 class="nw-text">X Range</h5>
+                        <h5>X Range</h5>
                         <p>
                             {{brushBox[0][0] | date:'medium'}} - {{brushBox[1][0] | date:'medium'}}
                         </p>
 
-                        <h5 class="nw-text">Y Range</h5>
+                        <h5>Y Range</h5>
 
                         <p>
                             {{brushBox[1][1] | number: '1.0-0'}} - {{brushBox[0][1] | number: '1.0-0'}}
@@ -246,16 +246,16 @@
             </div>
 
             <div *ngIf="isHovering" style="margin-left: 16px;">
-                <h3 class="nw-text nw-text-light">Hover data</h3>
+                <h3 class="nw-text-light">Hover data</h3>
                 <hr>
-                <p class="nw-text nw-text-light">
+                <p class="nw-text-light">
                     {{mainScaleHoverCoordinates[0] | date: 'medium'}}
                 </p>
-                <p class="nw-text nw-text-light">
+                <p class="nw-text-light">
                     {{mainScaleHoverCoordinates[1] | number: '1.0-0'}}
                 </p>
 
-                <p class="nw-text nw-text-light">
+                <p class="nw-text-light">
                     {{randomScaleHoverCoordinates[1] | number: '1.0-0'}}
                 </p>
             </div>
@@ -269,7 +269,7 @@
     </ng-container>
 
     <ng-container *ngIf="selectedTab === 'docs'">
-        <h3 class="nw-text">Importing</h3>
+        <h3>Importing</h3>
 
 <pre><code>
 {{'import { ChartsModule } from "nw-style-guide/charts";
@@ -289,19 +289,19 @@ export class AppModule { }
 '}}
 </code></pre>
 
-        <h3 class="nw-text">Chart wrapper</h3>
+        <h3>Chart wrapper</h3>
 
-        <p class="nw-text">
+        <p>
             This component (attached via an attribute selector) will generally wrap all other chart directives and components.
             This component <strong>must</strong> be attached to an SVG element (<code>SVGSVGElement</code>).
         </p>
 
-        <p class="nw-text">
+        <p>
             <code>nw-chart</code> renders it's children with <code>ng-content</code>. If you'd like more control over where your
             child components and directives are rendered, there are 10 "slots" available. <code>.nw-slot-1</code> to <code>.nw-slot-10</code>.
         </p>
 
-        <p class="nw-text">
+        <p>
             The view box of the SVG is based on the width, height and the corresponding margin inputs.
         </p>
 
@@ -336,7 +336,7 @@ export class AppModule { }
             </div>
         </div>
 
-        <h4 class="nw-text">Inputs</h4>
+        <h4>Inputs</h4>
 
         <table class="table table-bordered">
             <tbody>
@@ -361,7 +361,7 @@ export class AppModule { }
             </tbody>
         </table>
 
-        <h4 class="nw-text">Outputs</h4>
+        <h4>Outputs</h4>
 
         <table class="table table-bordered">
             <tbody>
@@ -378,7 +378,7 @@ export class AppModule { }
 
         <hr>
 
-        <h3 class="nw-text">X-Axis</h3>
+        <h3>X-Axis</h3>
 
         <div class="row">
             <div class="col-sm-6">
@@ -404,7 +404,7 @@ export class AppModule { }
             </div>
         </div>
 
-        <h4 class="nw-text">Inputs</h4>
+        <h4>Inputs</h4>
 
         <table class="table table-bordered">
             <tbody>
@@ -467,7 +467,7 @@ export class AppModule { }
 
         <hr>
 
-        <h3 class="nw-text">Y-Axis</h3>
+        <h3>Y-Axis</h3>
 
         <div class="row">
             <div class="col-sm-6">
@@ -493,7 +493,7 @@ export class AppModule { }
             </div>
         </div>
 
-        <h4 class="nw-text">Inputs</h4>
+        <h4>Inputs</h4>
 
         <table class="table table-bordered">
             <tbody>
