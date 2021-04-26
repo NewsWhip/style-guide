@@ -92,9 +92,12 @@ p {
 // -------------------------
 
 // Ex: (12px small font / 14px base font) * 100% = about 85%
-small,
-.small {
-    font-size: floor((100% * $font-size-small / $font-size-base));
+// Extra selectors "html body" are added for specificity, to override rules such as h[1-6] small {...} above.
+html body {
+    small,
+    .small {
+        font-size: floor((100% * $font-size-small / $font-size-base));
+    }
 }
 
 mark,
@@ -439,10 +442,13 @@ p {
     }
 }
 
-small, .small {
-    margin: 0;
-    font-size: 12px;
-    line-height: 1.4;
+// Extra selectors "html body" are added for specificity, to override rules such as h[1-6] small {...} above.
+html body {
+    small, .small {
+        margin: 0;
+        font-size: 12px;
+        line-height: 1.4;
+    }
 }
 
 .nw-text-light {
