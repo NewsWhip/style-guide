@@ -2,7 +2,7 @@
     font-size: 14px;
     text-align: left;
     line-height: 17px;
-    color: get-color('gray', 5x-light);
+    color: $text-color-secondary;
     margin-bottom: 0;
 
     &.table-striped > tbody > tr > td {
@@ -17,7 +17,7 @@
             > tr {
                 > th,
                 > td {
-                    border-color: get-color("gray", x-light);
+                    border-color: $divider-color-secondary;
                     border-bottom-width: 1px;
                     border-bottom-style: solid;
 
@@ -34,8 +34,8 @@
         }
         > tbody {
             > tr > td {
-                border-left: 1px solid get-color("gray", x-light);
-                border-right: 1px solid get-color("gray", x-light);
+                border-left: 1px solid $divider-color-secondary;
+                border-right: 1px solid $divider-color-secondary;
             }
         }
         > thead,

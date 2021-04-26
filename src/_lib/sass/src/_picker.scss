@@ -27,7 +27,7 @@ nw-angular-picker {
             }
         }
         &:not(:focus) {
-            @extend .btn-dropdown;
+            @extend .btn-secondary;
             @include placeholder(transparent);
         }
         ~ .dropdown-icon, ~ .reset-icon {
@@ -40,7 +40,7 @@ nw-angular-picker {
             cursor: pointer;
         }
         ~ .reset-icon {
-            color: #000000;
+            color: get-color("gray");
             right: 5px;
         }
     }
@@ -58,21 +58,21 @@ nw-angular-picker {
         justify-content: space-between;
         padding: 0 8px;
         line-height: 32px;
-        color: #000000;
-        border-bottom: 1px solid get-color("gray", 4x-light);
+        color: get-color("gray");
+        border-bottom: 1px solid $divider-color-primary;
     }
     .search-results {
         position: absolute;
         width: 100%;
         margin-bottom: 24px;
-        background: #ffffff;
+        background-color: #fff;
         z-index: 10;
 
         .search-result, .parent {
             position: relative;
             padding-left: 8px;
             font-size: 14px;
-            color: get-color("gray", dark);
+            color: get-color("gray");
             cursor: pointer;
 
             &:hover {
@@ -85,7 +85,7 @@ nw-angular-picker {
                 flex: 1;
             }
             .btn-ghost:not(:hover) {
-                color: get-color("gray", 2x-light);
+                color: get-color("gray");
             }
             .result-item {
                 display: flex;
@@ -128,7 +128,7 @@ nw-angular-picker {
             padding: 0 12px;
             width: 100%;
             font-size: 32px;
-            border-bottom: 1px solid get-color("gray", 4x-light);
+            border-bottom: 1px solid $divider-color-primary;
 
             @media (max-width: $screen-sm) {
                 display: flex;
@@ -137,7 +137,7 @@ nw-angular-picker {
         }
         .results-footer {
             padding: 8px;
-            border-top: 1px solid get-color("gray", 4x-light);
+            border-top: 1px solid $divider-color-primary;
         }
     }
 }

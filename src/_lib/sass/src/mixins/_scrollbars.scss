@@ -1,24 +1,24 @@
-@mixin scrollbars($size: .5em, $foreground-color: get-color("gray", 2x-light), $background-color: get-color("gray", 2x-light)) {
+@mixin scrollbars($size: .5em, $foreground-color: $divider-color-primary, $background-color: $divider-color-primary) {
     // For Google Chrome
     ::-webkit-scrollbar {
         width:  $size;
         height: $size;
     }
-    
+
     ::-webkit-scrollbar-thumb {
         background: $foreground-color;
         border-radius: #{$size/2};
     }
-    
+
     ::-webkit-scrollbar-track {
         background: transparent;
         border-radius: #{$size/2};
     }
-    
+
     ::-webkit-scrollbar-corner {
         background-color: transparent;
     }
-    
+
     // For Internet Explorer
     body {
         scrollbar-face-color: $foreground-color;
