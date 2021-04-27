@@ -12,13 +12,6 @@ h1, h2, h3, h4, h5, h6,
     font-weight: $headings-font-weight;
     line-height: $headings-line-height;
     color: $text-color;
-
-    small,
-    .small {
-        font-weight: normal;
-        line-height: 1;
-        color: $text-color-secondary;
-    }
 }
 
 h1, .h1,
@@ -26,11 +19,6 @@ h2, .h2,
 h3, .h3 {
     margin-top: $line-height-computed;
     margin-bottom: ($line-height-computed / 2);
-
-    small,
-    .small {
-        font-size: 65%;
-    }
 }
 
 h4, .h4,
@@ -38,11 +26,6 @@ h5, .h5,
 h6, .h6 {
     margin-top: ($line-height-computed / 2);
     margin-bottom: ($line-height-computed / 2);
-
-    small,
-    .small {
-        font-size: 75%;
-    }
 }
 
 h1, .h1 {
@@ -92,12 +75,9 @@ p {
 // -------------------------
 
 // Ex: (12px small font / 14px base font) * 100% = about 85%
-// Extra selectors "html body" are added for specificity, to override rules such as h[1-6] small {...} above.
-html body {
-    small,
-    .small {
-        font-size: floor((100% * $font-size-small / $font-size-base));
-    }
+small,
+.small {
+    font-size: floor((100% * $font-size-small / $font-size-base));
 }
 
 mark,
@@ -441,13 +421,10 @@ p {
     }
 }
 
-// Extra selectors "html body" are added for specificity, to override rules such as h[1-6] small {...} above.
-html body {
-    small, .small {
-        margin: 0;
-        font-size: 12px;
-        line-height: 1.4;
-    }
+small, .small {
+    margin: 0;
+    font-size: 12px;
+    line-height: 1.4;
 }
 
 .nw-text-light {
