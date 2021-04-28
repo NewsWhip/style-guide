@@ -432,11 +432,5 @@ small, .small {
 }
 
 .nw-text-dark {
-    &,
-    h1, h2, h3, h4, h5, h6,
-    .h1, .h2, .h3, .h4, .h5, .h6,
-    small,
-    .small {
-        color: get-color("gray");
-    }
+    color: get-color("gray");
 }
