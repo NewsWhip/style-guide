@@ -193,9 +193,9 @@ $btn-border-radius-xl:           $border-radius-xl !default;
 
 //== Forms
 //
-$input-bg:                       $text-color !default;
-$input-bg-disabled:              $text-color !default;
-$input-color:                    $level1 !default;
+$input-bg:                       #ffffff !default;
+$input-bg-disabled:              #ffffff !default;
+$input-color:                    get-color("gray") !default;
 $input-border:                   $divider-color-secondary !default;
 // TODO: Rename `$input-border-radius` to `$input-border-radius-base` in v4
 // This has no effect on `<select>`s in some browsers, due to the limited stylability of `<select>`s in CSS.
@@ -208,7 +208,7 @@ $input-height-base:              ($line-height-computed + ($padding-base-vertica
 $input-height-large:             (ceil($font-size-large * $line-height-large) + ($padding-large-vertical) + 11) !default;
 $input-height-small:             (floor($font-size-small * $line-height-small) + ($padding-small-vertical * 2) + 2) !default;
 $form-group-margin-bottom:       24px !default;
-$legend-color:                   $level1 !default;
+$legend-color:                   get-color("gray") !default;
 $legend-border-color:            $divider-color-secondary !default;
 $input-group-addon-bg:           $level1 !default;
 $input-group-addon-border-color: $input-border !default;
