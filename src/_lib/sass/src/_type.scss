@@ -11,21 +11,13 @@ h1, h2, h3, h4, h5, h6,
     font-family: $headings-font-family;
     font-weight: $headings-font-weight;
     line-height: $headings-line-height;
-    color: $text-color;
+    margin: 0;
 }
 
 h1, .h1,
 h2, .h2,
 h3, .h3 {
-    margin-top: $line-height-computed;
-    margin-bottom: ($line-height-computed / 2);
-}
-
-h4, .h4,
-h5, .h5,
-h6, .h6 {
-    margin-top: ($line-height-computed / 2);
-    margin-bottom: ($line-height-computed / 2);
+    margin-bottom: 6px;
 }
 
 h1, .h1 {
@@ -41,10 +33,12 @@ h3, .h3 {
 }
 
 h4, .h4 {
+    font-weight: bold;
     font-size: $font-size-h4;
 }
 
 h5, .h5 {
+    font-weight: bold;
     font-size: $font-size-h5;
 }
 
@@ -58,6 +52,16 @@ h6, .h6 {
 
 p {
     margin: 0 0 ($line-height-computed / 2);
+    font-size: 14px;
+    line-height: 1.4;
+
+    &.text-large {
+        font-size: 16px;
+    }
+
+    &.text-upper {
+        letter-spacing: 0.5px;
+    }
 }
 
 .lead {
@@ -74,10 +78,11 @@ p {
 // Emphasis & misc
 // -------------------------
 
-// Ex: (12px small font / 14px base font) * 100% = about 85%
 small,
 .small {
-    font-size: floor((100% * $font-size-small / $font-size-base));
+    margin: 0;
+    font-size: 12px;
+    line-height: 1.4;
 }
 
 mark,
@@ -378,53 +383,6 @@ address {
     }
 
     @extend .nw-link-tertiary;
-}
-
-h1, h3, h4, h5,
-.h1, .h3, .h4, .h5 {
-    line-height: 1.2;
-    margin: 0;
-}
-
-h1, .h1 {
-    font-weight: normal;
-    font-size: 36px;
-}
-
-// No h2 for now
-h3, .h3 {
-    font-weight: normal;
-    font-size: 24px;
-}
-
-h4, .h4 {
-    font-weight: bold;
-    font-size: 20px;
-}
-
-h5, .h5 {
-    font-weight: bold;
-    font-size: 16px;
-}
-
-p {
-    margin: 0;
-    font-size: 14px;
-    line-height: 1.4;
-
-    &.text-large {
-        font-size: 16px;
-    }
-
-    &.text-upper {
-        letter-spacing: 0.5px;
-    }
-}
-
-small, .small {
-    margin: 0;
-    font-size: 12px;
-    line-height: 1.4;
 }
 
 .nw-text-light {

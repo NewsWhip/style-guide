@@ -118,12 +118,12 @@ $font-size-base:          12px !default;
 $font-size-large:         16px;
 $font-size-xl:            16px !default;
 
-$font-size-h1:            floor(($font-size-base * 2.6)) !default; // ~36px
-$font-size-h2:            floor(($font-size-base * 2.15)) !default; // ~30px
-$font-size-h3:            ceil(($font-size-base * 1.7)) !default; // ~24px
-$font-size-h4:            ceil(($font-size-base * 1.25)) !default; // ~18px
-$font-size-h5:            $font-size-base !default;
-$font-size-h6:            ceil(($font-size-base * 0.85)) !default; // ~12px
+$font-size-h1:            36px !default;
+$font-size-h2:            30px !default;
+$font-size-h3:            24px !default;
+$font-size-h4:            20px !default;
+$font-size-h5:            16px !default;
+$font-size-h6:            12px !default;
 
 //** Unit-less `line-height` for use in components like buttons.
 $line-height-small:       1.2 !default;
@@ -135,8 +135,8 @@ $line-height-computed:    floor(($font-size-base * $line-height-base)) !default;
 
 //** By default, this inherits from the `<body>`.
 $headings-font-family:    inherit !default;
-$headings-font-weight:    500 !default;
-$headings-line-height:    1.1 !default;
+$headings-font-weight:    normal !default;
+$headings-line-height:    1.2 !default;
 $headings-color:          inherit !default;
 
 //== Common
@@ -504,13 +504,13 @@ $tooltip-arrow-color:               $tooltip-bg !default;
 //** Variables for tooltip with white background
 
 //** Tooltip light background color
-$tooltip-bg-light:                  $text-color;
+$tooltip-bg-light:                  #ffffff;
 
 //** Tooltip text color
 $tooltip-color-light:               $level1 !default;
 
 //** Tooltip arrow color
-$tooltip-arrow-color-light:         $text-color;
+$tooltip-arrow-color-light:         #ffffff;
 
 
 //== Popovers
