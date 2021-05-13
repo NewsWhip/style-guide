@@ -21,6 +21,6 @@ export class TypographyComponent implements OnInit {
   }
 
   get colorVariant(): string {
-    return `nw-text-${this.textColor.value}`
+    return this.textColor.value === 'light' ? '' : `nw-text-${this.textColor.value}`;
   }
 }

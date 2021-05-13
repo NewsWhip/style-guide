@@ -385,10 +385,6 @@ address {
     @extend .nw-link-tertiary;
 }
 
-.nw-text-light {
-    color: $text-color;
-}
-
 .nw-text-dark {
     color: get-color("gray");
 }

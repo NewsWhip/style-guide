@@ -7,7 +7,7 @@ import { Subscription } from 'rxjs';
     selector: 'app-email-input-demo',
     template: `
         <div class="page-header" style="padding-bottom: 0;">
-            <h3 class="nw-text-light">Email Input</h3>
+            <h3>Email Input</h3>
 
             <p>This is an input that a user can use to input multiple email in a form</p>
             <p><strong>Used in</strong>: Spike Export PDF to input emails</p>
