@@ -1,51 +1,197 @@
-<div>
-  <h2 class="page-header">Toasts</h2>
+<div class="page-header" style="padding-bottom: 0;">
+    <h3 class="nw-text nw-text-light">Toasts</h3>
 
-  <div class="row">
-    <div class="col-md-8 col-sm-12">
-      <div>
-        <button class="btn btn-primary" (click)="addSuccess()">Success</button>
-        <button class="btn btn-danger" (click)="addError()">Error</button>
-        <button class="btn btn-alt" (click)="addRandom()">Add Random</button>
-        <button class="btn btn-alt" (click)="addCustomToast()">Custom HTML</button>
-        <button class="btn btn-alt" (click)="addTemplateRefToast(ref)">Template Ref</button>
-        <hr>
-        <button class="btn btn-alt" (click)="addDismissibleOnDemand()">Add dismissible on demand</button>
-        <button class="btn btn-alt" (click)="dismissOnDemand()">Dismiss on demand</button>
-        <br><br>
-        <em>*Note: For simplicity, only one toast at a time is dismissible on demand in this demo,
-            others will stay on screen until you navigate away.</em>
-        <hr>
-      </div>
+    <p class="nw-text">Toasts generally provide application-level feedback & confirmation after the user performs an action.</p>
 
-      <ng-template #ref>
-        <div>
-          <p>Some paragraph text</p>
-          <i class="fab fa-twitter"></i>
-          <div>
-            <a href="https://spike.newswhip.com" class="nw-link nw-link-inline">Navigate to Spike</a>
-          </div>
-        </div>
-      </ng-template>
-
-      <div>
-        <h3>Implementation details</h3>
-
-        <ul>
-          <li>Toast messages should ideally be limited to no more than 50 characters</li>
-          <li>Successful toast messages should not be manually dismissable</li>
-          <li>The default time to display the toast is 3 seconds</li>
-        </ul>
-      </div>
-
-      <div>
-        <h3>Usage</h3>
-
-        <p>This module requires the dependency <code>@angular/cdk</code> to dynamically render content</p>
-
-        <markdown path="assets/modules/toasts/README.md"></markdown>
-
-      </div>
+    <div class="tabs-container">
+        <nw-tabs size="md">
+            <li nwTab [isActive]="selectedTab === 'design'" role="presentation">
+                <a [routerLink]="['.']" [queryParams]="{section: 'design'}" role="tab">Design</a>
+            </li>
+            <li nwTab [isActive]="selectedTab === 'api'" role="presentation">
+                <a [routerLink]="['.']" [queryParams]="{section: 'api'}" role="tab">API</a>
+            </li>
+        </nw-tabs>
     </div>
-  </div>
+</div>
+
+<div *ngIf="selectedTab === 'design'" class="tab-content">
+    <h4 class="nw-text" style="margin-bottom: 16px;">Live Example</h4>
+
+    <div class="live-example-form">
+        <form [formGroup]="form">
+            <div class="form-group">
+                <label>Toast type</label>
+                <div class="radio">
+                    <input formControlName="toastType" id="type-success" [value]="'success'" type="radio">
+                    <label for="type-success">Success</label>
+                </div>
+                <div class="radio">
+                    <input formControlName="toastType" id="type-error"  [value]="'error'" type="radio">
+                    <label for="type-error">Error</label>
+                </div>
+            </div>
+
+            <div class="form-group" [class.has-error]="form.get('text').invalid">
+                <label>Toast message</label>
+                <input class="form-control" formControlName="text" type="text" placeholder="Toast message">
+            </div>
+
+            <div class="form-group">
+                <div class="checkbox">
+                    <input formControlName="autoDismiss" id="auto-dimiss" type="checkbox">
+                    <label for="auto-dimiss">Should automatically dismiss</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <button class="btn btn-md btn-primary btn-block"
+                    [disabled]="form.invalid"
+                    (click)="showToast()">Show toast</button>
+            </div>
+        </form>
+    </div>
+
+    <h3 class="nw-text" style="margin-bottom: 16px;">Description</h3>
+
+    <ol style="margin-bottom: 32px;" class="guidelines">
+        <li>
+            <h5 class="nw-text" style="display: inline-block;">Character length</h5>
+            <p class="nw-text">Toast messages should ideally be limited to no more than 50 characters.</p>
+        </li>
+        <li>
+            <h5 class="nw-text" style="display: inline-block;">Dismissal</h5>
+            <p class="nw-text">Successful toast messages should not be manually dismissable.</p>
+        </li>
+        <li>
+            <h5 class="nw-text" style="display: inline-block;">Display time</h5>
+            <p class="nw-text">The default time to display the toast is 3 seconds.</p>
+        </li>
+    </ol>
+</div>
+
+<div *ngIf="selectedTab === 'api'" class="tab-content">
+    <div class="demo-section">
+        <div class="row">
+            <div class="col-md-8 col-sm-12">
+                <h4 class="nw-text">Importing</h4>
+                <app-copy-code>{{importModule}}</app-copy-code>
+            </div>
+        </div>
+    </div>
+
+    <div class="demo-section">
+        <div class="row">
+            <div class="col-md-8 col-sm-12">
+                <h4 class="nw-text">Basic example</h4>
+                <app-copy-code>{{example}}</app-copy-code>
+            </div>
+        </div>
+    </div>
+
+    <div class="demo-section">
+        <div class="row">
+            <div class="col-md-8 col-sm-12">
+                <h4 class="nw-text">Custom configuration</h4>
+                <p class="nw-text">
+                    Toasts are displayed using a <code>DomPortalOutlet</code> provided by <code>@angular/cdk</code>. By default, this portal outlet is attached to the document body.
+                    The portal outlet location can be configured by providing a custom <code>IToastConfig</code> with an <code>outletElement</code>. The following example showcases
+                    a component that injects a global instance of <code>Toaster</code> as well as a local instance for which we provide a custom configuration using 
+                    the <code>NW_TOASTER_CONFIG</code> injection token.
+                </p>
+
+                <pre style="margin: 16px 0"><code>{{configExample}}</code></pre>
+
+                <p class="nw-text">
+                    Addressing the constructor first, we inject two instances of <code>Toaster</code>. <code>_globalToaster</code> and <code>_localToaster</code>. <code>_globalToaster</code> is decorated with the <code>@SkipSelf</code> decorator. This tells
+                    the dependency injector to skip the current component (host) when trying to resolve the dependency. For more details on <code>@SkipSelf</code>, see 
+                    the <a class="nw-link nw-link-tertiary" href="https://angular.io/api/core/SkipSelf" target="_blank" rel="noopener">official docs</a>.<br><br>
+
+                    By using <code>@SkipSelf</code> and skipping the host when attempting to resolve <code>Toaster</code>, Angular will traverse the hierarchy and eventually resolve
+                    our <code>Toaster</code> dependency when it reaches our <code>AppModule</code> which imports <code>ToastsModule.forRoot()</code>. As a result our reference to <code>_globalToaster</code>
+                    is the singleton instance used application-wide.<br><br>
+
+                    For our "local instance", <code>_localToaster</code>, we use the decorator <code>@Host</code> which tells the dependency injector to go only as far as the host when attempting to resolve the dependency
+                    and no further. This is where the <code>providers</code> array in the <code>@Component</code> decorator come into play. Because of the <code>@Host</code> decorator, Angular will search these providers
+                    and go no further up the hierachy.<br><br>
+
+                    Our component now has access to two instances of <code>Toaster</code>. For our local toaster instance, we want our toasts to be projected inside the element ref of our component. In order to do this we need
+                    to call <code>setConfig</code> on the local toaster instance <strong>before</strong> we attempt to show a message.<br><br>
+
+                    Before calling <code>success</code> on our local instance, we configure the <code>outletElement</code> to be our component element. If we were to show a message before setting the configuration,
+                    the <code>outletElement</code> would default to the document body.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="demo-section">
+        <div class="row">
+            <div class="col-md-8 col-sm-12">
+                <h4 class="nw-text">Toaster API</h4>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th [style.width.px]="300">Method</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let method of toasterMethods">
+                            <td><code class="light">{{method.name}}</code></td>
+                            <td [innerHTML]="method.description"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="demo-section">
+        <div class="row">
+            <div class="col-md-8 col-sm-12">
+                <h4 class="nw-text">IToast interface</h4>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Property</th>
+                            <th>Default value</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of toastInterfaceDetails">
+                            <td><code class="light">{{item.name}}</code></td>
+                            <td><code class="light">{{item.default}}</code></td>
+                            <td [innerHTML]="item.description"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="demo-section">
+        <div class="row">
+            <div class="col-md-8 col-sm-12">
+                <h4 class="nw-text">IToastConfig interface</h4>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Property</th>
+                            <th>Default value</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code class="light">outletElement: Element</code></td>
+                            <td><code class="light">null</code></td>
+                            <td>A reference to the <code>Element</code> where the <code>ToastsComponent</code> should be projected</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
