@@ -1,8 +1,8 @@
 table.stack-wrapper {
-    &.nw-text-light {
-        background: #4c4c4c;
+    &:not(.nw-text-dark) {
+        color: #e2e5e9; // override _table.scss: table {color: $text-color-secondary}
     }
     &.nw-text-dark {
-        background: #dbdbdb;
+        background: #ffffff;
     }
 }
