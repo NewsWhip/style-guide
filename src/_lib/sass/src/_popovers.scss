@@ -13,7 +13,6 @@
     // So reset our font and text properties to avoid inheriting weird values.
     @include reset-text;
     font-size: $font-size-base;
-
     color: get-color("gray");
     background-color: $popover-bg;
     background-clip: padding-box;

@@ -1,7 +1,7 @@
 <div class="page-header" style="padding-bottom: 0;">
-    <h3 class="nw-text nw-text-light">Toasts</h3>
+    <h3>Toasts</h3>
 
-    <p class="nw-text">Toasts generally provide application-level feedback & confirmation after the user performs an action.</p>
+    <p>Toasts generally provide application-level feedback & confirmation after the user performs an action.</p>
 
     <div class="tabs-container">
         <nw-tabs size="md">
@@ -16,7 +16,7 @@
 </div>
 
 <div *ngIf="selectedTab === 'design'" class="tab-content">
-    <h4 class="nw-text" style="margin-bottom: 16px;">Live Example</h4>
+    <h4 style="margin-bottom: 16px;">Live Example</h4>
 
     <div class="live-example-form">
         <form [formGroup]="form">
@@ -64,20 +64,20 @@
         </form>
     </div>
 
-    <h3 class="nw-text" style="margin-bottom: 16px;">Description</h3>
+    <h3 style="margin-bottom: 16px;">Description</h3>
 
     <ol style="margin-bottom: 32px;" class="guidelines">
         <li>
-            <h5 class="nw-text" style="display: inline-block;">Character length</h5>
-            <p class="nw-text">Toast messages should ideally be limited to no more than 50 characters.</p>
+            <h5 style="display: inline-block;">Character length</h5>
+            <p>Toast messages should ideally be limited to no more than 50 characters.</p>
         </li>
         <li>
-            <h5 class="nw-text" style="display: inline-block;">Dismissal</h5>
-            <p class="nw-text">Successful toast messages should not be manually dismissable.</p>
+            <h5 style="display: inline-block;">Dismissal</h5>
+            <p>Successful toast messages should not be manually dismissable.</p>
         </li>
         <li>
-            <h5 class="nw-text" style="display: inline-block;">Display time</h5>
-            <p class="nw-text">The default time to display the toast is 3 seconds.</p>
+            <h5 style="display: inline-block;">Display time</h5>
+            <p>The default time to display the toast is 3 seconds.</p>
         </li>
     </ol>
 </div>
@@ -86,7 +86,7 @@
     <div class="demo-section">
         <div class="row">
             <div class="col-md-8 col-sm-12">
-                <h4 class="nw-text">Importing</h4>
+                <h4>Importing</h4>
                 <app-copy-code>{{importModule}}</app-copy-code>
             </div>
         </div>
@@ -95,7 +95,7 @@
     <div class="demo-section">
         <div class="row">
             <div class="col-md-8 col-sm-12">
-                <h4 class="nw-text">Basic example</h4>
+                <h4>Basic example</h4>
                 <app-copy-code>{{example}}</app-copy-code>
             </div>
         </div>
@@ -104,8 +104,8 @@
     <div class="demo-section">
         <div class="row">
             <div class="col-md-8 col-sm-12">
-                <h4 class="nw-text">Custom configuration</h4>
-                <p class="nw-text">
+                <h4>Custom configuration</h4>
+                <p>
                     Toasts are displayed using a <code>DomPortalOutlet</code> provided by <code>@angular/cdk</code>. By default, this portal outlet is attached to the document body.
                     The portal outlet location can be configured by providing a custom <code>IToastConfig</code> with an <code>outletElement</code>. The following example showcases
                     a component that injects a global instance of <code>Toaster</code> as well as a local instance for which we provide a custom configuration using 
@@ -114,7 +114,7 @@
 
                 <pre style="margin: 16px 0"><code>{{configExample}}</code></pre>
 
-                <p class="nw-text">
+                <p>
                     Addressing the constructor first, we inject two instances of <code>Toaster</code>. <code>_globalToaster</code> and <code>_localToaster</code>. <code>_globalToaster</code> is decorated with the <code>@SkipSelf</code> decorator. This tells
                     the dependency injector to skip the current component (host) when trying to resolve the dependency. For more details on <code>@SkipSelf</code>, see 
                     the <a class="nw-link nw-link-tertiary" href="https://angular.io/api/core/SkipSelf" target="_blank" rel="noopener">official docs</a>.<br><br>
@@ -140,7 +140,7 @@
     <div class="demo-section">
         <div class="row">
             <div class="col-md-8 col-sm-12">
-                <h4 class="nw-text">Toaster API</h4>
+                <h4>Toaster API</h4>
                 <table class="table table-bordered">
                     <thead>
                         <tr>
@@ -162,7 +162,7 @@
     <div class="demo-section">
         <div class="row">
             <div class="col-md-8 col-sm-12">
-                <h4 class="nw-text">IToast interface</h4>
+                <h4>IToast interface</h4>
                 <table class="table table-bordered">
                     <thead>
                         <tr>
@@ -186,7 +186,7 @@
     <div class="demo-section">
         <div class="row">
             <div class="col-md-8 col-sm-12">
-                <h4 class="nw-text">IToastConfig interface</h4>
+                <h4>IToastConfig interface</h4>
                 <table class="table table-bordered">
                     <thead>
                         <tr>
