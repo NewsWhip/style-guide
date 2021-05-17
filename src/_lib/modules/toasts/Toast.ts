@@ -7,6 +7,7 @@ export class Toast implements IToast {
     isDismissable?: boolean;
     autoDismiss?: boolean = true;
     dismissTimeout?: number = 3000;
+    size?: 'md';
 
     constructor(options: IToast) {
         Object.assign(this, options);

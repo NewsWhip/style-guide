@@ -6,4 +6,5 @@ export class IToast {
     isDismissable?: boolean;
     autoDismiss?: boolean;
     dismissTimeout?: number;
+    size?: 'sm' | 'md';
 }

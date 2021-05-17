@@ -48,7 +48,7 @@ export class Toaster {
         return this._toastsComponentRef.error(message);
     }
 
-    dismiss(toast: IToast): void {
+    dismiss(toast: Toast): void {
         this._toastsComponentRef.dismiss(toast);
     }
 

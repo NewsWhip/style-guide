@@ -10,16 +10,15 @@
 .toast {
     display: flex;
     flex-direction: row;
-    align-items: baseline;
+    // align-items: baseline;
+    align-items: flex-start;
     position: relative;
     margin: 8px auto;
-    padding: 8px 24px;
+    padding: 16px 24px;
     max-width: 500px;
     background: get-color("gray", light);
     color: #ffffff;
     border-radius: 5px;
-    font-size: 16px;
-    font-weight: 600;
 
     &.toast-success {
         background: get-color("secondary", base);
@@ -29,18 +28,39 @@
     }
     .toast-message {
         flex: 1;
-        align-self: center;
         margin: 0;
-        line-height: 19px;
+        line-height: 1.2;
+        font-size: 16px;
+        font-weight: 600;
     }
     .toast-icon {
-        font-size: 24px;
+        // font-size: 24px;
+        font-size: 16px;
         margin-right: 16px;
-    }
-    .close {
+        top: 1px;
         position: relative;
-        // Negate the unstyled button padding
-        right: -6px;
-        font-size: 24px;
+    }
+    .close-button {
+        position: relative;
+        right: -12px;
+        top: 1px;
+        color: #ffffff;
+    }
+    &.size-sm {
+        padding: 8px 16px;
+
+        .toast-message {
+            font-size: 14px;
+            font-weight: normal;
+        }
+        .toast-icon {
+            font-size: 14px;
+            margin-right: 12px;
+        }
+        .close-button {
+            right: -6px;
+            top: 0px;
+            margin-left: 4px;
+        }
     }
 }

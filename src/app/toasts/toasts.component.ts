@@ -29,7 +29,8 @@ export class ToastsComponent implements OnInit, OnDestroy {
     this.form = this._fb.group({
       toastType: ['success'],
       text: ['Example toast message', Validators.required],
-      autoDismiss: [true]
+      autoDismiss: [true],
+      size: ['md']
     });
 
     this.toasterMethods = this.getToasterMethods();
@@ -47,7 +48,8 @@ export class ToastsComponent implements OnInit, OnDestroy {
       typeId: this.form.get('toastType').value,
       message: this.form.get('text').value,
       autoDismiss: this.form.get('autoDismiss').value,
-      isDismissable: !this.form.get('autoDismiss').value
+      isDismissable: !this.form.get('autoDismiss').value,
+      size: this.form.get('size').value
     });
   }
 
