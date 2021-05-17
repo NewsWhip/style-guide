@@ -10,7 +10,6 @@
 .toast {
     display: flex;
     flex-direction: row;
-    // align-items: baseline;
     align-items: flex-start;
     position: relative;
     margin: 8px auto;
@@ -34,7 +33,6 @@
         font-weight: 600;
     }
     .toast-icon {
-        // font-size: 24px;
         font-size: 16px;
         margin-right: 16px;
         top: 1px;
