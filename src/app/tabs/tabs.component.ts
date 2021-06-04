@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
-import * as _ from 'lodash';
+import { uniqueId } from 'lodash-es';
 
 @Component({
     selector: 'app-tabs',
@@ -44,7 +44,7 @@ export class TabsComponent {
 
     addTab(): void {
         this.tabCollection.push({
-            name: _.uniqueId('Added '),
+            name: uniqueId('Added '),
             isActive: false
         })
     }
