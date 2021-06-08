@@ -2,8 +2,8 @@ import { Component, Input, Output, ChangeDetectorRef, ChangeDetectionStrategy, E
 import { trigger, transition, animate, style } from '@angular/animations';
 import { FormControl } from '@angular/forms';
 import { IPickerItem } from './IPickerItem';
-import * as _ from 'lodash';
 import { Subscription } from 'rxjs';
+import { isUndefined } from 'lodash-es';
 
 @Component({
 	selector: 'nw-angular-picker',
@@ -199,8 +199,8 @@ export class NwPickerComponent {
             if (val.length) {
                 const displayItems = this.items.filter(item => {
                     return (item.searchValues || []).some(value => {
-                        return _.includes(value.toLowerCase(), val.toLowerCase());
-                    }) || _.includes(item.displayName.toLowerCase(), val.toLowerCase());
+                        return value.toLowerCase().includes(val.toLowerCase());
+                    }) || item.displayName.toLowerCase().includes(val.toLowerCase());
                 });
                 // remove duplicate items
                 this.displayItems = displayItems.reduce((items, item) => items.find(x => x.id === item.id) ? [...items] : [...items, item], []);
@@ -240,7 +240,7 @@ export class NwPickerComponent {
     }
 
     getParentItem(parentId) {
-        return _.find(this.items, i => i.id === parentId);
+        return this.items.find(i => i.id === parentId);
     }
 
     hasChildren(id) {
@@ -342,11 +342,11 @@ export class NwPickerComponent {
 
     toggleDescendants(item: IPickerItem, add?: boolean, exclude?: boolean) {
         this.items.filter(ci => ci.parentId === item.id).forEach(ci => {
-            if (!_.isUndefined(add)) {
+            if (!isUndefined(add)) {
                 ci.added = add;
             }
 
-            if (!_.isUndefined(exclude)) {
+            if (!isUndefined(exclude)) {
                 ci.excluded = exclude;
             }
 
@@ -356,11 +356,11 @@ export class NwPickerComponent {
 
     toggleAncestors(item: IPickerItem, add?: boolean, exclude?: boolean) {
         this.items.filter(ci => ci.id === item.parentId).forEach(ci => {
-            if (!_.isUndefined(add)) {
+            if (!isUndefined(add)) {
                 ci.added = add;
             }
 
-            if (!_.isUndefined(exclude)) {
+            if (!isUndefined(exclude)) {
                 ci.excluded = exclude;
             }
 
