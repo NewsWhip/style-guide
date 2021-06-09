@@ -7,6 +7,7 @@ import { AxisTimeInterval } from 'd3-axis';
 import { curveCardinal, curveBasis, curveLinear, curveStep, curveStepAfter, curveStepBefore } from 'd3-shape';
 import { YAxisDirective, XAxisDirective, CircleDirective } from '../../_lib/modules/charts';
 import { ScaleTime } from 'd3-scale';
+import { BrushSelection } from 'd3-brush';
 
 @Component({
     selector: 'app-charts',
@@ -305,15 +306,31 @@ export class ChartsComponent implements OnInit {
         return Math.random() * (domain[1] - domain[0]) + domain[0];
     }
 
-    onBrushSelection(corners: [[number, number], [number, number]]) {
-        if (!corners) {
+    onBrushSelection(selection: BrushSelection) {
+        if (!selection) {
             return this.brushBox = null;
         }
-        this.brushBox = [
-            this.positionToCoordinates(this.xDomain, this.yDomain, corners[0]),
-            this.positionToCoordinates(this.xDomain, this.yDomain, corners[1]),
-        ]
-        console.log(this.brushBox);
+        switch (this.brushType.value) {
+            case '':
+                this.brushBox = [
+                    this.positionToCoordinates(this.xDomain, this.yDomain, selection[0] as [number, number]),
+                    this.positionToCoordinates(this.xDomain, this.yDomain, selection[1] as [number, number]),
+                ];
+                break;
+
+            case 'x':
+                this.brushBox = [
+                    this.positionToCoordinates(this.xDomain, this.yDomain, [selection[0], 0] as any),
+                    this.positionToCoordinates(this.xDomain, this.yDomain, [selection[1], 0] as any),
+                ];
+                break;
+
+            case 'y':
+                this.brushBox = [
+                    this.positionToCoordinates(this.xDomain, this.yDomain, [0, selection[0]] as any),
+                    this.positionToCoordinates(this.xDomain, this.yDomain, [0, selection[1]] as any),
+                ];
+        }
     }
 
     setSelectedTab(tab: string) {
