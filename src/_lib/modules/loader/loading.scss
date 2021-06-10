@@ -1,0 +1,28 @@
+.nw-loader {
+	display: none;
+	position: absolute;
+	top:0;
+	left: 0;
+	width: 100%;
+	text-align: center;
+	padding: 50px 0;
+	opacity: 1.0;
+	z-index: 1;
+
+	~ * {
+		transition: opacity $transition-time $transition-easing, filter $transition-time $transition-easing;
+	}
+
+	&.spike-loading {
+		display: block;
+
+		~ * {
+			opacity: 0.2;
+    		filter: grayscale(100%);
+			pointer-events: none;
+		}
+    }
+    &.full-height {
+        height: 100%;
+    }
+}
