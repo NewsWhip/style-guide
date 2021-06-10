@@ -1,0 +1,25 @@
+<div>
+    <h2 class="page-header">Autofocus</h2>
+    <input type="text" nwAutofocus placeholder="This input box is autofocused on load" class="form-control">
+    <hr>
+    <p>Import <code>AutoFocusModule</code> into your <code>app.module.ts</code>:</p>
+    <pre><code>
+    {{"import \{ AutoFocusModule \} from 'nw-style-guide/autofocus';
+
+    ...........
+    ...........
+
+    @NgModule({
+        declarations: [...],
+        imports: [
+            .....
+            .....
+            AutoFocusModule
+        ],
+        bootstrap: [AppComponent]
+    })
+    export class AppModule \{ \}"}}
+    </code></pre>
+
+    <p>Then use directive <code>nwAutofocus</code> in template by adding it to the element you'd like autofocused on load.</p>
+</div>
