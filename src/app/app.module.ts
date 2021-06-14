@@ -44,6 +44,8 @@ import { EmailInputModule } from "../_lib/modules/email-input/email-input.module
 import { EmailInputDemoComponent } from "./email-input/email-input-demo.component";
 import { CopyCodeComponent } from './copy-code/copy-code.component';
 import { HttpClientModule } from '@angular/common/http';
+import { AutofocusComponent } from './autofocus/autofocus.component';
+import { AutoFocusModule } from '../_lib/modules/autofocus';
 
 @NgModule({
   declarations: [
@@ -73,29 +75,31 @@ import { HttpClientModule } from '@angular/common/http';
     LoaderComponent,
     CarouselComponent,
     EmailInputDemoComponent,
-    CopyCodeComponent
+    CopyCodeComponent,
+    AutofocusComponent
   ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    ReactiveFormsModule,
-    routing,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    PopoverModule.forRoot(),
-    FeatureAlertsModule,
-    NwPickerModule,
-    ToastsModule.forRoot(),
-    NgxMdModule.forRoot(),
-    FeatureAlertsModule.forRoot(),
-    PortalModule,
-    TabsModule,
-    ChartsModule,
-    LoaderModule,
-    CarouselModule,
-    DropdownsModule,
-    EmailInputModule
-  ],
+    imports: [
+        BrowserModule,
+        FormsModule,
+        ReactiveFormsModule,
+        routing,
+        BrowserAnimationsModule,
+        HttpClientModule,
+        PopoverModule.forRoot(),
+        FeatureAlertsModule,
+        NwPickerModule,
+        ToastsModule.forRoot(),
+        NgxMdModule.forRoot(),
+        FeatureAlertsModule.forRoot(),
+        PortalModule,
+        TabsModule,
+        ChartsModule,
+        LoaderModule,
+        CarouselModule,
+        DropdownsModule,
+        EmailInputModule,
+        AutoFocusModule
+    ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

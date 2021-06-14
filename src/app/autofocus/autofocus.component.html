@@ -1,0 +1,41 @@
+<div class="page-header" style="padding-bottom: 0;">
+    <h3>Autofocus</h3>
+
+    <p>This directive auto-focuses on a focusable element when the element is rendered.</p>
+
+    <div class="tabs-container">
+        <nw-tabs size="md">
+            <li nwTab [isActive]="selectedTab === 'design'" role="presentation">
+                <a [routerLink]="['.']" [queryParams]="{section: 'design'}" role="tab">Design</a>
+            </li>
+            <li nwTab [isActive]="selectedTab === 'api'" role="presentation">
+                <a [routerLink]="['.']" [queryParams]="{section: 'api'}" role="tab">API</a>
+            </li>
+        </nw-tabs>
+    </div>
+</div>
+
+<div *ngIf="selectedTab === 'design'" class="tab-content">
+    <h4 style="margin-bottom: 16px;">Live Example</h4>
+    <input style="width: 300px" type="text" nwAutofocus placeholder="This input box is autofocused on load" class="form-control">
+</div>
+
+<div *ngIf="selectedTab === 'api'" class="tab-content">
+    <div class="demo-section">
+        <div class="row">
+            <div class="col-md-8 col-sm-12">
+                <h4>Importing</h4>
+                <app-copy-code>{{importModule}}</app-copy-code>
+            </div>
+        </div>
+    </div>
+
+    <div class="demo-section">
+        <div class="row">
+            <div class="col-md-8 col-sm-12">
+                <h4>Basic example</h4>
+                <app-copy-code>{{example}}</app-copy-code>
+            </div>
+        </div>
+    </div>
+</div>
