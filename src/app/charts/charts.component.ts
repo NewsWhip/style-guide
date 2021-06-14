@@ -130,6 +130,7 @@ export class ChartsComponent implements OnInit {
     public barWidth: FormControl = new FormControl(20);
     public xAxisTickCount: number | AxisTimeInterval = 8;
     public showForeignObject: FormControl = new FormControl(false);
+    public brushSelection: any;
 
     @ViewChild('xAxis') xAxis: XAxisDirective;
     @ViewChild('yAxis') yAxis: YAxisDirective;
@@ -307,6 +308,7 @@ export class ChartsComponent implements OnInit {
     }
 
     onBrushSelection(selection: BrushSelection) {
+        this.brushSelection = selection;
         if (!selection) {
             return this.brushBox = null;
         }

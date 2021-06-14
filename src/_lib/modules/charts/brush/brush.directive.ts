@@ -2,6 +2,7 @@ import { Directive, ElementRef, OnInit, Input, OnDestroy, Output, EventEmitter, 
 import { select, Selection } from 'd3-selection';
 import { brush, BrushBehavior, brushX, brushY, brushSelection, BrushSelection } from 'd3-brush';
 import { ChartComponent } from '../chart.component';
+import { isEqual } from 'lodash-es';
 
 @Directive({
     selector: 'svg:g[nw-brush]',
@@ -39,30 +40,32 @@ export class BrushDirective implements OnInit, OnDestroy, OnChanges {
         private _chart: ChartComponent) {}
 
     ngOnInit() {
-        this.initialize();
+        this._initialize();
+
         if (this.selection) {
             this._setBrushArea(this.selection);
         }
         this._subscribeToBrushEndEvent();
     }
 
-    ngOnChanges(changes: SimpleChanges) {
-        if (changes.dimension && !changes.dimension.firstChange && changes.dimension.previousValue !== changes.dimension.currentValue) {
-            this.reset();
+    ngOnChanges(c: SimpleChanges) {
+        const dimensionChange: boolean = c.dimension && !c.dimension.firstChange && c.dimension.previousValue !== c.dimension.currentValue;
+        const selectionChange: boolean = c.selection && !c.selection.firstChange && c.selection.previousValue !== c.selection.currentValue;
+
+        if (dimensionChange) {
+            this.selection ?
+                this._clearBrush({ emitEvent: false }) :
+                this._clearBrush();
+        }
+        if (selectionChange) {
+            this._setBrushArea(this.selection);
         }
     }
 
-    initialize() {
+    private _initialize() {
         this.brushSelection = select(this._elRef.nativeElement as SVGSVGElement);
         this.brushSelection.attr('class', 'nw-brush');
         this._createBrush();
-    }
-
-    reset() {
-        this._unbindEvents();
-        this._clearBrush();
-        this._createBrush();
-        this._subscribeToBrushEndEvent();
     }
 
     private _createBrush() {
@@ -80,16 +83,23 @@ export class BrushDirective implements OnInit, OnDestroy, OnChanges {
                 break;
         }
 
-        this.brush.extent(this.getExtent());
-
+        this.brush.extent(this._getExtent())
         this.brushSelection.call(this.brush);
     }
 
-    getExtent(): [[number, number], [number, number]] {
+    private _getExtent(): [[number, number], [number, number]] {
         return this.extent || [
             [0, 0],
             [this._chart.width, this._chart.height]
         ];
+    }
+
+    private _clearBrush(options: { emitEvent: boolean } = { emitEvent: true }) {
+        this.brush.move(this.brushSelection, null);
+
+        if (options.emitEvent) {
+            this.brushEnd.emit(null);
+        }
     }
 
     private _subscribeToBrushEndEvent() {
@@ -98,11 +108,6 @@ export class BrushDirective implements OnInit, OnDestroy, OnChanges {
 
             this.brushEnd.emit(selection);
         });
-    }
-
-    private _clearBrush() {
-        this.brush.move(this.brushSelection, null);
-        this.brushEnd.emit(null);
     }
 
     private _unbindEvents() {
@@ -118,7 +123,18 @@ export class BrushDirective implements OnInit, OnDestroy, OnChanges {
      * ref: https://github.com/d3/d3-brush#brush_move
      */
     private _setBrushArea(areaSelection: BrushSelection) {
-        this.brush.move(this.brushSelection, areaSelection);
+        /**
+         * We don't want to emit an event when the brush area is programatically updated. In order to that
+         * we unbind the "end" event and re-bind after the brush update
+         */
+        this._unbindEvents();
+
+        if (areaSelection) {
+            this.brush.move(this.brushSelection, areaSelection);
+        } else {
+            this._clearBrush();
+        }
+        this._subscribeToBrushEndEvent();
     }
 
     ngOnDestroy() {

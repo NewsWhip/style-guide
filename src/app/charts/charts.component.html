@@ -32,6 +32,7 @@
                 (bgClick)="onBgClick()">
 
                 <g nw-brush *ngIf="showBrush.value"
+                    [selection]="brushSelection"
                     [dimension]="brushType.value"
                     (brushEnd)="onBrushSelection($event)"></g>
 
