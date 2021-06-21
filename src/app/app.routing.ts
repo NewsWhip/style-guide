@@ -25,6 +25,7 @@ import { ChartsComponent } from "./charts/charts.component";
 import { LoaderComponent } from './loader/loader.component';
 import { CarouselComponent } from './carousel/carousel.component';
 import { EmailInputDemoComponent } from "./email-input/email-input-demo.component";
+import { AutofocusComponent } from './autofocus/autofocus.component';
 
 const appRoutes: Routes = [
     {
@@ -126,6 +127,10 @@ const appRoutes: Routes = [
     {
         path: 'email-input',
         component: EmailInputDemoComponent
+    },
+    {
+        path: 'autofocus',
+        component: AutofocusComponent
     }
 ];
 
