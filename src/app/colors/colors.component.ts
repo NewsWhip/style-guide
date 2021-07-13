@@ -79,7 +79,7 @@ export class ColorsComponent implements OnInit {
         let sat = Math.round(hsl[1]);
         let light = Math.round(hsl[2]);
 
-        return `hsl(${hue}, ${sat}%, ${light})%`;
+        return `hsl(${hue}, ${sat}%, ${light}%)`;
     }
 
     rgb2hex(rgbString) {
