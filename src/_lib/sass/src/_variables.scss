@@ -28,7 +28,7 @@ $alt-color-settings: (
 $tertiary-color-settings: (
     "name": "tertiary",
     "color": $tertiary-base,
-    "light-steps": (8, 16, 24, 32, 36, 40),
+    "light-steps": (4, 16, 24, 32, 36, 40),
     "dark-steps": (-8)
 );
 
@@ -42,7 +42,7 @@ $secondary-color-settings: (
 $primary-color-settings: (
     "name": "primary",
     "color": $primary-base,
-    "light-steps": (8, 16, 24, 32, 36, 40),
+    "light-steps": (4, 16, 24, 32, 36, 40),
     "dark-steps": (-8)
 );
 
