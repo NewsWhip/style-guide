@@ -56,8 +56,8 @@ a.btn {
 // --------------------------------------------------
 .btn-primary {
     @include button-variant(
-        $text-color,
-        $text-color,
+        #ffffff,
+        #ffffff,
         get-color('primary'),
         get-color('primary', light));
 }
@@ -77,8 +77,8 @@ a.btn {
 }
 .btn-danger {
     @include button-variant(
-        $text-color,
-        $text-color,
+        #ffffff,
+        #ffffff,
         get-color('tertiary'),
         get-color('tertiary', light));
 }
