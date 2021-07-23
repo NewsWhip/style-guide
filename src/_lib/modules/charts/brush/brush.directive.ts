@@ -31,6 +31,10 @@ export class BrushDirective implements OnInit, OnDestroy, OnChanges {
      * Outputs the brush selection in pixel values
      */
     @Output() brushEnd: EventEmitter<BrushSelection> = new EventEmitter();
+    /**
+     * Outputs the brush event in pixel values
+     */
+    @Output() brushed: EventEmitter<BrushSelection> = new EventEmitter();
 
     public brushSelection: Selection<SVGGElement, any, HTMLElement, any>;
     public brush: BrushBehavior<any>;
@@ -45,7 +49,7 @@ export class BrushDirective implements OnInit, OnDestroy, OnChanges {
         if (this.selection) {
             this._setBrushArea(this.selection);
         }
-        this._subscribeToBrushEndEvent();
+        this._subscribeToEvents();
     }
 
     ngOnChanges(c: SimpleChanges) {
@@ -102,16 +106,21 @@ export class BrushDirective implements OnInit, OnDestroy, OnChanges {
         }
     }
 
-    private _subscribeToBrushEndEvent() {
+    private _subscribeToEvents() {
         this.brush.on('end', _event => {
             const selection = brushSelection(this._elRef.nativeElement);
-
             this.brushEnd.emit(selection);
+        });
+
+        this.brush.on('brush', _event => {
+            const selection = brushSelection(this._elRef.nativeElement);
+            this.brushed.emit(selection);
         });
     }
 
     private _unbindEvents() {
         this.brush.on('end', null);
+        this.brush.on('brush', null);
     }
 
     /**
@@ -134,7 +143,7 @@ export class BrushDirective implements OnInit, OnDestroy, OnChanges {
         } else {
             this._clearBrush();
         }
-        this._subscribeToBrushEndEvent();
+        this._subscribeToEvents();
     }
 
     ngOnDestroy() {
