@@ -51,7 +51,7 @@ h6, .h6 {
 // -------------------------
 
 p {
-    margin: 0 0 ($line-height-computed / 2);
+    margin: 0 0 ($line-height-computed * 0.5);
     font-size: 14px;
     line-height: 1.4;
 
@@ -187,7 +187,7 @@ mark,
 ul,
 ol {
     margin-top: 0;
-    margin-bottom: ($line-height-computed / 2);
+    margin-bottom: ($line-height-computed * 0.5);
 
     ul,
     ol {
@@ -283,7 +283,7 @@ abbr[data-original-title] {
 
 // Blockquotes
 blockquote {
-    padding: ($line-height-computed / 2) $line-height-computed;
+    padding: ($line-height-computed * 0.5) $line-height-computed;
     margin: 0 0 $line-height-computed;
     font-size: $blockquote-font-size;
     border-left: 5px solid $blockquote-border-color;

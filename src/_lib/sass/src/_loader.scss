@@ -58,7 +58,7 @@ nw-loader {
             }
         }
         &.loader-sm {
-            font-size: $base-dot-size / 2;
+            font-size: $base-dot-size * 0.5;
         }
         &.loader-lg {
             font-size: $base-dot-size * 2;

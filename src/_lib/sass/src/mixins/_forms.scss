@@ -218,8 +218,8 @@
         &.switch-toggle {
             height: $height;
             width: $width;
-            border-radius: $height / 2;
-            font-size: $height / 2;
+            border-radius: $height * 0.5;
+            font-size: $height * 0.5;
 
             .on-off {
                 height: $round-button-size;
@@ -228,10 +228,10 @@
                 border-radius: 50%;
 
                 &:after {
-                    margin-left: $width / 2;
+                    margin-left: $width * 0.5;
                 }
                 &:before {
-                    margin-left: -$width / 2;
+                    margin-left: -$width * 0.5;
                 }
             }
         }
@@ -240,7 +240,7 @@
         &:checked {
             ~ label.switch-toggle {
                 .on-off {
-                    left: $width / 2;
+                    left: $width * 0.5;
                 }
             }
         }
