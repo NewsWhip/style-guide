@@ -30,6 +30,10 @@ nw-email-input {
     .pill {
         margin-right: 6px;
         margin-bottom: 6px;
+        .pill-label[contenteditable=true] {
+            background-color: white;
+            outline: none;
+        }
     }
     .input-container {
         display: flex;

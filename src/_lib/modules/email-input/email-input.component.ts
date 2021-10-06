@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy, Input, Output, EventEmitter, ViewChildren, QueryList } from '@angular/core';
 import { FormControl, Validators } from "@angular/forms";
 import { IValidationChange } from "./models/IValidationChange";
 import { Subscription } from 'rxjs';
@@ -12,10 +12,13 @@ import { Subscription } from 'rxjs';
             (paste)="onPaste($event)"
             [attr.data-placeholder-text]="placeholder">
 
-            <div class="pill pill-sm" *ngFor="let email of emails; let last = last;"
+            <div class="pill pill-sm" *ngFor="let email of emails; let last = last; let index = index;"
                 [class.invalid]="!isValid(email)"
                 [class.selected]="last && isPillSelected">
-                <span class="pill-label">{{email}}</span>
+                <span class="pill-label" #pillLabel
+                    [attr.contenteditable]="index === pillBeingEdited"
+                    (keydown)="onEditPillKeydown($event, index)"
+                    (click)="editPill(email, index)">{{email}}</span>
                 <button class="close" (click)="removeEmail(email)">×</button>
             </div>
 
@@ -47,9 +50,11 @@ export class EmailInputComponent implements OnInit, OnDestroy {
 
     @ViewChild('inputEl', { static: true }) inputEl: ElementRef;
     @ViewChild('container', { static: true }) container: ElementRef;
+    @ViewChildren('pillLabel') pillLabels: QueryList<ElementRef>;
 
     public emailInputControl: FormControl = new FormControl("", Validators.email);
     public isPillSelected: boolean = false;
+    public pillBeingEdited: number = -1;
 
     private _validationFormControl: FormControl = new FormControl();
     private _submitKeys: string[] = [",", "Enter", " ", ";"];
@@ -95,7 +100,7 @@ export class EmailInputComponent implements OnInit, OnDestroy {
             this.focus();
         }
 
-        if (event.key === "Escape") {
+        if (event.key === 'Escape') {
             event.stopPropagation();
             this.emailInputControl.setValue('');
             (this.inputEl.nativeElement as HTMLInputElement).blur();
@@ -179,6 +184,20 @@ export class EmailInputComponent implements OnInit, OnDestroy {
                 this.emails = Array.from(new Set(this.emails.concat(items)));
                 this.emailInputControl.setValue(lastEmail);
             }
+        }
+    }
+
+    editPill(email: string, index: number): void {
+        this.pillBeingEdited = index;
+        this._cdRef.detectChanges();
+    }
+
+    onEditPillKeydown(event: KeyboardEvent, index: number): void {
+        if (event.key === 'Enter') {
+            event.stopPropagation();
+            this.pillBeingEdited = null;
+            this.emails[index] = this.pillLabels.toArray()[index].nativeElement.textContent;
+            this._cdRef.detectChanges();
         }
     }
 
