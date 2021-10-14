@@ -47,6 +47,8 @@ nw-email-input {
         &:focus {
             outline: none;
             box-shadow: none;
+            background-color: transparent;
+            font-size: 12px;
         }
         // When not focussed, we want the input element to take up no space
         // We don't want to hide the element because we want it to still be focussable
