@@ -29,19 +29,19 @@
 
     &,
     &.hotspot-left {
-        left: -#{$hotspot-size / 2};
-        top: calc(50% - #{$hotspot-size / 2});
+        left: -#{$hotspot-size * 0.5};
+        top: calc(50% - #{$hotspot-size * 0.5});
     }
     &.hotspot-right {
-        left: calc(100% - #{$hotspot-size / 2});
+        left: calc(100% - #{$hotspot-size * 0.5});
     }
     &.hotspot-top {
-        left: calc(50% - #{$hotspot-size / 2});
-        top: -#{$hotspot-size / 2};
+        left: calc(50% - #{$hotspot-size * 0.5});
+        top: -#{$hotspot-size * 0.5};
     }
     &.hotspot-bottom {
-        left: calc(50% - #{$hotspot-size / 2});
-        top: calc(100% - #{$hotspot-size / 2});
+        left: calc(50% - #{$hotspot-size * 0.5});
+        top: calc(100% - #{$hotspot-size * 0.5});
     }
 }
 

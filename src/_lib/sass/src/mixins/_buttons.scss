@@ -1,28 +1,23 @@
-@mixin button-variant($color, $color-hover, $background, $bg-hover, $border: $background, $border-hover: $bg-hover) {
+@mixin button-variant($color, $color-hover, $background, $bg-hover-or-active, $border: transparent, $border-hover: transparent) {
     color: $color;
     background-color: $background;
     border-color: $border;
 
-    &:hover {
+    &:hover,
+    &:active,
+    &.active {
         color: $color-hover;
-        background-color: $bg-hover;
+        background-color: $bg-hover-or-active;
         border-color: $border-hover;
 
         &.btn-carousel:before {
             border-color: $color-hover;
         }
     }
-    &.active {
-        color: $color-hover;
-        background-color: darken($bg-hover, 10%);
-        border-color: darken($border-hover, 10%);
-    }
     // Override active button state for dropdown toggles
-    &:active,
-    &.active,
     .open > &.dropdown-toggle {
         color: $color-hover;
-        background-color: $bg-hover;
+        background-color: $bg-hover-or-active;
         border-color: $border-hover;
         box-shadow: none;
     }

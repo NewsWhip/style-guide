@@ -20,11 +20,11 @@
             position: relative;
             display: block;
             @include nav-size($padding-base-vertical, $padding-base-horizontal, 14px, 1);
-            color: get-color("gray", 4x-light);
+            color: $text-color-secondary;
             &:hover,
             &:focus {
                 text-decoration: none;
-                color: #ffffff;
+                color: $text-color;
             }
         }
 
@@ -81,7 +81,7 @@
 
         // Actual tabs (as links)
         > a {
-            color: get-color("gray", 3x-light);
+            color: $text-color-secondary;
         }
         &:first-child {
             margin-left: 0;
@@ -173,7 +173,7 @@ nw-tabs {
         // Links rendered as pills
         > a {
             border-radius: $nav-pills-border-radius;
-            background-color: get-color("gray", base);
+            background-color: $level1;
             text-decoration: none;
 
             &:hover,
@@ -211,12 +211,12 @@ nw-tabs {
         }
         &.disabled > a {
             color: $nav-disabled-link-color;
-            background-color: rgba(get-color("gray", base), 0.5);
+            background-color: rgba($level1, 0.5);
 
             &:hover,
             &:focus {
                 color: $nav-disabled-link-hover-color;
-                background-color: rgba(get-color("gray", base), 0.5);
+                background-color: rgba($level1, 0.5);
                 cursor: $cursor-disabled;
             }
         }

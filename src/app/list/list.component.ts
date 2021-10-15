@@ -9,9 +9,9 @@ declare var $: any;
 })
 export class ListComponent implements OnInit, AfterViewInit {
 
-    @ViewChild('lg') lg: ElementRef;
-    @ViewChild('lgPrimary') lgPrimary: ElementRef;
-    @ViewChild('nestedLg') nestedLg: ElementRef;
+    @ViewChild('lg', { static: true }) lg: ElementRef;
+    @ViewChild('lgPrimary', { static: true }) lgPrimary: ElementRef;
+    @ViewChild('nestedLg', { static: true }) nestedLg: ElementRef;
 
     public listGroupHTML: string;
     public listGroupPrimaryHTML: string;

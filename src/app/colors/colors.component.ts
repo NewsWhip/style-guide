@@ -1,13 +1,13 @@
-import { Component, OnInit, ElementRef, ViewChildren, QueryList, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 
 @Component({
     selector: 'app-colors',
     templateUrl: './colors.component.html'
 })
 export class ColorsComponent implements OnInit {
-
     public showColorCodes: boolean = false;
     public colorNames = [
+        "levels",
         "gray",
         "primary",
         "secondary",
@@ -28,6 +28,8 @@ export class ColorsComponent implements OnInit {
         "6x-light"
     ];
 
+    public levels = Array.from(Array(6).keys()); // create array & fill with 0-5
+
     public standaloneColors = [
         "yellow",
         "green"
@@ -38,7 +40,7 @@ export class ColorsComponent implements OnInit {
     ngOnInit() {
         setTimeout(() => {
             this.showColorCodes = true;
-        }, 100)
+        }, 100);
     }
 
     getColors(splash):string {
@@ -77,7 +79,7 @@ export class ColorsComponent implements OnInit {
         let sat = Math.round(hsl[1]);
         let light = Math.round(hsl[2]);
 
-        return `hsl(${hue}, ${sat}%, ${light})%`;
+        return `hsl(${hue}, ${sat}%, ${light}%)`;
     }
 
     rgb2hex(rgbString) {

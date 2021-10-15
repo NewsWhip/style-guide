@@ -1,13 +1,9 @@
 {
     "extends": "../tsconfig.build.json",
     "compilerOptions": {
-        "baseUrl": ".",
-        "outDir": "../../../../distribution/charts",
-        "rootDir": "."
-    },
-    "angularCompilerOptions": {
-        "strictMetadataEmit": false,
-        "skipTemplateCodegen": true
+        "baseUrl": "../",
+        "outDir": "../../../../distribution",
+        "rootDir": "../"
     },
     "files": [
         "./index.ts"

@@ -24,8 +24,8 @@ export class AppModule \{ \}"}}</code></pre>
     <div class="row">
         <div class="col-sm-3">
             <div class="dropdown" nwDropdown>
-                <button class="btn btn-dropdown dropdown-toggle" type="button" id="dropdownMenu1" nwDropdownToggle>
-                    .btn-dropdown
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu1" nwDropdownToggle>
+                    .btn-secondary
                     <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu" nwDropdownMenu aria-labelledby="dropdownMenu1">
@@ -53,31 +53,10 @@ export class AppModule \{ \}"}}</code></pre>
             </div>
         </div>
 
-        <div class="col-sm-3">
-            <div class="dropdown" nwDropdown>
-                <button class="btn btn-nav dropdown-toggle" type="button" id="dropdownMenu1" nwDropdownToggle>
-                    <div class="btn-contents">
-                        <div>
-                            .btn-nav
-                            <i class="fas fa-angle-down"></i>
-                        </div>
-                        <span class="subtext">Some complimentary text</span>
-                    </div>
-                </button>
-                <ul class="dropdown-menu" nwDropdownMenu aria-labelledby="dropdownMenu1">
-                    <li><a href="#">Action</a></li>
-                    <li><a href="#">Another action</a></li>
-                    <li><a href="#">Something else here</a></li>
-                    <li role="separator" class="divider"></li>
-                    <li><a href="#">Separated link</a></li>
-                </ul>
-            </div>
-        </div>
-
         <div class="col-sm-3 text-right">
             <div class="dropdown" nwDropdown>
-                <button class="btn btn-dropdown-inverse dropdown-toggle" type="button" id="dropdownMenu1" nwDropdownToggle>
-                    .btn-dropdown-inverse
+                <button class="btn btn-secondary-inverse dropdown-toggle" type="button" id="dropdownMenu1" nwDropdownToggle>
+                    .btn-secondary-inverse
                     <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu dropdown-menu-inverse dropdown-menu-right" aria-labelledby="dropdownMenu1">
@@ -101,7 +80,7 @@ export class AppModule \{ \}"}}</code></pre>
             <h3>Right aligned nested dropdown</h3>
 
             <div class="dropdown" nwDropdown [autoClose]="false">
-                <button class="btn btn-dropdown dropdown-toggle" type="button" id="dropdownNestedMenu1" nwDropdownToggle>
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownNestedMenu1" nwDropdownToggle>
                     Auto close false
                     <span class="caret"></span>
                 </button>
@@ -206,7 +185,7 @@ export class AppModule \{ \}"}}</code></pre>
             <h3>Disabled dropdown</h3>
 
             <div class="dropdown" nwDropdown>
-                <button class="btn btn-dropdown dropdown-toggle" type="button" id="dropdownMenu1" nwDropdownToggle disabled>
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu1" nwDropdownToggle disabled>
                     Disabled
                     <span class="caret"></span>
                 </button>
@@ -290,7 +269,7 @@ export class AppModule \{ \}"}}</code></pre>
             <h3>Dropdown minimum width</h3>
 
             <div class="dropdown" nwDropdown style="margin-bottom: 20px">
-                <button class="btn btn-dropdown dropdown-toggle" type="button" id="dropdownMenu1" nwDropdownToggle>
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu1" nwDropdownToggle>
                     Min width
                     <span class="caret"></span>
                 </button>
@@ -314,12 +293,12 @@ export class AppModule \{ \}"}}</code></pre>
 
     <h3>Append dropdown to body</h3>
 
-    <p class="nw-text" style="margin-bottom: 16px;">
+    <p style="margin-bottom: 16px;">
         To append the dropdown menu to the body, the recommended approach is to leverage the popover module from <code>ngx-bootstrap</code>. It is also recommended to use the <code>containerClass</code> with at least <code>popover-dropdown</code>. This class will remove a lot of base popver styling.
     </p>
 
     <div class="dropdown">
-        <button class="btn btn-md btn-dropdown"
+        <button class="btn btn-md btn-secondary"
             [popover]="dropdownMenuRef"
             container="body"
             containerClass="popover-dropdown"
@@ -359,7 +338,7 @@ export class AppModule \{ \}"}}</code></pre>
 
     <h3>Dropdown backdrop</h3>
 
-    <p class="nw-text">To render a backdrop to catch background clicks insert an element with the class <code>dropdown-backdrop</code> as the first child of your <code>.dropdown</code> element.</p>
+    <p>To render a backdrop to catch background clicks insert an element with the class <code>dropdown-backdrop</code> as the first child of your <code>.dropdown</code> element.</p>
     <em><i class="fas fa-exclamation-circle"></i> Backdrops should not be used if <code>autoClose</code> is set to <code>false</code></em>
     <hr>
 
@@ -368,7 +347,7 @@ export class AppModule \{ \}"}}</code></pre>
     <div class="full-width-container">
         <div class="dropdown" nwDropdown>
             <div class="dropdown-backdrop"></div>
-            <button class="btn btn-dropdown dropdown-toggle" type="button" id="dropdownMenu1" nwDropdownToggle>
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu1" nwDropdownToggle>
                 This button opens a full width menu (with a backdrop)
                 <span class="caret"></span>
             </button>
@@ -385,7 +364,7 @@ export class AppModule \{ \}"}}</code></pre>
 
     <div class="full-width-container">
         <div class="dropdown" nwDropdown>
-            <button class="btn btn-dropdown btn-block dropdown-toggle" type="button" nwDropdownToggle>
+            <button class="btn btn-secondary btn-block dropdown-toggle" type="button" nwDropdownToggle>
                 Full width button
                 <span class="caret"></span>
             </button>

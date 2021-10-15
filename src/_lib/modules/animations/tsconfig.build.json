@@ -5,10 +5,6 @@
         "outDir": "../../../../distribution/animations",
         "rootDir": "."
     },
-    "angularCompilerOptions": {
-        "strictMetadataEmit": false,
-        "skipTemplateCodegen": true
-    },
     "files": [
         "./index.ts"
     ]

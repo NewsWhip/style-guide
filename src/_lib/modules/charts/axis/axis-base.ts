@@ -1,13 +1,14 @@
-import { Input, OnInit, ElementRef, OnChanges, SimpleChanges, OnDestroy, NgZone } from "@angular/core";
+import { Input, OnInit, ElementRef, OnChanges, SimpleChanges, OnDestroy, NgZone, Directive } from "@angular/core";
 import { Axis, AxisTimeInterval } from 'd3-axis';
 import { ChartUtils } from "../chart.utils";
 import { select, Selection } from "d3-selection";
 import { ChartComponent } from "../chart.component";
 import { Subscription } from "rxjs";
 
+@Directive()
 export abstract class AxisBase implements OnInit, OnChanges, OnDestroy {
 
-    @Input() tickFormat: (value: number | Date | { valueOf(): number; }) => string
+    @Input() tickFormat: (value: number | Date | { valueOf(): number; }) => string;
     @Input() tickCount: number | AxisTimeInterval;
     @Input() tickSizeOuter: number = 6;
     @Input() tickValues: any[];
@@ -20,7 +21,7 @@ export abstract class AxisBase implements OnInit, OnChanges, OnDestroy {
     public axisSelection: Selection<SVGGElement, Array<[number, number]>, SVGElement, any>;
     public axisLabelSelection: Selection<SVGTextElement, any, HTMLElement, any>;
 
-    private _windowResizeSub: Subscription;
+    private _chartResizeSub: Subscription;
 
     constructor(
         private _elRef: ElementRef,
@@ -37,12 +38,12 @@ export abstract class AxisBase implements OnInit, OnChanges, OnDestroy {
         this.createLabel();
         this.render();
 
-        this._subscribeToWindowResize();
+        this._subscribeToChartResize();
     }
 
     ngOnChanges(c: SimpleChanges) {
-        let isDomainChange = ChartUtils.hasInputChanged(c.domain);
-        let isTickSettingsChange = ChartUtils.hasInputChanged(c.tickCount) ||
+        const isDomainChange = ChartUtils.hasInputChanged(c.domain);
+        const isTickSettingsChange = ChartUtils.hasInputChanged(c.tickCount) ||
             ChartUtils.hasInputChanged(c.tickSizeOuter) ||
             ChartUtils.hasInputChanged(c.showGuidlines) ||
             ChartUtils.hasInputChanged(c.tickValues);
@@ -105,8 +106,8 @@ export abstract class AxisBase implements OnInit, OnChanges, OnDestroy {
         return this.chart.height + this.chart.margins.top + this.chart.margins.bottom;
     }
 
-    private _subscribeToWindowResize() {
-        this._windowResizeSub = this._chartUtils.windowResize$
+    private _subscribeToChartResize() {
+        this._chartResizeSub = this._chartUtils.chartResize$
             .subscribe(_ => {
                 this.setDomain();
                 this.setTicks();
@@ -115,7 +116,7 @@ export abstract class AxisBase implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnDestroy() {
-        this._windowResizeSub.unsubscribe();
+        this._chartResizeSub.unsubscribe();
     }
 
 }

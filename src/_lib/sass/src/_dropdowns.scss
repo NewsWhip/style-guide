@@ -43,7 +43,7 @@
     background-color: $dropdown-bg;
     border: 1px solid $dropdown-border;
     border-radius: $border-radius-base;
-    box-shadow: 0 6px 12px rgba(0,0,0,.175);
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.4);
     background-clip: padding-box;
 
     // // Dividers (basically an hr) within the dropdown
@@ -133,22 +133,7 @@
 .dropdown-submenu {
     > li > a {
         // Links within the dropdown menu
-        display: block;
-        padding: 8px 16px;
-        clear: both;
-        font-weight: normal;
-        line-height: $line-height-base;
-        color: $dropdown-link-color;
-        white-space: nowrap; // prevent links from randomly breaking onto new lines
-        text-decoration: none;
-        cursor: pointer;
-
-        &:hover,
-        &:focus {
-            text-decoration: none;
-            color: $dropdown-link-hover-color;
-            background-color: $dropdown-link-hover-bg;
-        }
+        @include dropdown-menu-link;
     }
 }
 
@@ -156,12 +141,7 @@
 .dropdown-menu,
 .dropdown-submenu {
     > .active > a {
-        &,
-        &:hover,
-        &:focus {
-            color: $dropdown-link-active-color;
-            background-color: $dropdown-link-active-bg;
-        }
+        @include dropdown-menu-link-active;
     }
 }
 
@@ -173,15 +153,13 @@
     &,
     &:hover,
     &:focus {
-        opacity: 0.5;
-        cursor: $cursor-disabled;
-        color: $dropdown-link-color;
+        @include dropdown-menu-link-disabled;
     }
 }
 
 // Open state for the dropdown
 .open {
-    // Show the menu,// Show the submenu 
+    // Show the menu,// Show the submenu
     > .dropdown-menu, > li > .dropdown-menu {
         display: block;
     }
@@ -240,11 +218,6 @@
     display: none;
 }
 
-// Allow for dropdowns to go bottom up (aka, dropup-menu)
-//
-// Just add .dropup after the standard .dropdown class and you're set, bro.
-// TODO: abstract this so that the navbar fixed styles are not placed here?
-
 .dropup,
 .navbar-fixed-bottom .dropdown {
     // Reverse the caret
@@ -274,11 +247,13 @@
 }
 
 .dropdown-menu-inverse {
-    $dropdown-inverse-link-color: get-color("gray", base);
+    $dropdown-inverse-link-color: $level1;
     $dropdown-inverese-link-active-bg: get-color("primary", 3x-light);
 
-    background: #ffffff;
-
+    background-color: #ffffff;
+    .dropdown-header {
+        color: get-color("gray", x-light);
+    }
     > li > a {
         color: $dropdown-inverse-link-color;
         cursor: pointer;
@@ -306,7 +281,7 @@
         }
     }
     .divider {
-        background: get-color("gray", 3x-light);
+        background: rgba($level0, 0.4);
     }
 }
 // Custom popover styling for dropdowns appended to body

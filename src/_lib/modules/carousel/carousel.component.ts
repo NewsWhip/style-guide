@@ -68,7 +68,7 @@ export class CarouselComponent implements OnInit, AfterViewInit, AfterContentIni
 
     @Output() currPageChange: EventEmitter<number> = new EventEmitter();
 
-    @ViewChild('carousel') carousel: ElementRef;
+    @ViewChild('carousel', { static: true }) carousel: ElementRef;
 
     @ContentChildren(CarouselSlideDirective) slides: QueryList<CarouselSlideDirective>
 

@@ -1,32 +1,32 @@
 //== Import Bootstrap mixins
 //
 // Utilities
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/hide-text";
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/opacity";
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/image";
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/responsive-visibility";
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/reset-text";
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/text-emphasis";
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/text-overflow";
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/vendor-prefixes";
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/hide-text";
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/opacity";
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/image";
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/responsive-visibility";
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/reset-text";
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/text-emphasis";
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/text-overflow";
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/vendor-prefixes";
 
 // Components
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/alerts";
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/pagination";
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/nav-divider";
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/table-row";
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/alerts";
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/pagination";
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/nav-divider";
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/table-row";
 
 // Skins
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/background-variant";
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/border-radius";
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/gradients";
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/background-variant";
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/border-radius";
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/gradients";
 
 // Layout
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/clearfix";
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/center-block";
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/nav-vertical-align";
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/grid-framework";
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/grid";
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/clearfix";
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/center-block";
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/nav-vertical-align";
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/grid-framework";
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/grid";
 
 //== Import style guide functions, mixins and variables
 //
@@ -37,30 +37,30 @@
 //== Import the rest of Bootstrap
 //
 // Reset and dependencies
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/normalize";
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/normalize";
 
 // Core CSS (only the required components)
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/code";
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/grid";
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/tables";
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/code";
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/grid";
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/tables";
 
 // Components (only the required components)
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/component-animations";
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/button-groups";
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/input-groups";
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/navbar";
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/pagination";
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/badges";
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/thumbnails";
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/media";
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/responsive-embed";
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/component-animations";
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/button-groups";
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/input-groups";
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/navbar";
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/pagination";
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/badges";
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/thumbnails";
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/media";
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/responsive-embed";
 
 // Components w/ JavaScript (only the required components)
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/modals";
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/modals";
 
 // Utility classes (only the required components)
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/utilities";
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/responsive-utilities";
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/utilities";
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/responsive-utilities";
 
 //== Import the style guide
 //

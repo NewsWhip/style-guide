@@ -207,3 +207,42 @@
         }
     }
 }
+
+@mixin switch($height) {
+    $round-button-size: $height - 6;
+    $width: ($round-button-size * 2) + 6;
+
+    label {
+        line-height: $height;
+
+        &.switch-toggle {
+            height: $height;
+            width: $width;
+            border-radius: $height * 0.5;
+            font-size: $height * 0.5;
+
+            .on-off {
+                height: $round-button-size;
+                width: $round-button-size;
+                line-height: $round-button-size;
+                border-radius: 50%;
+
+                &:after {
+                    margin-left: $width * 0.5;
+                }
+                &:before {
+                    margin-left: -$width * 0.5;
+                }
+            }
+        }
+    }
+    input {
+        &:checked {
+            ~ label.switch-toggle {
+                .on-off {
+                    left: $width * 0.5;
+                }
+            }
+        }
+    }
+}

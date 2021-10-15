@@ -1,9 +1,10 @@
 import { Directive, ElementRef, Input, Output, EventEmitter, NgZone } from '@angular/core';
 import { axisBottom, axisTop } from 'd3-axis';
 import { AxisBase } from './axis-base';
-import { ScaleTime, scaleTime } from 'd3-scale';
+import { scaleTime } from 'd3-scale';
 import { ChartComponent } from '../chart.component';
 import { ChartUtils } from "../chart.utils";
+import { NwXAxisScale } from './models/XAxisScale';
 
 @Directive({
     selector: '[nw-x-axis]',
@@ -13,10 +14,9 @@ export class XAxisDirective extends AxisBase {
 
     @Input() align: 'top' | 'bottom' = 'bottom';
     @Input() domain: [number, number];
+    @Input() scale: NwXAxisScale = scaleTime();
 
-    @Output() scaleUpdated: EventEmitter<ScaleTime<number, number>> = new EventEmitter();
-
-    public scale: ScaleTime<number, number> = scaleTime();
+    @Output() scaleUpdated: EventEmitter<NwXAxisScale> = new EventEmitter();
 
     constructor(
         elRef: ElementRef,
@@ -47,7 +47,7 @@ export class XAxisDirective extends AxisBase {
     }
 
     setDomain() {
-        this.scale.domain(this.domain).range([0, this.chart.width]);
+        (this.scale.domain(this.domain) as NwXAxisScale).range([0, this.chart.width]);
     }
 
     positionLabel() {

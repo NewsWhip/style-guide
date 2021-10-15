@@ -39,14 +39,14 @@
 .list-group-secondary {
     .list-group-item {
         padding: $padding-base-vertical 22px;
-        background-color: get-color("gray", base);
+        background-color: $level3;
         margin-bottom: 1px;
         font-size: $font-size-base;
         line-height: $line-height-base;
-        color: #ffffff;
+        color: $text-color-secondary;
 
         &:focus {
-            background-color: get-color("gray", base);
+            background-color: $level4;
         }
         &:hover,
         &.active,
@@ -54,8 +54,7 @@
         &.active:focus {
             &,
             a {
-                background-color: get-color("gray", dark);
-                color: get-color("primary", 2x-light);
+                background-color: $level4;
                 box-shadow: none;
             }
         }
@@ -80,8 +79,7 @@
         &.disabled,
         &.disabled:hover,
         &.disabled:focus {
-            background-color: rgba(get-color("gray", base), 0.5);
-            color: rgba(#ffffff, 0.5);
+            color: $text-color-disabled;
         }
     }
     .list-group-header {
@@ -98,9 +96,10 @@
 // Use on `li`s or `div`s within the `.list-group` parent.
 .list-group-item {
     position: relative;
-    padding: 4px 12px;
+    padding: 4px 8px;
     margin-bottom: 1px;
     background-color: $list-group-bg;
+    border-radius: $border-radius-base;
     font-size: 14px;
     line-height: 20px;
 
@@ -109,13 +108,6 @@
         color: $list-group-link-color;
         display: block;
         text-decoration: none;
-    }
-    // Round the first and last items
-    &:first-child {
-        @include border-top-radius($list-group-border-radius);
-    }
-    &:last-child {
-        @include border-bottom-radius($list-group-border-radius);
     }
     &[data-toggle="collapse"] {
         &:before {
@@ -159,7 +151,6 @@
         color: $list-group-active-color;
         background-color: $list-group-active-bg;
         border-color: $list-group-active-border;
-        box-shadow: inset 4px 0px 0px get-color("primary", base);
     }
     &:hover {
         text-decoration: none;
@@ -194,15 +185,14 @@
     padding: 2px 12px;
     line-height: 24px;
     margin: 0;
-    color: get-color("gray", 3x-light);
-    font-size: $font-size-small;
+    color: $text-color;
     font-weight: 300;
     text-transform: uppercase;
     font-size: 14px;
 }
 .list-group-item-actions, .list-group-header-actions {
     position: absolute;
-    right: 0px;
+    right: 0;
     top: 1px;
     text-transform: initial;
     z-index: 11;

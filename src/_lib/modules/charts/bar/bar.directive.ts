@@ -1,9 +1,10 @@
 import { Directive, Input, OnInit, OnChanges, ElementRef, SimpleChanges, OnDestroy, NgZone } from '@angular/core';
 import { select, Selection } from 'd3-selection';
-import { ScaleTime, ScaleLinear, scaleTime, scaleLinear } from 'd3-scale';
+import { ScaleLinear, scaleTime, scaleLinear } from 'd3-scale';
 import { ChartUtils } from '../chart.utils';
 import { ChartComponent } from '../chart.component';
 import { Subscription } from 'rxjs';
+import { NwXAxisScale } from '../axis/models/XAxisScale';
 
 @Directive({
     selector: 'rect[nw-bar]'
@@ -16,12 +17,12 @@ export class BarDirective implements OnInit, OnChanges, OnDestroy {
     @Input() animDuration: number = ChartUtils.ANIMATION_DURATION;
     @Input() easing: (normalizedTime: number) => number = ChartUtils.ANIMATION_EASING;
     @Input() barWidth: number = 20;
+    @Input() xScale: NwXAxisScale = scaleTime();
 
     public rect: Selection<SVGRectElement, [number, number], SVGElement, any>;
-    public xScale: ScaleTime<number, number> = scaleTime();
     public yScale: ScaleLinear<number, number> = scaleLinear();
 
-    private _windowResizeSub: Subscription;
+    private _chartResizeSub: Subscription;
 
     constructor(
         private _elRef: ElementRef,
@@ -35,13 +36,13 @@ export class BarDirective implements OnInit, OnChanges, OnDestroy {
         this.setDomains();
         this.draw();
 
-        this._subscribeToWindowResize();
+        this._subscribeToChartResize();
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        let isDomainChange = (changes.xDomain || changes.yDomain) && ChartUtils.haveDomainsChanged(changes.xDomain, changes.yDomain);
-        let isDataChange = changes.point && !changes.point.firstChange && !ChartUtils.areDatasetsEqual([changes.point.previousValue], [changes.point.currentValue]);
-        let barWidthChange = changes.barWidth && !changes.barWidth.firstChange && (changes.barWidth.previousValue !== changes.barWidth.currentValue);
+        const isDomainChange = (changes.xDomain || changes.yDomain) && ChartUtils.haveDomainsChanged(changes.xDomain, changes.yDomain);
+        const isDataChange = changes.value && !changes.value.firstChange && !ChartUtils.areDatasetsEqual([changes.value.previousValue], [changes.value.currentValue]);
+        const barWidthChange = changes.barWidth && !changes.barWidth.firstChange && (changes.barWidth.previousValue !== changes.barWidth.currentValue);
 
         if (isDomainChange || isDataChange || barWidthChange) {
             this.setDomains();
@@ -50,7 +51,7 @@ export class BarDirective implements OnInit, OnChanges, OnDestroy {
     }
 
     setDomains() {
-        this.xScale.domain(this.xDomain).range([0, this._chart.width]);
+        (this.xScale.domain(this.xDomain) as NwXAxisScale).range([0, this._chart.width]);
         this.yScale.domain(this.yDomain).range([this._chart.height, 0]);
     }
 
@@ -72,8 +73,8 @@ export class BarDirective implements OnInit, OnChanges, OnDestroy {
         });
     }
 
-    private _subscribeToWindowResize() {
-        this._windowResizeSub = this._chartUtils.windowResize$
+    private _subscribeToChartResize() {
+        this._chartResizeSub = this._chartUtils.chartResize$
             .subscribe(_ => {
                 this.setDomains();
                 this.draw();
@@ -81,7 +82,7 @@ export class BarDirective implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnDestroy() {
-        this._windowResizeSub.unsubscribe();
+        this._chartResizeSub.unsubscribe();
     }
 
 }
