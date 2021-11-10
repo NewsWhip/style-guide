@@ -26,11 +26,11 @@ In your SASS file:
 @import "node_modules/nw-style-guide/sass/styles.scss";
 ```
 
-This functions as a drop-in replacement for the styles of Bootstrap SASS 3.x.
+> :warning: If you are importing the entire `styles.scss` file you do not need to import the individual functions, mixins and variables as outlined below. The `styles.scss` bundle already includes these
 
 ---
 
-If you wish to import only specific parts of the style guide you first need to import the core library. The order of these imports is important
+If you wish to import only specific parts of the style guide you first need to import the core library (functions, mixins and variables). The order of these imports is important
 
 ```scss
 // Import the core (required) files in this order
@@ -45,7 +45,7 @@ If you wish to import only specific parts of the style guide you first need to i
 @import "node_modules/nw-style-guide/sass/src/forms";
 ```
 
-In order to use the Proxima Nova font-family that comes bundles with the Style Guide, you will need to set the `$nw-font-path` variable in your own `variables.scss` file. This variable is a path that points to the fonts folder in the installed `nw-style-guide` package in your `node_modules` folder.
+In order to use the Proxima Nova font-family that comes bundled with the Style Guide, you will need to set the `$nw-font-path` variable in your own `variables.scss` file. This variable is a path that points to the fonts folder in the installed `nw-style-guide` package in your `node_modules` folder.
 
 ```scss
 // your variables.scss file
