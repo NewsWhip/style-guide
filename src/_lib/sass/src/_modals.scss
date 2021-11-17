@@ -128,4 +128,5 @@ body.modal-open {
 }
 .modal-open .modal {
     backdrop-filter: blur(4px);
+    transition: transform .3s ease-out;
 }
