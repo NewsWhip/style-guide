@@ -19,73 +19,38 @@ or
 In your SASS file:
 
 ```scss
-// Import your own app variables
+// Import your own app variables (if you have any)
 @import './variables.scss';
 
 // Import the entire NewsWhip style guide
 @import "node_modules/nw-style-guide/sass/styles.scss";
 ```
 
-This functions as a drop-in replacement for the styles of Bootstrap SASS 3.x.
+> :warning: If you are importing the entire `styles.scss` file you do not need to import the individual functions, mixins and variables as outlined below. The `styles.scss` bundle already includes these
 
 ---
 
-If you wish to import only specific parts of the style guide you first need to import the core library.
+If you wish to import only specific parts of the style guide you first need to import the core library (functions, mixins and variables). The order of these imports is important
 
 ```scss
-// Import the core (required) files
+// Import the core (required) files in this order
 @import "node_modules/nw-style-guide/sass/src/functions/functions";
 @import "node_modules/nw-style-guide/sass/src/mixins/mixins";
 @import "node_modules/nw-style-guide/sass/src/variables";
+```
 
+```scss
 // Now you include the specific section of the style guide you require
 @import "node_modules/nw-style-guide/sass/src/labels";
 @import "node_modules/nw-style-guide/sass/src/forms";
 ```
 
-## Components
+In order to use the Proxima Nova font-family that comes bundled with the Style Guide, you will need to set the `$nw-font-path` variable in your own `variables.scss` file. This variable is a path that points to the fonts folder in the installed `nw-style-guide` package in your `node_modules` folder.
 
-### Removed
-
-- `bootstrap/variables`
-- `bootstrap/breadcrumbs`
-- `bootstrap/carousel`
-- `bootstrap/glyphicons`
-- `bootstrap/jumbotron`
-- `bootstrap/pager`
-- `bootstrap/panels`
-- `bootstrap/progress-bars`
-- `bootstrap/wells`
-
-### New
-
-- `relative-weight`
-- `shadows`
-- `toasts`
-- `pills`
-- `picker`
-
-### Overrides
-
-- `bootstrap/button-groups`
-- `bootstrap/modals`
-- `bootstrap/tooltip`
-- `bootstrap/table`
-- `bootstrap/pagination`
-
-### Drop-in replacements
-
-- `bootstrap/buttons`
-- `bootstrap/close`
-- `bootstrap/dropdowns`
-- `bootstrap/labels`
-- `bootstrap/list-group`
-- `bootstrap/navs`
-- `bootstrap/scaffolding`
-- `bootstrap/popovers`
-- `bootstrap/forms`
-- `bootstrap/type`
-- `bootstrap/print`
+```scss
+// your variables.scss file
+$nw-font-path: '~nw-style-guide/assets/fonts';
+```
 
 ---
 
