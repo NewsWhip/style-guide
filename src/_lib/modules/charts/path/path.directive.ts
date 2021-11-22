@@ -1,4 +1,4 @@
-import { Directive, OnInit, Input, ElementRef, OnChanges, SimpleChanges, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Directive, OnInit, Input, ElementRef, OnChanges, SimpleChanges, Output, EventEmitter, OnDestroy, NgZone } from '@angular/core';
 import { select, Selection } from 'd3-selection';
 import { line, Line, curveLinear, CurveFactory } from 'd3-shape';
 import { ScaleLinear, scaleTime, scaleLinear } from 'd3-scale';
@@ -32,6 +32,7 @@ export class PathDirective implements OnInit, OnChanges, OnDestroy {
 
     constructor(
         private _elRef: ElementRef,
+        private _zone: NgZone,
         private _chart: ChartComponent,
         private _chartUtils: ChartUtils) {}
 
@@ -75,13 +76,28 @@ export class PathDirective implements OnInit, OnChanges, OnDestroy {
     }
 
     updateLine(): void {
-        this.path
-            .datum(this.data)
-            .transition()
-            .duration(this.animDuration)
-            .ease(this.easing)
-            .attr('d', this.line)
-            .on('end', e => this.animEnd.next());
+        /**
+         * Run this outside Angular because of the transition which, in this case, uses
+         * requestAnimationFrame and consequently results in up to 60 calls
+         * to the change detector per second
+         */
+        this._zone.runOutsideAngular(() => {
+            this.path
+                .datum(this.data)
+                .transition()
+                .duration(this.animDuration)
+                .ease(this.easing)
+                .attr('d', this.line)
+                .on('end', e => {
+                    // No point in emitting event if no one is listening
+                    if (this.animEnd.observers.length > 0) {
+                        // Re-enter the Angular zone
+                        this._zone.run(() => {
+                            this.animEnd.next();
+                        });
+                    }
+                });
+        });
     }
 
     private _subscribeToChartResize() {

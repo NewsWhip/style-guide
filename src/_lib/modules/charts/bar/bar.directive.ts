@@ -1,4 +1,4 @@
-import { Directive, Input, OnInit, OnChanges, ElementRef, SimpleChanges, OnDestroy } from '@angular/core';
+import { Directive, Input, OnInit, OnChanges, ElementRef, SimpleChanges, OnDestroy, NgZone } from '@angular/core';
 import { select, Selection } from 'd3-selection';
 import { ScaleLinear, scaleTime, scaleLinear } from 'd3-scale';
 import { ChartUtils } from '../chart.utils';
@@ -26,6 +26,7 @@ export class BarDirective implements OnInit, OnChanges, OnDestroy {
 
     constructor(
         private _elRef: ElementRef,
+        private _zone: NgZone,
         private _chart: ChartComponent,
         private _chartUtils: ChartUtils) { }
 
@@ -55,14 +56,21 @@ export class BarDirective implements OnInit, OnChanges, OnDestroy {
     }
 
     draw(animDuration: number = 0) {
-        this.rect
-            .transition()
-            .duration(animDuration)
-            .ease(this.easing)
-            .attr('x', this.xScale(this.value[0]) - (this.barWidth / 2))
-            .attr('y', this.yScale(this.value[1]))
-            .attr("width", this.barWidth)
-            .attr("height", this._chart.height - this.yScale(this.value[1]));
+        /**
+         * Run this outside Angular because of the transition which, in this case, uses
+         * requestAnimationFrame and consequently results in up to 60 calls
+         * to the change detector per second
+         */
+        this._zone.runOutsideAngular(() => {
+            this.rect
+                .transition()
+                .duration(animDuration)
+                .ease(this.easing)
+                .attr('x', this.xScale(this.value[0]) - (this.barWidth / 2))
+                .attr('y', this.yScale(this.value[1]))
+                .attr("width", this.barWidth)
+                .attr("height", this._chart.height - this.yScale(this.value[1]));
+        });
     }
 
     private _subscribeToChartResize() {

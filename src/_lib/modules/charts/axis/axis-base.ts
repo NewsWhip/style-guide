@@ -1,4 +1,4 @@
-import { Input, OnInit, ElementRef, OnChanges, SimpleChanges, OnDestroy, Directive } from "@angular/core";
+import { Input, OnInit, ElementRef, OnChanges, SimpleChanges, OnDestroy, NgZone, Directive } from "@angular/core";
 import { Axis, AxisTimeInterval } from 'd3-axis';
 import { ChartUtils } from "../chart.utils";
 import { select, Selection } from "d3-selection";
@@ -25,6 +25,7 @@ export abstract class AxisBase implements OnInit, OnChanges, OnDestroy {
 
     constructor(
         private _elRef: ElementRef,
+        private _zone: NgZone,
         public chart: ChartComponent,
         private _chartUtils: ChartUtils) {}
 
@@ -83,11 +84,18 @@ export abstract class AxisBase implements OnInit, OnChanges, OnDestroy {
     }
 
     update() {
-        this.axisSelection
-            .transition()
-            .duration(this.animDuration)
-            .ease(this.easing)
-            .call(this.axis);
+        /**
+         * Run this outside Angular because of the transition which, in this case, uses
+         * requestAnimationFrame and consequently results in up to 60 calls
+         * to the change detector per second
+         */
+        this._zone.runOutsideAngular(() => {
+            this.axisSelection
+                .transition()
+                .duration(this.animDuration)
+                .ease(this.easing)
+                .call(this.axis);
+        });
     }
 
     get fullWidth() {

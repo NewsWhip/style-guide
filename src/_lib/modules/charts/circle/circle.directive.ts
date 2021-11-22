@@ -1,4 +1,4 @@
-import { Directive, Input, OnInit, ElementRef, OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
+import { Directive, Input, OnInit, ElementRef, OnChanges, SimpleChanges, OnDestroy, NgZone } from '@angular/core';
 import { ChartUtils } from '../chart.utils';
 import { select, Selection } from 'd3-selection';
 import { ScaleLinear, scaleTime, scaleLinear } from 'd3-scale';
@@ -26,6 +26,7 @@ export class CircleDirective implements OnInit, OnChanges, OnDestroy {
 
     constructor(
         private _elRef: ElementRef,
+        private _zone: NgZone,
         private _chart: ChartComponent,
         private _chartUtils: ChartUtils) {}
 
@@ -59,11 +60,18 @@ export class CircleDirective implements OnInit, OnChanges, OnDestroy {
     }
 
     update() {
-        this.circle
-            .transition()
-            .duration(this.animDuration)
-            .ease(this.easing)
-            .attr("transform", this.transform);
+        /**
+         * Run this outside Angular because of the transition which, in this case, uses
+         * requestAnimationFrame and consequently results in up to 60 calls
+         * to the change detector per second
+         */
+        this._zone.runOutsideAngular(() => {
+            this.circle
+                .transition()
+                .duration(this.animDuration)
+                .ease(this.easing)
+                .attr("transform", this.transform);
+        });
     }
 
     get transform(): string {
