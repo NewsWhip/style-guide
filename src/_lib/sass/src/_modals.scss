@@ -51,7 +51,7 @@
         }
         &.in {
             .modal-dialog {
-                @include translate(0, 0);;
+                @include translate(0, 0);
             }
         }
     }
