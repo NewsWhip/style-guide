@@ -38,15 +38,21 @@
     .modal-footer {
         padding: 24px;
     }
-    // When sliding in the modal, animate it to slide from the right
-    &.slide-left .modal-dialog {
-        transform: translate3d(100%,0,0);
-        width: 80%;
-        float: right;
-        @include transition-transform(0.3s ease-out);
-
-        @media (max-width: $screen-md) {
-            width: 100%;
+      // When sliding in the modal, animate it to slide from the right
+      &.slide-left {
+        .modal-dialog {
+            transform: translate3d(100%,0,0);
+            width: 80%;
+            float: right;
+            @include transition-transform(0.3s ease-out);
+            @media (max-width: $screen-md) {
+                width: 100%;
+            }
+        }
+        &.in {
+            .modal-dialog {
+                @include translate(0, 0);
+            }
         }
     }
 

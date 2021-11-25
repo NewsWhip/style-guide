@@ -56,22 +56,34 @@ $nw-font-path: '~nw-style-guide/assets/fonts';
 
 ## Development and release process
 
+### Prerequisites
+
+- If you don't have one, you'll need to [create an npm account](https://www.npmjs.com/signup)
+- You'll need to  [login](https://docs.npmjs.com/creating-a-new-npm-user-account#testing-your-new-account-with-npm-login) on a local command line
+- Request to be added as a maintainer to the nw-style-guide [npm package](https://www.npmjs.com/package/nw-style-guide)
+- [Enable 2FA](https://docs.npmjs.com/configuring-two-factor-authentication) on your npm account
+
+### Features and fixes
+
 1. Create a new feature branch off master
-2. Implement feature / fix in feature branch
-3. Create pull request
-4. PR is approved
-5. Build the Github Pages demo in the feature branch
+1. Implement feature / fix in feature branch
+1. Create pull request
+1. Build the Github Pages demo in the feature branch
     - `npm run ghpages`
     - Make sure to `git add --all` not to end up with untracked files
     - Commit with message `build:ghpages`
     - Push changes
-    - `npm version {{version_type}}` to bump the version. The bump is automatically committed.
-    - Push changes
-6. Merge pull request to master
-7. After merging to master, checkout master
-8. Publish the new package version to npm with `npm run package:release`
+
+1. Update the package version with the command `npm version {{version_type}}`. The version bump is automatically committed. See [here](https://docs.npmjs.com/cli/v6/commands/npm-version#synopsis) for further information on the `npm version` command
+1. Push changes
+1. PR is approved
+1. Merge pull request to master
+1. After merging to master, checkout master and pull the latest changes
+1. Publish the new package version to npm with `npm run package:release`
     - `npm run package:release` first runs the `package:build` script
     - it then publishes the built files to npm
+
+> :bulb: At the end of the `package:release` script you will be prompted for a one-time-password (OTP). You should get this OTP from whatever authenticator app you're using
 
 ### Development
 
@@ -87,10 +99,10 @@ This is now what our `src` directory looks like
 
 ![src directory](https://i.imgur.com/BjSjf41.png)
 
-### Library publication
+### Further info on package release / publication
 
 This final step in the release process above is
-> Publish the updated package to the npm repository
+> Publish the new package version to npm
 
 We don't want to publish all our assets to npm, only the assets required by the consumer. In order to achieve this we run our release script which builds the required files to the `distribution` folder.
 
@@ -109,7 +121,7 @@ This script does a few things:
 3. Updates the copied `package.json` private property to `false`
 4. Publishes the `distribution` folder to npm
 
-_Publication will fail if the version in `package.json` has not been updated_.
+> :warning: Publication will fail if the version in `package.json` has not been updated
 
 ### Github pages
 
