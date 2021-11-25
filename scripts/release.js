@@ -8,7 +8,7 @@ const run = () => {
     process.stdout.write('Publishing package \n');
 
     try {
-        execSync(`npm publish ${utils.distPath}`);
+        execSync(`npm publish ${utils.distPath} --dry-run`);
     } catch(err) {
         throw err;
     }
