@@ -83,7 +83,7 @@ $nw-font-path: '~nw-style-guide/assets/fonts';
     - `npm run package:release` first runs the `package:build` script
     - it then publishes the built files to npm
 
-> :bulb: At the end of `package:release` script you will be prompted for a one-time-password (OTP). You should get this OTP from whatever authenticator app you're using
+> :bulb: At the end of the `package:release` script you will be prompted for a one-time-password (OTP). You should get this OTP from whatever authenticator app you're using
 
 ### Development
 
