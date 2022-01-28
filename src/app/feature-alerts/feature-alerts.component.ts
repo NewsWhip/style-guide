@@ -6,12 +6,12 @@ import { WindowRef } from '../../_lib/modules/feature-alerts/windowref';
     templateUrl: './feature-alerts.component.html',
     styleUrls: ['./feature-alerts.component.scss'],
     styles: [`
-        :host >>> .feature-alert.feat-alert-for-inline-element{
+        :host ::ng-deep .feature-alert.feat-alert-for-inline-element{
             border: 1px solid black;
             min-width: 300px;
         }
 
-        :host >>> .feat-alert-max-width-300{
+        :host ::ng-deep .feat-alert-max-width-300{
             max-width: 300px;
             border: 1px solid green;
         }
