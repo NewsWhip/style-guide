@@ -17,7 +17,6 @@ export class ResizeObserverDirective implements OnInit, OnDestroy {
     @Output() nwResize: EventEmitter<null> = new EventEmitter();
 
     private _observer: ResizeObserver;
-    private _window: Window = window;
     private _nwResize: Subject<null> = new Subject();
     private _destroyed$: Subject<null> = new Subject();
 
@@ -28,7 +27,7 @@ export class ResizeObserverDirective implements OnInit, OnDestroy {
     ngOnInit() {
         this.subscribeToResize();
 
-        if (this._window.ResizeObserver) {
+        if (ResizeObserver) {
             this.createObserver();
         }
     }
@@ -58,7 +57,7 @@ export class ResizeObserverDirective implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        if (this._window.ResizeObserver && this._observer) {
+        if (ResizeObserver && this._observer) {
             this._observer.unobserve(this.element);
         }
         this._destroyed$.next();
