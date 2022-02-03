@@ -93,6 +93,7 @@ $brand-danger:  get-color("tertiary") !default;
 //## Settings for some of the most global styles.
 $body-bg:               $level1 !default;
 
+// The rgb color of $text-color is rgb(226, 229, 233).
 $text-color:            #e2e5e9 !default;
 $text-color-secondary:  rgba($text-color, 0.6) !default;
 $text-color-disabled:   rgba($text-color, 0.4) !default;
