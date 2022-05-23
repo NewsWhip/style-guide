@@ -1,0 +1,56 @@
+@import '../../_lib/sass/src/variables.scss';
+
+.live-example-form {
+    padding: 16px;
+    background-color: $level2;
+    width: 300px;
+    margin-bottom: 16px;
+    border-radius: $border-radius-large;
+}
+.tooltip-demo {
+    position: relative;
+    border: 1px solid black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+    margin-left: 16px;
+
+    &.scrollable {
+        overflow-y: auto;
+
+        &:before {
+            content: "";
+            position: absolute;
+            pointer-events: none;
+            top: 0;
+            left: 0;
+            width: 100%;
+            bottom: -100%;
+        }
+    }
+}
+.tooltip-element {
+    display: inline-flex;
+    width: 60px;
+    height: 60px;
+    margin: 16px;
+    border-radius: 5px;
+    border: 1px solid black;
+}
+.scroller {
+    height: 300px;
+    overflow-y: auto;
+}
+.scroller-inner {
+    height: 600px;
+}
+
+.basic-examples {
+    button {
+        margin-right: 16px;
+    }
+}
+h4 {
+    margin-bottom: 16px;
+}

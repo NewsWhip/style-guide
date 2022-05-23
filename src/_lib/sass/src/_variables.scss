@@ -511,7 +511,7 @@ $tooltip-bg-light:                  #ffffff;
 $tooltip-color-light:               $level1 !default;
 
 //** Tooltip arrow color
-$tooltip-arrow-color-light:         #ffffff;
+$tooltip-arrow-color-light:         $tooltip-bg-light;
 
 
 //== Popovers
