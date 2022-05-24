@@ -2,8 +2,8 @@ import { CdkScrollable, CloseScrollStrategy, ConnectionPositionPair, FlexibleCon
 import { ComponentPortal } from "@angular/cdk/portal";
 import { ComponentRef, Directive, ElementRef, EventEmitter, Injector, Input, OnChanges, OnInit, Output, SimpleChanges, TemplateRef, ViewContainerRef } from "@angular/core";
 import { Placement } from "./models/Placement.type";
-import { Subject, fromEvent, merge, EMPTY, of, Observable, animationFrameScheduler, scheduled } from 'rxjs';
-import { takeUntil, filter, tap, map, debounceTime, switchMap, delay, repeat } from 'rxjs/operators';
+import { Subject, fromEvent, merge, EMPTY, of, Observable, animationFrameScheduler, scheduled, timer } from 'rxjs';
+import { takeUntil, filter, tap, map, debounce, switchMap, delay, repeat } from 'rxjs/operators';
 import { TOOLTIP_CONTEXT_TOKEN } from "./config/tooltip-context-token";
 import { TooltipContainerComponent } from "./tooltip-container.component";
 import { ITooltipData } from "./models/ITooltipData";
@@ -286,7 +286,12 @@ export class TooltipDirective implements OnInit, OnChanges {
                  * This debounce prevents instantaneous opening and closing (or vice-versa) in the scenario where `openEvents` contains the
                  * same event as `closeEvents`. For example, if both contain the "click" event, this will be fired twice in the space of a few ms
                  */
-                debounceTime(0),
+                debounce(() => {
+                    if (this.openEvents.some(e => this.closeEvents.includes(e))) {
+                        return timer(5);
+                    }
+                    return EMPTY;
+                }),
                 filter(_ => !this.isDisabled),
                 /**
                  * If this is an open event, use the input delay. Don't apply the delay to the close event
