@@ -1,4 +1,4 @@
-import { CdkScrollable, CloseScrollStrategy, ConnectionPositionPair, FlexibleConnectedPositionStrategy, Overlay, OverlayRef, RepositionScrollStrategy } from "@angular/cdk/overlay";
+import { CloseScrollStrategy, ConnectionPositionPair, FlexibleConnectedPositionStrategy, Overlay, OverlayRef, RepositionScrollStrategy } from "@angular/cdk/overlay";
 import { ComponentPortal } from "@angular/cdk/portal";
 import { ComponentRef, Directive, ElementRef, EventEmitter, Injector, Input, OnChanges, OnInit, Output, SimpleChanges, TemplateRef, ViewContainerRef } from "@angular/core";
 import { Placement } from "./models/Placement.type";
@@ -9,13 +9,6 @@ import { TooltipContainerComponent } from "./tooltip-container.component";
 import { ITooltipData } from "./models/ITooltipData";
 import { placementFlipMap } from "./config/placement-flip-map";
 
-/**
- * TODO
- * - explain what element to add styles to to manually adjust position of tooltip
- * - explain how we always append to body
- * - explain different selectors
- * - is scrollContainers actually necessary or does it pick up cdkScrollable ancenstors automatically?
- */
 @Directive({
     selector: '[nwTooltip],[nwPopover]',
     exportAs: 'nw-tooltip,nw-popover'
@@ -24,12 +17,12 @@ export class TooltipDirective implements OnInit, OnChanges {
 
     /**
      * This directive can be invoked by using the `nwTooltip` or `nwPopover` attributes. The only differences between using these
-     * attributes are the default value are certain properties, e.g. `delay` and open and close events
+     * attributes are the default values of certain properties, e.g. `delay` and open and close events
      */
     @Input('nwTooltip') tooltip: string | TemplateRef<any>;
     @Input('nwPopover') popover: string | TemplateRef<any>;
     /**
-     * An object that can be passed when the `tooltip` input is a `TemplateRef`
+     * An object that can be passed when the `nwTooltip` or `nwPopover` input is a `TemplateRef`
      * ref: https://angular.io/api/core/ng-template#context
      */
     @Input() context: any;
@@ -47,7 +40,7 @@ export class TooltipDirective implements OnInit, OnChanges {
      */
     @Input() isDisabled: boolean = false;
     /**
-     * number of ms to wait before opening
+     * Number of ms to wait before opening
      */
     @Input() delay: number;
     /**
@@ -63,12 +56,6 @@ export class TooltipDirective implements OnInit, OnChanges {
      * A list of events that close the tooltip
      */
     @Input() closeEvents: string[];
-    /**
-     * Sets the list of scrollable containers that host the origin element so that on reposition we
-     * can evaluate if it or the overlay has been clipped or outside view. Every scrollContainer must be
-     * an ancestor element of the origin element
-     */
-    @Input() scrollContainers: CdkScrollable[] = [];
     /**
      * A class to apply to the tooltip container
      */
@@ -91,7 +78,7 @@ export class TooltipDirective implements OnInit, OnChanges {
      */
     @Input() connectedTo: ElementRef<HTMLElement>;
     /**
-     * TODO: docs
+     * Determines whether pointer events are enabled on the cdk-overlay-pane element
      */
     @Input() pointerEvents: 'auto' | 'none';
 
@@ -131,7 +118,7 @@ export class TooltipDirective implements OnInit, OnChanges {
     }
 
     ngOnChanges(c: SimpleChanges): void {
-        const shouldUpdatePositionStrategy = ['placement', 'withArrow', 'autoFlip', 'scrollContainers']
+        const shouldUpdatePositionStrategy = ['placement', 'withArrow', 'autoFlip']
             .some(inputProp => c[inputProp]?.previousValue !== c[inputProp]?.currentValue && !c[inputProp]?.firstChange);
         const isOpenChange: boolean = c.isOpen?.previousValue !== c.isOpen?.currentValue && !c.isOpen.firstChange;
         const shouldUpdateScrollStrategy: boolean = c.closeOnScroll?.previousValue !== c.closeOnScroll?.currentValue && !c.closeOnScroll.firstChange;
@@ -150,21 +137,21 @@ export class TooltipDirective implements OnInit, OnChanges {
     }
 
     /**
-     * A public method that can be called manually from the exported directive to open the tooltip
+     * Can be called manually from the exported directive to open the tooltip
      */
     show(): void {
         this._manualToggleEvent$.next(true);
     }
 
     /**
-     * A public method that can be called manually from the exported directive to close the tooltip
+     * Can be called manually from the exported directive to close the tooltip
      */
     hide(): void {
         this._manualToggleEvent$.next(false);
     }
 
     /**
-     * A public method that can be called manually from the exported directive to close the tooltip
+     * Can be called manually from the exported directive to toggle the tooltip
      */
     toggle(): void {
         const isOpen = this._overlayRef.hasAttached();
@@ -489,7 +476,6 @@ export class TooltipDirective implements OnInit, OnChanges {
             .position()
             .flexibleConnectedTo(this.connectedTo || this._elRef)
             .withPositions(positions)
-            .withScrollableContainers(this.scrollContainers)
             .withPush(false);
     }
 

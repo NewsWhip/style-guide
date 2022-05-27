@@ -116,7 +116,105 @@
 </div>
 
 <div *ngIf="selectedTab === 'api'" class="tab-content">
-  <button class="btn btn-md btn-primary"
-    [nwTooltip]="'Testing some stuff'"
-    [placement]="'bottom'">Click to toggle</button>
+  <h3>API reference for tooltips / popover</h3>
+  <app-code [snippet]="snippets.import"></app-code>
+
+  <h4>Directives</h4>
+
+  <h5><code>TooltipDirective</code></h5>
+  <p>Directive that attaches a tooltip / popover to the host element.</p>
+  <p>Selector: <code>[nwTooltip],[nwPopover]</code></p>
+  <p>Exported as: <code>nw-tooltip,nw-popover</code></p>
+  <small>This directive can be invoked by using the <code>nwTooltip</code> or <code>nwPopover</code> attributes. The only differences between using these attributes are the default values of certain properties, e.g. `delay` and open and close events</small>
+  <h5>Properties</h5>
+
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th rowspan="2">Name</th>
+        <th rowspan="2">Description</th>
+        <th colspan="2">Default values</th>
+      </tr>
+      <tr>
+        
+        <th><code style="text-transform: initial">nwTooltip</code></th>
+        <th><code style="text-transform: initial">nwPopover</code></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <ng-container *ngFor="let row of propertiesTable">
+        <ng-container *ngTemplateOutlet="inputTableTowTmpl; context: { values: row }"></ng-container>
+      </ng-container>
+    </tbody>
+  </table>
+
+  <h5>Methods</h5>
+
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <td><code class="light">{{"show(): void"}}</code></td>
+        <td>Can be called manually from the exported directive to open the tooltip</td>
+      </tr>
+
+      <tr>
+        <td><code class="light">{{"hide(): void"}}</code></td>
+        <td>Can be called manually from the exported directive to close the tooltip</td>
+      </tr>
+
+      <tr>
+        <td><code class="light">{{"toggle(): void"}}</code></td>
+        <td>Can be called manually from the exported directive to toggle the tooltip</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h5>Types and interfaces</h5>
+  <app-code [snippet]="snippets.placementType"></app-code>
+
+  <h4>Troubleshooting</h4>
+
+  <app-faq>
+    <p question>My tooltip is not closing on scroll even though I've set <code>[closeOnScroll]="true"</code>.</p>
+    <p answer>If your tooltip is inside a scrollable container, that scrollable container needs to have the <code>cdkScrollable</code> directive attached.</p>
+  </app-faq>
+
+  <app-faq>
+    <p question>My tooltip is not repositioning on scroll.</p>
+    <p answer>As above, if your tooltip is inside a scrollable container, that scrollable container needs to have the <code>cdkScrollable</code> directive attached.</p>
+  </app-faq>
+
+  <app-faq>
+    <p question>Do I use the nwTooltip selector or the nwPopover selector?</p>
+    <p answer>
+      The answer depends on your desired behaviour. The only differences between the two selectors are the default values of the inputs. Consult
+      the properties table above to the differences between the default values.
+    </p>
+  </app-faq>
+
+  <app-faq>
+    <p question>How do I tweak the position of the tooltip?</p>
+    <p answer>
+      You can supply a containerClass input which you can apply styles against.
+    </p>
+  </app-faq>
 </div>
+
+<ng-template #inputTableTowTmpl let-values="values">
+  <tr>
+    <td>
+      <code class="light">{{values[0]}}</code>
+    </td>
+    <td [innerHTML]="values[1]"></td>
+    <td>{{values[2]}}</td>
+    <td>{{values[3]}}</td>
+  </tr>
+</ng-template>

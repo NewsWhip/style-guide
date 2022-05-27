@@ -49,6 +49,7 @@ import { AutoFocusModule } from '../_lib/modules/autofocus';
 import { TooltipModule } from '../_lib/modules/tooltips';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { AppCodeComponent } from './code/code.component';
+import { FaqComponent } from './faq/faq-component';
 
 @NgModule({
   declarations: [
@@ -80,7 +81,8 @@ import { AppCodeComponent } from './code/code.component';
     EmailInputDemoComponent,
     CopyCodeComponent,
     AutofocusComponent,
-    AppCodeComponent
+    AppCodeComponent,
+    FaqComponent
   ],
   imports: [
     BrowserModule,

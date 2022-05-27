@@ -1,4 +1,3 @@
-import { CdkScrollable } from '@angular/cdk/scrolling';
 import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -14,10 +13,119 @@ export class TooltipsComponent implements OnInit, OnDestroy {
 
   public selectedTab: 'design' | 'api' = 'design';
   public form: FormGroup;
+  public propertiesTable: [string, string, string, string][] = [
+    [
+      "@Input('nwTooltip') tooltip: string | TemplateRef<any>; or @Input('nwPopover') popover: string | TemplateRef<any>;",
+      "A string or TemplateRef representing the content of the tooltip",
+      "-",
+      "-"
+    ],
+    [
+      "@Input() context: any;",
+      'An object that can be passed when the `nwTooltip` or `nwPopover` input is a `TemplateRef`<br><br><a class="nw-link nw-link-tertiary" target="_blank" href="https://angular.io/api/core/ng-template#context">Docs</a>',
+      "-",
+      "-"
+    ],
+    [
+      "@Input() placement: Placement | Placement[];",
+      "One or more preferred placement options",
+      "-",
+      "-"
+    ],
+    [
+      "@Input() isOpen: boolean",
+      "Manually control the opening and closing of the tooltip",
+      "-",
+      "-"
+    ],
+    [
+      "@Input() isDisabled: boolean;",
+      "When true, the tooltip will not not respond to any open or close events. Nor will it respond to changes to the `isOpen` input",
+      "false",
+      "false"
+    ],
+    [
+      "@Input() delay: number;",
+      "Number of ms to wait before opening",
+      "500",
+      "0"
+    ],
+    [
+      "@Input() autoFlip: boolean;",
+      "Change the placement of the tooltip to its opposite position when it moves outside the viewport",
+      "true",
+      "true"
+    ],
+    [
+      "@Input() openEvents: string[];",
+      "A list of events that open the tooltip",
+      `["mouseenter"]`,
+      `["click"]`
+    ],
+    [
+      "@Input() closeEvents: string[];",
+      "A list of events that close the tooltip",
+      `["click", "mouseleave"]`,
+      `["click"]`
+    ],
+    [
+      "@Input() containerClass: string;",
+      "A class to apply to the tooltip container",
+      ``,
+      ``
+    ],
+    [
+      "@Input() withArrow: boolean;",
+      "Display an arrow or not. The location of the arrow is dependant on the current `placement`",
+      `true`,
+      `true`
+    ],
+    [
+      "@Input() closeOnScroll: boolean;",
+      "Whether or not to close the tooltip on scroll",
+      `true`,
+      `false`
+    ],
+    [
+      "@Input() closeOnOutsideClick: boolean = false;",
+      "Whether or not to close the tooltip on outside click",
+      `false`,
+      `false`
+    ],
+    [
+      "@Input() updatePositionOnAnimationFrame: boolean;",
+      `WARNING: Use with caution - there are potential performance issues with this.<br><br>
+        Update the position of the tooltip before the next browser repaint. An example of where this may be required is if the tooltip is attached (and open) to an element that transitions or animates to a new position`,
+      `false`,
+      `false`
+    ],
+    [
+      "@Input() connectedTo: ElementRef<HTMLElement>;",
+      `In the case where the tooltip should not be attached to the host element, a reference to another element can be used`,
+      `-`,
+      `-`
+    ],
+    [
+      "@Input() pointerEvents: 'auto' | 'none';",
+      `Determines whether pointer events are enabled on the cdk-overlay-pane element`,
+      `none`,
+      `auto`
+    ],
+    [
+      "@Output() nwShown: EventEmitter<null>",
+      "Emits an event when the tooltip is shown",
+      "-",
+      "- "
+    ],
+    [
+      "@Output() nwHidden: EventEmitter<null>",
+      "Emits an event when the tooltip is hidden",
+      "-",
+      "- "
+    ]
+  ]
 
   private _routeSub: Subscription;
-
-  @ViewChild(CdkScrollable, { static: true }) scrollContainer: CdkScrollable;
 
   constructor(
     private _fb: FormBuilder,
@@ -52,6 +160,12 @@ export class TooltipsComponent implements OnInit, OnDestroy {
   }
 
   public snippets: { [key: string]: ISnippet } = {
+    import: {
+      lang: 'typescript',
+      code: `
+        import { TooltipModule } from 'nw-style-guide/tooltips';
+      `
+    },
     basicTooltip: {
       lang: 'html',
       code: `
@@ -66,6 +180,24 @@ export class TooltipsComponent implements OnInit, OnDestroy {
         <button class="btn btn-md btn-primary"
             [nwPopover]="'Some popover text'"
             [placement]="'right'">Button text</button>
+      `
+    },
+    placementType: {
+      lang: 'typescript',
+      code: `
+        export type Placement =
+          | 'top'
+          | 'top-start'
+          | 'top-end'
+          | 'bottom'
+          | 'bottom-start'
+          | 'bottom-end'
+          | 'right'
+          | 'right-start'
+          | 'right-end'
+          | 'left'
+          | 'left-start'
+          | 'left-end';
       `
     }
   }
