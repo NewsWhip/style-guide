@@ -45,7 +45,6 @@ export class TooltipDirective implements OnInit, OnChanges {
     @Input() delay: number;
     /**
      * Change the placement of the tooltip to its opposite position when it moves outside the viewport
-     * TODO: maybe rename to just `flip`
      */
     @Input() autoFlip: boolean = true;
     /**
