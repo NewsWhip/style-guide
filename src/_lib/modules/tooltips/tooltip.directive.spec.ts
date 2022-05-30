@@ -5,6 +5,7 @@ import { TooltipContainerComponent } from "./tooltip-container.component";
 import { TooltipModule } from ".";
 import { TooltipDirective } from "./tooltip.directive";
 import { Placement } from "./models/Placement.type";
+import { CdkScrollable, CdkScrollableModule } from "@angular/cdk/scrolling";
 
 let comp: WrapperComponent;
 let fixture: ComponentFixture<WrapperComponent>;
@@ -17,7 +18,8 @@ describe('TooltipDirective', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
-                TooltipModule
+                TooltipModule,
+                CdkScrollableModule
             ],
             declarations: [
                 WrapperComponent
@@ -160,6 +162,29 @@ describe('TooltipDirective', () => {
         expect(tooltip).toBeTruthy();
     }));
 
+    it('should not open with a delay if a close event fires within the delay time', fakeAsync(() => {
+        comp.delay = 1000;
+        fixture.detectChanges();
+        const trigger = de.query(By.directive(TooltipDirective)).nativeElement;
+        fireEvent(trigger, 'mouseenter');
+        tick(900);
+        let tooltip = getTooltipEl();
+        expect(tooltip).toBeFalsy();
+        fireEvent(trigger, 'click');
+        tick(150);
+        tooltip = getTooltipEl();
+        expect(tooltip).toBeFalsy();
+    }));
+
+    it('should open even if the open events contains the same close events', fakeAsync(() => {
+        fixture.detectChanges();
+        const trigger = de.queryAll(By.directive(TooltipDirective))[1].nativeElement;
+        fireEvent(trigger, 'click');
+        tick(tickWaitMs);
+        let tooltip = getTooltipEl();
+        expect(tooltip).toBeTruthy();
+    }));
+
     it('should apply a placement class to the overlay pane', fakeAsync(() => {
         fixture.detectChanges();
         const trigger = de.query(By.directive(TooltipDirective)).nativeElement;
@@ -221,11 +246,40 @@ describe('TooltipDirective', () => {
         tooltip = getTooltipEl();
         expect(tooltip).toBeFalsy();
     });
+
+    it('tooltips should close on scroll by default', () => {
+        comp.delay = 0;
+        fixture.detectChanges();
+        const trigger = de.query(By.directive(TooltipDirective)).nativeElement;
+        fireEvent(trigger, 'mouseenter');
+        let tooltip = getTooltipEl();
+        expect(tooltip).toBeTruthy();
+        comp.scrollEl.nativeElement.dispatchEvent(new Event('scroll'));
+        fixture.detectChanges();
+        tooltip = getTooltipEl();
+        expect(tooltip).toBeFalsy();
+    });
+
+    it('popovers should not close on scroll by default', fakeAsync(() => {
+        comp.delay = 0;
+        comp.openEvents = ['click'];
+        comp.closeEvents = ['click'];
+        fixture.detectChanges();
+        const trigger = de.queryAll(By.directive(TooltipDirective))[1].nativeElement;
+        fireEvent(trigger, 'click');
+        tick(10);
+        let tooltip = getTooltipEl();
+        expect(tooltip).toBeTruthy();
+        comp.scrollEl.nativeElement.dispatchEvent(new Event('scroll'));
+        fixture.detectChanges();
+        tooltip = getTooltipEl();
+        expect(tooltip).toBeTruthy();
+    }));
 });
 
 @Component({
     template: `
-        <div class="wrapper-el">
+        <div class="wrapper-el" cdkScrollable>
             <button class="btn btn-md btn-primary" #tooltip="nw-tooltip"
                 [nwTooltip]="'Some tooltip text'"
                 [placement]="tooltipPlacement"
@@ -256,10 +310,22 @@ describe('TooltipDirective', () => {
                 [connectedTo]="connectedTo">Button text</button>
         </div>
 
-        <div class="connected-to-el" #connectionEl
-            [class.shrink]="shrinkElement"></div>
+        <div class="connected-to-el" #connectionEl></div>
     `,
     styles: [`
+        .wrapper-el {
+            overflow-y: auto;
+            height: 200px;
+            position: relative;
+        }
+        .wrapper-el:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 400px;
+        }
         .connected-to-el {
             position: absolute;
             width: 300px;
@@ -270,10 +336,6 @@ describe('TooltipDirective', () => {
             border: 1px solid white;
             transition: width 100ms linear;
         }
-        .connected-to-el.shrink {
-            width: 150px;
-            height: 150px;
-        }
     `]
 })
 class WrapperComponent implements OnInit {
@@ -281,6 +343,7 @@ class WrapperComponent implements OnInit {
     @ViewChild('tooltip') tooltip: TooltipDirective;
     @ViewChild('popover') popover: TooltipDirective;
     @ViewChild('connectionEl', { static: true }) connectionEl: ElementRef<HTMLElement>;
+    @ViewChild(CdkScrollable, { read: ElementRef }) scrollEl: ElementRef<HTMLElement>;
 
     public withArrow: boolean = true;
     public isDisabled: boolean = false;
@@ -294,8 +357,6 @@ class WrapperComponent implements OnInit {
     public connectedTo: ElementRef<HTMLElement>;
     public useConnectionEl: boolean = false;
     public manualOpen: boolean;
-    // used to test updatePositionOnAnimationFrame
-    public shrinkElement: boolean = false;
 
     ngOnInit() {
         if (this.useConnectionEl) {
