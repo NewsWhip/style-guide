@@ -1,6 +1,6 @@
 {
   "name": "nw-style-guide",
-  "version": "7.0.11",
+  "version": "8.0.0-beta.0",
   "license": "MIT",
   "author": {
     "email": "garethdn@gmail.com",
@@ -21,7 +21,8 @@
     "g:s": "ng g service --app=1",
     "package:build": "node scripts/build.js",
     "package:make-local-tgz": "node scripts/make-local-tgz.js",
-    "package:release": "node scripts/release.js"
+    "package:release": "node scripts/release.js",
+    "prepackage:release": "npm run test"
   },
   "private": true,
   "peerDependencies": {
