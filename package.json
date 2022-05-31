@@ -22,7 +22,7 @@
     "package:build": "node scripts/build.js",
     "package:make-local-tgz": "node scripts/make-local-tgz.js",
     "package:release": "node scripts/release.js",
-    "prepackage:release": "npm run test"
+    "prepackage:release": "npm run test -- --watch=false --progress=false --browsers=ChromeHeadless"
   },
   "private": true,
   "peerDependencies": {
