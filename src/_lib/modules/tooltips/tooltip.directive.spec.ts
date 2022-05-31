@@ -102,16 +102,17 @@ describe('TooltipDirective', () => {
 
     it('should be attached to the specified connectedTo element', fakeAsync(() => {
         comp.useConnectionEl = true;
+        comp.autoFlip = false;
         fixture.detectChanges();
         const trigger = de.query(By.directive(TooltipDirective)).nativeElement;
         fireEvent(trigger, 'mouseenter');
         tick(tickWaitMs);
+
         const tooltip = getTooltipEl();
-        
         const connectionElRect = comp.connectionEl.nativeElement.getBoundingClientRect();
         const tooltipElRect = tooltip.getBoundingClientRect();
-        // minus 8 for 5px arrow size and 3px manual offset
-        expect(tooltipElRect.top - 8).toEqual(connectionElRect.bottom);
+        // plus 8 for 5px arrow size and 3px manual offset
+        expect(tooltipElRect.top).toEqual(connectionElRect.bottom + 8);
         const leftPos = connectionElRect.left + (connectionElRect.width / 2) - (tooltipElRect.width / 2);
         expect(Math.round(tooltipElRect.left)).toEqual(Math.round(leftPos));
     }));
