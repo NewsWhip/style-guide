@@ -38,7 +38,7 @@
 
   <h4>Basic examples</h4>
 
-  <div class="basic-examples">
+  <div class="examples">
     <ng-container *ngTemplateOutlet="basicExampleTooltipTmpl; context: { placement: 'top' }"></ng-container>
     <ng-container *ngTemplateOutlet="basicExampleTooltipTmpl; context: { placement: 'right' }"></ng-container>
     <ng-container *ngTemplateOutlet="basicExampleTooltipTmpl; context: { placement: 'left' }"></ng-container>
@@ -57,7 +57,7 @@
 
   <hr>
 
-  <div class="basic-examples" [style.marginTop.px]="16">
+  <div class="examples" [style.marginTop.px]="16">
     <ng-container *ngTemplateOutlet="basicExamplePopoverTmpl; context: { placement: 'top' }"></ng-container>
     <ng-container *ngTemplateOutlet="basicExamplePopoverTmpl; context: { placement: 'right' }"></ng-container>
     <ng-container *ngTemplateOutlet="basicExamplePopoverTmpl; context: { placement: 'left' }"></ng-container>
@@ -75,15 +75,53 @@
   </div>
   <hr>
 
+  <h4>Popover with close button</h4>
+  <div class="examples" [style.margin]="'16px 0'">
+    <button class="btn btn-md btn-primary"
+      [nwPopover]="closeBtnTmpl"
+      [closeOnOutsideClick]="true"
+      placement="bottom-start"
+      [withClose]="true">Default popover with close button</button>
+
+    <button class="btn btn-md btn-primary"
+      [nwPopover]="closeBtnTmpl"
+      [closeOnOutsideClick]="true"
+      placement="bottom-start"
+      containerClass="tooltip-light"
+      [withClose]="true">Light popover with close button</button>
+
+    <ng-template #closeBtnTmpl>
+      <p>
+        <strong>Popover with close button</strong>
+      </p>
+      <small>The close button is always absolutely positioned in the top right of the popover</small>
+    </ng-template>
+  </div>
+
+  <app-code [snippet]="snippets.withCloseButton"></app-code>
+  <hr>
+
   <h4>Live example</h4>
 
   <div style="display: flex">
     <div class="live-example-form">
       <form [formGroup]="form">
-        <div class="form-group">
+        <!-- <div class="form-group">
           <div class="checkbox">
               <input formControlName="forceOpen" id="force-open" type="checkbox">
               <label for="force-open">Open tooltip</label>
+          </div>
+        </div> -->
+
+        <div class="form-group">
+          <div class="switch switch-sm">
+            <input type="checkbox" id="forceOpen" formControlName="forceOpen">
+            <label for="forceOpen" class="switch-toggle">
+                <span class="on-off no-text"></span>
+            </label>
+            <label for="forceOpen">
+              Open tooltip
+            </label>
           </div>
         </div>
 
@@ -95,13 +133,9 @@
               placeholder="Tooltip text"
               rows="8"></textarea>
         </div>
-  
-        <div class="form-group">
-            <label>Delay</label>
-            <input class="form-control" formControlName="delay" type="number" placeholder="Delay" step="50">
-        </div>
 
         <div class="form-group">
+          <label>Placement</label>
           <select formControlName="placement" class="form-control">
             <option [value]="'top'">top</option>
             <option [value]="'top-start'">top-start</option>
@@ -117,6 +151,18 @@
             <option [value]="'left-end'">left-end</option>
           </select>
         </div>
+
+        <div class="form-group">
+          <div class="switch switch-sm">
+            <input type="checkbox" id="with-delay" formControlName="withDelay">
+            <label for="with-delay" class="switch-toggle">
+                <span class="on-off no-text"></span>
+            </label>
+            <label for="with-delay">
+              Use delay
+            </label>
+          </div>
+        </div>
       </form>
     </div>
 
@@ -125,7 +171,7 @@
         [nwTooltip]="tooltipTmplRef"
         [placement]="form.get('placement').value"
         [isOpen]="form.get('forceOpen').value"
-        [delay]="form.get('delay').value"
+        [delay]="form.get('withDelay').value ? 500 : 0"
         [openEvents]="[]"
         [closeEvents]="[]"
         disabled>Tooltip anchor</button>
@@ -135,6 +181,7 @@
   <ng-template #tooltipTmplRef>
     <div [innerHTML]="form.get('tooltip').value"></div>
   </ng-template>
+  <hr>
 
   <h4>Example of customising close events</h4>
 

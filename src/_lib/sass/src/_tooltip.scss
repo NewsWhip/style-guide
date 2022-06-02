@@ -21,6 +21,10 @@
     --tooltip-arrow-color: #{$tooltip-arrow-color-light};
     --tooltip-bg-color: #{$tooltip-bg-light};
     --tooltip-color: #{$tooltip-color-light};
+
+    .close-button {
+      color: $level1;
+    }
   }
   // Wrapper for the tooltip content
   .tooltip-inner {
@@ -31,6 +35,12 @@
     background-color: var(--tooltip-bg-color);
     border-radius: $border-radius-base;
     box-shadow: 2px 2px 8px 0 $tooltip-box-shadow-color;
+
+    .close-button {
+      position: absolute;
+      top: calc(var(--tooltip-padding-horizontal) / 2);
+      right: calc(var(--tooltip-padding-horizontal) / 2);
+    }
   }
   .tooltip-arrow {
     position: absolute;

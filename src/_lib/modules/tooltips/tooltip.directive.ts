@@ -63,6 +63,10 @@ export class TooltipDirective implements OnInit, OnChanges {
      * Display an arrow or not. The location of the arrow is dependant on the current `placement`
      */
     @Input() withArrow: boolean = true;
+    /**
+     * Display a close button or not
+     */
+    @Input() withClose: boolean = false;
     @Input() closeOnScroll: boolean;
     @Input() closeOnOutsideClick: boolean = false;
     /**
@@ -83,12 +87,17 @@ export class TooltipDirective implements OnInit, OnChanges {
 
     @Output() nwShown: EventEmitter<null> = new EventEmitter();
     @Output() nwHidden: EventEmitter<null> = new EventEmitter();
+    @Output() nwClose: EventEmitter<null> = new EventEmitter();
 
     private _overlayRef: OverlayRef;
     private _destroyed$: Subject<null> = new Subject();
     private _tooltipArrowSize: number = 5;
     private _manualToggleEvent$: Subject<boolean> = new Subject();
     private _cancelDelayedOpen$: Subject<null> = new Subject();
+    /**
+     * A subject that emits when the TooltipContainerComponent is destroyed
+     */
+    private _tooltipContainerDestroyed$: Subject<null> = new Subject();
 
     constructor(
         private _elRef: ElementRef<HTMLElement>,
@@ -224,6 +233,7 @@ export class TooltipDirective implements OnInit, OnChanges {
             tooltip: this._getTooltipContent(),
             containerClass: this.containerClass,
             withArrow: this.withArrow,
+            withClose: this.withClose,
             templateRefContext: this.context
         };
 
@@ -302,6 +312,21 @@ export class TooltipDirective implements OnInit, OnChanges {
                      */
                     if (ref) {
                         ref.changeDetectorRef.detectChanges();
+                        ref.instance.close
+                            .pipe(takeUntil(this._tooltipContainerDestroyed$))
+                            .subscribe(_ => {
+                                this.nwClose.emit();
+                                this._close();
+                            });
+                        
+                        /**
+                         * When the TooltipContainerComponent is destroyed we fire the _tooltipContainerDestroyed$
+                         * so that our subscription to TooltipContainerComponent.close is unsubscribed from
+                         */
+                        ref.onDestroy(() => {
+                            this._tooltipContainerDestroyed$.next();
+                            this._tooltipContainerDestroyed$.complete();
+                        });
                     }
                 } else {
                     this._close();

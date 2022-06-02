@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, Inject, TemplateRef } from "@angular/core";
+import { Component, ChangeDetectionStrategy, Inject, TemplateRef, EventEmitter } from "@angular/core";
 import { ITooltipData } from "./models/ITooltipData";
 import { TOOLTIP_CONTEXT_TOKEN } from "./config/tooltip-context-token";
 
@@ -9,6 +9,9 @@ import { TOOLTIP_CONTEXT_TOKEN } from "./config/tooltip-context-token";
             [ngClass]="data.containerClass">
             <div class="tooltip-arrow" *ngIf="data.withArrow"></div>
             <div class="tooltip-inner">
+                <button *ngIf="data.withClose"
+                    (click)="close.emit()"
+                    class="btn btn-ghost-alt btn-sm btn-close close-button"></button>
                 <ng-container *ngIf="isTemplateRef; else stringTmpl">
                     <ng-container *ngTemplateOutlet="data.tooltip; context: data.templateRefContext"></ng-container>
                 </ng-container>
@@ -22,6 +25,7 @@ import { TOOLTIP_CONTEXT_TOKEN } from "./config/tooltip-context-token";
 })
 export class TooltipContainerComponent {
 
+    public close: EventEmitter<void> = new EventEmitter();
     public isTemplateRef: boolean = false;
 
     constructor(@Inject(TOOLTIP_CONTEXT_TOKEN) public data: ITooltipData) {

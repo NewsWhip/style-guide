@@ -140,7 +140,7 @@ export class TooltipsComponent implements OnInit, OnDestroy {
       forceOpen: [false],
       autoFlip: [true],
       isDisabled: [false],
-      delay: [0, Validators.required],
+      withDelay: [true, Validators.required],
       withArrow: [{ value: true, disabled: true }],
       scrollableContainer: [false],
       closeOnScroll: [false]
@@ -208,6 +208,23 @@ export class TooltipsComponent implements OnInit, OnDestroy {
           nwTooltip="This feature is disabled and this tooltip will not be dismissed on click"
           placement="right"
           [closeEvents]="['mouseleave']">Disabled element</button>
+      `
+    },
+    withCloseButton: {
+      lang: 'html',
+      code: `
+        <button class="btn btn-md btn-primary"
+          [nwPopover]="closeBtnTmpl"
+          [closeOnOutsideClick]="true"
+          placement="bottom-start"
+          [withClose]="true">Default popover with close button</button>
+
+        <ng-template #closeBtnTmpl>
+          <p>
+            <strong>Popover with close button</strong>
+          </p>
+          <small>The close button is always absolutely positioned in the top right of the popover</small>
+        </ng-template>
       `
     }
   }
