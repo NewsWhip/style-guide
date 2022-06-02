@@ -1,8 +1,6 @@
 <div class="page-header" style="padding-bottom: 0;">
   <h3>Tooltips</h3>
 
-  <p>TODO: description</p>
-
   <div class="tabs-container">
     <nw-tabs size="md">
       <li nwTab [isActive]="selectedTab === 'design'" role="presentation">
@@ -20,7 +18,7 @@
   
   <div style="padding-bottom: 120px; display: flex;">
     <div [style.width.px]="316">
-      <span [nwPopover]="tooltipTmplRef"
+      <span [nwPopover]="tooltipText"
         [placement]="'bottom-start'"
         [openEvents]="[]"
         [closeEvents]="[]"
@@ -28,7 +26,7 @@
         [isOpen]="true">Dark (default)</span>
     </div>
     <div [style.width.px]="316">
-      <span [nwPopover]="tooltipTmplRef"
+      <span [nwPopover]="tooltipText"
         [placement]="'bottom-start'"
         [containerClass]="'tooltip-light'"
         [openEvents]="[]"
@@ -48,7 +46,7 @@
     
     <ng-template #basicExampleTooltipTmpl let-placement="placement">
       <button class="btn btn-md btn-primary"
-        [nwTooltip]="tooltipTmplRef"
+        [nwTooltip]="tooltipText"
         [placement]="placement">Tooltip on {{placement}}</button>
     </ng-template>
     <br>
@@ -67,7 +65,7 @@
     
     <ng-template #basicExamplePopoverTmpl let-placement="placement">
       <button class="btn btn-md btn-primary"
-        [nwPopover]="tooltipTmplRef"
+        [nwPopover]="tooltipText"
         [placement]="placement">Popover on {{placement}}</button>
     </ng-template>
     <br>
@@ -76,13 +74,33 @@
     <app-code [snippet]="snippets.basicPopover"></app-code>
   </div>
   <hr>
-  <h4 [style.marginTop.px]="16">Additional positioning options</h4>
 
-  <p>There are a total of 12 placement options.</p>
+  <h4>Live example</h4>
 
   <div style="display: flex">
-    <div style="margin-right: 64px">
+    <div class="live-example-form">
       <form [formGroup]="form">
+        <div class="form-group">
+          <div class="checkbox">
+              <input formControlName="forceOpen" id="force-open" type="checkbox">
+              <label for="force-open">Open tooltip</label>
+          </div>
+        </div>
+
+        <div class="form-group">
+            <label>Content (plaintext or HTML)</label>
+            <textarea
+              class="form-control"
+              formControlName="tooltip"
+              placeholder="Tooltip text"
+              rows="8"></textarea>
+        </div>
+  
+        <div class="form-group">
+            <label>Delay</label>
+            <input class="form-control" formControlName="delay" type="number" placeholder="Delay" step="50">
+        </div>
+
         <div class="form-group">
           <select formControlName="placement" class="form-control">
             <option [value]="'top'">top</option>
@@ -101,18 +119,40 @@
         </div>
       </form>
     </div>
-    
-    <div>
+
+    <div class="tooltip-test-wrapper">
       <button class="btn btn-md btn-primary"
-        [nwPopover]="tooltipTmplRef"
+        [nwTooltip]="tooltipTmplRef"
         [placement]="form.get('placement').value"
-        [autoFlip]="false">Click to toggle</button>
+        [isOpen]="form.get('forceOpen').value"
+        [delay]="form.get('delay').value"
+        [openEvents]="[]"
+        [closeEvents]="[]"
+        disabled>Tooltip anchor</button>
     </div>
   </div>
 
   <ng-template #tooltipTmplRef>
-    {{form.get('tooltip').value}}
+    <div [innerHTML]="form.get('tooltip').value"></div>
   </ng-template>
+
+  <h4>Example of customising close events</h4>
+
+  <p>
+    Although not common, there are times when we want a tooltip to show on a disabled item but not be dismissed on click (which is the default behaviour).
+    This is largely because of our default delay of 500ms. If the user clicks the element to which the tooltip is attached before the 500ms passes they won't
+    see the tooltip which is, more than likely, explaining why the element is disabled.
+  </p>
+  <p>
+    We can achieve the desired behaviour by specifying the events we want to close the tooltip, using the <code>closeEvents</code> input.
+  </p>
+
+  <button class="btn btn-md btn-primary disabled" style="margin: 16px 0;"
+    nwTooltip="This feature is disabled and this tooltip will not be dismissed on click"
+    placement="right"
+    [closeEvents]="['mouseleave']">Disabled element</button>
+
+  <app-code [snippet]="snippets.disabledExample"></app-code>
 </div>
 
 <div *ngIf="selectedTab === 'api'" class="tab-content">

@@ -123,7 +123,8 @@ export class TooltipsComponent implements OnInit, OnDestroy {
       "-",
       "- "
     ]
-  ]
+  ];
+  public tooltipText: string = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam repellat odio modi facilis expedita laudantium neque numquam enim tenetur totam, sint quia aspernatur maiores reiciendis corporis quae perspiciatis laboriosam perferendis?';
 
   private _routeSub: Subscription;
 
@@ -134,12 +135,12 @@ export class TooltipsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.form = this._fb.group({
-      tooltip: ['Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam repellat odio modi facilis expedita laudantium neque numquam enim tenetur totam, sint quia aspernatur maiores reiciendis corporis quae perspiciatis laboriosam perferendis?', Validators.required],
+      tooltip: [this.tooltipText, Validators.required],
       placement: ['top'],
-      forceOpen: [true],
+      forceOpen: [false],
       autoFlip: [true],
       isDisabled: [false],
-      delay: [500, Validators.required],
+      delay: [0, Validators.required],
       withArrow: [{ value: true, disabled: true }],
       scrollableContainer: [false],
       closeOnScroll: [false]
@@ -198,6 +199,15 @@ export class TooltipsComponent implements OnInit, OnDestroy {
           | 'left'
           | 'left-start'
           | 'left-end';
+      `
+    },
+    disabledExample: {
+      lang: 'html',
+      code: `
+        <button class="btn btn-md btn-primary disabled"
+          nwTooltip="This feature is disabled and this tooltip will not be dismissed on click"
+          placement="right"
+          [closeEvents]="['mouseleave']">Disabled element</button>
       `
     }
   }
