@@ -276,6 +276,31 @@ describe('TooltipDirective', () => {
         tooltip = getTooltipEl();
         expect(tooltip).toBeTruthy();
     }));
+
+    it('should render a close button', fakeAsync(() => {
+        comp.withClose = true;
+        fixture.detectChanges();
+        const trigger = de.queryAll(By.directive(TooltipDirective))[1].nativeElement;
+        fireEvent(trigger, 'click');
+        tick(tickWaitMs);
+        const tooltip = getTooltipEl();
+        const closeBtn = tooltip.querySelector('.btn-close');
+        expect(closeBtn).toBeTruthy();
+    }));
+
+    it('should emit an event when the close button is clicked', fakeAsync(() => {
+        comp.withClose = true;
+        fixture.detectChanges();
+        const trigger = de.queryAll(By.directive(TooltipDirective))[1].nativeElement;
+        fireEvent(trigger, 'click');
+        tick(tickWaitMs);
+        const tooltip = getTooltipEl();
+        const closeBtn = tooltip.querySelector('.btn-close') as HTMLElement;
+        const spy = spyOn(comp, 'onCloseBtnClicked');
+        closeBtn.click();
+        fixture.detectChanges();
+        expect(spy).toHaveBeenCalledTimes(1);
+    }));
 });
 
 @Component({
@@ -286,6 +311,7 @@ describe('TooltipDirective', () => {
                 [placement]="tooltipPlacement"
                 [isDisabled]="isDisabled"
                 [withArrow]="withArrow"
+                [withClose]="withClose"
                 [delay]="delay"
                 [isOpen]="manualOpen"
                 [autoFlip]="autoFlip"
@@ -301,6 +327,7 @@ describe('TooltipDirective', () => {
                 [placement]="'right'"
                 [isDisabled]="isDisabled"
                 [withArrow]="withArrow"
+                [withClose]="withClose"
                 [delay]="delay"
                 [isOpen]="manualOpen"
                 [autoFlip]="autoFlip"
@@ -308,7 +335,8 @@ describe('TooltipDirective', () => {
                 [updatePositionOnAnimationFrame]="updatePositionOnAnimationFrame"
                 [openEvents]="openEvents"
                 [closeEvents]="closeEvents"
-                [connectedTo]="connectedTo">Button text</button>
+                [connectedTo]="connectedTo"
+                (nwClose)="onCloseBtnClicked()">Button text</button>
         </div>
 
         <div class="connected-to-el" #connectionEl></div>
@@ -347,6 +375,7 @@ class WrapperComponent implements OnInit {
     @ViewChild(CdkScrollable, { read: ElementRef }) scrollEl: ElementRef<HTMLElement>;
 
     public withArrow: boolean = true;
+    public withClose: boolean = false;
     public isDisabled: boolean = false;
     public openEvents: string[];
     public closeEvents: string[];
@@ -364,5 +393,7 @@ class WrapperComponent implements OnInit {
             this.connectedTo = this.connectionEl;
         }
     }
+
+    onCloseBtnClicked() {}
 
 }
