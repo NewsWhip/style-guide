@@ -9,16 +9,13 @@
 .tooltip {
   z-index: $zindex-tooltip;
   display: block;
-  // @include reset-text; // TODO: check if this is needed. Looks like it affects line height
-  // Main effect is a line-height of 1 - meaning single line tooltips display "better" / more compact with
-  // the affect being that multi-line tooltips are closer together
-  //
-  // consider adjusting padding bottom and keeping line-height of 1.2
   font-size: $font-size-small;
   --tooltip-arrow-color: #{$tooltip-arrow-color};
   --tooltip-bg-color: #{$tooltip-bg};
   --tooltip-color: #{$tooltip-color};
-  --tooltip-padding: 8px;
+  --tooltip-padding-horizontal: 8px;
+  // Reduced padding to compensate for line-height
+  --tooltip-padding-vertical: 6px;
 
   &.tooltip-light {
     --tooltip-arrow-color: #{$tooltip-arrow-color-light};
@@ -28,7 +25,7 @@
   // Wrapper for the tooltip content
   .tooltip-inner {
     max-width: $tooltip-max-width;
-    padding: var(--tooltip-padding);
+    padding: var(--tooltip-padding-vertical) var(--tooltip-padding-horizontal);
     color: var(--tooltip-color);
     text-align: left;
     background-color: var(--tooltip-bg-color);
@@ -83,27 +80,27 @@
   &.tooltip-top-start,
   &.tooltip-bottom-start {
     .tooltip-arrow {
-      left: calc($tooltip-arrow-width + var(--tooltip-padding));
+      left: calc($tooltip-arrow-width + var(--tooltip-padding-horizontal));
     }
   }
   &.tooltip-top-end,
   &.tooltip-bottom-end {
     .tooltip-arrow {
       left: unset;
-      right: var(--tooltip-padding);
+      right: var(--tooltip-padding-horizontal);
     }
   }
   &.tooltip-right-start,
   &.tooltip-left-start {
     .tooltip-arrow {
-      top: calc($tooltip-arrow-width + var(--tooltip-padding));
+      top: calc($tooltip-arrow-width + var(--tooltip-padding-horizontal));
     }
   }
   &.tooltip-right-end,
   &.tooltip-left-end {
     .tooltip-arrow {
       top: unset;
-      bottom: var(--tooltip-padding);
+      bottom: var(--tooltip-padding-horizontal);
     }
   }
 }
@@ -112,10 +109,3 @@
   border-bottom: 1px dashed get-color("gray", 3x-light);
   cursor: help;
 }
-// Do we need this? If so, document and display in style guide
-//
-// .tooltip-large + .tooltip > .tooltip-inner, .tooltip-large > .tooltip-inner {
-//   padding: 12px;
-//   line-height: 16px;
-//   min-width: 240px;
-// }
