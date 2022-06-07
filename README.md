@@ -2,7 +2,6 @@
 
 A library of components based on Bootstrap Sass 3.x
 
-
 ## Install
 
 `npm i --save nw-style-guide`
