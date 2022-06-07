@@ -81,6 +81,12 @@ export class TooltipsComponent implements OnInit, OnDestroy {
       `true`
     ],
     [
+      "@Input() withClose: boolean;",
+      "Display a close button or not",
+      `false`,
+      `false`
+    ],
+    [
       "@Input() closeOnScroll: boolean;",
       "Whether or not to close the tooltip on scroll",
       `true`,
@@ -120,6 +126,12 @@ export class TooltipsComponent implements OnInit, OnDestroy {
     [
       "@Output() nwHidden: EventEmitter<null>",
       "Emits an event when the tooltip is hidden",
+      "-",
+      "- "
+    ],
+    [
+      "@Output() nwClose: EventEmitter<null>",
+      "Emits an event when the close button is clicked",
       "-",
       "- "
     ]
