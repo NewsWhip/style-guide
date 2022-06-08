@@ -72,9 +72,10 @@ $level4: lighten($levels-base, 12); // #2D3239
 $level5: lighten($levels-base, 15); // #343942
 
 //== Colors (Standalone)
-//
 $yellow: #ffe085;
-$green: #139717;
+$green: #24A828;
+$red: #FF5D52;
+
 
 $gray-darker:            lighten($gray-base, 13.5%) !default; // #222
 $gray-dark:              lighten($gray-base, 20%) !default;   // #333

@@ -32,7 +32,8 @@ export class ColorsComponent implements OnInit {
 
     public standaloneColors = [
         "yellow",
-        "green"
+        "green",
+        "red"
     ];
 
     constructor(private _chRef: ChangeDetectorRef) { }
