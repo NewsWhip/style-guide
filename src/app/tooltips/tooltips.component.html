@@ -106,13 +106,6 @@
   <div style="display: flex">
     <div class="live-example-form">
       <form [formGroup]="form">
-        <!-- <div class="form-group">
-          <div class="checkbox">
-              <input formControlName="forceOpen" id="force-open" type="checkbox">
-              <label for="force-open">Open tooltip</label>
-          </div>
-        </div> -->
-
         <div class="form-group">
           <div class="switch switch-sm">
             <input type="checkbox" id="forceOpen" formControlName="forceOpen">
@@ -197,6 +190,7 @@
   <button class="btn btn-md btn-primary disabled" style="margin: 16px 0;"
     nwTooltip="This feature is disabled and this tooltip will not be dismissed on click"
     placement="right"
+    [delay]="0"
     [closeEvents]="['mouseleave']">Disabled element</button>
 
   <app-code [snippet]="snippets.disabledExample"></app-code>

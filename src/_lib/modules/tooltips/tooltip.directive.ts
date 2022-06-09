@@ -499,6 +499,7 @@ export class TooltipDirective implements OnInit, OnChanges {
         return this._overlay
             .position()
             .flexibleConnectedTo(this.connectedTo || this._elRef)
+            .withFlexibleDimensions(false)
             .withPositions(positions)
             .withPush(false);
     }

@@ -219,6 +219,7 @@ export class TooltipsComponent implements OnInit, OnDestroy {
         <button class="btn btn-md btn-primary disabled"
           nwTooltip="This feature is disabled and this tooltip will not be dismissed on click"
           placement="right"
+          [delay]="0"
           [closeEvents]="['mouseleave']">Disabled element</button>
       `
     },
