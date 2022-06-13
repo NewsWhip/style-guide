@@ -42,10 +42,14 @@ import { CarouselComponent } from './carousel/carousel.component';
 import { DropdownsModule } from "../_lib/modules/dropdowns/dropdowns.module";
 import { EmailInputModule } from "../_lib/modules/email-input/email-input.module";
 import { EmailInputDemoComponent } from "./email-input/email-input-demo.component";
-import { CopyCodeComponent } from './copy-code/copy-code.component';
+import { CopyCodeComponent } from './code/copy-code.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AutofocusComponent } from './autofocus/autofocus.component';
 import { AutoFocusModule } from '../_lib/modules/autofocus';
+import { TooltipModule } from '../_lib/modules/tooltips';
+import { ScrollingModule } from '@angular/cdk/scrolling';
+import { AppCodeComponent } from './code/code.component';
+import { FaqComponent } from './faq/faq-component';
 
 @NgModule({
   declarations: [
@@ -76,30 +80,34 @@ import { AutoFocusModule } from '../_lib/modules/autofocus';
     CarouselComponent,
     EmailInputDemoComponent,
     CopyCodeComponent,
-    AutofocusComponent
+    AutofocusComponent,
+    AppCodeComponent,
+    FaqComponent
   ],
-    imports: [
-        BrowserModule,
-        FormsModule,
-        ReactiveFormsModule,
-        routing,
-        BrowserAnimationsModule,
-        HttpClientModule,
-        PopoverModule.forRoot(),
-        FeatureAlertsModule,
-        NwPickerModule,
-        ToastsModule.forRoot(),
-        NgxMdModule.forRoot(),
-        FeatureAlertsModule.forRoot(),
-        PortalModule,
-        TabsModule,
-        ChartsModule,
-        LoaderModule,
-        CarouselModule,
-        DropdownsModule,
-        EmailInputModule,
-        AutoFocusModule
-    ],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
+    routing,
+    BrowserAnimationsModule,
+    HttpClientModule,
+    PopoverModule.forRoot(),
+    FeatureAlertsModule,
+    NwPickerModule,
+    ToastsModule.forRoot(),
+    NgxMdModule.forRoot(),
+    FeatureAlertsModule.forRoot(),
+    PortalModule,
+    TabsModule,
+    ChartsModule,
+    LoaderModule,
+    CarouselModule,
+    DropdownsModule,
+    EmailInputModule,
+    AutoFocusModule,
+    TooltipModule,
+    ScrollingModule
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

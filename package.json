@@ -1,6 +1,6 @@
 {
   "name": "nw-style-guide",
-  "version": "7.1.0",
+  "version": "8.0.0",
   "license": "MIT",
   "author": {
     "email": "garethdn@gmail.com",
@@ -9,6 +9,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "start:heroku": "node heroku-server.js",
     "build": "ng build --configuration production",
     "test": "ng test",
     "lint": "ng lint",
@@ -21,7 +22,8 @@
     "g:s": "ng g service --app=1",
     "package:build": "node scripts/build.js",
     "package:make-local-tgz": "node scripts/make-local-tgz.js",
-    "package:release": "node scripts/release.js"
+    "package:release": "node scripts/release.js",
+    "prepackage:release": "npm run test -- --watch=false --progress=false --browsers=ChromeHeadless"
   },
   "private": true,
   "peerDependencies": {
@@ -76,7 +78,9 @@
     "zone.js": "~0.11.4"
   },
   "dependencies": {
+    "express": "^4.18.1",
     "lodash-es": "^4.17.21",
+    "prismjs": "^1.27.0",
     "tslib": "^2.0.0"
   }
 }

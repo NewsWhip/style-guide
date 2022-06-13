@@ -4,6 +4,8 @@
 @import "../node_modules/@fortawesome/fontawesome-pro/scss/brands.scss";
 @import "../node_modules/@fortawesome/fontawesome-pro/scss/regular.scss";
 @import "../node_modules/@fortawesome/fontawesome-pro/scss/light.scss";
+@import "../node_modules/prismjs/themes/prism-tomorrow.css";
+@import "../node_modules/prismjs/plugins/toolbar/prism-toolbar.css";
 
 
 // Import the style guide
@@ -19,3 +21,4 @@
 @import "app/charts/charts.component";
 @import "app/modals/modals.component";
 @import "app/picker/picker.component.scss";
+@import "app/faq/faq-component.scss";

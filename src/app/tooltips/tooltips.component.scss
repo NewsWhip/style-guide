@@ -1,0 +1,26 @@
+@import '../../_lib/sass/src/variables.scss';
+
+.live-example-form {
+    padding: 16px;
+    background-color: $level2;
+    width: 300px;
+    border-radius: $border-radius-large;
+}
+.examples {
+    button {
+        margin-right: 16px;
+    }
+}
+h4, h5 {
+    margin: 16px 0;
+}
+.tooltip-test-wrapper {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    background-color: $level2;
+    border-radius: $border-radius-large;
+    margin-left: 16px;
+    padding: 16px;
+}

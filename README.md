@@ -145,3 +145,7 @@ Sometimes we won't want to release a beta version for testing changes, namely wh
 - Make a `.tgz` package of Style Guide by running `npm run package:make-local-tgz`.
 - Copy absolute path of newly built `.tgz` package from console logs.
 - Paste it into the product's (e.g. Spike's) `package.json` file in place of the current `nw-style-guide` version to test your SG changes locally, without the need to publish a beta version.
+
+### Heroku
+
+Need more docs but we might move entirely to Heroku in favour of Github Pages. This will allow us to have a prod and staging environment. Come back to this.
