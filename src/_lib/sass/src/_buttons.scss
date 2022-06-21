@@ -116,7 +116,7 @@ a.btn {
 // as currently this button has a fixed size
 .btn-carousel {
     @include button-variant(
-        get-color('primary'),
+        $text-color-secondary,
         get-color('primary', light),
         transparent,
         transparent);
@@ -129,22 +129,24 @@ a.btn {
 
     &,
     &.btn-carousel-next {
+        margin-left: 8px;
         &:before {
-            position: relative;
-            left: -4px;
-            height: 30px;
-            width: 30px;
-            content: '';
-            display: block;
-            border-right: 3px solid get-color("primary");
-            border-bottom: 3px solid get-color("primary");
-            transform: rotate(-45deg) skew(-20deg, -20deg);
+            display: inline-block;
+            font-style: normal;
+            font-variant: normal;
+            text-rendering: auto;
+            -webkit-font-smoothing: antialiased;
+            content: '\f054';
+            font-weight: 600;
+            line-height: 1;
+            font-family: "Font Awesome 5 Pro";
+            font-size: 1.6em;
         }
     }
     &.btn-carousel-prev {
+        margin-right: 8px;
         &:before {
-            left: 4px;
-            transform: rotate(-225deg) skew(-20deg, -20deg);
+            content: '\f053';
         }
     }
 }
