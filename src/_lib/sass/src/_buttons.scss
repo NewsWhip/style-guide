@@ -131,22 +131,22 @@ a.btn {
     &.btn-carousel-next {
         margin-left: 8px;
         &:before {
-            position: relative;
-            left: -4px;
-            height: 12px;
-            width: 12px;
-            content: '';
-            display: block;
-            border-right: 3px solid $text-color-secondary;
-            border-bottom: 3px solid $text-color-secondary;
-            transform: rotate(-45deg);
+            display: inline-block;
+            font-style: normal;
+            font-variant: normal;
+            text-rendering: auto;
+            -webkit-font-smoothing: antialiased;
+            content: '\f054';
+            font-weight: 600;
+            line-height: 1;
+            font-family: "Font Awesome 5 Pro";
+            font-size: 1.6em;
         }
     }
     &.btn-carousel-prev {
         margin-right: 8px;
         &:before {
-            left: 4px;
-            transform: rotate(-225deg);
+            content: '\f053';
         }
     }
 }
