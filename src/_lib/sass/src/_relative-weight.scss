@@ -1,33 +1,36 @@
+@use './variables' as vars;
+@use './color-palette' as palette;
+
 .rel-weight {
     background: transparent;
 
     .rel-weight-bar {
         width: 0;
-        background: get-color("secondary", base);
-        border: 1px solid get-color("secondary", base);
+        background: palette.get-color("secondary", base);
+        border: 1px solid palette.get-color("secondary", base);
         color: white;
         transition: width 0.3s ease-in-out;
-        padding-top: $padding-base-vertical; 
-        padding-bottom: $padding-base-vertical; 
+        padding-top: vars.$padding-base-vertical; 
+        padding-bottom: vars.$padding-base-vertical; 
         padding-left: 16px;
         padding-right: 16px;
-        font-size: $font-size-base;
-        line-height: $line-height-base;
+        font-size: vars.$font-size-base;
+        line-height: vars.$line-height-base;
     }
     &.rel-weight-sm {
         .rel-weight-bar {
-            padding-top: $padding-small-vertical;
-            padding-bottom: $padding-small-vertical;
-            font-size: $font-size-small;
-            line-height: $line-height-small;
+            padding-top: vars.$padding-small-vertical;
+            padding-bottom: vars.$padding-small-vertical;
+            font-size: vars.$font-size-small;
+            line-height: vars.$line-height-small;
         }
     }
     &.rel-weight-lg {
         .rel-weight-bar {
-            padding-top: $padding-large-vertical;
-            padding-bottom: $padding-large-vertical;
-            font-size: $font-size-large;
-            line-height: $line-height-large;
+            padding-top: vars.$padding-large-vertical;
+            padding-bottom: vars.$padding-large-vertical;
+            font-size: vars.$font-size-large;
+            line-height: vars.$line-height-large;
         }
     }
 }

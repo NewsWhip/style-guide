@@ -2,7 +2,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { PopoverModule } from 'ngx-bootstrap/popover'
 import { PortalModule } from '@angular/cdk/portal';
 import { NgxMdModule } from 'ngx-md';
 import { NwPickerModule } from '../_lib/modules/picker/picker.module';
@@ -24,7 +23,6 @@ import { BrandingComponent } from './branding/branding.component';
 import { ListComponent } from './list/list.component';
 import { FormsComponent } from './forms/forms.component';
 import { ModalsComponent } from './modals/modals.component';
-import { AlertsComponent } from './alerts/alerts.component';
 import { PaginationComponent } from './pagination/pagination.component';
 import { LabelsComponent } from './labels/labels.component';
 import { TablesComponent } from './tables/tables.component';
@@ -34,7 +32,7 @@ import { ToastsComponent } from './toasts/toasts.component';
 import { DemoPillsComponent } from './pills/pills.component';
 import { TypographyComponent } from './typography/typography.component';
 import { PickerComponent } from './picker/picker.component';
-import { FeatureAlertsComponent } from './feature-alerts/feature-alerts.component';
+import { HotspotsComponent } from './hotspots/hotspots.component';
 import { AnimationsComponent } from './animations/animations.component';
 import { ChartsComponent } from './charts/charts.component';
 import { LoaderComponent } from './loader/loader.component';
@@ -62,7 +60,6 @@ import { FaqComponent } from './faq/faq-component';
     ListComponent,
     FormsComponent,
     ModalsComponent,
-    AlertsComponent,
     PaginationComponent,
     LabelsComponent,
     TablesComponent,
@@ -73,7 +70,7 @@ import { FaqComponent } from './faq/faq-component';
     TypographyComponent,
     PickerComponent,
     TabsComponent,
-    FeatureAlertsComponent,
+    HotspotsComponent,
     AnimationsComponent,
     ChartsComponent,
     LoaderComponent,
@@ -91,7 +88,6 @@ import { FaqComponent } from './faq/faq-component';
     routing,
     BrowserAnimationsModule,
     HttpClientModule,
-    PopoverModule.forRoot(),
     FeatureAlertsModule,
     NwPickerModule,
     ToastsModule.forRoot(),

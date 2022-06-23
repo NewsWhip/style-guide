@@ -1,4 +1,6 @@
-@mixin scrollbars($size: .5em, $foreground-color: $divider-color-primary, $background-color: $divider-color-primary) {
+@use '../variables' as vars;
+
+@mixin scrollbars($size: .5em, $foreground-color: vars.$divider-color-primary, $background-color: vars.$divider-color-primary) {
     // For Google Chrome
     ::-webkit-scrollbar {
         width:  $size;

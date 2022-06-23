@@ -1,4 +1,4 @@
-app-charts {
+:host {
     p,h1,h2,h3,h4,h5 {
         margin: 8px 0 !important;
     }
@@ -36,7 +36,7 @@ app-charts {
             stroke-width: 3px;
         }
     }
-    .axis {
+    ::ng-deep .axis {
         .domain {
             stroke: black;
             stroke-width: 1px;

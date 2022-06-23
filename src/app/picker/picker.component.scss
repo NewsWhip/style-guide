@@ -1,9 +1,11 @@
-.custom-placeholder {
-    display: flex;
-    flex-direction: row;
-    width: 95%;
-
-    .excluded {
-        text-decoration: line-through;
+:host {
+    ::ng-deep .custom-placeholder {
+        display: flex;
+        flex-direction: row;
+        width: 95%;
+    
+        .excluded {
+            text-decoration: line-through;
+        }
     }
 }

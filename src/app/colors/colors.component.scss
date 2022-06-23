@@ -1,72 +1,78 @@
-app-colors {
-    .color-variants {
-        display: flex;
-        flex-direction: row;
+@use '../../_lib/sass/src/variables' as vars;
+@use '../../_lib/sass/src/color-palette' as palette;
 
-        .color {
-            flex: 1;
-            max-width: 50%;
-            margin-right: 10px;
-            margin-bottom: 10px;
+.color-variants {
+    display: flex;
+    flex-direction: row;
 
-            &:last-child {
-                margin-right: 0;
-            }
+    .color {
+        flex: 1;
+        max-width: 50%;
+        margin-right: 10px;
+        margin-bottom: 10px;
 
-            .splash {
-                height: 80px;
-            }
+        &:last-child {
+            margin-right: 0;
+        }
+
+        .splash {
+            height: 80px;
         }
     }
+}
 
-    .hex {
-        font-size: 10px;
-        display: block;
-        border-bottom-right-radius: 0;
-        border-bottom-left-radius: 0;
-        padding: 5px 0;
+.hex {
+    font-size: 10px;
+    display: block;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    padding: 5px 0;
+}
+
+.sass-code {
+    font-size: 10px;
+    display: block;
+    border-top-left-radius: 0;
+    border-bottom-right-radius: 0;
+    text-align: center;
+}
+
+@each $color-settings in palette.$color-settings-maps {
+    $name: map-get($color-settings, name);
+
+    .bg-#{$name}-base { background: palette.get-color($name, base) };
+    .bg-#{$name}-dark { background: palette.get-color($name, dark) };
+    .bg-#{$name}-light { background: palette.get-color($name, light) };
+    .bg-#{$name}-x-light { background: palette.get-color($name, x-light) };
+    .bg-#{$name}-2x-light { background: palette.get-color($name, 2x-light) };
+    .bg-#{$name}-3x-light { background: palette.get-color($name, 3x-light) };
+    .bg-#{$name}-4x-light { background: palette.get-color($name, 4x-light) };
+    .bg-#{$name}-5x-light { background: palette.get-color($name, 5x-light) };
+
+    @if $name == 'gray' {
+        .bg-#{$name}-6x-light { background: palette.get-color($name, 6x-light) };
     }
+}
 
-    .sass-code {
-        font-size: 10px;
-        display: block;
-        border-top-left-radius: 0;
-        border-bottom-right-radius: 0;
-        text-align: center;
-    }
+$levels-map: (
+    0: vars.$level0,
+    1: vars.$level1,
+    2: vars.$level2,
+    3: vars.$level3,
+    4: vars.$level4,
+    5: vars.$level5
+);
 
-    @each $color-settings in $color-settings-maps {
-        $name: map-get($color-settings, name);
+@each $index, $var in $levels-map {
+    .bg-levels-level#{$index} {background-color: $var;}
+}
 
-        .bg-#{$name}-base { background: get-color($name, base) };
-        .bg-#{$name}-dark { background: get-color($name, dark) };
-        .bg-#{$name}-light { background: get-color($name, light) };
-        .bg-#{$name}-x-light { background: get-color($name, x-light) };
-        .bg-#{$name}-2x-light { background: get-color($name, 2x-light) };
-        .bg-#{$name}-3x-light { background: get-color($name, 3x-light) };
-        .bg-#{$name}-4x-light { background: get-color($name, 4x-light) };
-        .bg-#{$name}-5x-light { background: get-color($name, 5x-light) };
-
-        @if $name == 'gray' {
-            .bg-#{$name}-6x-light { background: get-color($name, 6x-light) };
-        }
-    }
-
-    $levels-map: (0: $level0, 1: $level1, 2: $level2, 3: $level3, 4: $level4, 5: $level5);
-
-    @each $index, $var in $levels-map {
-        .bg-levels-level#{$index} {background-color: $var;}
-    }
-
-    .bg-yellow {
-        background: $yellow;
-    }
-    .bg-green {
-        background: $green;
-    }
-
-    .bg-red {
-        background: $red;
-    }
-
+.bg-yellow {
+    background: vars.$yellow;
+}
+.bg-green {
+    background: vars.$green;
+}
+.bg-red {
+    background: vars.$red;
 }

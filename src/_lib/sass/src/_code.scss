@@ -1,0 +1,46 @@
+@use "sass:math";
+@use './variables' as vars;
+//
+// Code (inline and block)
+// --------------------------------------------------
+
+
+// Inline and block code styles
+code,
+pre {
+  font-family: vars.$font-family-monospace;
+}
+
+// Inline code
+code {
+  padding: 2px 4px;
+  font-size: 90%;
+  color: vars.$code-color;
+  background-color: vars.$code-bg;
+  border-radius: vars.$border-radius-base;
+}
+
+// Blocks of code
+pre {
+  display: block;
+  padding: math.div(vars.$line-height-computed - 1, 2);
+  margin: 0 0 math.div(vars.$line-height-computed, 2);
+  font-size: (vars.$font-size-base - 1); // 14px to 13px
+  line-height: vars.$line-height-base;
+  color: vars.$pre-color;
+  word-break: break-all;
+  word-wrap: break-word;
+  background-color: vars.$pre-bg;
+  border: 1px solid vars.$pre-border-color;
+  border-radius: vars.$border-radius-base;
+
+  // Account for some code outputs that place code tags in pre tags
+  code {
+    padding: 0;
+    font-size: inherit;
+    color: inherit;
+    white-space: pre-wrap;
+    background-color: transparent;
+    border-radius: 0;
+  }
+}

@@ -8,7 +8,7 @@ import { TabsService } from './tabs.service';
     selector: 'nw-tabs',
     template: `
         <div class="scroll-container" #scrollContainer>
-            <ul class="nav nav-tabs" [ngClass]="tabSizeClass" role="tablist">
+            <ul class="nav-tabs" [ngClass]="tabSizeClass" role="tablist">
                 <ng-content></ng-content>
 
                 <li #activeBar class="nav-tabs-active-bar" [ngStyle]="getActiveStyles()"></li>
@@ -31,12 +31,7 @@ import { TabsService } from './tabs.service';
         </ng-template>
      `,
     providers: [TabsService],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    styles: [`
-        :host, ul {
-            position: relative;
-        }
-    `]
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class TabsComponent implements OnInit, AfterContentInit, OnDestroy {

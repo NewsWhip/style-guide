@@ -1,0 +1,54 @@
+//
+// Remove default margin.
+//
+
+body {
+    margin: 0;
+}
+
+b,
+strong {
+    font-weight: bold;
+}
+
+button {
+  -webkit-appearance: button;
+  cursor: pointer;
+}
+
+//
+// Address inconsistent and variable font size in all browsers.
+//
+small {
+    font-size: 80%;
+}
+
+//
+// Correct overflow not hidden in IE 9/10/11.
+//
+svg:not(:root) {
+    overflow: hidden;
+}
+
+hr {
+    box-sizing: content-box;
+    height: 0;
+}
+
+//
+// Contain overflow in all browsers.
+//
+pre {
+    overflow: auto;
+}
+
+//
+// Address odd `em`-unit font size rendering in all browsers.
+//
+code,
+kbd,
+pre,
+samp {
+    font-family: monospace, monospace;
+    font-size: 1em;
+}

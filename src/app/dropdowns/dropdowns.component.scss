@@ -1,9 +1,11 @@
-app-dropdowns {
+@use '../../_lib/sass/src/variables' as vars;
+
+:host {
     .full-width-container {
         width: 550px;
         border: 1px solid #ffffff;
         padding: 20px;
         margin-bottom: 20px;
-        border-radius: $border-radius-base;
+        border-radius: vars.$border-radius-base;
     }
 }

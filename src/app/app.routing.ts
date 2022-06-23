@@ -9,7 +9,6 @@ import { BrandingComponent } from './branding/branding.component';
 import { ListComponent } from './list/list.component';
 import { FormsComponent } from './forms/forms.component';
 import { ModalsComponent } from "./modals/modals.component";
-import { AlertsComponent } from "./alerts/alerts.component";
 import { PaginationComponent } from "./pagination/pagination.component";
 import { LabelsComponent } from "./labels/labels.component";
 import { TablesComponent } from './tables/tables.component';
@@ -19,7 +18,7 @@ import { ToastsComponent } from "./toasts/toasts.component";
 import { DemoPillsComponent } from "./pills/pills.component";
 import { TypographyComponent } from "./typography/typography.component";
 import { PickerComponent } from "./picker/picker.component";
-import { FeatureAlertsComponent } from "./feature-alerts/feature-alerts.component";
+import { HotspotsComponent } from "./hotspots/hotspots.component";
 import { AnimationsComponent } from "./animations/animations.component";
 import { ChartsComponent } from "./charts/charts.component";
 import { LoaderComponent } from './loader/loader.component';
@@ -65,10 +64,6 @@ const appRoutes: Routes = [
         component: ModalsComponent
     },
     {
-        path: 'alerts',
-        component: AlertsComponent
-    },
-    {
         path: 'pagination',
         component: PaginationComponent
     },
@@ -105,8 +100,8 @@ const appRoutes: Routes = [
         component: ToastsComponent
     },
     {
-        path: 'feature-alerts',
-        component: FeatureAlertsComponent
+        path: 'hotspots',
+        component: HotspotsComponent
     },
     {
         path: 'animations',

@@ -1,26 +1,82 @@
+@use './variables' as vars;
+
 .table {
+    width: 100%;
+    max-width: 100%;
+    background-color: vars.$table-bg;
     font-size: 14px;
     text-align: left;
     line-height: 17px;
-    color: $text-color-secondary;
+    color: vars.$text-color-secondary;
     margin-bottom: 0;
+    border-collapse: collapse;
+    border-spacing: 0;
 
-    &.table-striped > tbody > tr > td {
-        border-top: none;
+    > thead,
+    > tbody,
+    > tfoot {
+        > tr {
+            > th,
+            > td {
+                padding: vars.$table-cell-padding;
+                line-height: vars.$line-height-base;
+                vertical-align: middle;
+                border-top: 1px solid vars.$table-border-color;
+            }
+            &.no-border {
+                > th,
+                > td {
+                    border-left: none;
+                    border-right: none;
+                }
+            }
+        }
+    }
+    > thead > tr > th {
+        vertical-align: bottom;
+        border-bottom: 2px solid vars.$table-border-color;
+        text-transform: uppercase;
+        font-weight: normal;
+        padding: {
+            top: 16px;
+            bottom: 16px;
+        }
+        i {
+            margin: 0 8px;
+        }
+    }
+    // Remove top border from thead by default
+    > thead:first-child {
+        > tr:first-child {
+            > th,
+            > td {
+                border-top: 0;
+            }
+        }
+    }
+    &.table-striped {
+        > tbody > tr {
+            > td {
+                border-top: none;
+            }
+            &:nth-of-type(odd) {
+                background-color: vars.$table-bg-accent;
+            }
+        }
     }
     &.table-skeleton {
         background: transparent;
-
+        
         > thead,
         > tbody,
         > tfoot {
             > tr {
                 > th,
                 > td {
-                    border-color: $divider-color-secondary;
+                    border-color: vars.$divider-color-secondary;
                     border-bottom-width: 1px;
                     border-bottom-style: solid;
-
+                    
                     &:first-child {
                         border-left: none;
                         padding-left: 4px;
@@ -34,8 +90,8 @@
         }
         > tbody {
             > tr > td {
-                border-left: 1px solid $divider-color-secondary;
-                border-right: 1px solid $divider-color-secondary;
+                border-left: 1px solid vars.$divider-color-secondary;
+                border-right: 1px solid vars.$divider-color-secondary;
             }
         }
         > thead,
@@ -74,7 +130,7 @@
             border: none;
         }
         > tbody > tr > td {
-            background-color: $level3;
+            background-color: vars.$level3;
             padding: 16px;
             &:first-child {
                 border-top-left-radius: 9px;
@@ -89,32 +145,23 @@
             border-top: none;
         }
     }
-    > thead,
-    > tbody,
-    > tfoot {
-        > tr {
-            > th,
-            > td {
-                vertical-align: middle;
-            }
-            &.no-border {
+    &.table-bordered {
+        border: 1px solid vars.$table-border-color;
+        > thead,
+        > tbody,
+        > tfoot {
+            > tr {
                 > th,
                 > td {
-                    border-left: none;
-                    border-right: none;
+                    border: 1px solid vars.$table-border-color;
                 }
             }
         }
-    }
-    > thead > tr > th {
-        text-transform: uppercase;
-        font-weight: normal;
-        padding: {
-            top: 16px;
-            bottom: 16px;
-        }
-        i {
-            margin: 0 8px;
+        > thead > tr {
+            > th,
+            > td {
+                border-bottom-width: 2px;
+            }
         }
     }
     > tfoot > tr > td {

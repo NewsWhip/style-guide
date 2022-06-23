@@ -293,23 +293,19 @@ export class AppModule \{ \}"}}</code></pre>
 
     <h3>Append dropdown to body</h3>
 
-    <p style="margin-bottom: 16px;">
-        To append the dropdown menu to the body, the recommended approach is to leverage the popover module from <code>ngx-bootstrap</code>. It is also recommended to use the <code>containerClass</code> with at least <code>popover-dropdown</code>. This class will remove a lot of base popver styling.
-    </p>
-
     <div class="dropdown">
         <button class="btn btn-md btn-secondary"
-            [popover]="dropdownMenuRef"
-            container="body"
+            [nwPopover]="dropdownMenuRef"
+            [withArrow]="false"
             containerClass="popover-dropdown"
-            placement="left"
-            [outsideClick]="true">
+            placement="bottom-start"
+            [closeOnOutsideClick]="true">
             Append to body
         </button>
     </div>
 
     <ng-template #dropdownMenuRef>
-        <ul class="dropdown-menu" style="display: block; top: 15px;">
+        <ul class="dropdown-menu" style="display: block;">
             <li><a href="#">Menu item 1</a></li>
             <li><a href="#">Menu item 2</a></li>
             <li><a href="#">Menu item 3</a></li>

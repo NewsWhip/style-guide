@@ -1,3 +1,5 @@
+@use './variables' as vars;
+
 // Override button margins
 .btn-group {
     .btn + .btn,
@@ -14,12 +16,12 @@
 }
 // Carets in other button sizes
 .btn-lg .caret {
-    border-width: $caret-width-large $caret-width-large 0;
+    border-width: vars.$caret-width-large vars.$caret-width-large 0;
     border-bottom-width: 0;
 }
 // Upside down carets for .dropup
 .dropup .btn-lg .caret {
-    border-width: 0 $caret-width-large $caret-width-large;
+    border-width: 0 vars.$caret-width-large vars.$caret-width-large;
 }
 .btn-group-responsive {
 	display: flex;
@@ -36,14 +38,14 @@
 	}
 }
 .btn-group-responsive-xl {
-    height: ceil($font-size-xl * $line-height-xl) + ($padding-xl-vertical * 2) + 2;
+    height: ceil(vars.$font-size-xl * vars.$line-height-xl) + (vars.$padding-xl-vertical * 2) + 2;
 }
 .btn-group-responsive-lg {
-    height: ceil($font-size-large * $line-height-large) + ($padding-large-vertical * 2) + 2;
+    height: ceil(vars.$font-size-large * vars.$line-height-large) + (vars.$padding-large-vertical * 2) + 2;
 }
 .btn-group-responsive-md {
-    height: ceil(14px * $line-height-base) + ($padding-base-vertical * 2) + 2;
+    height: ceil(14px * vars.$line-height-base) + (vars.$padding-base-vertical * 2) + 2;
 }
 .btn-group-responsive-sm {
-    height: ceil($font-size-small * $line-height-small) + ($padding-small-vertical * 2) + 2;
+    height: ceil(vars.$font-size-small * vars.$line-height-small) + (vars.$padding-small-vertical * 2) + 2;
 }

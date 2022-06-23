@@ -1,0 +1,126 @@
+@use '../variables' as vars;
+@use '../mixins/nav-size' as navs;
+@use '../color-palette' as palette;
+
+nw-tabs {
+    position: relative;
+
+    ul {
+        position: relative;
+    }
+    .scroll-container {
+        white-space: nowrap;
+        overflow-x: auto;
+        // To account for active-tab element
+        padding-bottom: 3px;
+        scroll-behavior: smooth;
+    
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    
+        &::-webkit-scrollbar {
+            display: none;
+        }
+    }
+
+    .nav-tabs {
+        margin-bottom: 0;
+        padding-left: 0; // Override default ul/ol
+        list-style: none;
+
+        > li  {
+            position: relative;
+            display: inline-block;
+            margin: 0 12px;
+            vertical-align: middle;
+    
+            // Actual tabs (as links)
+            > a {
+                position: relative;
+                display: block;
+                @include navs.nav-size(vars.$padding-base-vertical, vars.$padding-base-horizontal, 14px, 1);
+                color: vars.$text-color-secondary;
+                &:hover,
+                &:focus {
+                    text-decoration: none;
+                    color: vars.$text-color;
+                }
+            }
+            &:first-child {
+                margin-left: 0;
+            }
+            &:last-child {
+                margin-right: 0;
+            }
+            // Active state, and its :hover to override normal :hover
+            &.active > a {
+                &,
+                &:hover,
+                &:focus {
+                    color: vars.$text-color;
+                    cursor: default;
+                }
+            }
+            // Disabled state sets text to gray and nukes hover/tab effects
+            &.disabled > a {
+                color: vars.$nav-disabled-link-color;
+    
+                &:hover,
+                &:focus {
+                    color: vars.$nav-disabled-link-hover-color;
+                    text-decoration: none;
+                    background-color: transparent;
+                    cursor: vars.$cursor-disabled;
+                }
+            }
+        }
+        .open > a {
+            &,
+            &:hover,
+            &:focus {
+                background-color: vars.$nav-link-hover-bg;
+                border-color: vars.$link-color;
+            }
+        }
+        .nav-tabs-active-bar {
+            margin: 0;
+            display: block;
+            height: 3px;
+            position: absolute;
+            background-color: palette.get-color("primary", base);
+            transition: all ease-in-out 200ms;
+        }
+        &.nav-sm > li > a {
+            @include navs.nav-size(vars.$padding-small-vertical + 1, 0, vars.$font-size-small, vars.$line-height-small);
+        }
+        &.nav-md > li > a {
+            @include navs.nav-size(vars.$padding-base-vertical + 1, 0, 14px, vars.$line-height-base);
+        }
+        &.nav-lg > li > a {
+            @include navs.nav-size(vars.$padding-large-vertical + 1, 0, vars.$font-size-large, vars.$line-height-large);
+        }
+    }
+    .pagination-container {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+    
+        .prev-page, .next-page {
+            position: absolute;
+            top: 0;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            pointer-events: all;
+        }
+        .next-page {
+            right: 0;
+            transform: rotate(180deg);
+        }
+    }
+}

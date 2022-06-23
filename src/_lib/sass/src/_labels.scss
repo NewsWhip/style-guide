@@ -1,3 +1,6 @@
+@use './variables' as vars;
+@use './color-palette' as palette;
+
 .label {
     display: inline-flex;
     flex-direction: row;
@@ -14,39 +17,38 @@
     vertical-align: baseline;
 
     &.label-badge {
-        color: get-color("gray", 4x-light);
-        background: get-color("gray", light);
-        border-color: get-color("gray", light);
+        color: palette.get-color("gray", 4x-light);
+        background: palette.get-color("gray", light);
+        border-color: palette.get-color("gray", light);
     }
     &.label-danger {
         color: #ffffff;
-        background: get-color('tertiary');
-        border-color: get-color('tertiary');
+        background: palette.get-color('tertiary');
+        border-color: palette.get-color('tertiary');
     }
     &.label-alt {
-        color: get-color("alt", light);
-        background: get-color("gray", dark);
-        border-color: get-color("gray", dark);
+        color: palette.get-color("alt", light);
+        background: palette.get-color("gray", dark);
+        border-color: palette.get-color("gray", dark);
     }
     &.label-new {
         color: #ffffff;
-        background: get-color("tertiary");
-        border-color: get-color("tertiary");
+        background: palette.get-color("tertiary");
+        border-color: palette.get-color("tertiary");
     }
     &.label-beta {
-        color: get-color("gray");
-        background: get-color("alt");
-        border-color: get-color("alt");
+        color: palette.get-color("gray");
+        background: palette.get-color("alt");
+        border-color: palette.get-color("alt");
     }
     &.label-op {
         text-transform: initial;
         color: #ffffff;
-        background: get-color("secondary", base);
-        border-color: get-color("secondary", base);
+        background: palette.get-color("secondary", base);
+        border-color: palette.get-color("secondary", base);
     }
 }
  .label-round {
-     padding: 0 7px;
-     @include border-right-radius(9px);
-     @include border-left-radius(9px);
+    padding: 0 7px;
+    border-radius: 9px;
  }

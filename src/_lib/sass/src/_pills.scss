@@ -1,47 +1,53 @@
+@use './variables' as vars;
+@use './color-palette' as palette;
+@use './buttons';
+
 .pill {
     display: inline-flex;
-    background: get-color("primary", 2x-light);
-    height: $input-height-base;
-    line-height: $input-height-base;
-    padding: 0 $padding-base-horizontal;
+    background: palette.get-color("primary", 2x-light);
+    height: vars.$input-height-base;
+    line-height: vars.$input-height-base;
+    padding: 0 vars.$padding-base-horizontal;
     margin-right: 4px;
     margin-bottom: 4px;
     font-weight: 600;
-    font-size: $font-size-base;
-    color: get-color("gray", base);
+    font-size: vars.$font-size-base;
+    color: palette.get-color("gray", base);
     border-radius: 3px;
 
     .close {
-        color: get-color("primary", base);
+        @extend .btn-unstyled;
+        color: palette.get-color("primary", base);
         font-size: 160%;
         // Negate the 6px padding on the close button
         position: relative;
         right: -6px;
         margin-left: -6px;
+        top: -1px;
 
         &:hover {
-            color: get-color("primary", dark);
+            color: palette.get-color("primary", dark);
         }
     }
     &.pill-sm {
-        padding: 0 $padding-small-horizontal;
-        font-size: $font-size-small;
-        height: $input-height-small;
-        line-height: $input-height-small;
+        padding: 0 vars.$padding-small-horizontal;
+        font-size: vars.$font-size-small;
+        height: vars.$input-height-small;
+        line-height: vars.$input-height-small;
         border-radius: 3px;
 
     }
     &.pill-lg {
-        padding: 0 $padding-large-horizontal;
-        font-size: $font-size-large;
-        height: $input-height-large;
-        line-height: $input-height-large;
+        padding: 0 vars.$padding-large-horizontal;
+        font-size: vars.$font-size-large;
+        height: vars.$input-height-large;
+        line-height: vars.$input-height-large;
         border-radius: 3px;
     }
     &.disabled,
     .close:disabled {
         opacity: 0.5;
-        cursor: $cursor-disabled;
+        cursor: vars.$cursor-disabled;
     }
     &.pill-excluded {
         .pill-label {
@@ -53,29 +59,29 @@
     }
     &.pill-editable {
         &:hover:not(.disabled) {
-            background: get-color("primary", 3x-light);
+            background: palette.get-color("primary", 3x-light);
 
             &.invalid {
-                background-color: get-color("tertiary", 3x-light);
+                background-color: palette.get-color("tertiary", 3x-light);
             }
         }
     }
     &.invalid {
-        background-color: get-color("tertiary", 2x-light);
+        background-color: palette.get-color("tertiary", 2x-light);
 
         .close {
-            color: get-color("tertiary", base);
+            color: palette.get-color("tertiary", base);
 
             &:hover {
-                color: get-color("tertiary", dark);
+                color: palette.get-color("tertiary", dark);
             }
         }
     }
     &.selected {
-        box-shadow: 0 0 0 1px get-color("primary", dark);
+        box-shadow: 0 0 0 1px palette.get-color("primary", dark);
 
         &.invalid {
-            box-shadow: 0 0 0 1px get-color("tertiary", dark);
+            box-shadow: 0 0 0 1px palette.get-color("tertiary", dark);
         }
     }
 }

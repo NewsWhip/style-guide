@@ -1,21 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-modals',
-  templateUrl: './modals.component.html'
+  templateUrl: './modals.component.html',
+  styleUrls: ['./modals.component.scss']
 })
-export class ModalsComponent implements OnInit {
+export class ModalsComponent {
 
   public modalSize: string = 'md';
-  public isInverse: boolean = false;
   public isImage: boolean = false;
   public showTitle: boolean = true;
 
-  constructor() { }
-
-  ngOnInit() { }
-
-  invertModal(value) {
-    this.isInverse = value;
-  }
 }

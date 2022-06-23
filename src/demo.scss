@@ -1,24 +1,100 @@
 // Import third-party libs
-@import "../node_modules/@fortawesome/fontawesome-pro/scss/fontawesome.scss";
-@import "../node_modules/@fortawesome/fontawesome-pro/scss/solid.scss";
-@import "../node_modules/@fortawesome/fontawesome-pro/scss/brands.scss";
-@import "../node_modules/@fortawesome/fontawesome-pro/scss/regular.scss";
-@import "../node_modules/@fortawesome/fontawesome-pro/scss/light.scss";
-@import "../node_modules/prismjs/themes/prism-tomorrow.css";
-@import "../node_modules/prismjs/plugins/toolbar/prism-toolbar.css";
-
+@use "../node_modules/@fortawesome/fontawesome-pro/scss/fontawesome.scss";
+@use "../node_modules/@fortawesome/fontawesome-pro/scss/solid.scss";
+@use "../node_modules/@fortawesome/fontawesome-pro/scss/brands.scss";
+@use "../node_modules/@fortawesome/fontawesome-pro/scss/regular.scss";
+@use "../node_modules/@fortawesome/fontawesome-pro/scss/light.scss";
+@use "../node_modules/prismjs/themes/prism-tomorrow.css";
+@use "../node_modules/prismjs/plugins/toolbar/prism-toolbar.css";
 
 // Import the style guide
-@import "_lib/sass/styles.scss";
+@use "_lib/sass/styles.scss";
+@use '_lib/sass/src/color-palette' as palette;
 
-// Styles for the demo app only
-@import "app/app.component";
-@import "app/buttons/buttons.component";
-@import "app/colors/colors.component";
-@import "app/dropdowns/dropdowns.component";
-@import "app/branding/branding.component";
-@import "app/list/list.component";
-@import "app/charts/charts.component";
-@import "app/modals/modals.component";
-@import "app/picker/picker.component.scss";
-@import "app/faq/faq-component.scss";
+body {
+    margin: 0;
+    padding: 0 0 90px 0;
+
+    * {
+        box-sizing: border-box;
+    }
+    // The only reason this is here is because of the way that modals are
+    // rendered in the Style Guide. They are already on the page and we need
+    // to force some styles so that they are not blocking the page content
+    &:not(.modal-open) {
+        app-modals {
+            .modals {
+                .modal {
+                    display: none !important;
+                }
+            }
+        }
+    }
+}
+.page-header {
+    p {
+        margin: 0;
+        line-height: 1;
+        margin-top: 16px;
+    }
+    // Page headers should span the full width and negate the container padding
+    .tabs-container {
+        background-color: palette.get-color("gray", dark);
+        padding-left: 32px;
+        padding-right: 32px;
+        margin-left: -32px;
+        margin-right: -32px;
+        margin-top: 16px;
+        position: relative;
+        top: 1px;
+    }
+}
+hr {
+    margin: 30px 0;
+}
+pre {
+    position: relative;
+    white-space: pre-line;
+}
+code {
+    padding: 0;
+    line-height: 1.2;
+}
+pre.light,
+code.light {
+    background: transparent;
+    color: #ffffff;
+}
+.light-bg {
+    background: #fff;
+}
+.demo-section {
+    margin-bottom: 32px !important;
+
+    h4 {
+        margin-bottom: 8px;
+    }
+}
+ol.guidelines {
+    list-style: none;
+    counter-reset: item;
+    padding-left: 0;
+
+    li {
+        counter-increment: item;
+        margin-bottom: 16px;
+
+        &:before {
+            font-weight: bold;
+            font-size: 16px;
+            margin-right: 8px;
+            content: counter(item)'.';
+            width: 1.2em;
+        }
+    }
+
+}
+.tab-content {
+    padding-bottom: 16px;
+    max-width: 800px;
+}

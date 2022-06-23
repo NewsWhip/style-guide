@@ -1,3 +1,6 @@
+@use './variables' as vars;
+@use './mixins/forms';
+@use './color-palette' as palette;
 //
 // Forms
 // --------------------------------------------------
@@ -17,44 +20,19 @@ fieldset {
     min-width: 0;
 }
 
-legend {
-    display: block;
-    width: 100%;
-    padding: 0;
-    margin-bottom: $line-height-computed;
-    font-size: ($font-size-base * 1.5);
-    line-height: inherit;
-    color: $legend-color;
-    border: 0;
-    border-bottom: 1px solid $legend-border-color;
-}
-
 label {
     font-size: 14px;
     display: inline-block;
     max-width: 100%; // Force IE8 to wrap long content (see https://github.com/twbs/bootstrap/issues/13141)
     margin-bottom: 4px;
     font-weight: normal;
-    color: $text-color;
-}
-
-
-// Normalize form controls
-//
-// While most of our form styles require extra classes, some basic normalization
-// is required to ensure optimum display with or without those classes to better
-// address browser inconsistencies.
-
-// Override content-box in Normalize (* isn't specific enough)
-input[type="search"] {
-    @include box-sizing(border-box);
+    color: vars.$text-color;
 }
 
 // Position radios and checkboxes better
 input[type="radio"],
 input[type="checkbox"] {
     margin: 4px 0 0;
-    margin-top: 1px \9; // IE8-9
     line-height: normal;
 }
 
@@ -78,16 +56,7 @@ select[size] {
 input[type="file"]:focus,
 input[type="radio"]:focus,
 input[type="checkbox"]:focus {
-    @include form-control-focus;
-}
-
-// Adjust output element
-output {
-    display: block;
-    padding-top: ($padding-base-vertical + 1);
-    font-size: $font-size-base;
-    line-height: $line-height-base;
-    color: $input-color;
+    @include forms.form-control-focus;
 }
 
 
@@ -117,24 +86,19 @@ output {
     display: block;
     width: 100%;
     height: 32px; // Make inputs at least the height of their button counterpart (base line-height + padding + border)
-    padding: $padding-base-vertical $padding-base-horizontal;
+    padding: vars.$padding-base-vertical vars.$padding-base-horizontal;
     font-size: 14px;
-    line-height: $line-height-base;
-    color: $input-color;
-    background-color: $input-bg;
+    line-height: vars.$line-height-base;
+    color: vars.$input-color;
+    background-color: vars.$input-bg;
     background-image: none; // Reset unusual Firefox-on-Android default style; see https://github.com/necolas/normalize.css/issues/214
-    border: 1px solid $input-border;
-    border-radius: $input-border-radius; // Note: This has no effect on <select>s in some browsers, due to the limited stylability of <select>s in CSS.
-    @include transition(border-color ease-in-out .15s, box-shadow ease-in-out .15s);
+    border: 1px solid vars.$input-border;
+    border-radius: vars.$input-border-radius; // Note: This has no effect on <select>s in some browsers, due to the limited stylability of <select>s in CSS.
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
 
-    // Placeholder
-    @include placeholder;
-
-    // Unstyle the caret on `<select>`s in IE10+.
-    &::-ms-expand {
-        border: 0;
-        background-color: transparent;
-    }
+    ::placeholder { color: vars.$input-color-placeholder; }
+    &::-moz-placeholder { color: vars.$input-color-placeholder; }
+    &::-webkit-input-placeholder  { color: vars.$input-color-placeholder; }
 
     // Disabled and read-only inputs
     //
@@ -149,12 +113,12 @@ output {
 
     &[disabled],
     fieldset[disabled] & {
-        cursor: $cursor-disabled;
+        cursor: vars.$cursor-disabled;
     }
 
     &:focus {
         // Customize the `:focus` state to imitate native WebKit styles.
-        @include form-control-focus;
+        @include forms.form-control-focus;
     }
     // [converter] extracted textarea& to textarea.form-control
 }
@@ -166,68 +130,20 @@ textarea.form-control {
     line-height: 1.4;
 }
 
-
-// Search inputs in iOS
-//
-// This overrides the extra rounded corners on search inputs in iOS so that our
-// `.form-control` class can properly style them. Note that this cannot simply
-// be added to `.form-control` as it's not specific enough. For details, see
-// https://github.com/twbs/bootstrap/issues/11586.
-
-input[type="search"] {
-    -webkit-appearance: none;
-}
-
-
-// Special styles for iOS temporal inputs
-//
-// In Mobile Safari, setting `display: block` on temporal inputs causes the
-// text within the input to become vertically misaligned. As a workaround, we
-// set a pixel line-height that matches the given height of the input, but only
-// for Safari. See https://bugs.webkit.org/show_bug.cgi?id=139848
-//
-// Note that as of 9.3, iOS doesn't support `week`.
-
-@media screen and (-webkit-min-device-pixel-ratio: 0) {
-    input[type="date"],
-    input[type="time"],
-    input[type="datetime-local"],
-    input[type="month"] {
-        &.form-control {
-            line-height: $input-height-base;
-        }
-
-        &.input-sm,
-        .input-group-sm & {
-            line-height: $input-height-small;
-        }
-
-        &.input-lg,
-        .input-group-lg & {
-            line-height: $input-height-large;
-        }
-    }
-}
-
-
 // Form groups
 //
 // Designed to help with the organization and spacing of vertical forms. For
 // horizontal forms, use the predefined grid classes.
 
 .form-group {
-    margin-bottom: $form-group-margin-bottom;
+    margin-bottom: vars.$form-group-margin-bottom;
 }
-
 
 // Checkboxes and radios
 //
 // Indent the labels to position radios/checkboxes as hanging controls.
-
 .radio,
-.radio-inline,
-.checkbox,
-.checkbox-inline {
+.checkbox {
     position: relative;
     display: block;
     margin-bottom: 8px;
@@ -240,21 +156,21 @@ input[type="search"] {
         margin-bottom: 0;
         display: inline-flex;
         align-items: center;
-        color: $text-color-secondary;
+        color: vars.$text-color-secondary;
 
         &:before {
             font-family: "Font Awesome 5 Pro";
             font-weight: 900;
             content: "\f00c";
             position: relative;
-            background-color: $text-color;
+            background-color: vars.$text-color;
             color: transparent;
             width: 16px;
             min-width: 16px;
             height: 16px;
             padding-top: 1px;
             margin-right: 8px;
-            border-radius: $border-radius-base;
+            border-radius: vars.$border-radius-base;
             font-size: 10px;
             text-align: center;
             transition-property: background;
@@ -272,8 +188,8 @@ input[type="search"] {
         &:checked {
             ~ label {
                 &:before {
-                    background-color: get-color("primary", base);
-                    color: $text-color;
+                    background-color: palette.get-color("primary", base);
+                    color: vars.$text-color;
                 }
             }
         }
@@ -285,17 +201,16 @@ input[type="search"] {
         }
         &:focus {
             ~ label:before {
-                @include form-control-focus($input-border-focus, 2px);
+                @include forms.form-control-focus(vars.$input-border-focus, 2px);
             }
         }
     }
 }
 
-.checkbox,
-.checkbox-inline {
+.checkbox {
     label {
         &:before {
-            border: 1px solid $input-border;
+            border: 1px solid vars.$input-border;
         }
     }
     input:checked {
@@ -314,7 +229,7 @@ input[type="search"] {
         input[type="checkbox"]:checked {
             ~ label {
                 &:before {
-                    background: get-color("tertiary", base);
+                    background: palette.get-color("tertiary", base);
                 }
             }
         }
@@ -322,17 +237,16 @@ input[type="search"] {
     &.checkbox-placeholder {
         input[type="checkbox"]:not(:checked) {
             ~ label:before {
-                color: rgba($level0, 0.4);
+                color: rgba(vars.$level0, 0.4);
             }
         }
     }
 }
 
-.radio,
-.radio-inline {
+.radio {
     label:before {
         content: " ";
-        border: 6px solid $divider-color-secondary;
+        border: 6px solid vars.$divider-color-secondary;
         border-radius: 50%;
         transition-property: border-color;
         transition-timing-function: ease-in-out;
@@ -340,27 +254,10 @@ input[type="search"] {
     }
     input[type="radio"]:checked {
         ~ label:before {
-            border-color: get-color("primary", base);
-            background: $text-color;
+            border-color: palette.get-color("primary", base);
+            background: vars.$text-color;
         }
     }
-}
-
-// Radios and checkboxes on same line
-.radio-inline,
-.checkbox-inline {
-    position: relative;
-    display: inline-block;
-    padding-left: 20px;
-    margin-bottom: 0;
-    vertical-align: middle;
-    font-weight: normal;
-    cursor: pointer;
-}
-.radio-inline + .radio-inline,
-.checkbox-inline + .checkbox-inline {
-    margin-top: 0;
-    margin-left: 10px; // space out consecutive inline controls
 }
 
 // Apply same disabled cursor tweak as for inputs
@@ -372,15 +269,7 @@ input[type="checkbox"] {
     &[disabled],
     &.disabled,
     fieldset[disabled] & {
-        cursor: $cursor-disabled;
-    }
-}
-// These classes are used directly on <label>s
-.radio-inline,
-.checkbox-inline {
-    &.disabled,
-    fieldset[disabled] & {
-        cursor: $cursor-disabled;
+        cursor: vars.$cursor-disabled;
     }
 }
 // These classes are used on elements with <label> descendants
@@ -389,32 +278,10 @@ input[type="checkbox"] {
     &.disabled,
     fieldset[disabled] & {
         label {
-            cursor: $cursor-disabled;
+            cursor: vars.$cursor-disabled;
         }
     }
 }
-
-
-// Static form control text
-//
-// Apply class to a `p` element to make any string of text align with labels in
-// a horizontal form layout.
-
-.form-control-static {
-    // Size it appropriately next to real form controls
-    padding-top: ($padding-base-vertical + 1);
-    padding-bottom: ($padding-base-vertical + 1);
-    // Remove default margin from `p`
-    margin-bottom: 0;
-    min-height: ($line-height-computed + $font-size-base);
-
-    &.input-lg,
-    &.input-sm {
-        padding-left: 0;
-        padding-right: 0;
-    }
-}
-
 
 // Form control sizing
 //
@@ -424,122 +291,70 @@ input[type="checkbox"] {
 // The `.form-group-* form-control` variations are sadly duplicated to avoid the
 // issue documented in https://github.com/twbs/bootstrap/issues/15074.
 
-@include input-size('.input-sm', $input-height-small, $padding-small-vertical, $padding-small-horizontal, $font-size-small, $line-height-small, $input-border-radius-small);
+@include forms.input-size(
+    '.input-sm',
+    vars.$input-height-small,
+    vars.$padding-small-vertical,
+    vars.$padding-small-horizontal,
+    vars.$font-size-small,
+    vars.$line-height-small,
+    vars.$input-border-radius-small
+);
 .form-group-sm {
     .form-control {
-        height: $input-height-small;
-        padding: $padding-small-vertical $padding-small-horizontal;
-        font-size: $font-size-small;
-        line-height: $line-height-small;
-        border-radius: $input-border-radius-small;
+        height: vars.$input-height-small;
+        padding: vars.$padding-small-vertical vars.$padding-small-horizontal;
+        font-size: vars.$font-size-small;
+        line-height: vars.$line-height-small;
+        border-radius: vars.$input-border-radius-small;
     }
     select.form-control {
-        height: $input-height-small;
-        line-height: $input-height-small;
+        height: vars.$input-height-small;
+        line-height: vars.$input-height-small;
     }
     textarea.form-control,
     select[multiple].form-control {
         height: auto;
     }
-    .form-control-static {
-        height: $input-height-small;
-        min-height: ($line-height-computed + $font-size-small);
-        padding: ($padding-small-vertical + 1) $padding-small-horizontal;
-        font-size: $font-size-small;
-        line-height: $line-height-small;
-    }
 }
 
-@include input-size('.input-lg', $input-height-large, $padding-large-vertical, $padding-base-horizontal, $font-size-large, $line-height-large, $input-border-radius-large);
+@include forms.input-size(
+    '.input-lg',
+    vars.$input-height-large,
+    vars.$padding-large-vertical,
+    vars.$padding-base-horizontal,
+    vars.$font-size-large,
+    vars.$line-height-large,
+    vars.$input-border-radius-large
+);
 .form-group-lg {
     .form-control {
-        height: $input-height-large;
-        padding: $padding-large-vertical $padding-base-horizontal;
-        font-size: $font-size-large;
-        line-height: $line-height-large;
-        border-radius: $input-border-radius-large;
+        height: vars.$input-height-large;
+        padding: vars.$padding-large-vertical vars.$padding-base-horizontal;
+        font-size: vars.$font-size-large;
+        line-height: vars.$line-height-large;
+        border-radius: vars.$input-border-radius-large;
     }
     select.form-control {
-        height: $input-height-large;
-        line-height: $input-height-large;
+        height: vars.$input-height-large;
+        line-height: vars.$input-height-large;
     }
     textarea.form-control,
     select[multiple].form-control {
         height: auto;
     }
-    .form-control-static {
-        height: $input-height-large;
-        min-height: ($line-height-computed + $font-size-large);
-        padding: ($padding-large-vertical + 1) $padding-base-horizontal;
-        font-size: $font-size-large;
-        line-height: $line-height-large;
-    }
-}
-
-
-// Form control feedback states
-//
-// Apply contextual and semantic states to individual form controls.
-
-.has-feedback {
-    // Enable absolute positioning
-    position: relative;
-
-    // Ensure icons don't overlap text
-    .form-control {
-        padding-right: ($input-height-base * 1.25);
-    }
-}
-// Feedback icon (requires .glyphicon classes)
-.form-control-feedback {
-    position: absolute;
-    top: 0;
-    right: 0;
-    z-index: 2; // Ensure icon is above input groups
-    display: block;
-    width: $input-height-base;
-    height: $input-height-base;
-    line-height: $input-height-base;
-    text-align: center;
-    pointer-events: none;
-}
-.input-lg + .form-control-feedback,
-.input-group-lg + .form-control-feedback,
-.form-group-lg .form-control + .form-control-feedback {
-    width: $input-height-large;
-    height: $input-height-large;
-    line-height: $input-height-large;
-}
-.input-sm + .form-control-feedback,
-.input-group-sm + .form-control-feedback,
-.form-group-sm .form-control + .form-control-feedback {
-    width: $input-height-small;
-    height: $input-height-small;
-    line-height: $input-height-small;
 }
 
 // Feedback states
 .has-success {
-    @include form-control-validation($state-success-text, $state-success-border, $state-success-bg);
+    @include forms.form-control-validation(vars.$state-success-text, vars.$state-success-border, vars.$state-success-bg);
 }
 .has-warning {
-    @include form-control-validation($state-warning-text, $state-warning-border, $state-warning-bg);
+    @include forms.form-control-validation(vars.$state-warning-text, vars.$state-warning-border, vars.$state-warning-bg);
 }
 .has-error {
-    @include form-control-validation($state-danger-text, $state-danger-border, $state-danger-bg);
+    @include forms.form-control-validation(vars.$state-danger-text, vars.$state-danger-border, vars.$state-danger-bg);
 }
-
-// Reposition feedback icon if input has visible label above
-.has-feedback label {
-
-    & ~ .form-control-feedback {
-        top: ($line-height-computed + 5); // Height of the `label` and its margin
-    }
-    &.sr-only ~ .form-control-feedback {
-        top: 0;
-    }
-}
-
 
 // Help text
 //
@@ -550,107 +365,33 @@ input[type="checkbox"] {
     display: block; // account for any element using help-block
     margin-top: 5px;
     margin-bottom: 10px;
-    color: lighten($text-color, 25%); // lighten the text some for contrast
+    color: lighten(vars.$text-color, 25%); // lighten the text some for contrast
     font-size: 12px;
 }
-// [converter] extracted as `@mixin form-inline` for libsass compatibility
-.form-inline {
-    @include form-inline;
-}
-
-
 
 // Horizontal forms
 //
 // Horizontal forms are built on grid classes and allow you to create forms with
 // labels on the left and inputs on the right.
-
-.form-horizontal {
-
-    // Consistent vertical alignment of radios and checkboxes
-    //
-    // Labels also get some reset styles, but that is scoped to a media query below.
-    .radio,
-    .checkbox,
-    .radio-inline,
-    .checkbox-inline {
-        margin-top: 0;
-        margin-bottom: 0;
-        padding-top: ($padding-base-vertical + 1); // Default padding plus a border
-    }
-    // Account for padding we're adding to ensure the alignment and of help text
-    // and other content below items
-    .radio,
-    .checkbox {
-        min-height: ($line-height-computed + ($padding-base-vertical + 1));
-    }
-
-    // Make form groups behave like rows
-    .form-group {
-        @include make-row;
-    }
-
-    // Reset spacing and right align labels, but scope to media queries so that
-    // labels on narrow viewports stack the same as a default form example.
-    @media (min-width: $screen-sm-min) {
-        .control-label {
-            text-align: right;
-            margin-bottom: 0;
-            padding-top: ($padding-base-vertical + 1); // Default padding plus a border
-        }
-    }
-
-    // Validation states
-    //
-    // Reposition the icon because it's now within a grid column and columns have
-    // `position: relative;` on them. Also accounts for the grid gutter padding.
-    .has-feedback .form-control-feedback {
-        right: floor(($grid-gutter-width * 0.5));
-    }
-
-    // Form group sizes
-    //
-    // Quick utility class for applying `.input-lg` and `.input-sm` styles to the
-    // inputs and labels within a `.form-group`.
-    .form-group-lg {
-        @media (min-width: $screen-sm-min) {
-            .control-label {
-                padding-top: ($padding-large-vertical + 1);
-                font-size: $font-size-large;
-            }
-        }
-    }
-    .form-group-sm {
-        @media (min-width: $screen-sm-min) {
-            .control-label {
-                padding-top: ($padding-small-vertical + 1);
-                font-size: $font-size-small;
-            }
-        }
-    }
-}
-
 .switch {
-    @include clearfix;
-
     label {
         float: left;
         line-height: 32px;
         cursor: pointer;
         margin-bottom: 0;
-        color: $text-color-secondary;
+        color: vars.$text-color-secondary;
 
         &.switch-toggle {
             position: relative;
             content: " ";
             display: inline-block;
-            background-color: rgba($text-color, 0.15);
+            background-color: rgba(vars.$text-color, 0.15);
             height: 32px;
             width: 65px;
             border-radius: 16px;
             font-size: 16px;
             font-weight: lighter;
-            color: $text-color;
+            color: vars.$text-color;
             overflow: hidden;
             margin-right: 10px;
             transition-property: background-color;
@@ -662,7 +403,7 @@ input[type="checkbox"] {
                 position: absolute;
                 top: 3px;
                 left: 3px;
-                background-color: $text-color;
+                background-color: vars.$text-color;
                 height: 26px;
                 width: 26px;
                 line-height: 28px;
@@ -703,7 +444,7 @@ input[type="checkbox"] {
 
         &:checked {
             ~ label.switch-toggle {
-                background-color: get-color("secondary", base);
+                background-color: palette.get-color("secondary", base);
 
                 .on-off {
                     left: 36px;
@@ -718,19 +459,19 @@ input[type="checkbox"] {
         }
         &:focus {
             ~ label.switch-toggle {
-                @include form-control-focus($input-border-focus, 2px);
+                @include forms.form-control-focus(vars.$input-border-focus, 2px);
             }
         }
     }
     &.switch-sm {
-        @include switch(24px);
+        @include forms.switch(24px);
     }
     &.switch-xs {
-        @include switch(18px);
+        @include forms.switch(18px);
     }
     &.switch-pause {
         .switch-toggle {
-            background-color: get-color("alt", base);
+            background-color: palette.get-color("alt", base);
         }
     }
 }

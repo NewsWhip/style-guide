@@ -1,21 +1,23 @@
+@use './variables' as vars;
+
 // Regular / default
 @font-face {
     font-family: 'ProximaNova';
-    src: url('#{$nw-font-path}/proxima_nova_regular.woff') format('woff');
+    src: url('#{vars.$nw-font-path}/proxima_nova_regular.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
 // Bold
 @font-face {
     font-family: 'ProximaNova';
-    src: url('#{$nw-font-path}/proxima_nova_bold.woff') format('woff');
+    src: url('#{vars.$nw-font-path}/proxima_nova_bold.woff') format('woff');
     font-weight: bold;
     font-style: normal;
 }
 // Semibold
 @font-face {
     font-family: 'ProximaNova';
-    src: url('#{$nw-font-path}/proxima_nova_semibold.woff') format('woff');
+    src: url('#{vars.$nw-font-path}/proxima_nova_semibold.woff') format('woff');
     font-weight: 600;
     font-style: normal;
 }

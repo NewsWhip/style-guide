@@ -1,10 +1,78 @@
+@use './variables' as vars;
+//
+// Pagination (multiple pages)
+// --------------------------------------------------
 .pagination {
+    display: inline-block;
+    padding-left: 0;
+    margin: vars.$line-height-computed 0;
+    border-radius: vars.$border-radius-base;
     margin: 0;
-
+    
     > li {
+        display: inline; // Remove list-style and block-level defaults
         > a,
         > span {
-            border-radius: $border-radius-base;
+            position: relative;
+            float: left; // Collapse white-space
+            padding: vars.$padding-base-vertical vars.$padding-base-horizontal;
+            margin-left: -1px;
+            line-height: vars.$line-height-base;
+            color: vars.$pagination-color;
+            text-decoration: none;
+            background-color: vars.$pagination-bg;
+            border: 1px solid vars.$pagination-border;
+            border-radius: vars.$border-radius-base;
+            
+            &:hover,
+            &:focus {
+                z-index: 2;
+                color: vars.$pagination-hover-color;
+                background-color: vars.$pagination-hover-bg;
+                border-color: vars.$pagination-hover-border;
+            }
+        }
+        &:first-child {
+            > a,
+            > span {
+                margin-left: 0;
+                border-top-left-radius: vars.$border-radius-base;
+                border-bottom-left-radius: vars.$border-radius-base;
+            }
+        }
+        &:last-child {
+            > a,
+            > span {
+                border-top-right-radius: vars.$border-radius-base;
+                border-bottom-right-radius: vars.$border-radius-base;
+            }
+        }
+    }
+    
+    > .active > a,
+    > .active > span {
+        &,
+        &:hover,
+        &:focus {
+            z-index: 3;
+            color: vars.$pagination-active-color;
+            cursor: default;
+            background-color: vars.$pagination-active-bg;
+            border-color: vars.$pagination-active-border;
+        }
+    }
+    
+    > .disabled {
+        > span,
+        > span:hover,
+        > span:focus,
+        > a,
+        > a:hover,
+        > a:focus {
+            color: vars.$pagination-disabled-color;
+            cursor: vars.$cursor-disabled;
+            background-color: vars.$pagination-disabled-bg;
+            border-color: vars.$pagination-disabled-border;
         }
     }
 }
