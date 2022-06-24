@@ -42,6 +42,11 @@ export class EmailInputComponent implements OnInit, OnDestroy {
      */
     @Input() inputId: string = "";
     @Input() placeholder: string = '';
+    /**
+     * A list of strings or RegExp to be matched against the inputted list of emails. Any emails that
+     * match entries in the blacklist will be marked as invalid
+     */
+    @Input() blacklist: (string | RegExp)[] = [];
 
     @Output() updated: EventEmitter<IValidationChange> = new EventEmitter();
 
@@ -68,7 +73,6 @@ export class EmailInputComponent implements OnInit, OnDestroy {
                 this.isPillSelected = false;
                 this._cdRef.detectChanges();
             }
-            this._emitValidationChange();
         });
     }
 
@@ -117,8 +121,18 @@ export class EmailInputComponent implements OnInit, OnDestroy {
 
     isValid(email: string): boolean {
         this._validationFormControl.setValue(email);
+        const isBlacklisted = this.blacklist.some(item => {
+            /**
+             * If item in blacklist is a string, create a regular expression to match the full
+             * case-insenstive string
+             */
+            if (typeof item === 'string') {
+                return email.match(new RegExp(`^${item}$`, 'i'));
+            }
+            return email.match(item)
+        });
 
-        return Validators.email(this._validationFormControl) === null;
+        return Validators.email(this._validationFormControl) === null && !isBlacklisted;
     }
 
     onContainerClick(event: MouseEvent) {
@@ -127,7 +141,7 @@ export class EmailInputComponent implements OnInit, OnDestroy {
          *
          * We don't care about events that bubble up from child elements.
          */
-        if (event.srcElement === this.container.nativeElement) {
+        if (event.target === this.container.nativeElement) {
             this.focus();
         }
     }
@@ -179,6 +193,7 @@ export class EmailInputComponent implements OnInit, OnDestroy {
                 this.emails = Array.from(new Set(this.emails.concat(items)));
                 this.emailInputControl.setValue(lastEmail);
             }
+            this._emitValidationChange();
         }
     }
 
@@ -188,6 +203,7 @@ export class EmailInputComponent implements OnInit, OnDestroy {
         // We only want to add the entry if it hasn't already been added
         if (email.length && this.emails.indexOf(email) === -1) {
             this.emails = this.emails.concat(this.emailInputControl.value.trim());
+            this._emitValidationChange();
         }
         this.emailInputControl.setValue('');
     }
@@ -209,13 +225,9 @@ export class EmailInputComponent implements OnInit, OnDestroy {
 
     private _emitValidationChange() {
         /**
-         * In order to be valid, entered emails AND the input value must be valid emails
+         * isValid is based on the entered emails and does not include the current value of the form control
          */
-        const emails: string[] = this.emails
-            .concat(this.emailInputControl.value)
-            .filter(value => value.length > 0);
-
-        const isValid: boolean = emails.length > 0 && emails.every(email => this.isValid(email));
+        const isValid: boolean = this.emails.length > 0 && this.emails.every(email => this.isValid(email));
 
         this.updated.emit({
             isValid: isValid,
