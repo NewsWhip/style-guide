@@ -49,6 +49,42 @@ describe('EmailInputComponent', () => {
         expect(comp.emails.length).toEqual(1);
     });
 
+    it('isValid should be emitted as true when all entered emails are valid', () => {
+        const spy = spyOn(comp.updated, 'emit');
+        fixture.detectChanges();
+
+        const [event] = spy.calls.mostRecent().args;
+        expect(event.isValid).toEqual(true);
+    });
+
+    it('isValid should be emitted as false when any entered email is invalid', () => {
+        comp.emails = ['a@a.com', 'b@b.com', 'invalid.email'];
+        const spy = spyOn(comp.updated, 'emit');
+        fixture.detectChanges();
+
+        const [event] = spy.calls.mostRecent().args;
+        expect(event.isValid).toEqual(false);
+    });
+
+    it('should not emit a validation event when the form control changes', () => {
+        fixture.detectChanges();
+
+        const spy = spyOn(comp.updated, 'emit');
+        comp.emailInputControl.setValue('invalid.email');
+        expect(spy).not.toHaveBeenCalled();
+    });
+
+    it('should not include the form control when assessing the validity', () => {
+        fixture.detectChanges();
+
+        const spy = spyOn(comp.updated, 'emit');
+        comp.emailInputControl.setValue('invalid.email');
+        comp['_emitValidationChange']();
+        const [event] = spy.calls.mostRecent().args;
+        expect(comp.emailInputControl.invalid).toEqual(true);
+        expect(event.isValid).toEqual(true);
+    });
+
     describe('should show a pill as invalid if', () => {
         it('it is not in an email format', () => {
             comp.emails = ['a@a.com', 'dsadsadsa'];
