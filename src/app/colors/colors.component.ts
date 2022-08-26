@@ -28,7 +28,7 @@ export class ColorsComponent implements OnInit {
         "6x-light"
     ];
 
-    public levels = Array.from(Array(6).keys()); // create array & fill with 0-5
+    public levels = Array.from(Array(7).keys()); // create array & fill with 0-6
 
     public standaloneColors = [
         "yellow",
