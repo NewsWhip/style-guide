@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
-import { FormControl, Validators } from "@angular/forms";
+import { UntypedFormControl, Validators } from "@angular/forms";
 import { IValidationChange } from "./models/IValidationChange";
 import { Subscription } from 'rxjs';
 
@@ -53,10 +53,10 @@ export class EmailInputComponent implements OnInit, OnDestroy {
     @ViewChild('inputEl', { static: true }) inputEl: ElementRef;
     @ViewChild('container', { static: true }) container: ElementRef;
 
-    public emailInputControl: FormControl = new FormControl("", Validators.email);
+    public emailInputControl: UntypedFormControl = new UntypedFormControl("", Validators.email);
     public isPillSelected: boolean = false;
 
-    private _validationFormControl: FormControl = new FormControl();
+    private _validationFormControl: UntypedFormControl = new UntypedFormControl();
     private _submitKeys: string[] = [",", "Enter", " ", ";"];
     private _valueChangesSub: Subscription;
 

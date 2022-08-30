@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Toaster } from '../../_lib/modules/toasts';
@@ -12,7 +12,7 @@ import { Toaster } from '../../_lib/modules/toasts';
 export class ToastsComponent implements OnInit, OnDestroy {
 
   public selectedTab: 'design' | 'api' = 'design';
-  public form: FormGroup;
+  public form: UntypedFormGroup;
   public toasterMethods: any[];
   public toastInterfaceDetails: any[];
   public configExample: any;
@@ -23,7 +23,7 @@ export class ToastsComponent implements OnInit, OnDestroy {
     private _cdRef: ChangeDetectorRef,
     private _toaster: Toaster,
     private _route: ActivatedRoute,
-    private _fb: FormBuilder) { }
+    private _fb: UntypedFormBuilder) { }
 
   ngOnInit() {
     this.form = this._fb.group({

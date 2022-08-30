@@ -1,6 +1,6 @@
 import { Component, Input, Output, ChangeDetectorRef, ChangeDetectionStrategy, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { trigger, transition, animate, style } from '@angular/animations';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { IPickerItem } from './IPickerItem';
 import { Subscription } from 'rxjs';
 import { isUndefined } from 'lodash-es';
@@ -178,7 +178,7 @@ export class NwPickerComponent {
     @ViewChild('inputEl', { static: true }) inputEl: ElementRef;
 
     public displayItems: IPickerItem[];
-    public searchTerm = new FormControl();
+    public searchTerm = new UntypedFormControl();
     public canViewResults: boolean = false;
     public parentId: any;
     public selectionsAreShowing: boolean = false;

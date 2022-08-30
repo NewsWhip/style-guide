@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ISnippet } from '../code/ISnippet';
@@ -12,7 +12,7 @@ import { ISnippet } from '../code/ISnippet';
 export class TooltipsComponent implements OnInit, OnDestroy {
 
   public selectedTab: 'design' | 'api' = 'design';
-  public form: FormGroup;
+  public form: UntypedFormGroup;
   public propertiesTable: [string, string, string, string][] = [
     [
       "@Input('nwTooltip') tooltip: string | TemplateRef<any>; or @Input('nwPopover') popover: string | TemplateRef<any>;",
@@ -141,7 +141,7 @@ export class TooltipsComponent implements OnInit, OnDestroy {
   private _routeSub: Subscription;
 
   constructor(
-    private _fb: FormBuilder,
+    private _fb: UntypedFormBuilder,
     private _cdRef: ChangeDetectorRef,
     private _route: ActivatedRoute) {}
 
