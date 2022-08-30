@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormControl } from "@angular/forms";
+import { FormControl } from "@angular/forms";
 
 @Component({
   selector: 'app-typography',
@@ -8,7 +8,7 @@ import { UntypedFormControl } from "@angular/forms";
 })
 export class TypographyComponent implements OnInit {
 
-  public textColor: UntypedFormControl = new UntypedFormControl('light');
+  public textColor: FormControl = new FormControl('light');
   public exampleText: string = 'The quick brown fox jumps over the lazy dog';
 
   constructor() { }

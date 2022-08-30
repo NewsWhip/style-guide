@@ -1,5 +1,5 @@
 import {Component, OnInit, ChangeDetectionStrategy, ViewChild, ViewChildren, QueryList} from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, UntypedFormArray, UntypedFormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
 import * as moment from 'moment';
 import { DecimalPipe } from '@angular/common';
 import { bisector } from 'd3-array';
@@ -108,8 +108,8 @@ export class ChartsComponent implements OnInit {
     public numRandomPoints: number = 10;
     public randomData: Array<[number, number] | [number, number, number]>;
     public randomYDomain: [number, number];
-    public randomAsBars: UntypedFormControl = new UntypedFormControl(false);
-    public randomArea: UntypedFormControl = new UntypedFormControl(false);
+    public randomAsBars: FormControl = new FormControl(false);
+    public randomArea: FormControl = new FormControl(false);
     public randomLineCurve = {label: 'Linear', curve: curveLinear};
     public randomLineCurvesOptions = [
         {label: 'Linear', curve: curveLinear},
@@ -121,21 +121,21 @@ export class ChartsComponent implements OnInit {
     ];
 
     public metricNames: string[] = [];
-    public form: UntypedFormGroup;
-    public showBrush: UntypedFormControl = new UntypedFormControl(false);
-    public showTooltip: UntypedFormControl = new UntypedFormControl(true);
-    public brushType: UntypedFormControl = new UntypedFormControl('');
+    public form: FormGroup;
+    public showBrush: FormControl = new FormControl(false);
+    public showTooltip: FormControl = new FormControl(true);
+    public brushType: FormControl = new FormControl('');
     public brushBox: [[Date, number], [Date, number]];
-    public barWidth: UntypedFormControl = new UntypedFormControl(20);
+    public barWidth: FormControl = new FormControl(20);
     public xAxisTickCount: number | AxisTimeInterval = 8;
-    public showForeignObject: UntypedFormControl = new UntypedFormControl(false);
+    public showForeignObject: FormControl = new FormControl(false);
 
     @ViewChild('xAxis') xAxis: XAxisDirective;
     @ViewChild('yAxis') yAxis: YAxisDirective;
     @ViewChildren('circle') fbCircles: QueryList<CircleDirective>;
 
     constructor(
-        private _fb: UntypedFormBuilder,
+        private _fb: FormBuilder,
         private _decimalPipe: DecimalPipe) { }
 
     ngOnInit() {
@@ -149,9 +149,9 @@ export class ChartsComponent implements OnInit {
 
     createForm() {
         this.form = this._fb.group({
-            selectedMetrics: new UntypedFormArray(
+            selectedMetrics: new FormArray(
                 this.metricNames
-                    .map(mn => new UntypedFormControl(true))
+                    .map(mn => new FormControl(true))
             )
         });
     }
@@ -195,7 +195,7 @@ export class ChartsComponent implements OnInit {
         let i = this.metricNames.indexOf(metricName);
 
         if (i > -1) {
-            return (this.form.get('selectedMetrics') as UntypedFormArray).controls[i].value;
+            return (this.form.get('selectedMetrics') as FormArray).controls[i].value;
         }
         return false;
     }
