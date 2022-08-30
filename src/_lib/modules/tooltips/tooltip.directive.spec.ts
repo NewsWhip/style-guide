@@ -28,7 +28,7 @@ describe('TooltipDirective', () => {
         fixture = TestBed.createComponent(WrapperComponent);
         comp = fixture.componentInstance;
         de = fixture.debugElement;
-        documentDebugElement = new DebugElement(document);
+        documentDebugElement = new DebugElement(document.body);
     });
 
     const fireEvent = (element: HTMLElement, event: string) => {
