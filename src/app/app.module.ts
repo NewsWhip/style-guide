@@ -2,9 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { PopoverModule } from 'ngx-bootstrap/popover'
 import { PortalModule } from '@angular/cdk/portal';
-import { NgxMdModule } from 'ngx-md';
 import { NwPickerModule } from '../_lib/modules/picker/picker.module';
 import { ToastsModule } from '../_lib/modules/toasts';
 import { FeatureAlertsModule } from '../_lib/modules/feature-alerts';
@@ -91,11 +89,9 @@ import { FaqComponent } from './faq/faq-component';
     routing,
     BrowserAnimationsModule,
     HttpClientModule,
-    PopoverModule.forRoot(),
     FeatureAlertsModule,
     NwPickerModule,
     ToastsModule.forRoot(),
-    NgxMdModule.forRoot(),
     FeatureAlertsModule.forRoot(),
     PortalModule,
     TabsModule,

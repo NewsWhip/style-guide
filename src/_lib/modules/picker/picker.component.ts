@@ -178,7 +178,7 @@ export class NwPickerComponent {
     @ViewChild('inputEl', { static: true }) inputEl: ElementRef;
 
     public displayItems: IPickerItem[];
-    public searchTerm = new FormControl();
+    public searchTerm: FormControl<string> = new FormControl();
     public canViewResults: boolean = false;
     public parentId: any;
     public selectionsAreShowing: boolean = false;

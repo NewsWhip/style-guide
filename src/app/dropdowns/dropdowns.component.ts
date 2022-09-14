@@ -22,11 +22,11 @@ export class DropdownsComponent implements OnInit {
         return `
 <div class="dropdown">
     <button class="btn btn-md btn-secondary"
-        [popover]="dropdownMenuRef"
+        [nwPopover]="dropdownMenuRef"
         container="body"
         containerClass="popover-dropdown"
         placement="left"
-        [outsideClick]="true">
+        [closeOnOutsideClick]="true">
         Append to body
     </button>
 </div>

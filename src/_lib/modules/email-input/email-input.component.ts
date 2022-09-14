@@ -53,10 +53,10 @@ export class EmailInputComponent implements OnInit, OnDestroy {
     @ViewChild('inputEl', { static: true }) inputEl: ElementRef;
     @ViewChild('container', { static: true }) container: ElementRef;
 
-    public emailInputControl: FormControl = new FormControl("", Validators.email);
+    public emailInputControl: FormControl<string> = new FormControl("", Validators.email);
     public isPillSelected: boolean = false;
 
-    private _validationFormControl: FormControl = new FormControl();
+    private _validationFormControl: FormControl<string> = new FormControl();
     private _submitKeys: string[] = [",", "Enter", " ", ";"];
     private _valueChangesSub: Subscription;
 
