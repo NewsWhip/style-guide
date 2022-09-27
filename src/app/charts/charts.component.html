@@ -110,10 +110,10 @@
                         [xDomain]="xDomain"
                         [yDomain]="yDomain"
                         r=5
-                        [popover]="circlePopTemplate"
-                        [popoverContext]="{ point: point }"
+                        [nwPopover]="circlePopTemplate"
+                        [context]="{ point: point }"
                         container="body"
-                        [outsideClick]="true"></circle>
+                        [closeOnOutsideClick]="true"></circle>
                 </ng-container>
 
                 <ng-container *ngIf="!randomAsBars.value">
@@ -122,10 +122,10 @@
                         [xDomain]="xDomain"
                         [yDomain]="randomYDomain"
                         r=5
-                        [popover]="circlePopTemplate"
-                        [popoverContext]="{ point: point }"
+                        [nwPopover]="circlePopTemplate"
+                        [context]="{ point: point }"
                         container="body"
-                        [outsideClick]="true"></circle>
+                        [closeOnOutsideClick]="true"></circle>
                 </ng-container>
 
                 <ng-container *ngIf="randomAsBars.value">
@@ -134,10 +134,10 @@
                         [xDomain]="xDomain"
                         [yDomain]="randomYDomain"
                         [barWidth]="barWidth.value"
-                        [popover]="circlePopTemplate"
-                        [popoverContext]="{ point: point }"
+                        [nwPopover]="circlePopTemplate"
+                        [context]="{ point: point }"
                         container="body"
-                        [outsideClick]="true"></rect>
+                        [closeOnOutsideClick]="true"></rect>
                 </ng-container>
 
                 <foreignObject *ngIf="showForeignObject.value"
