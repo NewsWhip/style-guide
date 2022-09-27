@@ -8,8 +8,8 @@ import { Subscription, fromEvent } from 'rxjs';
     selector: 'nw-carousel',
     template: `
         <div class="carousel-container">
-            <div class="pagination-container" *ngIf="showPagination">
-                <button class="btn btn-carousel btn-carousel-prev" (click)="prev()" [disabled]="isFirstPage"></button>
+            <div class="pagination-container" *ngIf="showPagination && !isFirstPage">
+                <button class="btn btn-carousel btn-carousel-prev" (click)="prev()"></button>
             </div>
 
             <ng-content select=".pagination-left"></ng-content>
@@ -30,8 +30,8 @@ import { Subscription, fromEvent } from 'rxjs';
                 </div>
             </div>
 
-            <div class="pagination-container" *ngIf="showPagination">
-                <button class="btn btn-carousel btn-carousel-next" (click)="next()" [disabled]="isLastPage"></button>
+            <div class="pagination-container" *ngIf="showPagination && !isLastPage">
+                <button class="btn btn-carousel btn-carousel-next" (click)="next()"></button>
             </div>
 
             <ng-content select=".pagination-right"></ng-content>
