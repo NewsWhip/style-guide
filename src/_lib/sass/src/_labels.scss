@@ -34,8 +34,8 @@
         border-color: get-color("tertiary");
     }
     &.label-beta {
-        color: get-color("gray");
-        background: get-color("alt");
+        color: get-color("alt");
+        background: transparent;
         border-color: get-color("alt");
     }
     &.label-op {
@@ -45,8 +45,8 @@
         border-color: get-color("secondary", base);
     }
 }
- .label-round {
-     padding: 0 7px;
-     @include border-right-radius(9px);
-     @include border-left-radius(9px);
- }
+.label-round {
+    padding: 0 7px;
+    @include border-right-radius(9px);
+    @include border-left-radius(9px);
+}
