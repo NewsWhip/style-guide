@@ -10,7 +10,7 @@
 .toast {
     display: flex;
     flex-direction: row;
-    align-items: flex-start;
+    align-items: baseline;
     position: relative;
     margin: 8px auto;
     padding: 16px 24px;
@@ -21,6 +21,9 @@
 
     &.toast-success {
         background: get-color("secondary", base);
+        .toast-icon {
+            font-weight: normal;
+        }
     }
     &.toast-error {
         background: get-color("tertiary", base);
@@ -43,6 +46,7 @@
         right: -12px;
         top: 1px;
         color: #ffffff;
+        padding-right: 8px;
     }
     &.size-sm {
         padding: 8px 16px;
