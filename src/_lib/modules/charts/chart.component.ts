@@ -1,5 +1,5 @@
 import { Component, ElementRef, Input, OnInit, ViewChild, AfterViewInit, ChangeDetectionStrategy, Output, EventEmitter, OnDestroy } from '@angular/core';
-import { select, Selection, mouse } from 'd3-selection';
+import { select, Selection, pointer } from 'd3-selection';
 import { ChartUtils } from './chart.utils';
 import { fromEvent, Subject, merge } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
@@ -109,9 +109,9 @@ export class ChartComponent implements OnInit, AfterViewInit, OnDestroy {
         select(this.mouseEventCaptureContainer.nativeElement)
             .style('pointer-events', 'all')
             .on('mouseleave', () => this.nwMouseleave.emit())
-            .on('mousemove', function() {
+            .on('mousemove', e => {
                 // emits the current mouse position
-                self.nwMousemove.emit(mouse(this))
+                self.nwMousemove.emit(pointer(e))
             });
     }
 
