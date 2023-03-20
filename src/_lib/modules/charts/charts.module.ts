@@ -12,6 +12,7 @@ import { ChartTooltipDirective } from './tooltip/chart-tooltip.directive';
 import { ResizeObserverModule } from '../resize-observer';
 import { ForeignObjectDirective } from './foreign-object/foreign-object.directive';
 import { WordCloudComponent } from './word-cloud/word-cloud.component';
+import { WordComponent } from './word-cloud/word.component';
 
 @NgModule({
     imports: [
@@ -29,7 +30,8 @@ import { WordCloudComponent } from './word-cloud/word-cloud.component';
         AreaDirective,
         ChartTooltipDirective,
         ForeignObjectDirective,
-        WordCloudComponent
+        WordCloudComponent,
+        WordComponent
     ],
     exports: [
         ChartComponent,
@@ -42,7 +44,8 @@ import { WordCloudComponent } from './word-cloud/word-cloud.component';
         AreaDirective,
         ChartTooltipDirective,
         ForeignObjectDirective,
-        WordCloudComponent
+        WordCloudComponent,
+        WordComponent
     ]
 })
 export class ChartsModule { }

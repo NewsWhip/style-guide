@@ -2,6 +2,17 @@
 
 <p>Angular version: {{version.full}}</p>
 
+<button class="btn btn-md btn-primary" (click)="generateWords()">Regenerate words</button>
+
 <div class="word-cloud-container">
-    <nw-word-cloud></nw-word-cloud>
+    <nw-word-cloud
+        [words]="words"
+        (wordsPlaced)="placedWords = $event">
+
+        <nw-word *ngFor="let word of placedWords; trackBy: wordTrack"
+            [word]="word"
+            [nwTooltip]="word.wordDetails.value + ' has a weight of ' + word.wordDetails.weight"
+            placement="top"
+            [style.cursor]="'pointer'"></nw-word>
+    </nw-word-cloud>
 </div>
