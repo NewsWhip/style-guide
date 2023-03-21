@@ -10,6 +10,7 @@ import { TabsModule } from '../_lib/modules/tabs';
 import { ChartsModule } from "../_lib/modules/charts/charts.module";
 import { LoaderModule } from '../_lib/modules/loader';
 import { CarouselModule } from '../_lib/modules/carousel/carousel.module';
+import { WordCloudModule } from '../_lib/modules/word-cloud';
 
 import { AppComponent } from './app.component';
 import { ButtonsComponent } from './buttons/buttons.component';
@@ -102,7 +103,8 @@ import { FaqComponent } from './faq/faq-component';
     EmailInputModule,
     AutoFocusModule,
     TooltipModule,
-    ScrollingModule
+    ScrollingModule,
+    WordCloudModule
   ],
   bootstrap: [AppComponent]
 })

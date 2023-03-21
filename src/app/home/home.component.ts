@@ -1,5 +1,5 @@
 import { Component, OnInit, VERSION } from '@angular/core';
-import { IPlacedWord } from '../../_lib/modules/charts/word-cloud/models/IPlacedWord';
+import { IPlacedWord } from '../../_lib/modules/word-cloud/models/IPlacedWord';
 
 @Component({
     selector: 'app-home',

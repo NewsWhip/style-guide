@@ -1,0 +1,11 @@
+{
+    "extends": "../tsconfig.build.json",
+    "compilerOptions": {
+        "baseUrl": "../",
+        "outDir": "../../../../distribution",
+        "rootDir": "../"
+    },
+    "files": [
+        "./index.ts"
+    ]
+}
