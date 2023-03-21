@@ -30,7 +30,7 @@ export class HomeComponent implements OnInit {
         return words.map((value, i) => {
             return {
                 value,
-                weight: Math.floor(Math.random() * 50 * i + 1)
+                weight: Math.floor(Math.random() * 50 * (i + 1))
             };
         })
     }

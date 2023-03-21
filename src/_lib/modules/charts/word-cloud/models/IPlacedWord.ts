@@ -1,7 +1,6 @@
+import { IBoundingBox } from "./IBoundingBox";
 import { IWordDetails } from "./IWordDetails";
 
-export interface IPlacedWord {
-    x: number;
-    y: number;
+export interface IPlacedWord extends IBoundingBox {
     wordDetails: IWordDetails;
 }

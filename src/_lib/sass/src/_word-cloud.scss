@@ -1,19 +1,21 @@
 nw-word-cloud {
-    .word-cloud-container {
-        width: 100%;
-        height: 100%;
-        position: relative;
-    }
+    position: relative;
+    width: 100%;
+    height: 100%;
 
     canvas {
-        background-color: white;
+        background-color: transparent;
+        position: absolute;
+        top: 0;
+        left: 0;
+        pointer-events: none;
     }
 
     nw-word {
         position: absolute;
         top: 0;
         left: 0;
-        line-height: 0.9;
+        line-height: 1;
         transition: translate 600ms ease-in-out,
             font-size 600ms ease-in-out;
     }
