@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, OnChanges, Output, Renderer2, SimpleChanges } from "@angular/core";
 import { IBoundingBox } from "./models/IBoundingBox";
-import { IGridPoint } from "./models/IGridPoint";
+import { IPoint } from "./models/IPoint";
 import { IPlacedWord } from "./models/IPlacedWord";
 import { IWordCloudConfig } from "./models/IWordCloudConfig";
 import { IWordDetails } from "./models/IWordDetails";
@@ -35,7 +35,7 @@ export class WordCloudComponent implements OnChanges {
     private _placedWords: IPlacedWord[];
     private _canvas: HTMLCanvasElement;
     private _ctx: CanvasRenderingContext2D;
-    private _centerPoint: IGridPoint;
+    private _centerPoint: IPoint;
     private _gridResolution = 1;
     private _config: IWordCloudConfig;
 
@@ -51,27 +51,28 @@ export class WordCloudComponent implements OnChanges {
 
     private _init(): void {
         this._config = this._getConfig();
-        console.log(this._config);
         this._words = this._getWords();
         this._placedWords = [];
         this._drawCanvas();
-        this._centerPoint = {
-            x: this._canvas.width / 2,
-            y: this._canvas.height / 2
-        };
+        this._centerPoint = { x: this._canvas.width / 2, y: this._canvas.height / 2 };
         this._placeWords();
 
         if (this._config.debugMode) {
+            console.info(this._config);
             this._drawSprial();
         }
     }
 
     private _getWords(): IWordDetails[] {
+        const weights = this.words.map(w => w.weight);
+        const minWeight: number = Math.min(...weights);
+        const maxWeight: number = Math.max(...weights);
+
         return this.words.map(word => {
             return {
                 value: word.value,
                 weight: word.weight,
-                fontSize: this._getFontSize(word.weight)
+                fontSize: this._getFontSize(word.weight, minWeight, maxWeight)
             };
         }).sort((a, b) => b.weight - a.weight);
     }
@@ -91,9 +92,7 @@ export class WordCloudComponent implements OnChanges {
         const t1 = performance.now();
 
         const placeWord = (wordDetails: IWordDetails, index: number = 0) => {
-            this._ctx.font = `${this._config.fontWeight} ${wordDetails.fontSize}px/1 ${this._config.fontFamily}`;
-            this._ctx.textAlign = "center";
-            this._ctx.textBaseline = "middle";
+            this._setFontDetails(this._ctx, wordDetails.fontSize);
 
             const gridPoint = this._placeOnSpiral(index);
             const metrics = this._ctx.measureText(wordDetails.value);
@@ -106,11 +105,8 @@ export class WordCloudComponent implements OnChanges {
                 x: gridPoint.x - (metrics.width / 2),
                 y: gridPoint.y - (fontHeight / 2),
                 width: metrics.width,
-                height: fontHeight,
-                isOutsideCanvas: false
+                height: fontHeight
             }
-
-            boundingBox.isOutsideCanvas = this._isOutsideCanvas(boundingBox, this._canvas.width, this._canvas.height);
 
             /**
              * If this bounding box intersects another bounding box, increment the index and try the next place
@@ -136,7 +132,7 @@ export class WordCloudComponent implements OnChanges {
             placeWord(word);
         });
 
-        const outOfBounds = this._placedWords.filter(word => word.isOutsideCanvas);
+        const outOfBounds = this._placedWords.filter(word => this._isOutsideCanvas(word, this._canvas.width, this._canvas.height));
 
         const minX = Math.min(...outOfBounds.map(oob => oob.x));
         const maxX = Math.max(...outOfBounds.map(oob => oob.x + oob.width));
@@ -179,6 +175,12 @@ export class WordCloudComponent implements OnChanges {
         }
     }
 
+    private _setFontDetails(ctx: CanvasRenderingContext2D, fontSize: number): void {
+        ctx.font = `${this._config.fontWeight} ${fontSize}px/1 ${this._config.fontFamily}`;
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+    }
+
     private _isIntersecting(boundingBox: IBoundingBox): boolean {
         const doBoxesOverlap = (boxA: IBoundingBox, boxB: IBoundingBox): boolean => {
             return !(boxA.x + boxA.width < boxB.x ||
@@ -190,10 +192,7 @@ export class WordCloudComponent implements OnChanges {
         return this._placedWords.some(word => doBoxesOverlap(boundingBox, word));
     }
 
-    private _getFontSize(wordWeight: number): number {
-        const weights = this.words.map(w => w.weight);
-        const minWeight: number = Math.min(...weights);
-        const maxWeight: number = Math.max(...weights);
+    private _getFontSize(wordWeight: number, minWeight: number, maxWeight: number): number {
         const weightDiff = maxWeight - minWeight;
         const factor = (wordWeight - minWeight) / weightDiff;
         const fontSize = ((this._config.maxFontSize - this._config.minFontSize) * factor) + this._config.minFontSize;
@@ -201,7 +200,7 @@ export class WordCloudComponent implements OnChanges {
         return Math.round(fontSize);
     }
 
-    private _placeOnSpiral(n: number): IGridPoint {
+    private _placeOnSpiral(n: number): IPoint {
         const spiral = (i: number) => {
             const factor = 0.3;
             const aspectRatio = this._canvas.width / this._canvas.height;
@@ -238,13 +237,14 @@ export class WordCloudComponent implements OnChanges {
     }
 
     private _drawSprial(): void {
-        for (let i = 0; i < 1000; i++) {
-            const point = this._placeOnSpiral(i);
+        this._ctx.save();
+        this._ctx.fillStyle = 'white';
 
-            this._ctx.save();
-            this._ctx.fillStyle = 'white';
-            this._ctx.fillRect(point.x, point.y, 1, 1);
-            this._ctx.restore();
+        for (let i = 0; i < 1000; i++) {
+            const { x, y } = this._placeOnSpiral(i);
+            this._ctx.fillRect(x, y, 1, 1);
         }
+
+        this._ctx.restore();
     }
 }

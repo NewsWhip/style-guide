@@ -15,11 +15,14 @@ export class WordComponent implements OnChanges {
     public translate: string;
     @HostBinding('style.fontSize.px')
     public fontSize: number;
+    @HostBinding('style.lineHeight.px')
+    public lineHeight: number;
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes.word?.currentValue !== changes.word?.previousValue) {
             this.translate = `${this.word.x}px ${this.word.y}px`;
             this.fontSize = this.word.wordDetails.fontSize;
+            this.lineHeight = this.word.height;
         }
     }
 

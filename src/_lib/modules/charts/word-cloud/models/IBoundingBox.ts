@@ -3,5 +3,4 @@ export interface IBoundingBox {
     y: number;
     width: number;
     height: number;
-    isOutsideCanvas: boolean;
 }
