@@ -1,0 +1,18 @@
+<h1 class="page-header">Word cloud</h1>
+
+<button class="btn btn-md btn-primary" (click)="generateWords()">Regenerate words</button>
+<button class="btn btn-md btn-primary" (click)="export()">Export to canvas</button>
+
+<div class="word-cloud-container">
+    <nw-word-cloud
+        [words]="words"
+        [options]="{ debugMode: false }"
+        (wordsPlaced)="placedWords = $event">
+
+        <nw-word *ngFor="let word of placedWords; trackBy: wordTrack"
+            [word]="word"
+            [nwTooltip]="word.wordDetails.value + ' has a weight of ' + word.wordDetails.weight"
+            placement="top"
+            [style.cursor]="'pointer'"></nw-word>
+    </nw-word-cloud>
+</div>

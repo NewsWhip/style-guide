@@ -49,6 +49,20 @@ export class WordCloudComponent implements OnChanges {
         }
     }
 
+    public getCanvas(): HTMLCanvasElement {
+        /**
+         * Todo
+         * 1. Figure out the best way to handle this. Should we always draw text to the canvas in _placeWords
+         * and then just export that canvas? Should we redraw a new canvas and return it?
+         * 2. What about the color? Does each word input require a color? Does the config include a range of
+         * colors? Does the config include a setting that instructs the component to choose a color?
+         * 3. Should this export an image rather than a canvas?
+         * 4. If it should export an image, should this method return an Observable
+         * 5. What is the placedWords have exceeded the bound of the canvas?
+         */
+        return this._canvas;
+    }
+
     private _init(): void {
         this._config = this._getConfig();
         this._words = this._getWords();

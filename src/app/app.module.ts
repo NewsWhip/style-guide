@@ -49,6 +49,7 @@ import { TooltipModule } from '../_lib/modules/tooltips';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { AppCodeComponent } from './code/code.component';
 import { FaqComponent } from './faq/faq-component';
+import { WordCloudDemoComponent } from './word-cloud/word-cloud.component';
 
 @NgModule({
   declarations: [
@@ -81,7 +82,8 @@ import { FaqComponent } from './faq/faq-component';
     CopyCodeComponent,
     AutofocusComponent,
     AppCodeComponent,
-    FaqComponent
+    FaqComponent,
+    WordCloudDemoComponent
   ],
   imports: [
     BrowserModule,
