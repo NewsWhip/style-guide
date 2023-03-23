@@ -2,7 +2,7 @@
     "extends": "../tsconfig.build.json",
     "compilerOptions": {
         "baseUrl": "../",
-        "outDir": "../../../../distribution",
+        "outDir": "../../../../distribution/word-cloud",
         "rootDir": "../"
     },
     "files": [
