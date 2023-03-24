@@ -7,12 +7,13 @@
     <nw-word-cloud
         [words]="words"
         [options]="{ debugMode: false }"
-        (wordsPlaced)="placedWords = $event">
+        (wordsPlaced)="onWordsPlaced($event)">
 
         <nw-word *ngFor="let word of placedWords; trackBy: wordTrack"
             [word]="word"
-            [nwTooltip]="word.wordDetails.value + ' has a weight of ' + word.wordDetails.weight"
+            [nwTooltip]="word.value + ' has a weight of ' + word.weight"
             placement="top"
-            [style.cursor]="'pointer'"></nw-word>
+            [style.cursor]="'pointer'"
+            [style.color]="word.color"></nw-word>
     </nw-word-cloud>
 </div>

@@ -1,9 +1,10 @@
 import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, OnChanges, Output, Renderer2, SimpleChanges } from "@angular/core";
 import { IBoundingBox } from "./models/IBoundingBox";
 import { IPoint } from "./models/IPoint";
-import { IPlacedWord } from "./models/IPlacedWord";
 import { IWordCloudConfig } from "./models/IWordCloudConfig";
-import { IWordDetails } from "./models/IWordDetails";
+import { IWord } from "./models/IWord";
+import { IWordWithFontSize } from "./models/IWordWithFontSize";
+import { IWordWithPosition } from "./models/IWordWithPosition";
 
 @Component({
     selector: 'nw-word-cloud',
@@ -24,15 +25,15 @@ import { IWordDetails } from "./models/IWordDetails";
  * - try log n scaling for font-sizes (https://www.jasondavies.com/wordcloud/)
  * - can I support multiple orientations
  */
-export class WordCloudComponent implements OnChanges {
+export class WordCloudComponent<T extends IWord> implements OnChanges {
 
-    @Input() words: { value: string; weight: number }[];
+    @Input() words: T[];
     @Input() options: Partial<IWordCloudConfig> = {};
 
-    @Output() wordsPlaced: EventEmitter<IPlacedWord[]> = new EventEmitter();
+    @Output() wordsPlaced: EventEmitter<IWordWithPosition<T>[]> = new EventEmitter();
 
-    private _words: IWordDetails[];
-    private _placedWords: IPlacedWord[];
+    private _words: IWordWithFontSize<T>[];
+    private _placedWords: IWordWithPosition<T>[];
     private _canvas: HTMLCanvasElement;
     private _ctx: CanvasRenderingContext2D;
     private _centerPoint: IPoint;
@@ -77,15 +78,14 @@ export class WordCloudComponent implements OnChanges {
         }
     }
 
-    private _getWords(): IWordDetails[] {
+    private _getWords(): IWordWithFontSize<T>[] {
         const weights = this.words.map(w => w.weight);
         const minWeight: number = Math.min(...weights);
         const maxWeight: number = Math.max(...weights);
 
         return this.words.map(word => {
             return {
-                value: word.value,
-                weight: word.weight,
+                ...word,
                 fontSize: this._getFontSize(word.weight, minWeight, maxWeight)
             };
         }).sort((a, b) => b.weight - a.weight);
@@ -105,11 +105,11 @@ export class WordCloudComponent implements OnChanges {
     private _placeWords(): void {
         const t1 = performance.now();
 
-        const placeWord = (wordDetails: IWordDetails, index: number = 0) => {
-            this._setFontDetails(this._ctx, wordDetails.fontSize);
+        const placeWord = (wordWithFontSize: IWordWithFontSize<T>, index: number = 0) => {
+            this._setFontDetails(this._ctx, wordWithFontSize.fontSize);
 
             const gridPoint = this._placeOnSpiral(index);
-            const metrics = this._ctx.measureText(wordDetails.value);
+            const metrics = this._ctx.measureText(wordWithFontSize.value);
             const fontHeight = (metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent) * 1.1;
 
             /**
@@ -126,19 +126,19 @@ export class WordCloudComponent implements OnChanges {
              * If this bounding box intersects another bounding box, increment the index and try the next place
              */
             if (this._isIntersecting(boundingBox)) {
-                return placeWord(wordDetails, index + 1);
+                return placeWord(wordWithFontSize, index + 1);
             }
 
             this._placedWords = this._placedWords.concat({
                 ...boundingBox,
-                wordDetails
+                ...wordWithFontSize
             });
 
             if (this._config.debugMode) {
                 this._ctx.strokeStyle = 'blue';
                 this._ctx.strokeRect(boundingBox.x, boundingBox.y, boundingBox.width, boundingBox.height);
                 this._ctx.fillStyle = 'red';
-                this._ctx.fillText(wordDetails.value, gridPoint.x, gridPoint.y);
+                this._ctx.fillText(wordWithFontSize.value, gridPoint.x, gridPoint.y);
             }
         };
 
@@ -175,13 +175,13 @@ export class WordCloudComponent implements OnChanges {
             pw.y = (pw.y * yScale) + (overflowTop * yScale);
             pw.width = pw.width * xScale;
             pw.height = pw.height * yScale;
-            pw.wordDetails.fontSize = pw.wordDetails.fontSize * xScale;
+            pw.fontSize = pw.fontSize * xScale;
         });
 
         /**
          * Sort words before emitting so that a trackBy function will work correctly with the collection
          */
-        const sortedWords = this._placedWords.sort((a, b) => a.wordDetails.value.localeCompare(b.wordDetails.value))
+        const sortedWords = this._placedWords.sort((a, b) => a.value.localeCompare(b.value))
         this.wordsPlaced.emit(sortedWords);
 
         if (this._config.debugMode) {
