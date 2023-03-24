@@ -79,7 +79,7 @@ export class WordCloudDemoComponent implements OnInit {
             code: `
                 <nw-word-cloud
                     [words]="words"
-                    [options]="{ minFontSize: 20 }"
+                    [options]="{ minFontSize: 20, fontWeight: 'bold' }"
                     (wordsPlaced)="placedWords = $event">
             
                     <nw-word *ngFor="let word of placedWords; trackBy: wordTrack"
@@ -144,10 +144,6 @@ export class WordCloudDemoComponent implements OnInit {
         {
             name: 'weight: number',
             description: 'The weight of the word relative to the others. This could be based on a score, engagement, frequency etc.'
-        },
-        {
-            name: 'color: string',
-            description: 'Any valid CSS color'
         },
         {
             name: 'exportColor: string',
