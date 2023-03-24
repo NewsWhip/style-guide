@@ -1,6 +1,13 @@
+@import '../../_lib/sass/src/variables.scss';
+
 .word-cloud-container {
-    width: 288px;
+    width: 400px;
     height: 400px;
-    border: 1px solid rgb(72, 255, 0);
-    margin-top: 90px;
+    margin-top: 16px;
+    background-color: $level2;
+    border-radius: $border-radius-large;
+}
+
+h4, h5 {
+    margin: 16px 0;
 }

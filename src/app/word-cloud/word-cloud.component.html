@@ -1,19 +1,184 @@
-<h1 class="page-header">Word cloud</h1>
+<div class="page-header" style="padding-bottom: 0;">
+    <h3>Word Cloud</h3>
 
-<button class="btn btn-md btn-primary" (click)="generateWords()">Regenerate words</button>
-<button class="btn btn-md btn-primary" (click)="export()">Export to canvas</button>
-
-<div class="word-cloud-container">
-    <nw-word-cloud
-        [words]="words"
-        [options]="{ debugMode: false }"
-        (wordsPlaced)="onWordsPlaced($event)">
-
-        <nw-word *ngFor="let word of placedWords; trackBy: wordTrack"
-            [word]="word"
-            [nwTooltip]="word.value + ' has a weight of ' + word.weight"
-            placement="top"
-            [style.cursor]="'pointer'"
-            [style.color]="word.color"></nw-word>
-    </nw-word-cloud>
+    <div class="tabs-container">
+        <nw-tabs size="md">
+            <li nwTab [isActive]="selectedTab === 'design'" role="presentation">
+                <a [routerLink]="['.']" [queryParams]="{section: 'design'}" role="tab">Design</a>
+            </li>
+            <li nwTab [isActive]="selectedTab === 'api'" role="presentation">
+                <a [routerLink]="['.']" [queryParams]="{section: 'api'}" role="tab">API</a>
+            </li>
+        </nw-tabs>
+    </div>
 </div>
+
+<div *ngIf="selectedTab === 'design'" class="tab-content">
+    <h4>Demo</h4>
+    <button class="btn btn-md btn-primary" (click)="generateWords()">Regenerate words</button>
+    <!-- <button class="btn btn-md btn-primary" (click)="export()">Export to canvas</button> -->
+    
+    <div class="word-cloud-container">
+        <nw-word-cloud
+            [words]="words"
+            [options]="{ debugMode: false }"
+            (wordsPlaced)="onWordsPlaced($event)">
+    
+            <nw-word *ngFor="let word of placedWords; trackBy: wordTrack"
+                [word]="word"
+                [nwTooltip]="word.value + ' has a weight of ' + word.weight"
+                placement="top"
+                [style.cursor]="'pointer'"
+                [style.color]="word.color"></nw-word>
+        </nw-word-cloud>
+    </div>
+
+    <h4>Basic example</h4>
+    <app-code [snippet]="snippets.example"></app-code>
+
+    <h4>With tooltip</h4>
+    <app-code [snippet]="snippets.exampleWithAdditions"></app-code>
+</div>
+
+<div *ngIf="selectedTab === 'api'" class="tab-content">
+    <h3>API reference for tooltips / popover</h3>
+
+    <h4>Importing</h4>
+    <app-code [snippet]="snippets.import"></app-code>
+
+    <h4>Usage notes</h4>
+    <p>
+        The <code>WordCloudComponent</code> is responsible for taking a collection of word objects and an optional config, and determining the size and
+        position of those words in the word cloud. When those sizes and positions are calculated, the are emitted via an output in the form of <code>IWordWithPosition&lt;T&gt;[]</code>
+        where <code>T</code> is a generic word object that satisifes the <code>IWord</code> interface below.
+    </p>
+    <br>
+    <p>
+        The onus is on the consumer to then project the outputted word via <code>ng-content</code> using the <code>{{snippets.wordComponentSelector.code}}</code> component as shown
+        in the example below. This is designed as such so that the consumer has more control over each individual word, allowing them to attach directives like tooltips and popovers, customizing
+        styles and binding custom events.
+    </p>
+
+
+    <h4>Components</h4>
+
+    <h5><code>WordCloudComponent</code></h5>
+    <p>The component that take the input words and calculates their size and position in the word cloud.</p>
+    <p>Selector: <code>{{snippets.selector.code}}</code></p>
+    <h5>Properties</h5>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th rowspan="2">Name</th>
+                <th rowspan="2">Description</th>
+                <th colspan="2">Default values</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <ng-container *ngFor="let row of wordCloudPropertiesTable">
+                <ng-container *ngTemplateOutlet="inputTableTowTmpl; context: { values: row }"></ng-container>
+            </ng-container>
+        </tbody>
+    </table>
+
+    <h5>Methods</h5>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td><code class="light">**TODO**</code></td>
+                <td>**TODO**</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h5><code>WordComponent</code></h5>
+    <p>The component responsible for rendering individual words</p>
+    <p>Selector: <code>{{snippets.selector.wordComponentSelector}}</code></p>
+    <h5>Properties</h5>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th rowspan="2">Name</th>
+                <th rowspan="2">Description</th>
+                <th colspan="2">Default values</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <ng-container *ngFor="let row of wordComponentPropertiesTable">
+                <ng-container *ngTemplateOutlet="inputTableTowTmpl; context: { values: row }"></ng-container>
+            </ng-container>
+        </tbody>
+    </table>
+
+    <h4>Types and interfaces</h4>
+    
+    <h5>IWord interface</h5>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Property</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of wordInterfaceDetails">
+                <td><code class="light">{{item.name}}</code></td>
+                <td [innerHTML]="item.description"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h5>IWordCloudConfig interface</h5>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Property</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of configInterfaceDetails">
+                <td><code class="light">{{item.name}}</code></td>
+                <td [innerHTML]="item.description"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h5>IWordWithPosition interface</h5>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Property</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of wordWithPositionInterfaceDetails">
+                <td><code class="light">{{item.name}}</code></td>
+                <td [innerHTML]="item.description"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<ng-template #inputTableTowTmpl let-values="values">
+    <tr>
+        <td>
+            <code class="light">{{values[0]}}</code>
+        </td>
+        <td [innerHTML]="values[1]"></td>
+        <td>{{values[2]}}</td>
+    </tr>
+</ng-template>
