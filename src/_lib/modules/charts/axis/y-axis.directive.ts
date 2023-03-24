@@ -11,7 +11,7 @@ import { ChartUtils } from "../chart.utils";
 })
 export class YAxisDirective extends AxisBase {
 
-    @Input() align: 'left' | 'right' = 'left';
+    @Input() align: 'left' | 'right' | 'center' = 'left';
     @Input() domain: [number, number];
 
     @Output() scaleUpdated: EventEmitter<ScaleLinear<number, number>> = new EventEmitter();
@@ -66,13 +66,25 @@ export class YAxisDirective extends AxisBase {
     }
 
     render() {
-        let xTranslation = this.align === "right" ? this.chart.width : 0;
+        let xTranslation = this._getAxisTranslation();
 
         this.axisSelection
             .attr('transform', "translate(" + xTranslation + ", 0)")
             .call(this.axis);
 
         this.positionLabel();
+    }
+
+    private _getAxisTranslation(): number {
+        if (this.align === 'right') {
+            return this.chart.width;
+        }
+
+        if (this.align === 'center') {
+            return this.chart.width / 2;
+        }
+
+        return 0;
     }
 
 }

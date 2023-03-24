@@ -1,3 +1,33 @@
 <h1 class="page-header">NewsWhip Style Guide</h1>
 
 <p>Angular version: {{version.full}}</p>
+
+<svg nw-chart #chart="nw-chart" style="width: 700px; height: 700px;"
+    [margins]="chartMargins">
+
+    <!-- Axes -->
+    <g class="x axis" nw-x-axis #xAxis="nw-x-axis"
+        [domain]="xDomain"
+        [scale]="axisScale"
+        [tickFormat]="axisTickFormat"
+        [align]="'center'"></g>
+
+    <g class="y axis" nw-y-axis #yAxis="nw-y-axis"
+        [domain]="yDomain"
+        [tickFormat]="axisTickFormat"
+        [align]="'center'"></g>
+
+    <circle *ngFor="let entity of entities"
+        [nw-circle]="[entity.aggregation.current.publicationsCount, entity.aggregation.current.interactionsCount]"
+        [xDomain]="xDomain"
+        [yDomain]="yDomain"
+        [nwTooltip]="circleTooltipTmpl"
+        [context]="{ entity: entity }"
+        r=5
+        fill="red"
+        stroke="white"></circle>
+</svg>
+
+<ng-template #circleTooltipTmpl let-entity="entity">
+    {{entity | json}}
+</ng-template>
