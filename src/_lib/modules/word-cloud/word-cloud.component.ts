@@ -73,7 +73,7 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
         this._positionWords();
 
         if (this._config.debugMode) {
-            console.info(this._config);
+            console.info('Config', this._config);
             this._drawSprial();
         }
     }
@@ -145,7 +145,7 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
             if (this._config.debugMode) {
                 this._ctx.strokeStyle = 'blue';
                 this._ctx.strokeRect(boundingBox.x, boundingBox.y, boundingBox.width, boundingBox.height);
-                this._ctx.fillStyle = 'red';
+                this._ctx.fillStyle = wordWithFontSize.exportColor;
                 this._ctx.fillText(wordWithFontSize.value, gridPoint.x, gridPoint.y);
             }
         };
@@ -154,7 +154,7 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
             positionWord(word);
         });
 
-        this._positionedWords = this._scalePlacedWords(this._positionedWords);
+        this._positionedWords = this._scalePositionedWords(this._positionedWords);
 
         /**
          * Sort words before emitting so that a trackBy function will work correctly with the collection
@@ -163,7 +163,7 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
         this.wordsPositioned.emit(sortedWords);
 
         if (this._config.debugMode) {
-            console.info(`Words placed on sprial in ${performance.now() - t1}ms`);
+            console.info(`Words positioned on sprial in ${performance.now() - t1}ms`);
         }
     }
 
@@ -264,8 +264,8 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
      * Determine the amount of overflow for the words that have been placed outside the canvas, calculate the scaling factor for repositioning these
      * words back inside the canvas, and update and return the placed words with the scaling factor applied
      */
-    private _scalePlacedWords(placedWords: IWordWithPosition<T>[]): IWordWithPosition<T>[] {
-        const outOfBounds = placedWords.filter(word => this._isOutsideCanvas(word, this._canvas.width, this._canvas.height));
+    private _scalePositionedWords(positionedWords: IWordWithPosition<T>[]): IWordWithPosition<T>[] {
+        const outOfBounds = positionedWords.filter(word => this._isOutsideCanvas(word, this._canvas.width, this._canvas.height));
 
         /**
          * Determine the minimum and maximum x-coordinates of the words that are outside the canvas. The minimum x-coordinate is the leftmost
