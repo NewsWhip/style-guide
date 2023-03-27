@@ -22,14 +22,13 @@
         <nw-word-cloud
             [words]="words"
             [options]="{ debugMode: false }"
-            (wordsPlaced)="onWordsPlaced($event)">
+            (wordsPositioned)="onWordsPositioned($event)">
     
-            <nw-word *ngFor="let word of placedWords; trackBy: wordTrack"
+            <nw-word *ngFor="let word of positionedWords; trackBy: wordTrack"
                 [word]="word"
                 [nwTooltip]="word.value + ' has a weight of ' + word.weight"
                 placement="top"
-                [style.cursor]="'pointer'"
-                [style.color]="word.color"></nw-word>
+                [style.cursor]="'pointer'"></nw-word>
         </nw-word-cloud>
     </div>
 

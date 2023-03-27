@@ -21,7 +21,7 @@ export class WordCloudDemoComponent implements OnInit {
 
     public selectedTab: 'design' | 'api' = 'design';
     public words: IMyWord[];
-    public placedWords: IWordWithPosition<IMyWord>[] = [];
+    public positionedWords: IWordWithPosition<IMyWord>[] = [];
     public exportedCanvas: HTMLCanvasElement;
 
     constructor(
@@ -52,8 +52,8 @@ export class WordCloudDemoComponent implements OnInit {
         this._renderer.appendChild(this._elRef.nativeElement, this.exportedCanvas);
     }
 
-    onWordsPlaced(words: IWordWithPosition<IMyWord>[]) {
-        this.placedWords = words;
+    onWordsPositioned(words: IWordWithPosition<IMyWord>[]) {
+        this.positionedWords = words;
     }
 
     public snippets: { [key: string]: ISnippet } = {
@@ -68,9 +68,9 @@ export class WordCloudDemoComponent implements OnInit {
             code: `
                 <nw-word-cloud
                     [words]="words"
-                    (wordsPlaced)="placedWords = $event">
+                    (wordsPositioned)="positionedWords = $event">
             
-                    <nw-word *ngFor="let word of placedWords" [word]="word"></nw-word>
+                    <nw-word *ngFor="let word of positionedWords" [word]="word"></nw-word>
                 </nw-word-cloud>
             `
         },
@@ -80,9 +80,9 @@ export class WordCloudDemoComponent implements OnInit {
                 <nw-word-cloud
                     [words]="words"
                     [options]="{ minFontSize: 20, fontWeight: 'bold' }"
-                    (wordsPlaced)="placedWords = $event">
+                    (wordsPositioned)="positionedWords = $event">
             
-                    <nw-word *ngFor="let word of placedWords; trackBy: wordTrack"
+                    <nw-word *ngFor="let word of positionedWords; trackBy: wordTrack"
                         [word]="word"
                         [nwTooltip]="word.value + ' has a weight of ' + word.weight"
                         [placement]="'top'"
@@ -122,7 +122,7 @@ export class WordCloudDemoComponent implements OnInit {
             }`
         ],
         [
-            "@Output() wordsPlaced: EventEmitter<IWordWithPosition<T>[]>",
+            "@Output() wordsPositioned: EventEmitter<IWordWithPosition<T>[]>",
             "An event emitter that fires when the words have been sized and positioned",
             "-"
         ]

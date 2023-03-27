@@ -30,10 +30,10 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
     @Input() words: T[];
     @Input() options: Partial<IWordCloudConfig> = {};
 
-    @Output() wordsPlaced: EventEmitter<IWordWithPosition<T>[]> = new EventEmitter();
+    @Output() wordsPositioned: EventEmitter<IWordWithPosition<T>[]> = new EventEmitter();
 
-    private _words: IWordWithFontSize<T>[];
-    private _placedWords: IWordWithPosition<T>[];
+    private _wordsWithFontSize: IWordWithFontSize<T>[];
+    private _positionedWords: IWordWithPosition<T>[];
     private _canvas: HTMLCanvasElement;
     private _ctx: CanvasRenderingContext2D;
     private _centerPoint: IPoint;
@@ -66,11 +66,11 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
 
     private _init(): void {
         this._config = this._getConfig();
-        this._words = this._getWords();
-        this._placedWords = [];
+        this._wordsWithFontSize = this._getWordsWithFontSize(this.words);
+        this._positionedWords = [];
         this._drawCanvas();
         this._centerPoint = { x: this._canvas.width / 2, y: this._canvas.height / 2 };
-        this._placeWords();
+        this._positionWords();
 
         if (this._config.debugMode) {
             console.info(this._config);
@@ -78,12 +78,12 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
         }
     }
 
-    private _getWords(): IWordWithFontSize<T>[] {
-        const weights = this.words.map(w => w.weight);
+    private _getWordsWithFontSize(words: T[]): IWordWithFontSize<T>[] {
+        const weights = words.map(w => w.weight);
         const minWeight: number = Math.min(...weights);
         const maxWeight: number = Math.max(...weights);
 
-        return this.words.map(word => {
+        return words.map(word => {
             return {
                 ...word,
                 fontSize: this._getFontSize(word.weight, minWeight, maxWeight)
@@ -102,10 +102,18 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
         }
     }
 
-    private _placeWords(): void {
+    /**
+     * This method is responsible for positioning the words onto a canvas by iterating through each word, finding a suitable location for
+     * it using a spiral algorithm, and checking if the word's bounding box intersects with any existing bounding boxes
+     */
+    private _positionWords(): void {
         const t1 = performance.now();
 
-        const placeWord = (wordWithFontSize: IWordWithFontSize<T>, index: number = 0) => {
+        /**
+         * Sets the font details, places the word on the spiral, and calculates the bounding box of the word based on its font size. If the
+         * bounding box intersects with another bounding box, the index is incremented and we try to place it again
+         */
+        const positionWord = (wordWithFontSize: IWordWithFontSize<T>, index: number = 0) => {
             this._setFontDetails(this._ctx, wordWithFontSize.fontSize);
 
             const gridPoint = this._placeOnSpiral(index);
@@ -126,10 +134,10 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
              * If this bounding box intersects another bounding box, increment the index and try the next place
              */
             if (this._isIntersecting(boundingBox)) {
-                return placeWord(wordWithFontSize, index + 1);
+                return positionWord(wordWithFontSize, index + 1);
             }
 
-            this._placedWords = this._placedWords.concat({
+            this._positionedWords = this._positionedWords.concat({
                 ...boundingBox,
                 ...wordWithFontSize
             });
@@ -142,47 +150,17 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
             }
         };
 
-        this._words.forEach(word => {
-            placeWord(word);
+        this._wordsWithFontSize.forEach(word => {
+            positionWord(word);
         });
 
-        const outOfBounds = this._placedWords.filter(word => this._isOutsideCanvas(word, this._canvas.width, this._canvas.height));
-
-        const minX = Math.min(...outOfBounds.map(oob => oob.x));
-        const maxX = Math.max(...outOfBounds.map(oob => oob.x + oob.width));
-        const overflowLeft = minX < 0 ? Math.abs(minX) : 0;
-        const overflowRight = maxX > this._canvas.width ? (maxX - this._canvas.width) : 0;
-        const overflowX = overflowLeft + overflowRight;
-        const xScale = this._canvas.width / (this._canvas.width + overflowX);
-
-        if (this._config.debugMode) {
-            console.info(`minX: ${minX}, maxX: ${maxX}, overflowX: ${overflowX}, xScale: ${xScale}`);
-        }
-
-        const minY = Math.min(...outOfBounds.map(oob => oob.y));
-        const maxY = Math.max(...outOfBounds.map(oob => oob.y + oob.height));
-        const overflowTop = minY < 0 ? Math.abs(minY) : 0;
-        const overflowBottom = maxY > this._canvas.height ? (maxY - this._canvas.height) : 0;
-        const overflowY = overflowTop + overflowBottom;
-        const yScale = this._canvas.height / (this._canvas.height + overflowY);
-
-        if (this._config.debugMode) {
-            console.info(`minY: ${minY}, maxY: ${maxY}, overflowY: ${overflowY}, yScale: ${yScale}`);
-        }
-
-        this._placedWords.forEach(pw => {
-            pw.x = (pw.x * xScale) + (overflowLeft * xScale);
-            pw.y = (pw.y * yScale) + (overflowTop * yScale);
-            pw.width = pw.width * xScale;
-            pw.height = pw.height * yScale;
-            pw.fontSize = pw.fontSize * xScale;
-        });
+        this._positionedWords = this._scalePlacedWords(this._positionedWords);
 
         /**
          * Sort words before emitting so that a trackBy function will work correctly with the collection
          */
-        const sortedWords = this._placedWords.sort((a, b) => a.value.localeCompare(b.value))
-        this.wordsPlaced.emit(sortedWords);
+        const sortedWords = this._positionedWords.sort((a, b) => a.value.localeCompare(b.value))
+        this.wordsPositioned.emit(sortedWords);
 
         if (this._config.debugMode) {
             console.info(`Words placed on sprial in ${performance.now() - t1}ms`);
@@ -196,6 +174,9 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
     }
 
     private _isIntersecting(boundingBox: IBoundingBox): boolean {
+        /**
+         * Check whether or not two bounding boxes overlap
+         */
         const doBoxesOverlap = (boxA: IBoundingBox, boxB: IBoundingBox): boolean => {
             return !(boxA.x + boxA.width < boxB.x ||
                 boxB.x + boxB.width < boxA.x ||
@@ -203,9 +184,16 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
                 boxB.y + boxB.height < boxA.y);
         };
 
-        return this._placedWords.some(word => doBoxesOverlap(boundingBox, word));
+        /**
+         * Check if any bounding boxes overlap
+         */
+        return this._positionedWords.some(word => doBoxesOverlap(boundingBox, word));
     }
 
+    /**
+     * Calculate the font size for a given word weight based on the minimum and maximum weights and the minimum and maximum font sizes
+     * defined in the word cloud configuration object
+     */
     private _getFontSize(wordWeight: number, minWeight: number, maxWeight: number): number {
         const weightDiff = maxWeight - minWeight;
         const factor = (wordWeight - minWeight) / weightDiff;
@@ -214,6 +202,13 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
         return Math.round(fontSize);
     }
 
+    /**
+     * @description This method is used to place a point on a spiral based on the input n. It calculates the coordinates of the
+     * point on the spiral using the spiral helper function and returns an object of type IPoint. The spiral is defined using a combination
+     * of trigonometric functions and aspects such as factor, aspectRatio, and angle.
+     *
+     * @returns An object of type `IPoint` with `x` and `y` properties
+     */
     private _placeOnSpiral(n: number): IPoint {
         const spiral = (i: number) => {
             const factor = 0.3;
@@ -235,6 +230,9 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
             boundingBox.y < 0;
     }
 
+    /**
+     * Retrieve the word cloud configuration object by merging default values with any options passed to this component instance
+     */
     private _getConfig(): IWordCloudConfig {
         const defaultConfig: IWordCloudConfig = {
             debugMode: false,
@@ -260,5 +258,54 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
         }
 
         this._ctx.restore();
+    }
+
+    /**
+     * Determine the amount of overflow for the words that have been placed outside the canvas, calculate the scaling factor for repositioning these
+     * words back inside the canvas, and update and return the placed words with the scaling factor applied
+     */
+    private _scalePlacedWords(placedWords: IWordWithPosition<T>[]): IWordWithPosition<T>[] {
+        const outOfBounds = placedWords.filter(word => this._isOutsideCanvas(word, this._canvas.width, this._canvas.height));
+
+        /**
+         * Determine the minimum and maximum x-coordinates of the words that are outside the canvas. The minimum x-coordinate is the leftmost
+         * point of any out-of-bounds word, and the maximum x-coordinate is the rightmost point of any out-of-bounds word
+         */
+        const minX = Math.min(...outOfBounds.map(oob => oob.x));
+        const maxX = Math.max(...outOfBounds.map(oob => oob.x + oob.width));
+        /**
+         * Calculate the amount of overflow for the words that are outside the canvas. `overflowLeft` is the amount by which the out-of-bounds words
+         * exceed the left edge of the canvas, and `overflowRight` is the amount by which they exceed the right edge of the canvas
+         */
+        const overflowLeft = minX < 0 ? Math.abs(minX) : 0;
+        const overflowRight = maxX > this._canvas.width ? (maxX - this._canvas.width) : 0;
+        const overflowX = overflowLeft + overflowRight;
+        const xScale = this._canvas.width / (this._canvas.width + overflowX);
+
+        if (this._config.debugMode) {
+            console.info(`minX: ${minX}, maxX: ${maxX}, overflowX: ${overflowX}, xScale: ${xScale}`);
+        }
+
+        const minY = Math.min(...outOfBounds.map(oob => oob.y));
+        const maxY = Math.max(...outOfBounds.map(oob => oob.y + oob.height));
+        const overflowTop = minY < 0 ? Math.abs(minY) : 0;
+        const overflowBottom = maxY > this._canvas.height ? (maxY - this._canvas.height) : 0;
+        const overflowY = overflowTop + overflowBottom;
+        const yScale = this._canvas.height / (this._canvas.height + overflowY);
+
+        if (this._config.debugMode) {
+            console.info(`minY: ${minY}, maxY: ${maxY}, overflowY: ${overflowY}, yScale: ${yScale}`);
+        }
+
+        return this._positionedWords.map(pw => {
+            return {
+                ...pw,
+                x: (pw.x * xScale) + (overflowLeft * xScale),
+                y: (pw.y * yScale) + (overflowTop * yScale),
+                width: pw.width * xScale,
+                height: pw.height * yScale,
+                fontSize: pw.fontSize * xScale
+            }
+        });
     }
 }
