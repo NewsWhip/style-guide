@@ -12,20 +12,6 @@ import { IWordWithPosition } from "./models/IWordWithPosition";
     changeDetection: ChangeDetectionStrategy.OnPush,
     preserveWhitespaces: false
 })
-/**
- * Todos
- * - Test with very long words - DONE
- * - Don't draw a spiral - DONE
- *      - loop until all words are placed
- *      - then scale the canvas to fit all words (with padding)
- *      - adjust font-sizes based on scale
- * - issue where font may not be loaded when we're drawing to the canvas
- *      - https://developer.mozilla.org/en-US/docs/Web/API/FontFaceSet/check
- * - can I make it easy to export
- * - try log n scaling for font-sizes (https://www.jasondavies.com/wordcloud/)
- * - can I support multiple orientations
- * - use CSS variables for exportColor
- */
 export class WordCloudComponent<T extends IWord> implements OnChanges {
 
     @Input() words: T[];
@@ -38,7 +24,13 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
     private _canvas: HTMLCanvasElement;
     private _ctx: CanvasRenderingContext2D;
     private _centerPoint: IPoint;
-    private _gridResolution = 1;
+    /**
+     * Controls how many points are generated on the spiral. Should be kept between 0 and 1. Lower values generate more
+     * points on the spiral but it can take a lot longer to position the words. If updating this value to <= 0.3, consider
+     * all the places where this is used and for each one the amount of words in the cloud. It could also be a good idea to
+     * make this value configurable by allowing it to be specified in the `options` input
+     */
+    private _spiralResolution = 0.3;
     private _config: IWordCloudConfig;
 
     constructor(
@@ -67,9 +59,9 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
         exportCanvas.height = this._canvas.height;
 
         this._positionedWords.forEach(pw => {
-            const gridPoint: IPoint = { x: pw.canvasX, y: pw.canvasY };
+            const point: IPoint = { x: pw.canvasX, y: pw.canvasY };
             this._setFontDetails(exportCtx, pw.fontSize);
-            this._drawWord(pw, gridPoint, exportCtx);
+            this._drawWord(pw, point, exportCtx);
         });
 
         return exportCanvas.toDataURL('image/png');
@@ -141,7 +133,7 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
         const positionWord = (wordWithFontSize: IWordWithFontSize<T>, index: number = 0) => {
             this._setFontDetails(this._ctx, wordWithFontSize.fontSize);
 
-            const gridPoint = this._placeOnSpiral(index);
+            const point = this._placeOnSpiral(index);
             const metrics = this._ctx.measureText(wordWithFontSize.value);
             const fontHeight = (metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent) * 1.1;
 
@@ -149,8 +141,8 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
              * Adjust the x and y based on textAlign = "center" and textBaseline = "middle";
              */
             const boundingBox: IBoundingBox = {
-                x: gridPoint.x - (metrics.width / 2),
-                y: gridPoint.y - (fontHeight / 2),
+                x: point.x - (metrics.width / 2),
+                y: point.y - (fontHeight / 2),
                 width: metrics.width,
                 height: fontHeight
             }
@@ -165,14 +157,14 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
             this._positionedWords = this._positionedWords.concat({
                 ...boundingBox,
                 ...wordWithFontSize,
-                canvasX: gridPoint.x,
-                canvasY: gridPoint.y
+                canvasX: point.x,
+                canvasY: point.y
             });
 
             if (this._config.debugMode) {
                 this._ctx.strokeStyle = 'blue';
                 this._ctx.strokeRect(boundingBox.x, boundingBox.y, boundingBox.width, boundingBox.height);
-                this._drawWord(wordWithFontSize, gridPoint, this._ctx);
+                this._drawWord(wordWithFontSize, point, this._ctx);
             }
         };
 
@@ -193,9 +185,9 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
         }
     }
 
-    private _drawWord(wordWithFontSize: IWordWithFontSize<T>, gridPoint: IPoint, ctx: CanvasRenderingContext2D) {
+    private _drawWord(wordWithFontSize: IWordWithFontSize<T>, point: IPoint, ctx: CanvasRenderingContext2D) {
         ctx.fillStyle = wordWithFontSize.exportColor;
-        ctx.fillText(wordWithFontSize.value, gridPoint.x, gridPoint.y);
+        ctx.fillText(wordWithFontSize.value, point.x, point.y);
     }
 
     private _setFontDetails(ctx: CanvasRenderingContext2D, fontSize: number): void {
@@ -242,11 +234,10 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
      */
     private _placeOnSpiral(n: number): IPoint {
         const spiral = (i: number) => {
-            const factor = 0.3;
             const aspectRatio = this._canvas.width / this._canvas.height;
-            const angle = this._gridResolution * i;
-            const x = this._centerPoint.x + (1 + angle) * Math.cos(angle) * factor * aspectRatio;
-            const y = this._centerPoint.y + (1 + angle) * Math.sin(angle) * factor;
+            const angle = i;
+            const x = this._centerPoint.x + (1 + angle) * Math.cos(angle) * this._spiralResolution * aspectRatio;
+            const y = this._centerPoint.y + (1 + angle) * Math.sin(angle) * this._spiralResolution;
 
             return { x, y };
         }
@@ -283,7 +274,7 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
         this._ctx.save();
         this._ctx.fillStyle = 'white';
 
-        for (let i = 0; i < 1000; i++) {
+        for (let i = 0; i < 3000; i++) {
             const { x, y } = this._placeOnSpiral(i);
             this._ctx.fillRect(x, y, 1, 1);
         }
