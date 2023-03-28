@@ -6,6 +6,14 @@
     margin-top: 16px;
     background-color: $level2;
     border-radius: $border-radius-large;
+
+    nw-word {
+        color: $text-color-secondary;
+
+        &:hover {
+            color: $text-color;
+        }
+    }
 }
 
 h4, h5 {

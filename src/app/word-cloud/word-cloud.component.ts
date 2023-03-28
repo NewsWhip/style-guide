@@ -23,6 +23,7 @@ export class WordCloudDemoComponent implements OnInit {
     public words: IMyWord[];
     public positionedWords: IWordWithPosition<IMyWord>[] = [];
     public exportedCanvas: HTMLCanvasElement;
+    public testImage: string;
 
     constructor(
         private _renderer: Renderer2,
@@ -48,8 +49,9 @@ export class WordCloudDemoComponent implements OnInit {
     }
 
     export() {
-        this.exportedCanvas = this.wordCloud.getCanvas();
-        this._renderer.appendChild(this._elRef.nativeElement, this.exportedCanvas);
+        this.testImage = this.wordCloud.exportCanvas();
+        // this.exportedCanvas = this.wordCloud.getCanvas();
+        // this._renderer.appendChild(this._elRef.nativeElement, this.exportedCanvas);
     }
 
     onWordsPositioned(words: IWordWithPosition<IMyWord>[]) {
@@ -177,11 +179,19 @@ export class WordCloudDemoComponent implements OnInit {
     public wordWithPositionInterfaceDetails = [
         {
             name: 'x: number',
-            description: 'The x position of the word'
+            description: 'The x position of the word used to absolutely position element in the DOM'
         },
         {
             name: 'y: number',
-            description: 'The y position of the word'
+            description: 'The y position of the word used to absolutely position element in the DOM'
+        },
+        {
+            name: 'canvasX: number',
+            description: 'Used to redraw the words when exporting the word cloud to PNG'
+        },
+        {
+            name: 'canvasY: number',
+            description: 'Used to redraw the words when exporting the word cloud to PNG'
         },
         {
             name: 'width: number',

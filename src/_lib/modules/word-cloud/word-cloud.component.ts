@@ -24,6 +24,7 @@ import { IWordWithPosition } from "./models/IWordWithPosition";
  * - can I make it easy to export
  * - try log n scaling for font-sizes (https://www.jasondavies.com/wordcloud/)
  * - can I support multiple orientations
+ * - use CSS variables for exportColor
  */
 export class WordCloudComponent<T extends IWord> implements OnChanges {
 
@@ -50,18 +51,28 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
         }
     }
 
-    public getCanvas(): HTMLCanvasElement {
+    /**
+     * Exports the canvas to a PNG image and returns the base64-encoded PNG data
+     * @returns A string containing the base64-encoded PNG data of the canvas
+     */
+    public exportCanvas(): string {
         /**
-         * Todo
-         * 1. Figure out the best way to handle this. Should we always draw text to the canvas in _placeWords
-         * and then just export that canvas? Should we redraw a new canvas and return it?
-         * 2. What about the color? Does each word input require a color? Does the config include a range of
-         * colors? Does the config include a setting that instructs the component to choose a color?
-         * 3. Should this export an image rather than a canvas?
-         * 4. If it should export an image, should this method return an Observable
-         * 5. What is the placedWords have exceeded the bound of the canvas?
+         * Create a new canvas matching the dimensions of the original canvas. At this point, `_positionedWords` contains
+         * the final positions of the words and we have no need to check for intersections, so we loop through our words
+         * and draw them on our `exportCanvas`
          */
-        return this._canvas;
+        const exportCanvas = this._renderer.createElement('canvas') as HTMLCanvasElement;
+        const exportCtx = exportCanvas.getContext('2d');
+        exportCanvas.width = this._canvas.width;
+        exportCanvas.height = this._canvas.height;
+
+        this._positionedWords.forEach(pw => {
+            const gridPoint: IPoint = { x: pw.canvasX, y: pw.canvasY };
+            this._setFontDetails(exportCtx, pw.fontSize);
+            this._drawWord(pw, gridPoint, exportCtx);
+        });
+
+        return exportCanvas.toDataURL('image/png');
     }
 
     private _init(): void {
@@ -139,14 +150,15 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
 
             this._positionedWords = this._positionedWords.concat({
                 ...boundingBox,
-                ...wordWithFontSize
+                ...wordWithFontSize,
+                canvasX: gridPoint.x,
+                canvasY: gridPoint.y
             });
 
             if (this._config.debugMode) {
                 this._ctx.strokeStyle = 'blue';
                 this._ctx.strokeRect(boundingBox.x, boundingBox.y, boundingBox.width, boundingBox.height);
-                this._ctx.fillStyle = wordWithFontSize.exportColor;
-                this._ctx.fillText(wordWithFontSize.value, gridPoint.x, gridPoint.y);
+                this._drawWord(wordWithFontSize, gridPoint, this._ctx);
             }
         };
 
@@ -165,6 +177,11 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
         if (this._config.debugMode) {
             console.info(`Words positioned on sprial in ${performance.now() - t1}ms`);
         }
+    }
+
+    private _drawWord(wordWithFontSize: IWordWithFontSize<T>, gridPoint: IPoint, ctx: CanvasRenderingContext2D) {
+        ctx.fillStyle = wordWithFontSize.exportColor;
+        ctx.fillText(wordWithFontSize.value, gridPoint.x, gridPoint.y);
     }
 
     private _setFontDetails(ctx: CanvasRenderingContext2D, fontSize: number): void {
@@ -298,10 +315,15 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
         }
 
         return this._positionedWords.map(pw => {
+            const translateX = overflowLeft * xScale;
+            const translateY = overflowTop * yScale;
+
             return {
                 ...pw,
-                x: (pw.x * xScale) + (overflowLeft * xScale),
-                y: (pw.y * yScale) + (overflowTop * yScale),
+                canvasX: (pw.canvasX * xScale) + translateX,
+                canvasY: (pw.canvasY * yScale) + translateY,
+                x: (pw.x * xScale) + translateX,
+                y: (pw.y * yScale) + translateY,
                 width: pw.width * xScale,
                 height: pw.height * yScale,
                 fontSize: pw.fontSize * xScale

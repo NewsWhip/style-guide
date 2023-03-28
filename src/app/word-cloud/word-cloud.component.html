@@ -16,7 +16,7 @@
 <div *ngIf="selectedTab === 'design'" class="tab-content">
     <h4>Demo</h4>
     <button class="btn btn-md btn-primary" (click)="generateWords()">Regenerate words</button>
-    <!-- <button class="btn btn-md btn-primary" (click)="export()">Export to canvas</button> -->
+    <button class="btn btn-md btn-primary" (click)="export()">Export to canvas</button>
     
     <div class="word-cloud-container">
         <nw-word-cloud
@@ -31,6 +31,8 @@
                 [style.cursor]="'pointer'"></nw-word>
         </nw-word-cloud>
     </div>
+
+    <img *ngIf="testImage" [src]="testImage">
 
     <h4>Basic example</h4>
     <app-code [snippet]="snippets.example"></app-code>
