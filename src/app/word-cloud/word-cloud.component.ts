@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ElementRef, OnInit, Renderer2, VERSION, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { IWordWithPosition } from '../../_lib/modules/word-cloud/models/IWordWithPosition';
 import { WordCloudComponent } from '../../_lib/modules/word-cloud';
 import { IWord } from '../../_lib/modules/word-cloud/models/IWord';
@@ -6,8 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ISnippet } from '../code/ISnippet';
 
 interface IMyWord extends IWord {
-    someProp1: string;
-    someProp2: string;
+    id: number;
 }
 
 @Component({
@@ -22,12 +21,8 @@ export class WordCloudDemoComponent implements OnInit {
     public selectedTab: 'design' | 'api' = 'design';
     public words: IMyWord[];
     public positionedWords: IWordWithPosition<IMyWord>[] = [];
-    public exportedCanvas: HTMLCanvasElement;
-    public testImage: string;
 
     constructor(
-        private _renderer: Renderer2,
-        private _elRef: ElementRef<HTMLElement>,
         private _route: ActivatedRoute,
         private _cdRef: ChangeDetectorRef) { }
 
@@ -48,10 +43,8 @@ export class WordCloudDemoComponent implements OnInit {
         return index + item.value;
     }
 
-    export() {
-        this.testImage = this.wordCloud.exportCanvas();
-        // this.exportedCanvas = this.wordCloud.getCanvas();
-        // this._renderer.appendChild(this._elRef.nativeElement, this.exportedCanvas);
+    download() {
+        this.wordCloud.downloadCanvas('word-cloud');
     }
 
     onWordsPositioned(words: IWordWithPosition<IMyWord>[]) {
@@ -216,8 +209,7 @@ export class WordCloudDemoComponent implements OnInit {
                 weight: Math.floor(Math.random() * 50 * (i + 1)),
                 color: 'white',
                 exportColor: 'black',
-                someProp1: 'test1',
-                someProp2: 'test2'
+                id: i
             };
         });
     }

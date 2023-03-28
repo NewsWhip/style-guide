@@ -15,8 +15,8 @@
 
 <div *ngIf="selectedTab === 'design'" class="tab-content">
     <h4>Demo</h4>
-    <button class="btn btn-md btn-primary" (click)="generateWords()">Regenerate words</button>
-    <button class="btn btn-md btn-primary" (click)="export()">Export to canvas</button>
+    <button class="btn btn-md btn-primary" (click)="generateWords()">Update weights</button>
+    <button class="btn btn-md btn-primary" (click)="download()" [style.marginLeft.px]="16">Download image</button>
     
     <div class="word-cloud-container">
         <nw-word-cloud
@@ -31,8 +31,6 @@
                 [style.cursor]="'pointer'"></nw-word>
         </nw-word-cloud>
     </div>
-
-    <img *ngIf="testImage" [src]="testImage">
 
     <h4>Basic example</h4>
     <app-code [snippet]="snippets.example"></app-code>
@@ -96,8 +94,12 @@
 
         <tbody>
             <tr>
-                <td><code class="light">**TODO**</code></td>
-                <td>**TODO**</td>
+                <td><code class="light">exportCanvas(): string</code></td>
+                <td>Returns a base64-encoded PNG of the word cloud</td>
+            </tr>
+            <tr>
+                <td><code class="light">downloadCanvas(filename: string): void</code></td>
+                <td>Automatically exports the word cloud to PNG and downloads with the supplied filename</td>
             </tr>
         </tbody>
     </table>

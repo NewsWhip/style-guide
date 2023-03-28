@@ -75,6 +75,15 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
         return exportCanvas.toDataURL('image/png');
     }
 
+    public downloadCanvas(filename: string): void {
+        const dataUrl = this.exportCanvas();
+        const link = document.createElement('a');
+
+        link.download = `${filename}.png`;
+        link.href = dataUrl;
+        link.click();
+    }
+
     private _init(): void {
         this._config = this._getConfig();
         this._wordsWithFontSize = this._getWordsWithFontSize(this.words);
@@ -89,6 +98,11 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
         }
     }
 
+    /**
+     * Calculates the font size for each word based on its weight and the range of weights in the list of words
+     * @param words List of words with their respective weights
+     * @returns A new list of words sorted by weight (largest to smallest) with their respective font sizes
+     */
     private _getWordsWithFontSize(words: T[]): IWordWithFontSize<T>[] {
         const weights = words.map(w => w.weight);
         const minWeight: number = Math.min(...weights);
