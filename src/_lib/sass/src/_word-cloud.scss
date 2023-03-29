@@ -16,6 +16,7 @@ nw-word-cloud {
         position: absolute;
         top: 0;
         left: 0;
+        white-space: nowrap;
         transition: translate $transition,
             font-size $transition,
             line-height $transition;

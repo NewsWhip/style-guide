@@ -1,6 +1,21 @@
+@import '../../_lib/sass/src/variables.scss';
+
 .word-cloud-container {
-    width: 500px;
-    height: 300px;
-    border: 1px solid rgb(72, 255, 0);
-    margin-top: 90px;
+    width: 400px;
+    height: 400px;
+    margin-top: 16px;
+    background-color: $level2;
+    border-radius: $border-radius-large;
+
+    nw-word {
+        color: $text-color-secondary;
+
+        &:hover {
+            color: $text-color;
+        }
+    }
+}
+
+h4, h5 {
+    margin: 16px 0;
 }
