@@ -36,19 +36,19 @@
                     (brushEnd)="onBrushSelection($event)"></g>
 
                 <!-- Axes -->
-                <g class="x axis nw-slot-2" nw-x-axis #xAxis="nw-x-axis"
+                <g class="x axis" nw-x-axis #xAxis="nw-x-axis"
                     [domain]="xDomain"
                     [tickFormat]="xAxisTickFormat"
                     label="Axis label"
                     [tickCount]="xAxisTickCount"></g>
 
-                <g class="y axis nw-slot-2" nw-y-axis #yAxis="nw-y-axis"
+                <g class="y axis" nw-y-axis #yAxis="nw-y-axis"
                     [domain]="yDomain"
                     label="Axis label"
                     [tickFormat]="yAxisTickFormat"
                     [showGuidlines]="true"></g>
 
-                <g class="y axis random-axis nw-slot-2" nw-y-axis align="right"
+                <g class="y axis random-axis" nw-y-axis align="right"
                     [domain]="randomYDomain"
                     [tickCount]="4"
                     label="Axis label"
