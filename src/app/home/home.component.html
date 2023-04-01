@@ -2,31 +2,72 @@
 
 <p>Angular version: {{version.full}}</p>
 
-<svg nw-chart #chart="nw-chart" style="width: 700px; height: 700px;"
-    [margins]="chartMargins">
+<div class="scatterplot-container">
+    <svg nw-chart
+        style="width: 700px; height: 700px; display: block;"
+        [margins]="chartMargins"
+        (mouseleave)="onChartMouseleave()">
+    
+        <g *ngFor="let q of quadrants"
+            class="quadrant nw-slot-2"
+            [ngClass]="q.id"
+            [class.active]="q.id === activeQuadrant?.id"
+            (mouseenter)="onQuadrantMouseenter(q)">
+            <path
+                [nw-area]="q.area"
+                [xDomain]="xDomain"
+                [yDomain]="yDomain"></path>
 
-    <!-- Axes -->
-    <g class="x axis" nw-x-axis #xAxis="nw-x-axis"
-        [domain]="xDomain"
-        [scale]="axisScale"
-        [tickFormat]="axisTickFormat"
-        [align]="'center'"></g>
+            <text class="quadrant-label" *ngFor="let label of q.labels; let index = index"
+                [ngClass]="label.className"
+                [nw-text]="label.point"
+                [xDomain]="xDomain"
+                [yDomain]="yDomain"
+                [xScale]="axisScale"
+                [attr.text-anchor]="label.textAnchor"
+                [attr.dy]="15 * index">{{label.value}}</text>
+        </g>
 
-    <g class="y axis" nw-y-axis #yAxis="nw-y-axis"
-        [domain]="yDomain"
-        [tickFormat]="axisTickFormat"
-        [align]="'center'"></g>
-
-    <circle *ngFor="let entity of entities"
-        [nw-circle]="[entity.aggregation.current.publicationsCount, entity.aggregation.current.interactionsCount]"
-        [xDomain]="xDomain"
-        [yDomain]="yDomain"
-        [nwTooltip]="circleTooltipTmpl"
-        [context]="{ entity: entity }"
-        r=5
-        fill="red"
-        stroke="white"></circle>
-</svg>
+        <g *ngFor="let label of axisLabels">
+            <text class="axis-label"
+                [nw-text]="label.point"
+                [xDomain]="xDomain"
+                [yDomain]="yDomain"
+                [xScale]="axisScale"
+                [attr.text-anchor]="label.textAnchor"
+                [style.translate]="label.translate">
+                <tspan x="0" class="metric-value">{{label.value}}</tspan>
+                <tspan x="0" dy="1.2em" class="metric-label">{{label.label}}</tspan>
+            </text>
+        </g>
+    
+        <!-- Axes -->
+        <g class="nw-slot-2 x axis" nw-x-axis
+            [domain]="xDomain"
+            [scale]="axisScale"
+            [tickFormat]="axisTickFormat"
+            [tickCount]="0"
+            [tickSizeOuter]="0"
+            [align]="'center'"></g>
+    
+        <g class="nw-slot-2 y axis" nw-y-axis
+            [domain]="yDomain"
+            [tickFormat]="axisTickFormat"
+            [tickCount]="0"
+            [tickSizeOuter]="0"
+            [align]="'center'"></g>
+    
+        <ng-container *ngFor="let entity of entities">
+            <circle [nw-circle]="[entity.aggregation.current.publicationsCount, entity.aggregation.current.interactionsCount]"
+                [xDomain]="xDomain"
+                [yDomain]="yDomain"
+                [nwTooltip]="circleTooltipTmpl"
+                [context]="{ entity: entity }"
+                r=5
+                fill="#3D81FF"></circle>
+        </ng-container>
+    </svg>
+</div>
 
 <ng-template #circleTooltipTmpl let-entity="entity">
     {{entity | json}}

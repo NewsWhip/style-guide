@@ -2,6 +2,17 @@ import { DecimalPipe } from '@angular/common';
 import { Component, OnInit, VERSION } from '@angular/core';
 import { scaleLinear } from 'd3-scale';
 
+interface IQuadrant {
+    area: Array<[number, number, number]>;
+    id: string;
+    labels: {
+        className?: string;
+        value: string;
+        textAnchor: 'start' | 'middle' | 'end';
+        point: [number, number]
+    }[];
+}
+
 @Component({
     selector: 'app-home',
     templateUrl: './home.component.html',
@@ -469,15 +480,181 @@ export class HomeComponent implements OnInit {
             "score": 0.4387189871060839
         }
     ];
+    public quadrants: IQuadrant[];
+    public activeQuadrant: IQuadrant | null; 
+    public axisLabels;
 
     constructor(private _decimalPipe: DecimalPipe) { }
 
     ngOnInit(): void {
-        const articleCounts = this.entities.map(e => e.aggregation.current.publicationsCount);
         const interactionCounts = this.entities.map(e => e.aggregation.current.interactionsCount);
+        const articleCounts = this.entities.map(e => e.aggregation.current.publicationsCount);
 
         this.xDomain = [Math.min(...articleCounts), Math.max(...articleCounts)];
         this.yDomain = [Math.min(...interactionCounts), Math.max(...interactionCounts)];
+
+        this.quadrants = this.getQuadrants();
+        this.axisLabels = this.getAxisLabels();
     }
 
+    onQuadrantMouseenter(quadrant: IQuadrant): void {
+        this.activeQuadrant = quadrant;
+    }
+
+    onChartMouseleave(): void {
+        this.activeQuadrant = null;
+    }
+
+    getQuadrants(): IQuadrant[] {
+        const center = {
+            x: ((this.xDomain[1] - this.xDomain[0]) / 2) + this.xDomain[0],
+            y: ((this.yDomain[1] - this.yDomain[0]) / 2) + this.yDomain[0]
+        };
+
+        /**
+         * All quadrants are extended well beyond the bounds of the chart, with the out-of-bounds portions cutoff by the
+         * overflow: hidden on the chart svg
+         */
+        const left = this.xDomain[0] - this.xDomain[1];
+        const top = this.yDomain[1] * 2;
+        const right = this.xDomain[1] * 2;
+        const bottom = this.yDomain[0] - this.yDomain[1];
+
+        const topLeft: IQuadrant = {
+            area: [
+                [left, top, center.y] as [number, number, number],
+                [center.x, top, center.y] as [number, number, number]
+            ],
+            id: 'top-left',
+            labels: [
+                {
+                    className: 'bolded',
+                    value: 'Higher Public Interest',
+                    textAnchor: 'start',
+                    point: [this.xDomain[0], this.yDomain[1]]
+                },
+                {
+                    value: 'Lower Media Interest',
+                    textAnchor: 'start',
+                    point: [this.xDomain[0], this.yDomain[1]]
+                }
+            ]
+        };
+        
+        const topRight: IQuadrant = {
+            area: [
+                [center.x, top, center.y] as [number, number, number],
+                [right, top, center.y] as [number, number, number]
+            ],
+            id: 'top-right',
+            labels: [
+                {
+                    className: 'bolded',
+                    value: 'Higher Public Interest',
+                    textAnchor: 'end',
+                    point: [this.xDomain[1], this.yDomain[1]]
+                },
+                {
+                    className: 'bolded',
+                    value: 'Higher Media Interest',
+                    textAnchor: 'end',
+                    point: [this.xDomain[1], this.yDomain[1]]
+                }
+            ]
+        };
+
+        const bottomRight: IQuadrant = {
+            area: [
+                [center.x, center.y, bottom] as [number, number, number],
+                [right, center.y, bottom] as [number, number, number]
+            ],
+            id: 'bottom-right',
+            labels: [
+                {
+                    value: 'Lower Public Interest',
+                    textAnchor: 'end',
+                    point: [this.xDomain[1], this.yDomain[0]]
+                },
+                {
+                    className: 'bolded',
+                    value: 'Higher Media Interest',
+                    textAnchor: 'end',
+                    point: [this.xDomain[1], this.yDomain[0]]
+                }
+            ]
+        };
+
+        const bottomLeft: IQuadrant = {
+            area: [
+                [left, center.y, bottom] as [number, number, number],
+                [center.x, center.y, bottom] as [number, number, number]
+            ],
+            id: 'bottom-left',
+            labels: [
+                {
+                    value: 'Lower Public Interest',
+                    textAnchor: 'start',
+                    point: [this.xDomain[0], this.yDomain[0]]
+                },
+                {
+                    value: 'Lower Media Interest',
+                    textAnchor: 'start',
+                    point: [this.xDomain[0], this.yDomain[0]]
+                }
+            ]
+        };
+
+        return [
+            topLeft,
+            topRight,
+            bottomRight,
+            bottomLeft
+        ];
+    }
+
+    getAxisLabels() {
+        const center = {
+            x: ((this.xDomain[1] - this.xDomain[0]) / 2) + this.xDomain[0],
+            y: ((this.yDomain[1] - this.yDomain[0]) / 2) + this.yDomain[0]
+        };
+
+        const minX = {
+            point: [this.xDomain[0], center.y],
+            label: 'Articles',
+            value: this.xDomain[0],
+            textAnchor: 'end',
+            translate: '-8px 0'
+        }
+
+        const maxX = {
+            point: [this.xDomain[1], center.y],
+            label: 'Articles',
+            value: this.xDomain[1],
+            textAnchor: 'start',
+            translate: '8px 0'
+        }
+
+        const minY = {
+            point: [center.x, this.yDomain[0]],
+            label: 'Interactions',
+            value: this.yDomain[0],
+            textAnchor: 'middle',
+            translate: '0 20px'
+        }
+
+        const maxY = {
+            point: [center.x, this.yDomain[1]],
+            label: 'Interactions',
+            value: this.yDomain[1],
+            textAnchor: 'middle',
+            translate: '0 -26px'
+        }
+
+        return [
+            minX,
+            maxX,
+            minY,
+            maxY
+        ];
+    }
 }

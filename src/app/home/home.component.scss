@@ -1,0 +1,67 @@
+@import '../../_lib/sass/src/variables.scss';
+
+@mixin quadrant($translation, $label-translation) {
+    translate: $translation;
+
+    .quadrant-label {
+        translate: $label-translation;
+    }
+}
+
+.scatterplot-container {
+    background-color: $level3;
+    width: fit-content;
+}
+
+.quadrant {
+    path {
+        fill: transparent;
+        transition: fill 300ms linear;
+    }
+
+    .quadrant-label {
+        opacity: 0;
+        transition: opacity 300ms linear;
+        fill: white;
+        pointer-events: none;
+
+        &.bolded {
+            font-weight: bold;
+        }
+    }
+
+    &.top-left {
+        @include quadrant(0, -44px -26px);
+    }
+
+    &.top-right {
+        @include quadrant(1px, 44px -26px);
+    }
+
+    &.bottom-right {
+        @include quadrant(1px 1px, 44px 20px);
+    }
+
+    &.bottom-left {
+        @include quadrant(0 1px, -44px 20px);
+    }
+
+    &.active {
+        path {
+            fill: $level4;
+        }
+
+        .quadrant-label {
+            opacity: 1;
+        }
+    }
+}
+
+.axis-label {
+    font-size: 12px;
+    fill: $text-color-secondary;
+
+    .metric-value {
+        font-weight: bold;
+    }
+}
