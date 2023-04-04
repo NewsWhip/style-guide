@@ -260,8 +260,8 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
             debugMode: false,
             fontFamily: 'ProximaNova',
             fontWeight: 'normal',
-            maxFontSize: 60,
-            minFontSize: 10
+            maxFontSize: 40,
+            minFontSize: 12
         }
 
         return {
