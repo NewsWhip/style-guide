@@ -65,7 +65,7 @@ $nw-font-path: '~nw-style-guide/assets/fonts';
 - Add Font Awesome registry and authentication token to your global .npmrc file which is generated after logging in to npm 
 ```
     @fortawesome:registry=https://npm.fontawesome.com/
-    /npm.fontawesome.com/:_authToken=C5BA5CBA-3911-41FA-A98D-0DD2A6D57FC5
+    /npm.fontawesome.com/:_authToken=xxxxxxxxxxxxxxxxxxxxxxx // replace with authToken from .npmrc in Spike 
     //registry.npmjs.org/:_authToken=xxxxxxxxxxxxxxxxxxxxxxx // replace with your authToken from npm
 ```
 ### Features and fixes
