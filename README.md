@@ -62,6 +62,10 @@ $nw-font-path: '~nw-style-guide/assets/fonts';
 - You'll need to  [login](https://docs.npmjs.com/creating-a-new-npm-user-account#testing-your-new-account-with-npm-login) on a local command line
 - Request to be added as a maintainer to the nw-style-guide [npm package](https://www.npmjs.com/package/nw-style-guide)
 - [Enable 2FA](https://docs.npmjs.com/configuring-two-factor-authentication) on your npm account
+- Add Font Awesome registry and authentication token to your global .npmrc file which is generated after logging in to npm 
+    `@fortawesome:registry=https://npm.fontawesome.com/`
+    `/npm.fontawesome.com/:_authToken=C5BA5CBA-3911-41FA-A98D-0DD2A6D57FC5`
+    `//registry.npmjs.org/:_authToken=xxxxxxxxxxxxxxxxxxxxxxx // replace with your authToken from npm`
 
 ### Features and fixes
 
