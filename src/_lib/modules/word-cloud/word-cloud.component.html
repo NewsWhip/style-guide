@@ -1,1 +1,8 @@
+<div class="font-loader"
+    [style.fontFamily]="config.fontFamily"
+    [style.fontWeight]="config.fontWeight">
+    This element is hidden and is used to delay drawing to the canvas until the font is loaded. If we don't wait and the
+    font has not loaded, the word will be drawn to the canvas with a fallback font and, as a result, will not be positioned
+    correctly when used with the supplied font details
+</div>
 <ng-content></ng-content>
