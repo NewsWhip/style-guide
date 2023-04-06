@@ -21,4 +21,11 @@ nw-word-cloud {
             font-size $transition,
             line-height $transition;
     }
+
+    .font-loader {
+        visibility: hidden;
+        position: absolute;
+        pointer-events: none;
+        user-select: none;
+    }
 }

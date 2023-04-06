@@ -1,10 +1,13 @@
-import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, OnChanges, Output, Renderer2, SimpleChanges } from "@angular/core";
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, Inject, Input, OnChanges, Output, Renderer2, SimpleChanges } from "@angular/core";
+import { DOCUMENT } from "@angular/common";
 import { IBoundingBox } from "./models/IBoundingBox";
 import { IPoint } from "./models/IPoint";
 import { IWordCloudConfig } from "./models/IWordCloudConfig";
 import { IWord } from "./models/IWord";
 import { IWordWithFontSize } from "./models/IWordWithFontSize";
 import { IWordWithPosition } from "./models/IWordWithPosition";
+import { interval, Observable, of } from "rxjs";
+import { catchError, filter, map, startWith, take, timeout } from "rxjs/operators";
 
 @Component({
     selector: 'nw-word-cloud',
@@ -31,11 +34,14 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
      * make this value configurable by allowing it to be specified in the `options` input
      */
     private _spiralResolution = 0.3;
-    private _config: IWordCloudConfig;
+
+    public config: IWordCloudConfig;
 
     constructor(
         private _elRef: ElementRef<HTMLElement>,
-        private _renderer: Renderer2) {}
+        private _renderer: Renderer2,
+        private _cdRef: ChangeDetectorRef,
+        @Inject(DOCUMENT) private _document: Document) {}
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes.words?.currentValue !== changes.words?.previousValue) {
@@ -77,17 +83,22 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
     }
 
     private _init(): void {
-        this._config = this._getConfig();
+        this.config = this._getConfig();
         this._wordsWithFontSize = this._getWordsWithFontSize(this.words);
         this._positionedWords = [];
         this._drawCanvas();
         this._centerPoint = { x: this._canvas.width / 2, y: this._canvas.height / 2 };
-        this._positionWords();
 
-        if (this._config.debugMode) {
-            console.info('Config', this._config);
-            this._drawSprial();
-        }
+        this._isFontLoaded().subscribe(() => {
+            this._positionWords();
+    
+            if (this.config.debugMode) {
+                console.info('Config', this.config);
+                this._drawSprial();
+            }
+
+            this._cdRef.detectChanges();
+        });
     }
 
     /**
@@ -114,7 +125,7 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
         this._canvas.height = this._elRef.nativeElement.parentElement.clientHeight;
         this._ctx = this._canvas.getContext('2d');
 
-        if (this._config.debugMode) {
+        if (this.config.debugMode) {
             this._renderer.appendChild(this._elRef.nativeElement, this._canvas);
         }
     }
@@ -161,7 +172,7 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
                 canvasY: point.y
             });
 
-            if (this._config.debugMode) {
+            if (this.config.debugMode) {
                 this._ctx.strokeStyle = 'blue';
                 this._ctx.strokeRect(boundingBox.x, boundingBox.y, boundingBox.width, boundingBox.height);
                 this._drawWord(wordWithFontSize, point, this._ctx);
@@ -180,7 +191,7 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
         const sortedWords = this._positionedWords.sort((a, b) => a.value.localeCompare(b.value))
         this.wordsPositioned.emit(sortedWords);
 
-        if (this._config.debugMode) {
+        if (this.config.debugMode) {
             console.info(`Words positioned on sprial in ${performance.now() - t1}ms`);
         }
     }
@@ -191,7 +202,7 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
     }
 
     private _setFontDetails(ctx: CanvasRenderingContext2D, fontSize: number): void {
-        ctx.font = `${this._config.fontWeight} ${fontSize}px/1 ${this._config.fontFamily}`;
+        ctx.font = `${this.config.fontWeight} ${fontSize}px/1 ${this.config.fontFamily}`;
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
     }
@@ -220,7 +231,7 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
     private _getFontSize(wordWeight: number, minWeight: number, maxWeight: number): number {
         const weightDiff = maxWeight - minWeight;
         const factor = (wordWeight - minWeight) / weightDiff;
-        const fontSize = ((this._config.maxFontSize - this._config.minFontSize) * factor) + this._config.minFontSize;
+        const fontSize = ((this.config.maxFontSize - this.config.minFontSize) * factor) + this.config.minFontSize;
 
         return Math.round(fontSize);
     }
@@ -260,8 +271,8 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
             debugMode: false,
             fontFamily: 'ProximaNova',
             fontWeight: 'normal',
-            maxFontSize: 60,
-            minFontSize: 10
+            maxFontSize: 40,
+            minFontSize: 12
         }
 
         return {
@@ -304,7 +315,7 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
         const overflowX = overflowLeft + overflowRight;
         const xScale = this._canvas.width / (this._canvas.width + overflowX);
 
-        if (this._config.debugMode) {
+        if (this.config.debugMode) {
             console.info(`minX: ${minX}, maxX: ${maxX}, overflowX: ${overflowX}, xScale: ${xScale}`);
         }
 
@@ -315,7 +326,7 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
         const overflowY = overflowTop + overflowBottom;
         const yScale = this._canvas.height / (this._canvas.height + overflowY);
 
-        if (this._config.debugMode) {
+        if (this.config.debugMode) {
             console.info(`minY: ${minY}, maxY: ${maxY}, overflowY: ${overflowY}, yScale: ${yScale}`);
         }
 
@@ -334,5 +345,27 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
                 fontSize: pw.fontSize * xScale
             }
         });
+    }
+
+    private _isFontLoaded(): Observable<{ isLoaded: boolean }> {
+        const fontTimeout = 5000;
+        /**
+         * Needs to be a valid font string
+         * ref: https://developer.mozilla.org/en-US/docs/Web/CSS/font
+         */
+        const fontString = `${this.config.fontWeight} 12px ${this.config.fontFamily}`;
+
+        return interval(250).pipe(
+            startWith(0),
+            map(_x => this._document.fonts.check(fontString)),
+            filter(isLoaded => isLoaded),
+            map(isLoaded => ({ isLoaded })),
+            take(1),
+            timeout(fontTimeout),
+            catchError(_e => {
+                console.warn(`The font "${fontString}" failed to load within ${fontTimeout}ms`);
+                return of({ isLoaded: false });
+            })
+        )
     }
 }

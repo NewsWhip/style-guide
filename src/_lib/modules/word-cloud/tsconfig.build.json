@@ -3,7 +3,7 @@
     "compilerOptions": {
         "baseUrl": "../",
         "outDir": "../../../../distribution/word-cloud",
-        "rootDir": "../"
+        "rootDir": "."
     },
     "files": [
         "./index.ts"

@@ -9,7 +9,7 @@ interface IMyWord extends IWord {
     id: number;
 }
 
-fdescribe('WordCloudComponent', () => {
+describe('WordCloudComponent', () => {
     let comp: WordCloudComponent<IMyWord>;
     let fixture: ComponentFixture<WordCloudComponent<IMyWord>>;
     let de: DebugElement;
@@ -38,7 +38,7 @@ fdescribe('WordCloudComponent', () => {
             fixture.detectChanges();
 
 
-            expect(comp['_getFontSize'](wordWeight, minWeight, maxWeight)).toEqual(10);
+            expect(comp['_getFontSize'](wordWeight, minWeight, maxWeight)).toEqual(12);
         });
 
         it('should return maxFontSize when wordWeight is equal to maxWeight', () => {
@@ -52,7 +52,7 @@ fdescribe('WordCloudComponent', () => {
             fixture.detectChanges();
 
 
-            expect(comp['_getFontSize'](wordWeight, minWeight, maxWeight)).toEqual(60);
+            expect(comp['_getFontSize'](wordWeight, minWeight, maxWeight)).toEqual(40);
         });
 
         it('should return a font size between minFontSize and maxFontSize when wordWeight is between minWeight and maxWeight', () => {
