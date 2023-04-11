@@ -147,15 +147,18 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
             const point = this._placeOnSpiral(index);
             const metrics = this._ctx.measureText(wordWithFontSize.value);
             const fontHeight = (metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent) * 1.1;
+            const { paddingX, paddingY } = this.config;
+            const width = metrics.width + paddingX;
+            const height = fontHeight + paddingY;
 
             /**
              * Adjust the x and y based on textAlign = "center" and textBaseline = "middle";
              */
             const boundingBox: IBoundingBox = {
-                x: point.x - (metrics.width / 2),
-                y: point.y - (fontHeight / 2),
-                width: metrics.width,
-                height: fontHeight
+                x: point.x - (width / 2),
+                y: point.y - (height / 2),
+                width,
+                height
             }
 
             /**
@@ -272,7 +275,9 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
             fontFamily: 'ProximaNova',
             fontWeight: 'normal',
             maxFontSize: 40,
-            minFontSize: 12
+            minFontSize: 12,
+            paddingX: 5,
+            paddingY: 5
         }
 
         return {

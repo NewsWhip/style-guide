@@ -18,12 +18,15 @@ export class WordComponent<T extends IWord> implements OnChanges {
     public fontSize: number;
     @HostBinding('style.lineHeight.px')
     public lineHeight: number;
+    @HostBinding('style.width.px')
+    public width: number;
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes.word?.currentValue !== changes.word?.previousValue) {
             this.translate = `${this.word.x}px ${this.word.y}px`;
             this.fontSize = this.word.fontSize;
             this.lineHeight = this.word.height;
+            this.width = this.word.width;
         }
     }
 

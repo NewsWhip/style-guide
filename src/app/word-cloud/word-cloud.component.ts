@@ -112,8 +112,10 @@ export class WordCloudDemoComponent implements OnInit {
                 debugMode: false,
                 fontFamily: 'ProximaNova',
                 fontWeight: 'normal',
-                maxFontSize: 60,
-                minFontSize: 10
+                maxFontSize: 40,
+                minFontSize: 12,
+                paddingX: 5,
+                paddingY: 5
             }`
         ],
         [
@@ -166,6 +168,14 @@ export class WordCloudDemoComponent implements OnInit {
         {
             name: 'maxFontSize: number',
             description: 'The fontSize to use for the word with the largest weight'
+        },
+        {
+            name: 'paddingX: number',
+            description: 'A pixel value used to specify the horizontal space between words'
+        },
+        {
+            name: 'paddingY: number',
+            description: 'A pixel value used to specify the vertical space between words'
         }
     ]
 
