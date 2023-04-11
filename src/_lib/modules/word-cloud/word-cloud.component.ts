@@ -41,7 +41,8 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
         private _elRef: ElementRef<HTMLElement>,
         private _renderer: Renderer2,
         private _cdRef: ChangeDetectorRef,
-        @Inject(DOCUMENT) private _document: Document) {}
+        @Inject(DOCUMENT) private _document: Document,
+        public elRef: ElementRef<HTMLElement>) {}
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes.words?.currentValue !== changes.words?.previousValue) {
@@ -53,7 +54,7 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
      * Exports the canvas to a PNG image and returns the base64-encoded PNG data
      * @returns A string containing the base64-encoded PNG data of the canvas
      */
-    public exportCanvas(): string {
+    exportCanvas(): string {
         /**
          * Create a new canvas matching the dimensions of the original canvas. At this point, `_positionedWords` contains
          * the final positions of the words and we have no need to check for intersections, so we loop through our words
@@ -73,13 +74,17 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
         return exportCanvas.toDataURL('image/png');
     }
 
-    public downloadCanvas(filename: string): void {
+    downloadCanvas(filename: string): void {
         const dataUrl = this.exportCanvas();
         const link = document.createElement('a');
 
         link.download = `${filename}.png`;
         link.href = dataUrl;
         link.click();
+    }
+
+    onResize() {
+        this._init();
     }
 
     private _init(): void {

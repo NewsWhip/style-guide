@@ -2,10 +2,12 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { WordCloudComponent } from './word-cloud.component';
 import { WordComponent } from './word.component';
+import { ResizeObserverModule } from '../resize-observer';
 
 @NgModule({
     imports: [
-        CommonModule
+        CommonModule,
+        ResizeObserverModule
     ],
     declarations: [
         WordCloudComponent,
