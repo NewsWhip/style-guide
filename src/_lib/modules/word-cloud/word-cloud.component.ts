@@ -44,7 +44,10 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
         public elRef: ElementRef<HTMLElement>) {}
 
     ngOnChanges(changes: SimpleChanges): void {
-        if (changes.words?.currentValue !== changes.words?.previousValue) {
+        const wordsChange: boolean = changes.words?.currentValue !== changes.words?.previousValue;
+        const optionsChange: boolean = changes.options?.currentValue !== changes.options?.previousValue;
+
+        if (wordsChange || optionsChange) {
             this._init();
         }
     }

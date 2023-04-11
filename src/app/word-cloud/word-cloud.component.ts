@@ -4,6 +4,7 @@ import { WordCloudComponent } from '../../_lib/modules/word-cloud';
 import { IWord } from '../../_lib/modules/word-cloud/models/IWord';
 import { ActivatedRoute } from '@angular/router';
 import { ISnippet } from '../code/ISnippet';
+import { IWordCloudConfig } from '../../_lib/modules/word-cloud/models/IWordCloudConfig';
 
 interface IMyWord extends IWord {
     id: number;
@@ -21,6 +22,9 @@ export class WordCloudDemoComponent implements OnInit {
     public selectedTab: 'design' | 'api' = 'design';
     public words: IMyWord[];
     public positionedWords: IWordWithPosition<IMyWord>[] = [];
+    public config: Partial<IWordCloudConfig> = {
+        debugMode: false
+    }
 
     constructor(
         private _route: ActivatedRoute,

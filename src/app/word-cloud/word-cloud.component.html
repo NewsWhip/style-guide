@@ -21,7 +21,7 @@
     <div class="word-cloud-container">
         <nw-word-cloud
             [words]="words"
-            [options]="{ debugMode: false }"
+            [options]="config"
             (wordsPositioned)="onWordsPositioned($event)">
     
             <nw-word *ngFor="let word of positionedWords; trackBy: wordTrack"
