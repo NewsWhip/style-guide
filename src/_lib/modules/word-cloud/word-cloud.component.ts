@@ -337,24 +337,35 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
         const overflowBottom = maxY > this._canvas.height ? (maxY - this._canvas.height) : 0;
         const overflowY = overflowTop + overflowBottom;
         const yScale = this._canvas.height / (this._canvas.height + overflowY);
+        const minScale = Math.min(xScale, yScale);
 
         if (this.config.debugMode) {
             console.info(`minY: ${minY}, maxY: ${maxY}, overflowY: ${overflowY}, yScale: ${yScale}`);
         }
 
+        const moveTowardsCenter = (x: number, y: number, percentage: number) => {
+            return {
+                x: x * (1 - percentage) + this._centerPoint.x * percentage,
+                y: y * (1 - percentage) + this._centerPoint.y * percentage
+            };
+        }
+
         return this._positionedWords.map(pw => {
-            const translateX = overflowLeft * xScale;
-            const translateY = overflowTop * yScale;
+            const { x, y } = moveTowardsCenter(pw.x, pw.y, 1 - minScale);
+            const { x: canvasX, y: canvasY } = moveTowardsCenter(pw.canvasX, pw.canvasY, 1 - minScale);
+            const width = pw.width * minScale;;
+            const height = pw.height * minScale;
+            const fontSize = pw.fontSize * minScale;
 
             return {
                 ...pw,
-                canvasX: (pw.canvasX * xScale) + translateX,
-                canvasY: (pw.canvasY * yScale) + translateY,
-                x: (pw.x * xScale) + translateX,
-                y: (pw.y * yScale) + translateY,
-                width: pw.width * xScale,
-                height: pw.height * yScale,
-                fontSize: pw.fontSize * xScale
+                canvasX,
+                canvasY,
+                x,
+                y,
+                width,
+                height,
+                fontSize
             }
         });
     }
