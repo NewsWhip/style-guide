@@ -38,7 +38,7 @@ describe('WordCloudComponent', () => {
             fixture.detectChanges();
 
 
-            expect(comp['_getFontSize'](wordWeight, minWeight, maxWeight)).toEqual(14);
+            expect(comp['_getFontSize'](wordWeight, minWeight, maxWeight)).toEqual(16);
         });
 
         it('should return maxFontSize when wordWeight is equal to maxWeight', () => {
