@@ -21,7 +21,7 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
 
     @Output() wordsPositioned: EventEmitter<IWordWithPosition<T>[]> = new EventEmitter();
 
-    private _wordsWithFontSize: IWordWithFontSize<T>[];
+    private _truncatedWordsWithFontSize: IWordWithFontSize<T>[];
     private _positionedWords: IWordWithPosition<T>[];
     private _canvas: HTMLCanvasElement;
     private _ctx: CanvasRenderingContext2D;
@@ -91,7 +91,7 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
 
     private _init(): void {
         this.config = this._getConfig();
-        this._wordsWithFontSize = this._getWordsWithFontSize(this.words);
+        this._truncatedWordsWithFontSize = this._getTruncatedWordsWithFontSize(this.words);
         this._positionedWords = [];
         this._drawCanvas();
         this._centerPoint = { x: this._canvas.width / 2, y: this._canvas.height / 2 };
@@ -113,7 +113,7 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
      * @param words List of words with their respective weights
      * @returns A new list of words sorted by weight (largest to smallest) with their respective font sizes
      */
-    private _getWordsWithFontSize(words: T[]): IWordWithFontSize<T>[] {
+    private _getTruncatedWordsWithFontSize(words: T[]): IWordWithFontSize<T>[] {
         const weights = words.map(w => w.weight);
         const minWeight: number = Math.min(...weights);
         const maxWeight: number = Math.max(...weights);
@@ -121,7 +121,8 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
         return words.map(word => {
             return {
                 ...word,
-                fontSize: this._getFontSize(word.weight, minWeight, maxWeight)
+                fontSize: this._getFontSize(word.weight, minWeight, maxWeight),
+                truncatedValue: this._truncateWord(word.value)
             };
         }).sort((a, b) => b.weight - a.weight);
     }
@@ -152,7 +153,7 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
             this._setFontDetails(this._ctx, wordWithFontSize.fontSize);
 
             const point = this._placeOnSpiral(index);
-            const metrics = this._ctx.measureText(wordWithFontSize.value);
+            const metrics = this._ctx.measureText(wordWithFontSize.truncatedValue);
             const fontHeight = (metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent) * 1.1;
             const { paddingX, paddingY } = this.config;
             const width = metrics.width + paddingX;
@@ -189,7 +190,7 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
             }
         };
 
-        this._wordsWithFontSize.forEach(word => {
+        this._truncatedWordsWithFontSize.forEach(word => {
             positionWord(word);
         });
 
@@ -206,9 +207,16 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
         }
     }
 
+    private _truncateWord(value: string): string {
+        if (value.length > this.config.maxCharCount) {
+            return value.substring(0, 20) + '...'
+        }
+        return value;
+    }
+
     private _drawWord(wordWithFontSize: IWordWithFontSize<T>, point: IPoint, ctx: CanvasRenderingContext2D) {
         ctx.fillStyle = wordWithFontSize.exportColor;
-        ctx.fillText(wordWithFontSize.value, point.x, point.y);
+        ctx.fillText(wordWithFontSize.truncatedValue, point.x, point.y);
     }
 
     private _setFontDetails(ctx: CanvasRenderingContext2D, fontSize: number): void {
@@ -284,7 +292,8 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
             maxFontSize: 48,
             minFontSize: 16,
             paddingX: 8,
-            paddingY: 8
+            paddingY: 8,
+            maxCharCount: 20
         }
 
         return {

@@ -6,4 +6,5 @@ export interface IWordCloudConfig {
     maxFontSize: number;
     paddingX: number;
     paddingY: number;
+    maxCharCount: number;
 }
