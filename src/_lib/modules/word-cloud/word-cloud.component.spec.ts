@@ -38,7 +38,7 @@ describe('WordCloudComponent', () => {
             fixture.detectChanges();
 
 
-            expect(comp['_getFontSize'](wordWeight, minWeight, maxWeight)).toEqual(12);
+            expect(comp['_getFontSize'](wordWeight, minWeight, maxWeight)).toEqual(14);
         });
 
         it('should return maxFontSize when wordWeight is equal to maxWeight', () => {
@@ -52,7 +52,7 @@ describe('WordCloudComponent', () => {
             fixture.detectChanges();
 
 
-            expect(comp['_getFontSize'](wordWeight, minWeight, maxWeight)).toEqual(40);
+            expect(comp['_getFontSize'](wordWeight, minWeight, maxWeight)).toEqual(48);
         });
 
         it('should return a font size between minFontSize and maxFontSize when wordWeight is between minWeight and maxWeight', () => {
