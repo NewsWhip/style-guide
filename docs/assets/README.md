@@ -71,20 +71,20 @@ $nw-font-path: '~nw-style-guide/assets/fonts';
 ### Features and fixes
 
 1. Create a new feature branch off master
-1. Implement feature / fix in feature branch
-1. Create pull request
-1. Build the Github Pages demo in the feature branch
+2. Implement feature / fix in feature branch
+3. Create pull request
+4. Build the Github Pages demo in the feature branch
     - `npm run ghpages`
     - Make sure to `git add --all` not to end up with untracked files
     - Commit with message `build:ghpages`
     - Push changes
 
-1. Update the package version with the command `npm version {{version_type}}`. The version bump is automatically committed. See [here](https://docs.npmjs.com/cli/v6/commands/npm-version#synopsis) for further information on the `npm version` command
-1. Push changes
-1. PR is approved
-1. Merge pull request to master
-1. After merging to master, checkout master and pull the latest changes
-1. Publish the new package version to npm with `npm run package:release`
+5. Update the package version with the command `npm version {{version_type}}`. The version bump is automatically committed. See [here](https://docs.npmjs.com/cli/v6/commands/npm-version#synopsis) for further information on the `npm version` command
+6. Push changes
+7. PR is approved
+8. Merge pull request to master
+9. After merging to master, checkout master and pull the latest changes
+10. Publish the new package version to npm with `npm run package:release`
     - `npm run package:release` first runs the `package:build` script
     - it then publishes the built files to npm
 
