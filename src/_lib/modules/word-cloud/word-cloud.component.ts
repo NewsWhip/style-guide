@@ -334,18 +334,32 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
          */
         const overflowLeft = minX < 0 ? Math.abs(minX) : 0;
         const overflowRight = maxX > this._canvas.width ? (maxX - this._canvas.width) : 0;
-        const overflowX = overflowLeft + overflowRight;
+        /**
+         * Find the largest horizontal overflow and double it. As we're scaling towards the center, rather than summing the left
+         * and right overflows we need to take the largest and double it to ensure we don't end up with words being positioned out
+         * of bounds on the x-axis
+         */
+        const overflowX = Math.max(overflowLeft, overflowRight) * 2;
         const xScale = this._canvas.width / (this._canvas.width + overflowX);
 
         if (this.config.debugMode) {
             console.info(`minX: ${minX}, maxX: ${maxX}, overflowX: ${overflowX}, xScale: ${xScale}`);
         }
 
+        /**
+         * Determine the minimum and maximum y-coordinates of the words that are outside the canvas. The minimum y-coordinate is the topmost
+         * point of any out-of-bounds word, and the maximum Y-coordinate is the bottom-most point of any out-of-bounds word
+         */
         const minY = Math.min(...outOfBounds.map(oob => oob.y));
         const maxY = Math.max(...outOfBounds.map(oob => oob.y + oob.height));
         const overflowTop = minY < 0 ? Math.abs(minY) : 0;
         const overflowBottom = maxY > this._canvas.height ? (maxY - this._canvas.height) : 0;
-        const overflowY = overflowTop + overflowBottom;
+        /**
+         * Find the largest vertical overflow and double it. As we're scaling towards the center, rather than summing the top
+         * and bottom overflows we need to take the largest and double it to ensure we don't end up with words being positioned out
+         * of bounds on the y-axis
+         */
+        const overflowY = Math.max(overflowTop, overflowBottom) * 2;
         const yScale = this._canvas.height / (this._canvas.height + overflowY);
         const minScale = Math.min(xScale, yScale);
 
@@ -353,16 +367,31 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
             console.info(`minY: ${minY}, maxY: ${maxY}, overflowY: ${overflowY}, yScale: ${yScale}`);
         }
 
-        const moveTowardsCenter = (x: number, y: number, percentage: number) => {
+        const moveTowardsCenter = (x: number, y: number, height: number, scale: number) => {
+            const scaledHeightOffset = (height / 4) * scale;
+            const dx = this._centerPoint.x - x;
+            const dy = this._centerPoint.y - y + scaledHeightOffset;
+            /**
+             * Determine the distance between the current position and the target position (the center) and
+             * multiply it by our scale (between 0 and 1) to move partway towards the target
+             */
+            const dist = Math.sqrt((dx * dx) + (dy * dy)) * (1 - scale);
+            /**
+             * Calculate the angle at which we should move and the update our x and y using our calculated distance and angle
+             *
+             * ref: https://stackoverflow.com/a/5995931/1128290
+             */
+            const angle = Math.atan2(dy, dx);
+
             return {
-                x: x * (1 - percentage) + this._centerPoint.x * percentage,
-                y: y * (1 - percentage) + this._centerPoint.y * percentage
+                x: x + (dist * Math.cos(angle)),
+                y: y + (dist * Math.sin(angle))
             };
         }
 
         return this._positionedWords.map(pw => {
-            const { x, y } = moveTowardsCenter(pw.x, pw.y, 1 - minScale);
-            const { x: canvasX, y: canvasY } = moveTowardsCenter(pw.canvasX, pw.canvasY, 1 - minScale);
+            const { x, y } = moveTowardsCenter(pw.x, pw.y, pw.height, minScale);
+            const { x: canvasX, y: canvasY } = moveTowardsCenter(pw.canvasX, pw.canvasY, pw.height, minScale);
             const width = pw.width * minScale;;
             const height = pw.height * minScale;
             const fontSize = pw.fontSize * minScale;

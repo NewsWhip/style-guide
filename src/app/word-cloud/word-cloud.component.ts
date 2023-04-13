@@ -225,10 +225,9 @@ export class WordCloudDemoComponent implements OnInit {
     ]
 
     private _generateInputWords(): IMyWord[] {
-        // const words = ["document", "scatter", "outside", "Compromise", "finished", "reluctance", "discount", "content-stuff", "banish", "mainstream", "sail", "porter", "climb", "Europe", "fixture", "fail", "revolution", "consideration", "reader", "receipt", "half", "concentrate", "dynamic", "continuation", "racism", "crack", "treat", "greet", "coalition", "grain"];
-        const words = ["document", "scatter", "outside", "Compromise", "https://docs.google.com/presentation/d/13TisSnkhZ4WgpkXGTQtjQVSfJSPvZlDb-r3kiLImV-w/edit#slide=id.g22bafa1cdf4_0_27", "reluctance", "discount", "content", "banish", "mainstream", "sail", "porter", "climb", "Europe", "fixture", "fail", "revolution", "consideration", "reader", "receipt", "half", "concentrate", "dynamic", "continuation", "racism", "crack", "treat", "greet", "coalition", "grain"];
+        const words = ["document", "scatter", "outside", "Compromise", "finished", "reluctance", "discount", "content-stuff", "banish", "mainstream", "sail", "porter", "climb", "Europe", "fixture", "fail", "revolution", "consideration", "reader", "receipt", "half", "concentrate", "dynamic", "continuation", "racism", "crack", "treat", "greet", "coalition", "grain"];
 
-        return words.slice(0, 10).map((value, i) => {
+        return words.map((value, i) => {
             return {
                 value,
                 weight: Math.floor(Math.random() * 50 * (i + 1)),
