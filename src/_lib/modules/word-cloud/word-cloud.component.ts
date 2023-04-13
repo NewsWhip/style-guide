@@ -293,7 +293,8 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
             minFontSize: 16,
             paddingX: 8,
             paddingY: 8,
-            maxCharCount: 20
+            maxCharCount: 20,
+            resizeTolerance: 0
         }
 
         return {

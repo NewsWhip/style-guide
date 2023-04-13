@@ -116,10 +116,12 @@ export class WordCloudDemoComponent implements OnInit {
                 debugMode: false,
                 fontFamily: 'ProximaNova',
                 fontWeight: 'normal',
-                maxFontSize: 40,
-                minFontSize: 12,
-                paddingX: 5,
-                paddingY: 5
+                maxFontSize: 48,
+                minFontSize: 16,
+                paddingX: 8,
+                paddingY: 8,
+                maxCharCount: 20,
+                resizeTolerance: 0
             }`
         ],
         [
@@ -180,6 +182,14 @@ export class WordCloudDemoComponent implements OnInit {
         {
             name: 'paddingY: number',
             description: 'A pixel value used to specify the vertical space between words'
+        },
+        {
+            name: 'maxCharCount: number',
+            description: 'The character count at which words should be truncated and ellipsis appended'
+        },
+        {
+            name: 'resizeTolerance: number',
+            description: 'A pixel value specifying the minimum change in height or width that triggers the resize event'
         }
     ]
 
@@ -215,9 +225,10 @@ export class WordCloudDemoComponent implements OnInit {
     ]
 
     private _generateInputWords(): IMyWord[] {
-        const words = ["document", "scatter", "outside", "Compromise", "finished", "reluctance", "discount", "content", "banish", "mainstream", "sail", "porter", "climb", "Europe", "fixture", "fail", "revolution", "consideration", "reader", "receipt", "half", "concentrate", "dynamic", "continuation", "racism", "crack", "treat", "greet", "coalition", "grain"];
+        // const words = ["document", "scatter", "outside", "Compromise", "finished", "reluctance", "discount", "content-stuff", "banish", "mainstream", "sail", "porter", "climb", "Europe", "fixture", "fail", "revolution", "consideration", "reader", "receipt", "half", "concentrate", "dynamic", "continuation", "racism", "crack", "treat", "greet", "coalition", "grain"];
+        const words = ["document", "scatter", "outside", "Compromise", "https://docs.google.com/presentation/d/13TisSnkhZ4WgpkXGTQtjQVSfJSPvZlDb-r3kiLImV-w/edit#slide=id.g22bafa1cdf4_0_27", "reluctance", "discount", "content", "banish", "mainstream", "sail", "porter", "climb", "Europe", "fixture", "fail", "revolution", "consideration", "reader", "receipt", "half", "concentrate", "dynamic", "continuation", "racism", "crack", "treat", "greet", "coalition", "grain"];
 
-        return words.map((value, i) => {
+        return words.slice(0, 10).map((value, i) => {
             return {
                 value,
                 weight: Math.floor(Math.random() * 50 * (i + 1)),

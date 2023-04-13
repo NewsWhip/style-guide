@@ -1,6 +1,7 @@
 <div class="nw-word-cloud-container"
     nwResizeObserver
     [element]="elRef.nativeElement"
+    [tolerance]="config.resizeTolerance"
     (nwResize)="onResize()">
     <div class="font-loader"
         [style.fontFamily]="config.fontFamily"
