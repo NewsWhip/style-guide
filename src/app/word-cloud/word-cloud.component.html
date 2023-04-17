@@ -58,6 +58,14 @@
         styles and binding custom events.
     </p>
 
+    <h5>Animations</h5>
+    <p>
+        By default, when the position of a word in the cloud changes it animates to its new position over <code>600ms</code> with an easing
+        of <code>cubic-bezier(0.49, 0.07, 0.2, 0.99)</code>. The same timing and easing are used to the animate the font-size, line-height and width. To adjust the timing and easing any
+        parent element can define the <code>--nw-word-cloud-transition</code> CSS variable, for example <code>--nw-word-cloud-transition: 300ms linear;</code>, or to disable the animations
+        <code>--nw-word-cloud-transition: 0 linear;</code>
+    </p>
+
 
     <h4>Components</h4>
 
