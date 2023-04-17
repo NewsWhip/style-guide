@@ -51,7 +51,7 @@ export class ResizeObserverDirective implements OnInit, OnDestroy {
             tap(entry => this._currentElementRect = entry.contentRect),
             /**
              * use skip(1) because an event is emitting immediately
-             * after call .observe on the observer
+             * after calling .observe on the observer
              */
             skip(1),
             debounceTime(50),
