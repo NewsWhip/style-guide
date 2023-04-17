@@ -44,8 +44,8 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
         public elRef: ElementRef<HTMLElement>) {}
 
     ngOnChanges(changes: SimpleChanges): void {
-        const wordsChange: boolean = changes.words?.currentValue !== changes.words?.previousValue;
-        const optionsChange: boolean = changes.options?.currentValue !== changes.options?.previousValue;
+        const wordsChange = changes.words?.currentValue !== changes.words?.previousValue;
+        const optionsChange = changes.options?.currentValue !== changes.options?.previousValue;
 
         if (wordsChange || optionsChange) {
             this._init();
@@ -209,7 +209,7 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
 
     private _truncateWord(value: string): string {
         if (value.length > this.config.maxCharCount) {
-            return value.substring(0, 20) + '...'
+            return value.substring(0, this.config.maxCharCount) + '...'
         }
         return value;
     }
@@ -392,7 +392,7 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
         return this._positionedWords.map(pw => {
             const { x, y } = moveTowardsCenter(pw.x, pw.y, pw.height, minScale);
             const { x: canvasX, y: canvasY } = moveTowardsCenter(pw.canvasX, pw.canvasY, pw.height, minScale);
-            const width = pw.width * minScale;;
+            const width = pw.width * minScale;
             const height = pw.height * minScale;
             const fontSize = pw.fontSize * minScale;
 
