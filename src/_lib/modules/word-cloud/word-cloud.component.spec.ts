@@ -1,5 +1,7 @@
 import { DebugElement, SimpleChange } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { cloneDeep } from "lodash-es";
+import { ResizeObserverModule } from "../resize-observer";
 import { IBoundingBox } from "./models/IBoundingBox";
 import { IWord } from "./models/IWord";
 import { IWordWithPosition } from "./models/IWordWithPosition";
@@ -7,6 +9,13 @@ import { WordCloudComponent } from "./word-cloud.component";
 
 interface IMyWord extends IWord {
     id: number;
+}
+
+const mockWord: IMyWord = {
+    exportColor: 'black',
+    id: 1,
+    value: 'my test string',
+    weight: 10
 }
 
 describe('WordCloudComponent', () => {
@@ -18,7 +27,8 @@ describe('WordCloudComponent', () => {
         TestBed.configureTestingModule({
             declarations: [
                 WordCloudComponent
-            ]
+            ],
+            imports: [ResizeObserverModule]
         });
         fixture = TestBed.createComponent(WordCloudComponent<IMyWord>);
         comp = fixture.componentInstance;
@@ -38,7 +48,7 @@ describe('WordCloudComponent', () => {
             fixture.detectChanges();
 
 
-            expect(comp['_getFontSize'](wordWeight, minWeight, maxWeight)).toEqual(12);
+            expect(comp['_getFontSize'](wordWeight, minWeight, maxWeight)).toEqual(16);
         });
 
         it('should return maxFontSize when wordWeight is equal to maxWeight', () => {
@@ -52,7 +62,7 @@ describe('WordCloudComponent', () => {
             fixture.detectChanges();
 
 
-            expect(comp['_getFontSize'](wordWeight, minWeight, maxWeight)).toEqual(40);
+            expect(comp['_getFontSize'](wordWeight, minWeight, maxWeight)).toEqual(48);
         });
 
         it('should return a font size between minFontSize and maxFontSize when wordWeight is between minWeight and maxWeight', () => {
@@ -127,5 +137,26 @@ describe('WordCloudComponent', () => {
         });
     });
 
+    describe('_getTruncatedWordsWithFontSize', () => {
+        beforeEach(() => {
+            comp.options = { maxCharCount: 20 };
+            comp.words = [];
+            comp.ngOnChanges({
+                options: new SimpleChange(undefined, comp.options, true)
+            });
+        });
 
+        it('should not truncate words that do not exceed the max character count', () => {
+            const word = cloneDeep(mockWord);
+            const [result] = comp['_getTruncatedWordsWithFontSize']([word]);
+            expect(result.truncatedValue).toEqual('my test string');
+        });
+
+        it('should truncate words that exceed the max character count', () => {
+            const word = cloneDeep(mockWord);
+            word.value = "a string that exceeds the max character count";
+            const [result] = comp['_getTruncatedWordsWithFontSize']([word]);
+            expect(result.truncatedValue).toEqual('a string that exceed...');
+        });
+    });
 });

@@ -4,4 +4,8 @@ export interface IWordCloudConfig {
     fontWeight: string;
     minFontSize: number;
     maxFontSize: number;
+    paddingX: number;
+    paddingY: number;
+    maxCharCount: number;
+    resizeTolerance: number;
 }

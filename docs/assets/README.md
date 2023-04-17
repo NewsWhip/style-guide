@@ -62,24 +62,29 @@ $nw-font-path: '~nw-style-guide/assets/fonts';
 - You'll need to  [login](https://docs.npmjs.com/creating-a-new-npm-user-account#testing-your-new-account-with-npm-login) on a local command line
 - Request to be added as a maintainer to the nw-style-guide [npm package](https://www.npmjs.com/package/nw-style-guide)
 - [Enable 2FA](https://docs.npmjs.com/configuring-two-factor-authentication) on your npm account
-
+- Add Font Awesome registry and authentication token to your global .npmrc file which is generated after logging in to npm 
+```
+    @fortawesome:registry=https://npm.fontawesome.com/
+    /npm.fontawesome.com/:_authToken=xxxxxxxxxxxxxxxxxxxxxxx // replace with Fontawesome Pro authToken
+    //registry.npmjs.org/:_authToken=xxxxxxxxxxxxxxxxxxxxxxx // replace with your authToken from npm
+```
 ### Features and fixes
 
 1. Create a new feature branch off master
-1. Implement feature / fix in feature branch
-1. Create pull request
-1. Build the Github Pages demo in the feature branch
+2. Implement feature / fix in feature branch
+3. Create pull request
+4. Build the Github Pages demo in the feature branch
     - `npm run ghpages`
     - Make sure to `git add --all` not to end up with untracked files
     - Commit with message `build:ghpages`
     - Push changes
 
-1. Update the package version with the command `npm version {{version_type}}`. The version bump is automatically committed. See [here](https://docs.npmjs.com/cli/v6/commands/npm-version#synopsis) for further information on the `npm version` command
-1. Push changes
-1. PR is approved
-1. Merge pull request to master
-1. After merging to master, checkout master and pull the latest changes
-1. Publish the new package version to npm with `npm run package:release`
+5. Update the package version with the command `npm version {{version_type}}`. The version bump is automatically committed. See [here](https://docs.npmjs.com/cli/v6/commands/npm-version#synopsis) for further information on the `npm version` command
+6. Push changes
+7. PR is approved
+8. Merge pull request to master
+9. After merging to master, checkout master and pull the latest changes
+10. Publish the new package version to npm with `npm run package:release`
     - `npm run package:release` first runs the `package:build` script
     - it then publishes the built files to npm
 

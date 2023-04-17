@@ -12,8 +12,7 @@ import { catchError, filter, map, startWith, take, timeout } from "rxjs/operator
 @Component({
     selector: 'nw-word-cloud',
     templateUrl: './word-cloud.component.html',
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    preserveWhitespaces: false
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class WordCloudComponent<T extends IWord> implements OnChanges {
 
@@ -22,7 +21,7 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
 
     @Output() wordsPositioned: EventEmitter<IWordWithPosition<T>[]> = new EventEmitter();
 
-    private _wordsWithFontSize: IWordWithFontSize<T>[];
+    private _truncatedWordsWithFontSize: IWordWithFontSize<T>[];
     private _positionedWords: IWordWithPosition<T>[];
     private _canvas: HTMLCanvasElement;
     private _ctx: CanvasRenderingContext2D;
@@ -41,10 +40,14 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
         private _elRef: ElementRef<HTMLElement>,
         private _renderer: Renderer2,
         private _cdRef: ChangeDetectorRef,
-        @Inject(DOCUMENT) private _document: Document) {}
+        @Inject(DOCUMENT) private _document: Document,
+        public elRef: ElementRef<HTMLElement>) {}
 
     ngOnChanges(changes: SimpleChanges): void {
-        if (changes.words?.currentValue !== changes.words?.previousValue) {
+        const wordsChange: boolean = changes.words?.currentValue !== changes.words?.previousValue;
+        const optionsChange: boolean = changes.options?.currentValue !== changes.options?.previousValue;
+
+        if (wordsChange || optionsChange) {
             this._init();
         }
     }
@@ -53,7 +56,7 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
      * Exports the canvas to a PNG image and returns the base64-encoded PNG data
      * @returns A string containing the base64-encoded PNG data of the canvas
      */
-    public exportCanvas(): string {
+    exportCanvas(): string {
         /**
          * Create a new canvas matching the dimensions of the original canvas. At this point, `_positionedWords` contains
          * the final positions of the words and we have no need to check for intersections, so we loop through our words
@@ -73,7 +76,7 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
         return exportCanvas.toDataURL('image/png');
     }
 
-    public downloadCanvas(filename: string): void {
+    downloadCanvas(filename: string): void {
         const dataUrl = this.exportCanvas();
         const link = document.createElement('a');
 
@@ -82,9 +85,13 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
         link.click();
     }
 
+    onResize() {
+        this._init();
+    }
+
     private _init(): void {
         this.config = this._getConfig();
-        this._wordsWithFontSize = this._getWordsWithFontSize(this.words);
+        this._truncatedWordsWithFontSize = this._getTruncatedWordsWithFontSize(this.words);
         this._positionedWords = [];
         this._drawCanvas();
         this._centerPoint = { x: this._canvas.width / 2, y: this._canvas.height / 2 };
@@ -106,7 +113,7 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
      * @param words List of words with their respective weights
      * @returns A new list of words sorted by weight (largest to smallest) with their respective font sizes
      */
-    private _getWordsWithFontSize(words: T[]): IWordWithFontSize<T>[] {
+    private _getTruncatedWordsWithFontSize(words: T[]): IWordWithFontSize<T>[] {
         const weights = words.map(w => w.weight);
         const minWeight: number = Math.min(...weights);
         const maxWeight: number = Math.max(...weights);
@@ -114,7 +121,8 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
         return words.map(word => {
             return {
                 ...word,
-                fontSize: this._getFontSize(word.weight, minWeight, maxWeight)
+                fontSize: this._getFontSize(word.weight, minWeight, maxWeight),
+                truncatedValue: this._truncateWord(word.value)
             };
         }).sort((a, b) => b.weight - a.weight);
     }
@@ -145,17 +153,20 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
             this._setFontDetails(this._ctx, wordWithFontSize.fontSize);
 
             const point = this._placeOnSpiral(index);
-            const metrics = this._ctx.measureText(wordWithFontSize.value);
+            const metrics = this._ctx.measureText(wordWithFontSize.truncatedValue);
             const fontHeight = (metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent) * 1.1;
+            const { paddingX, paddingY } = this.config;
+            const width = metrics.width + paddingX;
+            const height = fontHeight + paddingY;
 
             /**
              * Adjust the x and y based on textAlign = "center" and textBaseline = "middle";
              */
             const boundingBox: IBoundingBox = {
-                x: point.x - (metrics.width / 2),
-                y: point.y - (fontHeight / 2),
-                width: metrics.width,
-                height: fontHeight
+                x: point.x - (width / 2),
+                y: point.y - (height / 2),
+                width,
+                height
             }
 
             /**
@@ -179,7 +190,7 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
             }
         };
 
-        this._wordsWithFontSize.forEach(word => {
+        this._truncatedWordsWithFontSize.forEach(word => {
             positionWord(word);
         });
 
@@ -196,9 +207,16 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
         }
     }
 
+    private _truncateWord(value: string): string {
+        if (value.length > this.config.maxCharCount) {
+            return value.substring(0, 20) + '...'
+        }
+        return value;
+    }
+
     private _drawWord(wordWithFontSize: IWordWithFontSize<T>, point: IPoint, ctx: CanvasRenderingContext2D) {
         ctx.fillStyle = wordWithFontSize.exportColor;
-        ctx.fillText(wordWithFontSize.value, point.x, point.y);
+        ctx.fillText(wordWithFontSize.truncatedValue, point.x, point.y);
     }
 
     private _setFontDetails(ctx: CanvasRenderingContext2D, fontSize: number): void {
@@ -271,8 +289,12 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
             debugMode: false,
             fontFamily: 'ProximaNova',
             fontWeight: 'normal',
-            maxFontSize: 40,
-            minFontSize: 12
+            maxFontSize: 48,
+            minFontSize: 16,
+            paddingX: 8,
+            paddingY: 8,
+            maxCharCount: 20,
+            resizeTolerance: 0
         }
 
         return {
@@ -312,37 +334,77 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
          */
         const overflowLeft = minX < 0 ? Math.abs(minX) : 0;
         const overflowRight = maxX > this._canvas.width ? (maxX - this._canvas.width) : 0;
-        const overflowX = overflowLeft + overflowRight;
+        /**
+         * Find the largest horizontal overflow and double it. As we're scaling towards the center, rather than summing the left
+         * and right overflows we need to take the largest and double it to ensure we don't end up with words being positioned out
+         * of bounds on the x-axis
+         */
+        const overflowX = Math.max(overflowLeft, overflowRight) * 2;
         const xScale = this._canvas.width / (this._canvas.width + overflowX);
 
         if (this.config.debugMode) {
             console.info(`minX: ${minX}, maxX: ${maxX}, overflowX: ${overflowX}, xScale: ${xScale}`);
         }
 
+        /**
+         * Determine the minimum and maximum y-coordinates of the words that are outside the canvas. The minimum y-coordinate is the topmost
+         * point of any out-of-bounds word, and the maximum Y-coordinate is the bottom-most point of any out-of-bounds word
+         */
         const minY = Math.min(...outOfBounds.map(oob => oob.y));
         const maxY = Math.max(...outOfBounds.map(oob => oob.y + oob.height));
         const overflowTop = minY < 0 ? Math.abs(minY) : 0;
         const overflowBottom = maxY > this._canvas.height ? (maxY - this._canvas.height) : 0;
-        const overflowY = overflowTop + overflowBottom;
+        /**
+         * Find the largest vertical overflow and double it. As we're scaling towards the center, rather than summing the top
+         * and bottom overflows we need to take the largest and double it to ensure we don't end up with words being positioned out
+         * of bounds on the y-axis
+         */
+        const overflowY = Math.max(overflowTop, overflowBottom) * 2;
         const yScale = this._canvas.height / (this._canvas.height + overflowY);
+        const minScale = Math.min(xScale, yScale);
 
         if (this.config.debugMode) {
             console.info(`minY: ${minY}, maxY: ${maxY}, overflowY: ${overflowY}, yScale: ${yScale}`);
         }
 
+        const moveTowardsCenter = (x: number, y: number, height: number, scale: number) => {
+            const scaledHeightOffset = (height / 4) * scale;
+            const dx = this._centerPoint.x - x;
+            const dy = this._centerPoint.y - y + scaledHeightOffset;
+            /**
+             * Determine the distance between the current position and the target position (the center) and
+             * multiply it by our scale (between 0 and 1) to move partway towards the target
+             */
+            const dist = Math.sqrt((dx * dx) + (dy * dy)) * (1 - scale);
+            /**
+             * Calculate the angle at which we should move and the update our x and y using our calculated distance and angle
+             *
+             * ref: https://stackoverflow.com/a/5995931/1128290
+             */
+            const angle = Math.atan2(dy, dx);
+
+            return {
+                x: x + (dist * Math.cos(angle)),
+                y: y + (dist * Math.sin(angle))
+            };
+        }
+
         return this._positionedWords.map(pw => {
-            const translateX = overflowLeft * xScale;
-            const translateY = overflowTop * yScale;
+            const { x, y } = moveTowardsCenter(pw.x, pw.y, pw.height, minScale);
+            const { x: canvasX, y: canvasY } = moveTowardsCenter(pw.canvasX, pw.canvasY, pw.height, minScale);
+            const width = pw.width * minScale;;
+            const height = pw.height * minScale;
+            const fontSize = pw.fontSize * minScale;
 
             return {
                 ...pw,
-                canvasX: (pw.canvasX * xScale) + translateX,
-                canvasY: (pw.canvasY * yScale) + translateY,
-                x: (pw.x * xScale) + translateX,
-                y: (pw.y * yScale) + translateY,
-                width: pw.width * xScale,
-                height: pw.height * yScale,
-                fontSize: pw.fontSize * xScale
+                canvasX,
+                canvasY,
+                x,
+                y,
+                width,
+                height,
+                fontSize
             }
         });
     }

@@ -4,6 +4,7 @@ import { WordCloudComponent } from '../../_lib/modules/word-cloud';
 import { IWord } from '../../_lib/modules/word-cloud/models/IWord';
 import { ActivatedRoute } from '@angular/router';
 import { ISnippet } from '../code/ISnippet';
+import { IWordCloudConfig } from '../../_lib/modules/word-cloud/models/IWordCloudConfig';
 
 interface IMyWord extends IWord {
     id: number;
@@ -21,6 +22,9 @@ export class WordCloudDemoComponent implements OnInit {
     public selectedTab: 'design' | 'api' = 'design';
     public words: IMyWord[];
     public positionedWords: IWordWithPosition<IMyWord>[] = [];
+    public config: Partial<IWordCloudConfig> = {
+        debugMode: false
+    }
 
     constructor(
         private _route: ActivatedRoute,
@@ -112,8 +116,12 @@ export class WordCloudDemoComponent implements OnInit {
                 debugMode: false,
                 fontFamily: 'ProximaNova',
                 fontWeight: 'normal',
-                maxFontSize: 60,
-                minFontSize: 10
+                maxFontSize: 48,
+                minFontSize: 16,
+                paddingX: 8,
+                paddingY: 8,
+                maxCharCount: 20,
+                resizeTolerance: 0
             }`
         ],
         [
@@ -166,6 +174,22 @@ export class WordCloudDemoComponent implements OnInit {
         {
             name: 'maxFontSize: number',
             description: 'The fontSize to use for the word with the largest weight'
+        },
+        {
+            name: 'paddingX: number',
+            description: 'A pixel value used to specify the horizontal space between words'
+        },
+        {
+            name: 'paddingY: number',
+            description: 'A pixel value used to specify the vertical space between words'
+        },
+        {
+            name: 'maxCharCount: number',
+            description: 'The character count at which words should be truncated and ellipsis appended'
+        },
+        {
+            name: 'resizeTolerance: number',
+            description: 'A pixel value specifying the minimum change in height or width that triggers the resize event'
         }
     ]
 
@@ -201,7 +225,7 @@ export class WordCloudDemoComponent implements OnInit {
     ]
 
     private _generateInputWords(): IMyWord[] {
-        const words = ["document", "scatter", "outside", "Compromise", "finished", "reluctance", "discount", "content", "banish", "mainstream", "sail", "porter", "climb", "Europe", "fixture", "fail", "revolution", "consideration", "reader", "receipt", "half", "concentrate", "dynamic", "continuation", "racism", "crack", "treat", "greet", "coalition", "grain"];
+        const words = ["document", "scatter", "outside", "Compromise", "finished", "reluctance", "discount", "content-stuff", "banish", "mainstream", "sail", "porter", "climb", "Europe", "fixture", "fail", "revolution", "consideration", "reader", "receipt", "half", "concentrate", "dynamic", "continuation", "racism", "crack", "treat", "greet", "coalition", "grain"];
 
         return words.map((value, i) => {
             return {
