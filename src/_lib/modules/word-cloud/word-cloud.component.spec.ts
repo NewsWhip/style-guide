@@ -1,6 +1,5 @@
 import { DebugElement, SimpleChange } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { cloneDeep } from "lodash-es";
 import { ResizeObserverModule } from "../resize-observer";
 import { IBoundingBox } from "./models/IBoundingBox";
 import { IWord } from "./models/IWord";
@@ -147,13 +146,13 @@ describe('WordCloudComponent', () => {
         });
 
         it('should not truncate words that do not exceed the max character count', () => {
-            const word = cloneDeep(mockWord);
+            const word = {...mockWord};
             const [result] = comp['_getTruncatedWordsWithFontSize']([word]);
             expect(result.truncatedValue).toEqual('my test string');
         });
 
         it('should truncate words that exceed the max character count', () => {
-            const word = cloneDeep(mockWord);
+            const word = {...mockWord};
             word.value = "a string that exceeds the max character count";
             const [result] = comp['_getTruncatedWordsWithFontSize']([word]);
             expect(result.truncatedValue).toEqual('a string that exceed...');

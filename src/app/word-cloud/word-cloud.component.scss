@@ -6,6 +6,8 @@
     margin-top: 16px;
     background-color: $level2;
     border-radius: $border-radius-large;
+    resize: both;
+    overflow: hidden;
 
     nw-word {
         color: $text-color-secondary;
