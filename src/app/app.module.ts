@@ -10,6 +10,7 @@ import { TabsModule } from '../_lib/modules/tabs';
 import { ChartsModule } from "../_lib/modules/charts/charts.module";
 import { LoaderModule } from '../_lib/modules/loader';
 import { CarouselModule } from '../_lib/modules/carousel/carousel.module';
+import { WordCloudModule } from '../_lib/modules/word-cloud';
 
 import { AppComponent } from './app.component';
 import { ButtonsComponent } from './buttons/buttons.component';
@@ -48,6 +49,7 @@ import { TooltipModule } from '../_lib/modules/tooltips';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { AppCodeComponent } from './code/code.component';
 import { FaqComponent } from './faq/faq-component';
+import { WordCloudDemoComponent } from './word-cloud/word-cloud.component';
 
 @NgModule({
   declarations: [
@@ -80,7 +82,8 @@ import { FaqComponent } from './faq/faq-component';
     CopyCodeComponent,
     AutofocusComponent,
     AppCodeComponent,
-    FaqComponent
+    FaqComponent,
+    WordCloudDemoComponent
   ],
   imports: [
     BrowserModule,
@@ -102,7 +105,8 @@ import { FaqComponent } from './faq/faq-component';
     EmailInputModule,
     AutoFocusModule,
     TooltipModule,
-    ScrollingModule
+    ScrollingModule,
+    WordCloudModule
   ],
   bootstrap: [AppComponent]
 })

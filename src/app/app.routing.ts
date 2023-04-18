@@ -26,6 +26,7 @@ import { LoaderComponent } from './loader/loader.component';
 import { CarouselComponent } from './carousel/carousel.component';
 import { EmailInputDemoComponent } from "./email-input/email-input-demo.component";
 import { AutofocusComponent } from './autofocus/autofocus.component';
+import { WordCloudDemoComponent } from './word-cloud/word-cloud.component';
 
 const appRoutes: Routes = [
     {
@@ -131,6 +132,10 @@ const appRoutes: Routes = [
     {
         path: 'autofocus',
         component: AutofocusComponent
+    },
+    {
+        path: 'word-cloud',
+        component: WordCloudDemoComponent
     }
 ];
 
