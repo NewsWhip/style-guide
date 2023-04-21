@@ -1,6 +1,7 @@
 import { DecimalPipe } from '@angular/common';
 import { Component, OnInit, VERSION } from '@angular/core';
 import { scaleLinear } from 'd3-scale';
+import { entities1, entities2 } from './test-data';
 
 interface IQuadrant {
     area: Array<[number, number, number]>;
@@ -11,6 +12,32 @@ interface IQuadrant {
         textAnchor: 'start' | 'middle' | 'end';
         point: [number, number]
     }[];
+}
+
+export interface IEntity {
+    x: number;
+    y: number;
+    name: string;
+    id: any;
+}
+
+export interface IGroupedEntity {
+    x: number;
+    y: number;
+    positionDetails: Square;
+    entities: IEntity[];
+    translate: string;
+}
+
+export type Square = {
+    position: [number, number];
+    x: number;
+    y: number;
+    textAnchor: 'start' | 'end' | 'middle';
+    dy: number;
+    dx: number;
+    width: number;
+    height: number;
 }
 
 @Component({
@@ -28,473 +55,54 @@ export class HomeComponent implements OnInit {
     public chartMargins = { top: 50, bottom: 50, left: 60, right: 60 };
     public axisTickFormat = (d: number) => this._decimalPipe.transform(d, '1.0-0');
     public axisScale = scaleLinear();
-    public entities = [
-        {
-            "id": 1670416684028,
-            "name": "united nations",
-            "aggregation": {
-                "current": {
-                    "interactionsCount": 247,
-                    "publicationsCount": 2
-                },
-                "previous": {
-                    "interactionsCount": 0,
-                    "publicationsCount": 0
-                }
-            },
-            "score": 3.7366755108690595
-        },
-        {
-            "id": 1670416698843,
-            "name": "the united nations",
-            "aggregation": {
-                "current": {
-                    "interactionsCount": 218,
-                    "publicationsCount": 2
-                },
-                "previous": {
-                    "interactionsCount": 0,
-                    "publicationsCount": 0
-                }
-            },
-            "score": 3.2979565237629758
-        },
-        {
-            "id": 2040215362,
-            "name": "menindee",
-            "aggregation": {
-                "current": {
-                    "interactionsCount": 218,
-                    "publicationsCount": 1
-                },
-                "previous": {
-                    "interactionsCount": 0,
-                    "publicationsCount": 0
-                }
-            },
-            "score": 3.2979565237629758
-        },
-        {
-            "id": 1672753673946,
-            "name": "guli",
-            "aggregation": {
-                "current": {
-                    "interactionsCount": 218,
-                    "publicationsCount": 1
-                },
-                "previous": {
-                    "interactionsCount": 0,
-                    "publicationsCount": 0
-                }
-            },
-            "score": 3.2979565237629758
-        },
-        {
-            "id": 1670553469435,
-            "name": "the murray-darling",
-            "aggregation": {
-                "current": {
-                    "interactionsCount": 218,
-                    "publicationsCount": 1
-                },
-                "previous": {
-                    "interactionsCount": 0,
-                    "publicationsCount": 0
-                }
-            },
-            "score": 3.2979565237629758
-        },
-        {
-            "id": 523029426,
-            "name": "amazon",
-            "aggregation": {
-                "current": {
-                    "interactionsCount": 218,
-                    "publicationsCount": 1
-                },
-                "previous": {
-                    "interactionsCount": 0,
-                    "publicationsCount": 0
-                }
-            },
-            "score": 3.2979565237629758
-        },
-        {
-            "id": 1476069599,
-            "name": "un",
-            "aggregation": {
-                "current": {
-                    "interactionsCount": 65,
-                    "publicationsCount": 4
-                },
-                "previous": {
-                    "interactionsCount": 0,
-                    "publicationsCount": 0
-                }
-            },
-            "score": 0.9833356607550156
-        },
-        {
-            "id": 1827472248,
-            "name": "brigham young university",
-            "aggregation": {
-                "current": {
-                    "interactionsCount": 36,
-                    "publicationsCount": 0
-                },
-                "previous": {
-                    "interactionsCount": 99,
-                    "publicationsCount": 0
-                }
-            },
-            "score": 0.5446166736489318
-        },
-        {
-            "id": 993062250,
-            "name": "salt lake temple",
-            "aggregation": {
-                "current": {
-                    "interactionsCount": 36,
-                    "publicationsCount": 0
-                },
-                "previous": {
-                    "interactionsCount": 99,
-                    "publicationsCount": 0
-                }
-            },
-            "score": 0.5446166736489318
-        },
-        {
-            "id": 1675188230242,
-            "name": "byu faculty",
-            "aggregation": {
-                "current": {
-                    "interactionsCount": 36,
-                    "publicationsCount": 0
-                },
-                "previous": {
-                    "interactionsCount": 0,
-                    "publicationsCount": 0
-                }
-            },
-            "score": 0.5446166736489318
-        },
-        {
-            "id": 1670416845026,
-            "name": "church",
-            "aggregation": {
-                "current": {
-                    "interactionsCount": 36,
-                    "publicationsCount": 0
-                },
-                "previous": {
-                    "interactionsCount": 0,
-                    "publicationsCount": 0
-                }
-            },
-            "score": 0.5446166736489318
-        },
-        {
-            "id": 1670419943596,
-            "name": "sustainability office",
-            "aggregation": {
-                "current": {
-                    "interactionsCount": 36,
-                    "publicationsCount": 0
-                },
-                "previous": {
-                    "interactionsCount": 0,
-                    "publicationsCount": 0
-                }
-            },
-            "score": 0.5446166736489318
-        },
-        {
-            "id": 1679385992455,
-            "name": "wallace stegner center symposium",
-            "aggregation": {
-                "current": {
-                    "interactionsCount": 36,
-                    "publicationsCount": 0
-                },
-                "previous": {
-                    "interactionsCount": 0,
-                    "publicationsCount": 0
-                }
-            },
-            "score": 0.5446166736489318
-        },
-        {
-            "id": 1671400834559,
-            "name": "the presiding bishopric",
-            "aggregation": {
-                "current": {
-                    "interactionsCount": 36,
-                    "publicationsCount": 0
-                },
-                "previous": {
-                    "interactionsCount": 0,
-                    "publicationsCount": 0
-                }
-            },
-            "score": 0.5446166736489318
-        },
-        {
-            "id": 1670419291099,
-            "name": "the university of utah",
-            "aggregation": {
-                "current": {
-                    "interactionsCount": 36,
-                    "publicationsCount": 0
-                },
-                "previous": {
-                    "interactionsCount": 0,
-                    "publicationsCount": 0
-                }
-            },
-            "score": 0.5446166736489318
-        },
-        {
-            "id": 1679385992460,
-            "name": "sustainability leadership committee",
-            "aggregation": {
-                "current": {
-                    "interactionsCount": 36,
-                    "publicationsCount": 0
-                },
-                "previous": {
-                    "interactionsCount": 0,
-                    "publicationsCount": 0
-                }
-            },
-            "score": 0.5446166736489318
-        },
-        {
-            "id": 1679385992457,
-            "name": "the utah legislature]",
-            "aggregation": {
-                "current": {
-                    "interactionsCount": 36,
-                    "publicationsCount": 0
-                },
-                "previous": {
-                    "interactionsCount": 0,
-                    "publicationsCount": 0
-                }
-            },
-            "score": 0.5446166736489318
-        },
-        {
-            "id": 1672770995867,
-            "name": "church office building plaza",
-            "aggregation": {
-                "current": {
-                    "interactionsCount": 36,
-                    "publicationsCount": 0
-                },
-                "previous": {
-                    "interactionsCount": 0,
-                    "publicationsCount": 0
-                }
-            },
-            "score": 0.5446166736489318
-        },
-        {
-            "id": 1671190026922,
-            "name": "earthecho",
-            "aggregation": {
-                "current": {
-                    "interactionsCount": 35,
-                    "publicationsCount": 0
-                },
-                "previous": {
-                    "interactionsCount": 0,
-                    "publicationsCount": 0
-                }
-            },
-            "score": 0.5294884327142392
-        },
-        {
-            "id": 1679398292780,
-            "name": "the earthecho international water",
-            "aggregation": {
-                "current": {
-                    "interactionsCount": 35,
-                    "publicationsCount": 0
-                },
-                "previous": {
-                    "interactionsCount": 0,
-                    "publicationsCount": 0
-                }
-            },
-            "score": 0.5294884327142392
-        },
-        {
-            "id": 1439939285,
-            "name": "earthecho international",
-            "aggregation": {
-                "current": {
-                    "interactionsCount": 35,
-                    "publicationsCount": 0
-                },
-                "previous": {
-                    "interactionsCount": 0,
-                    "publicationsCount": 0
-                }
-            },
-            "score": 0.5294884327142392
-        },
-        {
-            "id": 1670435985478,
-            "name": "metropolitan ministries",
-            "aggregation": {
-                "current": {
-                    "interactionsCount": 35,
-                    "publicationsCount": 0
-                },
-                "previous": {
-                    "interactionsCount": 0,
-                    "publicationsCount": 0
-                }
-            },
-            "score": 0.5294884327142392
-        },
-        {
-            "id": 1679507132959,
-            "name": "u.n. world water development",
-            "aggregation": {
-                "current": {
-                    "interactionsCount": 29,
-                    "publicationsCount": 1
-                },
-                "previous": {
-                    "interactionsCount": 0,
-                    "publicationsCount": 0
-                }
-            },
-            "score": 0.4387189871060839
-        },
-        {
-            "id": 1679351225491,
-            "name": "antonio guterres",
-            "aggregation": {
-                "current": {
-                    "interactionsCount": 29,
-                    "publicationsCount": 1
-                },
-                "previous": {
-                    "interactionsCount": 0,
-                    "publicationsCount": 0
-                }
-            },
-            "score": 0.4387189871060839
-        },
-        {
-            "id": 1670418668321,
-            "name": "opens",
-            "aggregation": {
-                "current": {
-                    "interactionsCount": 29,
-                    "publicationsCount": 1
-                },
-                "previous": {
-                    "interactionsCount": 0,
-                    "publicationsCount": 0
-                }
-            },
-            "score": 0.4387189871060839
-        },
-        {
-            "id": 1679507132956,
-            "name": "the water development report(opens",
-            "aggregation": {
-                "current": {
-                    "interactionsCount": 29,
-                    "publicationsCount": 1
-                },
-                "previous": {
-                    "interactionsCount": 0,
-                    "publicationsCount": 0
-                }
-            },
-            "score": 0.4387189871060839
-        },
-        {
-            "id": 1679507132954,
-            "name": "water foundation",
-            "aggregation": {
-                "current": {
-                    "interactionsCount": 29,
-                    "publicationsCount": 1
-                },
-                "previous": {
-                    "interactionsCount": 0,
-                    "publicationsCount": 0
-                }
-            },
-            "score": 0.4387189871060839
-        },
-        {
-            "id": 1671811429925,
-            "name": "desolenator",
-            "aggregation": {
-                "current": {
-                    "interactionsCount": 29,
-                    "publicationsCount": 1
-                },
-                "previous": {
-                    "interactionsCount": 0,
-                    "publicationsCount": 0
-                }
-            },
-            "score": 0.4387189871060839
-        },
-        {
-            "id": 1679507132952,
-            "name": "world water day(opens",
-            "aggregation": {
-                "current": {
-                    "interactionsCount": 29,
-                    "publicationsCount": 1
-                },
-                "previous": {
-                    "interactionsCount": 0,
-                    "publicationsCount": 0
-                }
-            },
-            "score": 0.4387189871060839
-        },
-        {
-            "id": 1679507132950,
-            "name": "cloudfisher",
-            "aggregation": {
-                "current": {
-                    "interactionsCount": 29,
-                    "publicationsCount": 1
-                },
-                "previous": {
-                    "interactionsCount": 0,
-                    "publicationsCount": 0
-                }
-            },
-            "score": 0.4387189871060839
-        }
-    ];
+    public entities1 = entities1;
+    public entities2 = entities2;
+    public entities3: IEntity[];
     public quadrants: IQuadrant[];
     public activeQuadrant: IQuadrant | null; 
     public axisLabels;
+    public get entities(): IEntity[] {
+        return this.entities3;
+    }
+    public groupedEntities: IGroupedEntity[];
+    public activeGroup: IGroupedEntity;
+    public squares: Square[];
+    public maxEntitiesToDisplay = 3;
 
     constructor(private _decimalPipe: DecimalPipe) { }
 
+    getEntities3() {
+        const articleCountRange = [2, 400];
+        const interactionRange = [234, 12587];
+
+        const randomInRange = (min: number, max: number) => {
+            min = Math.ceil(min);
+            max = Math.floor(max);
+            return Math.floor(Math.random() * (max - min + 1) + min);
+        }
+
+        return entities2.slice(0, 20).map(e => {
+            return {
+                ...e,
+                x: randomInRange(articleCountRange[0], articleCountRange[1]),
+                y: randomInRange(interactionRange[0], interactionRange[1])
+            }
+        });
+    }
+
     ngOnInit(): void {
-        const interactionCounts = this.entities.map(e => e.aggregation.current.interactionsCount);
-        const articleCounts = this.entities.map(e => e.aggregation.current.publicationsCount);
+        this.entities3 = this.getEntities3();
+        const interactionCounts = this.entities.map(e => e.y);
+        const articleCounts = this.entities.map(e => e.x);
 
         this.xDomain = [Math.min(...articleCounts), Math.max(...articleCounts)];
         this.yDomain = [Math.min(...interactionCounts), Math.max(...interactionCounts)];
 
         this.quadrants = this.getQuadrants();
         this.axisLabels = this.getAxisLabels();
+        this.squares = this.divideChart();
+        this.groupedEntities = this.getGroupedEntities();
+        console.log(this.groupedEntities);
     }
 
     onQuadrantMouseenter(quadrant: IQuadrant): void {
@@ -656,5 +264,120 @@ export class HomeComponent implements OnInit {
             minY,
             maxY
         ];
+    }
+
+    getGroupedEntities(): IGroupedEntity[] {
+        type MapKey = `${number}:${number}`;
+        const map = new Map<MapKey, IEntity[]>();
+
+        this.entities.forEach(e => {
+            const key: MapKey = `${e.x}:${e.y}`;
+
+            if (map.has(key)) {
+                const currentValue = map.get(key);
+                map.set(key, currentValue.concat(e));
+            } else {
+                map.set(key, [e])
+            }
+        });
+
+
+        return [...map.keys()].map(key => {
+            const [x, y] = key.split(':').map(val => +val);
+            const entities = map.get(key);
+            const square = this.squares.find(sq => {
+                const x1 = sq.x - sq.width;
+                const y1 = sq.y + sq.height;
+
+                return (x >= x1 && x <= sq.x) && (y <= y1 && y >= sq.y);
+            });
+
+            const translate = (square.dy && square.textAnchor !== 'middle') ?
+                `0 ${-square.dy}px`:
+                '0 0';
+
+            return {
+                x,
+                y,
+                positionDetails: square,
+                entities,
+                translate
+            }
+        })
+    }
+
+    divideChart(numDivisions: number = 16): Square[] {
+        const divisor = numDivisions / 4;
+        const colWidth = (this.xDomain[1] - this.xDomain[0]) / divisor;
+        const rowHeight = (this.yDomain[1] - this.yDomain[0]) / divisor;
+        const yOffset = 15;
+        const xOffset = 10;
+
+        const getHorizonatalAlignment = (row: number): { textAnchor: Square['textAnchor']; dx: number } => {
+            if (row === 0) {
+                return {
+                    textAnchor: 'start',
+                    dx: xOffset
+                };
+            }
+
+            if (row === (divisor - 1)) {
+                return {
+                    textAnchor: 'end',
+                    dx: -xOffset
+                };
+            }
+
+            return {
+                textAnchor: 'middle',
+                dx: 0
+            };
+        };
+
+        const getDy = (col: number) => {
+            if (col <= (divisor / 2 - 1)) {
+                return yOffset;
+            }
+
+            return -yOffset;
+        };
+
+        let matrix: Square[] = [];
+
+        for (let row = 0; row < divisor; row++) {
+            for (let col = 0; col < divisor; col++) {
+                const { textAnchor, dx} = getHorizonatalAlignment(row);
+                const dy = getDy(col);
+
+                matrix.push({
+                    position: [row, col],
+                    x: this.xDomain[0] + ((row + 1) * colWidth),
+                    y: this.yDomain[1] - ((col + 1) * rowHeight),
+                    textAnchor,
+                    dx,
+                    dy,
+                    width: colWidth,
+                    height: rowHeight
+                });
+            }
+        }
+
+        return matrix;
+    }
+
+    onGroupMouseenter(group: IGroupedEntity) {
+        this.activeGroup = group;
+
+        /**
+         * Reorder the groups so that active group is re-rendered on top
+         */
+        const fromIndex = this.groupedEntities.indexOf(this.activeGroup);
+        const toIndex = this.groupedEntities.length - 1;
+        this.groupedEntities.splice(fromIndex, 1);
+        this.groupedEntities.splice(toIndex, 0, this.activeGroup);
+    }
+
+    onGroupMouseleave() {
+        this.activeGroup = null;
     }
 }

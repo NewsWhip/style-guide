@@ -6,6 +6,7 @@
     <svg nw-chart
         style="width: 700px; height: 700px; display: block;"
         [margins]="chartMargins"
+        [class.has-active-group]="activeGroup"
         (mouseleave)="onChartMouseleave()">
     
         <g *ngFor="let q of quadrants"
@@ -57,15 +58,104 @@
             [tickSizeOuter]="0"
             [align]="'center'"></g>
     
-        <ng-container *ngFor="let entity of entities">
-            <circle [nw-circle]="[entity.aggregation.current.publicationsCount, entity.aggregation.current.interactionsCount]"
+        <!-- <ng-container *ngFor="let entity of entities">
+            <circle [nw-circle]="[entity.x, entity.y]"
                 [xDomain]="xDomain"
                 [yDomain]="yDomain"
                 [nwTooltip]="circleTooltipTmpl"
                 [context]="{ entity: entity }"
                 r=5
                 fill="#3D81FF"></circle>
+        </ng-container> -->
+
+        <!-- <ng-container *ngFor="let square of squares">
+            <circle
+                [nw-circle]="[square.x, square.y]"
+                [xDomain]="xDomain"
+                [yDomain]="yDomain"
+                r=3
+                fill="green"></circle>
+
+            <text class="entity-label-group"
+                [attr.data-id]="square.position"
+                [nw-text]="[square.x, square.y]"
+                [xDomain]="xDomain"
+                [yDomain]="yDomain"
+                [xScale]="axisScale"
+                [attr.text-anchor]="square.textAnchor"
+                [attr.dy]="square.dy"
+                fill="white"
+                font-size="10px">
+                {{square.position}}
+            </text>
+        </ng-container> -->
+
+        <ng-container *ngFor="let group of groupedEntities">
+            <ng-container *ngTemplateOutlet="entityGroupTmpl; context: { group }"></ng-container>
         </ng-container>
+
+        <ng-template #entityGroupTmpl let-group="group">
+            <g class="entity-group"
+                (mouseenter)="onGroupMouseenter(group)"
+                (mouseleave)="onGroupMouseleave()"
+                [class.active]="group === activeGroup">
+                <circle
+                    [nw-circle]="[group.x, group.y]"
+                    [xDomain]="xDomain"
+                    [yDomain]="yDomain"
+                    r=5
+                    fill="#3D81FF"></circle>
+        
+                <text class="entity-label-group"
+                    [nw-text]="[group.x, group.y]"
+                    [xDomain]="xDomain"
+                    [yDomain]="yDomain"
+                    [xScale]="axisScale"
+                    [attr.text-anchor]="group.positionDetails.textAnchor"
+                    [style.translate]="group.translate">
+                    <tspan *ngFor="let entity of group.entities | slice:0:(group === activeGroup ? Infinity : maxEntitiesToDisplay); let index = index"
+                        x="0"
+                        [attr.dx]="group.positionDetails.dx"
+                        [attr.dy]="group.positionDetails.dy"
+                        class="entity-label">{{entity.name}}</tspan>
+        
+                    <tspan *ngIf="group !== activeGroup && group.entities.length > maxEntitiesToDisplay"
+                        x="0"
+                        [attr.dx]="group.positionDetails.dx"
+                        [attr.dy]="group.positionDetails.dy">+ {{group.entities.length - maxEntitiesToDisplay}} more</tspan>
+                </text>
+            </g>
+        </ng-template>
+        <!-- <g class="entity-group" *ngFor="let group of groupedEntities"
+            [class.active]="group === activeGroup">
+            <circle
+                [nw-circle]="[group.x, group.y]"
+                [xDomain]="xDomain"
+                [yDomain]="yDomain"
+                r=5
+                fill="#3D81FF"></circle>
+
+            <text class="entity-label-group"
+                (mouseenter)="onGroupMouseenter(group)"
+                (mouseleave)="onGroupMouseleave()"
+                [nw-text]="[group.x, group.y]"
+                [xDomain]="xDomain"
+                [yDomain]="yDomain"
+                [xScale]="axisScale"
+                [attr.text-anchor]="group.positionDetails.textAnchor"
+                [style.translate]="group.translate">
+                <tspan *ngFor="let entity of group.entities | slice:0:(group === activeGroup ? Infinity : maxEntitiesToDisplay); let index = index"
+                    x="0"
+                    [attr.dx]="group.positionDetails.dx"
+                    [attr.dy]="group.positionDetails.dy"
+                    class="entity-label">{{entity.name}}</tspan>
+
+                <tspan *ngIf="group !== activeGroup && group.entities.length > maxEntitiesToDisplay"
+                    x="0"
+                    [attr.dx]="group.positionDetails.dx"
+                    [attr.dy]="group.positionDetails.dy">+ {{group.entities.length - maxEntitiesToDisplay}} more</tspan>
+            </text>
+        </g> -->
     </svg>
 </div>
 

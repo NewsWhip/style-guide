@@ -65,3 +65,31 @@
         font-weight: bold;
     }
 }
+
+.entity-group {
+    pointer-events: bounding-box;
+    transition: opacity 300ms linear;
+
+    .entity-label-group {
+        fill: $text-color-secondary;
+        font-size: 14px;
+        font-weight: bold;
+        dominant-baseline: central;
+    }
+
+    &.active {
+        .entity-label-group {
+            fill: $text-color;
+        }
+
+        +.entity-group {
+            opacity: 0.1;
+        }
+    }
+}
+
+.has-active-group {
+    .entity-group:not(.active) {
+        opacity: 0.2;
+    }
+}
