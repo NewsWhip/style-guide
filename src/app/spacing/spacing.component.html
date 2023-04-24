@@ -42,37 +42,9 @@
 <hr>
 <h3>Examples</h3>
 
-<pre>
+<app-code *ngFor="let snippet of snippets" [snippet]="snippet"></app-code>
 
-<code>
-    {{'.ml-4 {
-        margin-left: 4px;
-    }'}}
-</code>
+<h3>Usage</h3>
+<app-code *ngFor="let snippet of usageSnippets" [snippet]="snippet"></app-code>
 
-<code>
-    {{'.mt-16 {
-        margin-top: 16px;
-    }'}}
-</code>
 
-<code>
-    {{'.mx-4 {
-        margin-left: 4px;
-        margin-right: 4px;
-    }'}}
-</code>
-
-<code>
-    {{'.mr-auto {
-        margin-right: auto;
-    }'}}
-</code>
-
-<code>
-    {{'.p-8 {
-        padding: 8px;
-    }'}}
-</code>
-
-</pre>
