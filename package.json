@@ -9,7 +9,6 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "start:heroku": "node heroku-server.js",
     "build": "ng build --configuration production",
     "test": "ng test",
     "lint": "ng lint",
