@@ -15,7 +15,7 @@ const mockWord: IMyWord = {
     id: 1,
     value: 'my test string',
     weight: 10
-}
+};
 
 describe('WordCloudComponent', () => {
     let comp: WordCloudComponent<IMyWord>;

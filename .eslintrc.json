@@ -1,7 +1,6 @@
 {
   "root": true,
   "ignorePatterns": [
-    "src/**/*.spec.ts",
     "src/app/"
   ],
   "overrides": [
@@ -11,7 +10,8 @@
       ],
       "parserOptions": {
         "project": [
-          "src/tsconfig.app.json"
+          "src/tsconfig.app.json",
+          "src/tsconfig.spec.json"
         ],
         "createDefaultProgram": true
       },
@@ -45,6 +45,10 @@
         "@typescript-eslint/no-shadow": "off",
         "@typescript-eslint/prefer-for-of": "off",
         "@typescript-eslint/quotes": "off",
+        "@typescript-eslint/dot-notation": ["error", {
+          "allowPrivateClassPropertyAccess": true,
+          "allowProtectedClassPropertyAccess": true
+        }],
         "@typescript-eslint/naming-convention": [
           "error",
           { 
