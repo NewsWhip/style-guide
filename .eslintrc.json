@@ -25,45 +25,54 @@
         "@angular-eslint/no-lifecycle-call": "error",
         "@angular-eslint/prefer-on-push-component-change-detection": "error",
         "@angular-eslint/use-component-view-encapsulation": "error",
-        "@typescript-eslint/dot-notation": "off",
-        "no-empty-function": "off",
-        "@typescript-eslint/no-empty-function": ["error"],
-        "no-multiple-empty-lines": "error",
-        "no-unused-expressions": "error",
-        "prefer-const": [
-          "error",
-          {
-            "destructuring": "all"
-          }
-        ],
-        "semi": "error",
-        "@angular-eslint/component-selector": [
-          "error",
-          {
+        "@angular-eslint/contextual-lifecycle": "error",
+        "@angular-eslint/no-output-on-prefix": "error",
+        "@angular-eslint/no-inputs-metadata-property": "error",
+        "@angular-eslint/no-outputs-metadata-property": "error",
+        "@angular-eslint/no-conflicting-lifecycle": "error",
+        "@angular-eslint/no-output-rename": "error",
+        "@angular-eslint/use-lifecycle-interface": "error",
+        "@angular-eslint/use-pipe-transform-interface": "error",
+        "@angular-eslint/component-class-suffix": "error",
+        "@angular-eslint/directive-class-suffix": "error",
+        "@angular-eslint/no-host-metadata-property": "off",
+        "@angular-eslint/no-input-rename": "off",
+        "@angular-eslint/component-selector": ["error", {
             "type": ["element", "attribute"],
             "prefix": "nw",
             "style": "kebab-case"
-          }
-        ],
-        "@angular-eslint/directive-selector": [
-          "error",
-          {
-            "type": "attribute",
-            "prefix": "nw",
-            "style": "camelCase"
-          }
-        ],
+        }],
+        "@angular-eslint/directive-selector": ["error", {
+          "type": "attribute",
+          "prefix": "nw",
+          "style": "camelCase"
+        }],
+        "@typescript-eslint/no-empty-function": ["error"],
+        "@typescript-eslint/dot-notation": "off",
         "@typescript-eslint/prefer-function-type": "error",
+        "@typescript-eslint/consistent-type-assertions": "error",
+        "@typescript-eslint/no-empty-interface": "error",
+        "@typescript-eslint/no-misused-new": "error",
+        "@typescript-eslint/no-non-null-assertion": "error",
+        "@typescript-eslint/no-throw-literal": "error",
+        "@typescript-eslint/member-delimiter-style": "error",
+        "@typescript-eslint/ban-types": "off",
+        "@typescript-eslint/member-ordering": "off",
+        "@typescript-eslint/no-inferrable-types": "off",
+        "@typescript-eslint/no-shadow": "off",
+        "@typescript-eslint/prefer-for-of": "off",
+        "@typescript-eslint/quotes": "off",
+        "@typescript-eslint/type-annotation-spacing": "error",
         "@typescript-eslint/naming-convention": [
           "error",
-          { // ignore enum memebers
+          { 
+            // Ignore enum memebers
             "selector": [
               "enumMember"
             ],
             "format": null
           },
-          { // replaces "interface-name": [true, "always-prefix"]
-            // modified from example: https://tinyurl.com/6cwmfryj
+          {
             "selector": "interface",
             "format": ["PascalCase"],
             "custom": {
@@ -84,6 +93,13 @@
             "leadingUnderscore": "require"
           }
         ],
+        "no-empty-function": "off",
+        "no-multiple-empty-lines": "error",
+        "no-unused-expressions": "error",
+        "prefer-const": ["error", {
+          "destructuring": "all"
+        }],
+        "semi": "error",
         "curly": "error",
         "no-restricted-imports": [
           "error", {
@@ -95,7 +111,6 @@
           }
         ],
         "no-caller": "error",
-        "@typescript-eslint/consistent-type-assertions": "error",
         "no-bitwise": "error",
         "no-new-wrappers": "error",
         "no-debugger": "error",
@@ -103,28 +118,12 @@
         // Set to false because of the following example
         // constructor(private _errorsService: ErrorsService) {}
         "no-empty": "off",
-        "@typescript-eslint/no-empty-interface": "error",
         "no-eval": "error",
-        "@typescript-eslint/no-misused-new": "error",
-        "@typescript-eslint/no-non-null-assertion": "error",
-        "@typescript-eslint/no-throw-literal": "error",
         "no-fallthrough": "error",
         "no-undef-init": "error",
         "no-var": "error",
         "radix": "error",
         "eqeqeq": "error",
-        "@typescript-eslint/member-delimiter-style": "error",
-        "@angular-eslint/contextual-lifecycle": "error",
-        "@angular-eslint/no-output-on-prefix": "error",
-        "@angular-eslint/no-inputs-metadata-property": "error",
-        "@angular-eslint/no-outputs-metadata-property": "error",
-        "@angular-eslint/no-conflicting-lifecycle": "error",
-        "@angular-eslint/no-output-rename": "error",
-        "@angular-eslint/use-lifecycle-interface": "error",
-        "@angular-eslint/use-pipe-transform-interface": "error",
-        "@angular-eslint/component-class-suffix": "error",
-        "@angular-eslint/directive-class-suffix": "error",
-        "@angular-eslint/no-host-metadata-property": "off",
         "deprecation/deprecation": "warn",
 
         /* The following rules were added and set to "off" in order to address the new linting errors that appeared
@@ -137,13 +136,6 @@
         "no-console": "off",
         "no-underscore-dangle": "off",
         "quote-props": "off",
-        "@typescript-eslint/ban-types": "off",
-        "@typescript-eslint/member-ordering": "off",
-        "@typescript-eslint/no-inferrable-types": "off",
-        "@typescript-eslint/no-shadow": "off",
-        "@typescript-eslint/prefer-for-of": "off",
-        "@typescript-eslint/quotes": "off",
-        "@angular-eslint/no-input-rename": "off",
         "object-shorthand": "off",
         "jsdoc/newline-after-description": "error",
         "jsdoc/check-alignment": "error",
@@ -165,7 +157,6 @@
         ],
         "no-trailing-spaces": "error",
         "spaced-comment": "error",
-        "@typescript-eslint/type-annotation-spacing": "error",
         "no-multi-spaces": "error",
         "comma-spacing": "error",
         "array-bracket-spacing": "error",
