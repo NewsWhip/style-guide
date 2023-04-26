@@ -5,8 +5,8 @@ import { map } from "rxjs/operators";
 import { Subscription, Observable, merge } from 'rxjs';
 
 @Directive({
-  selector: '[nwDropdownMenu]',
-  exportAs: 'nw-dropdown-menu'
+    selector: '[nwDropdownMenu]',
+    exportAs: 'nw-dropdown-menu'
 })
 export class DropdownMenuDirective implements AfterContentInit, OnDestroy {
 
@@ -25,7 +25,7 @@ export class DropdownMenuDirective implements AfterContentInit, OnDestroy {
         const openEvents: Observable<number>[] = this.nestedDropdowns
             .map((nd, index) => {
                 return nd.opened
-                    .pipe(map(x => index))
+                    .pipe(map(x => index));
             });
 
         this._childrenVisibilityToggledSub = merge(...openEvents)
@@ -34,7 +34,7 @@ export class DropdownMenuDirective implements AfterContentInit, OnDestroy {
                 this.nestedDropdowns
                     .filter((nd, i) => i !== index)
                     .forEach(nd => nd.close());
-            })
+            });
     }
 
     @HostListener('click', ['$event'])

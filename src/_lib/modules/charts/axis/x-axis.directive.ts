@@ -37,8 +37,7 @@ export class XAxisDirective extends AxisBase {
 
         if (this.showGuidlines) {
             this.axis.tickSizeInner(-this.chart.height);
-        }
-        else {
+        } else {
             this.axis.tickSizeInner(6);
         }
 
@@ -63,7 +62,7 @@ export class XAxisDirective extends AxisBase {
     }
 
     render() {
-        let yTranslation = this.align === "bottom" ? this.chart.height : 0;
+        const yTranslation = this.align === "bottom" ? this.chart.height : 0;
 
         this.axisSelection
             .attr('transform', "translate(0," + yTranslation + ")")

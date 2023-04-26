@@ -129,7 +129,7 @@ export class EmailInputComponent implements OnInit, OnDestroy {
             if (typeof item === 'string') {
                 return email.match(new RegExp(`^${item}$`, 'i'));
             }
-            return email.match(item)
+            return email.match(item);
         });
 
         return Validators.email(this._validationFormControl) === null && !isBlacklisted;
@@ -152,7 +152,7 @@ export class EmailInputComponent implements OnInit, OnDestroy {
 
             this.emailInputControl.markAsDirty();
 
-            const selectionStart: number = (this.inputEl.nativeElement as HTMLInputElement).selectionStart
+            const selectionStart: number = (this.inputEl.nativeElement as HTMLInputElement).selectionStart;
             const selectionEnd: number = (this.inputEl.nativeElement as HTMLInputElement).selectionEnd;
             const controlValue: string = (this.emailInputControl.value as string);
 
@@ -168,8 +168,7 @@ export class EmailInputComponent implements OnInit, OnDestroy {
                 if (selectionStart !== selectionEnd) {
                     const newValue: string = controlValue.slice(0, selectionStart) + controlValue.slice(selectionEnd);
                     pastedData = newValue.slice(0, selectionStart) + pastedData + newValue.slice(selectionStart);
-                }
-                else {
+                } else {
                     pastedData = controlValue.slice(0, selectionStart) + pastedData + controlValue.slice(selectionStart);
                 }
             }
@@ -186,8 +185,7 @@ export class EmailInputComponent implements OnInit, OnDestroy {
                 // Use Set to remove duplicate emails
                 this.emails = Array.from(new Set(this.emails.concat(items)));
                 this.emailInputControl.setValue('');
-            }
-            else {
+            } else {
                 items.pop();
                 // Use Set to remove duplicate emails
                 this.emails = Array.from(new Set(this.emails.concat(items)));
@@ -216,8 +214,7 @@ export class EmailInputComponent implements OnInit, OnDestroy {
         if (this.emailInputControl.value.length < 1 && this.emails.length > 0) {
             if (this.isPillSelected) {
                 this.removeEmail(this.emails[this.emails.length - 1]);
-            }
-            else {
+            } else {
                 this.isPillSelected = true;
             }
         }
@@ -233,7 +230,7 @@ export class EmailInputComponent implements OnInit, OnDestroy {
             isValid: isValid,
             emails: this.emails,
             control: this.emailInputControl
-        })
+        });
     }
 
     ngOnDestroy() {

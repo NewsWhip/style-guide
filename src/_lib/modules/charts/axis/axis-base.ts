@@ -8,7 +8,7 @@ import { Subscription } from "rxjs";
 @Directive()
 export abstract class AxisBase implements OnInit, OnChanges, OnDestroy {
 
-    @Input() tickFormat: (value: number | Date | { valueOf(): number; }) => string;
+    @Input() tickFormat: (value: number | Date | { valueOf(): number }) => string;
     @Input() tickCount: number | AxisTimeInterval;
     @Input() tickSizeOuter: number = 6;
     @Input() tickValues: any[];
@@ -17,7 +17,7 @@ export abstract class AxisBase implements OnInit, OnChanges, OnDestroy {
     @Input() easing: (normalizedTime: number) => number = ChartUtils.ANIMATION_EASING;
     @Input() label: string = '';
 
-    public axis: Axis<number | Date | { valueOf(): number; }>;
+    public axis: Axis<number | Date | { valueOf(): number }>;
     public axisSelection: Selection<SVGGElement, Array<[number, number]>, SVGElement, any>;
     public axisLabelSelection: Selection<SVGTextElement, any, HTMLElement, any>;
 

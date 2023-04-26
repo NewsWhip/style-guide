@@ -45,7 +45,7 @@ export class LoaderComponent implements OnInit {
                 duration: this.fadeInMs,
                 delay: this.delayMs
             }
-        }
+        };
     }
 
     get dots(): number[] {

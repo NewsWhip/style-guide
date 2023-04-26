@@ -54,6 +54,7 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
 
     /**
      * Exports the canvas to a PNG image and returns the base64-encoded PNG data
+     *
      * @returns A string containing the base64-encoded PNG data of the canvas
      */
     exportCanvas(): string {
@@ -98,7 +99,7 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
 
         this._isFontLoaded().subscribe(() => {
             this._positionWords();
-    
+
             if (this.config.debugMode) {
                 console.info('Config', this.config);
                 this._drawSprial();
@@ -110,6 +111,7 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
 
     /**
      * Calculates the font size for each word based on its weight and the range of weights in the list of words
+     *
      * @param words List of words with their respective weights
      * @returns A new list of words sorted by weight (largest to smallest) with their respective font sizes
      */
@@ -167,7 +169,7 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
                 y: point.y - (height / 2),
                 width,
                 height
-            }
+            };
 
             /**
              * If this bounding box intersects another bounding box, increment the index and try the next place
@@ -199,7 +201,7 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
         /**
          * Sort words before emitting so that a trackBy function will work correctly with the collection
          */
-        const sortedWords = this._positionedWords.sort((a, b) => a.value.localeCompare(b.value))
+        const sortedWords = this._positionedWords.sort((a, b) => a.value.localeCompare(b.value));
         this.wordsPositioned.emit(sortedWords);
 
         if (this.config.debugMode) {
@@ -209,7 +211,7 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
 
     private _truncateWord(value: string): string {
         if (value.length > this.config.maxCharCount) {
-            return value.substring(0, this.config.maxCharCount) + '...'
+            return value.substring(0, this.config.maxCharCount) + '...';
         }
         return value;
     }
@@ -269,7 +271,7 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
             const y = this._centerPoint.y + (1 + angle) * Math.sin(angle) * this._spiralResolution;
 
             return { x, y };
-        }
+        };
 
         return spiral(n);
     }
@@ -295,7 +297,7 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
             paddingY: 8,
             maxCharCount: 20,
             resizeTolerance: 0
-        }
+        };
 
         return {
             ...defaultConfig,
@@ -387,7 +389,7 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
                 x: x + (dist * Math.cos(angle)),
                 y: y + (dist * Math.sin(angle))
             };
-        }
+        };
 
         return this._positionedWords.map(pw => {
             const { x, y } = moveTowardsCenter(pw.x, pw.y, pw.height, minScale);
@@ -405,7 +407,7 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
                 width,
                 height,
                 fontSize
-            }
+            };
         });
     }
 
@@ -428,6 +430,6 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
                 console.warn(`The font "${fontString}" failed to load within ${fontTimeout}ms`);
                 return of({ isLoaded: false });
             })
-        )
+        );
     }
 }

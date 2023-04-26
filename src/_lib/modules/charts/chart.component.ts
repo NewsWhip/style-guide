@@ -111,7 +111,7 @@ export class ChartComponent implements OnInit, AfterViewInit, OnDestroy {
             .on('mouseleave', () => this.nwMouseleave.emit())
             .on('mousemove', e => {
                 // emits the current mouse position
-                self.nwMousemove.emit(pointer(e))
+                self.nwMousemove.emit(pointer(e));
             });
     }
 
