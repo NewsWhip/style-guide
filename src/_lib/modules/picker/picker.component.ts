@@ -1,4 +1,4 @@
-import { Component, Input, Output, ChangeDetectorRef, ChangeDetectionStrategy, EventEmitter, ViewChild, ElementRef } from '@angular/core';
+import { Component, Input, Output, ChangeDetectorRef, ChangeDetectionStrategy, EventEmitter, ViewChild, ElementRef, OnInit, OnDestroy } from '@angular/core';
 import { trigger, transition, animate, style } from '@angular/animations';
 import { FormControl } from '@angular/forms';
 import { IPickerItem } from './IPickerItem';
@@ -149,7 +149,7 @@ import { isUndefined } from 'lodash-es';
     ]
 })
 
-export class NwPickerComponent {
+export class NwPickerComponent implements OnInit, OnDestroy {
 
     @Input() items: IPickerItem[];
     @Input() inputClasses: string = '';
@@ -168,6 +168,7 @@ export class NwPickerComponent {
     @Output() toggleExclude: EventEmitter<{ item: IPickerItem; searchTerm: string }> = new EventEmitter<{ item: IPickerItem; searchTerm: string }>();
     @Output() edit: EventEmitter<any> = new EventEmitter<any>();
     @Output() closed: EventEmitter<any> = new EventEmitter<any>();
+    // eslint-disable-next-line @angular-eslint/no-output-native
     @Output() focus: EventEmitter<ElementRef> = new EventEmitter<ElementRef>();
     @Output() clearAll: EventEmitter<any> = new EventEmitter<any>();
     @Output() clearSingle: EventEmitter<IPickerItem> = new EventEmitter<IPickerItem>();

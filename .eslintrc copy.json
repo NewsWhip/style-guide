@@ -7,7 +7,7 @@
   "overrides": [
     {
       "files": [
-        "*.ts"
+        "src/_lib/**/*.ts"
       ],
       "parserOptions": {
         "project": [
@@ -183,7 +183,7 @@
     },
     {
       "files": [
-        "*.html"
+        "app/**/*.html"
       ],
       "extends": [
         "plugin:@angular-eslint/template/recommended"
@@ -191,10 +191,7 @@
       "rules": {
         "@angular-eslint/template/no-any": "error",
         "@angular-eslint/template/banana-in-box": "error",
-        "@angular-eslint/template/no-negated-async": "error",
-        "@angular-eslint/template/eqeqeq": ["error", {
-          "allowNullOrUndefined": true
-        }]
+        "@angular-eslint/template/no-negated-async": "error"
       }
     }
   ]

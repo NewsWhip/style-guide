@@ -10,6 +10,7 @@ import { NwXAxisScale } from '../axis/models/XAxisScale';
 type AreaDatum = [number, number] | [number, number, number];
 
 @Directive({
+    // eslint-disable-next-line @angular-eslint/directive-selector
     selector: 'path[nw-area]',
     exportAs: 'nw-area'
 })

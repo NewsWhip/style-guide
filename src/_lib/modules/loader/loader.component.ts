@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { trigger, transition, style, animate } from "@angular/animations";
 
 @Component({
@@ -23,7 +23,8 @@ import { trigger, transition, style, animate } from "@angular/animations";
                 animate(`{{duration}}ms {{delay}}ms linear`, style({ opacity: 1 }))
             ])
         ])
-    ]
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class LoaderComponent implements OnInit {

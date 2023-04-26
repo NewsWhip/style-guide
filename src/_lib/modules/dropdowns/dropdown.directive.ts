@@ -64,7 +64,11 @@ export class DropdownDirective implements OnInit, OnChanges, OnDestroy {
         this._toggleSubscription = this._service.toggle$.subscribe(isOpen => {
             this.isOpen = isOpen;
 
-            this.isOpen ? this.opened.emit() : this.closed.emit();
+            if (this.isOpen) {
+                this.opened.emit();
+            } else {
+                this.closed.emit();
+            }
         });
     }
 

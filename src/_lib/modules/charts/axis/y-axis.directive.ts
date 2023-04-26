@@ -6,6 +6,7 @@ import { ChartComponent } from '../chart.component';
 import { ChartUtils } from "../chart.utils";
 
 @Directive({
+    // eslint-disable-next-line @angular-eslint/directive-selector
     selector: '[nw-y-axis]',
     exportAs: 'nw-y-axis'
 })

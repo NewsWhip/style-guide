@@ -4,6 +4,7 @@ import { brush, BrushBehavior, brushX, brushY } from 'd3-brush';
 import { ChartComponent } from '../chart.component';
 
 @Directive({
+    // eslint-disable-next-line @angular-eslint/directive-selector
     selector: 'svg:g[nw-brush]',
     exportAs: 'nw-brush'
 })

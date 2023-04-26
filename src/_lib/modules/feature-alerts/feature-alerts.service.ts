@@ -5,28 +5,28 @@ import { WindowRef } from './windowref';
 export class FeatureAlertsService {
     LOCAL_STORAGE_KEY = 'nwAlerts';
 
-    constructor(private w: WindowRef) {}
+    constructor(private _w: WindowRef) {}
 
     persist(id: string) {
-        this.set({
-            ...this.get(),
+        this._set({
+            ...this._get(),
             [id]: { dismissed: true }
         });
     }
 
     wasAlertDismissed(id: string): boolean {
-        const alerts = this.get();
+        const alerts = this._get();
 
         if (alerts && alerts.hasOwnProperty(id)) {
             return alerts[id].dismissed;
         }
     }
 
-    private get(): Object {
-        return JSON.parse(this.w.nativeWindow.localStorage.getItem(this.LOCAL_STORAGE_KEY));
+    private _get(): Object {
+        return JSON.parse(this._w.nativeWindow.localStorage.getItem(this.LOCAL_STORAGE_KEY));
     }
 
-    private set(alerts: Object) {
-        this.w.nativeWindow.localStorage.setItem(this.LOCAL_STORAGE_KEY, JSON.stringify(alerts));
+    private _set(alerts: Object) {
+        this._w.nativeWindow.localStorage.setItem(this.LOCAL_STORAGE_KEY, JSON.stringify(alerts));
     }
 }

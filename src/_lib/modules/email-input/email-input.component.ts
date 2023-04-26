@@ -96,7 +96,7 @@ export class EmailInputComponent implements OnInit, OnDestroy {
         if (index > -1) {
             event.preventDefault();
             this._addEmail();
-            this.focus();
+            this._focus();
         }
 
         if (event.key === "Escape") {
@@ -115,7 +115,7 @@ export class EmailInputComponent implements OnInit, OnDestroy {
         if (this.emailInputControl.value.length > 0) {
             event.preventDefault();
             this._addEmail();
-            this.focus();
+            this._focus();
         }
     }
 
@@ -142,7 +142,7 @@ export class EmailInputComponent implements OnInit, OnDestroy {
          * We don't care about events that bubble up from child elements.
          */
         if (event.target === this.container.nativeElement) {
-            this.focus();
+            this._focus();
         }
     }
 
@@ -206,7 +206,7 @@ export class EmailInputComponent implements OnInit, OnDestroy {
         this.emailInputControl.setValue('');
     }
 
-    private focus() {
+    private _focus() {
         (this.inputEl.nativeElement as HTMLInputElement).focus();
     }
 

@@ -1,6 +1,6 @@
 import { CloseScrollStrategy, ConnectionPositionPair, FlexibleConnectedPositionStrategy, Overlay, OverlayRef, RepositionScrollStrategy } from "@angular/cdk/overlay";
 import { ComponentPortal } from "@angular/cdk/portal";
-import { ComponentRef, Directive, ElementRef, EventEmitter, Injector, Input, OnChanges, OnInit, Output, SimpleChanges, TemplateRef, ViewContainerRef } from "@angular/core";
+import { ComponentRef, Directive, ElementRef, EventEmitter, Injector, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, TemplateRef, ViewContainerRef } from "@angular/core";
 import { Placement } from "./models/Placement.type";
 import { Subject, fromEvent, merge, EMPTY, of, Observable, animationFrameScheduler, scheduled, timer } from 'rxjs';
 import { takeUntil, filter, tap, map, debounce, switchMap, delay, repeat } from 'rxjs/operators';
@@ -13,7 +13,7 @@ import { placementFlipMap } from "./config/placement-flip-map";
     selector: '[nwTooltip],[nwPopover]',
     exportAs: 'nw-tooltip,nw-popover'
 })
-export class TooltipDirective implements OnInit, OnChanges {
+export class TooltipDirective implements OnInit, OnChanges, OnDestroy {
 
     /**
      * This directive can be invoked by using the `nwTooltip` or `nwPopover` attributes. The only differences between using these
