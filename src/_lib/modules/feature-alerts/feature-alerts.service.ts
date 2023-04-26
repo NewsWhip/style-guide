@@ -22,11 +22,11 @@ export class FeatureAlertsService {
         }
     }
 
-    private _get(): Object {
+    private _get(): object {
         return JSON.parse(this._w.nativeWindow.localStorage.getItem(this.LOCAL_STORAGE_KEY));
     }
 
-    private _set(alerts: Object) {
+    private _set(alerts: object) {
         this._w.nativeWindow.localStorage.setItem(this.LOCAL_STORAGE_KEY, JSON.stringify(alerts));
     }
 }

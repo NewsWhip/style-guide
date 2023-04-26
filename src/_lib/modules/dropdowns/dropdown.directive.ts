@@ -19,8 +19,8 @@ export class DropdownDirective implements OnInit, OnChanges, OnDestroy {
     @HostBinding('class.open') isOpen: boolean;
 
     private _toggleSubscription: Subscription;
-    private _documentUnlistener: Function;
-    private _escapeUnlistener: Function;
+    private _documentUnlistener: () => void;
+    private _escapeUnlistener: () => void;
 
     constructor(
         private _service: DropdownService,
