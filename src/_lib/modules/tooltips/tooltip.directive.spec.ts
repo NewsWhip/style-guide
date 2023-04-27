@@ -303,6 +303,7 @@ describe('TooltipDirective', () => {
     }));
 });
 
+// eslint-disable-next-line @angular-eslint/prefer-on-push-component-change-detection
 @Component({
     template: `
         <div class="wrapper-el" cdkScrollable>
@@ -365,8 +366,7 @@ describe('TooltipDirective', () => {
             border: 1px solid white;
             transition: width 100ms linear;
         }
-    `],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    `]
 })
 class WrapperComponent implements OnInit {
 
