@@ -8,6 +8,9 @@
       "files": [
         "*.ts"
       ],
+      "extends": [
+        "./linting-config/ts-files.json"
+      ],
       "parserOptions": {
         "project": [
           "src/tsconfig.app.json",
@@ -15,144 +18,35 @@
         ],
         "createDefaultProgram": true
       },
-      "extends": [
-        "plugin:@angular-eslint/ng-cli-compat",
-        "plugin:@angular-eslint/ng-cli-compat--formatting-add-on",
-        "plugin:@angular-eslint/template/process-inline-templates"
-      ],
       "rules": {
-        "@angular-eslint/contextual-decorator": "error",
-        "@angular-eslint/no-lifecycle-call": "error",
-        "@angular-eslint/prefer-on-push-component-change-detection": "error",
-        "@angular-eslint/use-component-view-encapsulation": "error",
-        "@angular-eslint/no-host-metadata-property": "off",
-        "@angular-eslint/no-input-rename": "off",
-        "@angular-eslint/component-selector": ["error", {
-            "type": ["element", "attribute"],
+        "@angular-eslint/component-selector": [
+          "error",
+          {
+            "type": [
+              "element",
+              "attribute"
+            ],
             "prefix": "nw",
             "style": "kebab-case"
-        }],
-        "@angular-eslint/directive-selector": ["error", {
-          "type": "attribute",
-          "prefix": "nw",
-          "style": "camelCase"
-        }],
-        "@typescript-eslint/no-empty-function": ["error"],
-        "@typescript-eslint/no-throw-literal": "error",
-        "@typescript-eslint/member-delimiter-style": "error",
-        "@typescript-eslint/member-ordering": "off",
-        "@typescript-eslint/no-inferrable-types": "off",
-        "@typescript-eslint/no-shadow": "off",
-        "@typescript-eslint/prefer-for-of": "off",
-        "@typescript-eslint/quotes": "off",
-        "@typescript-eslint/dot-notation": ["error", {
-          "allowPrivateClassPropertyAccess": true,
-          "allowProtectedClassPropertyAccess": true
-        }],
-        "@typescript-eslint/naming-convention": [
-          "error",
-          { 
-            // Ignore enum memebers
-            "selector": [
-              "enumMember"
-            ],
-            "format": null
-          },
-          {
-            "selector": "interface",
-            "format": ["PascalCase"],
-            "custom": {
-              "regex": "^I[A-Z]",
-              "match": true
-            }
-          },
-          {
-            "selector": "variable",
-            "format": ["camelCase", "UPPER_CASE", "PascalCase"],
-            "leadingUnderscore": "allow",
-            "trailingUnderscore": "forbid"
-          },
-          {
-            "selector": "memberLike",
-            "modifiers": ["private"],
-            "format": ["camelCase"],
-            "leadingUnderscore": "require"
           }
         ],
-        "no-empty-function": "off",
-        "no-multiple-empty-lines": "error",
-        "no-unused-expressions": "error",
-        "prefer-const": ["error", {
-          "destructuring": "all"
-        }],
-        "semi": "error",
-        "no-restricted-imports": [
-          "error", {
-            "paths": [
-              "lodash",
-              "ngx-bootstrap/popover",
-              "ngx-bootstrap/tooltip"
-            ]
-          }
-        ],
-        "deprecation/deprecation": "warn",
-
-        /* The following rules were added and set to "off" in order to address the new linting errors that appeared
-          after migration from tslint to eslint, since fixing these errors would require code changes.
-          These rules should be addressed one by one as part of tech debt in the following manner:
-          a rule should be removed, the resulting error fixed and the code change tested. */
-        "eol-last": "off",
-        "guard-for-in": "off",
-        "max-len": "off",
-        "no-console": "off",
-        "no-underscore-dangle": "off",
-        "quote-props": "off",
-        "object-shorthand": "off",
-        "arrow-body-style": "off",
-
-        // whitespace/spacing rules
-        "no-irregular-whitespace": "error",
-        "space-before-function-paren": [
+        "@angular-eslint/directive-selector": [
           "error",
           {
-            "anonymous": "never",
-            "named": "never",
-            "asyncArrow": "never"
+            "type": "attribute",
+            "prefix": "nw",
+            "style": "camelCase"
           }
-        ],
-        "space-in-parens": [
-          "error",
-          "never"
-        ],
-        "spaced-comment": "error",
-        "no-multi-spaces": "error",
-        "comma-spacing": "error",
-        "array-bracket-spacing": "error",
-        "arrow-spacing": "error",
-        "rest-spread-spacing": "error",
-        "semi-spacing": "error",
-        "key-spacing": "error",
-        "space-before-blocks": "error",
-        "keyword-spacing": "error",
-        "indent": ["error", 4, {"SwitchCase":  1}],
-        "brace-style": "error",
-        "space-infix-ops": "error"
-      },
-      "plugins": ["deprecation"]
+        ]
+      }
     },
     {
       "files": [
         "*.html"
       ],
       "extends": [
-        "plugin:@angular-eslint/template/recommended"
-      ],
-      "rules": {
-        "@angular-eslint/template/no-any": "error",
-        "@angular-eslint/template/eqeqeq": ["error", {
-          "allowNullOrUndefined": true
-        }]
-      }
+        "./linting-config/html-files.json"
+      ]
     }
   ]
 }
