@@ -251,7 +251,14 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
         const factor = (wordWeight - minWeight) / weightDiff;
         const fontSize = ((this.config.maxFontSize - this.config.minFontSize) * factor) + this.config.minFontSize;
 
-        return Math.round(fontSize);
+        /**
+         * fontSize may be NaN if all words have the same weight. If they do, return the fontSize that is midway
+         * between the minFontSize and the maxFontSize
+         */
+        if (fontSize) {
+            return Math.round(fontSize);
+        }
+        return Math.round((this.config.minFontSize + this.config.maxFontSize) / 2);
     }
 
     /**
