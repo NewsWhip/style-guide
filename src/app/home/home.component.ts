@@ -12,6 +12,16 @@ interface IQuadrant {
         textAnchor: 'start' | 'middle' | 'end';
         point: [number, number]
     }[];
+    zoomedDetails: {
+        x: {
+            domain: [number, number];
+            axisAlign: 'left' | 'right';
+        }
+        y: {
+            domain: [number, number];
+            axisAlign: 'top' | 'bottom';
+        }
+    }
 }
 
 export interface IEntity {
@@ -68,6 +78,7 @@ export class HomeComponent implements OnInit {
     public activeGroup: IGroupedEntity;
     public squares: Square[];
     public maxEntitiesToDisplay = 3;
+    public center;
 
     constructor(private _decimalPipe: DecimalPipe) { }
 
@@ -92,17 +103,25 @@ export class HomeComponent implements OnInit {
 
     ngOnInit(): void {
         this.entities3 = this.getEntities3();
-        const interactionCounts = this.entities.map(e => e.y);
-        const articleCounts = this.entities.map(e => e.x);
 
-        this.xDomain = [Math.min(...articleCounts), Math.max(...articleCounts)];
-        this.yDomain = [Math.min(...interactionCounts), Math.max(...interactionCounts)];
-
+        this.setDomains();
+        this.center = {
+            x: ((this.xDomain[1] - this.xDomain[0]) / 2) + this.xDomain[0],
+            y: ((this.yDomain[1] - this.yDomain[0]) / 2) + this.yDomain[0]
+        };
         this.quadrants = this.getQuadrants();
         this.axisLabels = this.getAxisLabels();
         this.squares = this.divideChart();
         this.groupedEntities = this.getGroupedEntities();
         console.log(this.groupedEntities);
+    }
+
+    setDomains() {
+        const interactionCounts = this.entities.map(e => e.y);
+        const articleCounts = this.entities.map(e => e.x);
+
+        this.xDomain = [Math.min(...articleCounts), Math.max(...articleCounts)];
+        this.yDomain = [Math.min(...interactionCounts), Math.max(...interactionCounts)];
     }
 
     onQuadrantMouseenter(quadrant: IQuadrant): void {
@@ -111,6 +130,15 @@ export class HomeComponent implements OnInit {
 
     onChartMouseleave(): void {
         this.activeQuadrant = null;
+    }
+
+    zoomInQuadrant(quadrant: IQuadrant): void {
+        this.xDomain = quadrant.zoomedDetails.x.domain;
+        this.yDomain = quadrant.zoomedDetails.y.domain;
+    }
+
+    zoomOut() {
+        this.setDomains();
     }
 
     getQuadrants(): IQuadrant[] {
@@ -127,6 +155,8 @@ export class HomeComponent implements OnInit {
         const top = this.yDomain[1] * 2;
         const right = this.xDomain[1] * 2;
         const bottom = this.yDomain[0] - this.yDomain[1];
+        const xZoomOverlap = (this.xDomain[1] - this.xDomain[0]) * 0.05;
+        const yZoomOverlap = (this.yDomain[1] - this.yDomain[0]) * 0.05;
 
         const topLeft: IQuadrant = {
             area: [
@@ -146,7 +176,17 @@ export class HomeComponent implements OnInit {
                     textAnchor: 'start',
                     point: [this.xDomain[0], this.yDomain[1]]
                 }
-            ]
+            ],
+            zoomedDetails: {
+                x: {
+                    domain: [this.xDomain[0], center.x + xZoomOverlap],
+                    axisAlign: 'right'
+                },
+                y: {
+                    domain: [center.y - yZoomOverlap, this.yDomain[1]],
+                    axisAlign: 'bottom'
+                }
+            }
         };
         
         const topRight: IQuadrant = {
@@ -168,7 +208,17 @@ export class HomeComponent implements OnInit {
                     textAnchor: 'end',
                     point: [this.xDomain[1], this.yDomain[1]]
                 }
-            ]
+            ],
+            zoomedDetails: {
+                x: {
+                    domain: [center.x - xZoomOverlap, this.xDomain[1]],
+                    axisAlign: 'left'
+                },
+                y: {
+                    domain: [center.y - yZoomOverlap, this.yDomain[1]],
+                    axisAlign: 'bottom'
+                }
+            }
         };
 
         const bottomRight: IQuadrant = {
@@ -189,7 +239,17 @@ export class HomeComponent implements OnInit {
                     textAnchor: 'end',
                     point: [this.xDomain[1], this.yDomain[0]]
                 }
-            ]
+            ],
+            zoomedDetails: {
+                x: {
+                    domain: [center.x - xZoomOverlap, this.xDomain[1]],
+                    axisAlign: 'left'
+                },
+                y: {
+                    domain: [this.yDomain[0], center.y + yZoomOverlap],
+                    axisAlign: 'top'
+                }
+            }
         };
 
         const bottomLeft: IQuadrant = {
@@ -209,7 +269,17 @@ export class HomeComponent implements OnInit {
                     textAnchor: 'start',
                     point: [this.xDomain[0], this.yDomain[0]]
                 }
-            ]
+            ],
+            zoomedDetails: {
+                x: {
+                    domain: [this.xDomain[0], center.x + xZoomOverlap],
+                    axisAlign: 'right'
+                },
+                y: {
+                    domain: [this.yDomain[0], center.y + yZoomOverlap],
+                    axisAlign: 'top'
+                }
+            }
         };
 
         return [

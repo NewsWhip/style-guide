@@ -2,6 +2,8 @@
 
 <p>Angular version: {{version.full}}</p>
 
+<button class="btn btn-md btn-primary" (click)="zoomOut()">Zoom out</button>
+
 <div class="scatterplot-container">
     <svg nw-chart
         style="width: 700px; height: 700px; display: block;"
@@ -13,7 +15,8 @@
             class="quadrant nw-slot-2"
             [ngClass]="q.id"
             [class.active]="q.id === activeQuadrant?.id"
-            (mouseenter)="onQuadrantMouseenter(q)">
+            (mouseenter)="onQuadrantMouseenter(q)"
+            (click)="zoomInQuadrant(q)">
             <path
                 [nw-area]="q.area"
                 [xDomain]="xDomain"
@@ -43,7 +46,7 @@
         </g>
     
         <!-- Axes -->
-        <g class="nw-slot-2 x axis" nw-x-axis
+        <!-- <g class="nw-slot-2 x axis" nw-x-axis
             [domain]="xDomain"
             [scale]="axisScale"
             [tickFormat]="axisTickFormat"
@@ -56,7 +59,21 @@
             [tickFormat]="axisTickFormat"
             [tickCount]="0"
             [tickSizeOuter]="0"
-            [align]="'center'"></g>
+            [align]="'center'"></g> -->
+
+        <path class="nw-slot-2 x axis"
+            [nw-path]="[[xDomain[0], center.y], [xDomain[1], center.y]]"
+            [xDomain]="xDomain"
+            [yDomain]="yDomain"
+            stroke="white"
+            stroke-width="1px"></path>
+
+        <path class="nw-slot-2 y axis"
+            [nw-path]="[[center.x, yDomain[1]], [center.x, yDomain[0]]]"
+            [xDomain]="xDomain"
+            [yDomain]="yDomain"
+            stroke="white"
+            stroke-width="1px"></path>
     
         <!-- <ng-container *ngFor="let entity of entities">
             <circle [nw-circle]="[entity.x, entity.y]"
