@@ -1,5 +1,5 @@
 name: prepackage-release
-run-name: ${{ github.actor }} is building the documentation
+run-name: ${{ github.actor }} is running pre-release tests
 on: [pull_request]
 jobs:
   build-docs:
