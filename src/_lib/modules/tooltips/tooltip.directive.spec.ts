@@ -87,7 +87,7 @@ describe('TooltipDirective', () => {
         expect(tooltip).toBeTruthy();
         fireEvent(trigger, 'dblclick');
         tooltip = getTooltipEl();
-        expect(tooltip).toBeTruthy();
+        expect(tooltip).toBeFalsy();
     }));
 
     it('should not open when an open event is fired if the tooltip is disabled', fakeAsync(() => {
