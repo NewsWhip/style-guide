@@ -1,0 +1,12 @@
+name: docs-build
+run-name: ${{ github.actor }} is building the documentation
+on: [pull_request]
+jobs:
+  build-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+      - run: npm run ghpages
