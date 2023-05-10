@@ -1,12 +1,12 @@
 name: Run tests
-run-name: ${{ github.actor }} is running pre-release tests
+run-name: ${{github.actor}} is running pre-release tests
 on:
   pull_request:
     branches:
       - master
       - main
 jobs:
-  prepackage-release:
+  tests:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
