@@ -17,7 +17,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: '16'
-      - name: Setting fontawesome pro config
+      - name: Setting Font Awesome Pro registry and auth token
         run: |
           npm config set "@fortawesome:registry" https://npm.fontawesome.com/
           npm config set "//npm.fontawesome.com/:_authToken" ${{secrets.FONTAWESOME_NPM_AUTH_TOKEN}}
@@ -30,5 +30,24 @@ jobs:
         with:
           name: build-artifact
           path: docs
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: github-pages
+      url: ${{steps.deployment.outputs.page_url}}
+    steps:
+    - name: Downloading artifact
+      uses: actions/download-artifact@master
+      with:
+        name: build-artifact
+        path: .
+    - uses: actions/configure-pages@v1
+    - uses: actions/upload-pages-artifact@v1
+      with:
+        path: .
+    - id: deployment
+      uses: actions/deploy-pages@main
+
 
     
