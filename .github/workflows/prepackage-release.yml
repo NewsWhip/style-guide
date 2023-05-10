@@ -9,7 +9,10 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: '16'
-      - run: npm config set "@fortawesome:registry" https://npm.fontawesome.com/
-      - run: npm config set "//npm.fontawesome.com/:_authToken" ${{secrets.FONTAWESOME_NPM_AUTH_TOKEN}}
-      - run: npm i
-      - run: npm run prepackage:release
+      - run: |
+          npm config set "@fortawesome:registry" https://npm.fontawesome.com/
+          npm config set "//npm.fontawesome.com/:_authToken" ${{secrets.FONTAWESOME_NPM_AUTH_TOKEN}}
+      - name: Installing dependencies
+        run: npm i
+      - name: Running the pre-package script
+        run: npm run prepackage:release
