@@ -1,0 +1,34 @@
+name: Build and deploy documentation
+run-name: ${{ github.actor }} is building the documentation
+on:
+  push:
+    branches:
+      - master
+      - main
+  pull_request:
+    branches:
+      - master
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/upload-pages-artifact@2
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+      - name: Setting fontawesome pro config
+        run: |
+          npm config set "@fortawesome:registry" https://npm.fontawesome.com/
+          npm config set "//npm.fontawesome.com/:_authToken" ${{secrets.FONTAWESOME_NPM_AUTH_TOKEN}}
+      - name: npm install
+        run: npm i
+      - name: Building docs
+        run: npm run ghpages
+      - name: Uploading artifact
+        uses: actions/upload-artifact@v2
+        with: 
+          name: docs
+          path: artifacts
+    
