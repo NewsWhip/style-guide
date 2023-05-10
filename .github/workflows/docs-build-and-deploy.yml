@@ -26,8 +26,9 @@ jobs:
       - name: Building docs
         run: npm run ghpages
       - name: Uploading artifact
-        uses: actions/upload-artifact@v2
-        with: 
-          name: docs
-          path: artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-artifact
+          path: docs
+
     
