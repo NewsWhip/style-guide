@@ -13,3 +13,5 @@ jobs:
       - run: npm config set "//npm.fontawesome.com/:_authToken" ${{secrets.FONTAWESOME_NPM_AUTH_TOKEN}}
       - run: npm i
       - run: npm run ghpages
+      - run: git commit -am "build:ghpages"
+      - run: git push
