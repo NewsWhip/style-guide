@@ -1,4 +1,4 @@
-name: prepackage-release
+name: Run tests
 run-name: ${{ github.actor }} is running pre-release tests
 on:
   pull_request:
@@ -18,5 +18,5 @@ jobs:
           npm config set "//npm.fontawesome.com/:_authToken" ${{secrets.FONTAWESOME_NPM_AUTH_TOKEN}}
       - name: Installing dependencies
         run: npm i
-      - name: Running the pre-package script
-        run: npm run prepackage:release
+      - name: Running the tests
+        run: npm run test-single-run
