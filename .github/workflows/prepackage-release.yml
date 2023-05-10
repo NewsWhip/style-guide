@@ -1,6 +1,10 @@
 name: prepackage-release
 run-name: ${{ github.actor }} is running pre-release tests
-on: [pull_request]
+on:
+  pull_request:
+    branches:
+      - master
+      - main
 jobs:
   prepackage-release:
     runs-on: ubuntu-latest
