@@ -6,21 +6,12 @@ on:
       - master
       - main
 jobs:
-  npm-config-update:
-    uses: ./.github/workflows/set-npm-config.yml
+  npm-install:
+    uses: ./.github/workflows/install-npm.yml
   tests:
     runs-on: ubuntu-latest
-    needs: npm-config-update
+    needs: npm-install
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16
-          cache: npm
-      - run: |
-          npm config set "@fortawesome:registry" https://npm.fontawesome.com/
-          npm config set "//npm.fontawesome.com/:_authToken" ${{secrets.FONTAWESOME_NPM_AUTH_TOKEN}}
-      - name: Installing dependencies
-        run: npm i
       - name: Running the tests
         run: npm run test-single-run
