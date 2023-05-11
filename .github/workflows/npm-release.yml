@@ -19,7 +19,7 @@ jobs:
       - name: Release
         uses: justincy/github-action-npm-release@2.0.2
         with:
-          token: ${{secrets.ACTIONS_PUBLISH_KEY}}
+          token: ${{secrets.GITHUB_ACTIONS_STYLE_GUIDE_TOKEN}}
         id: release
       - name: Print release output
         if: ${{ steps.release.outputs.released == 'true' }}
