@@ -18,9 +18,9 @@ jobs:
           node-version: 16
       - name: Release
         uses: justincy/github-action-npm-release@2.0.2
-        # with:
-        #   token: ${{secrets.GH_ACTIONS_STYLE_GUIDE_TOKEN}}
         id: release
+        with:
+          token: ${{secrets.GH_ACTIONS_STYLE_GUIDE_TOKEN}}
       - name: Print release output
         if: ${{ steps.release.outputs.released == 'true' }}
         run: echo Release ID ${{ steps.release.outputs.release_id }}
