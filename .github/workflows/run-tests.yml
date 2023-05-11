@@ -11,10 +11,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
-      - uses: ./.github/actions/update-npm-config
+      - uses: ./.github/actions/npm-install
         with:
           token: ${{secrets.FONTAWESOME_NPM_AUTH_TOKEN}}
       - name: Running the tests
-        run: |
-          npm i
-          npm run test-single-run
+        run: npm run test-single-run
