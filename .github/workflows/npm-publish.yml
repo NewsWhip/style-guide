@@ -1,20 +1,11 @@
 name: Build and publish package
-# TODO: include merge to master in this event
+# TODO: would it make sense to include merge to master in this event
 on:
   push:
     branches:
       - testing-github-actions
 jobs:
-  # npm-install:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #     - uses: actions/setup-node@v3
-  #     - uses: ./.github/actions/npm-install
-  #       with:
-  #         token: ${{secrets.FONTAWESOME_NPM_AUTH_TOKEN}}
   build:
-    # needs: npm-install
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -42,4 +33,7 @@ jobs:
           path: .
       - name: Publish
         run: npm publish package
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_PUBLISH_TOKEN}}
+
 
