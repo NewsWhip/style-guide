@@ -42,10 +42,9 @@ jobs:
         name: build-artifact
         path: .
     - name: Deploying to ${{steps.deployment.outputs.page_url}}
-      uses: actions/configure-pages@v1
+      # uses: actions/configure-pages@v1
       uses: actions/upload-pages-artifact@v1
       with:
         path: .
       id: deployment
       uses: actions/deploy-pages@main
-      
