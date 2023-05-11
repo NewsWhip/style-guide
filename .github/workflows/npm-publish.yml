@@ -1,8 +1,8 @@
 name: Build and publish package
 # TODO: include merge to master in this event
 on:
-  release:
-    types: published
+  # release:
+  #   types: published
   push:
     branches:
       - testing-github-actions
