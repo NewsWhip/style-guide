@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
-      - uses: ./.github/actions/update-npm-config.yml
+      - uses: ./.github/actions/update-npm-config
       - name: Running the tests
         run: |
           npm i
