@@ -12,6 +12,8 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
       - uses: ./.github/actions/update-npm-config
+        with:
+          token: ${{secrets.FONTAWESOME_NPM_AUTH_TOKEN}}
       - name: Running the tests
         run: |
           npm i
