@@ -1,0 +1,23 @@
+name: Release
+on:
+  push:
+    branches:
+      - main
+      - master
+      - testing-github-actions
+jobs:
+  build:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Release
+        uses: justincy/github-action-npm-release@2.0.2
+        id: release
+        with:
+          token: ${{ secrets.RUNNER_TOKEN }}
+      - name: Print release output
+        if: ${{ steps.release.outputs.released == 'true' }}
+        run: echo Release ID ${{ steps.release.outputs.release_id }}

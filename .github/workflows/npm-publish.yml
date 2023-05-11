@@ -1,0 +1,41 @@
+name: Build and publish package
+on:
+  release:
+    types: [published]
+jobs:
+  npm-install:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+      - uses: ./.github/actions/npm-install
+        with:
+          token: ${{secrets.FONTAWESOME_NPM_AUTH_TOKEN}}
+
+  build:
+    needs: npm-install
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+      - name: Build package
+        run: npm run package:build
+      - name: Copy package.json
+        run: node scripts/copy-package-file.js
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: package
+          path: distribution
+  release:
+    needs: build
+      runs-on: ubuntu-latest
+      steps: 
+      - name: Download artifact
+        uses: actions/download-artifact@master
+        with:
+          name: package
+          path: .
+      - name: Publish
+        run: npm publish package
+
