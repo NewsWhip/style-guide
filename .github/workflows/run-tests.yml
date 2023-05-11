@@ -16,3 +16,4 @@ jobs:
           token: ${{secrets.FONTAWESOME_NPM_AUTH_TOKEN}}
       - name: Running the tests
         run: npm run test-single-run
+        
