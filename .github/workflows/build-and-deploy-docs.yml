@@ -5,21 +5,16 @@ on:
     branches:
       - master
       - main
+      - testing-github-actions
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
+      - uses: ./.github/actions/npm-install
         with:
-          node-version: 16
-          cache: npm
-      - name: Setting Font Awesome Pro registry and auth token
-        run: |
-          npm config set "@fortawesome:registry" https://npm.fontawesome.com/
-          npm config set "//npm.fontawesome.com/:_authToken" ${{secrets.FONTAWESOME_NPM_AUTH_TOKEN}}
-      - name: npm install
-        run: npm i
+          token: ${{secrets.FONTAWESOME_NPM_AUTH_TOKEN}}
       - name: Building docs
         run: npm run ghpages
       # Upload the docs folder so that it can be downloaded and used in the next "deploy" step
