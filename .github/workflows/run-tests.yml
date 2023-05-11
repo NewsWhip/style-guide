@@ -13,5 +13,6 @@ jobs:
     needs: npm-install
     steps:
       - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
       - name: Running the tests
         run: npm run test-single-run
