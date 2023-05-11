@@ -1,9 +1,13 @@
 name: Build and publish package
 # TODO: would it make sense to include merge to master in this event
+# on:
+#   push:
+#     branches:
+#       - testing-github-actions
 on:
-  push:
-    branches:
-      - testing-github-actions
+  release:
+    types: [published]
+
 jobs:
   build:
     runs-on: ubuntu-latest
