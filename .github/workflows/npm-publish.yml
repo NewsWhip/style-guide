@@ -29,13 +29,15 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@master
         with:
-          name: package
+          name: my-package
           path: .
+      - name: Display structure of downloaded files
+        run: ls -R
       - uses: actions/setup-node@v3
         with:
           node-version: 16
           registry-url: https://registry.npmjs.org/
       - name: Publish
-        run: npm publish ./package
+        run: npm publish my-package
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_PUBLISH_TOKEN}}
