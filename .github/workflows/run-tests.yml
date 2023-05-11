@@ -6,11 +6,8 @@ on:
       - master
       - main
 jobs:
-  # npm-config:
-    # uses: ./.github/workflows/update-npm-config.yml
   tests:
     runs-on: ubuntu-latest
-    needs: npm-config
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
