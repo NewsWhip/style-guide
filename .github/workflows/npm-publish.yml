@@ -1,7 +1,11 @@
 name: Build and publish package
+# TODO: include merge to master in this event
 on:
   release:
-    types: [published]
+    types: published
+  push:
+    branches:
+      - testing-github-actions
 jobs:
   npm-install:
     runs-on: ubuntu-latest
@@ -11,7 +15,6 @@ jobs:
       - uses: ./.github/actions/npm-install
         with:
           token: ${{secrets.FONTAWESOME_NPM_AUTH_TOKEN}}
-
   build:
     needs: npm-install
     runs-on: ubuntu-latest
