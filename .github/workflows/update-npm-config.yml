@@ -1,8 +1,8 @@
-name: Set custom npm config and install
+name: Set custom npm config
 on:
   workflow_call:
 jobs:
-  install:
+  set-config:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -14,5 +14,3 @@ jobs:
         run: |
           npm config set "@fortawesome:registry" https://npm.fontawesome.com/
           npm config set "//npm.fontawesome.com/:_authToken" ${{secrets.FONTAWESOME_NPM_AUTH_TOKEN}}
-      - name: Installing dependencies
-        run: npm i

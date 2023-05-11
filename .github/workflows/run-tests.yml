@@ -6,13 +6,15 @@ on:
       - master
       - main
 jobs:
-  npm-install:
-    uses: ./.github/workflows/install-npm.yml
+  npm-config:
+    uses: ./.github/workflows/update-npm-config.yml
   tests:
     runs-on: ubuntu-latest
-    needs: npm-install
+    needs: npm-config
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
       - name: Running the tests
-        run: npm run test-single-run
+        run: |
+          npm i
+          npm run test-single-run
