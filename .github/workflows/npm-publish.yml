@@ -1,20 +1,10 @@
 name: Build and publish package
-# TODO: would it make sense to include merge to master in this event
-# on:
-#   push:
-#     branches:
-#       - testing-github-actions
+#
+# This workflow should run when a new release is published
+#
 on:
   release:
     types: [published]
-
-# Only trigger, when the build workflow succeeded
-# on:
-#   workflow_run:
-#     workflows: ["Release"]
-#     types:
-#       - completed
-
 jobs:
   build:
     runs-on: ubuntu-latest
