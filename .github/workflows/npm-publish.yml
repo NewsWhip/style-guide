@@ -4,9 +4,16 @@ name: Build and publish package
 #   push:
 #     branches:
 #       - testing-github-actions
+# on:
+#   release:
+#     types: [published]
+
+# Only trigger, when the build workflow succeeded
 on:
-  release:
-    types: [published]
+  workflow_run:
+    workflows: ["Release"]
+    types:
+      - completed
 
 jobs:
   build:
