@@ -20,3 +20,4 @@ runs:
     - name: Installing dependencies
       shell: bash
       run: npm install
+      
