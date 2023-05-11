@@ -35,13 +35,11 @@ jobs:
       name: github-pages
       url: ${{steps.deployment.outputs.page_url}}
     steps:
-    # Downloaded the previously uploaded docs folder
     - name: Downloading artifact
       uses: actions/download-artifact@master
       with:
         name: build-artifact
         path: .
-    - name: Deploying to ${{steps.deployment.outputs.page_url}}
     - uses: actions/configure-pages@v1
     - uses: actions/upload-pages-artifact@v1
       with:
