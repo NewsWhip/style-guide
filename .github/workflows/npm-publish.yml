@@ -4,22 +4,24 @@ name: Build and publish package
 #   push:
 #     branches:
 #       - testing-github-actions
-# on:
-#   release:
-#     types: [published]
+on:
+  release:
+    types: [published]
 
 # Only trigger, when the build workflow succeeded
-on:
-  workflow_run:
-    workflows: ["Release"]
-    types:
-      - completed
+# on:
+#   workflow_run:
+#     workflows: ["Release"]
+#     types:
+#       - completed
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          ssh-key: "${{secrets.ACTIONS_PUBLISH_KEY}}"
       - uses: actions/setup-node@v3
       - uses: ./.github/actions/npm-install
         with:
@@ -42,8 +44,6 @@ jobs:
         with:
           name: my-package
           path: distribution
-      - name: Display structure of downloaded files
-        run: ls -R
       - uses: actions/setup-node@v3
         with:
           node-version: 16
