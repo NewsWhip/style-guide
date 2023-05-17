@@ -4,10 +4,10 @@ import { CarouselComponent } from './carousel.component';
 import { CarouselSlideDirective } from './carousel-slide.directive';
 
 @NgModule({
-  imports: [
-    CommonModule
-  ],
-  declarations: [CarouselComponent, CarouselSlideDirective],
-  exports: [CarouselComponent, CarouselSlideDirective]
+    imports: [
+        CommonModule
+    ],
+    declarations: [CarouselComponent, CarouselSlideDirective],
+    exports: [CarouselComponent, CarouselSlideDirective]
 })
 export class CarouselModule { }

@@ -59,6 +59,7 @@ export class Toaster {
     /**
      * Set the configuration values for a `Toaster` instance. This can only be called once
      * per `Toaster` instance and must be called before the outlet is created
+     *
      * @param config Configuration settings for the Toaster
      */
     setConfig(config: IToastConfig): void {

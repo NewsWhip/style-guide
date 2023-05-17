@@ -23,15 +23,15 @@ export class HotspotComponent {
     @Input() id: any;
 
     constructor(
-        private featureAlertsService: FeatureAlertsService,
-        private cdRef: ChangeDetectorRef) {}
+        private _featureAlertsService: FeatureAlertsService,
+        private _cdRef: ChangeDetectorRef) {}
 
     get isOpen(): boolean {
-        return !this.featureAlertsService.wasAlertDismissed(this.id);
+        return !this._featureAlertsService.wasAlertDismissed(this.id);
     }
 
     dismiss() {
-        this.featureAlertsService.persist(this.id);
-        this.cdRef.detectChanges();
+        this._featureAlertsService.persist(this.id);
+        this._cdRef.detectChanges();
     }
 }

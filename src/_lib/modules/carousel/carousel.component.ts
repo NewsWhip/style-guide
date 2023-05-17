@@ -70,7 +70,7 @@ export class CarouselComponent implements OnInit, AfterViewInit, AfterContentIni
 
     @ViewChild('carousel', { static: true }) carousel: ElementRef;
 
-    @ContentChildren(CarouselSlideDirective) slides: QueryList<CarouselSlideDirective>
+    @ContentChildren(CarouselSlideDirective) slides: QueryList<CarouselSlideDirective>;
 
     public pages: number[] = [];
 
@@ -102,7 +102,7 @@ export class CarouselComponent implements OnInit, AfterViewInit, AfterContentIni
     ngAfterContentInit() {
         this._slidesSub = this.slides.changes.subscribe(res => {
             this.updatePages();
-        })
+        });
     }
 
     next() {
@@ -128,7 +128,7 @@ export class CarouselComponent implements OnInit, AfterViewInit, AfterContentIni
     }
 
     getPages() {
-        const estimatedPages: number = +(this.carouselNativeElement.scrollWidth / this.carouselNativeElement.clientWidth).toFixed(1)
+        const estimatedPages: number = +(this.carouselNativeElement.scrollWidth / this.carouselNativeElement.clientWidth).toFixed(1);
         const numOfPages: number = Math.ceil(estimatedPages);
 
         return [...Array(numOfPages).fill(1)].map((_, i) => i);
@@ -148,14 +148,14 @@ export class CarouselComponent implements OnInit, AfterViewInit, AfterContentIni
     }
 
     get isLastPage(): boolean {
-        return this.currPage === this.pages[this.pages.length - 1]
+        return this.currPage === this.pages[this.pages.length - 1];
     }
 
     get maskStyles() {
         return {
             '-webkit-mask-image': `linear-gradient(to left, rgba(0,0,0,0), ${this.maskColor})`,
             'background-color': `${this.maskColor}`
-        }
+        };
     }
 
     get maskGradient() {
@@ -168,7 +168,7 @@ export class CarouselComponent implements OnInit, AfterViewInit, AfterContentIni
             .subscribe(_ => {
                 this.goToPage(0);
                 this.updatePages();
-            })
+            });
     }
 
     ngOnDestroy() {
