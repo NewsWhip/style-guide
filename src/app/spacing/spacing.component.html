@@ -1,0 +1,50 @@
+<h2 class="page-header">Spacing</h2>
+
+<h3>How it works</h3>
+
+<p>Assign margin or padding values to an element or a subset of its sides with shorthand classes. Includes support for
+    individual properties, all properties, and vertical and horizontal properties.</p>
+    
+<p>Classes are built from a Sass map
+    ranging with the following sizes : 0px, 2px, 4px, 8px, 16px, 24px</p>
+
+<hr>
+<h3>Notation</h3>
+<p>The classes are named using the format <code>{{'{property}{side}-{size}'}}</code></p>
+
+<p class="mt-16"> Where property is one of:</p>
+<ul>
+    <li>m - for classes that set margin</li>
+    <li>p - for classes that set padding</li>
+</ul>
+<p class="mt-16">Where sides is one of:</p>
+<ul>
+    <li>t - for classes that set margin-top or padding-top</li>
+    <li>b - for classes that set margin-bottom or padding-bottom</li>
+    <li>l - for classes that set margin-left or padding-left</li>
+    <li>r - for classes that set margin-right or padding-right</li>
+    <li>x - for classes that set both *-left and *-right</li>
+    <li>y - for classes that set both *-top and *-bottom</li>
+    <li>blank - for classes that set a margin or padding on all 4 sides of the element</li>
+</ul>
+
+<p class="mt-16">Where size is one of:</p>
+<ul>
+    <li>0 - for classes that eliminate the margin or padding by setting it to 0</li>
+    <li>2 - for classes that set the margin or padding to 2px</li>
+    <li>4 - for classes that set the margin or padding to 4px</li>
+    <li>8 - for classes that set the margin or padding to 8px</li>
+    <li>16 - for classes that set the margin or padding to 16px</li>
+    <li>32 - for classes that set the margin or padding to 32px</li>
+    <li>auto - for classes that set the margin to auto</li>
+</ul>
+
+<hr>
+<h3>Examples</h3>
+
+<app-code *ngFor="let snippet of snippets" [snippet]="snippet"></app-code>
+
+<h3>Usage</h3>
+<app-code *ngFor="let snippet of usageSnippets" [snippet]="snippet"></app-code>
+
+

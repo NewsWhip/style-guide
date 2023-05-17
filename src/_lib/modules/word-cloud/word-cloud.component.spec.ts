@@ -41,11 +41,7 @@ describe('WordCloudComponent', () => {
             const maxWeight = 100;
             const wordWeight = 0;
 
-            comp.ngOnChanges({
-                words: new SimpleChange(undefined, [], true)
-            });
-            fixture.detectChanges();
-
+            comp.config = comp['_getConfig']();
 
             expect(comp['_getFontSize'](wordWeight, minWeight, maxWeight)).toEqual(16);
         });
@@ -55,11 +51,7 @@ describe('WordCloudComponent', () => {
             const maxWeight = 100;
             const wordWeight = 100;
 
-            comp.ngOnChanges({
-                words: new SimpleChange(undefined, [], true)
-            });
-            fixture.detectChanges();
-
+            comp.config = comp['_getConfig']();
 
             expect(comp['_getFontSize'](wordWeight, minWeight, maxWeight)).toEqual(48);
         });
@@ -69,15 +61,25 @@ describe('WordCloudComponent', () => {
             const maxWeight = 100;
             const wordWeight = 50;
 
-            comp.ngOnChanges({
-                words: new SimpleChange(undefined, [], true)
-            });
-            fixture.detectChanges();
+            comp.config = comp['_getConfig']();
 
             const fontSize = comp['_getFontSize'](wordWeight, minWeight, maxWeight);
 
             expect(fontSize).toBeGreaterThanOrEqual(12);
             expect(fontSize).toBeLessThanOrEqual(60);
+        });
+
+        it('should return a font size midway between minFontSize and maxFontSize when all wordWeights are the same', () => {
+            const minWeight = 100;
+            const maxWeight = 100;
+            const wordWeight = 100;
+
+            comp.options = { minFontSize: 25, maxFontSize: 75 };
+            comp.config = comp['_getConfig']();
+
+            const fontSize = comp['_getFontSize'](wordWeight, minWeight, maxWeight);
+
+            expect(fontSize).toEqual(50);
         });
     });
 
