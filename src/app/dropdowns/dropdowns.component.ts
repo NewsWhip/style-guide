@@ -8,6 +8,10 @@ export class DropdownsComponent implements OnInit {
 
     public popoverExample: string;
 
+    public dropdownItems = [...new Array(30).fill(0).map((_, i) => ({key: i, value: `option ${i}`}))];
+    public selectedItem: {key: number, value: string} = this.dropdownItems[20];
+    public preselectedExample: string;
+    
     constructor() { }
 
     ngOnInit() {
@@ -17,6 +21,7 @@ export class DropdownsComponent implements OnInit {
     stopProp(e: Event) {
         e.preventDefault();
     }
+
 
     getPopoverExample(): string {
         return `
