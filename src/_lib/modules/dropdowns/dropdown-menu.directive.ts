@@ -37,7 +37,7 @@ export class DropdownMenuDirective implements AfterContentInit, OnDestroy {
 
     _scrollToActiveElement() {
         const activeElement = this._element.nativeElement.querySelector('.active');
-        this._element.nativeElement.scrollTo({ top: activeElement.offsetTop });
+        activeElement && this._element.nativeElement.scrollTo({ top: activeElement.offsetTop });
     }
 
     // When a sub dropdown menu is opened, force close any sibling sub dropdown menus
