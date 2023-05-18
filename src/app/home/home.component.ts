@@ -3,9 +3,11 @@ import { Component, OnInit, VERSION } from '@angular/core';
 import { scaleLinear } from 'd3-scale';
 import { entities1, entities2 } from './test-data';
 
+type QuadrantId = `${'top' | 'bottom'}-${'left' | 'right'}`
+
 interface IQuadrant {
     area: Array<[number, number, number]>;
-    id: string;
+    id: QuadrantId;
     labels: {
         className?: string;
         value: string;
@@ -13,14 +15,8 @@ interface IQuadrant {
         point: [number, number]
     }[];
     zoomedDetails: {
-        x: {
-            domain: [number, number];
-            axisAlign: 'left' | 'right';
-        }
-        y: {
-            domain: [number, number];
-            axisAlign: 'top' | 'bottom';
-        }
+        xDomain: [number, number];
+        yDomain: [number, number];
     }
 }
 
@@ -69,7 +65,8 @@ export class HomeComponent implements OnInit {
     public entities2 = entities2;
     public entities3: IEntity[];
     public quadrants: IQuadrant[];
-    public activeQuadrant: IQuadrant | null; 
+    public hoveredQuadrant: IQuadrant | null;
+    public zoomedQuadrant: IQuadrant | null;
     public axisLabels;
     public get entities(): IEntity[] {
         return this.entities3;
@@ -79,6 +76,7 @@ export class HomeComponent implements OnInit {
     public squares: Square[];
     public maxEntitiesToDisplay = 3;
     public center;
+    public animDuration = 150;
 
     constructor(private _decimalPipe: DecimalPipe) { }
 
@@ -113,7 +111,6 @@ export class HomeComponent implements OnInit {
         this.axisLabels = this.getAxisLabels();
         this.squares = this.divideChart();
         this.groupedEntities = this.getGroupedEntities();
-        console.log(this.groupedEntities);
     }
 
     setDomains() {
@@ -125,23 +122,31 @@ export class HomeComponent implements OnInit {
     }
 
     onQuadrantMouseenter(quadrant: IQuadrant): void {
-        this.activeQuadrant = quadrant;
+        this.hoveredQuadrant = quadrant;
     }
 
     onChartMouseleave(): void {
-        this.activeQuadrant = null;
+        this.hoveredQuadrant = null;
     }
 
-    zoomInQuadrant(quadrant: IQuadrant): void {
-        this.xDomain = quadrant.zoomedDetails.x.domain;
-        this.yDomain = quadrant.zoomedDetails.y.domain;
+    toggleQuadrantZoom(quadrant: IQuadrant): void {
+        if (this.zoomedQuadrant?.id === quadrant.id) {
+            this.zoomOut();
+        } else {
+            this.zoomedQuadrant = quadrant;
+            console.log('zoomed quadrant', this.zoomedQuadrant);
+            this.xDomain = quadrant.zoomedDetails.xDomain;
+            this.yDomain = quadrant.zoomedDetails.yDomain;
+        }
     }
 
     zoomOut() {
+        this.zoomedQuadrant = null;
         this.setDomains();
     }
 
     getQuadrants(): IQuadrant[] {
+        const zoomQuadrantOverlpaPercentage = 0.02;
         const center = {
             x: ((this.xDomain[1] - this.xDomain[0]) / 2) + this.xDomain[0],
             y: ((this.yDomain[1] - this.yDomain[0]) / 2) + this.yDomain[0]
@@ -155,8 +160,8 @@ export class HomeComponent implements OnInit {
         const top = this.yDomain[1] * 2;
         const right = this.xDomain[1] * 2;
         const bottom = this.yDomain[0] - this.yDomain[1];
-        const xZoomOverlap = (this.xDomain[1] - this.xDomain[0]) * 0.05;
-        const yZoomOverlap = (this.yDomain[1] - this.yDomain[0]) * 0.05;
+        const xZoomOverlap = (this.xDomain[1] - this.xDomain[0]) * zoomQuadrantOverlpaPercentage;
+        const yZoomOverlap = (this.yDomain[1] - this.yDomain[0]) * zoomQuadrantOverlpaPercentage;
 
         const topLeft: IQuadrant = {
             area: [
@@ -178,14 +183,8 @@ export class HomeComponent implements OnInit {
                 }
             ],
             zoomedDetails: {
-                x: {
-                    domain: [this.xDomain[0], center.x + xZoomOverlap],
-                    axisAlign: 'right'
-                },
-                y: {
-                    domain: [center.y - yZoomOverlap, this.yDomain[1]],
-                    axisAlign: 'bottom'
-                }
+                xDomain: [this.xDomain[0], center.x + xZoomOverlap],
+                yDomain: [center.y - yZoomOverlap, this.yDomain[1]]
             }
         };
         
@@ -210,14 +209,8 @@ export class HomeComponent implements OnInit {
                 }
             ],
             zoomedDetails: {
-                x: {
-                    domain: [center.x - xZoomOverlap, this.xDomain[1]],
-                    axisAlign: 'left'
-                },
-                y: {
-                    domain: [center.y - yZoomOverlap, this.yDomain[1]],
-                    axisAlign: 'bottom'
-                }
+                xDomain: [center.x - xZoomOverlap, this.xDomain[1]],
+                yDomain: [center.y - yZoomOverlap, this.yDomain[1]]
             }
         };
 
@@ -241,14 +234,8 @@ export class HomeComponent implements OnInit {
                 }
             ],
             zoomedDetails: {
-                x: {
-                    domain: [center.x - xZoomOverlap, this.xDomain[1]],
-                    axisAlign: 'left'
-                },
-                y: {
-                    domain: [this.yDomain[0], center.y + yZoomOverlap],
-                    axisAlign: 'top'
-                }
+                xDomain: [center.x - xZoomOverlap, this.xDomain[1]],
+                yDomain: [this.yDomain[0], center.y + yZoomOverlap]
             }
         };
 
@@ -271,14 +258,8 @@ export class HomeComponent implements OnInit {
                 }
             ],
             zoomedDetails: {
-                x: {
-                    domain: [this.xDomain[0], center.x + xZoomOverlap],
-                    axisAlign: 'right'
-                },
-                y: {
-                    domain: [this.yDomain[0], center.y + yZoomOverlap],
-                    axisAlign: 'top'
-                }
+                xDomain: [this.xDomain[0], center.x + xZoomOverlap],
+                yDomain: [this.yDomain[0], center.y + yZoomOverlap]
             }
         };
 

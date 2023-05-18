@@ -14,6 +14,8 @@
 }
 
 .quadrant {
+    cursor: zoom-in;
+
     path {
         fill: transparent;
         transition: fill 300ms linear;
@@ -46,7 +48,8 @@
         @include quadrant(0 1px, -44px 20px);
     }
 
-    &.active {
+    &.active,
+    &.zoomed {
         path {
             fill: $level4;
         }
@@ -54,6 +57,10 @@
         .quadrant-label {
             opacity: 1;
         }
+    }
+
+    &.zoomed {
+        cursor: zoom-out;
     }
 }
 
@@ -72,24 +79,47 @@
 
     .entity-label-group {
         fill: $text-color-secondary;
-        font-size: 14px;
-        font-weight: bold;
+        font-size: 12px;
         dominant-baseline: central;
     }
 
     &.active {
         .entity-label-group {
             fill: $text-color;
-        }
-
-        +.entity-group {
-            opacity: 0.1;
+            text-shadow: -1px 0 1.5px $level3,
+                0px -1px 1.5px $level3,
+                1px 0px 1.5px $level3,
+                0px 1px 1.5px $level3;
         }
     }
 }
 
 .has-active-group {
     .entity-group:not(.active) {
-        opacity: 0.2;
+        opacity: 0.6;
     }
+}
+
+.zoomed-quadrant-top-left {
+    .quadrant.top-right { cursor: e-resize; }
+    .quadrant.bottom-right { cursor: se-resize; }
+    .quadrant.bottom-left { cursor: s-resize; }
+}
+
+.zoomed-quadrant-top-right {
+    .quadrant.top-left { cursor: w-resize; }
+    .quadrant.bottom-right { cursor: s-resize; }
+    .quadrant.bottom-left { cursor: sw-resize; }
+}
+
+.zoomed-quadrant-bottom-right {
+    .quadrant.top-left { cursor: nw-resize; }
+    .quadrant.top-right { cursor: n-resize; }
+    .quadrant.bottom-left { cursor: w-resize; }
+}
+
+.zoomed-quadrant-bottom-left {
+    .quadrant.top-left { cursor: n-resize; }
+    .quadrant.top-right { cursor: ne-resize; }
+    .quadrant.bottom-right { cursor: e-resize; }
 }

@@ -9,18 +9,22 @@
         style="width: 700px; height: 700px; display: block;"
         [margins]="chartMargins"
         [class.has-active-group]="activeGroup"
+        [ngClass]="zoomedQuadrant ? 'zoomed-quadrant-' + zoomedQuadrant.id : null"
         (mouseleave)="onChartMouseleave()">
     
         <g *ngFor="let q of quadrants"
             class="quadrant nw-slot-2"
             [ngClass]="q.id"
-            [class.active]="q.id === activeQuadrant?.id"
+            [class.active]="q.id === hoveredQuadrant?.id"
+            [class.zoomed]="q.id === zoomedQuadrant?.id"
             (mouseenter)="onQuadrantMouseenter(q)"
-            (click)="zoomInQuadrant(q)">
+            (click)="toggleQuadrantZoom(q)">
             <path
                 [nw-area]="q.area"
                 [xDomain]="xDomain"
-                [yDomain]="yDomain"></path>
+                [yDomain]="yDomain"
+                [xScale]="axisScale"
+                [animDuration]="animDuration"></path>
 
             <text class="quadrant-label" *ngFor="let label of q.labels; let index = index"
                 [ngClass]="label.className"
@@ -28,6 +32,7 @@
                 [xDomain]="xDomain"
                 [yDomain]="yDomain"
                 [xScale]="axisScale"
+                [animDuration]="animDuration"
                 [attr.text-anchor]="label.textAnchor"
                 [attr.dy]="15 * index">{{label.value}}</text>
         </g>
@@ -38,33 +43,20 @@
                 [xDomain]="xDomain"
                 [yDomain]="yDomain"
                 [xScale]="axisScale"
+                [animDuration]="animDuration"
                 [attr.text-anchor]="label.textAnchor"
                 [style.translate]="label.translate">
                 <tspan x="0" class="metric-value">{{label.value}}</tspan>
                 <tspan x="0" dy="1.2em" class="metric-label">{{label.label}}</tspan>
             </text>
         </g>
-    
-        <!-- Axes -->
-        <!-- <g class="nw-slot-2 x axis" nw-x-axis
-            [domain]="xDomain"
-            [scale]="axisScale"
-            [tickFormat]="axisTickFormat"
-            [tickCount]="0"
-            [tickSizeOuter]="0"
-            [align]="'center'"></g>
-    
-        <g class="nw-slot-2 y axis" nw-y-axis
-            [domain]="yDomain"
-            [tickFormat]="axisTickFormat"
-            [tickCount]="0"
-            [tickSizeOuter]="0"
-            [align]="'center'"></g> -->
 
         <path class="nw-slot-2 x axis"
             [nw-path]="[[xDomain[0], center.y], [xDomain[1], center.y]]"
             [xDomain]="xDomain"
             [yDomain]="yDomain"
+            [xScale]="axisScale"
+            [animDuration]="animDuration"
             stroke="white"
             stroke-width="1px"></path>
 
@@ -72,40 +64,10 @@
             [nw-path]="[[center.x, yDomain[1]], [center.x, yDomain[0]]]"
             [xDomain]="xDomain"
             [yDomain]="yDomain"
+            [xScale]="axisScale"
+            [animDuration]="animDuration"
             stroke="white"
             stroke-width="1px"></path>
-    
-        <!-- <ng-container *ngFor="let entity of entities">
-            <circle [nw-circle]="[entity.x, entity.y]"
-                [xDomain]="xDomain"
-                [yDomain]="yDomain"
-                [nwTooltip]="circleTooltipTmpl"
-                [context]="{ entity: entity }"
-                r=5
-                fill="#3D81FF"></circle>
-        </ng-container> -->
-
-        <!-- <ng-container *ngFor="let square of squares">
-            <circle
-                [nw-circle]="[square.x, square.y]"
-                [xDomain]="xDomain"
-                [yDomain]="yDomain"
-                r=3
-                fill="green"></circle>
-
-            <text class="entity-label-group"
-                [attr.data-id]="square.position"
-                [nw-text]="[square.x, square.y]"
-                [xDomain]="xDomain"
-                [yDomain]="yDomain"
-                [xScale]="axisScale"
-                [attr.text-anchor]="square.textAnchor"
-                [attr.dy]="square.dy"
-                fill="white"
-                font-size="10px">
-                {{square.position}}
-            </text>
-        </ng-container> -->
 
         <ng-container *ngFor="let group of groupedEntities">
             <ng-container *ngTemplateOutlet="entityGroupTmpl; context: { group }"></ng-container>
@@ -120,7 +82,9 @@
                     [nw-circle]="[group.x, group.y]"
                     [xDomain]="xDomain"
                     [yDomain]="yDomain"
-                    r=5
+                    [animDuration]="animDuration"
+                    [xScale]="axisScale"
+                    r=4
                     fill="#3D81FF"></circle>
         
                 <text class="entity-label-group"
@@ -128,6 +92,7 @@
                     [xDomain]="xDomain"
                     [yDomain]="yDomain"
                     [xScale]="axisScale"
+                    [animDuration]="animDuration"
                     [attr.text-anchor]="group.positionDetails.textAnchor"
                     [style.translate]="group.translate">
                     <tspan *ngFor="let entity of group.entities | slice:0:(group === activeGroup ? Infinity : maxEntitiesToDisplay); let index = index"
@@ -143,39 +108,5 @@
                 </text>
             </g>
         </ng-template>
-        <!-- <g class="entity-group" *ngFor="let group of groupedEntities"
-            [class.active]="group === activeGroup">
-            <circle
-                [nw-circle]="[group.x, group.y]"
-                [xDomain]="xDomain"
-                [yDomain]="yDomain"
-                r=5
-                fill="#3D81FF"></circle>
-
-            <text class="entity-label-group"
-                (mouseenter)="onGroupMouseenter(group)"
-                (mouseleave)="onGroupMouseleave()"
-                [nw-text]="[group.x, group.y]"
-                [xDomain]="xDomain"
-                [yDomain]="yDomain"
-                [xScale]="axisScale"
-                [attr.text-anchor]="group.positionDetails.textAnchor"
-                [style.translate]="group.translate">
-                <tspan *ngFor="let entity of group.entities | slice:0:(group === activeGroup ? Infinity : maxEntitiesToDisplay); let index = index"
-                    x="0"
-                    [attr.dx]="group.positionDetails.dx"
-                    [attr.dy]="group.positionDetails.dy"
-                    class="entity-label">{{entity.name}}</tspan>
-
-                <tspan *ngIf="group !== activeGroup && group.entities.length > maxEntitiesToDisplay"
-                    x="0"
-                    [attr.dx]="group.positionDetails.dx"
-                    [attr.dy]="group.positionDetails.dy">+ {{group.entities.length - maxEntitiesToDisplay}} more</tspan>
-            </text>
-        </g> -->
     </svg>
 </div>
-
-<ng-template #circleTooltipTmpl let-entity="entity">
-    {{entity | json}}
-</ng-template>
