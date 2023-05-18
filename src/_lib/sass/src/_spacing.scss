@@ -1,0 +1,72 @@
+
+// List of sizes to generate for each
+$sizes: 0, 2, 4, 8, 16, 24, auto;
+$directions : (
+    t: top,
+    b: bottom,
+    l: left, 
+    r: right
+);
+
+@mixin generateWithDirection($prefix, $property) {
+    $class: null;
+    $unit: null;
+    @for $i from 1 through length($sizes) {
+
+        $size: nth($sizes, $i);
+        
+        @if $size == auto {
+            $class : #{$prefix}-auto;
+            $unit : auto;
+        } @else {
+            $class : #{$prefix}-#{$size};
+            $unit : #{$size}px;
+        }
+
+        .#{$class} {
+            #{$property}: #{$unit} !important;
+        }
+    }
+}
+
+@mixin generateBiDirection($prefix, $property){
+    @for $i from 1 through length($sizes) {
+        $size: nth($sizes, $i);
+
+        @if $size == auto {
+            .#{$prefix}x-auto {
+                #{$property}-left: auto !important;
+                #{$property}-right: auto !important;
+            }
+            .#{$prefix}y-auto {
+                #{$property}-top: auto !important;
+                #{$property}-bottom: auto !important;
+            }
+        } @else{   
+            .#{$prefix}x-#{$size} {
+                #{$property}-left: #{$size}px !important;
+                #{$property}-right: #{$size}px !important;
+            }
+            .#{$prefix}y-#{$size} {
+                #{$property}-top: #{$size}px !important;
+                #{$property}-bottom: #{$size}px !important;
+            }
+        }
+    }
+}
+
+// Create basic classes for each direction - ml-2, ml-8, mr-auto, mb-16 etc
+@each $key,$val in $directions {
+    @include generateWithDirection(m#{$key}, margin-#{$val});
+    @include generateWithDirection(p#{$key}, padding-#{$val});
+}
+
+// Create classes with no direction - m-2, m-16, p-4, p-24 etc
+@include generateWithDirection(p, padding);
+@include generateWithDirection(m, margin);
+
+// Create bidirectional classes - mx-2, mx-auto, py-8 etc
+@include generateBiDirection(p, padding);
+@include generateBiDirection(m, margin);
+
+

@@ -50,6 +50,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { AppCodeComponent } from './code/code.component';
 import { FaqComponent } from './faq/faq-component';
 import { WordCloudDemoComponent } from './word-cloud/word-cloud.component';
+import { SpacingComponent } from './spacing/spacing.component';
 
 @NgModule({
   declarations: [
@@ -83,7 +84,8 @@ import { WordCloudDemoComponent } from './word-cloud/word-cloud.component';
     AutofocusComponent,
     AppCodeComponent,
     FaqComponent,
-    WordCloudDemoComponent
+    WordCloudDemoComponent,
+    SpacingComponent
   ],
   imports: [
     BrowserModule,

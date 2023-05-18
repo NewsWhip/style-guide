@@ -1,6 +1,6 @@
 {
   "name": "nw-style-guide",
-  "version": "10.2.0",
+  "version": "10.4.1",
   "license": "MIT",
   "author": {
     "email": "garethdn@gmail.com",
@@ -46,7 +46,7 @@
     "@types/jasminewd2": "~2.0.2",
     "@types/lodash-es": "^4.17.4",
     "@types/node": "^12.11.1",
-    "bootstrap-sass": "^3.3.7",
+    "bootstrap-sass": "3.4.3",
     "clipboard": "^2.0.4",
     "d3": "7.8.2",
     "fs-extra": "^8.0.1",
