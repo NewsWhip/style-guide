@@ -15,7 +15,7 @@ export class DropdownMenuDirective implements AfterContentInit, OnDestroy {
 
     constructor(
         private _service: DropdownService,
-        private _element: ElementRef,
+        private _element: ElementRef<HTMLElement>,
         private _cdRef: ChangeDetectorRef
     ) { }
 
@@ -35,7 +35,7 @@ export class DropdownMenuDirective implements AfterContentInit, OnDestroy {
     }
 
     private _scrollToActiveElement() {
-        const menuElement: HTMLElement = this._element.nativeElement;
+        const menuElement = this._element.nativeElement;
         const activeElement: HTMLElement = this._element.nativeElement.querySelector('.active');
         if (activeElement) {
             menuElement.scrollTo({ top: activeElement.offsetTop });
