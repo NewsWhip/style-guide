@@ -1,8 +1,8 @@
 import { Directive, HostListener, QueryList, AfterContentInit, ContentChildren, OnDestroy, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { DropdownService } from "./dropdown.service";
 import { DropdownDirective } from "./dropdown.directive";
-import { filter, map } from "rxjs/operators";
-import { Subscription, Observable, merge } from 'rxjs';
+import { filter, map, takeUntil } from "rxjs/operators";
+import { Observable, merge, Subject } from 'rxjs';
 
 @Directive({
     selector: '[nwDropdownMenu]',
@@ -11,9 +11,7 @@ import { Subscription, Observable, merge } from 'rxjs';
 export class DropdownMenuDirective implements AfterContentInit, OnDestroy {
 
     @ContentChildren(DropdownDirective) nestedDropdowns: QueryList<DropdownDirective>;
-
-    private _childrenVisibilityToggledSub: Subscription;
-    private _scrollSub: Subscription;
+    private _destroyed$: Subject<null> = new Subject();
 
     constructor(
         private _service: DropdownService,
@@ -27,17 +25,21 @@ export class DropdownMenuDirective implements AfterContentInit, OnDestroy {
     }
 
     private _subscribeToScrollPosition() {
-        this._scrollSub = this._service.toggle$.pipe(
+        this._service.toggle$.pipe(
             filter(opened => opened),
+            takeUntil(this._destroyed$)
         ).subscribe(() => {
             this._cdRef.detectChanges();
             this._scrollToActiveElement();
         });
     }
 
-    _scrollToActiveElement() {
-        const activeElement = this._element.nativeElement.querySelector('.active');
-        activeElement && this._element.nativeElement.scrollTo({ top: activeElement.offsetTop });
+    private _scrollToActiveElement() {
+        const menuElement: HTMLElement = this._element.nativeElement;
+        const activeElement: HTMLElement = this._element.nativeElement.querySelector('.active');
+        if (activeElement) {
+            menuElement.scrollTo({ top: activeElement.offsetTop });
+        }
     }
 
     // When a sub dropdown menu is opened, force close any sibling sub dropdown menus
@@ -48,13 +50,14 @@ export class DropdownMenuDirective implements AfterContentInit, OnDestroy {
                     .pipe(map(x => index))
             });
 
-        this._childrenVisibilityToggledSub = merge(...openEvents)
-            .subscribe(index => {
-                // Close all other sibling dropdowns
-                this.nestedDropdowns
-                    .filter((nd, i) => i !== index)
-                    .forEach(nd => nd.close());
-            })
+        merge(...openEvents).pipe(
+            takeUntil(this._destroyed$)
+        ).subscribe(index => {
+            // Close all other sibling dropdowns
+            this.nestedDropdowns
+                .filter((nd, i) => i !== index)
+                .forEach(nd => nd.close());
+        })
     }
 
     @HostListener('click', ['$event'])
@@ -69,8 +72,8 @@ export class DropdownMenuDirective implements AfterContentInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        this._childrenVisibilityToggledSub.unsubscribe();
-        this._scrollSub.unsubscribe();
+        this._destroyed$.next();
+        this._destroyed$.complete();
     }
 
 }
