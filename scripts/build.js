@@ -1,3 +1,4 @@
+// @ts-check
 const fs = require('fs-extra');
 const path = require('path');
 const execSync = require('child_process').execSync;
@@ -21,7 +22,8 @@ const run = () => {
     copySassFiles();
     compileSass();
     copyAssets();
-    copyReadme();
+    copyLintingConfig();
+    copyFile('README.MD', 'Copying README');
     utils.onComplete();
 }
 
@@ -52,7 +54,7 @@ const buildModule = (directoryPath) => {
     if (fs.existsSync(tsConfigPath)) {
         process.stdout.write(`Building ${dirName} module`);
 
-        compileModule(tsConfigPath, outputPath);
+        compileModule(tsConfigPath);
 
         utils.onSuccess();
     }
@@ -69,7 +71,7 @@ const buildModule = (directoryPath) => {
     }
 }
 
-const compileModule = (tsConfigPath, outputPath) => {
+const compileModule = (tsConfigPath) => {
     try {
         execSync(`${ngcPath} -p ${tsConfigPath}`)
     } catch(err) {
@@ -78,20 +80,9 @@ const compileModule = (tsConfigPath, outputPath) => {
 }
 
 const copySassFiles = () => {
-    process.stdout.write('Copying SASS files');
-
     const sourcePath = path.join('src', '_lib', 'sass');
     const destinationPath = path.join(utils.distPath, 'sass');
-
-    fs.mkdirSync(destinationPath);
-
-    try {
-        fs.copySync(sourcePath, destinationPath);
-        utils.onSuccess();
-    } catch (err) {
-        utils.onError();
-        throw err;
-    }
+    copyDir(sourcePath, destinationPath, 'Copying SASS files')
 }
 
 const compileSass = () => {
@@ -101,9 +92,8 @@ const compileSass = () => {
     const destFile = path.join(utils.distPath, 'styles.css');
 
     try {
-        const result = sass.renderSync({
-            file: sourceFile,
-            outputStyle: 'compressed'
+        const result = sass.compile(sourceFile, {
+            style: 'compressed'
         });
         fs.writeFileSync(destFile, result.css);
         utils.onSuccess();
@@ -114,13 +104,31 @@ const compileSass = () => {
 }
 
 const copyAssets = () => {
-    process.stdout.write('Copying assets (images and fonts)');
-
     const sourceDir = path.join('src', 'assets');
     const destinationPath = path.join(utils.distPath, 'assets');
 
+    copyDir(sourceDir, destinationPath, 'Copying assets (images and fonts)')
+}
+
+const copyLintingConfig = () => {
+    const dirName = 'linting-config';
+    const sourceDir = path.join(dirName);
+    const destinationPath = path.join(utils.distPath, dirName);
+
+    copyDir(sourceDir, destinationPath, 'Copying linting config')
+}
+
+/**
+ * @param {string} sourceFile 
+ * @param {string} message 
+ */
+const copyFile = (sourceFile, message) => {
+    process.stdout.write(message);
+
+    const destFile = path.join(utils.distPath, sourceFile);
+
     try {
-        fs.copySync(sourceDir, destinationPath);
+        fs.copyFileSync(sourceFile, destFile);
         utils.onSuccess();
     } catch (err) {
         utils.onError();
@@ -128,14 +136,16 @@ const copyAssets = () => {
     }
 }
 
-const copyReadme = () => {
-    process.stdout.write('Copying README');
-
-    const sourceFile = 'README.md';
-    const destFile = path.join(utils.distPath, sourceFile);
+/**
+ * @param {string} sourceDir
+ * @param {string} destPath
+ * @param {string} message
+ */
+const copyDir = (sourceDir, destPath, message) => {
+    process.stdout.write(message);
 
     try {
-        fs.copyFileSync(sourceFile, destFile);
+        fs.copySync(sourceDir, destPath);
         utils.onSuccess();
     } catch (err) {
         utils.onError();

@@ -4,12 +4,12 @@ import { debounceTime, filter, tap } from "rxjs/operators";
 import { Subscription, fromEvent } from 'rxjs';
 
 @Directive({
-  selector: '[nwDropdownToggle]',
-  exportAs: 'nw-dropdown-toggle',
-  host: {
-    'aria-haspopup': 'true',
-    '[attr.aria-expanded]': 'isOpen'
-  }
+    selector: '[nwDropdownToggle]',
+    exportAs: 'nw-dropdown-toggle',
+    host: {
+        'aria-haspopup': 'true',
+        '[attr.aria-expanded]': 'isOpen'
+    }
 })
 export class DropdownToggleDirective implements OnInit, OnDestroy {
 
@@ -31,12 +31,12 @@ export class DropdownToggleDirective implements OnInit, OnDestroy {
 
         if (this.nwTrigger === 'hover') {
             const mouseEnterSub: Subscription = fromEvent(this._elRef.nativeElement as HTMLElement, 'mouseenter')
-            .pipe(
-                tap(_ => this._isMousingOver = true),
-                debounceTime(300),
-                filter(_ => this._isMousingOver)
-            )
-            .subscribe(event => this._open());
+                .pipe(
+                    tap(_ => this._isMousingOver = true),
+                    debounceTime(300),
+                    filter(_ => this._isMousingOver)
+                )
+                .subscribe(event => this._open());
 
             const mouseLeaveSub: Subscription = fromEvent(this._elRef.nativeElement as HTMLElement, 'mouseleave')
                 .pipe(
@@ -46,7 +46,7 @@ export class DropdownToggleDirective implements OnInit, OnDestroy {
                 )
                 .subscribe(event => this._close());
 
-            this._mouseEventSubscriptions = [mouseEnterSub, mouseLeaveSub]
+            this._mouseEventSubscriptions = [mouseEnterSub, mouseLeaveSub];
         }
     }
 
