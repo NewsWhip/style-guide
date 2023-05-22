@@ -4,6 +4,7 @@ import { brush, BrushBehavior, brushX, brushY } from 'd3-brush';
 import { ChartComponent } from '../chart.component';
 
 @Directive({
+    // eslint-disable-next-line @angular-eslint/directive-selector
     selector: 'svg:g[nw-brush]',
     exportAs: 'nw-brush'
 })
@@ -34,7 +35,7 @@ export class BrushDirective implements OnInit, OnDestroy, OnChanges {
 
     initialize() {
         this.brushSelection = select(this._elRef.nativeElement as SVGSVGElement);
-        this.brushSelection.attr('class', 'nw-brush')
+        this.brushSelection.attr('class', 'nw-brush');
         this._createBrush();
     }
 
@@ -69,18 +70,18 @@ export class BrushDirective implements OnInit, OnDestroy, OnChanges {
         return this.extent || [
             [0, 0],
             [this._chart.width, this._chart.height]
-        ]
+        ];
     }
 
     private _subscribeToBrushEndEvent() {
         this.brush.on('end', () => {
-            let selection = this.brushSelection.select('rect.selection');
-            let nw: [number, number] = [+selection.attr('x'), +selection.attr('y')];
-            let se: [number, number] = [
+            const selection = this.brushSelection.select('rect.selection');
+            const nw: [number, number] = [+selection.attr('x'), +selection.attr('y')];
+            const se: [number, number] = [
                 +selection.attr('x') + +selection.attr('width'),
                 +selection.attr('y') + +selection.attr('height')
             ];
-            let emission: [[number, number], [number, number]] = nw[0] === se[0] && nw[1] === se[1] ?
+            const emission: [[number, number], [number, number]] = nw[0] === se[0] && nw[1] === se[1] ?
                 null :
                 [nw, se];
 

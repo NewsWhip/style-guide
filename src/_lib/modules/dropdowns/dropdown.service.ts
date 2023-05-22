@@ -34,7 +34,7 @@ export class DropdownService {
 
         return path
             // Map to parentNode so we can use querySelector
-            .map(el => el.parentNode  as HTMLElement)
+            .map(el => el.parentNode as HTMLElement)
             // Filter out undefined parent nodes
             .filter(p => p)
             // Check if any of the parentNodes match any of the selectors

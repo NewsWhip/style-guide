@@ -132,6 +132,15 @@
               }
             ]
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
+          }
         }
       },
       "schematics": {
@@ -142,7 +151,18 @@
         },
         "@schematics/angular:directive": {
           "prefix": "app"
+        },
+        "@angular-eslint/schematics:application": {
+          "setParserOptionsProject": true
+        },
+        "@angular-eslint/schematics:library": {
+          "setParserOptionsProject": true
         }
+      },
+      "cli": {
+        "schematicCollections": [
+          "@angular-eslint/schematics"
+        ]
       }
     },
     "demo-app-e2e": {

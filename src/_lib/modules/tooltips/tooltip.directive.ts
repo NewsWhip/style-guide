@@ -1,6 +1,6 @@
 import { CloseScrollStrategy, ConnectionPositionPair, FlexibleConnectedPositionStrategy, Overlay, OverlayRef, RepositionScrollStrategy } from "@angular/cdk/overlay";
 import { ComponentPortal } from "@angular/cdk/portal";
-import { ComponentRef, Directive, ElementRef, EventEmitter, Injector, Input, OnChanges, OnInit, Output, SimpleChanges, TemplateRef, ViewContainerRef } from "@angular/core";
+import { ComponentRef, Directive, ElementRef, EventEmitter, Injector, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, TemplateRef, ViewContainerRef } from "@angular/core";
 import { Placement } from "./models/Placement.type";
 import { Subject, fromEvent, merge, EMPTY, of, Observable, animationFrameScheduler, scheduled, timer } from 'rxjs';
 import { takeUntil, filter, tap, map, debounce, switchMap, delay, repeat } from 'rxjs/operators';
@@ -13,7 +13,7 @@ import { placementFlipMap } from "./config/placement-flip-map";
     selector: '[nwTooltip],[nwPopover]',
     exportAs: 'nw-tooltip,nw-popover'
 })
-export class TooltipDirective implements OnInit, OnChanges {
+export class TooltipDirective implements OnInit, OnChanges, OnDestroy {
 
     /**
      * This directive can be invoked by using the `nwTooltip` or `nwPopover` attributes. The only differences between using these
@@ -306,7 +306,7 @@ export class TooltipDirective implements OnInit, OnChanges {
             .subscribe(isOpenEvent => {
                 if (isOpenEvent) {
                     const ref = this._open();
-    
+
                     /**
                      * No ref will be returned if the overlay is already attached
                      */
@@ -318,7 +318,7 @@ export class TooltipDirective implements OnInit, OnChanges {
                                 this.nwClose.emit();
                                 this._close();
                             });
-                        
+
                         /**
                          * When the TooltipContainerComponent is destroyed we fire the _tooltipContainerDestroyed$
                          * so that our subscription to TooltipContainerComponent.close is unsubscribed from
@@ -339,24 +339,24 @@ export class TooltipDirective implements OnInit, OnChanges {
         const offset = this._tooltipArrowSize + 3;
         const getXOffset = (placement: Placement) => {
             if (!this.withArrow) {
-                return 0
+                return 0;
             }
             if (placement.startsWith('right')) {
-                return offset;  
+                return offset;
             }
             if (placement.startsWith('left')) {
-                return -offset;  
+                return -offset;
             }
         };
         const getYOffset = (placement: Placement) => {
             if (!this.withArrow) {
-                return 0
+                return 0;
             }
             if (placement.startsWith('top')) {
-                return -offset;  
+                return -offset;
             }
             if (placement.startsWith('bottom')) {
-                return offset;  
+                return offset;
             }
         };
         const getPanelClass = (placement: Placement): string => `tooltip-${placement}`;
@@ -473,9 +473,9 @@ export class TooltipDirective implements OnInit, OnChanges {
                     null,
                     getPanelClass(placement)
                 );
-        
+
             default:
-                return bottom
+                return bottom;
         }
     }
 

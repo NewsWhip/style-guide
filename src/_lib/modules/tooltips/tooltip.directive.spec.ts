@@ -1,4 +1,4 @@
-import { Component, DebugElement, ElementRef, OnInit, ViewChild } from "@angular/core";
+import { ChangeDetectionStrategy, Component, DebugElement, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { ComponentFixture, fakeAsync, TestBed, tick } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 import { TooltipContainerComponent } from "./tooltip-container.component";
@@ -35,7 +35,7 @@ describe('TooltipDirective', () => {
         element.dispatchEvent(new Event(event));
     };
 
-    const getTooltipEl = (): HTMLElement => 
+    const getTooltipEl = (): HTMLElement =>
         documentDebugElement.query(By.directive(TooltipContainerComponent))?.query(By.css('.tooltip')).nativeElement;
 
     it('should apply the containerClass to the .tooltip element', fakeAsync(() => {
@@ -47,7 +47,7 @@ describe('TooltipDirective', () => {
         const tooltip = getTooltipEl();
         expect(tooltip.classList).toContain('test-tooltip-container-class');
     }));
-    
+
     it('should display an arrow', fakeAsync(() => {
         fixture.detectChanges();
         const trigger = de.query(By.directive(TooltipDirective)).nativeElement;
@@ -56,7 +56,7 @@ describe('TooltipDirective', () => {
         const tooltip = getTooltipEl();
         expect(tooltip.querySelector('.tooltip-arrow')).toBeTruthy();
     }));
-    
+
     it('should not display an arrow', fakeAsync(() => {
         comp.withArrow = false;
         fixture.detectChanges();
@@ -68,7 +68,7 @@ describe('TooltipDirective', () => {
     }));
 
     it('should open when an open event is fired', fakeAsync(() => {
-        comp.openEvents = ['focus']
+        comp.openEvents = ['focus'];
         fixture.detectChanges();
         const trigger = de.query(By.directive(TooltipDirective)).nativeElement;
         fireEvent(trigger, 'focus');
@@ -78,7 +78,7 @@ describe('TooltipDirective', () => {
     }));
 
     it('should close when an close event is fired', fakeAsync(() => {
-        comp.closeEvents = ['dblclick']
+        comp.closeEvents = ['dblclick'];
         fixture.detectChanges();
         const trigger = de.query(By.directive(TooltipDirective)).nativeElement;
         fireEvent(trigger, 'mouseenter');
@@ -182,7 +182,7 @@ describe('TooltipDirective', () => {
         const trigger = de.queryAll(By.directive(TooltipDirective))[1].nativeElement;
         fireEvent(trigger, 'click');
         tick(tickWaitMs);
-        let tooltip = getTooltipEl();
+        const tooltip = getTooltipEl();
         expect(tooltip).toBeTruthy();
     }));
 
@@ -303,6 +303,7 @@ describe('TooltipDirective', () => {
     }));
 });
 
+// eslint-disable-next-line @angular-eslint/prefer-on-push-component-change-detection
 @Component({
     template: `
         <div class="wrapper-el" cdkScrollable>
@@ -394,6 +395,7 @@ class WrapperComponent implements OnInit {
         }
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
     onCloseBtnClicked() {}
 
 }

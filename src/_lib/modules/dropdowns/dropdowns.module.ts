@@ -5,10 +5,10 @@ import { DropdownToggleDirective } from "./dropdown-toggle.directive";
 import { DropdownMenuDirective } from "./dropdown-menu.directive";
 
 @NgModule({
-  imports: [
-    CommonModule
-  ],
-  declarations: [DropdownDirective, DropdownToggleDirective, DropdownMenuDirective],
-  exports: [DropdownDirective, DropdownToggleDirective, DropdownMenuDirective]
+    imports: [
+        CommonModule
+    ],
+    declarations: [DropdownDirective, DropdownToggleDirective, DropdownMenuDirective],
+    exports: [DropdownDirective, DropdownToggleDirective, DropdownMenuDirective]
 })
 export class DropdownsModule { }
