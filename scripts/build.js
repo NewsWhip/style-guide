@@ -23,7 +23,7 @@ const run = () => {
     compileSass();
     copyAssets();
     copyLintingConfig();
-    copyFile('./README.MD', 'Copying README');
+    copyFile('README.MD', 'Copying README');
     utils.onComplete();
 }
 
@@ -126,9 +126,10 @@ const copyFile = (sourceFile, message) => {
     process.stdout.write(message);
 
     const destFile = path.join(utils.distPath, sourceFile);
+    const srcFile = path.join(sourceFile);
 
     try {
-        fs.copyFileSync(sourceFile, destFile);
+        fs.copyFileSync(srcFile, destFile);
         utils.onSuccess();
     } catch (err) {
         utils.onError();
