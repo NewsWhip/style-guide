@@ -1,4 +1,4 @@
-import { Component, Input, Output, ChangeDetectorRef, ChangeDetectionStrategy, EventEmitter, ViewChild, ElementRef } from '@angular/core';
+import { Component, Input, Output, ChangeDetectorRef, ChangeDetectionStrategy, EventEmitter, ViewChild, ElementRef, OnInit, OnDestroy } from '@angular/core';
 import { trigger, transition, animate, style } from '@angular/animations';
 import { FormControl } from '@angular/forms';
 import { IPickerItem } from './IPickerItem';
@@ -6,8 +6,8 @@ import { Subscription } from 'rxjs';
 import { isUndefined } from 'lodash-es';
 
 @Component({
-	selector: 'nw-angular-picker',
-	template: `
+    selector: 'nw-angular-picker',
+    template: `
         <div class="nw-picker">
             <!-- START: NOT xs screen -->
             <div class="input-container hidden-xs">
@@ -135,21 +135,21 @@ import { isUndefined } from 'lodash-es';
             </div>
         </div>
 	`,
-	changeDetection: ChangeDetectionStrategy.OnPush,
-	animations: [
-		trigger('slideUpIn', [
-			transition('void => in', [
-				style({ top: '100%', transform: 'scale(0)' }),
-				animate(200, style({ top: 0, transform: 'scale(1)' }))
-			]),
-			transition('in => void', [
-				animate(200, style({ top: '100%', transform: 'scale(0)' }))
-			])
-		])
-	]
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    animations: [
+        trigger('slideUpIn', [
+            transition('void => in', [
+                style({ top: '100%', transform: 'scale(0)' }),
+                animate(200, style({ top: 0, transform: 'scale(1)' }))
+            ]),
+            transition('in => void', [
+                animate(200, style({ top: '100%', transform: 'scale(0)' }))
+            ])
+        ])
+    ]
 })
 
-export class NwPickerComponent {
+export class NwPickerComponent implements OnInit, OnDestroy {
 
     @Input() items: IPickerItem[];
     @Input() inputClasses: string = '';
@@ -164,10 +164,11 @@ export class NwPickerComponent {
     @Input() isMobileDisplay: boolean = false;
 
     @Output() selections: EventEmitter<IPickerItem[]> = new EventEmitter<IPickerItem[]>();
-    @Output() toggleInclude: EventEmitter<{ item: IPickerItem, searchTerm: string }> = new EventEmitter<{ item: IPickerItem, searchTerm: string }>();
-    @Output() toggleExclude: EventEmitter<{ item: IPickerItem, searchTerm: string }> = new EventEmitter<{ item: IPickerItem, searchTerm: string }>();
+    @Output() toggleInclude: EventEmitter<{ item: IPickerItem; searchTerm: string }> = new EventEmitter<{ item: IPickerItem; searchTerm: string }>();
+    @Output() toggleExclude: EventEmitter<{ item: IPickerItem; searchTerm: string }> = new EventEmitter<{ item: IPickerItem; searchTerm: string }>();
     @Output() edit: EventEmitter<any> = new EventEmitter<any>();
     @Output() closed: EventEmitter<any> = new EventEmitter<any>();
+    // eslint-disable-next-line @angular-eslint/no-output-native
     @Output() focus: EventEmitter<ElementRef> = new EventEmitter<ElementRef>();
     @Output() clearAll: EventEmitter<any> = new EventEmitter<any>();
     @Output() clearSingle: EventEmitter<IPickerItem> = new EventEmitter<IPickerItem>();
@@ -193,7 +194,7 @@ export class NwPickerComponent {
     }
 
     subscribeToSearchTermChanges() {
-        let sub = this.searchTerm.valueChanges.subscribe(val => {
+        const sub = this.searchTerm.valueChanges.subscribe(val => {
             this.selectionsAreShowing = false;
 
             if (val.length) {
@@ -204,8 +205,7 @@ export class NwPickerComponent {
                 });
                 // remove duplicate items
                 this.displayItems = displayItems.reduce((items, item) => items.find(x => x.id === item.id) ? [...items] : [...items, item], []);
-            }
-            else {
+            } else {
                 this.setDisplayItemsFromParentId(this.parentId);
             }
         });
@@ -295,9 +295,9 @@ export class NwPickerComponent {
         item.added = this.isMultiSelect ? !item.added : true;
         item.excluded = false;
 
-      // setting flag for duplicate id's as in case of location for selection and deselection on checkbox click
+        // setting flag for duplicate id's as in case of location for selection and deselection on checkbox click
         if (this.isMultiSelect) {
-            this.items.forEach(pickerItem => {    
+            this.items.forEach(pickerItem => {
                 if (item.id === pickerItem.id) {
                     pickerItem.added = item.added;
                 }
@@ -320,9 +320,9 @@ export class NwPickerComponent {
 
         item.added = false;
         item.excluded = !item.excluded;
-         // setting flag for duplicate id's as in case of location for selection and deselection on checkbox click
-         if (this.isMultiSelect) {
-            this.items.forEach(pickerItem => {    
+        // setting flag for duplicate id's as in case of location for selection and deselection on checkbox click
+        if (this.isMultiSelect) {
+            this.items.forEach(pickerItem => {
                 if (item.id === pickerItem.id) {
                     pickerItem.excluded = item.excluded;
                 }
@@ -365,7 +365,7 @@ export class NwPickerComponent {
             }
 
             this.toggleAncestors(ci, add, exclude);
-        })
+        });
     }
 
     preventBlur(e: KeyboardEvent) {
@@ -379,7 +379,7 @@ export class NwPickerComponent {
 
     onFocus() {
         this.showResults();
-        this.focus.emit(this.inputEl)
+        this.focus.emit(this.inputEl);
     }
 
     showResults() {
@@ -419,12 +419,12 @@ export class NwPickerComponent {
         }
 
         if (this.isHeightDynamic) {
-            let appContainer = <HTMLElement>document.querySelector('.app-container');
-            let appContainerOffsetTop = appContainer.getBoundingClientRect().top;
-            let elOffsetTop = el.getBoundingClientRect().top;
-            let buffer = 50;
+            const appContainer = document.querySelector('.app-container') as HTMLElement;
+            const appContainerOffsetTop = appContainer.getBoundingClientRect().top;
+            const elOffsetTop = el.getBoundingClientRect().top;
+            const buffer = 50;
 
-            let height = appContainer.offsetHeight - (elOffsetTop - appContainerOffsetTop);
+            const height = appContainer.offsetHeight - (elOffsetTop - appContainerOffsetTop);
 
             if (height < this.maxHeight) {
                 return height - buffer + 'px';

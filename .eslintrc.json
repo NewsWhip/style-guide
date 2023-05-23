@@ -1,0 +1,52 @@
+{
+  "root": true,
+  "ignorePatterns": [
+    "src/app/"
+  ],
+  "overrides": [
+    {
+      "files": [
+        "*.ts"
+      ],
+      "extends": [
+        "./linting-config/ts-files.json"
+      ],
+      "parserOptions": {
+        "project": [
+          "src/tsconfig.app.json",
+          "src/tsconfig.spec.json"
+        ],
+        "createDefaultProgram": true
+      },
+      "rules": {
+        "@angular-eslint/component-selector": [
+          "error",
+          {
+            "type": [
+              "element",
+              "attribute"
+            ],
+            "prefix": "nw",
+            "style": "kebab-case"
+          }
+        ],
+        "@angular-eslint/directive-selector": [
+          "error",
+          {
+            "type": "attribute",
+            "prefix": "nw",
+            "style": "camelCase"
+          }
+        ]
+      }
+    },
+    {
+      "files": [
+        "*.html"
+      ],
+      "extends": [
+        "./linting-config/html-files.json"
+      ]
+    }
+  ]
+}

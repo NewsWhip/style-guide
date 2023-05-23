@@ -6,6 +6,7 @@ import { ChartComponent } from '../chart.component';
 import { ChartUtils } from "../chart.utils";
 
 @Directive({
+    // eslint-disable-next-line @angular-eslint/directive-selector
     selector: '[nw-y-axis]',
     exportAs: 'nw-y-axis'
 })
@@ -37,8 +38,7 @@ export class YAxisDirective extends AxisBase {
 
         if (this.showGuidlines) {
             this.axis.tickSizeInner(-this.chart.width);
-        }
-        else {
+        } else {
             this.axis.tickSizeInner(6);
         }
 
@@ -53,7 +53,7 @@ export class YAxisDirective extends AxisBase {
         if (this.label) {
             const rotationAngle = this.align === 'left' ? '-90' : '90';
             const y = this.align === 'left' ? 0 : -this.fullWidth;
-            const x  = this.align === 'left' ? -(this.fullHeight / 2) : (this.fullHeight / 2);
+            const x = this.align === 'left' ? -(this.fullHeight / 2) : (this.fullHeight / 2);
 
             this.axisLabelSelection
                 .attr('class', 'axis-label ' + this.align)
@@ -66,7 +66,7 @@ export class YAxisDirective extends AxisBase {
     }
 
     render() {
-        let xTranslation = this.align === "right" ? this.chart.width : 0;
+        const xTranslation = this.align === "right" ? this.chart.width : 0;
 
         this.axisSelection
             .attr('transform', "translate(" + xTranslation + ", 0)")

@@ -99,7 +99,7 @@ export class TabsComponent implements OnInit, AfterContentInit, OnDestroy {
             .subscribe(() => {
                 console.log('transition ended');
                 this._cdRef.detectChanges();
-            })
+            });
     }
 
     getActiveTab(): TabDirective {
@@ -129,7 +129,7 @@ export class TabsComponent implements OnInit, AfterContentInit, OnDestroy {
     get background() {
         return {
             'background': `linear-gradient(to left, rgba(0,0,0,0), ${this.maskColor})`
-        }
+        };
     }
 
     get clientWidth(): number {
@@ -164,7 +164,7 @@ export class TabsComponent implements OnInit, AfterContentInit, OnDestroy {
         };
 
         const shouldScrollLeft: boolean = position.left < this.getScrollEl().scrollLeft;
-        const shouldScrollRight: boolean = position.right > (this.getScrollEl().scrollLeft +  + this.clientWidth);
+        const shouldScrollRight: boolean = position.right > (this.getScrollEl().scrollLeft + this.clientWidth);
 
         if (shouldScrollLeft) {
             this.getScrollEl().scrollLeft = position.left - 30;

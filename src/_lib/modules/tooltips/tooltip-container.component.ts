@@ -3,7 +3,7 @@ import { ITooltipData } from "./models/ITooltipData";
 import { TOOLTIP_CONTEXT_TOKEN } from "./config/tooltip-context-token";
 
 @Component({
-    selector: 'spike-tooltip-container',
+    selector: 'nw-tooltip-container',
     template: `
         <div class="tooltip"
             [ngClass]="data.containerClass">

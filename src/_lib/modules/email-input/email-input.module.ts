@@ -4,11 +4,11 @@ import { EmailInputComponent } from './email-input.component';
 import { ReactiveFormsModule } from "@angular/forms";
 
 @NgModule({
-  imports: [
-    CommonModule,
-    ReactiveFormsModule
-  ],
-  declarations: [EmailInputComponent],
-  exports: [EmailInputComponent]
+    imports: [
+        CommonModule,
+        ReactiveFormsModule
+    ],
+    declarations: [EmailInputComponent],
+    exports: [EmailInputComponent]
 })
 export class EmailInputModule { }
