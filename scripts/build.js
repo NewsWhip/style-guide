@@ -17,12 +17,12 @@ const run = () => {
     // Create the distribution folder
     fs.mkdirSync(utils.distPath);
     // For each module, try to compile the Angular module
-    buildModules();
-    utils.logSeparator();
-    copySassFiles();
-    compileSass();
-    copyAssets();
-    copyLintingConfig();
+    // buildModules();
+    // utils.logSeparator();
+    // copySassFiles();
+    // compileSass();
+    // copyAssets();
+    // copyLintingConfig();
     copyFile('README.MD', 'Copying README');
     utils.onComplete();
 }
