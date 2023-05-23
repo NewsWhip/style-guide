@@ -73,20 +73,14 @@ $nw-font-path: '~nw-style-guide/assets/fonts';
 1. Create a new feature branch off master
 1. Implement feature / fix in feature branch
 1. Create pull request
-1. Build the Github Pages demo in the feature branch
-    - `npm run ghpages`
-    - Make sure to `git add --all` not to end up with untracked files
-    - Commit with message `build:ghpages`
-    - Push changes
-
 1. Update the package version with the command `npm version {{version_type}}`. The version bump is automatically committed. See [here](https://docs.npmjs.com/cli/v6/commands/npm-version#synopsis) for further information on the `npm version` command
 1. Push changes
 1. PR is approved
 1. Merge pull request to master
-1. After merging to master, checkout master and pull the latest changes
-1. Publish the new package version to npm with `npm run package:release`
-    - `npm run package:release` first runs the `package:build` script
-    - it then publishes the built files to npm
+1. After merging to master, the docs will be deployed to Github pages, a new release will be created (if the version in package.json has changed), and a new version will be published to npm
+
+### Manually publishing the package to npm
+If there is an issue with Github Actions and we need to manually publish the package, we can do so with the `npm run package:release` script
 
 > :bulb: At the end of the `package:release` script you will be prompted for a one-time-password (OTP). You should get this OTP from whatever authenticator app you're using
 
@@ -130,19 +124,7 @@ This script does a few things:
 
 ### Github pages
 
-We use Github pages to continuously deploy the application. When Github detects a change to the `/docs` folder in master, a redeployment takes place.
-
-We can build the `/docs` folder for Github pages by running `npm run ghpages`.
-
-**It's important to rebuild the `/docs` folder before branches are merged to master. Otherwise new features or fixes won't be visible on our demo site on Github Pages. As part of a pull request the `/docs` folder should be rebuilt using `npm run ghpages`**
-
-### Local server
-
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-### Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+We use Github pages to continuously deploy the application. This deployment is handled automatically with the [build-and-deploy-docs](./.github/workflows/build-and-deploy-docs.yml) Github workflow. Whenever the master branch is updated, you can expect this workflow to trigger.
 
 ### Building local versions
 

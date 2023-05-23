@@ -1,4 +1,4 @@
-name: Run tests
+name: Run tests and lint
 run-name: ${{github.actor}} is running pre-release tests
 on:
   pull_request:
@@ -16,4 +16,6 @@ jobs:
           token: ${{secrets.FONTAWESOME_NPM_AUTH_TOKEN}}
       - name: Running the tests
         run: npm run test-single-run
+      - name: Linting
+        run: npm run lint
         
