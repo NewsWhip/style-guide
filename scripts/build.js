@@ -23,7 +23,7 @@ const run = () => {
     compileSass();
     copyAssets();
     copyLintingConfig();
-    copyFile('README.MD', 'Copying README');
+    copyFile('./README.MD', 'Copying README');
     utils.onComplete();
 }
 
