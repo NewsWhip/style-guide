@@ -17,12 +17,12 @@ const run = () => {
     // Create the distribution folder
     fs.mkdirSync(utils.distPath);
     // For each module, try to compile the Angular module
-    // buildModules();
-    // utils.logSeparator();
-    // copySassFiles();
-    // compileSass();
-    // copyAssets();
-    // copyLintingConfig();
+    buildModules();
+    utils.logSeparator();
+    copySassFiles();
+    compileSass();
+    copyAssets();
+    copyLintingConfig();
     copyFile('README.md', 'Copying README');
     utils.onComplete();
 }
@@ -126,10 +126,9 @@ const copyFile = (sourceFile, message) => {
     process.stdout.write(message);
 
     const destFile = path.join(utils.distPath, sourceFile);
-    const srcFile = path.join(sourceFile);
 
     try {
-        fs.copyFileSync(srcFile, destFile);
+        fs.copyFileSync(sourceFile, destFile);
         utils.onSuccess();
     } catch (err) {
         utils.onError();
