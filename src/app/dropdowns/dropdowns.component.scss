@@ -6,4 +6,11 @@ app-dropdowns {
         margin-bottom: 20px;
         border-radius: $border-radius-base;
     }
+
+    .preselected{
+        .dropdown-menu{
+            height: 200px;
+            overflow-y: scroll;
+        }
+    }
 }
