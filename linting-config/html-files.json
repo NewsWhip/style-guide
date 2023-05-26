@@ -1,0 +1,14 @@
+{
+    "extends": [
+        "plugin:@angular-eslint/template/recommended"
+    ],
+    "rules": {
+        "@angular-eslint/template/no-any": "error",
+        "@angular-eslint/template/eqeqeq": [
+            "error",
+            {
+                "allowNullOrUndefined": true
+            }
+        ]
+    }
+}

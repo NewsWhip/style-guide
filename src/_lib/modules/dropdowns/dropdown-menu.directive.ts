@@ -47,7 +47,7 @@ export class DropdownMenuDirective implements AfterContentInit, OnDestroy {
         const openEvents: Observable<number>[] = this.nestedDropdowns
             .map((nd, index) => {
                 return nd.opened
-                    .pipe(map(x => index))
+                    .pipe(map(x => index));
             });
 
         merge(...openEvents).pipe(

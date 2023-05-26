@@ -56,8 +56,7 @@ export class ResizeObserverDirective implements OnInit, OnDestroy {
             skip(1),
             debounceTime(50),
             takeUntil(this._destroyed$)
-        )
-        .subscribe(res => this.nwResize.emit());
+        ).subscribe(res => this.nwResize.emit());
     }
 
     createObserver() {

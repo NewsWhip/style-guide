@@ -7,9 +7,10 @@ import { ChartUtils } from '../chart.utils';
 import { Subscription } from 'rxjs';
 import { NwXAxisScale } from '../axis/models/XAxisScale';
 
-type AreaDatum = [number, number] | [number, number, number]
+type AreaDatum = [number, number] | [number, number, number];
 
 @Directive({
+    // eslint-disable-next-line @angular-eslint/directive-selector
     selector: 'path[nw-area]',
     exportAs: 'nw-area'
 })
@@ -85,7 +86,7 @@ export class AreaDirective implements OnInit, OnChanges, OnDestroy {
             .transition()
             .duration(this.animDuration)
             .ease(this.easing)
-            .attr('d', this.area)
+            .attr('d', this.area);
     }
 
     private _subscribeToChartResize() {

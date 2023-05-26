@@ -1,0 +1,131 @@
+{
+    "extends": [
+        "plugin:@angular-eslint/ng-cli-compat",
+        "plugin:@angular-eslint/ng-cli-compat--formatting-add-on",
+        "plugin:@angular-eslint/template/process-inline-templates"
+    ],
+    "rules": {
+        "@angular-eslint/contextual-decorator": "error",
+        "@angular-eslint/no-lifecycle-call": "error",
+        "@angular-eslint/prefer-on-push-component-change-detection": "error",
+        "@angular-eslint/use-component-view-encapsulation": "error",
+        "@angular-eslint/no-host-metadata-property": "off",
+        "@angular-eslint/no-input-rename": "off",
+        "@typescript-eslint/no-empty-function": "error",
+        "@typescript-eslint/no-throw-literal": "error",
+        "@typescript-eslint/member-delimiter-style": "error",
+        "@typescript-eslint/member-ordering": "off",
+        "@typescript-eslint/no-inferrable-types": "off",
+        "@typescript-eslint/no-shadow": "off",
+        "@typescript-eslint/prefer-for-of": "off",
+        "@typescript-eslint/quotes": "off",
+        "@typescript-eslint/dot-notation": [
+            "error",
+            {
+                "allowPrivateClassPropertyAccess": true,
+                "allowProtectedClassPropertyAccess": true
+            }
+        ],
+        "@typescript-eslint/naming-convention": [
+            "error",
+            {
+                "selector": [
+                    "enumMember"
+                ],
+                "format": null
+            },
+            {
+                "selector": "interface",
+                "format": [
+                    "PascalCase"
+                ],
+                "custom": {
+                    "regex": "^I[A-Z]",
+                    "match": true
+                }
+            },
+            {
+                "selector": "variable",
+                "format": [
+                    "camelCase",
+                    "UPPER_CASE",
+                    "PascalCase"
+                ],
+                "leadingUnderscore": "allow",
+                "trailingUnderscore": "forbid"
+            },
+            {
+                "selector": "memberLike",
+                "modifiers": [
+                    "private"
+                ],
+                "format": [
+                    "camelCase"
+                ],
+                "leadingUnderscore": "require"
+            }
+        ],
+        "no-empty-function": "off",
+        "no-multiple-empty-lines": "error",
+        "no-unused-expressions": "error",
+        "prefer-const": [
+            "error",
+            {
+                "destructuring": "all"
+            }
+        ],
+        "semi": "error",
+        "no-restricted-imports": [
+            "error",
+            {
+                "paths": [
+                    "lodash",
+                    "ngx-bootstrap/popover",
+                    "ngx-bootstrap/tooltip"
+                ]
+            }
+        ],
+        "deprecation/deprecation": "warn",
+        "eol-last": "off",
+        "guard-for-in": "off",
+        "max-len": "off",
+        "no-console": "off",
+        "no-underscore-dangle": "off",
+        "quote-props": "off",
+        "object-shorthand": "off",
+        "arrow-body-style": "off",
+        "no-irregular-whitespace": "error",
+        "space-before-function-paren": [
+            "error",
+            {
+                "anonymous": "never",
+                "named": "never",
+                "asyncArrow": "never"
+            }
+        ],
+        "space-in-parens": [
+            "error",
+            "never"
+        ],
+        "spaced-comment": "error",
+        "no-multi-spaces": "error",
+        "comma-spacing": "error",
+        "array-bracket-spacing": "error",
+        "arrow-spacing": "error",
+        "rest-spread-spacing": "error",
+        "semi-spacing": "error",
+        "key-spacing": "error",
+        "space-before-blocks": "error",
+        "keyword-spacing": "error",
+        "indent": [
+            "error",
+            4,
+            {
+                "SwitchCase": 1
+            }
+        ],
+        "brace-style": "error",
+        "space-infix-ops": "error"
+    },
+    "plugins": ["deprecation"]
+}
