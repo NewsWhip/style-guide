@@ -57,7 +57,7 @@ export class DropdownMenuDirective implements AfterContentInit, OnDestroy {
             this.nestedDropdowns
                 .filter((nd, i) => i !== index)
                 .forEach(nd => nd.close());
-        })
+        });
     }
 
     @HostListener('click', ['$event'])
