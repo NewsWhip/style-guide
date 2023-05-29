@@ -1,0 +1,37 @@
+# Create a new release on Github if the package.json version has changed
+name: Release
+on:
+  push:
+    branches:
+      - main
+      - master
+jobs:
+  build:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: Release
+        uses: justincy/github-action-npm-release@2.0.2
+        id: release
+        #
+        # This token is required to allow workflows to trigger workflows. This token is a fine-grained personal access token
+        # with access only to the NewsWhip/style-guide repo with the following permissions
+        #
+        # Read access to actions, actions variables, commit statuses, metadata, and secrets
+        # Read and Write access to code and workflows
+        #
+        # This key has a max lifetime of 365 days and will need to be regularly renewed
+        #
+        # See https://github.com/orgs/community/discussions/25281 for some more detail
+        #
+        with:
+          token: ${{secrets.GH_ACTIONS_STYLE_GUIDE_TOKEN}}
+      - name: Print release output
+        if: ${{ steps.release.outputs.released == 'true' }}
+        run: echo Release ID ${{ steps.release.outputs.release_id }}
