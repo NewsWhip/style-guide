@@ -14,10 +14,10 @@ jobs:
       - uses: ./.github/actions/npm-install
         with:
           token: ${{secrets.FONTAWESOME_NPM_AUTH_TOKEN}}
-      - name: Running the tests
-        run: npm run test-single-run
       - name: Linting
         run: npm run lint
+      - name: Running the tests
+        run: npm run test-single-run
       - name: Building package
         run: npm run package:build
         
