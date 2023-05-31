@@ -1,0 +1,23 @@
+name: Set custom npm config and install depedencies
+description: Customise the Font Awesome registry and auth token, and npm install
+inputs:
+  token:
+    description: 'Your Font Awesome auth token'
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 16
+        cache: npm
+    - name: Setting Font Awesome registry and auth token
+      shell: bash
+      run: |
+        npm config set "@fortawesome:registry" https://npm.fontawesome.com/
+        npm config set "//npm.fontawesome.com/:_authToken" ${{inputs.token}}
+    - name: Installing dependencies
+      shell: bash
+      run: npm install
+      

@@ -291,6 +291,24 @@ export class AppModule \{ \}"}}</code></pre>
 
     <hr>
 
+    <h3>Dopdown with selected option highlighted and visible</h3>
+    <p>Dropdown menu will automatically scroll to item with <code>.active</code> class</p>
+    <div class="preselected my-16">
+        <div class="dropdown" nwDropdown>
+            <button class="btn btn-secondary dropdown-toggle" id="preselected-dropdown" nwDropdownToggle>
+                {{selectedItem.value}}
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-inverse" aria-labelledby="preselected-dropdown" nwDropdownMenu>
+                <li *ngFor="let item of dropdownItems" [class.active]="selectedItem === item">
+                    <a (click)="selectedItem = item" >{{item.value}}</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <hr>
+
     <h3>Append dropdown to body</h3>
 
     <p style="margin-bottom: 16px;">

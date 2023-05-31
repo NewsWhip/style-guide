@@ -1,0 +1,23 @@
+name: Pre-release tasks
+run-name: ${{github.actor}} is running pre-release tests
+on:
+  pull_request:
+    branches:
+      - master
+      - main
+jobs:
+  pre-release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+      - uses: ./.github/actions/npm-install
+        with:
+          token: ${{secrets.FONTAWESOME_NPM_AUTH_TOKEN}}
+      - name: Linting
+        run: npm run lint
+      - name: Running the tests
+        run: npm run test-single-run
+      - name: Building package
+        run: npm run package:build
+        

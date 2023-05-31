@@ -1,6 +1,6 @@
 {
   "name": "nw-style-guide",
-  "version": "11.0.0-scatter-plot.0",
+  "version": "11.3.0",
   "license": "MIT",
   "author": {
     "email": "garethdn@gmail.com",
@@ -11,6 +11,7 @@
     "start": "ng serve",
     "build": "ng build --configuration production",
     "test": "ng test",
+    "test-single-run": "npm run test -- --watch=false --progress=false --browsers=ChromeHeadless",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "ngc": "ngc",
@@ -22,7 +23,7 @@
     "package:build": "node scripts/build.js",
     "package:make-local-tgz": "node scripts/make-local-tgz.js",
     "package:release": "node scripts/release.js",
-    "prepackage:release": "npm run test -- --watch=false --progress=false --browsers=ChromeHeadless"
+    "prepackage:release": "npm run test-single-run"
   },
   "private": true,
   "devDependencies": {
@@ -67,7 +68,6 @@
     "json": "^9.0.6",
     "karma": "~6.3.4",
     "karma-chrome-launcher": "~3.1.0",
-    "karma-cli": "~1.0.1",
     "karma-coverage-istanbul-reporter": "~3.0.2",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "^1.5.0",
