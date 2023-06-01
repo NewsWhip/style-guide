@@ -13,7 +13,7 @@ import { NwXAxisScale } from './models/XAxisScale';
 })
 export class XAxisDirective extends AxisBase {
 
-    @Input() align: 'top' | 'bottom' = 'bottom';
+    @Input() align: 'top' | 'bottom' | 'center' = 'bottom';
     @Input() domain: [number, number];
     @Input() scale: NwXAxisScale = scaleTime();
 
@@ -63,13 +63,25 @@ export class XAxisDirective extends AxisBase {
     }
 
     render() {
-        const yTranslation = this.align === "bottom" ? this.chart.height : 0;
+        const yTranslation = this._getAxisTranslation();
 
         this.axisSelection
             .attr('transform', "translate(0," + yTranslation + ")")
             .call(this.axis);
 
         this.positionLabel();
+    }
+
+    private _getAxisTranslation(): number {
+        if (this.align === 'bottom') {
+            return this.chart.height;
+        }
+
+        if (this.align === 'center') {
+            return this.chart.height / 2;
+        }
+
+        return 0;
     }
 
 }

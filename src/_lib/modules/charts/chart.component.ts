@@ -16,17 +16,8 @@ import { debounceTime, takeUntil } from 'rxjs/operators';
             <ng-content select="[nw-x-axis],[nw-y-axis]"></ng-content>
             <svg:g #mouseEventCaptureContainer class="mouse-event-capture-container">
                 <ng-content select=".nw-slot-1"></ng-content>
-                <ng-content select=".nw-slot-2"></ng-content>
-                <ng-content select=".nw-slot-3"></ng-content>
-                <ng-content select=".nw-slot-4"></ng-content>
-                <ng-content select=".nw-slot-5"></ng-content>
-                <ng-content select=".nw-slot-6"></ng-content>
-                <ng-content select=".nw-slot-7"></ng-content>
-                <ng-content select=".nw-slot-8"></ng-content>
-                <ng-content select=".nw-slot-9"></ng-content>
-                <ng-content select=".nw-slot-10"></ng-content>
-
                 <svg:rect #hoverOverlay (click)="onBackgroundClick()"></svg:rect>
+                <ng-content select=".nw-slot-2"></ng-content>
                 <ng-content></ng-content>
             </svg:g>
         </svg:g>
