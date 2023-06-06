@@ -132,14 +132,11 @@ a.btn {
         margin-left: 8px;
         &:before {
             display: inline-block;
-            font-style: normal;
-            font-variant: normal;
             text-rendering: auto;
             -webkit-font-smoothing: antialiased;
             content: '\f054';
-            font-weight: 600;
             line-height: 1;
-            font-family: "Font Awesome 5 Pro";
+            font: var(--fa-font-solid);
             font-size: 1.6em;
         }
     }
