@@ -69,10 +69,6 @@ export class TextDirective implements OnInit, OnChanges, OnDestroy {
             .attr("y", this.y);
     }
 
-    get transform(): string {
-        return `translate(${this.x}, ${this.y})`;
-    }
-
     get x(): number {
         return this.xScale(this.point[0]);
     }
