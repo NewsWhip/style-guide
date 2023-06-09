@@ -56,7 +56,8 @@ export class TextDirective implements OnInit, OnChanges, OnDestroy {
 
     draw(): void {
         this.text
-            .attr("transform", this.transform);
+            .attr("x", this.x)
+            .attr("y", this.y);
     }
 
     update() {
@@ -64,11 +65,8 @@ export class TextDirective implements OnInit, OnChanges, OnDestroy {
             .transition()
             .duration(this.animDuration)
             .ease(this.easing)
-            .attr("transform", this.transform);
-    }
-
-    get transform(): string {
-        return `translate(${this.x}, ${this.y})`;
+            .attr("x", this.x)
+            .attr("y", this.y);
     }
 
     get x(): number {
