@@ -111,8 +111,7 @@
     }
     &[data-toggle="collapse"] {
         &:before {
-            font-family: "Font Awesome 5 Pro";
-            font-weight: 300;
+            font: var(--fa-font-light);
             content: '\f07c';
             display: inline-block;
             margin-right: 8px;

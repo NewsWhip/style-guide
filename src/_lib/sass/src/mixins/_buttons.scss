@@ -75,17 +75,14 @@
 @mixin button-close($font-size, $line-height, $padding-vertical) {
     @include button-square($font-size, $line-height, $padding-vertical);
 
-    // ref: https://fontawesome.com/v5/docs/web/advanced/css-pseudo-elements
+    // ref: https://fontawesome.com/docs/web/add-icons/pseudo-elements
     &:before {
         display: inline-block;
-        font-style: normal;
-        font-variant: normal;
         text-rendering: auto;
         -webkit-font-smoothing: antialiased;
         content: '\f00d';
-        font-weight: 300;
         line-height: 1;
-        font-family: "Font Awesome 5 Pro";
+        font: var(--fa-font-light);
         font-size: 1.3em;
     }
 }
