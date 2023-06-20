@@ -3,6 +3,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PortalModule } from '@angular/cdk/portal';
+import { DialogModule } from '@angular/cdk/dialog';
 import { NwPickerModule } from '../_lib/modules/picker/picker.module';
 import { ToastsModule } from '../_lib/modules/toasts';
 import { FeatureAlertsModule } from '../_lib/modules/feature-alerts';
@@ -108,7 +109,8 @@ import { SpacingComponent } from './spacing/spacing.component';
     AutoFocusModule,
     TooltipModule,
     ScrollingModule,
-    WordCloudModule
+    WordCloudModule,
+    DialogModule
   ],
   bootstrap: [AppComponent]
 })
