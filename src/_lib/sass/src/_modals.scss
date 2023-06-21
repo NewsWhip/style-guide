@@ -133,7 +133,7 @@
 
     &.cdk-overlay-backdrop-showing {
         background-color: rgba($modal-backdrop-bg, $modal-backdrop-opacity);
-        backdrop-filter: blur(4px)
+        backdrop-filter: blur(4px);
     }
 
     &.transparent {
