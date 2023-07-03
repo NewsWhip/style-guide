@@ -1,11 +1,3 @@
-// Right now, the cdk-overlay-container houses only tooltip and popovers and we need to alter the default z-index
-// of 1000 as the tooltips and popovers display behind our modals. If and when we come to rendering modals inside
-// the same cdk-overlay-container we can probably remove this and rely on the z-index specified on the tooltip,
-// popover and modal elements
-.cdk-overlay-container {
-  z-index: $zindex-popover;
-}
-
 .tooltip {
   z-index: $zindex-tooltip;
   display: block;

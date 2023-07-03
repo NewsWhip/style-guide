@@ -1,6 +1,6 @@
 {
   "name": "nw-style-guide",
-  "version": "12.0.0",
+  "version": "13.0.0",
   "license": "MIT",
   "author": {
     "email": "garethdn@gmail.com",
@@ -34,7 +34,7 @@
     "@angular-eslint/schematics": "^15.2.1",
     "@angular-eslint/template-parser": "^15.2.1",
     "@angular/animations": "^15.2.8",
-    "@angular/cdk": "^15.2.8",
+    "@angular/cdk": "^15.2.9",
     "@angular/cli": "^15.2.6",
     "@angular/common": "^15.2.8",
     "@angular/compiler": "^15.2.8",
