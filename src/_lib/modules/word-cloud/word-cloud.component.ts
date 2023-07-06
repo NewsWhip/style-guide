@@ -8,11 +8,14 @@ import { IWordWithFontSize } from "./models/IWordWithFontSize";
 import { IWordWithPosition } from "./models/IWordWithPosition";
 import { interval, Observable, of } from "rxjs";
 import { catchError, filter, map, startWith, take, timeout } from "rxjs/operators";
+import { ResizeObserverDirective } from "../resize-observer/resize-observer.directive";
 
 @Component({
     selector: 'nw-word-cloud',
     templateUrl: './word-cloud.component.html',
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [ResizeObserverDirective]
 })
 export class WordCloudComponent<T extends IWord> implements OnChanges {
 

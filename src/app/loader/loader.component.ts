@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import { LoaderComponent as LoaderComponent_1 } from '../../_lib/modules/loader/loader.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-loader',
-  templateUrl: './loader.component.html',
-  styleUrls: ['./loader.component.scss']
+    selector: 'app-loader',
+    templateUrl: './loader.component.html',
+    styleUrls: ['./loader.component.scss'],
+    standalone: true,
+    imports: [ReactiveFormsModule, LoaderComponent_1]
 })
 export class LoaderComponent implements OnInit {
   private _num: number = 6;

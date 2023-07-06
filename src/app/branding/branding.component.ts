@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
     selector: 'app-branding',
-    templateUrl: './branding.component.html'
+    templateUrl: './branding.component.html',
+    standalone: true
 })
 export class BrandingComponent implements OnInit {
 

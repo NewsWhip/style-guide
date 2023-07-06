@@ -1,11 +1,16 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { CarouselSlideDirective } from '../../_lib/modules/carousel/carousel-slide.directive';
+import { NgFor } from '@angular/common';
+import { CarouselComponent as CarouselComponent_1 } from '../../_lib/modules/carousel/carousel.component';
 
 @Component({
     selector: 'app-carousel',
     templateUrl: './carousel.component.html',
     styleUrls: ['./carousel.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [CarouselComponent_1, NgFor, CarouselSlideDirective]
 })
 export class CarouselComponent implements OnInit {
 

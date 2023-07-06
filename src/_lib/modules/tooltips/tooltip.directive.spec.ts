@@ -1,8 +1,7 @@
-import { ChangeDetectionStrategy, Component, DebugElement, ElementRef, OnInit, ViewChild } from "@angular/core";
+import { Component, DebugElement, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { ComponentFixture, fakeAsync, TestBed, tick } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 import { TooltipContainerComponent } from "./tooltip-container.component";
-import { TooltipModule } from ".";
 import { TooltipDirective } from "./tooltip.directive";
 import { Placement } from "./models/Placement.type";
 import { CdkScrollable, CdkScrollableModule } from "@angular/cdk/scrolling";
@@ -18,11 +17,9 @@ describe('TooltipDirective', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
-                TooltipModule,
-                CdkScrollableModule
-            ],
-            declarations: [
-                WrapperComponent
+                CdkScrollableModule,
+                WrapperComponent,
+                TooltipDirective
             ]
         });
         fixture = TestBed.createComponent(WrapperComponent);
@@ -366,7 +363,9 @@ describe('TooltipDirective', () => {
             border: 1px solid white;
             transition: width 100ms linear;
         }
-    `]
+    `],
+    standalone: true,
+    imports: [CdkScrollableModule, TooltipDirective]
 })
 class WrapperComponent implements OnInit {
 

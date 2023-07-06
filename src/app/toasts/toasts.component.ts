@@ -1,13 +1,19 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { FormBuilder, FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Toaster } from '../../_lib/modules/toasts';
+import { CopyCodeComponent } from '../code/copy-code.component';
+import { NgIf, NgFor } from '@angular/common';
+import { TabDirective } from '../../_lib/modules/tabs/tab.directive';
+import { TabsComponent } from '../../_lib/modules/tabs/tabs.component';
 
 @Component({
-  selector: 'app-toasts',
-  templateUrl: './toasts.component.html',
-  styleUrls: ['./toasts.component.scss']
+    selector: 'app-toasts',
+    templateUrl: './toasts.component.html',
+    styleUrls: ['./toasts.component.scss'],
+    standalone: true,
+    imports: [TabsComponent, TabDirective, RouterLink, NgIf, ReactiveFormsModule, CopyCodeComponent, NgFor]
 })
 export class ToastsComponent implements OnInit, OnDestroy {
 

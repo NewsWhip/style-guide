@@ -6,10 +6,10 @@ import { HotspotComponent } from "./hotspot.component";
 
 @NgModule({
     imports: [
-        CommonModule
+        CommonModule,
+        HotspotComponent
     ],
     providers: [WindowRef],
-    declarations: [HotspotComponent],
     exports: [HotspotComponent]
 })
 export class FeatureAlertsModule {

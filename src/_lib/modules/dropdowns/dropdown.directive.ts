@@ -5,7 +5,8 @@ import { Subscription } from 'rxjs';
 @Directive({
     selector: '[nwDropdown]',
     exportAs: 'nw-dropdown',
-    providers: [DropdownService]
+    providers: [DropdownService],
+    standalone: true
 })
 export class DropdownDirective implements OnInit, OnChanges, OnDestroy {
 

@@ -11,7 +11,8 @@ import { placementFlipMap } from "./config/placement-flip-map";
 
 @Directive({
     selector: '[nwTooltip],[nwPopover]',
-    exportAs: 'nw-tooltip,nw-popover'
+    exportAs: 'nw-tooltip,nw-popover',
+    standalone: true
 })
 export class TooltipDirective implements OnInit, OnChanges, OnDestroy {
 

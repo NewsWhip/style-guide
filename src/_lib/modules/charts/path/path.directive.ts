@@ -11,7 +11,8 @@ import { NwXAxisScale } from '../axis/models/XAxisScale';
 @Directive({
     // eslint-disable-next-line @angular-eslint/directive-selector
     selector: 'path[nw-path]',
-    exportAs: 'nw-path'
+    exportAs: 'nw-path',
+    standalone: true
 })
 export class PathDirective implements OnInit, OnChanges, OnDestroy {
 

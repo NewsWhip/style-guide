@@ -1,8 +1,15 @@
 import { Component, OnInit } from '@angular/core';
+import { TooltipDirective } from '../../_lib/modules/tooltips/tooltip.directive';
+import { NgFor } from '@angular/common';
+import { DropdownMenuDirective } from '../../_lib/modules/dropdowns/dropdown-menu.directive';
+import { DropdownToggleDirective } from '../../_lib/modules/dropdowns/dropdown-toggle.directive';
+import { DropdownDirective } from '../../_lib/modules/dropdowns/dropdown.directive';
 
 @Component({
     selector: 'app-dropdowns',
-    templateUrl: './dropdowns.component.html'
+    templateUrl: './dropdowns.component.html',
+    standalone: true,
+    imports: [DropdownDirective, DropdownToggleDirective, DropdownMenuDirective, NgFor, TooltipDirective]
 })
 export class DropdownsComponent implements OnInit {
 

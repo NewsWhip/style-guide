@@ -6,7 +6,8 @@ import { ChartComponent } from '../chart.component';
 @Directive({
     // eslint-disable-next-line @angular-eslint/directive-selector
     selector: 'svg:g[nw-brush]',
-    exportAs: 'nw-brush'
+    exportAs: 'nw-brush',
+    standalone: true
 })
 export class BrushDirective implements OnInit, OnDestroy, OnChanges {
 

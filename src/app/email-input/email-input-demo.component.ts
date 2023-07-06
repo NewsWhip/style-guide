@@ -1,8 +1,13 @@
 import { Component, ChangeDetectionStrategy, ChangeDetectorRef, OnInit } from '@angular/core';
 import { IValidationChange } from "../../_lib/modules/email-input/models/IValidationChange";
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ISnippet } from '../code/ISnippet';
+import { AppCodeComponent } from '../code/code.component';
+import { EmailInputComponent } from '../../_lib/modules/email-input/email-input.component';
+import { NgIf, NgFor } from '@angular/common';
+import { TabDirective } from '../../_lib/modules/tabs/tab.directive';
+import { TabsComponent } from '../../_lib/modules/tabs/tabs.component';
 
 @Component({
     selector: 'app-email-input-demo',
@@ -15,7 +20,9 @@ import { ISnippet } from '../code/ISnippet';
         ol li {
             margin-bottom: 16px;
         }
-    `]
+    `],
+    standalone: true,
+    imports: [TabsComponent, TabDirective, RouterLink, NgIf, EmailInputComponent, AppCodeComponent, NgFor]
 })
 export class EmailInputDemoComponent implements OnInit {
 

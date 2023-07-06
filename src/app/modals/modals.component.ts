@@ -1,11 +1,14 @@
 import { Dialog } from '@angular/cdk/dialog';
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { NgFor, NgIf } from '@angular/common';
 
 @Component({
     selector: 'app-modals',
     templateUrl: './modals.component.html',
-    styleUrls: ['./modals.component.scss']
+    styleUrls: ['./modals.component.scss'],
+    standalone: true,
+    imports: [ReactiveFormsModule, NgFor, NgIf]
 })
 export class ModalsComponent implements OnInit {
 
