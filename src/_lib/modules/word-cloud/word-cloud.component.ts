@@ -65,8 +65,11 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
          */
         const exportCanvas = this._renderer.createElement('canvas') as HTMLCanvasElement;
         const exportCtx = exportCanvas.getContext('2d');
-        exportCanvas.width = this._canvas.width;
-        exportCanvas.height = this._canvas.height;
+        const ratio = window.devicePixelRatio;
+
+        exportCanvas.width = this._canvas.width * ratio;
+        exportCanvas.height = this._canvas.height * ratio;
+        exportCtx.scale(ratio, ratio);
 
         this._positionedWords.forEach(pw => {
             const point: IPoint = { x: pw.canvasX, y: pw.canvasY };
@@ -74,7 +77,19 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
             this._drawWord(pw, point, exportCtx);
         });
 
-        return exportCanvas.toDataURL('image/png');
+        const lowestPointOnTheYAxis = Math.min(...this._positionedWords.map(pw => pw.canvasY - pw.height / 2));
+        const highestPointOnTheYAxis = Math.max(...this._positionedWords.map(pw => pw.canvasY + pw.height / 2));
+        const hightOfWordCloudContent = (highestPointOnTheYAxis - lowestPointOnTheYAxis) * ratio;
+        const extractWordCloudImageData = exportCtx.getImageData(0, lowestPointOnTheYAxis * ratio, exportCanvas.width, hightOfWordCloudContent);
+
+        const canvas = this._renderer.createElement('canvas') as HTMLCanvasElement;
+        const context = canvas.getContext('2d');
+
+        canvas.width = exportCanvas.width;
+        canvas.height = hightOfWordCloudContent;
+        context.putImageData(extractWordCloudImageData, 0, 0);
+
+        return canvas.toDataURL('image/png');
     }
 
     downloadCanvas(filename: string): void {
