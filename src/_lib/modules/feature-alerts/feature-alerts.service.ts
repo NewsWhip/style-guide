@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { WindowRef } from './windowref';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class FeatureAlertsService {
     LOCAL_STORAGE_KEY = 'nwAlerts';
 

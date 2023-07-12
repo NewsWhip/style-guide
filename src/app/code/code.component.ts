@@ -13,7 +13,8 @@ import 'prismjs/plugins/copy-to-clipboard/prism-copy-to-clipboard';
         <pre class="language-{{snippet.lang}}">
             <code #code class="language-{{snippet.lang}}"></code>
         </pre>
-    `
+    `,
+    standalone: true
 })
 export class AppCodeComponent implements AfterViewInit {
 

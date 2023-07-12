@@ -6,7 +6,9 @@ import { Toast } from './Toast';
 import { IToastConfig } from './IToastConfig';
 import { defaultConfig } from './config';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class Toaster {
 
     private _toastPortal: ComponentPortal<ToastsComponent>;

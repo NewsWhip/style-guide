@@ -1,147 +1,116 @@
-import { ModuleWithProviders, Injectable } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { ButtonsComponent } from './buttons/buttons.component';
-import { ColorsComponent } from './colors/colors.component';
-import { HomeComponent } from './home/home.component';
-import { DropdownsComponent } from './dropdowns/dropdowns.component';
-import { TabsComponent } from './tabs/tabs.component';
-import { BrandingComponent } from './branding/branding.component';
-import { ListComponent } from './list/list.component';
-import { FormsComponent } from './forms/forms.component';
-import { ModalsComponent } from "./modals/modals.component";
-import { AlertsComponent } from "./alerts/alerts.component";
-import { PaginationComponent } from "./pagination/pagination.component";
-import { LabelsComponent } from "./labels/labels.component";
-import { TablesComponent } from './tables/tables.component';
-import { TooltipsComponent } from './tooltips/tooltips.component';
-import { RelativeWeightComponent } from "./relative-weight/relative-weight.component";
-import { ToastsComponent } from "./toasts/toasts.component";
-import { DemoPillsComponent } from "./pills/pills.component";
-import { TypographyComponent } from "./typography/typography.component";
-import { PickerComponent } from "./picker/picker.component";
-import { FeatureAlertsComponent } from "./feature-alerts/feature-alerts.component";
-import { AnimationsComponent } from "./animations/animations.component";
-import { ChartsComponent } from "./charts/charts.component";
-import { LoaderComponent } from './loader/loader.component';
-import { CarouselComponent } from './carousel/carousel.component';
-import { EmailInputDemoComponent } from "./email-input/email-input-demo.component";
-import { AutofocusComponent } from './autofocus/autofocus.component';
-import { WordCloudDemoComponent } from './word-cloud/word-cloud.component';
-import { SpacingComponent } from './spacing/spacing.component';
+import { Routes } from '@angular/router';
 
-const appRoutes: Routes = [
+export const routes: Routes = [
     {
         path: '',
-        component: HomeComponent
+        loadComponent: () => import('./home/home.component').then(mod => mod.HomeComponent)
     },
     {
         path: 'buttons',
-        component: ButtonsComponent
+        loadComponent: () => import('./buttons/buttons.component').then(mod => mod.ButtonsComponent)
     },
     {
         path: 'colors',
-        component: ColorsComponent
+        loadComponent: () => import('./colors/colors.component').then(mod => mod.ColorsComponent)
     },
     {
         path: 'dropdowns',
-        component: DropdownsComponent
+        loadComponent: () => import('./dropdowns/dropdowns.component').then(mod => mod.DropdownsComponent)
     },
     {
         path: 'tabs',
-        component: TabsComponent
+        loadComponent: () => import('./tabs/tabs.component').then(mod => mod.TabsComponent)
     },
     {
         path: 'branding',
-        component: BrandingComponent
+        loadComponent: () => import('./branding/branding.component').then(mod => mod.BrandingComponent)
     },
     {
         path: 'lists',
-        component: ListComponent
+        loadComponent: () => import('./list/list.component').then(mod => mod.ListComponent)
     },
     {
         path: 'forms',
-        component: FormsComponent
+        loadComponent: () => import('./forms/forms.component').then(mod => mod.FormsComponent)
     },
     {
         path: 'modals',
-        component: ModalsComponent
+        loadComponent: () => import('./modals/modals.component').then(mod => mod.ModalsComponent)
     },
     {
         path: 'alerts',
-        component: AlertsComponent
+        loadComponent: () => import('./alerts/alerts.component').then(mod => mod.AlertsComponent)
     },
     {
         path: 'pagination',
-        component: PaginationComponent
+        loadComponent: () => import('./pagination/pagination.component').then(mod => mod.PaginationComponent)
     },
     {
         path: 'labels',
-        component: LabelsComponent
+        loadComponent: () => import('./labels/labels.component').then(mod => mod.LabelsComponent)
     },
     {
         path: 'tables',
-        component: TablesComponent
+        loadComponent: () => import('./tables/tables.component').then(mod => mod.TablesComponent)
     },
     {
         path: 'tooltips',
-        component: TooltipsComponent
+        loadComponent: () => import('./tooltips/tooltips.component').then(mod => mod.TooltipsComponent)
     },
     {
         path: 'relative-weighting',
-        component: RelativeWeightComponent
+        loadComponent: () => import('./relative-weight/relative-weight.component').then(mod => mod.RelativeWeightComponent)
     },
     {
         path: 'pills',
-        component: DemoPillsComponent
+        loadComponent: () => import('./pills/pills.component').then(mod => mod.DemoPillsComponent)
     },
     {
         path: 'typography',
-        component: TypographyComponent
+        loadComponent: () => import('./typography/typography.component').then(mod => mod.TypographyComponent)
     },
     {
         path: 'picker',
-        component: PickerComponent
+        loadComponent: () => import('./picker/picker.component').then(mod => mod.PickerComponent)
     },
     {
         path: 'toasts',
-        component: ToastsComponent
+        loadComponent: () => import('./toasts/toasts.component').then(mod => mod.ToastsComponent)
     },
     {
         path: 'feature-alerts',
-        component: FeatureAlertsComponent
+        loadComponent: () => import('./feature-alerts/feature-alerts.component').then(mod => mod.FeatureAlertsComponent)
     },
     {
         path: 'animations',
-        component: AnimationsComponent
+        loadComponent: () => import('./animations/animations.component').then(mod => mod.AnimationsComponent)
     },
     {
         path: 'charts',
-        component: ChartsComponent
+        loadComponent: () => import('./charts/charts.component').then(mod => mod.ChartsComponent)
     },
     {
         path: 'loader',
-        component: LoaderComponent
+        loadComponent: () => import('./loader/loader.component').then(mod => mod.LoaderComponent)
     },
     {
         path: 'carousel',
-        component: CarouselComponent
+        loadComponent: () => import('./carousel/carousel.component').then(mod => mod.CarouselComponent)
     },
     {
         path: 'email-input',
-        component: EmailInputDemoComponent
+        loadComponent: () => import('./email-input/email-input-demo.component').then(mod => mod.EmailInputDemoComponent)
     },
     {
         path: 'autofocus',
-        component: AutofocusComponent
+        loadComponent: () => import('./autofocus/autofocus.component').then(mod => mod.AutofocusComponent)
     },
     {
         path: 'word-cloud',
-        component: WordCloudDemoComponent
+        loadComponent: () => import('./word-cloud/word-cloud.component').then(mod => mod.WordCloudDemoComponent)
     },
     {
         path: 'spacing',
-        component: SpacingComponent
+        loadComponent: () => import('./spacing/spacing.component').then(mod => mod.SpacingComponent)
     }
 ];
-
-export const routing: ModuleWithProviders<RouterModule> = RouterModule.forRoot(appRoutes, { useHash: true });

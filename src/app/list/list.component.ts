@@ -1,11 +1,17 @@
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { DropdownMenuDirective } from '../../_lib/modules/dropdowns/dropdown-menu.directive';
+import { DropdownToggleDirective } from '../../_lib/modules/dropdowns/dropdown-toggle.directive';
+import { DropdownDirective } from '../../_lib/modules/dropdowns/dropdown.directive';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 declare var html_beautify: any;
 declare var $: any;
 
 @Component({
     selector: 'app-list',
-    templateUrl: './list.component.html'
+    templateUrl: './list.component.html',
+    standalone: true,
+    imports: [RouterLink, RouterLinkActive, DropdownDirective, DropdownToggleDirective, DropdownMenuDirective]
 })
 export class ListComponent implements OnInit, AfterViewInit {
 

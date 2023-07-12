@@ -5,7 +5,8 @@ import { IWordWithPosition } from "./models/IWordWithPosition";
 @Component({
     selector: 'nw-word',
     templateUrl: './word.component.html',
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true
 })
 export class WordComponent<T extends IWord> implements OnChanges {
 

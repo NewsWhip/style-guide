@@ -9,7 +9,8 @@ import { NwXAxisScale } from './models/XAxisScale';
 @Directive({
     // eslint-disable-next-line @angular-eslint/directive-selector
     selector: '[nw-x-axis]',
-    exportAs: 'nw-x-axis'
+    exportAs: 'nw-x-axis',
+    standalone: true
 })
 export class XAxisDirective extends AxisBase {
 

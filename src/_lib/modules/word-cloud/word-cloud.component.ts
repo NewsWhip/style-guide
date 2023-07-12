@@ -8,11 +8,15 @@ import { IWordWithFontSize } from "./models/IWordWithFontSize";
 import { IWordWithPosition } from "./models/IWordWithPosition";
 import { interval, Observable, of } from "rxjs";
 import { catchError, filter, map, startWith, take, timeout } from "rxjs/operators";
+import { ResizeObserverDirective } from "../resize-observer/resize-observer.directive";
+import { max } from "moment";
 
 @Component({
     selector: 'nw-word-cloud',
     templateUrl: './word-cloud.component.html',
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [ResizeObserverDirective]
 })
 export class WordCloudComponent<T extends IWord> implements OnChanges {
 
@@ -65,11 +69,15 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
          */
         const exportCanvas = this._renderer.createElement('canvas') as HTMLCanvasElement;
         const exportCtx = exportCanvas.getContext('2d');
+
+        const topMostWordY = Math.min(...this._positionedWords.map(pw => pw.canvasY - (pw.height / 2)));
+        const bottomMostWordY = Math.max(...this._positionedWords.map(pw => pw.canvasY + pw.height));
+
         exportCanvas.width = this._canvas.width;
-        exportCanvas.height = this._canvas.height;
+        exportCanvas.height = bottomMostWordY - topMostWordY;
 
         this._positionedWords.forEach(pw => {
-            const point: IPoint = { x: pw.canvasX, y: pw.canvasY };
+            const point: IPoint = { x: pw.canvasX, y: pw.canvasY - topMostWordY };
             this._setFontDetails(exportCtx, pw.fontSize);
             this._drawWord(pw, point, exportCtx);
         });

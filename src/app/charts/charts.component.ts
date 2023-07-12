@@ -1,18 +1,33 @@
 import {Component, OnInit, ChangeDetectionStrategy, ViewChild, ViewChildren, QueryList} from '@angular/core';
-import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, FormArray, FormControl, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import * as moment from 'moment';
-import { DecimalPipe } from '@angular/common';
+import { DecimalPipe, NgIf, NgFor, DatePipe } from '@angular/common';
 import { bisector } from 'd3-array';
 import { AxisTimeInterval } from 'd3-axis';
 import { curveCardinal, curveBasis, curveLinear, curveStep, curveStepAfter, curveStepBefore } from 'd3-shape';
 import { YAxisDirective, XAxisDirective, CircleDirective } from '../../_lib/modules/charts';
 import { ScaleTime } from 'd3-scale';
+import { ChartTooltipDirective } from '../../_lib/modules/charts/tooltip/chart-tooltip.directive';
+import { ForeignObjectDirective } from '../../_lib/modules/charts/foreign-object/foreign-object.directive';
+import { BarDirective } from '../../_lib/modules/charts/bar/bar.directive';
+import { TooltipDirective } from '../../_lib/modules/tooltips/tooltip.directive';
+import { CircleDirective as CircleDirective_1 } from '../../_lib/modules/charts/circle/circle.directive';
+import { AreaDirective } from '../../_lib/modules/charts/area/area.directive';
+import { PathDirective } from '../../_lib/modules/charts/path/path.directive';
+import { YAxisDirective as YAxisDirective_1 } from '../../_lib/modules/charts/axis/y-axis.directive';
+import { XAxisDirective as XAxisDirective_1 } from '../../_lib/modules/charts/axis/x-axis.directive';
+import { BrushDirective } from '../../_lib/modules/charts/brush/brush.directive';
+import { ChartComponent } from '../../_lib/modules/charts/chart.component';
+import { TabDirective } from '../../_lib/modules/tabs/tab.directive';
+import { TabsComponent } from '../../_lib/modules/tabs/tabs.component';
 
 @Component({
     selector: 'app-charts',
     templateUrl: './charts.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    providers: [DecimalPipe]
+    providers: [DecimalPipe],
+    standalone: true,
+    imports: [TabsComponent, TabDirective, NgIf, ReactiveFormsModule, NgFor, ChartComponent, BrushDirective, XAxisDirective_1, YAxisDirective_1, PathDirective, AreaDirective, CircleDirective_1, TooltipDirective, BarDirective, ForeignObjectDirective, ChartTooltipDirective, FormsModule, DecimalPipe, DatePipe]
 })
 export class ChartsComponent implements OnInit {
 

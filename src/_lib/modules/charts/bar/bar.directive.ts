@@ -8,7 +8,8 @@ import { NwXAxisScale } from '../axis/models/XAxisScale';
 
 @Directive({
     // eslint-disable-next-line @angular-eslint/directive-selector
-    selector: 'rect[nw-bar]'
+    selector: 'rect[nw-bar]',
+    standalone: true
 })
 export class BarDirective implements OnInit, OnChanges, OnDestroy {
 

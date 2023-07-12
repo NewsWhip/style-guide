@@ -12,9 +12,7 @@ describe('EmailInputComponent', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
-                ReactiveFormsModule
-            ],
-            declarations: [
+                ReactiveFormsModule,
                 EmailInputComponent
             ]
         });

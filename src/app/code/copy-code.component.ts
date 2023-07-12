@@ -17,7 +17,8 @@ import { Toaster } from "../../_lib/modules/toasts";
             cursor: pointer;
         }
     `],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true
 })
 export class CopyCodeComponent implements AfterContentInit {
 

@@ -2,9 +2,16 @@ import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { IWordWithPosition } from '../../_lib/modules/word-cloud/models/IWordWithPosition';
 import { WordCloudComponent } from '../../_lib/modules/word-cloud';
 import { IWord } from '../../_lib/modules/word-cloud/models/IWord';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ISnippet } from '../code/ISnippet';
 import { IWordCloudConfig } from '../../_lib/modules/word-cloud/models/IWordCloudConfig';
+import { AppCodeComponent } from '../code/code.component';
+import { TooltipDirective } from '../../_lib/modules/tooltips/tooltip.directive';
+import { WordComponent } from '../../_lib/modules/word-cloud/word.component';
+import { WordCloudComponent as WordCloudComponent_1 } from '../../_lib/modules/word-cloud/word-cloud.component';
+import { NgIf, NgFor, NgTemplateOutlet } from '@angular/common';
+import { TabDirective } from '../../_lib/modules/tabs/tab.directive';
+import { TabsComponent } from '../../_lib/modules/tabs/tabs.component';
 
 interface IMyWord extends IWord {
     id: number;
@@ -13,7 +20,9 @@ interface IMyWord extends IWord {
 @Component({
     selector: 'app-home',
     templateUrl: './word-cloud.component.html',
-    styleUrls: ['./word-cloud.component.scss']
+    styleUrls: ['./word-cloud.component.scss'],
+    standalone: true,
+    imports: [TabsComponent, TabDirective, RouterLink, NgIf, WordCloudComponent_1, NgFor, WordComponent, TooltipDirective, AppCodeComponent, NgTemplateOutlet]
 })
 export class WordCloudDemoComponent implements OnInit {
 

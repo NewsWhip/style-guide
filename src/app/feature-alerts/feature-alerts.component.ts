@@ -1,5 +1,6 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { WindowRef } from '../../_lib/modules/feature-alerts/windowref';
+import { HotspotComponent } from '../../_lib/modules/feature-alerts/hotspot.component';
 
 @Component({
     selector: 'app-feature-alerts',
@@ -16,7 +17,9 @@ import { WindowRef } from '../../_lib/modules/feature-alerts/windowref';
             border: 1px solid green;
         }
     `],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [HotspotComponent]
 })
 export class FeatureAlertsComponent {
     message: string;

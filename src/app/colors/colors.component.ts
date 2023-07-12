@@ -1,8 +1,11 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { NgFor, NgIf } from '@angular/common';
 
 @Component({
     selector: 'app-colors',
-    templateUrl: './colors.component.html'
+    templateUrl: './colors.component.html',
+    standalone: true,
+    imports: [NgFor, NgIf]
 })
 export class ColorsComponent implements OnInit {
     public showColorCodes: boolean = false;
