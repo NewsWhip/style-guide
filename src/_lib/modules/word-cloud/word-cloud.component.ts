@@ -77,16 +77,20 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
             this._drawWord(pw, point, exportCtx);
         });
 
+        /*
+        * Get the lowest & heighest words positions from the y-axies and based on that we get the word cloud content height
+        * which we then use in order to extract only the content of the word cloud excluding white space and set it to a new canvas.
+        */
         const lowestPointOnTheYAxis = Math.min(...this._positionedWords.map(pw => pw.canvasY - pw.height / 2));
         const highestPointOnTheYAxis = Math.max(...this._positionedWords.map(pw => pw.canvasY + pw.height / 2));
-        const hightOfWordCloudContent = (highestPointOnTheYAxis - lowestPointOnTheYAxis) * ratio;
-        const extractWordCloudImageData = exportCtx.getImageData(0, lowestPointOnTheYAxis * ratio, exportCanvas.width, hightOfWordCloudContent);
+        const heightOfWordCloudContent = (highestPointOnTheYAxis - lowestPointOnTheYAxis) * ratio;
+        const extractWordCloudImageData = exportCtx.getImageData(0, lowestPointOnTheYAxis * ratio, exportCanvas.width, heightOfWordCloudContent);
 
         const canvas = this._renderer.createElement('canvas') as HTMLCanvasElement;
         const context = canvas.getContext('2d');
 
         canvas.width = exportCanvas.width;
-        canvas.height = hightOfWordCloudContent;
+        canvas.height = heightOfWordCloudContent;
         context.putImageData(extractWordCloudImageData, 0, 0);
 
         return canvas.toDataURL('image/png');
