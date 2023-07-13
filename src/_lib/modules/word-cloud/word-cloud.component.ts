@@ -78,7 +78,7 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
         });
 
         /*
-        * Get the lowest & heighest words positions from the y-axies and based on that we get the word cloud content height
+        * Get the lowest & highest words positions from the y-axis and based on that we get the word cloud content height
         * which we then use in order to extract only the content of the word cloud excluding white space and set it to a new canvas.
         */
         const lowestPointOnTheYAxis = Math.min(...this._positionedWords.map(pw => pw.canvasY - pw.height / 2));
