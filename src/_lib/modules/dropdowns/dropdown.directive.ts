@@ -65,7 +65,17 @@ export class DropdownDirective implements OnInit, OnChanges, OnDestroy {
 
     private _subscribeToToggle(): void {
         this._toggleSubscription = this._service.toggle$
-            .pipe(filter(() => !this.disabled))
+            /**
+             * If the dropdown is disabled, only allow close events through
+             */
+            .pipe(
+                filter(isOpen => {
+                    if (this.disabled) {
+                        return !isOpen;
+                    }
+                    return true;
+                })
+            )
             .subscribe(isOpen => {
                 this.isOpen = isOpen;
 
