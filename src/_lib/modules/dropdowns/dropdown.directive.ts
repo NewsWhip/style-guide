@@ -1,6 +1,7 @@
 import { Directive, Input, HostBinding, OnDestroy, OnInit, OnChanges, SimpleChanges, ElementRef, Output, EventEmitter, NgZone, Renderer2, ChangeDetectorRef } from '@angular/core';
 import { DropdownService } from "./dropdown.service";
 import { Subscription } from 'rxjs';
+import { filter } from 'rxjs/operators';
 
 @Directive({
     selector: '[nwDropdown]',
@@ -12,6 +13,8 @@ export class DropdownDirective implements OnInit, OnChanges, OnDestroy {
     @Input() autoClose: boolean | "inside" | "outside" = true;
     @Input() elementsToIgnore: HTMLElement[] = [];
     @Input() selectorsToIgnore: string[] = [];
+    @HostBinding('class.disabled')
+    @Input() disabled: boolean = false;
 
     @Output() opened: EventEmitter<null> = new EventEmitter();
     @Output() closed: EventEmitter<null> = new EventEmitter();
@@ -61,15 +64,17 @@ export class DropdownDirective implements OnInit, OnChanges, OnDestroy {
     }
 
     private _subscribeToToggle(): void {
-        this._toggleSubscription = this._service.toggle$.subscribe(isOpen => {
-            this.isOpen = isOpen;
+        this._toggleSubscription = this._service.toggle$
+            .pipe(filter(() => !this.disabled))
+            .subscribe(isOpen => {
+                this.isOpen = isOpen;
 
-            if (this.isOpen) {
-                this.opened.emit();
-            } else {
-                this.closed.emit();
-            }
-        });
+                if (this.isOpen) {
+                    this.opened.emit();
+                } else {
+                    this.closed.emit();
+                }
+            });
     }
 
     onDocumentClick(event: MouseEvent) {
