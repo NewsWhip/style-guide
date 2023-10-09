@@ -84,6 +84,11 @@ export class EmailInputDemoComponent implements OnInit {
                 description: 'Placeholder text applied to the empty input.'
             },
             {
+                name: `@Input() persistentPlaceholder: string`,
+                defaultValue: `""`,
+                description: 'Placeholder text applied to the input. Positioned after the selected values'
+            },
+            {
                 name: `@Input() blacklist: (string | RegExp)[]`,
                 defaultValue: `[]`,
                 description: 'A list of strings or RegExp to be matched against the inputted list of emails. Any emails that match entries in the blacklist will be marked as invalid'
