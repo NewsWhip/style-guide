@@ -19,7 +19,7 @@ import { Subscription } from 'rxjs';
                 <button class="close" (click)="removeEmail(email)">×</button>
             </div>
 
-            <div class="input-container" [class.persistent-placeholder]="!!persistentPlaceholder">
+            <div class="input-container" [class.persistent-placeholder]="persistentPlaceholder">
                 <!-- pill-hidden is an invisble element that controls the width of the input -->
                 <div class="pill pill-sm pill-hidden">{{emailInputControl.value}}</div>
                 <input type="text" #inputEl [id]="inputId"
