@@ -44,6 +44,11 @@
         background: get-color("secondary", base);
         border-color: get-color("secondary", base);
     }
+    &.label-alt-badge {
+        color: #000000;
+        background: get-color("alt");
+        border-color: get-color("alt"); 
+    }
 }
 .label-round {
     padding: 0 7px;
