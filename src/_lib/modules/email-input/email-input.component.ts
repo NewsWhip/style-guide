@@ -19,7 +19,7 @@ import { Subscription } from 'rxjs';
                 <button class="close" (click)="removeEmail(email)">×</button>
             </div>
 
-            <div class="input-container">
+            <div class="input-container" [class.persistent-placeholder]="persistentPlaceholder">
                 <!-- pill-hidden is an invisble element that controls the width of the input -->
                 <div class="pill pill-sm pill-hidden">{{emailInputControl.value}}</div>
                 <input type="text" #inputEl [id]="inputId"
@@ -27,6 +27,7 @@ import { Subscription } from 'rxjs';
                     (keydown)="onKeydown($event)"
                     (keydown.tab)="onTab($event)"
                     (keyup.backspace)="onBackspace()"
+                    [placeholder]="persistentPlaceholder"
                     (blur)="onBlur()">
             </div>
         </div>
@@ -42,6 +43,7 @@ export class EmailInputComponent implements OnInit, OnDestroy {
      */
     @Input() inputId: string = "";
     @Input() placeholder: string = '';
+    @Input() persistentPlaceholder: string = '';
     /**
      * A list of strings or RegExp to be matched against the inputted list of emails. Any emails that
      * match entries in the blacklist will be marked as invalid
