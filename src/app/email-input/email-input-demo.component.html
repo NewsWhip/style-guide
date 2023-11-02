@@ -18,7 +18,7 @@
 <div *ngIf="selectedTab === 'design'" class="tab-content">
     <h4 style="margin-bottom: 16px;">Live example</h4>
 
-    <div class="form-group" style="margin-bottom: 0;">
+    <div class="form-group" style="margin-bottom: 16px;">
         <label for="email-input">Input Label</label>
         <nw-email-input
             [emails]="emails"
@@ -26,6 +26,16 @@
             inputId="email-input"
             (updated)="onChange($event)"></nw-email-input>
     </div>
+
+    <div class="form-group" style="margin-bottom: 0;">
+        <label for="email-input">Persistent Placeholder</label>
+        <nw-email-input
+            [emails]="emails"
+            persistentPlaceholder="Enter Email Address"
+            inputId="email-input"
+            (updated)="onChange($event)"></nw-email-input>
+    </div>
+
 
     <hr>
 
