@@ -8,7 +8,7 @@ export class ChartUtils {
     public static ANIMATION_DURATION: number = 1000;
     public static ANIMATION_EASING: (normalizedTime: number) => number = easeCubicInOut;
 
-    private _chartResize$: Subject<number>;
+    private _chartResize$: Subject<void>;
     public chartResize$: Observable<any>;
 
     constructor() {

@@ -73,7 +73,7 @@
     "karma-jasmine-html-reporter": "^1.5.0",
     "moment": "^2.23.0",
     "rimraf": "^2.6.3",
-    "rxjs": "^6.6.3",
+    "rxjs": "^7.8.1",
     "typescript": "^5.1.6",
     "zone.js": "~0.13.3"
   },

@@ -90,14 +90,14 @@ export class TooltipDirective implements OnInit, OnChanges, OnDestroy {
     @Output() nwClose: EventEmitter<null> = new EventEmitter();
 
     private _overlayRef: OverlayRef;
-    private _destroyed$: Subject<null> = new Subject();
+    private _destroyed$: Subject<void> = new Subject();
     private _tooltipArrowSize: number = 5;
     private _manualToggleEvent$: Subject<boolean> = new Subject();
-    private _cancelDelayedOpen$: Subject<null> = new Subject();
+    private _cancelDelayedOpen$: Subject<void> = new Subject();
     /**
      * A subject that emits when the TooltipContainerComponent is destroyed
      */
-    private _tooltipContainerDestroyed$: Subject<null> = new Subject();
+    private _tooltipContainerDestroyed$: Subject<void> = new Subject();
 
     constructor(
         private _elRef: ElementRef<HTMLElement>,
@@ -114,7 +114,7 @@ export class TooltipDirective implements OnInit, OnChanges, OnDestroy {
             this._manualToggleEvent$.next(this.isOpen);
         }
 
-        scheduled(of(0), animationFrameScheduler)
+        scheduled([0], animationFrameScheduler)
             .pipe(
                 filter(_ => this.updatePositionOnAnimationFrame && this._overlayRef.hasAttached()),
                 repeat(),
@@ -286,7 +286,7 @@ export class TooltipDirective implements OnInit, OnChanges, OnDestroy {
                     if (this.openEvents.some(e => this.closeEvents.includes(e))) {
                         return timer(5);
                     }
-                    return EMPTY;
+                    return of(0);
                 }),
                 filter(_ => !this.isDisabled),
                 /**

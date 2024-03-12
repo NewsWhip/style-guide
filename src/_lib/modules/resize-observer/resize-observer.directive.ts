@@ -22,7 +22,7 @@ export class ResizeObserverDirective implements OnInit, OnDestroy {
 
     private _observer: ResizeObserver;
     private _nwResize: Subject<ResizeObserverEntry> = new Subject();
-    private _destroyed$: Subject<null> = new Subject();
+    private _destroyed$: Subject<void> = new Subject();
     private _currentElementRect: DOMRectReadOnly;
 
     constructor(_elRef: ElementRef<HTMLElement>) {

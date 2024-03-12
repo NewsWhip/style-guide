@@ -48,8 +48,8 @@ export class ChartComponent implements OnInit, AfterViewInit, OnDestroy {
     public svg: Selection<SVGSVGElement, any, HTMLElement, any>;
     public parentElement: HTMLElement;
 
-    private _destroyed$: Subject<null> = new Subject();
-    private _chartDimensionsChange$: Subject<null> = new Subject();
+    private _destroyed$: Subject<void> = new Subject();
+    private _chartDimensionsChange$: Subject<void> = new Subject();
 
     constructor(
         private _elRef: ElementRef<SVGSVGElement>,

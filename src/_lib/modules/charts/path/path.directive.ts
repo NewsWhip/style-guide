@@ -23,7 +23,7 @@ export class PathDirective implements OnInit, OnChanges, OnDestroy {
     @Input() easing: (normalizedTime: number) => number = ChartUtils.ANIMATION_EASING;
     @Input() xScale: NwXAxisScale = scaleTime();
 
-    @Output() animEnd: EventEmitter<null> = new EventEmitter();
+    @Output() animEnd: EventEmitter<void> = new EventEmitter();
 
     public line: Line<[number, number]>;
     public path: Selection<SVGPathElement, Array<[number, number]>, SVGElement, any>;
