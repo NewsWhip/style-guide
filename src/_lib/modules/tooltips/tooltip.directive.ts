@@ -2,8 +2,8 @@ import { CloseScrollStrategy, ConnectionPositionPair, FlexibleConnectedPositionS
 import { ComponentPortal } from "@angular/cdk/portal";
 import { ComponentRef, Directive, ElementRef, EventEmitter, Injector, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, TemplateRef, ViewContainerRef } from "@angular/core";
 import { Placement } from "./models/Placement.type";
-import { Subject, fromEvent, merge, EMPTY, of, Observable, animationFrameScheduler, scheduled, timer } from 'rxjs';
-import { takeUntil, filter, tap, map, debounce, switchMap, delay, repeat } from 'rxjs/operators';
+import { Subject, fromEvent, merge, EMPTY, of, Observable, animationFrameScheduler, timer, interval } from 'rxjs';
+import { takeUntil, filter, tap, map, debounce, switchMap, delay } from 'rxjs/operators';
 import { TOOLTIP_CONTEXT_TOKEN } from "./config/tooltip-context-token";
 import { TooltipContainerComponent } from "./tooltip-container.component";
 import { ITooltipData } from "./models/ITooltipData";
@@ -114,15 +114,16 @@ export class TooltipDirective implements OnInit, OnChanges, OnDestroy {
             this._manualToggleEvent$.next(this.isOpen);
         }
 
-        scheduled([0], animationFrameScheduler)
-            .pipe(
-                filter(_ => this.updatePositionOnAnimationFrame && this._overlayRef.hasAttached()),
-                repeat(),
-                takeUntil(this._destroyed$)
-            )
-            .subscribe(() => {
-                this._overlayRef.updatePosition();
-            });
+        if (this.updatePositionOnAnimationFrame) {
+            interval(0, animationFrameScheduler)
+                .pipe(
+                    filter(_ => this.updatePositionOnAnimationFrame && this._overlayRef.hasAttached()),
+                    takeUntil(this._destroyed$)
+                )
+                .subscribe(() => {
+                    this._overlayRef.updatePosition();
+                });
+        }
     }
 
     ngOnChanges(c: SimpleChanges): void {
