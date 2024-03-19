@@ -27,7 +27,7 @@ jobs:
       - name: Copy package.json
         run: node scripts/copy-package-file.js
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: my-package
           path: distribution
@@ -36,7 +36,7 @@ jobs:
     runs-on: ubuntu-latest
     steps: 
       - name: Download artifact
-        uses: actions/download-artifact@master
+        uses: actions/download-artifact@v4
         with:
           name: my-package
           path: distribution
