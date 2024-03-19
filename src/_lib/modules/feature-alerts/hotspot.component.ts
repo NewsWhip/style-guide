@@ -31,7 +31,7 @@ export class HotspotComponent {
     }
 
     dismiss() {
-        this._featureAlertsService.persist(this.id);
+        this._featureAlertsService.dismiss(this.id);
         this._cdRef.detectChanges();
     }
 }
