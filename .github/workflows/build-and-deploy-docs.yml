@@ -18,7 +18,7 @@ jobs:
         run: npm run ghpages
       # Upload the docs folder so that it can be downloaded and used in the next "deploy" step
       - name: Uploading artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: build-artifact
           path: docs
@@ -35,7 +35,7 @@ jobs:
       url: ${{steps.deployment.outputs.page_url}}
     steps:
     - name: Downloading artifact
-      uses: actions/download-artifact@master
+      uses: actions/download-artifact@v4
       with:
         name: build-artifact
         path: .
