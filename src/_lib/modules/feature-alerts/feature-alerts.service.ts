@@ -7,7 +7,7 @@ export class FeatureAlertsService {
 
     constructor(private _w: WindowRef) {}
 
-    persist(id: string) {
+    dismiss(id: string) {
         this._set({
             ...this._get(),
             [id]: { dismissed: true }
