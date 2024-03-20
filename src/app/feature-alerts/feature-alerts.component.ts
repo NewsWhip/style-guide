@@ -1,5 +1,6 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { WindowRef } from '../../_lib/modules/feature-alerts/windowref';
+import { FeatureAlertsService } from '../../_lib/modules/feature-alerts';
 
 @Component({
     selector: 'app-feature-alerts',
@@ -21,7 +22,13 @@ import { WindowRef } from '../../_lib/modules/feature-alerts/windowref';
 export class FeatureAlertsComponent {
     message: string;
 
-    constructor(private w: WindowRef) {}
+    featureAlertIds: string[] = ['example-feature-1', 'example-feature-2'];
+    showResetButton: boolean;
+
+    constructor(
+        private w: WindowRef,
+        private _featureAlertService: FeatureAlertsService
+    ) {}
 
     clearLocalStorage() {
         this.w.nativeWindow.localStorage.clear();
@@ -96,5 +103,15 @@ export class FeatureAlertsComponent {
 
     onCTAClick5() {
         this.message = 'Clicked on call to action button in the SECOND INLINE em element.';
+    }
+
+    dismissFeature(id: string) {
+        this._featureAlertService.dismiss(id);
+        this.showResetButton = true;
+    }
+
+    resetFeatureAlert() {
+        this.featureAlertIds.forEach(id => this._featureAlertService.enable(id));
+        this.showResetButton = false;
     }
 }

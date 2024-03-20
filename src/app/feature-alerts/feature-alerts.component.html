@@ -3,6 +3,37 @@
 
     <div class="row">
         <div class="col-md-8 col-sm-12">
+            <h3>Feature Alert Directive</h3>
+            <div style="margin-bottom: 20px;">This is a stuctural directive that can show / hide an element and store the state in local storage</div>
+
+            <div style="margin-bottom: 20px;">
+                <a (click)="dismissFeature(featureAlertIds[0])" href="javascript:;">
+                    <span>Click to dismiss badge          
+                        <span *nwFeatureAlert="featureAlertIds[0]"
+                        class="label label-round label-new ml-4">New</span> 
+                    </span>
+                </a>
+            </div>
+
+            <div style="margin-bottom: 20px;">                
+                <span>Dismiss from button         
+                    <span *nwFeatureAlert="featureAlertIds[1]"
+                    class="label label-round label-new ml-4">New</span> 
+                </span>
+                <button class="ml-4 btn btn-primary" (click)="dismissFeature(featureAlertIds[1])">
+                    Dismiss New badge
+                </button>
+            </div>
+            <div *ngIf="showResetButton" style="margin-bottom: 20px;">
+                <button class="btn btn-primary" (click)="resetFeatureAlert()">
+                    Reset Feature Alerts
+                </button>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-md-8 col-sm-12">
             <h3>Hotspots</h3>
 
             <div style="margin-bottom: 20px;">
