@@ -35,7 +35,7 @@ export class FeatureAlertsDirective implements OnInit, OnDestroy {
     private _templateRef = inject(TemplateRef<any>);
     private _viewContainer = inject(ViewContainerRef);
     private _featureAlertsService = inject(FeatureAlertsService);
-    private _destroyed$: Subject<null> = new Subject();
+    private _destroyed$: Subject<void> = new Subject();
 
     ngOnInit(): void {
         this._toggleFeatureAlert(this.nwFeatureAlert);
