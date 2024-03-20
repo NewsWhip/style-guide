@@ -7,7 +7,7 @@ export class FeatureAlertsService {
     LOCAL_STORAGE_KEY = 'nwAlerts';
 
     private _dismissSubject = new Subject<string>();
-    public dismiss$ = new Observable();
+    public dismiss$ = new Observable<string>();
 
     constructor(private _w: WindowRef) {
         this.dismiss$ = this._dismissSubject.asObservable();

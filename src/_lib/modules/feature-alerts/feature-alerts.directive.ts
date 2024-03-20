@@ -1,11 +1,13 @@
-import { Input, Directive, TemplateRef, ViewContainerRef, OnInit } from '@angular/core';
+import { Input, Directive, TemplateRef, ViewContainerRef, OnInit, inject, OnDestroy } from '@angular/core';
 import { FeatureAlertsService } from './feature-alerts.service';
-import { filter } from 'rxjs/operators';
+import { filter, takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Directive({
     selector: '[nwFeatureAlert]'
 })
-export class FeatureAlertsDirective implements OnInit {
+export class FeatureAlertsDirective implements OnInit, OnDestroy {
+
     /**
      * This directive shows/hides content depending on whether or not a given feature ID is enabled/disabled in local storage
      * It listens for changes on the FeatureAlertsService _dismissSubject and shows/hides accordingly
@@ -30,15 +32,17 @@ export class FeatureAlertsDirective implements OnInit {
     @Input() nwFeatureAlert: string;
 
     private _isInView = false;
-    constructor(
-        private _templateRef: TemplateRef<any>,
-        private _viewContainer: ViewContainerRef,
-        private _featureAlertsService: FeatureAlertsService) { }
+    private _templateRef = inject(TemplateRef<any>);
+    private _viewContainer = inject(ViewContainerRef);
+    private _featureAlertsService = inject(FeatureAlertsService);
+    private _destroyed$: Subject<null> = new Subject();
 
     ngOnInit(): void {
         this._toggleFeatureAlert(this.nwFeatureAlert);
         this._featureAlertsService.dismiss$.pipe(
-            filter((id: string) => id === this.nwFeatureAlert)
+            filter((id: string) => id === this.nwFeatureAlert),
+            takeUntil(this._destroyed$)
+
         ).subscribe(id => this._toggleFeatureAlert(id));
     }
 
@@ -51,5 +55,10 @@ export class FeatureAlertsDirective implements OnInit {
             this._viewContainer.clear();
             this._isInView = false;
         }
+    }
+
+    ngOnDestroy(): void {
+        this._destroyed$.next();
+        this._destroyed$.complete();
     }
 }
