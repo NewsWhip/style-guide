@@ -6,17 +6,20 @@ import { IWord } from "./models/IWord";
 import { IWordWithPosition } from "./models/IWordWithPosition";
 import { WordCloudComponent } from "./word-cloud.component";
 
+interface IMyWord extends IWord {
+    id: number;
+}
 
-const mockWord: IWord = {
+const mockWord: IMyWord = {
     exportColor: 'black',
-    id: '1',
+    id: 1,
     value: 'my test string',
     weight: 10
 };
 
 describe('WordCloudComponent', () => {
-    let comp: WordCloudComponent<IWord>;
-    let fixture: ComponentFixture<WordCloudComponent<IWord>>;
+    let comp: WordCloudComponent<IMyWord>;
+    let fixture: ComponentFixture<WordCloudComponent<IMyWord>>;
     let de: DebugElement;
 
     beforeEach(() => {
@@ -26,7 +29,7 @@ describe('WordCloudComponent', () => {
             ],
             imports: [ResizeObserverModule]
         });
-        fixture = TestBed.createComponent(WordCloudComponent<IWord>);
+        fixture = TestBed.createComponent(WordCloudComponent<IMyWord>);
         comp = fixture.componentInstance;
         de = fixture.debugElement;
         comp.words = [];
