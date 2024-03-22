@@ -1,7 +1,6 @@
 {
     "extends": [
-        "plugin:@angular-eslint/ng-cli-compat",
-        "plugin:@angular-eslint/ng-cli-compat--formatting-add-on",
+        "plugin:@angular-eslint/recommended",
         "plugin:@angular-eslint/template/process-inline-templates"
     ],
     "rules": {
@@ -127,5 +126,5 @@
         "brace-style": "error",
         "space-infix-ops": "error"
     },
-    "plugins": ["deprecation"]
+    "plugins": ["deprecation", "@typescript-eslint"]
 }
