@@ -11,7 +11,7 @@ import { Observable, merge, Subject } from 'rxjs';
 export class DropdownMenuDirective implements AfterContentInit, OnDestroy {
 
     @ContentChildren(DropdownDirective) nestedDropdowns: QueryList<DropdownDirective>;
-    private _destroyed$: Subject<null> = new Subject();
+    private _destroyed$: Subject<void> = new Subject();
 
     constructor(
         private _service: DropdownService,

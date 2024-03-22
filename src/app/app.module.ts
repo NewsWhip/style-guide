@@ -10,8 +10,9 @@ import { FeatureAlertsModule } from '../_lib/modules/feature-alerts';
 import { TabsModule } from '../_lib/modules/tabs';
 import { ChartsModule } from "../_lib/modules/charts/charts.module";
 import { LoaderModule } from '../_lib/modules/loader';
-import { CarouselModule } from '../_lib/modules/carousel/carousel.module';
+import { CarouselModule } from '../_lib/modules/carousel';
 import { WordCloudModule } from '../_lib/modules/word-cloud';
+import { DropdownsModule } from "../_lib/modules/dropdowns";
 
 import { AppComponent } from './app.component';
 import { ButtonsComponent } from './buttons/buttons.component';
@@ -39,7 +40,6 @@ import { AnimationsComponent } from './animations/animations.component';
 import { ChartsComponent } from './charts/charts.component';
 import { LoaderComponent } from './loader/loader.component';
 import { CarouselComponent } from './carousel/carousel.component';
-import { DropdownsModule } from "../_lib/modules/dropdowns/dropdowns.module";
 import { EmailInputModule } from "../_lib/modules/email-input/email-input.module";
 import { EmailInputDemoComponent } from "./email-input/email-input-demo.component";
 import { CopyCodeComponent } from './code/copy-code.component';
