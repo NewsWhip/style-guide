@@ -79,7 +79,7 @@ export class TooltipDirective implements OnInit, OnChanges, OnDestroy {
     /**
      * In the case where the tooltip should not be attached to the host element, a reference to another element can be used
      */
-    @Input() connectedTo: ElementRef<HTMLElement>;
+    @Input() connectedTo: ElementRef<HTMLElement> | Element;
     /**
      * Determines whether pointer events are enabled on the cdk-overlay-pane element
      */
