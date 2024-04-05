@@ -68,6 +68,38 @@ $nw-font-path: '~nw-style-guide/assets/fonts';
     /npm.fontawesome.com/:_authToken=xxxxxxxxxxxxxxxxxxxxxxx // replace with Fontawesome Pro authToken
     //registry.npmjs.org/:_authToken=xxxxxxxxxxxxxxxxxxxxxxx // replace with your authToken from npm
 ```
+
+
+### Building local versions
+
+Sometimes when making extensive changes that require continuous local testing inside the product we need to create local versions. For this purpose we can run the `make-local-tgz` script and use it as follows:  
+- Make a `.tgz` package of Style Guide by running `npm run package:make-local-tgz`.
+- Copy absolute path of newly built `.tgz` package from console logs.
+- Paste it into the product's (e.g. Spike's) `package.json` file in place of the current `nw-style-guide` version to test your SG changes locally, without the need to publish a beta version.
+- Run `npm install` to install the new package version.
+- Sometimes if you dont see your changes, delete the `node_modules` folder from your Project (e.g. Spike) and run `npm install again`.
+- If you want to confirm whether or not the new style guide version has been installed, navigate to your `node_modules` folder and look for the style guide directory and inside the `package.json` file you can confirm the version number.
+
+### Building a Beta version for testing
+
+Most of the time we would need to deploy our application (e.g. Spike) to a test env to allow others to test and to make sure the changes we have added to the style guide project are functioning and or looking as expected.
+
+To do so we usually create a Beta version which we release to npm.
+
+To achieve this we need to:
+- Update the version of the style guide version property in `package.json` to a beta version using `npm version {{version_type}}` for example "npm version 14.0.1-beta.0" 
+- Once updated we're now ready to push the new version to npm using this command `npm run package:release`
+- Once that version is pushed check the npm website where the package is deployed to confirm the latest version deployed is the one you just added https://www.npmjs.com/package/nw-style-guide.
+- In your Spike or other project change the `nw-style-guide` version in `package.json` to this new version and push and deploy the changes to a test env.
+- Once changes are approved and everything is looking fine we then need to update the `nw-style-guide` version to remove the beta.0. to do that we call the same command we called earlier `npm version {{version_type}}` it can also be done manually but this command is better as it auto commits the changes.
+(just a note from my experience you don't need to include the beta.0 but I'm guessing i'ts good here because if we want to deploy another beta version we would only need to incremenet that 0 to 1 and so on).
+- Then we push the latest changes to Github.
+- Once approved, merge the changes into master and a new version will be released shortly automatically. You'll most likely recieve a notification via email and or slack of this new version.
+- Go back to your project (e.g. Spike) and update the nw-style-guide version in the `package.json` to use the new version you just committed.
+- push changes and merge, assuming it has been approved.
+- Thats it you're done.
+
+
 ### Features and fixes
 
 1. Create a new feature branch off master
@@ -125,10 +157,3 @@ This script does a few things:
 ### Github pages
 
 We use Github pages to continuously deploy the application. This deployment is handled automatically with the [build-and-deploy-docs](./.github/workflows/build-and-deploy-docs.yml) Github workflow. Whenever the master branch is updated, you can expect this workflow to trigger.
-
-### Building local versions
-
-Sometimes we won't want to release a beta version for testing changes, namely when making extensive changes that require continuous local testing inside the product. For this purpose we can run the `make-local-tgz` script and use it as follows:  
-- Make a `.tgz` package of Style Guide by running `npm run package:make-local-tgz`.
-- Copy absolute path of newly built `.tgz` package from console logs.
-- Paste it into the product's (e.g. Spike's) `package.json` file in place of the current `nw-style-guide` version to test your SG changes locally, without the need to publish a beta version.
