@@ -77,7 +77,7 @@ Sometimes when making extensive changes that require continuous local testing in
 - Copy absolute path of newly built `.tgz` package from console logs.
 - Paste it into the product's (e.g. Spike's) `package.json` file in place of the current `nw-style-guide` version to test your SG changes locally, without the need to publish a beta version.
 - Run `npm install` to install the new package version.
-- Sometimes if you dont see your changes, delete the `node_modules` folder from your Project (e.g. Spike) and run npm install again.
+- Sometimes if you dont see your changes, delete the `node_modules` folder from your Project (e.g. Spike) and run `npm install again`.
 - If you want to confirm whether or not the new style guide version has been installed, navigate to your `node_modules` folder and look for the style guide directory and inside the `package.json` file you can confirm the version number.
 
 ### Building a Beta version for testing
