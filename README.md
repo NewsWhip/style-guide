@@ -88,14 +88,14 @@ To do so we usually create a Beta version which we release to npm.
 
 To achieve this we need to:
 - Update the version of the style guide version property in `package.json` to a beta version using `npm version {{version_type}}` for example "npm version 14.0.1-beta.0" 
-- Once updated we now ready to push the new version to npm using this command `npm run package:release`
+- Once updated we're now ready to push the new version to npm using this command `npm run package:release`
 - Once that version is pushed check the npm website where the package is deployed to confirm the latest version deployed is the one you just added https://www.npmjs.com/package/nw-style-guide.
 - In your Spike or other project change the `nw-style-guide` version in `package.json` to this new version and push and deploy the changes to a test env.
-- Once changes are approved and everything is looking fine we then need to update the `nw-style-guide` version to remove the beta.0. to do that we call the same command we called earlier `npm version {{version_type}}` it can also be done manually but this command is better as it auto commit the changes.
-(just a note from my experience you dont need to include the .0 but im guessing its good here because if we want to deploy another beta version we would only need to incremenet that 0 to 1 and so on).
+- Once changes are approved and everything is looking fine we then need to update the `nw-style-guide` version to remove the beta.0. to do that we call the same command we called earlier `npm version {{version_type}}` it can also be done manually but this command is better as it auto commits the changes.
+(just a note from my experience you don't need to include the beta.0 but I'm guessing i'ts good here because if we want to deploy another beta version we would only need to incremenet that 0 to 1 and so on).
 - Then we push the latest changes to Github.
 - Once approved, merge the changes into master and a new version will be released shortly automatically. You'll most likely recieve a notification via email and or slack of this new version.
-- Go back to your project (e.g. Spike) and update the nw-style-guide version in the `package.json` to use the new version you just commited.
+- Go back to your project (e.g. Spike) and update the nw-style-guide version in the `package.json` to use the new version you just committed.
 - push changes and merge, assuming it has been approved.
 - Thats it you're done.
 
