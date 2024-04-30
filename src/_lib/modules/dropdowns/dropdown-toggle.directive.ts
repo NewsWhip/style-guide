@@ -14,7 +14,6 @@ import { Subscription, fromEvent } from 'rxjs';
 export class DropdownToggleDirective implements OnInit, OnDestroy {
 
     @Input() nwTrigger: "click" | "hover" = "click";
-    @Input() isResponsive: boolean = true;
     @Input() breakpoint: number = 767;
 
     public isOpen: boolean = false;
@@ -33,17 +32,19 @@ export class DropdownToggleDirective implements OnInit, OnDestroy {
         if (this.nwTrigger === 'hover') {
             const mouseEnterSub: Subscription = fromEvent(this._elRef.nativeElement as HTMLElement, 'mouseenter')
                 .pipe(
+                    filter(_ => !this._isMobile()),
                     tap(_ => this._isMousingOver = true),
                     debounceTime(300),
-                    filter(_ => this._isMousingOver && this._canHover())
+                    filter(_ => this._isMousingOver)
                 )
                 .subscribe(event => this._open());
 
             const mouseLeaveSub: Subscription = fromEvent(this._elRef.nativeElement as HTMLElement, 'mouseleave')
                 .pipe(
+                    filter(_ => !this._isMobile()),
                     tap(_ => this._isMousingOver = false),
                     debounceTime(300),
-                    filter(_ => !this._isMousingOver && this._canHover())
+                    filter(_ => !this._isMousingOver)
                 )
                 .subscribe(event => this._close());
 
@@ -51,11 +52,8 @@ export class DropdownToggleDirective implements OnInit, OnDestroy {
         }
     }
 
-    private _canHover() {
-        if (!this.isResponsive) {
-            return true;
-        }
-        return this.isResponsive && window.innerWidth > this.breakpoint;
+    private _isMobile() {
+        return window.innerWidth < this.breakpoint;
     }
 
     private _subscribeToToggle() {
