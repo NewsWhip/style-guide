@@ -32,7 +32,7 @@ export class DropdownToggleDirective implements OnInit, OnDestroy {
         if (this.nwTrigger === 'hover') {
             const mouseEnterSub: Subscription = fromEvent(this._elRef.nativeElement as HTMLElement, 'mouseenter')
                 .pipe(
-                    filter(_ => !this._isMobile()),
+                    filter(_ => !this._isMobileScreenSize()),
                     tap(_ => this._isMousingOver = true),
                     debounceTime(300),
                     filter(_ => this._isMousingOver)
@@ -41,7 +41,7 @@ export class DropdownToggleDirective implements OnInit, OnDestroy {
 
             const mouseLeaveSub: Subscription = fromEvent(this._elRef.nativeElement as HTMLElement, 'mouseleave')
                 .pipe(
-                    filter(_ => !this._isMobile()),
+                    filter(_ => !this._isMobileScreenSize()),
                     tap(_ => this._isMousingOver = false),
                     debounceTime(300),
                     filter(_ => !this._isMousingOver)
@@ -52,7 +52,7 @@ export class DropdownToggleDirective implements OnInit, OnDestroy {
         }
     }
 
-    private _isMobile() {
+    private _isMobileScreenSize() {
         return window.innerWidth < this.breakpoint;
     }
 
