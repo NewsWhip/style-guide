@@ -14,6 +14,8 @@ import { Subscription, fromEvent } from 'rxjs';
 export class DropdownToggleDirective implements OnInit, OnDestroy {
 
     @Input() nwTrigger: "click" | "hover" = "click";
+    @Input() isResponsive: boolean = true;
+    @Input() breakpoint: number = 767;
 
     public isOpen: boolean = false;
 
@@ -28,13 +30,12 @@ export class DropdownToggleDirective implements OnInit, OnDestroy {
 
     ngOnInit() {
         this._subscribeToToggle();
-
         if (this.nwTrigger === 'hover') {
             const mouseEnterSub: Subscription = fromEvent(this._elRef.nativeElement as HTMLElement, 'mouseenter')
                 .pipe(
                     tap(_ => this._isMousingOver = true),
                     debounceTime(300),
-                    filter(_ => this._isMousingOver)
+                    filter(_ => this._isMousingOver && this._canHover())
                 )
                 .subscribe(event => this._open());
 
@@ -42,12 +43,19 @@ export class DropdownToggleDirective implements OnInit, OnDestroy {
                 .pipe(
                     tap(_ => this._isMousingOver = false),
                     debounceTime(300),
-                    filter(_ => !this._isMousingOver)
+                    filter(_ => !this._isMousingOver && this._canHover())
                 )
                 .subscribe(event => this._close());
 
             this._mouseEventSubscriptions = [mouseEnterSub, mouseLeaveSub];
         }
+    }
+
+    private _canHover() {
+        if (!this.isResponsive) {
+            return true;
+        }
+        return this.isResponsive && window.innerWidth > this.breakpoint;
     }
 
     private _subscribeToToggle() {
@@ -71,6 +79,7 @@ export class DropdownToggleDirective implements OnInit, OnDestroy {
     @HostListener('click', ['$event'])
     toggle(event: MouseEvent) {
         this._service.toggle();
+        event.stopImmediatePropagation();
     }
 
     ngOnDestroy() {
