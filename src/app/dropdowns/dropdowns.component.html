@@ -3,21 +3,12 @@
 
     <h3>Usage</h3>
 
-    <pre><code>{{"import \{ DropdownsModule \} from 'nw-style-guide/dropdowns';
+    <p>
+        Import <code>DropdownsModule</code> to your imports in AppModule. 
+        If it's being used in a standalone component import into the components imports array
+    </p>
 
-...........
-...........
-
-@NgModule({
-    declarations: [...],
-    imports: [
-        .....
-        .....
-        DropdownsModule
-    ],
-    bootstrap: [AppComponent]
-})
-export class AppModule \{ \}"}}</code></pre>
+    <hr>
 
     <h3>Color variations</h3>
 
@@ -361,7 +352,6 @@ export class AppModule \{ \}"}}</code></pre>
     <hr>
 
     <h3>Dropdown full width</h3>
-
     <div class="full-width-container">
         <div class="dropdown" nwDropdown>
             <div class="dropdown-backdrop"></div>
@@ -399,6 +389,25 @@ export class AppModule \{ \}"}}</code></pre>
     <em>
         <code>.dropdown-menu-block</code> will make the dropdown menu the same width as the parent container
     </em>
+
+    <hr>
+
+    <h3>Responsive</h3>
+    <p>Mouse hover events don't exist on mobile.  If nwTrigger is set to hover, this will be set to click when the screen goes below a specific size</p>
+    <em><i class="fas fa-exclamation-circle"></i> Defualt size is <code>767</code></em>
+
+
+    <div class="full-width-container mt-16">
+        <div class="dropdown" nwDropdown>
+            <button class="btn btn-secondary btn-block dropdown-toggle" type="button" nwDropdownToggle nwTrigger="hover">
+                Hover on large screen, click on small screen
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" nwDropdownMenu>
+                <li><a href="#">Menu item 1</a></li>
+            </ul>
+        </div>
+    </div>
 
     <hr>
 
