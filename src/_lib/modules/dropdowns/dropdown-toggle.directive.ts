@@ -77,7 +77,9 @@ export class DropdownToggleDirective implements OnInit, OnDestroy {
     @HostListener('click', ['$event'])
     toggle(event: MouseEvent) {
         this._service.toggle();
-        event.stopImmediatePropagation();
+        if (this.nwTrigger === 'hover') {
+            event.stopImmediatePropagation();
+        }
     }
 
     ngOnDestroy() {
