@@ -190,6 +190,9 @@ export class TooltipDirective implements OnInit, OnChanges, OnDestroy {
             this.closeEvents = getDefaultValue(this.closeEvents, ["click"]);
             this.closeOnScroll = getDefaultValue(this.closeOnScroll, false);
             this.pointerEvents = getDefaultValue(this.pointerEvents, 'auto');
+            if (isMobileScreenSize) {
+                this.closeOnOutsideClick = true;
+            }
         } else {
             this.delay = getDefaultValue(this.delay, 500);
             this.openEvents = getDefaultValue(this.openEvents, ["mouseenter"]);
