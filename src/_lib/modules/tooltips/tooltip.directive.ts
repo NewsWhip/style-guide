@@ -84,6 +84,10 @@ export class TooltipDirective implements OnInit, OnChanges, OnDestroy {
      * Determines whether pointer events are enabled on the cdk-overlay-pane element
      */
     @Input() pointerEvents: 'auto' | 'none';
+    /**
+     * The screen size at which the tooltip should treated as a popover as there is no hover events on mobile 
+     */
+    @Input() breakpoint: number = 767;
 
     @Output() nwShown: EventEmitter<null> = new EventEmitter();
     @Output() nwHidden: EventEmitter<null> = new EventEmitter();
@@ -174,12 +178,13 @@ export class TooltipDirective implements OnInit, OnChanges, OnDestroy {
         const getDefaultValue = <T>(currVal: T, defaultVal: T): T => {
             return currVal ?? defaultVal;
         };
+        const isMobileScreenSize = window.innerWidth < this.breakpoint;
 
         /**
          * Check for undefined and null, not empty strings. This prevents errors when an empty
          * string is passed in the popover or tooltip input
          */
-        if (this.popover !== undefined && this.popover !== null) {
+        if ((this.popover !== undefined && this.popover !== null) || isMobileScreenSize) {
             this.delay = getDefaultValue(this.delay, 0);
             this.openEvents = getDefaultValue(this.openEvents, ["click"]);
             this.closeEvents = getDefaultValue(this.closeEvents, ["click"]);
