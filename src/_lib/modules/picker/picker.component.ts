@@ -1,4 +1,4 @@
-import { Component, Input, Output, ChangeDetectorRef, ChangeDetectionStrategy, EventEmitter, ViewChild, ElementRef, OnInit, OnDestroy } from '@angular/core';
+import { Component, Input, Output, ChangeDetectorRef, ChangeDetectionStrategy, EventEmitter, ViewChild, ElementRef, OnInit, OnDestroy, SimpleChanges, OnChanges } from '@angular/core';
 import { trigger, transition, animate, style } from '@angular/animations';
 import { FormControl } from '@angular/forms';
 import { IPickerItem } from './IPickerItem';
@@ -21,7 +21,7 @@ import { isUndefined } from 'lodash-es';
 
                 <div class="input-placeholder text-ellipsis" [innerHTML]="getPlaceholderText()"></div>
 
-                <i (click)="showResults();inputEl.focus()" class="caret dropdown-icon"></i>
+                <i *ngIf="!isChevronHidden" (click)="showResults();inputEl.focus()" class="caret dropdown-icon"></i>
             </div>
 
             <!-- END: NOT xs screen -->
@@ -149,7 +149,7 @@ import { isUndefined } from 'lodash-es';
     ]
 })
 
-export class NwPickerComponent implements OnInit, OnDestroy {
+export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
 
     @Input() items: IPickerItem[];
     @Input() inputClasses: string = '';
@@ -162,6 +162,8 @@ export class NwPickerComponent implements OnInit, OnDestroy {
     @Input() isHeightDynamic: boolean;
     @Input() isMultiSelect: boolean = true;
     @Input() isMobileDisplay: boolean = false;
+    @Input() isDisabled: boolean = false;
+    @Input() isChevronHidden: boolean = false;
 
     @Output() selections: EventEmitter<IPickerItem[]> = new EventEmitter<IPickerItem[]>();
     @Output() toggleInclude: EventEmitter<{ item: IPickerItem; searchTerm: string }> = new EventEmitter<{ item: IPickerItem; searchTerm: string }>();
@@ -191,6 +193,12 @@ export class NwPickerComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.parentId = this.initialParentId;
         this.subscribeToSearchTermChanges();
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        if (this.isDisabled) {
+            this.searchTerm.disable();
+        }
     }
 
     subscribeToSearchTermChanges() {
@@ -378,15 +386,19 @@ export class NwPickerComponent implements OnInit, OnDestroy {
     }
 
     onFocus() {
-        this.showResults();
-        this.focus.emit(this.inputEl);
+        if (!this.isDisabled) {
+            this.showResults();
+            this.focus.emit(this.inputEl);
+        }
     }
 
     showResults() {
-        this.parentId = this.initialParentId;
-        this.canViewResults = true;
+        if (!this.isDisabled) {
+            this.parentId = this.initialParentId;
+            this.canViewResults = true;
 
-        this.setDisplayItemsFromParentId(this.parentId);
+            this.setDisplayItemsFromParentId(this.parentId);
+        }
     }
 
     close() {

@@ -92,7 +92,7 @@ To achieve this we need to:
 - Once that version is pushed check the npm website where the package is deployed to confirm the latest version deployed is the one you just added https://www.npmjs.com/package/nw-style-guide.
 - In your Spike or other project change the `nw-style-guide` version in `package.json` to this new version and push and deploy the changes to a test env.
 - Once changes are approved and everything is looking fine we then need to update the `nw-style-guide` version to remove the beta.0. to do that we call the same command we called earlier `npm version {{version_type}}` it can also be done manually but this command is better as it auto commits the changes.
-(just a note from my experience you don't need to include the beta.0 but I'm guessing i'ts good here because if we want to deploy another beta version we would only need to incremenet that 0 to 1 and so on).
+(just a note from my experience you don't need to include the beta.0 but I'm guessing i'ts good here because if we want to deploy another beta version we would only need to increment that 0 to 1 and so on).
 - Then we push the latest changes to Github.
 - Once approved, merge the changes into master and a new version will be released shortly automatically. You'll most likely recieve a notification via email and or slack of this new version.
 - Go back to your project (e.g. Spike) and update the nw-style-guide version in the `package.json` to use the new version you just committed.
