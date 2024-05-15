@@ -155,6 +155,17 @@ Animates the opening of the dropdown
 
 ----
 
+`isDisabled: boolean = false;`
+
+Disables input field and functionality
+
+----
+
+`isChevronHidden: boolean = false;`
+
+show or hide the expand chevron
+
+----
 
 ## Picker Outputs
 
