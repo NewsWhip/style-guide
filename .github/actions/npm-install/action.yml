@@ -10,7 +10,7 @@ runs:
     - uses: actions/checkout@v3
     - uses: actions/setup-node@v3
       with:
-        node-version: 16
+        node-version: 18.18
         cache: npm
     - name: Setting Font Awesome registry and auth token
       shell: bash
@@ -20,4 +20,3 @@ runs:
     - name: Installing dependencies
       shell: bash
       run: npm install
-      
