@@ -1,6 +1,10 @@
 nw-angular-picker {
     @include scrollbars();
 
+    .disabled  {
+        opacity: .50;
+    }
+
     .nw-picker {
         position: relative;
     }
