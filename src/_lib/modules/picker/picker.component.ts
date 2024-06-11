@@ -10,7 +10,7 @@ import { isUndefined } from 'lodash-es';
     template: `
         <div class="nw-picker">
             <!-- START: NOT xs screen -->
-            <div class="input-container hidden-xs">
+            <div class="input-container hidden-xs" [class.disabled]="isDisabled">
                 <input type="text" #inputEl
                     class="form-control search-input {{inputClasses}} text-ellipsis"
                     [formControl]="searchTerm"
