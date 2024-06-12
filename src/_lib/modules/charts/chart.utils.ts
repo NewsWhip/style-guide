@@ -34,7 +34,8 @@ export class ChartUtils {
     }
 
     notifyChartResize(): void {
-        this._chartResize$.next();
+        console.log('notify chart resize');
+        // this._chartResize$.next();
     }
 
 }

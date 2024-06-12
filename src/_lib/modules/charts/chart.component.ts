@@ -36,6 +36,7 @@ export class ChartComponent implements OnInit, AfterViewInit, OnDestroy {
         left?: number;
         right?: number;
     } = { top: 0, bottom: 0, left: 0, right: 0 };
+    @Input() scaleOnResize: boolean = true;
 
     @ViewChild('chartContainer', { static: true }) chartContainer: ElementRef<SVGGElement>;
     @ViewChild('mouseEventCaptureContainer', { static: true }) mouseEventCaptureContainer: ElementRef<SVGGElement>;
@@ -60,7 +61,9 @@ export class ChartComponent implements OnInit, AfterViewInit, OnDestroy {
 
         this.setSvg();
         this.setHoverOverlay();
-        this.subscribeToChartResize();
+        if (this.scaleOnResize) {
+            this.subscribeToChartResize();
+        }
     }
 
     ngAfterViewInit() {
