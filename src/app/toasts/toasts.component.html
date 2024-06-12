@@ -106,25 +106,25 @@
             <div class="col-md-8 col-sm-12">
                 <h4>Custom configuration</h4>
                 <p>
-                    Toasts are displayed using a <code>DomPortalOutlet</code> provided by <code>@angular/cdk</code>. By default, this portal outlet is attached to the document body.
+                    Toasts are displayed using a <code>DomPortalOutlet</code> provided by <code>&#64;angular/cdk</code>. By default, this portal outlet is attached to the document body.
                     The portal outlet location can be configured by providing a custom <code>IToastConfig</code> with an <code>outletElement</code>. The following example showcases
-                    a component that injects a global instance of <code>Toaster</code> as well as a local instance for which we provide a custom configuration using 
+                    a component that injects a global instance of <code>Toaster</code> as well as a local instance for which we provide a custom configuration using
                     the <code>NW_TOASTER_CONFIG</code> injection token.
                 </p>
 
                 <pre style="margin: 16px 0"><code>{{configExample}}</code></pre>
 
                 <p>
-                    Addressing the constructor first, we inject two instances of <code>Toaster</code>. <code>_globalToaster</code> and <code>_localToaster</code>. <code>_globalToaster</code> is decorated with the <code>@SkipSelf</code> decorator. This tells
-                    the dependency injector to skip the current component (host) when trying to resolve the dependency. For more details on <code>@SkipSelf</code>, see 
+                    Addressing the constructor first, we inject two instances of <code>Toaster</code>. <code>_globalToaster</code> and <code>_localToaster</code>. <code>_globalToaster</code> is decorated with the <code>&#64;SkipSelf</code> decorator. This tells
+                    the dependency injector to skip the current component (host) when trying to resolve the dependency. For more details on <code>&#64;SkipSelf</code>, see
                     the <a class="nw-link nw-link-tertiary" href="https://angular.io/api/core/SkipSelf" target="_blank" rel="noopener">official docs</a>.<br><br>
 
-                    By using <code>@SkipSelf</code> and skipping the host when attempting to resolve <code>Toaster</code>, Angular will traverse the hierarchy and eventually resolve
+                    By using <code>&#64;SkipSelf</code> and skipping the host when attempting to resolve <code>Toaster</code>, Angular will traverse the hierarchy and eventually resolve
                     our <code>Toaster</code> dependency when it reaches our <code>AppModule</code> which imports <code>ToastsModule.forRoot()</code>. As a result our reference to <code>_globalToaster</code>
                     is the singleton instance used application-wide.<br><br>
 
-                    For our "local instance", <code>_localToaster</code>, we use the decorator <code>@Host</code> which tells the dependency injector to go only as far as the host when attempting to resolve the dependency
-                    and no further. This is where the <code>providers</code> array in the <code>@Component</code> decorator come into play. Because of the <code>@Host</code> decorator, Angular will search these providers
+                    For our "local instance", <code>_localToaster</code>, we use the decorator <code>&#64;Host</code> which tells the dependency injector to go only as far as the host when attempting to resolve the dependency
+                    and no further. This is where the <code>providers</code> array in the <code>&#64;Component</code> decorator come into play. Because of the <code>&#64;Host</code> decorator, Angular will search these providers
                     and go no further up the hierachy.<br><br>
 
                     Our component now has access to two instances of <code>Toaster</code>. For our local toaster instance, we want our toasts to be projected inside the element ref of our component. In order to do this we need
