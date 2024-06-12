@@ -2,7 +2,7 @@ import { Component, ElementRef, Input, OnInit, ViewChild, AfterViewInit, ChangeD
 import { select, Selection, pointer } from 'd3-selection';
 import { ChartUtils } from './chart.utils';
 import { fromEvent, Subject, merge } from 'rxjs';
-import { debounceTime, takeUntil } from 'rxjs/operators';
+import { debounceTime, take, takeUntil, tap } from 'rxjs/operators';
 
 @Component({
     selector: 'svg[nw-chart]',
@@ -36,6 +36,8 @@ export class ChartComponent implements OnInit, AfterViewInit, OnDestroy {
         left?: number;
         right?: number;
     } = { top: 0, bottom: 0, left: 0, right: 0 };
+    
+    // In cases where scaling is happening in the parent, we don't want the chart to also react screen size changes
     @Input() scaleOnResize: boolean = true;
 
     @ViewChild('chartContainer', { static: true }) chartContainer: ElementRef<SVGGElement>;
@@ -61,9 +63,7 @@ export class ChartComponent implements OnInit, AfterViewInit, OnDestroy {
 
         this.setSvg();
         this.setHoverOverlay();
-        if (this.scaleOnResize) {
-            this.subscribeToChartResize();
-        }
+        this.subscribeToChartResize();
     }
 
     ngAfterViewInit() {
@@ -125,6 +125,8 @@ export class ChartComponent implements OnInit, AfterViewInit, OnDestroy {
         merge(windowResize$, this._chartDimensionsChange$)
             .pipe(
                 debounceTime(100),
+                // If scaleOnResize is false we still need notifyChartResize to fire once to get the initial dimensions
+                take(this.scaleOnResize ? Infinity : 1),
                 takeUntil(this._destroyed$)
             )
             .subscribe(_ => this.chartUtils.notifyChartResize());
