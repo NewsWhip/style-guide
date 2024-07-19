@@ -12,7 +12,13 @@ import { NwXAxisScale } from '../axis/models/XAxisScale';
 })
 export class BarDirective implements OnInit, OnChanges, OnDestroy {
 
-    @Input('nw-bar') value: [number, number];
+    /**
+     * [number, number] corresponds to a coordinate of [x, y]
+     * [number, number, number] corresponds to a coordinate of [x, y2, y1] where y1 is the lower
+     * y-value and y2 is the upper y-value. Where y1 is not provided the bar will span from the
+     * provided y-value to 0 (the full chart height)
+     */
+    @Input('nw-bar') value: [number, number] | [number, number, number];
     @Input() xDomain: [number, number];
     @Input() yDomain: [number, number];
     @Input() animDuration: number = ChartUtils.ANIMATION_DURATION;
@@ -56,14 +62,19 @@ export class BarDirective implements OnInit, OnChanges, OnDestroy {
     }
 
     draw(animDuration: number = 0) {
+        const x = this.value[0];
+        const y2 = this.value[1];
+        const y1 = this.value[2];
+        const height = y1 ? y2 - y1 : y2;
+
         this.rect
             .transition()
             .duration(animDuration)
             .ease(this.easing)
-            .attr('x', this.xScale(this.value[0]) - (this.barWidth / 2))
-            .attr('y', this.yScale(this.value[1]))
+            .attr('x', this.xScale(x) - (this.barWidth / 2))
+            .attr('y', this.yScale(y2))
             .attr("width", this.barWidth)
-            .attr("height", this._chart.height - this.yScale(this.value[1]));
+            .attr("height", this._chart.height - this.yScale(height));
     }
 
     private _subscribeToChartResize() {
