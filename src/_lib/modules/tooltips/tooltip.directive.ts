@@ -232,6 +232,8 @@ export class TooltipDirective implements OnInit, OnChanges, OnDestroy {
         const disposeOnNavigation = true;
         const panelClasses: string[] = ["tooltip-overlay", `pointer-events-${this.pointerEvents}`];
         this._overlayRef = this._overlay.create({ positionStrategy, scrollStrategy, disposeOnNavigation, panelClass: panelClasses });
+        console.log('hostElement', this._overlayRef.hostElement);
+        console.log('overlayElement', this._overlayRef.overlayElement);
     }
 
     /**
