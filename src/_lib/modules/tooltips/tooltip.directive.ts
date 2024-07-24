@@ -88,6 +88,7 @@ export class TooltipDirective implements OnInit, OnChanges, OnDestroy {
      * The screen size at which the tooltip should treated as a popover as there is no hover events on mobile 
      */
     @Input() breakpoint: number = 767;
+    @Input() hostElementZIndex: number;
 
     @Output() nwShown: EventEmitter<null> = new EventEmitter();
     @Output() nwHidden: EventEmitter<null> = new EventEmitter();
@@ -232,6 +233,10 @@ export class TooltipDirective implements OnInit, OnChanges, OnDestroy {
         const disposeOnNavigation = true;
         const panelClasses: string[] = ["tooltip-overlay", `pointer-events-${this.pointerEvents}`];
         this._overlayRef = this._overlay.create({ positionStrategy, scrollStrategy, disposeOnNavigation, panelClass: panelClasses });
+
+        if (this.hostElementZIndex) {
+            this._overlayRef.hostElement.style.zIndex = this.hostElementZIndex.toString();
+        }
     }
 
     /**
