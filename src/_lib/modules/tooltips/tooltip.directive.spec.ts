@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, DebugElement, ElementRef, OnInit, ViewChild } from "@angular/core";
+import { Component, DebugElement, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { ComponentFixture, fakeAsync, TestBed, tick } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 import { TooltipContainerComponent } from "./tooltip-container.component";
@@ -6,7 +6,6 @@ import { TooltipModule } from ".";
 import { TooltipDirective } from "./tooltip.directive";
 import { Placement } from "./models/Placement.type";
 import { CdkScrollable, CdkScrollableModule } from "@angular/cdk/scrolling";
-import { WindowRef } from "../feature-alerts/windowref";
 
 let comp: WrapperComponent;
 let fixture: ComponentFixture<WrapperComponent>;
@@ -22,7 +21,6 @@ describe('TooltipDirective', () => {
                 TooltipModule,
                 CdkScrollableModule
             ],
-            providers: [WindowRef],
             declarations: [
                 WrapperComponent
             ]
@@ -140,7 +138,7 @@ describe('TooltipDirective', () => {
     }));
 
     it('should not close on outside click', fakeAsync(() => {
-        TestBed.inject(WindowRef).nativeWindow.innerWidth = 1000;
+        window.innerWidth = 1000;
         comp.openEvents = ['mouseenter'];
         fixture.detectChanges();
         const trigger = de.query(By.directive(TooltipDirective)).nativeElement;
@@ -273,7 +271,7 @@ describe('TooltipDirective', () => {
     }));
 
     it('tooltips should close on scroll by default', fakeAsync(() => {
-        TestBed.inject(WindowRef).nativeWindow.innerWidth = 1000;
+        window.innerWidth = 1000;
         comp.openEvents = ['mouseenter'];
         comp.delay = 0;
         fixture.detectChanges();
