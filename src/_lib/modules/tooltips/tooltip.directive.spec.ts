@@ -12,7 +12,7 @@ let fixture: ComponentFixture<WrapperComponent>;
 let de: DebugElement;
 let documentDebugElement: DebugElement;
 
-const tickWaitMs: number = 5000;
+const tickWaitMs: number = 500;
 
 describe('TooltipDirective', () => {
     beforeEach(() => {
