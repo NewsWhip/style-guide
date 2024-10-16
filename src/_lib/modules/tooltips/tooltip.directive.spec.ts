@@ -14,7 +14,7 @@ let documentDebugElement: DebugElement;
 
 const tickWaitMs: number = 500;
 
-fdescribe('TooltipDirective', () => {
+describe('TooltipDirective', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
@@ -38,7 +38,7 @@ fdescribe('TooltipDirective', () => {
     const getTooltipEl = (): HTMLElement =>
         documentDebugElement.query(By.directive(TooltipContainerComponent))?.query(By.css('.tooltip')).nativeElement;
 
-    it('should apply the containerClass to the .tooltip element', fakeAsync(() => {
+    fit('should apply the containerClass to the .tooltip element', fakeAsync(() => {
         fixture.detectChanges();
         const trigger = de.query(By.directive(TooltipDirective)).nativeElement;
         fireEvent(trigger, 'mouseenter');
@@ -67,14 +67,13 @@ fdescribe('TooltipDirective', () => {
         expect(tooltip.querySelector('.tooltip-arrow')).toBeFalsy();
     }));
 
-    fit('should open when an open event is fired', fakeAsync(() => {
+    it('should open when an open event is fired', fakeAsync(() => {
         comp.openEvents = ['focus'];
         fixture.detectChanges();
         const trigger = de.query(By.directive(TooltipDirective)).nativeElement;
         fireEvent(trigger, 'focus');
         tick(tickWaitMs);
         const tooltip = getTooltipEl();
-        console.log(tooltip);
         expect(tooltip).toBeTruthy();
     }));
 
@@ -197,7 +196,7 @@ fdescribe('TooltipDirective', () => {
         expect(overlayPane.classList).toContain('tooltip-bottom');
     }));
 
-    it('should flip position if it does not it in the viewport', fakeAsync(() => {
+    it('should flip position if it does not fit in the viewport', fakeAsync(() => {
         comp.tooltipPlacement = ['left'];
         fixture.detectChanges();
         const trigger = de.query(By.directive(TooltipDirective)).nativeElement;
@@ -207,7 +206,7 @@ fdescribe('TooltipDirective', () => {
         expect(overlayPane.classList).toContain('tooltip-right');
     }));
 
-    it('should not flip position if it does not it in the viewport', fakeAsync(() => {
+    it('should not flip position if it does not fit in the viewport', fakeAsync(() => {
         comp.tooltipPlacement = ['left'];
         comp.autoFlip = false;
         fixture.detectChanges();
@@ -218,7 +217,7 @@ fdescribe('TooltipDirective', () => {
         expect(overlayPane.classList).toContain('tooltip-left');
     }));
 
-    it('should try to use the second placement position if the first does not it', fakeAsync(() => {
+    it('should try to use the second placement position if the first does not fit', fakeAsync(() => {
         comp.tooltipPlacement = ['left', 'top-start'];
         comp.autoFlip = false;
         fixture.detectChanges();
