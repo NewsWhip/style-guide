@@ -15,7 +15,7 @@ let documentDebugElement: DebugElement;
 
 const tickWaitMs: number = 500;
 
-fdescribe('TooltipDirective', () => {
+describe('TooltipDirective', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
