@@ -39,6 +39,7 @@ describe('TooltipDirective', () => {
         documentDebugElement.query(By.directive(TooltipContainerComponent))?.query(By.css('.tooltip')).nativeElement;
 
     fit('should apply the containerClass to the .tooltip element', fakeAsync(() => {
+        comp.openEvents = ['mouseenter'];
         fixture.detectChanges();
         const trigger = de.query(By.directive(TooltipDirective)).nativeElement;
         fireEvent(trigger, 'mouseenter');
