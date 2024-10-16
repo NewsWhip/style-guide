@@ -1,6 +1,6 @@
 {
   "name": "nw-style-guide",
-  "version": "15.3.0",
+  "version": "15.3.1",
   "license": "MIT",
   "author": {
     "email": "garethdn@gmail.com",
@@ -11,7 +11,7 @@
     "start": "ng serve",
     "build": "ng build --configuration production",
     "test": "ng test",
-    "test-single-run": "npm run test -- --watch=false --progress=false --browsers=ChromeHeadless",
+    "test-single-run": "npm run test -- --watch=false --progress=false",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "ngc": "ngc",
