@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, DebugElement, ElementRef, OnInit, ViewChild } from "@angular/core";
+import { Component, DebugElement, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { ComponentFixture, fakeAsync, TestBed, tick } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 import { TooltipContainerComponent } from "./tooltip-container.component";
@@ -39,6 +39,7 @@ describe('TooltipDirective', () => {
         documentDebugElement.query(By.directive(TooltipContainerComponent))?.query(By.css('.tooltip')).nativeElement;
 
     it('should apply the containerClass to the .tooltip element', fakeAsync(() => {
+        comp.openEvents = ['mouseenter'];
         fixture.detectChanges();
         const trigger = de.query(By.directive(TooltipDirective)).nativeElement;
         fireEvent(trigger, 'mouseenter');
@@ -49,6 +50,7 @@ describe('TooltipDirective', () => {
     }));
 
     it('should display an arrow', fakeAsync(() => {
+        comp.openEvents = ['mouseenter'];
         fixture.detectChanges();
         const trigger = de.query(By.directive(TooltipDirective)).nativeElement;
         fireEvent(trigger, 'mouseenter');
@@ -58,6 +60,7 @@ describe('TooltipDirective', () => {
     }));
 
     it('should not display an arrow', fakeAsync(() => {
+        comp.openEvents = ['mouseenter'];
         comp.withArrow = false;
         fixture.detectChanges();
         const trigger = de.query(By.directive(TooltipDirective)).nativeElement;
@@ -78,6 +81,7 @@ describe('TooltipDirective', () => {
     }));
 
     it('should close when an close event is fired', fakeAsync(() => {
+        comp.openEvents = ['mouseenter'];
         comp.closeEvents = ['dblclick'];
         fixture.detectChanges();
         const trigger = de.query(By.directive(TooltipDirective)).nativeElement;
@@ -91,6 +95,7 @@ describe('TooltipDirective', () => {
     }));
 
     it('should not open when an open event is fired if the tooltip is disabled', fakeAsync(() => {
+        comp.openEvents = ['mouseenter'];
         comp.isDisabled = true;
         fixture.detectChanges();
         const trigger = de.query(By.directive(TooltipDirective)).nativeElement;
@@ -101,6 +106,7 @@ describe('TooltipDirective', () => {
     }));
 
     it('should be attached to the specified connectedTo element', fakeAsync(() => {
+        comp.openEvents = ['mouseenter'];
         comp.useConnectionEl = true;
         comp.autoFlip = false;
         fixture.detectChanges();
@@ -118,6 +124,7 @@ describe('TooltipDirective', () => {
     }));
 
     it('should close on outside click', fakeAsync(() => {
+        comp.openEvents = ['mouseenter'];
         comp.closeOnOutsideClick = true;
         fixture.detectChanges();
         const trigger = de.query(By.directive(TooltipDirective)).nativeElement;
@@ -131,18 +138,23 @@ describe('TooltipDirective', () => {
     }));
 
     it('should not close on outside click', fakeAsync(() => {
+        window.innerWidth = 1000;
+        comp.openEvents = ['mouseenter'];
         fixture.detectChanges();
         const trigger = de.query(By.directive(TooltipDirective)).nativeElement;
         fireEvent(trigger, 'mouseenter');
         tick(tickWaitMs);
         let tooltip = getTooltipEl();
         expect(tooltip).toBeTruthy();
-        document.body.click();
+        fireEvent(document.body, 'click');
+        tick(5);
         tooltip = getTooltipEl();
         expect(tooltip).toBeTruthy();
     }));
 
     it('should open with a delay', fakeAsync(() => {
+        comp.delay = 500;
+        comp.openEvents = ['mouseenter'];
         fixture.detectChanges();
         const trigger = de.query(By.directive(TooltipDirective)).nativeElement;
         fireEvent(trigger, 'mouseenter');
@@ -155,6 +167,7 @@ describe('TooltipDirective', () => {
     }));
 
     it('should open without a delay', fakeAsync(() => {
+        comp.openEvents = ['mouseenter'];
         comp.delay = 0;
         fixture.detectChanges();
         const trigger = de.query(By.directive(TooltipDirective)).nativeElement;
@@ -164,6 +177,8 @@ describe('TooltipDirective', () => {
     }));
 
     it('should not open with a delay if a close event fires within the delay time', fakeAsync(() => {
+        comp.openEvents = ['mouseenter'];
+        comp.closeEvents = ['click'];
         comp.delay = 1000;
         fixture.detectChanges();
         const trigger = de.query(By.directive(TooltipDirective)).nativeElement;
@@ -187,6 +202,7 @@ describe('TooltipDirective', () => {
     }));
 
     it('should apply a placement class to the overlay pane', fakeAsync(() => {
+        comp.openEvents = ['mouseenter'];
         fixture.detectChanges();
         const trigger = de.query(By.directive(TooltipDirective)).nativeElement;
         fireEvent(trigger, 'mouseenter');
@@ -197,6 +213,7 @@ describe('TooltipDirective', () => {
     }));
 
     it('should flip position if it does not fit in the viewport', fakeAsync(() => {
+        comp.openEvents = ['mouseenter'];
         comp.tooltipPlacement = ['left'];
         fixture.detectChanges();
         const trigger = de.query(By.directive(TooltipDirective)).nativeElement;
@@ -207,6 +224,7 @@ describe('TooltipDirective', () => {
     }));
 
     it('should not flip position if it does not fit in the viewport', fakeAsync(() => {
+        comp.openEvents = ['mouseenter'];
         comp.tooltipPlacement = ['left'];
         comp.autoFlip = false;
         fixture.detectChanges();
@@ -218,6 +236,7 @@ describe('TooltipDirective', () => {
     }));
 
     it('should try to use the second placement position if the first does not fit', fakeAsync(() => {
+        comp.openEvents = ['mouseenter'];
         comp.tooltipPlacement = ['left', 'top-start'];
         comp.autoFlip = false;
         fixture.detectChanges();
@@ -228,38 +247,45 @@ describe('TooltipDirective', () => {
         expect(overlayPane.classList).toContain('tooltip-top-start');
     }));
 
-    it('should manually open', () => {
+    it('should manually open', fakeAsync(() => {
         comp.manualOpen = true;
         comp.delay = 0;
         fixture.detectChanges();
+        tick(5);
         const tooltip = getTooltipEl();
         expect(tooltip).toBeTruthy();
-    });
+    }));
 
-    it('should manually close', () => {
+    it('should manually close', fakeAsync(() => {
         comp.manualOpen = true;
         comp.delay = 0;
         fixture.detectChanges();
+        tick(5);
         let tooltip = getTooltipEl();
         expect(tooltip).toBeTruthy();
         comp.manualOpen = false;
         fixture.detectChanges();
+        tick(5);
         tooltip = getTooltipEl();
         expect(tooltip).toBeFalsy();
-    });
+    }));
 
-    it('tooltips should close on scroll by default', () => {
+    it('tooltips should close on scroll by default', fakeAsync(() => {
+        window.innerWidth = 1000;
+        comp.openEvents = ['mouseenter'];
         comp.delay = 0;
         fixture.detectChanges();
         const trigger = de.query(By.directive(TooltipDirective)).nativeElement;
         fireEvent(trigger, 'mouseenter');
+        tick(5);
         let tooltip = getTooltipEl();
         expect(tooltip).toBeTruthy();
         comp.scrollEl.nativeElement.dispatchEvent(new Event('scroll'));
         fixture.detectChanges();
+        tick(5);
         tooltip = getTooltipEl();
         expect(tooltip).toBeFalsy();
-    });
+    }));
 
     it('popovers should not close on scroll by default', fakeAsync(() => {
         comp.delay = 0;

@@ -62,11 +62,8 @@ export abstract class AxisBase implements OnInit, OnChanges, OnDestroy {
         this.axis
             .ticks(this.tickCount)
             .tickFormat(this.tickFormat)
-            .tickSizeOuter(this.tickSizeOuter);
-
-        if (this.tickValues) {
-            this.axis.tickValues(this.tickValues);
-        }
+            .tickSizeOuter(this.tickSizeOuter)
+            .tickValues(this.tickValues);
     }
 
     setDomain() {
