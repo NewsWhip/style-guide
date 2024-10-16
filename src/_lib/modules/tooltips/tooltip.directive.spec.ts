@@ -14,7 +14,7 @@ let documentDebugElement: DebugElement;
 
 const tickWaitMs: number = 500;
 
-describe('TooltipDirective', () => {
+fdescribe('TooltipDirective', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
@@ -38,7 +38,7 @@ describe('TooltipDirective', () => {
     const getTooltipEl = (): HTMLElement =>
         documentDebugElement.query(By.directive(TooltipContainerComponent))?.query(By.css('.tooltip')).nativeElement;
 
-    fit('should apply the containerClass to the .tooltip element', fakeAsync(() => {
+    it('should apply the containerClass to the .tooltip element', fakeAsync(() => {
         comp.openEvents = ['mouseenter'];
         fixture.detectChanges();
         const trigger = de.query(By.directive(TooltipDirective)).nativeElement;
@@ -50,6 +50,7 @@ describe('TooltipDirective', () => {
     }));
 
     it('should display an arrow', fakeAsync(() => {
+        comp.openEvents = ['mouseenter'];
         fixture.detectChanges();
         const trigger = de.query(By.directive(TooltipDirective)).nativeElement;
         fireEvent(trigger, 'mouseenter');
@@ -59,6 +60,7 @@ describe('TooltipDirective', () => {
     }));
 
     it('should not display an arrow', fakeAsync(() => {
+        comp.openEvents = ['mouseenter'];
         comp.withArrow = false;
         fixture.detectChanges();
         const trigger = de.query(By.directive(TooltipDirective)).nativeElement;
@@ -79,6 +81,7 @@ describe('TooltipDirective', () => {
     }));
 
     it('should close when an close event is fired', fakeAsync(() => {
+        comp.openEvents = ['mouseenter'];
         comp.closeEvents = ['dblclick'];
         fixture.detectChanges();
         const trigger = de.query(By.directive(TooltipDirective)).nativeElement;
@@ -92,6 +95,7 @@ describe('TooltipDirective', () => {
     }));
 
     it('should not open when an open event is fired if the tooltip is disabled', fakeAsync(() => {
+        comp.openEvents = ['mouseenter'];
         comp.isDisabled = true;
         fixture.detectChanges();
         const trigger = de.query(By.directive(TooltipDirective)).nativeElement;
@@ -102,6 +106,7 @@ describe('TooltipDirective', () => {
     }));
 
     it('should be attached to the specified connectedTo element', fakeAsync(() => {
+        comp.openEvents = ['mouseenter'];
         comp.useConnectionEl = true;
         comp.autoFlip = false;
         fixture.detectChanges();
@@ -119,6 +124,7 @@ describe('TooltipDirective', () => {
     }));
 
     it('should close on outside click', fakeAsync(() => {
+        comp.openEvents = ['mouseenter'];
         comp.closeOnOutsideClick = true;
         fixture.detectChanges();
         const trigger = de.query(By.directive(TooltipDirective)).nativeElement;
@@ -132,6 +138,7 @@ describe('TooltipDirective', () => {
     }));
 
     it('should not close on outside click', fakeAsync(() => {
+        comp.openEvents = ['mouseenter'];
         fixture.detectChanges();
         const trigger = de.query(By.directive(TooltipDirective)).nativeElement;
         fireEvent(trigger, 'mouseenter');
@@ -144,6 +151,7 @@ describe('TooltipDirective', () => {
     }));
 
     it('should open with a delay', fakeAsync(() => {
+        comp.openEvents = ['mouseenter'];
         fixture.detectChanges();
         const trigger = de.query(By.directive(TooltipDirective)).nativeElement;
         fireEvent(trigger, 'mouseenter');
@@ -156,6 +164,7 @@ describe('TooltipDirective', () => {
     }));
 
     it('should open without a delay', fakeAsync(() => {
+        comp.openEvents = ['mouseenter'];
         comp.delay = 0;
         fixture.detectChanges();
         const trigger = de.query(By.directive(TooltipDirective)).nativeElement;
@@ -165,6 +174,7 @@ describe('TooltipDirective', () => {
     }));
 
     it('should not open with a delay if a close event fires within the delay time', fakeAsync(() => {
+        comp.openEvents = ['mouseenter'];
         comp.delay = 1000;
         fixture.detectChanges();
         const trigger = de.query(By.directive(TooltipDirective)).nativeElement;
