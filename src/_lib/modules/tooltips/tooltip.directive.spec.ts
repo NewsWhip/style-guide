@@ -138,6 +138,7 @@ fdescribe('TooltipDirective', () => {
     }));
 
     it('should not close on outside click', fakeAsync(() => {
+        console.log('window.innerWidth', window.innerWidth);
         comp.openEvents = ['mouseenter'];
         fixture.detectChanges();
         const trigger = de.query(By.directive(TooltipDirective)).nativeElement;
@@ -152,6 +153,7 @@ fdescribe('TooltipDirective', () => {
     }));
 
     it('should open with a delay', fakeAsync(() => {
+        comp.delay = 500;
         comp.openEvents = ['mouseenter'];
         fixture.detectChanges();
         const trigger = de.query(By.directive(TooltipDirective)).nativeElement;
@@ -278,6 +280,7 @@ fdescribe('TooltipDirective', () => {
         expect(tooltip).toBeTruthy();
         comp.scrollEl.nativeElement.dispatchEvent(new Event('scroll'));
         fixture.detectChanges();
+        tick(5);
         tooltip = getTooltipEl();
         expect(tooltip).toBeFalsy();
     }));
