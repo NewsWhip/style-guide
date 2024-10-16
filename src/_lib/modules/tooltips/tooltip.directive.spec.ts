@@ -145,7 +145,7 @@ fdescribe('TooltipDirective', () => {
         tick(tickWaitMs);
         let tooltip = getTooltipEl();
         expect(tooltip).toBeTruthy();
-        document.body.click();
+        fireEvent(document.body, 'click');
         tooltip = getTooltipEl();
         expect(tooltip).toBeTruthy();
     }));
