@@ -32,11 +32,11 @@ describe('TooltipDirective', () => {
     });
 
     const fireEvent = (element: HTMLElement, event: string) => {
-        element.dispatchEvent(new MouseEvent(event));
+        element.dispatchEvent(new Event(event));
     };
 
     const getTooltipEl = (): HTMLElement =>
-        documentDebugElement.query(By.directive(TooltipContainerComponent))?.query(By.css('.tooltip')).nativeElement;
+        document.querySelector('.tooltip');
 
     it('should apply the containerClass to the .tooltip element', fakeAsync(() => {
         fixture.detectChanges();
