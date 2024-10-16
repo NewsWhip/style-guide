@@ -146,6 +146,7 @@ fdescribe('TooltipDirective', () => {
         let tooltip = getTooltipEl();
         expect(tooltip).toBeTruthy();
         fireEvent(document.body, 'click');
+        tick(5);
         tooltip = getTooltipEl();
         expect(tooltip).toBeTruthy();
     }));
@@ -174,6 +175,8 @@ fdescribe('TooltipDirective', () => {
     }));
 
     it('should not open with a delay if a close event fires within the delay time', fakeAsync(() => {
+        comp.openEvents = ['mouseenter'];
+        comp.closeEvents = ['click'];
         comp.delay = 1000;
         fixture.detectChanges();
         const trigger = de.query(By.directive(TooltipDirective)).nativeElement;
