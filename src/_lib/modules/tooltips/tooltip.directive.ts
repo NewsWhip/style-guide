@@ -186,7 +186,6 @@ export class TooltipDirective implements OnInit, OnChanges, OnDestroy {
          * string is passed in the popover or tooltip input
          */
         if ((this.popover !== undefined && this.popover !== null) || isMobileScreenSize) {
-            console.log('setting popover defaults', this.openEvents, this.closeEvents);
             this.delay = getDefaultValue(this.delay, 0);
             this.openEvents = getDefaultValue(this.openEvents, ["click"]);
             this.closeEvents = getDefaultValue(this.closeEvents, ["click"]);
@@ -196,7 +195,6 @@ export class TooltipDirective implements OnInit, OnChanges, OnDestroy {
                 this.closeOnOutsideClick = true;
             }
         } else {
-            console.log('setting tooltip defaults', this.openEvents, this.closeEvents);
             this.delay = getDefaultValue(this.delay, 500);
             this.openEvents = getDefaultValue(this.openEvents, ["mouseenter"]);
             this.closeEvents = getDefaultValue(this.closeEvents, ["click", "mouseleave"]);
