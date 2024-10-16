@@ -14,7 +14,7 @@ module.exports = function (config) {
       {'reporter:jasmine-seed': ['type', JasmineSeedReporter]}
     ],
     client:{
-      clearContext: false, // leave Jasmine Spec Runner output visible in browser
+      clearContext: true, // leave Jasmine Spec Runner output visible in browser
       jasmine: {
         // you can add configuration options for Jasmine here
         // the possible options are listed at https://jasmine.github.io/api/edge/Configuration.html
@@ -41,13 +41,11 @@ module.exports = function (config) {
               base: 'ChromeHeadless',
               flags: [
                   '--no-sandbox',
-                  '--headless=new',
-                  '--disable-web-security',
-                  '--disable-site-isolation-trials'
+                  '--headless=new'
               ]
           }
       },
-    singleRun: false,
+    singleRun: true,
     sourcemap: true
   });
 };
