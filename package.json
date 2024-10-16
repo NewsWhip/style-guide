@@ -72,6 +72,7 @@
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "^1.5.0",
     "moment": "^2.23.0",
+    "puppeteer": "^23.5.3",
     "rimraf": "^2.6.3",
     "rxjs": "^7.8.1",
     "typescript": "^5.4.5",

@@ -1,5 +1,6 @@
 // Karma configuration file, see link for more information
 // https://karma-runner.github.io/1.0/config/configuration-file.html
+process.env.CHROME_BIN = require('puppeteer').executablePath()
 
 module.exports = function (config) {
   config.set({
@@ -14,7 +15,7 @@ module.exports = function (config) {
       {'reporter:jasmine-seed': ['type', JasmineSeedReporter]}
     ],
     client:{
-      clearContext: true, // leave Jasmine Spec Runner output visible in browser
+      clearContext: false, // leave Jasmine Spec Runner output visible in browser
       jasmine: {
         // you can add configuration options for Jasmine here
         // the possible options are listed at https://jasmine.github.io/api/edge/Configuration.html
@@ -35,7 +36,6 @@ module.exports = function (config) {
     logLevel: config.LOG_INFO,
     autoWatch: true,
     browsers: ['HeadlessChrome'],
-    browsers: ['HeadlessChrome'],
       customLaunchers: {
           HeadlessChrome: {
               base: 'ChromeHeadless',
@@ -45,7 +45,7 @@ module.exports = function (config) {
               ]
           }
       },
-    singleRun: true,
+    singleRun: false,
     sourcemap: true
   });
 };
