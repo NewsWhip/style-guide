@@ -200,6 +200,7 @@ fdescribe('TooltipDirective', () => {
     }));
 
     it('should apply a placement class to the overlay pane', fakeAsync(() => {
+        comp.openEvents = ['mouseenter'];
         fixture.detectChanges();
         const trigger = de.query(By.directive(TooltipDirective)).nativeElement;
         fireEvent(trigger, 'mouseenter');
@@ -210,6 +211,7 @@ fdescribe('TooltipDirective', () => {
     }));
 
     it('should flip position if it does not fit in the viewport', fakeAsync(() => {
+        comp.openEvents = ['mouseenter'];
         comp.tooltipPlacement = ['left'];
         fixture.detectChanges();
         const trigger = de.query(By.directive(TooltipDirective)).nativeElement;
