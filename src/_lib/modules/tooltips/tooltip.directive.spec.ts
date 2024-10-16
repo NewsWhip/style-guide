@@ -32,6 +32,7 @@ describe('TooltipDirective', () => {
     });
 
     const fireEvent = (element: HTMLElement, event: string) => {
+        console.log(`firing ${event} event for element`, element);
         element.dispatchEvent(new Event(event));
     };
 
