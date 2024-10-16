@@ -1,6 +1,6 @@
 import { CloseScrollStrategy, ConnectionPositionPair, FlexibleConnectedPositionStrategy, Overlay, OverlayRef, RepositionScrollStrategy } from "@angular/cdk/overlay";
 import { ComponentPortal } from "@angular/cdk/portal";
-import { ComponentRef, Directive, ElementRef, EventEmitter, Injector, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, TemplateRef, ViewContainerRef } from "@angular/core";
+import { ComponentRef, Directive, ElementRef, EventEmitter, Injector, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, TemplateRef, ViewContainerRef, inject } from "@angular/core";
 import { Placement } from "./models/Placement.type";
 import { Subject, fromEvent, merge, EMPTY, of, Observable, animationFrameScheduler, timer, interval } from 'rxjs';
 import { takeUntil, filter, tap, map, debounce, switchMap, delay } from 'rxjs/operators';
@@ -8,6 +8,7 @@ import { TOOLTIP_CONTEXT_TOKEN } from "./config/tooltip-context-token";
 import { TooltipContainerComponent } from "./tooltip-container.component";
 import { ITooltipData } from "./models/ITooltipData";
 import { placementFlipMap } from "./config/placement-flip-map";
+import { WindowRef } from "../feature-alerts/windowref";
 
 @Directive({
     selector: '[nwTooltip],[nwPopover]',
@@ -103,6 +104,7 @@ export class TooltipDirective implements OnInit, OnChanges, OnDestroy {
      * A subject that emits when the TooltipContainerComponent is destroyed
      */
     private _tooltipContainerDestroyed$: Subject<void> = new Subject();
+    private _window = inject(WindowRef).nativeWindow;
 
     constructor(
         private _elRef: ElementRef<HTMLElement>,
@@ -179,7 +181,7 @@ export class TooltipDirective implements OnInit, OnChanges, OnDestroy {
         const getDefaultValue = <T>(currVal: T, defaultVal: T): T => {
             return currVal ?? defaultVal;
         };
-        const isMobileScreenSize = window.innerWidth < this.breakpoint;
+        const isMobileScreenSize = this._window.innerWidth < this.breakpoint;
 
         /**
          * Check for undefined and null, not empty strings. This prevents errors when an empty

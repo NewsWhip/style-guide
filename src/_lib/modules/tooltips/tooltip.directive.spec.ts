@@ -140,12 +140,9 @@ fdescribe('TooltipDirective', () => {
     }));
 
     it('should not close on outside click', fakeAsync(() => {
-        spyOn(TestBed.inject(WindowRef), 'nativeWindow').and.returnValue({
-            innerWidth: 1000
-        });
+        TestBed.inject(WindowRef).nativeWindow.innerWidth = 1000;
         comp.openEvents = ['mouseenter'];
         fixture.detectChanges();
-        console.log('window.innerWidth', TestBed.inject(WindowRef).nativeWindow.innerWidth);
         const trigger = de.query(By.directive(TooltipDirective)).nativeElement;
         fireEvent(trigger, 'mouseenter');
         tick(tickWaitMs);
@@ -275,6 +272,7 @@ fdescribe('TooltipDirective', () => {
     }));
 
     it('tooltips should close on scroll by default', fakeAsync(() => {
+        TestBed.inject(WindowRef).nativeWindow.innerWidth = 1000;
         comp.openEvents = ['mouseenter'];
         comp.delay = 0;
         fixture.detectChanges();
