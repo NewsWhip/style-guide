@@ -249,13 +249,14 @@ fdescribe('TooltipDirective', () => {
         expect(overlayPane.classList).toContain('tooltip-top-start');
     }));
 
-    it('should manually open', () => {
+    it('should manually open', fakeAsync(() => {
         comp.manualOpen = true;
         comp.delay = 0;
         fixture.detectChanges();
+        tick(5);
         const tooltip = getTooltipEl();
         expect(tooltip).toBeTruthy();
-    });
+    }));
 
     it('should manually close', fakeAsync(() => {
         comp.manualOpen = true;
