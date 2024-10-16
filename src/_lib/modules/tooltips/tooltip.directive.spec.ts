@@ -217,6 +217,7 @@ fdescribe('TooltipDirective', () => {
     }));
 
     it('should not flip position if it does not fit in the viewport', fakeAsync(() => {
+        comp.openEvents = ['mouseenter'];
         comp.tooltipPlacement = ['left'];
         comp.autoFlip = false;
         fixture.detectChanges();
@@ -228,6 +229,7 @@ fdescribe('TooltipDirective', () => {
     }));
 
     it('should try to use the second placement position if the first does not fit', fakeAsync(() => {
+        comp.openEvents = ['mouseenter'];
         comp.tooltipPlacement = ['left', 'top-start'];
         comp.autoFlip = false;
         fixture.detectChanges();
@@ -259,6 +261,7 @@ fdescribe('TooltipDirective', () => {
     });
 
     it('tooltips should close on scroll by default', () => {
+        comp.openEvents = ['mouseenter'];
         comp.delay = 0;
         fixture.detectChanges();
         const trigger = de.query(By.directive(TooltipDirective)).nativeElement;
