@@ -6,6 +6,7 @@ import { TooltipModule } from ".";
 import { TooltipDirective } from "./tooltip.directive";
 import { Placement } from "./models/Placement.type";
 import { CdkScrollable, CdkScrollableModule } from "@angular/cdk/scrolling";
+import { WindowRef } from "../feature-alerts/windowref";
 
 let comp: WrapperComponent;
 let fixture: ComponentFixture<WrapperComponent>;
@@ -21,6 +22,7 @@ fdescribe('TooltipDirective', () => {
                 TooltipModule,
                 CdkScrollableModule
             ],
+            providers: [WindowRef],
             declarations: [
                 WrapperComponent
             ]
@@ -138,9 +140,12 @@ fdescribe('TooltipDirective', () => {
     }));
 
     it('should not close on outside click', fakeAsync(() => {
-        console.log('window.innerWidth', window.innerWidth);
+        spyOn(TestBed.inject(WindowRef), 'nativeWindow').and.returnValue({
+            innerWidth: 1000
+        });
         comp.openEvents = ['mouseenter'];
         fixture.detectChanges();
+        console.log('window.innerWidth', TestBed.inject(WindowRef).nativeWindow.innerWidth);
         const trigger = de.query(By.directive(TooltipDirective)).nativeElement;
         fireEvent(trigger, 'mouseenter');
         tick(tickWaitMs);
