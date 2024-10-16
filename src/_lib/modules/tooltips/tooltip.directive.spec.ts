@@ -248,31 +248,34 @@ fdescribe('TooltipDirective', () => {
         expect(tooltip).toBeTruthy();
     });
 
-    it('should manually close', () => {
+    it('should manually close', fakeAsync(() => {
         comp.manualOpen = true;
         comp.delay = 0;
         fixture.detectChanges();
+        tick(5);
         let tooltip = getTooltipEl();
         expect(tooltip).toBeTruthy();
         comp.manualOpen = false;
         fixture.detectChanges();
+        tick(5);
         tooltip = getTooltipEl();
         expect(tooltip).toBeFalsy();
-    });
+    }));
 
-    it('tooltips should close on scroll by default', () => {
+    it('tooltips should close on scroll by default', fakeAsync(() => {
         comp.openEvents = ['mouseenter'];
         comp.delay = 0;
         fixture.detectChanges();
         const trigger = de.query(By.directive(TooltipDirective)).nativeElement;
         fireEvent(trigger, 'mouseenter');
+        tick(5);
         let tooltip = getTooltipEl();
         expect(tooltip).toBeTruthy();
         comp.scrollEl.nativeElement.dispatchEvent(new Event('scroll'));
         fixture.detectChanges();
         tooltip = getTooltipEl();
         expect(tooltip).toBeFalsy();
-    });
+    }));
 
     it('popovers should not close on scroll by default', fakeAsync(() => {
         comp.delay = 0;
