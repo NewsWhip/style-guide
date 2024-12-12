@@ -1,146 +1,244 @@
-.table {
-    font-size: 14px;
-    text-align: left;
-    line-height: 17px;
-    color: $text-color-secondary;
-    margin-bottom: 0;
+//
+// Tables
+// --------------------------------------------------
 
-    &.table-striped > tbody > tr > td {
-        border-top: none;
-    }
-    &.table-skeleton {
-        background: transparent;
 
-        > thead,
-        > tbody,
-        > tfoot {
-            > tr {
-                > th,
-                > td {
-                    border-color: $divider-color-secondary;
-                    border-bottom-width: 1px;
-                    border-bottom-style: solid;
+table {
+  background-color: $table-bg;
 
-                    &:first-child {
-                        border-left: none;
-                        padding-left: 4px;
-                    }
-                    &:last-child {
-                        border-right: none;
-                        padding-right: 4px;
-                    }
-                }
-            }
-        }
-        > tbody {
-            > tr > td {
-                border-left: 1px solid $divider-color-secondary;
-                border-right: 1px solid $divider-color-secondary;
-            }
-        }
-        > thead,
-        > tfoot {
-            tr {
-                > th,
-                > td {
-                    border-width: 2px;
-                    border-left: none;
-                    border-right: none;
-                }
-            }
-        }
-        > tfoot {
-            tr {
-                > th,
-                > td {
-                    border-bottom: none;
-                }
-            }
-        }
+  // Table cell sizing
+  //
+  // Reset default table behavior
+
+  col[class*="col-"] {
+    position: static; // Prevent border hiding in Firefox and IE9-11 (see https://github.com/twbs/bootstrap/issues/11623)
+    display: table-column;
+    float: none;
+  }
+
+  td,
+  th {
+    &[class*="col-"] {
+      position: static; // Prevent border hiding in Firefox and IE9-11 (see https://github.com/twbs/bootstrap/issues/11623)
+      display: table-cell;
+      float: none;
     }
-    &.table-pilled-rows {
-        background-color: transparent;
-        border-spacing: 0 8px;
-        border-collapse: separate;
-        > thead > tr > th {
-            padding-top: 8px;
-            padding-bottom: 8px;
-            &:first-child {
-                padding-left: 0;
-            }
-        }
-        > thead > tr > th,
-        > tbody > tr > td {
-            border: none;
-        }
-        > tbody > tr > td {
-            background-color: $level3;
-            padding: 16px;
-            &:first-child {
-                border-top-left-radius: 9px;
-                border-bottom-left-radius: 9px;
-            }
-            &:last-child {
-                border-top-right-radius: 9px;
-                border-bottom-right-radius: 9px;
-            }
-        }
-        > tfoot > tr > td {
-            border-top: none;
-        }
-    }
-    > thead,
-    > tbody,
-    > tfoot {
-        > tr {
-            > th,
-            > td {
-                vertical-align: middle;
-            }
-            &.no-border {
-                > th,
-                > td {
-                    border-left: none;
-                    border-right: none;
-                }
-            }
-        }
-    }
-    > thead > tr > th {
-        text-transform: uppercase;
-        font-weight: normal;
-        padding: {
-            top: 16px;
-            bottom: 16px;
-        }
-        i {
-            margin: 0 8px;
-        }
-    }
-    > tfoot > tr > td {
-        border-top-width: 2px;
-    }
-    /* Optional Border Class */
-    td.no-border {
-        &,
-        + td {
-            border: {
-                left: none !important;
-                right: none !important;
-            }
-        }
-    }
+  }
 }
-.table-tall {
-    > thead,
-    > tbody,
-    > tfoot {
-        > tr {
+
+th {
+  text-align: left;
+}
+
+
+// Baseline styles
+
+.table {
+  width: 100%;
+  max-width: 100%;
+  font-size: 14px;
+  text-align: left;
+  line-height: 17px;
+  color: $text-color-secondary;
+  margin-bottom: 0;
+  // Cells
+  > thead,
+  > tbody,
+  > tfoot {
+    > tr {
+      > th,
+      > td {
+        padding: $table-cell-padding;
+        line-height: $line-height-base;
+        vertical-align: middle;
+        border-top: 1px solid $table-border-color;
+      }
+    }
+  }
+  > thead > tr > th {
+    border-bottom: 2px solid $table-border-color;
+    text-transform: uppercase;
+    font-weight: normal;
+    padding: {
+      top: 16px;
+      bottom: 16px;
+    }
+    i {
+      margin: 0 8px;
+    }
+  }
+  > tfoot > tr > td {
+    border-top-width: 2px;
+  }
+  // Remove top border from thead by default
+  > colgroup + thead,
+  > thead:first-child {
+    > tr:first-child {
+      > th,
+      > td {
+        border-top: 0;
+      }
+    }
+  }
+  // Account for multiple tbody instances
+  > tbody + tbody {
+    border-top: 2px solid $table-border-color;
+  }
+
+  td.no-border {
+    &,
+    + td {
+      border: {
+        left: none !important;
+        right: none !important;
+      }
+    }
+  }
+
+  // Nesting
+  .table {
+    background-color: $body-bg;
+  }
+}
+
+// Bordered version
+//
+// Add borders all around the table and between all the columns.
+
+.table-bordered {
+  border: 1px solid $table-border-color;
+  > thead,
+  > tbody,
+  > tfoot {
+    > tr {
+      > th,
+      > td {
+        border: 1px solid $table-border-color;
+      }
+    }
+  }
+  > thead > tr {
+    > th,
+    > td {
+      border-bottom-width: 2px;
+    }
+  }
+}
+
+
+// Zebra-striping
+//
+// Default zebra-stripe styles (alternating gray and transparent backgrounds)
+
+.table-striped {
+  > tbody > tr:nth-of-type(odd) {
+    background-color: $table-bg-accent;
+  }
+  > tbody > tr > td {
+    border-top: none;
+  }
+}
+
+.table-skeleton {
+  background: transparent;
+
+  > thead,
+  > tbody,
+  > tfoot {
+      > tr {
+          > th,
+          > td {
+              border-color: $divider-color-secondary;
+              border-bottom-width: 1px;
+              border-bottom-style: solid;
+              vertical-align: middle;
+
+              &:first-child {
+                  border-left: none;
+                  padding-left: 4px;
+              }
+              &:last-child {
+                  border-right: none;
+                  padding-right: 4px;
+              }
+          }
+          &.no-border {
             > th,
             > td {
-                padding-top: 16px;
-                padding-bottom: 16px;
+                border-left: none;
+                border-right: none;
             }
-        }
+          }
+      }
+  }
+  > tbody {
+      > tr > td {
+          border-left: 1px solid $divider-color-secondary;
+          border-right: 1px solid $divider-color-secondary;
+      }
+  }
+  > thead,
+  > tfoot {
+      tr {
+          > th,
+          > td {
+              border-width: 2px;
+              border-left: none;
+              border-right: none;
+          }
+      }
+  }
+  > tfoot {
+      tr {
+          > th,
+          > td {
+              border-bottom: none;
+          }
+      }
+  }
+}
+.table-pilled-rows {
+  background-color: transparent;
+  border-spacing: 0 8px;
+  border-collapse: separate;
+  > thead > tr > th {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    &:first-child {
+      padding-left: 0;
     }
+  }
+  > thead > tr > th,
+  > tbody > tr > td {
+    border: none;
+  }
+  > tbody > tr > td {
+    background-color: $level3;
+    padding: 16px;
+    &:first-child {
+      border-top-left-radius: 9px;
+      border-bottom-left-radius: 9px;
+    }
+    &:last-child {
+      border-top-right-radius: 9px;
+      border-bottom-right-radius: 9px;
+    }
+  }
+  > tfoot > tr > td {
+    border-top: none;
+  }
+}
+
+.table-tall {
+  > thead,
+  > tbody,
+  > tfoot {
+    > tr {
+      > th,
+      > td {
+        padding-top: 16px;
+        padding-bottom: 16px;
+      }
+    }
+  }
 }

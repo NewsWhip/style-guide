@@ -1,6 +1,6 @@
 {
   "name": "nw-style-guide",
-  "version": "15.3.1",
+  "version": "16.0.0-beta.1",
   "license": "MIT",
   "author": {
     "email": "garethdn@gmail.com",
@@ -53,7 +53,6 @@
     "@types/node": "^16.18.87",
     "@typescript-eslint/eslint-plugin": "^7.1.1",
     "@typescript-eslint/parser": "^7.1.1",
-    "bootstrap-sass": "3.4.3",
     "clipboard": "^2.0.4",
     "d3": "7.8.2",
     "eslint": "^8.39.0",
@@ -64,7 +63,6 @@
     "fs-extra": "^8.0.1",
     "jasmine-core": "~3.6.0",
     "jasmine-spec-reporter": "~5.0.0",
-    "jquery": "^3.3.1",
     "json": "^9.0.6",
     "karma": "~6.3.4",
     "karma-chrome-launcher": "~3.2.0",

@@ -64,17 +64,6 @@ p {
     }
 }
 
-.lead {
-    margin-bottom: $line-height-computed;
-    font-size: floor(($font-size-base * 1.15));
-    font-weight: 300;
-    line-height: 1.4;
-
-    @media (min-width: $screen-sm-min) {
-        font-size: ($font-size-base * 1.5);
-    }
-}
-
 // Emphasis & misc
 // -------------------------
 
@@ -83,12 +72,6 @@ small,
     margin: 0;
     font-size: 12px;
     line-height: 1.4;
-}
-
-mark,
-.mark {
-    background-color: $state-warning-bg;
-    padding: .2em;
 }
 
 // Alignment
@@ -147,26 +130,6 @@ mark,
 
 @include text-emphasis-variant('.text-verified', #1CCAFD); // Twitter color
 
-// Contextual backgrounds
-// For now we'll leave these alongside the text classes until v4 when we can
-// safely shift things around (per SemVer rules).
-.bg-primary {
-    // Given the contrast here, this is the only class to have its color inverted
-    // automatically.
-    color: #fff;
-}
-
-@include bg-variant('.bg-primary', $brand-primary);
-
-@include bg-variant('.bg-success', $state-success-bg);
-
-@include bg-variant('.bg-info', $state-info-bg);
-
-@include bg-variant('.bg-warning', $state-warning-bg);
-
-@include bg-variant('.bg-danger', $state-danger-bg);
-
-
 // Page header
 // -------------------------
 
@@ -221,65 +184,9 @@ ol {
     }
 }
 
-// Description Lists
-dl {
-    margin-top: 0; // Remove browser default
-    margin-bottom: $line-height-computed;
-}
-
-dt,
-dd {
-    line-height: $line-height-base;
-}
-
-dt {
-    font-weight: bold;
-}
-
-dd {
-    margin-left: 0; // Undo browser default
-}
-
-// Horizontal description lists
-//
-// Defaults to being stacked without any of the below styles applied, until the
-// grid breakpoint is reached (default of ~768px).
-
-.dl-horizontal {
-    dd {
-        @include clearfix; // Clear the floated `dt` if an empty `dd` is present
-    }
-
-    @media (min-width: $dl-horizontal-breakpoint) {
-        dt {
-            float: left;
-            width: ($dl-horizontal-offset - 20);
-            clear: left;
-            text-align: right;
-            @include text-overflow;
-        }
-        dd {
-            margin-left: $dl-horizontal-offset;
-        }
-    }
-}
-
 
 // Misc
 // -------------------------
-
-// Abbreviations and acronyms
-abbr[title],
-    // Add data-* attribute to help out our tooltip plugin, per https://github.com/twbs/bootstrap/issues/5257
-abbr[data-original-title] {
-    cursor: help;
-    border-bottom: 1px dotted $abbr-border-color;
-}
-
-.initialism {
-    font-size: 90%;
-    @extend .text-uppercase;
-}
 
 // Blockquotes
 blockquote {
@@ -314,9 +221,7 @@ blockquote {
 
 // Opposite alignment of blockquote
 //
-// Heads up: `blockquote.pull-right` has been deprecated as of v3.1.0.
-.blockquote-reverse,
-blockquote.pull-right {
+.blockquote-reverse {
     padding-right: 15px;
     padding-left: 0;
     border-right: 5px solid $blockquote-border-color;
@@ -335,13 +240,6 @@ blockquote.pull-right {
             content: '\00A0 \2014'; // nbsp, em dash
         }
     }
-}
-
-// Addresses
-address {
-    margin-bottom: $line-height-computed;
-    font-style: normal;
-    line-height: $line-height-base;
 }
 
 // Custom interactive text styling

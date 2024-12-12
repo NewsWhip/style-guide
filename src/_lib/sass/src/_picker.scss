@@ -32,7 +32,10 @@ nw-angular-picker {
         }
         &:not(:focus) {
             @extend .btn-secondary;
-            @include placeholder(transparent);
+
+            &::placeholder {
+                color: transparent;
+            }
         }
         ~ .dropdown-icon, ~ .reset-icon {
             position: absolute;

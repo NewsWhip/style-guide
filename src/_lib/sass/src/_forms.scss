@@ -47,7 +47,7 @@ label {
 
 // Override content-box in Normalize (* isn't specific enough)
 input[type="search"] {
-    @include box-sizing(border-box);
+    box-sizing: border-box;
 }
 
 // Position radios and checkboxes better
@@ -125,10 +125,11 @@ output {
     background-image: none; // Reset unusual Firefox-on-Android default style; see https://github.com/necolas/normalize.css/issues/214
     border: 1px solid $input-border;
     border-radius: $input-border-radius; // Note: This has no effect on <select>s in some browsers, due to the limited stylability of <select>s in CSS.
-    @include transition(border-color ease-in-out .15s, box-shadow ease-in-out .15s);
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
 
-    // Placeholder
-    @include placeholder;
+    &::placeholder {
+        color: $input-color-placeholder;
+    }
 
     // Unstyle the caret on `<select>`s in IE10+.
     &::-ms-expand {
