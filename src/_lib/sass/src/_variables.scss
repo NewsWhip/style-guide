@@ -1,3 +1,6 @@
+@use 'sass:color';
+@use 'sass:math';
+
 $bootstrap-sass-asset-helper: false !default;
 $nw-font-path: '../../../assets/fonts' !default;
 
@@ -65,24 +68,23 @@ $color-settings-maps: (
 //== Levels colors
 //
 $level0: $levels-base; // #121417
-$level1: lighten($levels-base, 3); // #191b20
-$level2: lighten($levels-base, 6); // #1F2328
-$level3: lighten($levels-base, 9); // #262A31
-$level4: lighten($levels-base, 12); // #2D3239
-$level5: lighten($levels-base, 15); // #343942
-$level6: lighten($levels-base, 18); // #3A414A
+$level1: color.adjust($levels-base, $lightness: 3%); // #191b20
+$level2: color.adjust($levels-base, $lightness: 6%); // #1F2328
+$level3: color.adjust($levels-base, $lightness: 9%); // #262A31
+$level4: color.adjust($levels-base, $lightness: 12%); // #2D3239
+$level5: color.adjust($levels-base, $lightness: 15%); // #343942
+$level6: color.adjust($levels-base, $lightness: 18%); // #3A414A
 
 //== Colors (Standalone)
 $yellow: #ffe085;
 $green: #24A828;
 $red: #FF5D52;
 
-
-$gray-darker:            lighten($gray-base, 13.5%) !default; // #222
-$gray-dark:              lighten($gray-base, 20%) !default;   // #333
-$gray:                   lighten($gray-base, 33.5%) !default; // #555
-$gray-light:             lighten($gray-base, 46.7%) !default; // #777
-$gray-lighter:           lighten($gray-base, 93.5%) !default; // #eee
+$gray-darker: color.adjust($gray-base, $lightness: -13.5%) !default; // #222
+$gray-dark: color.adjust($gray-base, $lightness: -20%) !default; // #333
+$gray: color.adjust($gray-base, $lightness: -33.5%) !default; // #555
+$gray-light: color.adjust($gray-base, $lightness: 46.7%) !default; // #777
+$gray-lighter: color.adjust($gray-base, $lightness: 93.5%) !default; // #eee
 
 $brand-primary: get-color("primary") !default;
 $brand-success: $green !default;
@@ -134,7 +136,7 @@ $line-height-base:        1 !default;
 $line-height-large:       1.15 !default; // extra decimals for Win 8.1 Chrome
 $line-height-xl:          1.2 !default;
 //** Computed "line-height" (`font-size` * `line-height`) for use with `margin`, `padding`, etc.
-$line-height-computed:    floor(($font-size-base * $line-height-base)) !default; // ~20px
+$line-height-computed:    math.floor(($font-size-base * $line-height-base)) !default; // ~20px
 
 //** By default, this inherits from the `<body>`.
 $headings-font-family:    inherit !default;
@@ -208,8 +210,8 @@ $input-border-radius-small:      3px !default;
 $input-border-focus:             get-color("primary", light) !default;
 $input-color-placeholder:        $text-disabled-inverse !default;
 $input-height-base:              ($line-height-computed + ($padding-base-vertical * 2) + 2) !default;
-$input-height-large:             (ceil($font-size-large * $line-height-large) + ($padding-large-vertical) + 11) !default;
-$input-height-small:             (floor($font-size-small * $line-height-small) + ($padding-small-vertical * 2) + 2) !default;
+$input-height-large:             (math.ceil($font-size-large * $line-height-large) + ($padding-large-vertical) + 11) !default;
+$input-height-small:             (math.floor($font-size-small * $line-height-small) + ($padding-small-vertical * 2) + 2) !default;
 $form-group-margin-bottom:       24px !default;
 $legend-color:                   get-color("gray") !default;
 $legend-border-color:            $divider-color-secondary !default;
@@ -331,7 +333,7 @@ $container-lg:                 $container-large-desktop !default;
 $navbar-height:                    50px !default;
 $navbar-margin-bottom:             $line-height-computed !default;
 $navbar-border-radius:             $border-radius-base !default;
-$navbar-padding-horizontal:        floor(($grid-gutter-width * 0.5)) !default;
+$navbar-padding-horizontal:        math.floor(($grid-gutter-width * 0.5)) !default;
 $navbar-padding-vertical:          (($navbar-height - $line-height-computed) * 0.5) !default;
 $navbar-collapse-max-height:       340px !default;
 
@@ -459,8 +461,8 @@ $jumbotron-padding:              30px !default;
 $jumbotron-color:                inherit !default;
 $jumbotron-bg:                   get-color('gray', 3x-light) !default;
 $jumbotron-heading-color:        inherit !default;
-$jumbotron-font-size:            ceil(($font-size-base * 1.5)) !default;
-$jumbotron-heading-font-size:    ceil(($font-size-base * 4.5)) !default;
+$jumbotron-font-size:            math.ceil(($font-size-base * 1.5)) !default;
+$jumbotron-heading-font-size:    math.ceil(($font-size-base * 4.5)) !default;
 
 
 //== Form states and alerts
@@ -544,10 +546,10 @@ $popover-arrow-color:                 $popover-bg !default;
 $popover-arrow-outer-width:           ($popover-arrow-width + 1) !default;
 
 //** Popover outer arrow color
-$popover-arrow-outer-color:           fade_in($popover-border-color, 0.05) !default;
+$popover-arrow-outer-color:           color.adjust($popover-border-color, $alpha: -0.05) !default;
 
 //** Popover outer arrow fallback color
-$popover-arrow-outer-fallback-color:  darken($popover-fallback-border-color, 20%) !default;
+$popover-arrow-outer-fallback-color:  color.adjust($popover-fallback-border-color, $lightness: -20%) !default;
 
 
 //== Labels
@@ -740,7 +742,7 @@ $thumbnail-caption-padding:   9px !default;
 //##
 
 $well-bg:                     #f5f5f5 !default;
-$well-border:                 darken($well-bg, 7%) !default;
+$well-border:                 color.adjust($well-bg, $lightness: -7%) !default;
 
 
 //== Badges
