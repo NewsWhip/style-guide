@@ -1,51 +1,55 @@
+@use 'sass:color';
+@use 'sass:list';
+@use 'sass:map';
+
 @function get-color($variant, $shade: base) {
     @each $color-settings in $color-settings-maps {
-        $name: map-get($color-settings, name);
+        $name: map.get($color-settings, name);
 
         @if $name == $variant {
 
             @if $shade == base {
-                @return map-get($color-settings, color);
+                @return map.get($color-settings, color);
             }
 
-            @if $shade == dark {
-                $darken-by: nth(map-get($color-settings, dark-steps), 1);
-                @return darken(map-get($color-settings, color), $darken-by * -1);
+            @if $shade ==dark {
+                $darken-by: nth(map.get($color-settings, dark-steps), 1);
+                @return color.adjust(map.get($color-settings, color), $lightness: ($darken-by * -1) * 1%)
             }
 
-            @if $shade == light {
-                $lighten-by: nth(map-get($color-settings, light-steps), 1);
-                @return lighten(map-get($color-settings, color), $lighten-by);
+            @if $shade ==light {
+                $lighten-by: nth(map.get($color-settings, light-steps), 1);
+                @return color.adjust(map.get($color-settings, color), $lightness: ($lighten-by * 1) * 1%);
             }
 
-            @if $shade == x-light {
-                $lighten-by: nth(map-get($color-settings, light-steps), 2);
-                @return lighten(map-get($color-settings, color), $lighten-by);
+            @if $shade ==x-light {
+                $lighten-by: nth(map.get($color-settings, light-steps), 2);
+                @return color.adjust(map.get($color-settings, color), $lightness: ($lighten-by * 1) * 1%);
             }
 
-            @if $shade == 2x-light {
-                $lighten-by: nth(map-get($color-settings, light-steps), 3);
-                @return lighten(map-get($color-settings, color), $lighten-by);
+            @if $shade ==2x-light {
+                $lighten-by: nth(map.get($color-settings, light-steps), 3);
+                @return color.adjust(map.get($color-settings, color), $lightness: ($lighten-by * 1) * 1%);
             }
 
-            @if $shade == 3x-light {
-                $lighten-by: nth(map-get($color-settings, light-steps), 4);
-                @return lighten(map-get($color-settings, color), $lighten-by);
+            @if $shade ==3x-light {
+                $lighten-by: nth(map.get($color-settings, light-steps), 4);
+                @return color.adjust(map.get($color-settings, color), $lightness: ($lighten-by * 1) * 1%);
             }
 
-            @if $shade == 4x-light {
-                $lighten-by: nth(map-get($color-settings, light-steps), 5);
-                @return lighten(map-get($color-settings, color), $lighten-by);
+            @if $shade ==4x-light {
+                $lighten-by: nth(map.get($color-settings, light-steps), 5);
+                @return color.adjust(map.get($color-settings, color), $lightness: ($lighten-by * 1) * 1%);
             }
 
-            @if $shade == 5x-light {
-                $lighten-by: nth(map-get($color-settings, light-steps), 6);
-                @return lighten(map-get($color-settings, color), $lighten-by);
+            @if $shade ==5x-light {
+                $lighten-by: nth(map.get($color-settings, light-steps), 6);
+                @return color.adjust(map.get($color-settings, color), $lightness: ($lighten-by * 1) * 1%);
             }
 
-            @if $shade == 6x-light {
-                $lighten-by: nth(map-get($color-settings, light-steps), 7);
-                @return lighten(map-get($color-settings, color), $lighten-by);
+            @if $shade ==6x-light {
+                $lighten-by: nth(map.get($color-settings, light-steps), 7);
+                @return color.adjust(map.get($color-settings, color), $lightness: ($lighten-by * 1) * 1%);
             }
 
             @error "Error: `#{$shade}` is not a valid value for $shade.";
