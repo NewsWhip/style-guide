@@ -82,7 +82,7 @@ export class EmailInputComponent implements OnInit, OnDestroy {
         const index = this.emails.indexOf(email, 0);
 
         if (index > -1) {
-            this.emails.splice(index, 1);
+            this.emails = this.emails.filter(value => value !== email);
             this._emitValidationChange();
         }
     }
