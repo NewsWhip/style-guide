@@ -16,7 +16,7 @@ import { Subscription } from 'rxjs';
                 [class.invalid]="!isValid(email)"
                 [class.selected]="last && isPillSelected">
                 <span class="pill-label">{{email}}</span>
-                <button class="close" (click)="removeEmail(email)">×</button>
+                <button type="button" class="close" (click)="removeEmail(email)">×</button>
             </div>
 
             <div class="input-container" [class.persistent-placeholder]="persistentPlaceholder">
