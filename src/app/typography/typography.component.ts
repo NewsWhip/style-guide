@@ -10,14 +10,12 @@ export class TypographyComponent implements OnInit {
 
   public textColor: FormControl = new FormControl('light');
   public exampleText: string = 'The quick brown fox jumps over the lazy dog';
+  public randomLink: string ='';
 
   constructor() { }
 
   ngOnInit() {
-  }
-
-  get randomLink(): string {
-    return `https://www.google.ie/search?q=${Math.random() * (1000 - 99) + 99}`;
+    this.randomLink = `https://www.google.ie/search?q=${Math.random() * (1000 - 99) + 99}`;
   }
 
   get colorVariant(): string {

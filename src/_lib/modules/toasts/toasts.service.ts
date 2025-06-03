@@ -1,5 +1,4 @@
-import { Injectable, ComponentFactoryResolver, ApplicationRef, Injector, TemplateRef } from '@angular/core';
-import { ComponentPortal, DomPortalOutlet } from '@angular/cdk/portal';
+import { Injectable, ApplicationRef, Injector, TemplateRef, inject, ComponentRef, createComponent } from '@angular/core';
 import { ToastsComponent } from './toasts.component';
 import { IToast } from './IToast';
 import { Toast } from './Toast';
@@ -9,51 +8,52 @@ import { defaultConfig } from './config';
 @Injectable()
 export class Toaster {
 
-    private _toastPortal: ComponentPortal<ToastsComponent>;
-    private _outlet: DomPortalOutlet;
-    private _toastsComponentRef: ToastsComponent;
+    private _toastsComponentRef: ComponentRef<ToastsComponent>;
     private _config: IToastConfig;
-
-    constructor(
-        private _cfr: ComponentFactoryResolver,
-        private _appRef: ApplicationRef,
-        private _injector: Injector) {}
+    private _appRef = inject(ApplicationRef);
+    private _injector = inject(Injector);
 
     private _attachOutlet(): ToastsComponent {
         /**
          * If the `ToastsComponent` already exists return it
          */
         if (this._toastsComponentRef) {
-            return this._toastsComponentRef;
+            return this._toastsComponentRef.instance;
         }
         this._config = this._config || defaultConfig;
-        this._toastPortal = new ComponentPortal(ToastsComponent);
-        this._outlet = new DomPortalOutlet(this._config.outletElement, this._cfr, this._appRef, this._injector);
-        this._toastsComponentRef = this._outlet.attach(this._toastPortal).instance;
-        return this._toastsComponentRef;
+        const componentRef = createComponent(ToastsComponent, {
+            environmentInjector: this._appRef.injector,
+            elementInjector: this._injector
+        });
+
+        this._appRef.attachView(componentRef.hostView);
+        const outlet = this._config?.outletElement;
+        outlet.appendChild(componentRef.location.nativeElement);
+        this._toastsComponentRef = componentRef;
+        return componentRef.instance;
     }
 
     show(toast: IToast): Toast {
         this._attachOutlet();
-        return this._toastsComponentRef.show(toast);
+        return this._toastsComponentRef.instance.show(toast);
     }
 
     success(message: string | TemplateRef<any>): Toast {
         this._attachOutlet();
-        return this._toastsComponentRef.success(message);
+        return this._toastsComponentRef.instance.success(message);
     }
 
     error(message: string | TemplateRef<any>): Toast {
         this._attachOutlet();
-        return this._toastsComponentRef.error(message);
+        return this._toastsComponentRef.instance.error(message);
     }
 
     dismiss(toast: Toast): void {
-        this._toastsComponentRef.dismiss(toast);
+        this._toastsComponentRef.instance.dismiss(toast);
     }
 
     isToastActive(toast: Toast): boolean {
-        return this._toastsComponentRef.getToastIndex(toast) > -1;
+        return this._toastsComponentRef.instance.getToastIndex(toast) > -1;
     }
 
     /**

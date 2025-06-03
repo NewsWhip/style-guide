@@ -42,7 +42,7 @@ jobs:
           path: distribution
       - uses: actions/setup-node@v3
         with:
-          node-version: 18.18
+          node-version: 22.16
           registry-url: https://registry.npmjs.org/
       - name: Publish
         run: npm publish distribution/
