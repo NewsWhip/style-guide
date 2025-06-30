@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PortalModule } from '@angular/cdk/portal';
 import { DialogModule } from '@angular/cdk/dialog';
+import { CdkMenuModule } from '@angular/cdk/menu';
 import { NwPickerModule } from '../_lib/modules/picker/picker.module';
 import { ToastsModule } from '../_lib/modules/toasts';
 import { FeatureAlertsModule } from '../_lib/modules/feature-alerts';
@@ -107,7 +108,8 @@ import { SpacingComponent } from './spacing/spacing.component';
         TooltipModule,
         ScrollingModule,
         WordCloudModule,
-        DialogModule
+        DialogModule,
+        CdkMenuModule
     ],
     providers: [provideHttpClient(withInterceptorsFromDi())],
     bootstrap: [AppComponent]

@@ -10,3 +10,48 @@
 
 <p>Default animation duration: <strong>{{duration}}</strong></p>
 <p>Default animation easing: <strong>{{easing}}</strong></p>
+
+<div>
+    <button class="btn btn-md btn-secondary"
+        [cdkMenuTriggerFor]="file"
+        (cdkMenuOpened)="onMenuOpened($event)">
+        File
+        <span class="caret"></span>
+    </button>
+    
+    <ng-template #file>
+        <div class="dropdown-menu" cdkMenu>
+            <div class="dropdown-header">Custom Header</div>
+            <button class="menu-item" cdkMenuItem>Share</button>
+            <hr class="divider"/>
+            <button class="menu-item" cdkMenuItem [cdkMenuTriggerFor]="new_doc">
+                New <i class="fas fa-caret-right ml-auto"></i>
+            </button>
+            <button class="menu-item" cdkMenuItem disabled>Open</button>
+            <button class="menu-item active" cdkMenuItem>Make a Copy</button>
+            <hr class="divider"/>
+            <button class="menu-item" cdkMenuItem [cdkMenuTriggerFor]="download">
+                Download <i class="fas fa-caret-right ml-auto"></i>
+            </button>
+        </div>
+    </ng-template>
+    
+    <ng-template #new_doc>
+        <div class="dropdown-menu" cdkMenu>
+            <button class="menu-item" cdkMenuItem>Document</button>
+            <button class="menu-item" cdkMenuItem>From template</button>
+            <hr class="divider"/>
+            <button class="menu-item" cdkMenuItem>Spreadsheet</button>
+            <button class="menu-item" cdkMenuItem>Presentation</button>
+            <button class="menu-item" cdkMenuItem>Form</button>
+        </div>
+    </ng-template>
+    
+    <ng-template #download>
+        <div class="dropdown-menu" cdkMenu>
+            <button class="menu-item" cdkMenuItem>Microsoft Word</button>
+            <button class="menu-item" cdkMenuItem>PDF</button>
+            <button class="menu-item" cdkMenuItem>Plain text</button>
+        </div>
+    </ng-template>
+</div>

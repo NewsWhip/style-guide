@@ -16,4 +16,8 @@ export class AnimationsComponent implements OnInit {
   ngOnInit() {
   }
 
+  onMenuOpened(event: any) {
+    console.log('menu opened', event);
+  }
+
 }

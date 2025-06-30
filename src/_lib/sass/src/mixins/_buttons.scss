@@ -15,7 +15,13 @@
         }
     }
     // Override active button state for dropdown toggles
-    .open > &.dropdown-toggle {
+    // .open > &.dropdown-toggle {
+    //     color: $color-hover;
+    //     background-color: $bg-hover-or-active;
+    //     border-color: $border-hover;
+    //     box-shadow: none;
+    // }
+    &[aria-expanded="true"] {
         color: $color-hover;
         background-color: $bg-hover-or-active;
         border-color: $border-hover;
