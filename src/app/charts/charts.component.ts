@@ -11,6 +11,7 @@ import { ScaleTime } from 'd3-scale';
 @Component({
     selector: 'app-charts',
     templateUrl: './charts.component.html',
+    styleUrls: ['./charts.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [DecimalPipe]
 })

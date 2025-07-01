@@ -1,3 +1,6 @@
+@use './variables';
+@use './mixins/list-group';
+
 //
 // List groups
 // --------------------------------------------------
@@ -26,7 +29,7 @@
 // Primary list group
 .list-group-primary {
     .list-group-item {
-        font-size: $font-size-large;
+        font-size: variables.$font-size-large;
     }
     .list-group-header {
         line-height: 25px;
@@ -38,15 +41,15 @@
 // Secondary list group
 .list-group-secondary {
     .list-group-item {
-        padding: $padding-base-vertical 22px;
-        background-color: $level3;
+        padding: variables.$padding-base-vertical 22px;
+        background-color: variables.$level3;
         margin-bottom: 1px;
-        font-size: $font-size-base;
-        line-height: $line-height-base;
-        color: $text-color-secondary;
+        font-size: variables.$font-size-base;
+        line-height: variables.$line-height-base;
+        color: variables.$text-color-secondary;
 
         &:focus {
-            background-color: $level4;
+            background-color: variables.$level4;
         }
         &:hover,
         &.active,
@@ -54,7 +57,7 @@
         &.active:focus {
             &,
             a {
-                background-color: $level4;
+                background-color: variables.$level4;
                 box-shadow: none;
             }
         }
@@ -79,7 +82,7 @@
         &.disabled,
         &.disabled:hover,
         &.disabled:focus {
-            color: $text-color-disabled;
+            color: variables.$text-color-disabled;
         }
     }
     .list-group-header {
@@ -98,14 +101,14 @@
     position: relative;
     padding: 4px 8px;
     margin-bottom: 1px;
-    background-color: $list-group-bg;
-    border-radius: $border-radius-base;
+    background-color: variables.$list-group-bg;
+    border-radius: variables.$border-radius-base;
     font-size: 14px;
     line-height: 20px;
 
     &,
     > a {
-        color: $list-group-link-color;
+        color: variables.$list-group-link-color;
         display: block;
         text-decoration: none;
     }
@@ -137,9 +140,9 @@
     &.disabled,
     &.disabled:hover,
     &.disabled:focus {
-        background-color: $list-group-disabled-bg;
-        color: $list-group-disabled-color;
-        cursor: $cursor-disabled;
+        background-color: variables.$list-group-disabled-bg;
+        color: variables.$list-group-disabled-color;
+        cursor: variables.$cursor-disabled;
     }
 
     // Active class on item itself, not parent
@@ -147,14 +150,14 @@
     &.active:hover,
     &.active:focus {
         z-index: 2; // Place active items above their siblings for proper border styling
-        color: $list-group-active-color;
-        background-color: $list-group-active-bg;
-        border-color: $list-group-active-border;
+        color: variables.$list-group-active-color;
+        background-color: variables.$list-group-active-bg;
+        border-color: variables.$list-group-active-border;
     }
     &:hover {
         text-decoration: none;
-        color: $list-group-link-hover-color;
-        background-color: $list-group-hover-bg;
+        color: variables.$list-group-link-hover-color;
+        background-color: variables.$list-group-hover-bg;
     }
     .list-group-item-icon {
         position: absolute;
@@ -166,10 +169,10 @@
     //
     // Add modifier classes to change text and background color on individual items.
     // Organizationally, this must come after the `:hover` states.
-    @include list-group-item-variant(success, $state-success-bg, $state-success-text);
-    @include list-group-item-variant(info, $state-info-bg, $state-info-text);
-    @include list-group-item-variant(warning, $state-warning-bg, $state-warning-text);
-    @include list-group-item-variant(danger, $state-danger-bg, $state-danger-text);
+    @include list-group.list-group-item-variant(success, variables.$state-success-bg, variables.$state-success-text);
+    @include list-group.list-group-item-variant(info, variables.$state-info-bg, variables.$state-info-text);
+    @include list-group.list-group-item-variant(warning, variables.$state-warning-bg, variables.$state-warning-text);
+    @include list-group.list-group-item-variant(danger, variables.$state-danger-bg, variables.$state-danger-text);
 }
 
 // Custom content options
@@ -184,7 +187,7 @@
     padding: 2px 12px;
     line-height: 24px;
     margin: 0;
-    color: $text-color;
+    color: variables.$text-color;
     font-weight: 300;
     text-transform: uppercase;
     font-size: 14px;
@@ -208,8 +211,8 @@
     top: -2px;
 
     &:hover + .list-group-item {
-        color: $list-group-link-hover-color;
-        background-color: $list-group-hover-bg;
+        color: variables.$list-group-link-hover-color;
+        background-color: variables.$list-group-hover-bg;
     }
 }
 .list-group-item-with-actions {

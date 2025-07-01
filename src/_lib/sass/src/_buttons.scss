@@ -1,14 +1,17 @@
+@use './variables';
+@use './mixins/buttons' as buttons;
+
 .btn {
     display: inline-block;
     margin-bottom: 0; // For input.btn
-    font-weight: $btn-font-weight;
+    font-weight: variables.$btn-font-weight;
     text-align: center;
     vertical-align: middle;
     touch-action: manipulation;
     cursor: pointer;
     background-image: none; // Reset unusual Firefox-on-Android default style; see https://github.com/necolas/normalize.css/issues/214
     white-space: nowrap;
-    @include button-size($padding-base-vertical, $padding-base-horizontal, 14px, $line-height-base, $btn-border-radius-base);
+    @include buttons.button-size(variables.$padding-base-vertical, variables.$padding-base-horizontal, 14px, variables.$line-height-base, variables.$btn-border-radius-base);
     user-select: none;
     border-style: solid;
     border-width: 1px;
@@ -34,7 +37,7 @@
     &.disabled,
     &[disabled],
     fieldset[disabled] & {
-        cursor: $cursor-disabled;
+        cursor: variables.$cursor-disabled;
         opacity: .50;
         box-shadow: none;
     }
@@ -55,69 +58,69 @@ a.btn {
 // Alternate buttons
 // --------------------------------------------------
 .btn-primary {
-    @include button-variant(
+    @include buttons.button-variant(
         #ffffff,
         #ffffff,
-        get-color('primary'),
-        get-color('primary', light));
+        variables.get-color('primary'),
+        variables.get-color('primary', light));
 }
 .btn-secondary {
-    @include button-variant(
-        $text-color,
-        $text-color,
-        rgba($text-color, 0.15),
-        rgba($text-color, 0.20));
+    @include buttons.button-variant(
+        variables.$text-color,
+        variables.$text-color,
+        rgba(variables.$text-color, 0.15),
+        rgba(variables.$text-color, 0.20));
 }
 .btn-secondary-inverse {
-    @include button-variant(
-        get-color("gray", base),
-        get-color("gray", base),
-        get-color("gray", 6x-light),
-        get-color("gray", 5x-light));
+    @include buttons.button-variant(
+        variables.get-color("gray", base),
+        variables.get-color("gray", base),
+        variables.get-color("gray", 6x-light),
+        variables.get-color("gray", 5x-light));
 }
 .btn-danger {
-    @include button-variant(
+    @include buttons.button-variant(
         #ffffff,
         #ffffff,
-        get-color('tertiary'),
-        get-color('tertiary', light));
+        variables.get-color('tertiary'),
+        variables.get-color('tertiary', light));
 }
 .btn-alt {
-    @include button-variant(
-        $text-color,
-        get-color('primary', 2x-light),
+    @include buttons.button-variant(
+        variables.$text-color,
+        variables.get-color('primary', 2x-light),
         transparent,
         transparent,
-        $text-color,
-        get-color('primary', 2x-light));
+        variables.$text-color,
+        variables.get-color('primary', 2x-light));
 }
 .btn-ghost {
-    @include button-variant(
-        $text-color-secondary,
-        $text-color,
+    @include buttons.button-variant(
+        variables.$text-color-secondary,
+        variables.$text-color,
         transparent,
-        rgba($text-color, 0.1));
+        rgba(variables.$text-color, 0.1));
 }
 .btn-ghost-alt {
-    @include button-variant(
-        $text-color-secondary,
-        get-color('primary', 2x-light),
+    @include buttons.button-variant(
+        variables.$text-color-secondary,
+        variables.get-color('primary', 2x-light),
         transparent,
         transparent);
 }
 .btn-activate {
-    @include button-variant(
-        $text-color,
-        $text-color,
-        get-color("secondary", base),
-        get-color("secondary", light));
+    @include buttons.button-variant(
+        variables.$text-color,
+        variables.$text-color,
+        variables.get-color("secondary", base),
+        variables.get-color("secondary", light));
 }
 // applying sizes to this element will not do anything
 // as currently this button has a fixed size
 .btn-carousel {
-    @include button-variant(
-        $text-color-secondary,
-        get-color('primary', light),
+    @include buttons.button-variant(
+        variables.$text-color-secondary,
+        variables.get-color('primary', light),
         transparent,
         transparent);
 
@@ -152,58 +155,58 @@ a.btn {
 // --------------------------------------------------
 
 .btn-xl {
-    @include button-size($padding-xl-vertical, $padding-xl-horizontal, $font-size-xl, $line-height-xl, $btn-border-radius-xl);
+    @include buttons.button-size(variables.$padding-xl-vertical, variables.$padding-xl-horizontal, variables.$font-size-xl, variables.$line-height-xl, variables.$btn-border-radius-xl);
 
     &.btn-round {
-        @include button-round($font-size-xl, $line-height-xl, $padding-xl-vertical);
+        @include buttons.button-round(variables.$font-size-xl, variables.$line-height-xl, variables.$padding-xl-vertical);
     }
 
     &.btn-close {
-        @include button-close($font-size-xl, $line-height-xl, $padding-xl-vertical)
+        @include buttons.button-close(variables.$font-size-xl, variables.$line-height-xl, variables.$padding-xl-vertical)
     }
 }
 .btn-lg {
-    @include button-size($padding-large-vertical, $padding-large-horizontal, $font-size-large, $line-height-large, $btn-border-radius-large);
+    @include buttons.button-size(variables.$padding-large-vertical, variables.$padding-large-horizontal, variables.$font-size-large, variables.$line-height-large, variables.$btn-border-radius-large);
 
     &.btn-round {
-        @include button-round($font-size-large, $line-height-large, $padding-large-vertical);
+        @include buttons.button-round(variables.$font-size-large, variables.$line-height-large, variables.$padding-large-vertical);
     }
 
     &.btn-close {
-        @include button-close($font-size-large, $line-height-large, $padding-large-vertical)
+        @include buttons.button-close(variables.$font-size-large, variables.$line-height-large, variables.$padding-large-vertical)
     }
 }
 .btn-md {
-    @include button-size($padding-base-vertical, $padding-base-horizontal, 14px, $line-height-base, $btn-border-radius-base);
+    @include buttons.button-size(variables.$padding-base-vertical, variables.$padding-base-horizontal, 14px, variables.$line-height-base, variables.$btn-border-radius-base);
 
     &.btn-round {
-        @include button-round(14px, $line-height-base, $padding-base-vertical);
+        @include buttons.button-round(14px, variables.$line-height-base, variables.$padding-base-vertical);
     }
 
     &.btn-close {
-        @include button-close(14px, $line-height-base, $padding-base-vertical)
+        @include buttons.button-close(14px, variables.$line-height-base, variables.$padding-base-vertical)
     }
 }
 .btn-sm {
-    @include button-size($padding-small-vertical, $padding-small-horizontal, $font-size-small, $line-height-small, $btn-border-radius-small);
+    @include buttons.button-size(variables.$padding-small-vertical, variables.$padding-small-horizontal, variables.$font-size-small, variables.$line-height-small, variables.$btn-border-radius-small);
 
     &.btn-round {
-        @include button-round($font-size-small, $line-height-small, $padding-small-vertical);
+        @include buttons.button-round(variables.$font-size-small, variables.$line-height-small, variables.$padding-small-vertical);
     }
 
     &.btn-close {
-        @include button-close($font-size-small, $line-height-small, $padding-small-vertical)
+        @include buttons.button-close(variables.$font-size-small, variables.$line-height-small, variables.$padding-small-vertical)
     }
 }
 .btn-xs {
-    @include button-size(0, 7px, 12px, 1.333333333333, 9px);
+    @include buttons.button-size(0, 7px, 12px, 1.333333333333, 9px);
 
     &.btn-round {
-        @include button-round(12px, 1.333333333333, 0);
+        @include buttons.button-round(12px, 1.333333333333, 0);
     }
 
     &.btn-close {
-        @include button-close(12px, 1.333333333333, 0)
+        @include buttons.button-close(12px, 1.333333333333, 0)
     }
 }
 .btn-slim {

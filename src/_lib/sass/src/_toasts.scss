@@ -1,3 +1,5 @@
+@use './variables';
+
 .toasts-container {
     display: flex;
     flex-direction: column;
@@ -5,7 +7,7 @@
     top: 16px;
     left: 50%;
     transform: translateX(-50%);
-    z-index: $zindex-toast;
+    z-index: variables.$zindex-toast;
 }
 .toast {
     display: flex;
@@ -15,18 +17,18 @@
     margin: 8px auto;
     padding: 16px 24px;
     max-width: 500px;
-    background: get-color("gray", light);
+    background: variables.get-color("gray", light);
     color: #ffffff;
     border-radius: 5px;
 
     &.toast-success {
-        background: get-color("secondary", base);
+        background: variables.get-color("secondary", base);
         .toast-icon {
             font-weight: normal;
         }
     }
     &.toast-error {
-        background: get-color("tertiary", base);
+        background: variables.get-color("tertiary", base);
     }
     .toast-message {
         flex: 1;

@@ -1,0 +1,31 @@
+app-faq {
+  display: block;
+  padding: 8px;
+  border-radius: 6px;
+  margin-bottom: 8px;
+  background-color: #262a31;
+  cursor: pointer;
+  position: relative;
+}
+app-faq .arrow {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-size: 14px;
+  transition: transform 150ms linear;
+}
+app-faq .question {
+  padding-left: 24px;
+}
+app-faq .question p {
+  margin-bottom: 0;
+}
+app-faq .question.open .arrow {
+  transform: rotate(90deg);
+}
+app-faq .answer {
+  padding-left: 24px;
+  padding-top: 8px;
+  margin-top: 4px;
+  border-top: 1px solid rgba(226, 229, 233, 0.15);
+}/*# sourceMappingURL=faq-component.css.map */

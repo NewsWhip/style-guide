@@ -1,0 +1,11 @@
+.help-block {
+  display: none;
+}
+
+.has-error .help-block {
+  display: block;
+}
+
+.switch {
+  margin-bottom: 8px;
+}/*# sourceMappingURL=forms.component.css.map */

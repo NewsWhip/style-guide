@@ -1,3 +1,6 @@
+@use './variables';
+@use './mixins/border-radius' as br;
+
 .label {
     display: inline-flex;
     flex-direction: row;
@@ -14,44 +17,44 @@
     vertical-align: baseline;
 
     &.label-badge {
-        color: get-color("gray", 4x-light);
-        background: get-color("gray", light);
-        border-color: get-color("gray", light);
+        color: variables.get-color("gray", 4x-light);
+        background: variables.get-color("gray", light);
+        border-color: variables.get-color("gray", light);
     }
     &.label-danger {
         color: #ffffff;
-        background: get-color('tertiary');
-        border-color: get-color('tertiary');
+        background: variables.get-color('tertiary');
+        border-color: variables.get-color('tertiary');
     }
     &.label-alt {
-        color: get-color("alt", light);
-        background: get-color("gray", dark);
-        border-color: get-color("gray", dark);
+        color: variables.get-color("alt", light);
+        background: variables.get-color("gray", dark);
+        border-color: variables.get-color("gray", dark);
     }
     &.label-new {
         color: #ffffff;
-        background: get-color("tertiary");
-        border-color: get-color("tertiary");
+        background: variables.get-color("tertiary");
+        border-color: variables.get-color("tertiary");
     }
     &.label-beta {
-        color: get-color("alt");
+        color: variables.get-color("alt");
         background: transparent;
-        border-color: get-color("alt");
+        border-color: variables.get-color("alt");
     }
     &.label-op {
         text-transform: initial;
         color: #ffffff;
-        background: get-color("secondary", base);
-        border-color: get-color("secondary", base);
+        background: variables.get-color("secondary", base);
+        border-color: variables.get-color("secondary", base);
     }
     &.label-alt-badge {
         color: #000000;
-        background: get-color("alt");
-        border-color: get-color("alt"); 
+        background: variables.get-color("alt");
+        border-color: variables.get-color("alt"); 
     }
 }
 .label-round {
     padding: 0 7px;
-    @include border-right-radius(9px);
-    @include border-left-radius(9px);
+    @include br.border-right-radius(9px);
+    @include br.border-left-radius(9px);
 }

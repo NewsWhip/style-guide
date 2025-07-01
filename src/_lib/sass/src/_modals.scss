@@ -1,5 +1,9 @@
+@use './variables';
+@use './mixins/scrollbars' as sb;
+@use 'type';
+
 .modal-dialog {
-    z-index: $zindex-modal;
+    z-index: variables.$zindex-modal;
     max-width: 100%;
 
     // Media modal
@@ -12,7 +16,7 @@
             right: -8px;
             top: 0;
 
-            @media (max-width: $screen-md) {
+            @media (max-width: variables.$screen-md) {
                 transform: translateY(-100%);
                 right: 0;
                 top: -8px;
@@ -38,16 +42,16 @@
 
     // Size variations
     &.modal-sm {
-        width: $modal-sm;
+        width: variables.$modal-sm;
     }
 
     &,
     &.modal-md {
-        width: $modal-md;
+        width: variables.$modal-md;
     }
     
     &.modal-lg {
-        width: $modal-lg;
+        width: variables.$modal-lg;
     }
 
     &.modal-fullscreen {
@@ -60,7 +64,7 @@
             width: 100vw;
             display: flex;
             flex-direction: column;
-            @include scrollbars();
+            @include sb.scrollbars();
     
             .modal-body {
                 flex: 1;
@@ -80,13 +84,13 @@
     position: relative;
 
     .modal-title {
-        color: $text-color;
+        color: variables.$text-color;
         font-size: 16px;
         font-weight: bold;
         flex: 1;
         margin-top: 12px;
         padding: 16px 32px;
-        line-height: $modal-title-line-height;
+        line-height: variables.$modal-title-line-height;
         @extend .text-ellipsis;
     }
 
@@ -99,26 +103,26 @@
 
 // Content
 .modal-content {
-    background-color: $modal-content-bg;
-    border: 1px solid $modal-content-border-color;
+    background-color: variables.$modal-content-bg;
+    border: 1px solid variables.$modal-content-border-color;
     border-radius: 9px;
-    box-shadow: 0 0 8px 0 rgba($level0, 0.4);
+    box-shadow: 0 0 8px 0 rgba(variables.$level0, 0.4);
     outline: 0;
 }
 
 // Body
 .modal-body {
     position: relative;
-    padding: $modal-inner-padding;
+    padding: variables.$modal-inner-padding;
     font-size: 14px;
-    color: $text-color;
+    color: variables.$text-color;
 }
 
 // Footer
 .modal-footer {
     padding: 24px;
     text-align: right; // right align buttons
-    border-top: 1px solid $modal-footer-border-color;
+    border-top: 1px solid variables.$modal-footer-border-color;
 
     .btn + .btn {
         margin-left: 8px;
@@ -127,12 +131,12 @@
 
 // Backdrop styling
 .modal-backdrop {
-    background-color: rgba($modal-backdrop-bg, 0);
+    background-color: rgba(variables.$modal-backdrop-bg, 0);
     transition: background-color 300ms ease-out,
         backdrop-filter 300ms ease-out;
 
     &.cdk-overlay-backdrop-showing {
-        background-color: rgba($modal-backdrop-bg, $modal-backdrop-opacity);
+        background-color: rgba(variables.$modal-backdrop-bg, variables.$modal-backdrop-opacity);
         backdrop-filter: blur(4px);
     }
 
