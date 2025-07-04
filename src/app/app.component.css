@@ -1,0 +1,117 @@
+body {
+  margin: 0;
+  padding: 0 0 90px 0;
+}
+body * {
+  box-sizing: border-box;
+}
+
+hr {
+  margin: 30px 0;
+}
+
+app-root {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+}
+app-root .side-nav ::-webkit-scrollbar {
+  width: 0.5em;
+  height: 0.5em;
+}
+app-root .side-nav ::-webkit-scrollbar-thumb {
+  background: rgba(226, 229, 233, 0.25);
+  border-radius: 0.25em;
+}
+app-root .side-nav ::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 0.25em;
+}
+app-root .side-nav ::-webkit-scrollbar-corner {
+  background-color: transparent;
+}
+app-root .side-nav body {
+  scrollbar-face-color: rgba(226, 229, 233, 0.25);
+  scrollbar-track-color: transparent;
+}
+app-root .side-nav-menu {
+  position: fixed;
+  width: 200px;
+  height: 100vh;
+  background: #0f0f0f;
+  overflow-y: scroll;
+}
+app-root .side-nav-menu .app-logo {
+  max-width: 100%;
+  padding: 10px 7px;
+}
+app-root .app-body-container {
+  flex: 1;
+  padding: 0 32px;
+  margin-left: 200px;
+  width: calc(100% - 200px);
+}
+app-root .page-header p {
+  margin: 0;
+  line-height: 1;
+  margin-top: 16px;
+}
+app-root .page-header .tabs-container {
+  background-color: #0f0f0f;
+  padding-left: 32px;
+  padding-right: 32px;
+  margin-left: -32px;
+  margin-right: -32px;
+  margin-top: 16px;
+  position: relative;
+  top: 1px;
+}
+
+pre {
+  position: relative;
+  white-space: pre-line;
+}
+
+code {
+  padding: 0;
+  line-height: 1.2;
+}
+
+pre.light,
+code.light {
+  background: transparent;
+  color: #ffffff;
+}
+
+.light-bg {
+  background: #fff;
+}
+
+.demo-section {
+  margin-bottom: 32px !important;
+}
+.demo-section h4 {
+  margin-bottom: 8px;
+}
+
+ol.guidelines {
+  list-style: none;
+  counter-reset: item;
+  padding-left: 0;
+}
+ol.guidelines li {
+  counter-increment: item;
+  margin-bottom: 16px;
+}
+ol.guidelines li:before {
+  font-weight: bold;
+  font-size: 16px;
+  margin-right: 8px;
+  content: counter(item) ".";
+  width: 1.2em;
+}
+
+.tab-content {
+  padding-bottom: 16px;
+  max-width: 800px;
+}/*# sourceMappingURL=app.component.css.map */

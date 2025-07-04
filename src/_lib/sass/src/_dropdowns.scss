@@ -1,3 +1,6 @@
+@use "./variables";
+@use "./mixins/nav-divider";
+@use "./mixins/dropdowns";
 //
 // Dropdown menus
 // --------------------------------------------------
@@ -10,9 +13,9 @@
     margin-top: -1px;
     margin-left: 2px;
     vertical-align: middle;
-    border-top:   $caret-width-base dashed;
-    border-right: $caret-width-base solid transparent;
-    border-left:  $caret-width-base solid transparent;
+    border-top:   variables.$caret-width-base dashed;
+    border-right: variables.$caret-width-base solid transparent;
+    border-left:  variables.$caret-width-base solid transparent;
 }
 
 // The dropdown wrapper (div)
@@ -31,7 +34,7 @@
     position: absolute;
     top: 100%;
     left: 0;
-    z-index: $zindex-dropdown;
+    z-index: variables.$zindex-dropdown;
     display: none; // none by default, but block on "open" of the menu
     float: left;
     min-width: 160px;
@@ -40,15 +43,15 @@
     list-style: none;
     font-size: 14px;
     text-align: left; // Ensures proper alignment if parent has it changed (e.g., modal footer)
-    background-color: $dropdown-bg;
-    border: 1px solid $dropdown-border;
-    border-radius: $border-radius-base;
+    background-color: variables.$dropdown-bg;
+    border: 1px solid variables.$dropdown-border;
+    border-radius: variables.$border-radius-base;
     box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.4);
     background-clip: padding-box;
 
     // // Dividers (basically an hr) within the dropdown
     .divider {
-        @include nav-divider($dropdown-divider-bg);
+        @include nav-divider.nav-divider(variables.$dropdown-divider-bg);
     }
 
     &.dropdown-menu-arrow {
@@ -64,12 +67,12 @@
             pointer-events: none;
         }
         &:after {
-            border-bottom-color: $dropdown-bg;
+            border-bottom-color: variables.$dropdown-bg;
             border-width: 7px;
             margin-left: -7px;
         }
         &:before {
-            border-bottom-color: $dropdown-border;
+            border-bottom-color: variables.$dropdown-border;
             border-width: 8px;
             margin-left: -8px;
         }
@@ -133,7 +136,7 @@
 .dropdown-submenu {
     > li > a {
         // Links within the dropdown menu
-        @include dropdown-menu-link;
+        @include dropdowns.dropdown-menu-link;
     }
 }
 
@@ -141,7 +144,7 @@
 .dropdown-menu,
 .dropdown-submenu {
     > .active > a {
-        @include dropdown-menu-link-active;
+        @include dropdowns.dropdown-menu-link-active;
     }
 }
 
@@ -153,7 +156,7 @@
     &,
     &:hover,
     &:focus {
-        @include dropdown-menu-link-disabled;
+        @include dropdowns.dropdown-menu-link-disabled;
     }
 }
 
@@ -200,9 +203,9 @@
     display: block;
     padding: 3px 16px;
     padding-top: 8px;
-    font-size: $font-size-base;
-    line-height: $line-height-base;
-    color: $dropdown-header-color;
+    font-size: variables.$font-size-base;
+    line-height: variables.$line-height-base;
+    color: variables.$dropdown-header-color;
     white-space: nowrap; // as with > li > a
     text-transform: uppercase;
 }
@@ -214,7 +217,7 @@
     right: 0;
     bottom: 0;
     top: 0;
-    z-index: ($zindex-dropdown - 10);
+    z-index: (variables.$zindex-dropdown - 10);
     display: none;
 }
 
@@ -222,7 +225,7 @@
     // Reverse the caret
     .caret {
         border-top: 0;
-        border-bottom: $caret-width-base dashed;
+        border-bottom: variables.$caret-width-base dashed;
         content: "";
     }
     // Different positioning for bottom up menu
@@ -246,12 +249,12 @@
 }
 
 .dropdown-menu-inverse {
-    $dropdown-inverse-link-color: $level1;
-    $dropdown-inverese-link-active-bg: get-color("primary", 3x-light);
+    $dropdown-inverse-link-color: variables.$level1;
+    $dropdown-inverese-link-active-bg: variables.get-color("primary", 3x-light);
 
     background-color: #ffffff;
     .dropdown-header {
-        color: get-color("gray", x-light);
+        color: variables.get-color("gray", x-light);
     }
     > li > a {
         color: $dropdown-inverse-link-color;
@@ -280,7 +283,7 @@
         }
     }
     .divider {
-        background: rgba($level0, 0.4);
+        background: rgba(variables.$level0, 0.4);
     }
 }
 // Custom popover styling for dropdowns appended to body

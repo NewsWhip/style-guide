@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 
 @Component({
     selector: 'app-buttons',
-    templateUrl: './buttons.component.html'
+    templateUrl: './buttons.component.html',
+    styleUrls: ['./buttons.component.scss']
 })
 export class ButtonsComponent{
     public sizes = ['xs', 'sm', 'md', 'lg'];

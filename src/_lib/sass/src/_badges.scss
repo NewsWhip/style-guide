@@ -1,3 +1,4 @@
+@use './variables';
 //
 // Badges
 // --------------------------------------------------
@@ -8,15 +9,15 @@
   display: inline-block;
   min-width: 10px;
   padding: 3px 7px;
-  font-size: $font-size-small;
-  font-weight: $badge-font-weight;
-  line-height: $badge-line-height;
-  color: $badge-color;
+  font-size: variables.$font-size-small;
+  font-weight: variables.$badge-font-weight;
+  line-height: variables.$badge-line-height;
+  color: variables.$badge-color;
   text-align: center;
   white-space: nowrap;
   vertical-align: middle;
-  background-color: $badge-bg;
-  border-radius: $badge-border-radius;
+  background-color: variables.$badge-bg;
+  border-radius: variables.$badge-border-radius;
 
   // Empty badges collapse automatically (not available in IE8)
   &:empty {
@@ -40,8 +41,8 @@
   // Account for badges in navs
   .list-group-item.active > &,
   .nav-pills > .active > a > & {
-    color: $badge-active-color;
-    background-color: $badge-active-bg;
+    color: variables.$badge-active-color;
+    background-color: variables.$badge-active-bg;
   }
 
   .list-group-item > & {
@@ -61,7 +62,7 @@
 a.badge {
   &:hover,
   &:focus {
-    color: $badge-link-hover-color;
+    color: variables.$badge-link-hover-color;
     text-decoration: none;
     cursor: pointer;
   }

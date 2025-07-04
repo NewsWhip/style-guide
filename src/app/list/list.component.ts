@@ -4,7 +4,8 @@ declare var html_beautify: any;
 
 @Component({
     selector: 'app-list',
-    templateUrl: './list.component.html'
+    templateUrl: './list.component.html',
+    styleUrls: ['./list.component.scss']
 })
 export class ListComponent implements OnInit, AfterViewInit {
 

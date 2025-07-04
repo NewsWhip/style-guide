@@ -1,3 +1,5 @@
+@use "../variables";
+
 nw-loader {
     $base-dot-size: 8px;
 
@@ -44,7 +46,7 @@ nw-loader {
             transform: translateY(-2em);
         }
         .dot {
-            background-color: get-color("gray", 3x-light);
+            background-color: variables.get-color("gray", 3x-light);
             width: 1em;
             height: 1em;
             border-radius: 0.5em;
@@ -54,7 +56,7 @@ nw-loader {
         }
         &.loader-color {
             .dot {
-                background-color: get-color("primary");
+                background-color: variables.get-color("primary");
             }
         }
         &.loader-sm {

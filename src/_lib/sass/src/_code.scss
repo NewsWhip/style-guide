@@ -1,4 +1,6 @@
 @use "sass:math";
+@use "variables";
+
 //
 // Code (inline and block)
 // --------------------------------------------------
@@ -9,25 +11,25 @@ code,
 kbd,
 pre,
 samp {
-  font-family: $font-family-monospace;
+  font-family: variables.$font-family-monospace;
 }
 
 // Inline code
 code {
   padding: 2px 4px;
   font-size: 90%;
-  color: $code-color;
-  background-color: $code-bg;
-  border-radius: $border-radius-base;
+  color: variables.$code-color;
+  background-color: variables.$code-bg;
+  border-radius: variables.$border-radius-base;
 }
 
 // User input typically entered via keyboard
 kbd {
   padding: 2px 4px;
   font-size: 90%;
-  color: $kbd-color;
-  background-color: $kbd-bg;
-  border-radius: $border-radius-small;
+  color: variables.$kbd-color;
+  background-color: variables.$kbd-bg;
+  border-radius: variables.$border-radius-small;
   box-shadow: inset 0 -1px 0 rgba(0, 0, 0, .25);
 
   kbd {
@@ -41,16 +43,16 @@ kbd {
 // Blocks of code
 pre {
   display: block;
-  padding: math.div(($line-height-computed - 1), 2);
-  margin: 0 0 math.div($line-height-computed, 2);
-  font-size: ($font-size-base - 1); // 14px to 13px
-  line-height: $line-height-base;
-  color: $pre-color;
+  padding: math.div((variables.$line-height-computed - 1), 2);
+  margin: 0 0 math.div(variables.$line-height-computed, 2);
+  font-size: (variables.$font-size-base - 1); // 14px to 13px
+  line-height: variables.$line-height-base;
+  color: variables.$pre-color;
   word-break: break-all;
   word-wrap: break-word;
-  background-color: $pre-bg;
-  border: 1px solid $pre-border-color;
-  border-radius: $border-radius-base;
+  background-color: variables.$pre-bg;
+  border: 1px solid variables.$pre-border-color;
+  border-radius: variables.$border-radius-base;
 
   // Account for some code outputs that place code tags in pre tags
   code {
@@ -65,6 +67,6 @@ pre {
 
 // Enable scrollable blocks of code
 .pre-scrollable {
-  max-height: $pre-scrollable-max-height;
+  max-height: variables.$pre-scrollable-max-height;
   overflow-y: scroll;
 }

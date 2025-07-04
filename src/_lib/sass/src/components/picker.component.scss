@@ -1,5 +1,10 @@
+@use "../variables";
+@use "../mixins/border-radius" as br;
+@use "../mixins/scrollbars";
+@use "../buttons";
+
 nw-angular-picker {
-    @include scrollbars();
+    @include scrollbars.scrollbars();
 
     .disabled  {
         opacity: .50;
@@ -47,7 +52,7 @@ nw-angular-picker {
             cursor: pointer;
         }
         ~ .reset-icon {
-            color: get-color("gray");
+            color: variables.get-color("gray");
             right: 5px;
         }
     }
@@ -55,7 +60,7 @@ nw-angular-picker {
         overflow-y: auto;
         max-height: 400px;
 
-        @media (max-width: $screen-sm) {
+        @media (max-width: variables.$screen-sm) {
             flex: 1;
             max-height: unset;
         }
@@ -65,8 +70,8 @@ nw-angular-picker {
         justify-content: space-between;
         padding: 0 8px;
         line-height: 32px;
-        color: get-color("gray");
-        border-bottom: 1px solid $divider-color-primary;
+        color: variables.get-color("gray");
+        border-bottom: 1px solid variables.$divider-color-primary;
     }
     .search-results {
         position: absolute;
@@ -79,11 +84,11 @@ nw-angular-picker {
             position: relative;
             padding-left: 8px;
             font-size: 14px;
-            color: get-color("gray");
+            color: variables.get-color("gray");
             cursor: pointer;
 
             &:hover {
-                background: get-color("primary", 3x-light);
+                background: variables.get-color("primary", 3x-light);
             }
             .item-label {
                 overflow: hidden;
@@ -92,7 +97,7 @@ nw-angular-picker {
                 flex: 1;
             }
             .btn-ghost:not(:hover) {
-                color: get-color("gray");
+                color: variables.get-color("gray");
             }
             .result-item {
                 display: flex;
@@ -110,13 +115,13 @@ nw-angular-picker {
                 }
             }
             .drilldown {
-                @include border-left-radius(0);
+                @include br.border-left-radius(0);
             }
         }
         .picker-action {
-            color: get-color("primary", base);
+            color: variables.get-color("primary", base);
         }
-        @media (max-width: $screen-sm) {
+        @media (max-width: variables.$screen-sm) {
             display: flex;
             flex-direction: column;
             position: fixed;
@@ -135,16 +140,16 @@ nw-angular-picker {
             padding: 0 12px;
             width: 100%;
             font-size: 32px;
-            border-bottom: 1px solid $divider-color-primary;
+            border-bottom: 1px solid variables.$divider-color-primary;
 
-            @media (max-width: $screen-sm) {
+            @media (max-width: variables.$screen-sm) {
                 display: flex;
                 justify-content: flex-end;
             }
         }
         .results-footer {
             padding: 8px;
-            border-top: 1px solid $divider-color-primary;
+            border-top: 1px solid variables.$divider-color-primary;
         }
     }
 }

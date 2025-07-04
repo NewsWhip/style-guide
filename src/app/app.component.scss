@@ -1,29 +1,19 @@
-body {
-    margin: 0;
-    padding: 0 0 90px 0;
+@use "../_lib/sass/src/mixins/scrollbars";
+@use "../_lib/sass/src/variables" as variables;
 
-    * {
-        box-sizing: border-box;
-    }
-}
-
-hr {
-    margin: 30px 0;
-}
-
-app-root {
+:host {
     display: flex;
     flex-direction: row;
     height: 100%;
 
     .side-nav {
-        @include scrollbars();
+        @include scrollbars.scrollbars();
     }
     .side-nav-menu {
         position: fixed;
         width: 200px;
         height: 100vh;
-        background: get-color("gray", dark);
+        background: variables.get-color("gray", dark);
         overflow-y: scroll;
 
         .app-logo {
@@ -37,7 +27,7 @@ app-root {
         margin-left: 200px;
         width: calc(100% - 200px);
     }
-    .page-header {
+    ::ng-deep .page-header {
         p {
             margin: 0;
             line-height: 1;
@@ -45,7 +35,7 @@ app-root {
         }
         // Page headers should span the full width and negate the container padding
         .tabs-container {
-            background-color: get-color("gray", dark);
+            background-color: variables.get-color("gray", dark);
             padding-left: 32px;
             padding-right: 32px;
             margin-left: -32px;
@@ -55,50 +45,4 @@ app-root {
             top: 1px;
         }
     }
-}
-pre {
-    position: relative;
-    white-space: pre-line;
-}
-code {
-    padding: 0;
-    line-height: 1.2;
-}
-pre.light,
-code.light {
-    background: transparent;
-    color: #ffffff;
-}
-.light-bg {
-    background: #fff;
-}
-.demo-section {
-    margin-bottom: 32px !important;
-
-    h4 {
-        margin-bottom: 8px;
-    }
-}
-ol.guidelines {
-    list-style: none;
-    counter-reset: item;
-    padding-left: 0;
-
-    li {
-        counter-increment: item;
-        margin-bottom: 16px;
-
-        &:before {
-            font-weight: bold;
-            font-size: 16px;
-            margin-right: 8px;
-            content: counter(item)'.';
-            width: 1.2em;
-        }
-    }
-
-}
-.tab-content {
-    padding-bottom: 16px;
-    max-width: 800px;
 }

@@ -1,0 +1,6 @@
+app-list .list-container {
+  padding: 20px;
+  background: get-color("gray", dark);
+  width: 350px;
+  max-width: 100%;
+}/*# sourceMappingURL=list.component.css.map */
