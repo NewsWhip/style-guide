@@ -1,8 +1,0 @@
-.custom-placeholder {
-  display: flex;
-  flex-direction: row;
-  width: 95%;
-}
-.custom-placeholder .excluded {
-  text-decoration: line-through;
-}/*# sourceMappingURL=picker.component.css.map */
