@@ -1,11 +1,14 @@
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, Observable } from "rxjs";
+import { BehaviorSubject, distinctUntilChanged, Observable, skip, tap } from "rxjs";
 
 @Injectable()
 export class DropdownService {
 
     private _toggle$: BehaviorSubject<boolean> = new BehaviorSubject(false);
-    public toggle$: Observable<boolean> = this._toggle$.asObservable();
+    public toggle$: Observable<boolean> = this._toggle$.asObservable().pipe(
+        distinctUntilChanged(),
+        skip(1)
+    );
 
     public autoClose: boolean | "inside" | "outside";
 

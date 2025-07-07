@@ -34,6 +34,7 @@ describe('DropdownDirective', () => {
 
     it('calling close should result in the closed event emitter triggering', () => {
         fixture.detectChanges();
+        testComp.directive.open();
         const spy = spyOn(testComp, 'onClosed');
         testComp.directive.close();
         expect(spy).toHaveBeenCalled();
@@ -53,6 +54,7 @@ describe('DropdownDirective', () => {
 
         it('calling close should result in the closed event emitter triggering', () => {
             fixture.detectChanges();
+            testComp.directive.open();
             const spy = spyOn(testComp, 'onClosed');
             testComp.directive.close();
             expect(spy).toHaveBeenCalled();
