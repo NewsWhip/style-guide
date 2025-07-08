@@ -1,16 +1,16 @@
-app-dropdowns {
-    .full-width-container {
-        width: 550px;
-        border: 1px solid #ffffff;
-        padding: 20px;
-        margin-bottom: 20px;
-        border-radius: $border-radius-base;
-    }
+@use "../../_lib/sass/src/variables";
 
-    .preselected{
-        .dropdown-menu{
-            height: 200px;
-            overflow-y: scroll;
-        }
+.full-width-container {
+    width: 550px;
+    border: 1px solid #ffffff;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: variables.$border-radius-base;
+}
+
+.preselected{
+    .dropdown-menu{
+        height: 200px;
+        overflow-y: scroll;
     }
 }

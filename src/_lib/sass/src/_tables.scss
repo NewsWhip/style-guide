@@ -1,10 +1,11 @@
+@use './variables';
 //
 // Tables
 // --------------------------------------------------
 
 
 table {
-  background-color: $table-bg;
+  background-color: variables.$table-bg;
 
   // Table cell sizing
   //
@@ -39,7 +40,7 @@ th {
   font-size: 14px;
   text-align: left;
   line-height: 17px;
-  color: $text-color-secondary;
+  color: variables.$text-color-secondary;
   margin-bottom: 0;
   // Cells
   > thead,
@@ -48,15 +49,15 @@ th {
     > tr {
       > th,
       > td {
-        padding: $table-cell-padding;
-        line-height: $line-height-base;
+        padding: variables.$table-cell-padding;
+        line-height: variables.$line-height-base;
         vertical-align: middle;
-        border-top: 1px solid $table-border-color;
+        border-top: 1px solid variables.$table-border-color;
       }
     }
   }
   > thead > tr > th {
-    border-bottom: 2px solid $table-border-color;
+    border-bottom: 2px solid variables.$table-border-color;
     text-transform: uppercase;
     font-weight: normal;
     padding: {
@@ -82,7 +83,7 @@ th {
   }
   // Account for multiple tbody instances
   > tbody + tbody {
-    border-top: 2px solid $table-border-color;
+    border-top: 2px solid variables.$table-border-color;
   }
 
   td.no-border {
@@ -97,7 +98,7 @@ th {
 
   // Nesting
   .table {
-    background-color: $body-bg;
+    background-color: variables.$body-bg;
   }
 }
 
@@ -106,14 +107,14 @@ th {
 // Add borders all around the table and between all the columns.
 
 .table-bordered {
-  border: 1px solid $table-border-color;
+  border: 1px solid variables.$table-border-color;
   > thead,
   > tbody,
   > tfoot {
     > tr {
       > th,
       > td {
-        border: 1px solid $table-border-color;
+        border: 1px solid variables.$table-border-color;
       }
     }
   }
@@ -132,7 +133,7 @@ th {
 
 .table-striped {
   > tbody > tr:nth-of-type(odd) {
-    background-color: $table-bg-accent;
+    background-color: variables.$table-bg-accent;
   }
   > tbody > tr > td {
     border-top: none;
@@ -148,7 +149,7 @@ th {
       > tr {
           > th,
           > td {
-              border-color: $divider-color-secondary;
+              border-color: variables.$divider-color-secondary;
               border-bottom-width: 1px;
               border-bottom-style: solid;
               vertical-align: middle;
@@ -173,8 +174,8 @@ th {
   }
   > tbody {
       > tr > td {
-          border-left: 1px solid $divider-color-secondary;
-          border-right: 1px solid $divider-color-secondary;
+          border-left: 1px solid variables.$divider-color-secondary;
+          border-right: 1px solid variables.$divider-color-secondary;
       }
   }
   > thead,
@@ -213,7 +214,7 @@ th {
     border: none;
   }
   > tbody > tr > td {
-    background-color: $level3;
+    background-color: variables.$level3;
     padding: 16px;
     &:first-child {
       border-top-left-radius: 9px;

@@ -1,26 +1,29 @@
 @use "sass:math";
+@use "../variables";
+@use "../mixins/clearfix";
+
 // Grid system
 //
 // Generate semantic grid columns with these mixins.
 
 // Centered container element
-@mixin container-fixed($gutter: $grid-gutter-width) {
+@mixin container-fixed($gutter: variables.$grid-gutter-width) {
   padding-right: ceil(math.div($gutter, 2));
   padding-left: floor(math.div($gutter, 2));
   margin-right: auto;
   margin-left: auto;
-  @include clearfix;
+  @include clearfix.clearfix;
 }
 
 // Creates a wrapper for a series of columns
-@mixin make-row($gutter: $grid-gutter-width) {
+@mixin make-row($gutter: variables.$grid-gutter-width) {
   margin-right: floor(math.div($gutter, -2));
   margin-left: ceil(math.div($gutter, -2));
-  @include clearfix;
+  @include clearfix.clearfix;
 }
 
 // Generate the extra small columns
-@mixin make-xs-column($columns, $gutter: $grid-gutter-width) {
+@mixin make-xs-column($columns, $gutter: variables.$grid-gutter-width) {
   position: relative;
   float: left;
   width: percentage(math.div($columns, $grid-columns));
@@ -39,85 +42,85 @@
 }
 
 // Generate the small columns
-@mixin make-sm-column($columns, $gutter: $grid-gutter-width) {
+@mixin make-sm-column($columns, $gutter: variables.$grid-gutter-width) {
   position: relative;
   min-height: 1px;
   padding-right: math.div($gutter, 2);
   padding-left: math.div($gutter, 2);
 
-  @media (min-width: $screen-sm-min) {
+  @media (min-width: variables.$screen-sm-min) {
     float: left;
     width: percentage(math.div($columns, $grid-columns));
   }
 }
 @mixin make-sm-column-offset($columns) {
-  @media (min-width: $screen-sm-min) {
+  @media (min-width: variables.$screen-sm-min) {
     margin-left: percentage(math.div($columns, $grid-columns));
   }
 }
 @mixin make-sm-column-push($columns) {
-  @media (min-width: $screen-sm-min) {
+  @media (min-width: variables.$screen-sm-min) {
     left: percentage(math.div($columns, $grid-columns));
   }
 }
 @mixin make-sm-column-pull($columns) {
-  @media (min-width: $screen-sm-min) {
+  @media (min-width: variables.$screen-sm-min) {
     right: percentage(math.div($columns, $grid-columns));
   }
 }
 
 // Generate the medium columns
-@mixin make-md-column($columns, $gutter: $grid-gutter-width) {
+@mixin make-md-column($columns, $gutter: variables.$grid-gutter-width) {
   position: relative;
   min-height: 1px;
   padding-right: math.div($gutter, 2);
   padding-left: math.div($gutter, 2);
 
-  @media (min-width: $screen-md-min) {
+  @media (min-width: variables.$screen-md-min) {
     float: left;
     width: percentage(math.div($columns, $grid-columns));
   }
 }
 @mixin make-md-column-offset($columns) {
-  @media (min-width: $screen-md-min) {
+  @media (min-width: variables.$screen-md-min) {
     margin-left: percentage(math.div($columns, $grid-columns));
   }
 }
 @mixin make-md-column-push($columns) {
-  @media (min-width: $screen-md-min) {
+  @media (min-width: variables.$screen-md-min) {
     left: percentage(math.div($columns, $grid-columns));
   }
 }
 @mixin make-md-column-pull($columns) {
-  @media (min-width: $screen-md-min) {
+  @media (min-width: variables.$screen-md-min) {
     right: percentage(math.div($columns, $grid-columns));
   }
 }
 
 // Generate the large columns
-@mixin make-lg-column($columns, $gutter: $grid-gutter-width) {
+@mixin make-lg-column($columns, $gutter: variables.$grid-gutter-width) {
   position: relative;
   min-height: 1px;
   padding-right: math.div($gutter, 2);
   padding-left: math.div($gutter, 2);
 
-  @media (min-width: $screen-lg-min) {
+  @media (min-width: variables.$screen-lg-min) {
     float: left;
     width: percentage(math.div($columns, $grid-columns));
   }
 }
 @mixin make-lg-column-offset($columns) {
-  @media (min-width: $screen-lg-min) {
+  @media (min-width: variables.$screen-lg-min) {
     margin-left: percentage(math.div($columns, $grid-columns));
   }
 }
 @mixin make-lg-column-push($columns) {
-  @media (min-width: $screen-lg-min) {
+  @media (min-width: variables.$screen-lg-min) {
     left: percentage(math.div($columns, $grid-columns));
   }
 }
 @mixin make-lg-column-pull($columns) {
-  @media (min-width: $screen-lg-min) {
+  @media (min-width: variables.$screen-lg-min) {
     right: percentage(math.div($columns, $grid-columns));
   }
 }
