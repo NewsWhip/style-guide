@@ -1,5 +1,4 @@
 import { Directive, Input, HostListener, OnInit, ElementRef, ChangeDetectorRef, OnDestroy } from '@angular/core';
-import { CdkMenuTrigger } from '@angular/cdk/menu';
 import { DropdownService } from "./dropdown.service";
 import { debounceTime, filter, tap } from "rxjs/operators";
 import { Subscription, fromEvent } from 'rxjs';
@@ -26,8 +25,7 @@ export class DropdownToggleDirective implements OnInit, OnDestroy {
     constructor(
         private _service: DropdownService,
         private _elRef: ElementRef,
-        private _cdRef: ChangeDetectorRef,
-        private _cdkMenuTrigger: CdkMenuTrigger) {}
+        private _cdRef: ChangeDetectorRef) {}
 
     ngOnInit() {
         this._subscribeToToggle();
@@ -66,17 +64,13 @@ export class DropdownToggleDirective implements OnInit, OnDestroy {
 
     private _open() {
         this._isMousingOver = true;
-        if (this._cdkMenuTrigger) {
-            this._cdkMenuTrigger.open();
-        }
+        this._service.open();
         this._cdRef.detectChanges();
     }
 
     private _close() {
         this._isMousingOver = false;
-        if (this._cdkMenuTrigger) {
-            this._cdkMenuTrigger.close();
-        }
+        this._service.close();
         this._cdRef.detectChanges();
     }
 
