@@ -1,9 +1,11 @@
-app-faq {
+@use "../../_lib/sass/src/variables";
+
+:host {
     display: block;
     padding: 8px;
     border-radius: 6px;
     margin-bottom: 8px;
-    background-color: $level3;
+    background-color: variables.$level3;
     cursor: pointer;
     position: relative;
 
@@ -17,7 +19,7 @@ app-faq {
     .question {
         padding-left: 24px;
 
-        p {
+        ::ng-deep p {
             margin-bottom: 0;
         }
         &.open {
@@ -30,6 +32,6 @@ app-faq {
         padding-left: 24px;
         padding-top: 8px;
         margin-top: 4px;
-        border-top: 1px solid $divider-color-secondary;
+        border-top: 1px solid variables.$divider-color-secondary;
     }
 }
