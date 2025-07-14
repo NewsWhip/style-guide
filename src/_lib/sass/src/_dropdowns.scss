@@ -1,6 +1,7 @@
 @use "./variables";
 @use "./mixins/nav-divider";
 @use "./mixins/dropdowns";
+@use "./mixins/scrollbars";
 //
 // Dropdown menus
 // --------------------------------------------------
@@ -50,10 +51,10 @@
     }
 
     .menu-item {
-        @include variables.dropdown-menu-link;
+        @include dropdowns.dropdown-menu-link;
 
         &.active {
-            @include variables.dropdown-menu-link-active;
+            @include dropdowns.dropdown-menu-link-active;
         }
 
         // Gray out text and ensure the hover/focus state remains gray
@@ -61,7 +62,7 @@
             &,
             &:hover,
             &:focus-visible {
-                @include variables.dropdown-menu-link-disabled;
+                @include dropdowns.dropdown-menu-link-disabled;
             }
         }
     }
@@ -100,20 +101,20 @@
         color: variables.get-color("gray", x-light);
     }
     .menu-item {
-        color: variables.$dropdown-inverse-link-color;
+        color: $dropdown-inverse-link-color;
 
         &:hover,
         &:focus-visible {
-            color: variables.$dropdown-inverse-link-color;
-            background-color: variables.$dropdown-inverese-link-active-bg;
+            color: $dropdown-inverse-link-color;
+            background-color: $dropdown-inverese-link-active-bg;
         }
 
         &.active {
             &,
             &:hover,
             &:focus-visible {
-                color: variables.$dropdown-inverse-link-color;
-                background-color: variables.$dropdown-inverese-link-active-bg;
+                color: $dropdown-inverse-link-color;
+                background-color: $dropdown-inverese-link-active-bg;
             }
         }
 
@@ -121,7 +122,7 @@
             &,
             &:hover,
             &:focus-visible {
-                color: variables.$dropdown-inverse-link-color;
+                color: $dropdown-inverse-link-color;
                 background-color: transparent;
             }
         }
@@ -144,7 +145,7 @@
 }
 
 .cdk-overlay-pane{
-    @include scrollbars();
+    @include scrollbars.scrollbars();
 
     .dropdown-menu.scrollable {
         max-height: 200px;
