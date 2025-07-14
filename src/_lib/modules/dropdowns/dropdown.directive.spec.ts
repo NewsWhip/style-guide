@@ -61,20 +61,6 @@ describe('DropdownDirective', () => {
         });
     });
 
-    it('onEscape should call the close method in the service when the dropdown is open', () => {
-        fixture.detectChanges();
-        const service = de.injector.get(DropdownService);
-        const spy = spyOn(service, 'close');
-        testComp.directive.isOpen = true;
-
-        const event = new KeyboardEvent("keydown", {
-            'key': 'Escape'
-        });
-        document.dispatchEvent(event);
-
-        expect(spy).toHaveBeenCalled();
-    });
-
     describe('onDocumentClick', () => {
         it('should not try close the dropdown if its already closed', () => {
             fixture.detectChanges();

@@ -1,17 +1,19 @@
 @mixin dropdown-menu-link {
-    display: block;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    flex: 1;
+    background-color: transparent;
+    border: none;
+    user-select: none;
     padding: 8px 16px;
-    clear: both;
     font-weight: normal;
     line-height: $line-height-base;
     color: $dropdown-link-color;
-    white-space: nowrap; // prevent links from randomly breaking onto new lines
-    text-decoration: none;
     cursor: pointer;
 
     &:hover,
-    &:focus {
-        text-decoration: none;
+    &:focus-visible {
         color: $dropdown-link-hover-color;
         background-color: $dropdown-link-hover-bg;
     }
@@ -20,7 +22,7 @@
 @mixin dropdown-menu-link-active {
     &,
     &:hover,
-    &:focus {
+    &:focus-visible {
         color: $dropdown-link-active-color;
         background-color: $dropdown-link-active-bg;
     }
