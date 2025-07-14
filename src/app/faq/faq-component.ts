@@ -11,7 +11,8 @@ import { Component } from "@angular/core";
         <div class="answer" [class.hidden]="!isOpen">
             <ng-content select="[answer]"></ng-content>
         </div>
-    `
+    `,
+    styleUrls: ['./faq-component.scss']
 })
 export class FaqComponent {
 

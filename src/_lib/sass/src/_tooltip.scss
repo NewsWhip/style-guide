@@ -1,32 +1,34 @@
+@use './variables';
+
 .tooltip {
-  z-index: $zindex-tooltip;
+  z-index: variables.$zindex-tooltip;
   display: block;
-  font-size: $font-size-small;
-  --tooltip-arrow-color: #{$tooltip-arrow-color};
-  --tooltip-bg-color: #{$tooltip-bg};
-  --tooltip-color: #{$tooltip-color};
+  font-size: variables.$font-size-small;
+  --tooltip-arrow-color: #{variables.$tooltip-arrow-color};
+  --tooltip-bg-color: #{variables.$tooltip-bg};
+  --tooltip-color: #{variables.$tooltip-color};
   --tooltip-padding-horizontal: 8px;
   // Reduced padding to compensate for line-height
   --tooltip-padding-vertical: 6px;
 
   &.tooltip-light {
-    --tooltip-arrow-color: #{$tooltip-arrow-color-light};
-    --tooltip-bg-color: #{$tooltip-bg-light};
-    --tooltip-color: #{$tooltip-color-light};
+    --tooltip-arrow-color: #{variables.$tooltip-arrow-color-light};
+    --tooltip-bg-color: #{variables.$tooltip-bg-light};
+    --tooltip-color: #{variables.$tooltip-color-light};
 
     .close-button {
-      color: $level1;
+      color: variables.$level1;
     }
   }
   // Wrapper for the tooltip content
   .tooltip-inner {
-    max-width: $tooltip-max-width;
+    max-width: variables.$tooltip-max-width;
     padding: var(--tooltip-padding-vertical) var(--tooltip-padding-horizontal);
     color: var(--tooltip-color);
     text-align: left;
     background-color: var(--tooltip-bg-color);
-    border-radius: $border-radius-base;
-    box-shadow: 2px 2px 8px 0 $tooltip-box-shadow-color;
+    border-radius: variables.$border-radius-base;
+    box-shadow: 2px 2px 8px 0 variables.$tooltip-box-shadow-color;
 
     .close-button {
       position: absolute;
@@ -43,38 +45,38 @@
   }
 }
 .cdk-overlay-pane.tooltip-overlay {
-  z-index: $zindex-popover;
+  z-index: variables.$zindex-popover;
 
   &.pointer-events-none {
     pointer-events: none;
   }
 
   &[class*="tooltip-top"] .tooltip-arrow {
-    bottom: -$tooltip-arrow-width;
+    bottom: -#{variables.$tooltip-arrow-width};
     left: 50%;
-    margin-left: -$tooltip-arrow-width;
-    border-width: $tooltip-arrow-width $tooltip-arrow-width 0;
+    margin-left: -#{variables.$tooltip-arrow-width};
+    border-width: variables.$tooltip-arrow-width variables.$tooltip-arrow-width 0;
     border-top-color: var(--tooltip-arrow-color);
   }
   &[class*="tooltip-bottom"] .tooltip-arrow {
-    top: -$tooltip-arrow-width;
+    top: -#{variables.$tooltip-arrow-width};
     left: 50%;
-    margin-left: -$tooltip-arrow-width;
-    border-width: 0 $tooltip-arrow-width $tooltip-arrow-width;
+    margin-left: -#{variables.$tooltip-arrow-width};
+    border-width: 0 variables.$tooltip-arrow-width variables.$tooltip-arrow-width;
     border-bottom-color: var(--tooltip-arrow-color);
   }
   &[class*="tooltip-right"] .tooltip-arrow {
     top: 50%;
-    left: -$tooltip-arrow-width;
-    margin-top: -$tooltip-arrow-width;
-    border-width: $tooltip-arrow-width $tooltip-arrow-width $tooltip-arrow-width 0;
+    left: -#{variables.$tooltip-arrow-width};
+    margin-top: -#{variables.$tooltip-arrow-width};
+    border-width: variables.$tooltip-arrow-width variables.$tooltip-arrow-width variables.$tooltip-arrow-width 0;
     border-right-color: var(--tooltip-arrow-color);
   }
   &[class*="tooltip-left"] .tooltip-arrow {
     top: 50%;
-    right: -$tooltip-arrow-width;
-    margin-top: -$tooltip-arrow-width;
-    border-width: $tooltip-arrow-width 0 $tooltip-arrow-width $tooltip-arrow-width;
+    right: -#{variables.$tooltip-arrow-width};
+    margin-top: -#{variables.$tooltip-arrow-width};
+    border-width: variables.$tooltip-arrow-width 0 variables.$tooltip-arrow-width variables.$tooltip-arrow-width;
     border-left-color: var(--tooltip-arrow-color);
   }
 
@@ -82,7 +84,7 @@
   &.tooltip-top-start,
   &.tooltip-bottom-start {
     .tooltip-arrow {
-      left: calc($tooltip-arrow-width + var(--tooltip-padding-horizontal));
+      left: calc(variables.$tooltip-arrow-width + var(--tooltip-padding-horizontal));
     }
   }
   &.tooltip-top-end,
@@ -95,7 +97,7 @@
   &.tooltip-right-start,
   &.tooltip-left-start {
     .tooltip-arrow {
-      top: calc($tooltip-arrow-width + var(--tooltip-padding-horizontal));
+      top: calc(variables.$tooltip-arrow-width + var(--tooltip-padding-horizontal));
     }
   }
   &.tooltip-right-end,
@@ -108,6 +110,6 @@
 }
 
 .tooltip-signal {
-  border-bottom: 1px dashed get-color("gray", 3x-light);
+  border-bottom: 1px dashed variables.get-color("gray", 3x-light);
   cursor: help;
 }

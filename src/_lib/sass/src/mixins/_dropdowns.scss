@@ -1,3 +1,5 @@
+@use "../variables";
+
 @mixin dropdown-menu-link {
     display: flex;
     align-items: center;
@@ -8,14 +10,14 @@
     user-select: none;
     padding: 8px 16px;
     font-weight: normal;
-    line-height: $line-height-base;
-    color: $dropdown-link-color;
+    line-height: variables.$line-height-base;
+    color: variables.$dropdown-link-color;
     cursor: pointer;
 
     &:hover,
     &:focus-visible {
-        color: $dropdown-link-hover-color;
-        background-color: $dropdown-link-hover-bg;
+        color: variables.$dropdown-link-hover-color;
+        background-color: variables.$dropdown-link-hover-bg;
     }
 }
 
@@ -23,13 +25,13 @@
     &,
     &:hover,
     &:focus-visible {
-        color: $dropdown-link-active-color;
-        background-color: $dropdown-link-active-bg;
+        color: variables.$dropdown-link-active-color;
+        background-color: variables.$dropdown-link-active-bg;
     }
 }
 
 @mixin dropdown-menu-link-disabled {
     opacity: 0.5;
-    cursor: $cursor-disabled;
-    color: $dropdown-link-color;
+    cursor: variables.$cursor-disabled;
+    color: variables.$dropdown-link-color;
 }

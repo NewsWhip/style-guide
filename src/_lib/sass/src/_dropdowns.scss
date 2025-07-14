@@ -1,3 +1,6 @@
+@use "./variables";
+@use "./mixins/nav-divider";
+@use "./mixins/dropdowns";
 //
 // Dropdown menus
 // --------------------------------------------------
@@ -10,28 +13,28 @@
     margin-top: -1px;
     margin-left: 2px;
     vertical-align: middle;
-    border-top:   $caret-width-base dashed;
-    border-right: $caret-width-base solid transparent;
-    border-left:  $caret-width-base solid transparent;
+    border-top:   variables.$caret-width-base dashed;
+    border-right: variables.$caret-width-base solid transparent;
+    border-left:  variables.$caret-width-base solid transparent;
 }
 
 .dropdown-menu {
     display: inline-flex;
     flex-direction: column;
-    z-index: $zindex-dropdown;
+    z-index: variables.$zindex-dropdown;
     min-width: 160px;
     padding: 5px 0;
     margin: 2px 0 0;
     font-size: 14px;
-    background-color: $dropdown-bg;
-    border: 1px solid $dropdown-border;
-    border-radius: $border-radius-base;
+    background-color: variables.$dropdown-bg;
+    border: 1px solid variables.$dropdown-border;
+    border-radius: variables.$border-radius-base;
     box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.4);
     background-clip: padding-box;
 
     // // Dividers (basically an hr) within the dropdown
     .divider {
-        @include nav-divider($dropdown-divider-bg);
+        @include nav-divider.nav-divider(variables.$dropdown-divider-bg);
     }
 
     // Dropdown section headers
@@ -39,18 +42,18 @@
         display: block;
         padding: 3px 16px;
         padding-top: 8px;
-        font-size: $font-size-base;
-        line-height: $line-height-base;
-        color: $dropdown-header-color;
+        font-size: variables.$font-size-base;
+        line-height: variables.$line-height-base;
+        color: variables.$dropdown-header-color;
         white-space: nowrap;
         text-transform: uppercase;
     }
 
     .menu-item {
-        @include dropdown-menu-link;
+        @include variables.dropdown-menu-link;
 
         &.active {
-            @include dropdown-menu-link-active;
+            @include variables.dropdown-menu-link-active;
         }
 
         // Gray out text and ensure the hover/focus state remains gray
@@ -58,7 +61,7 @@
             &,
             &:hover,
             &:focus-visible {
-                @include dropdown-menu-link-disabled;
+                @include variables.dropdown-menu-link-disabled;
             }
         }
     }
@@ -75,7 +78,7 @@
     right: 0;
     bottom: 0;
     top: 0;
-    z-index: ($zindex-dropdown - 10);
+    z-index: (variables.$zindex-dropdown - 10);
     display: none;
 }
 
@@ -83,34 +86,34 @@
     // Reverse the caret
     .caret {
         border-top: 0;
-        border-bottom: $caret-width-base dashed;
+        border-bottom: variables.$caret-width-base dashed;
         content: "";
     }
 }
 
 .dropdown-menu-inverse {
-    $dropdown-inverse-link-color: $level1;
-    $dropdown-inverese-link-active-bg: get-color("primary", 3x-light);
+    $dropdown-inverse-link-color: variables.$level1;
+    $dropdown-inverese-link-active-bg: variables.get-color("primary", 3x-light);
     background-color: #ffffff;
 
     .dropdown-header {
-        color: get-color("gray", x-light);
+        color: variables.get-color("gray", x-light);
     }
     .menu-item {
-        color: $dropdown-inverse-link-color;
+        color: variables.$dropdown-inverse-link-color;
 
         &:hover,
         &:focus-visible {
-            color: $dropdown-inverse-link-color;
-            background-color: $dropdown-inverese-link-active-bg;
+            color: variables.$dropdown-inverse-link-color;
+            background-color: variables.$dropdown-inverese-link-active-bg;
         }
 
         &.active {
             &,
             &:hover,
             &:focus-visible {
-                color: $dropdown-inverse-link-color;
-                background-color: $dropdown-inverese-link-active-bg;
+                color: variables.$dropdown-inverse-link-color;
+                background-color: variables.$dropdown-inverese-link-active-bg;
             }
         }
 
@@ -118,13 +121,13 @@
             &,
             &:hover,
             &:focus-visible {
-                color: $dropdown-inverse-link-color;
+                color: variables.$dropdown-inverse-link-color;
                 background-color: transparent;
             }
         }
     }
     .divider {
-        background: rgba($level0, 0.4);
+        background: rgba(variables.$level0, 0.4);
     }
 }
 // Custom popover styling for dropdowns appended to body

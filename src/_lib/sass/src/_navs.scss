@@ -1,3 +1,9 @@
+@use './variables';
+@use './mixins/clearfix';
+@use './mixins/nav-size';
+@use './mixins/nav-divider';
+@use './mixins/border-radius' as br;
+
 //
 // Navs
 // --------------------------------------------------
@@ -10,7 +16,7 @@
     margin-bottom: 0;
     padding-left: 0; // Override default ul/ol
     list-style: none;
-    @include clearfix;
+    @include clearfix.clearfix;
 
     > li {
         position: relative;
@@ -19,25 +25,25 @@
         > a {
             position: relative;
             display: block;
-            @include nav-size($padding-base-vertical, $padding-base-horizontal, 14px, 1);
-            color: $text-color-secondary;
+            @include nav-size.nav-size(variables.$padding-base-vertical, variables.$padding-base-horizontal, 14px, 1);
+            color: variables.$text-color-secondary;
             &:hover,
             &:focus {
                 text-decoration: none;
-                color: $text-color;
+                color: variables.$text-color;
             }
         }
 
         // Disabled state sets text to gray and nukes hover/tab effects
         &.disabled > a {
-            color: $nav-disabled-link-color;
+            color: variables.$nav-disabled-link-color;
 
             &:hover,
             &:focus {
-                color: $nav-disabled-link-hover-color;
+                color: variables.$nav-disabled-link-hover-color;
                 text-decoration: none;
                 background-color: transparent;
-                cursor: $cursor-disabled;
+                cursor: variables.$cursor-disabled;
             }
         }
     }
@@ -47,8 +53,8 @@
         &,
         &:hover,
         &:focus {
-            background-color: $nav-link-hover-bg;
-            border-color: $link-color;
+            background-color: variables.$nav-link-hover-bg;
+            border-color: variables.$link-color;
         }
     }
 
@@ -58,7 +64,7 @@
     // we missed it. We don't currently support this anywhere, but in the interest
     // of maintaining backward compatibility in case you use it, it's deprecated.
     .nav-divider {
-        @include nav-divider;
+        @include nav-divider.nav-divider;
     }
 
     // Prevent IE8 from misplacing imgs
@@ -81,7 +87,7 @@
 
         // Actual tabs (as links)
         > a {
-            color: $text-color-secondary;
+            color: variables.$text-color-secondary;
         }
         &:first-child {
             margin-left: 0;
@@ -95,7 +101,7 @@
             &,
             &:hover,
             &:focus {
-                color: $nav-tabs-active-link-hover-color;
+                color: variables.$nav-tabs-active-link-hover-color;
                 cursor: default;
             }
         }
@@ -106,13 +112,13 @@
         @extend .nav-tabs-justified;
     }
     &.nav-sm > li > a {
-        @include nav-size($padding-small-vertical + 1, 0, $font-size-small, $line-height-small);
+        @include nav-size.nav-size(variables.$padding-small-vertical + 1, 0, variables.$font-size-small, variables.$line-height-small);
     }
     &.nav-md > li > a {
-        @include nav-size($padding-base-vertical + 1, 0, 14px, $line-height-base);
+        @include nav-size.nav-size(variables.$padding-base-vertical + 1, 0, 14px, variables.$line-height-base);
     }
     &.nav-lg > li > a {
-        @include nav-size($padding-large-vertical + 1, 0, $font-size-large, $line-height-large);
+        @include nav-size.nav-size(variables.$padding-large-vertical + 1, 0, variables.$font-size-large, variables.$line-height-large);
     }
 }
 
@@ -159,7 +165,7 @@ nw-tabs {
         display: block;
         height: 3px;
         position: absolute;
-        background-color: get-color("primary", base);
+        background-color: variables.get-color("primary", base);
         transition: all ease-in-out 200ms;
     }
 }
@@ -172,13 +178,13 @@ nw-tabs {
 
         // Links rendered as pills
         > a {
-            border-radius: $nav-pills-border-radius;
-            background-color: $level1;
+            border-radius: variables.$nav-pills-border-radius;
+            background-color: variables.$level1;
             text-decoration: none;
 
             &:hover,
             &:focus {
-                background-color: $nav-link-hover-bg;
+                background-color: variables.$nav-link-hover-bg;
             }
         }
         &:not(:first-child):not(:last-child) {
@@ -188,12 +194,12 @@ nw-tabs {
         }
         &:first-child:not(:last-child) {
             > a {
-                @include border-right-radius(0);
+                @include br.border-right-radius(0);
             }
         }
         &:last-child:not(:first-child) {
             > a {
-                @include border-left-radius(0);
+                @include br.border-left-radius(0);
             }
         }
         + li {
@@ -205,19 +211,19 @@ nw-tabs {
             &,
             &:hover,
             &:focus {
-                color: $nav-pills-active-link-hover-color;
-                background-color: $nav-pills-active-link-hover-bg;
+                color: variables.$nav-pills-active-link-hover-color;
+                background-color: variables.$nav-pills-active-link-hover-bg;
             }
         }
         &.disabled > a {
-            color: $nav-disabled-link-color;
-            background-color: rgba($level1, 0.5);
+            color: variables.$nav-disabled-link-color;
+            background-color: rgba(variables.$level1, 0.5);
 
             &:hover,
             &:focus {
-                color: $nav-disabled-link-hover-color;
-                background-color: rgba($level1, 0.5);
-                cursor: $cursor-disabled;
+                color: variables.$nav-disabled-link-hover-color;
+                background-color: rgba(variables.$level1, 0.5);
+                cursor: variables.$cursor-disabled;
             }
         }
     }
@@ -258,7 +264,7 @@ nw-tabs {
         left: auto;
     }
 
-    @media (min-width: $screen-sm-min) {
+    @media (min-width: variables.$screen-sm-min) {
         > li {
             display: table-cell;
             width: 1%;
@@ -278,24 +284,24 @@ nw-tabs {
     > li > a {
         // Override margin from .nav-tabs
         margin-right: 0;
-        border-radius: $border-radius-base;
+        border-radius: variables.$border-radius-base;
     }
 
     > .active > a,
     > .active > a:hover,
     > .active > a:focus {
-        border: 1px solid $nav-tabs-justified-link-border-color;
+        border: 1px solid variables.$nav-tabs-justified-link-border-color;
     }
 
-    @media (min-width: $screen-sm-min) {
+    @media (min-width: variables.$screen-sm-min) {
         > li > a {
-            border-bottom: 1px solid $nav-tabs-justified-link-border-color;
-            border-radius: $border-radius-base $border-radius-base 0 0;
+            border-bottom: 1px solid variables.$nav-tabs-justified-link-border-color;
+            border-radius: variables.$border-radius-base variables.$border-radius-base 0 0;
         }
         > .active > a,
         > .active > a:hover,
         > .active > a:focus {
-            border-bottom-color: $nav-tabs-justified-active-link-border-color;
+            border-bottom-color: variables.$nav-tabs-justified-active-link-border-color;
         }
     }
 }
@@ -323,5 +329,5 @@ nw-tabs {
     // make dropdown border overlap tab border
     margin-top: -1px;
     // Remove the top rounded corners here since there is a hard edge above the menu
-    @include border-top-radius(0);
+    @include br.border-top-radius(0);
 }
