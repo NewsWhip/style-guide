@@ -17,6 +17,12 @@
     border-top:   variables.$caret-width-base dashed;
     border-right: variables.$caret-width-base solid transparent;
     border-left:  variables.$caret-width-base solid transparent;
+
+    &.caret-up {
+        border-top: 0;
+        border-bottom: variables.$caret-width-base dashed;
+        content: "";
+    }
 }
 
 .dropdown-menu {
@@ -81,15 +87,6 @@
     top: 0;
     z-index: (variables.$zindex-dropdown - 10);
     display: none;
-}
-
-.dropup {
-    // Reverse the caret
-    .caret {
-        border-top: 0;
-        border-bottom: variables.$caret-width-base dashed;
-        content: "";
-    }
 }
 
 .dropdown-menu-inverse {
