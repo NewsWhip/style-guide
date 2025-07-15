@@ -1,19 +1,21 @@
 @use "../variables";
 
 @mixin dropdown-menu-link {
-    display: block;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    flex: 1;
+    background-color: transparent;
+    border: none;
+    user-select: none;
     padding: 8px 16px;
-    clear: both;
     font-weight: normal;
     line-height: variables.$line-height-base;
     color: variables.$dropdown-link-color;
-    white-space: nowrap; // prevent links from randomly breaking onto new lines
-    text-decoration: none;
     cursor: pointer;
 
     &:hover,
-    &:focus {
-        text-decoration: none;
+    &:focus-visible {
         color: variables.$dropdown-link-hover-color;
         background-color: variables.$dropdown-link-hover-bg;
     }
@@ -22,7 +24,7 @@
 @mixin dropdown-menu-link-active {
     &,
     &:hover,
-    &:focus {
+    &:focus-visible {
         color: variables.$dropdown-link-active-color;
         background-color: variables.$dropdown-link-active-bg;
     }

@@ -251,4 +251,15 @@ input[type="button"] {
         align-items: center;
         justify-content: space-between;
     }
+
+    button {
+        &.disabled,
+        &[disabled],
+        fieldset[disabled] & {
+            cursor: variables.$cursor-disabled;
+            opacity: .50;
+            box-shadow: none;
+            pointer-events: none;
+        }
+    }
 }

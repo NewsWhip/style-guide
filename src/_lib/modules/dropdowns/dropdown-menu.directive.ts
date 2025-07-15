@@ -1,8 +1,7 @@
-import { Directive, HostListener, QueryList, AfterContentInit, ContentChildren, OnDestroy, ElementRef, ChangeDetectorRef } from '@angular/core';
+import { Directive, HostListener, QueryList, AfterContentInit, ContentChildren, OnDestroy, ElementRef } from '@angular/core';
 import { DropdownService } from "./dropdown.service";
 import { DropdownDirective } from "./dropdown.directive";
-import { filter, map, takeUntil } from "rxjs/operators";
-import { Observable, merge, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 
 @Directive({
     selector: '[nwDropdownMenu]',
@@ -15,49 +14,22 @@ export class DropdownMenuDirective implements AfterContentInit, OnDestroy {
 
     constructor(
         private _service: DropdownService,
-        private _element: ElementRef<HTMLElement>,
-        private _cdRef: ChangeDetectorRef
+        private _element: ElementRef<HTMLElement>
     ) { }
 
     ngAfterContentInit() {
-        this._subscribeToChildrenVisbilityToggle();
-        this._subscribeToScrollPosition();
-    }
-
-    private _subscribeToScrollPosition() {
-        this._service.toggle$.pipe(
-            filter(opened => opened),
-            takeUntil(this._destroyed$)
-        ).subscribe(() => {
-            this._cdRef.detectChanges();
-            this._scrollToActiveElement();
-        });
+        this._scrollToActiveElement();
     }
 
     private _scrollToActiveElement() {
         const menuElement = this._element.nativeElement;
-        const activeElement: HTMLElement = this._element.nativeElement.querySelector('.active');
-        if (activeElement) {
-            menuElement.scrollTo({ top: activeElement.offsetTop });
-        }
-    }
 
-    // When a sub dropdown menu is opened, force close any sibling sub dropdown menus
-    private _subscribeToChildrenVisbilityToggle() {
-        const openEvents: Observable<number>[] = this.nestedDropdowns
-            .map((nd, index) => {
-                return nd.opened
-                    .pipe(map(x => index));
+        const activeItem = menuElement.querySelector('.menu-item.active') as HTMLElement | null;
+        if (activeItem) {
+            setTimeout(() => {
+                menuElement.scrollTo({ top: activeItem.offsetTop });
             });
-
-        merge(...openEvents).pipe(
-            takeUntil(this._destroyed$)
-        ).subscribe(index => {
-            // Close all other sibling dropdowns
-            this.nestedDropdowns
-                .filter((nd, i) => i !== index)
-                .forEach(nd => nd.close());
-        });
+        }
     }
 
     @HostListener('click', ['$event'])
