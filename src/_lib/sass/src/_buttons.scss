@@ -243,8 +243,7 @@ input[type="button"] {
     border: none;
     margin: 0;
 }
-.dropdown,
-.dropup {
+.dropdown {
     .btn-block {
         display: flex;
         flex-direction: row;
@@ -256,10 +255,19 @@ input[type="button"] {
         &.disabled,
         &[disabled],
         fieldset[disabled] & {
-            cursor: variables.$cursor-disabled;
+            cursor: variables.$cursor-disabled !important;
             opacity: .50;
             box-shadow: none;
-            pointer-events: none;
         }
+    }
+}
+
+[role="menuitem"] {
+    &.disabled,
+    &[disabled],
+    fieldset[disabled] & {
+        cursor: variables.$cursor-disabled !important;
+        opacity: .50;
+        box-shadow: none;
     }
 }
