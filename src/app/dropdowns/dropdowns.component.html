@@ -14,52 +14,58 @@
 
     <div class="row">
         <div class="col-sm-3">
-            <div class="dropdown" nwDropdown>
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu1" nwDropdownToggle>
+            <div class="dropdown">
+                <button class="btn btn-secondary" type="button" id="dropdownMenu1" [cdkMenuTriggerFor]="dropdownMenu1">
                     .btn-secondary
                     <span class="caret"></span>
                 </button>
-                <ul class="dropdown-menu" nwDropdownMenu aria-labelledby="dropdownMenu1">
-                    <li><a href="#">Action</a></li>
-                    <li><a href="#">Another action</a></li>
-                    <li><a href="#">Something else here</a></li>
-                    <li class="active"><a href="#">Active menu item</a></li>
-                </ul>
+                <ng-template #dropdownMenu1>
+                    <div class="dropdown-menu" cdkMenu aria-labelledby="dropdownMenu1">
+                        <button cdkMenuItem class="menu-item">Action</button>
+                        <button cdkMenuItem class="menu-item">Another action</button>
+                        <button cdkMenuItem class="menu-item">Something else here</button>
+                        <button cdkMenuItem class="menu-item active">Active menu item</button>
+                    </div>
+                </ng-template>
             </div>
         </div>
 
         <div class="col-sm-3">
-            <div class="dropdown" nwDropdown>
-                <button class="btn btn-ghost dropdown-toggle" type="button" id="dropdownMenu1" nwDropdownToggle>
+            <div class="dropdown">
+                <button class="btn btn-ghost" type="button" id="dropdownMenu1" [cdkMenuTriggerFor]="dropdownMenu2">
                     .btn-ghost
                     <span class="caret"></span>
                 </button>
-                <ul class="dropdown-menu" nwDropdownMenu aria-labelledby="dropdownMenu1">
-                    <li><a href="#">Action</a></li>
-                    <li><a href="#">Another action</a></li>
-                    <li><a href="#">Something else here</a></li>
-                    <li role="separator" class="divider"></li>
-                    <li><a href="#">Separated link</a></li>
-                </ul>
+                <ng-template #dropdownMenu2>
+                    <div class="dropdown-menu" cdkMenu aria-labelledby="dropdownMenu1">
+                        <button cdkMenuItem class="menu-item">Action</button>
+                        <button cdkMenuItem class="menu-item">Another action</button>
+                        <button cdkMenuItem class="menu-item">Something else here</button>
+                        <hr role="separator" class="divider"/>
+                        <button cdkMenuItem class="menu-item">Separated link</button>
+                    </div>
+                </ng-template>
             </div>
         </div>
 
         <div class="col-sm-3 text-right">
-            <div class="dropdown" nwDropdown>
-                <button class="btn btn-secondary-inverse dropdown-toggle" type="button" id="dropdownMenu1" nwDropdownToggle>
+            <div class="dropdown">
+                <button class="btn btn-secondary-inverse" type="button" id="dropdownMenu1" [cdkMenuTriggerFor]="dropdownMenu3">
                     .btn-secondary-inverse
                     <span class="caret"></span>
                 </button>
-                <ul class="dropdown-menu dropdown-menu-inverse dropdown-menu-right" aria-labelledby="dropdownMenu1">
-                    <li class="dropdown-header">Enabled items</li>
-                    <li><a href="#">Action</a></li>
-                    <li><a href="#">Another action</a></li>
-                    <li class="active"><a href="#">Active item</a></li>
-                    <li role="separator" class="divider"></li>
-                    <li class="dropdown-header">Disabled items</li>
-                    <li class="disabled"><a>Action</a></li>
-                    <li class="disabled"><a>Another action</a></li>
-                </ul>
+                <ng-template #dropdownMenu3>
+                    <div class="dropdown-menu dropdown-menu-inverse" cdkMenu aria-labelledby="dropdownMenu1">
+                        <div class="dropdown-header">Enabled items</div>
+                        <button cdkMenuItem class="menu-item">Action</button>
+                        <button cdkMenuItem class="menu-item">Another action</button>
+                        <button cdkMenuItem class="menu-item active">Active item</button>
+                        <hr role="separator" class="divider"/>
+                        <div class="dropdown-header">Disabled items</div>
+                        <button cdkMenuItem disabled class="menu-item">Action</button>
+                        <button cdkMenuItem disabled class="menu-item">Another action</button>
+                    </div>
+                </ng-template>
             </div>
         </div>
     </div>
@@ -70,100 +76,96 @@
         <div class="col-sm-4">
             <h3>Right aligned nested dropdown</h3>
 
-            <div class="dropdown" nwDropdown [autoClose]="false">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownNestedMenu1" nwDropdownToggle>
+            <div class="dropdown">
+                <button class="btn btn-secondary" type="button" id="dropdownNestedMenu1" nwDropdown [autoClose]="false" [cdkMenuTriggerFor]="dropdownNestedMenu4">
                     Auto close false
                     <span class="caret"></span>
                 </button>
-                <ul class="dropdown-menu" nwDropdownMenu aria-labelledby="dropdownNestedMenu1">
-                    <li><a href="javascript:;">Action</a></li>
-                    <li><a href="javascript:;">Another action</a></li>
+                <ng-template #dropdownNestedMenu4>
+                    <div class="dropdown-menu" cdkMenu aria-labelledby="dropdownNestedMenu1">
+                        <button cdkMenuItem class="menu-item">Action</button>
+                        <button cdkMenuItem class="menu-item">Another action</button>
+                        <button cdkMenuItem class="menu-item" [cdkMenuTriggerFor]="submenu1">Hover on me<i class="fas fa-caret-right pull-right"></i></button>
+                        <button cdkMenuItem class="menu-item" [cdkMenuTriggerFor]="submenu2">Click me<i class="fas fa-caret-right pull-right"></i></button>
+                        <button cdkMenuItem class="menu-item">Another action</button>
 
-                    <!-- Hover example -->
-                    <ul class="dropdown-submenu" nwDropdown>
-                        <li nwDropdownToggle nwTrigger="hover">
-                            <a href="javascript:;">Hover on me<i class="fas fa-caret-right pull-right"></i></a>
+                        <!-- Hover example -->
+                        <ng-template #submenu1>
+                            <div class="dropdown-menu" cdkMenu>
+                                <button cdkMenuItem class="menu-item">Nested Dropdown Item 1</button>
+                                <button cdkMenuItem class="menu-item">Nested Dropdown Item 2</button>
+                                <button cdkMenuItem class="menu-item">Nested Dropdown Item 3</button>
+                                <button cdkMenuItem class="menu-item">Nested Dropdown Item 4</button>
 
-                            <ul class="dropdown-menu" nwDropdownMenu>
-                                <li><a href="javascript:;">Nested Dropdown Item 1</a></li>
-                                <li><a href="javascript:;">Nested Dropdown Item 2</a></li>
-                                <li><a href="javascript:;">Nested Dropdown Item 3</a></li>
-                                <li><a href="javascript:;">Nested Dropdown Item 4</a></li>
+                                <hr class="divider" role="separator"/>
+                                <button cdkMenuItem class="menu-item">Separated item</button>
+                            </div>
+                        </ng-template>
+                        <!-- Click example -->
+                         <ng-template #submenu2>
+                            <div class="dropdown-menu" cdkMenu>
+                               <button cdkMenuItem class="menu-item">This menu will close on a click outside it</button>
+                               <button cdkMenuItem class="menu-item">Nested Dropdown Item 1</button>
+                               <button cdkMenuItem class="menu-item">Nested Dropdown Item 2</button>
+                               <button cdkMenuItem class="menu-item">Nested Dropdown Item 3</button>
+                               <button cdkMenuItem class="menu-item">Nested Dropdown Item 4</button>
+        
+                               <hr class="divider" role="separator"/>
+                               <button cdkMenuItem class="menu-item">Separated item</button>
+                               <button cdkMenuItem class="menu-item" [cdkMenuTriggerFor]="submenu3">Hover on me<i class="fas fa-caret-right pull-right"></i></button>
+                            </div>
+                         </ng-template>
+                         <!-- Deeply nested -->
+                         <ng-template #submenu3>
+                            <div class="dropdown-menu" cdkMenu>
+                                <button cdkMenuItem class="menu-item">Nested Dropdown Item 1</button>
+                                <button cdkMenuItem class="menu-item">Nested Dropdown Item 2</button>
+                                <button cdkMenuItem class="menu-item">Nested Dropdown Item 3</button>
+                                <button cdkMenuItem class="menu-item">Nested Dropdown Item 4</button>
 
-                                <li class="divider" role="separator"></li>
-                                <li><a href="javascript:;"><span>Separated item</span></a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <!-- Click example -->
-                    <ul class="dropdown-submenu" nwDropdown [autoClose]="'outside'">
-                        <li>
-                            <a href="javascript:;" nwDropdownToggle>Click me<i class="fas fa-caret-right pull-right"></i></a>
-
-                            <ul class="dropdown-menu" nwDropdownMenu>
-                                <li><a href="javascript:;">This menu will close on a click outside it</a></li>
-                                <li><a href="javascript:;">Nested Dropdown Item 1</a></li>
-                                <li><a href="javascript:;">Nested Dropdown Item 2</a></li>
-                                <li><a href="javascript:;">Nested Dropdown Item 3</a></li>
-                                <li><a href="javascript:;">Nested Dropdown Item 4</a></li>
-
-                                <li class="divider" role="separator"></li>
-                                <li><a href="javascript:;"><span>Separated item</span></a></li>
-                                <!-- Deeply nested -->
-                                <ul class="dropdown-submenu" nwDropdown>
-                                    <li nwDropdownToggle nwTrigger="hover">
-                                        <a href="javascript:;">Hover on me<i class="fas fa-caret-right pull-right"></i></a>
-
-                                        <ul class="dropdown-menu" nwDropdownMenu>
-                                            <li><a href="javascript:;">Nested Dropdown Item 1</a></li>
-                                            <li><a href="javascript:;">Nested Dropdown Item 2</a></li>
-                                            <li><a href="javascript:;">Nested Dropdown Item 3</a></li>
-                                            <li><a href="javascript:;">Nested Dropdown Item 4</a></li>
-
-                                            <li class="divider" role="separator"></li>
-                                            <li><a href="javascript:;"><span>Separated item</span></a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </ul>
-                        </li>
-                    </ul>
-                    <li><a href="javascript:;">Another action</a></li>
-                </ul>
+                                <hr class="divider" role="separator"/>
+                                <button cdkMenuItem class="menu-item">Separated item</button>
+                            </div>
+                        </ng-template>
+                    </div>
+                </ng-template>
             </div>
         </div>
 
         <div class="col-sm-4 text-right">
             <h3>Left aligned nested dropdown</h3>
 
-            <div class="dropdown" nwDropdown>
-                <button class="btn btn-ghost dropdown-toggle" type="button" id="dropdownNestedMenu2" nwDropdownToggle>
+            <div class="dropdown">
+                <button class="btn btn-ghost" type="button" id="dropdownNestedMenu2" 
+                    [cdkMenuTriggerFor]="dropdownNestedMenu5"
+                    [cdkMenuPosition]="[{originX: 'end', originY: 'bottom', overlayX: 'end', overlayY: 'top'}]">
                     Left aligned nested dropdown
                     <span class="caret"></span>
                 </button>
-                <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownNestedMenu2">
-                    <li><a href="#">Action</a></li>
-                    <li><a href="#">Another action</a></li>
-                    <ul class="dropdown-submenu submenu-left" nwDropdown>
-                        <li nwDropdownToggle nwTrigger="hover">
-                            <a href="javascript:;">Nested dropdown<i class="fas fa-caret-right pull-right"></i></a>
+                <ng-template #dropdownNestedMenu5>
+                    <div class="dropdown-menu" cdkMenu aria-labelledby="dropdownNestedMenu2">
+                        <button cdkMenuItem class="menu-item">Action</button>
+                        <button cdkMenuItem class="menu-item">Another action</button>
+                        <button cdkMenuItem class="menu-item" [cdkMenuTriggerFor]="submenu4"
+                            [cdkMenuPosition]="[{originX: 'start', originY: 'top', overlayX: 'end', overlayY: 'top'}]">
+                            Nested dropdown<i class="fas fa-caret-right pull-right"></i>
+                        </button>
+                        <button cdkMenuItem class="menu-item">Something else here</button>
+                        <hr class="divider" role="separator"/>
+                        <button cdkMenuItem class="menu-item">Separated link</button>
+                    </div>
+                </ng-template>
+                <ng-template #submenu4>
+                    <div class="dropdown-menu" cdkMenu>
+                        <button cdkMenuItem class="menu-item">Nested Dropdown Item 1</button>
+                        <button cdkMenuItem class="menu-item">Nested Dropdown Item 2</button>
+                        <button cdkMenuItem class="menu-item">Nested Dropdown Item 3</button>
+                        <button cdkMenuItem class="menu-item">Nested Dropdown Item 4</button>
 
-                            <ul class="dropdown-menu" nwDropdownMenu>
-                                <li><a href="javascript:;">Nested Dropdown Item 1</a></li>
-                                <li><a href="javascript:;">Nested Dropdown Item 2</a></li>
-                                <li><a href="javascript:;">Nested Dropdown Item 3</a></li>
-                                <li><a href="javascript:;">Nested Dropdown Item 4</a></li>
-
-                                <li class="divider" role="separator"></li>
-                                <li><a href="javascript:;"><span>Separated item</span></a></li>
-                            </ul>
-                        </li>
-
-                    </ul>
-                    <li><a href="#">Something else here</a></li>
-                    <li role="separator" class="divider"></li>
-                    <li><a href="#">Separated link</a></li>
-                </ul>
+                        <hr class="divider" role="separator"/>
+                        <button cdkMenuItem class="menu-item">Separated item</button>
+                    </div>
+                </ng-template>
             </div>
         </div>
     </div>
@@ -175,14 +177,16 @@
 
             <h3>Disabled dropdown</h3>
 
-            <div class="dropdown" nwDropdown>
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu1" nwDropdownToggle disabled>
+            <div class="dropdown">
+                <button class="btn btn-secondary" type="button" id="dropdownMenu1" [cdkMenuTriggerFor]="dropdownMenu6" disabled>
                     Disabled
                     <span class="caret"></span>
                 </button>
-                <ul class="dropdown-menu" nwDropdownMenu aria-labelledby="dropdownMenu1">
-                    <li><a href="#">Action</a></li>
-                </ul>
+                <ng-template #dropdownMenu6>
+                    <div class="dropdown-menu" cdkMenu aria-labelledby="dropdownMenu1">
+                        <button>Action</button>
+                    </div>
+                </ng-template>
             </div>
 
         </div>
@@ -192,22 +196,24 @@
 
             <h3>Dropdown with headers and dividers</h3>
 
-            <div class="dropdown" nwDropdown>
-                <button class="btn btn-ghost dropdown-toggle" type="button" id="dropdownMenu1" nwDropdownToggle>
+            <div class="dropdown">
+                <button class="btn btn-ghost" type="button" id="dropdownMenu1" [cdkMenuTriggerFor]="dropdownMenu7">
                     Headers and divider
                     <span class="caret"></span>
                 </button>
-                <ul class="dropdown-menu" nwDropdownMenu aria-labelledby="dropdownMenu1">
-                    <li class="dropdown-header">Header 1</li>
-                    <li><a href="#">Action</a></li>
-                    <li><a href="#">Another action</a></li>
-                    <li role="separator" class="divider"></li>
-                    <li><a href="#">Separated link</a></li>
-                    <li><a href="#">Something else here</a></li>
-                    <li class="dropdown-header">Header 2</li>
-                    <li><a href="#">Action</a></li>
-                    <li><a href="#">Another action</a></li>
-                </ul>
+                <ng-template #dropdownMenu7>
+                    <div class="dropdown-menu" cdkMenu aria-labelledby="dropdownMenu1">
+                        <div class="dropdown-header">Header 1</div>
+                        <button cdkMenuItem class="menu-item">Action</button>
+                        <button cdkMenuItem class="menu-item">Another action</button>
+                        <hr role="separator" class="divider"/>
+                        <button cdkMenuItem class="menu-item">Separated link</button>
+                        <button cdkMenuItem class="menu-item">Something else here</button>
+                        <div class="dropdown-header">Header 2</div>
+                        <button cdkMenuItem class="menu-item">Action</button>
+                        <button cdkMenuItem class="menu-item">Another action</button>
+                    </div>
+                </ng-template>
             </div>
 
         </div>
@@ -216,20 +222,22 @@
 
             <h3>Dropdown with disabled menu items</h3>
 
-            <div class="dropdown" nwDropdown>
-                <button class="btn btn-ghost dropdown-toggle" type="button" id="dropdownMenu1" nwDropdownToggle>
+            <div class="dropdown">
+                <button class="btn btn-ghost" type="button" id="dropdownMenu1" [cdkMenuTriggerFor]="dropdownMenu8">
                     Disabled menu items
                     <span class="caret"></span>
                 </button>
-                <ul class="dropdown-menu" nwDropdownMenu aria-labelledby="dropdownMenu1">
-                    <li class="dropdown-header">Enabled items</li>
-                    <li><a href="#">Action</a></li>
-                    <li><a href="#">Another action</a></li>
-                    <li role="separator" class="divider"></li>
-                    <li class="dropdown-header">Disabled items</li>
-                    <li class="disabled"><a>Action</a></li>
-                    <li class="disabled"><a>Another action</a></li>
-                </ul>
+                <ng-template #dropdownMenu8>
+                    <div class="dropdown-menu" cdkMenu aria-labelledby="dropdownMenu1">
+                        <div class="dropdown-header">Enabled items</div>
+                        <button cdkMenuItem class="menu-item">Action</button>
+                        <button cdkMenuItem class="menu-item">Another action</button>
+                        <hr role="separator" class="divider"/>
+                        <div class="dropdown-header">Disabled items</div>
+                        <button cdkMenuItem disabled class="menu-item">Action</button>
+                        <button cdkMenuItem disabled class="menu-item">Another action</button>
+                    </div>
+                </ng-template>
             </div>
 
         </div>
@@ -242,15 +250,19 @@
 
             <h3>Dropup menu</h3>
 
-            <div class="dropup" nwDropdown>
-                <button class="btn btn-ghost dropdown-toggle" type="button" id="dropdownMenu1" nwDropdownToggle>
+            <div class="dropup">
+                <button class="btn btn-ghost" type="button" id="dropdownMenu1" 
+                    [cdkMenuTriggerFor]="dropdownMenu9"
+                    [cdkMenuPosition]="[{originX: 'start', originY: 'top', overlayX: 'start', overlayY: 'bottom'}]">
                     Dropup menu
                     <span class="caret"></span>
                 </button>
-                <ul class="dropdown-menu" nwDropdownMenu aria-labelledby="dropdownMenu1">
-                    <li><a href="#">Action</a></li>
-                    <li><a href="#">Another action</a></li>
-                </ul>
+                <ng-template #dropdownMenu9>
+                    <div class="dropdown-menu" cdkMenu aria-labelledby="dropdownMenu1">
+                        <button cdkMenuItem class="menu-item">Action</button>
+                        <button cdkMenuItem class="menu-item">Another action</button>
+                    </div>
+                </ng-template>
             </div>
 
         </div>
@@ -259,17 +271,19 @@
 
             <h3>Dropdown minimum width</h3>
 
-            <div class="dropdown" nwDropdown style="margin-bottom: 20px">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu1" nwDropdownToggle>
+            <div class="dropdown" style="margin-bottom: 20px">
+                <button class="btn btn-secondary" type="button" id="dropdownMenu1" [cdkMenuTriggerFor]="dropdownMenu10">
                     Min width
                     <span class="caret"></span>
                 </button>
-                <ul class="dropdown-menu" nwDropdownMenu aria-labelledby="dropdownMenu1">
-                    <li><a href="#">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">4</a></li>
-                </ul>
+                <ng-template #dropdownMenu10>
+                    <div class="dropdown-menu" cdkMenu aria-labelledby="dropdownMenu1">
+                        <button cdkMenuItem class="menu-item">1</button>
+                        <button cdkMenuItem class="menu-item">2</button>
+                        <button cdkMenuItem class="menu-item">3</button>
+                        <button cdkMenuItem class="menu-item">4</button>
+                    </div>
+                </ng-template>
             </div>
 
             <i class="fas fa-exclamation-circle"></i>
@@ -285,16 +299,18 @@
     <h3>Dopdown with selected option highlighted and visible</h3>
     <p>Dropdown menu will automatically scroll to item with <code>.active</code> class</p>
     <div class="preselected my-16">
-        <div class="dropdown" nwDropdown>
-            <button class="btn btn-secondary dropdown-toggle" id="preselected-dropdown" nwDropdownToggle>
+        <div class="dropdown">
+            <button class="btn btn-secondary" id="preselected-dropdown" [cdkMenuTriggerFor]="dropdownMenu11">
                 {{selectedItem.value}}
                 <span class="caret"></span>
             </button>
-            <ul class="dropdown-menu dropdown-menu-inverse" aria-labelledby="preselected-dropdown" nwDropdownMenu>
-                <li *ngFor="let item of dropdownItems" [class.active]="selectedItem === item">
-                    <a (click)="selectedItem = item" >{{item.value}}</a>
-                </li>
-            </ul>
+            <ng-template #dropdownMenu11>
+                <div class="dropdown-menu dropdown-menu-inverse scrollable" aria-labelledby="preselected-dropdown" nwDropdownMenu cdkMenu>
+                    @for (item of dropdownItems; track item.value) {
+                        <button class="menu-item" cdkMenuItem [class.active]="selectedItem === item" (click)="selectedItem = item">{{item.value}}</button>
+                    }
+                </div>
+            </ng-template>
         </div>
     </div>
 
@@ -318,27 +334,25 @@
     </div>
 
     <ng-template #dropdownMenuRef>
-        <ul class="dropdown-menu" style="display: block;">
-            <li><a href="#">Menu item 1</a></li>
-            <li><a href="#">Menu item 2</a></li>
-            <li><a href="#">Menu item 3</a></li>
-            <li><a href="#">Menu item 4</a></li>
-            <ul class="dropdown-submenu" nwDropdown>
-                <li nwDropdownToggle nwTrigger="hover">
-                    <a href="javascript:;">Nested dropdown<i class="fas fa-caret-right pull-right"></i></a>
-
-                    <ul class="dropdown-menu" nwDropdownMenu>
-                        <li><a href="javascript:;">Nested Dropdown Item 1</a></li>
-                        <li><a href="javascript:;">Nested Dropdown Item 2</a></li>
-                        <li><a href="javascript:;">Nested Dropdown Item 3</a></li>
-                        <li><a href="javascript:;">Nested Dropdown Item 4</a></li>
-
-                        <li class="divider" role="separator"></li>
-                        <li><a href="javascript:;"><span>Separated item</span></a></li>
-                    </ul>
-                </li>
-            </ul>
-        </ul>
+        <div class="dropdown-menu" cdkMenu>
+            <button cdkMenuItem class="menu-item">Menu item 1</button>
+            <button cdkMenuItem class="menu-item">Menu item 2</button>
+            <button cdkMenuItem class="menu-item">Menu item 3</button>
+            <button cdkMenuItem class="menu-item">Menu item 4</button>
+            <button cdkMenuItem class="menu-item" [cdkMenuTriggerFor]="nestedDropdown" nwDropdownToggle nwTrigger="hover">
+                Nested dropdown<i class="fas fa-caret-right pull-right"></i>
+            </button>
+            <ng-template #nestedDropdown>
+                <div class="dropdown-menu" cdkMenu>
+                    <button cdkMenuItem class="menu-item">Nested Dropdown Item 1</button>
+                    <button cdkMenuItem class="menu-item">Nested Dropdown Item 2</button>
+                    <button cdkMenuItem class="menu-item">Nested Dropdown Item 3</button>
+                    <button cdkMenuItem class="menu-item">Nested Dropdown Item 4</button>
+                    <hr class="divider" role="separator"/>
+                    <button cdkMenuItem class="menu-item">Separated item</button>
+                </div>
+            </ng-template>
+        </div>
     </ng-template>
 
     <pre style="margin-top: 16px;"><code [innerText]="popoverExample"></code></pre>
@@ -353,35 +367,40 @@
 
     <h3>Dropdown full width</h3>
     <div class="full-width-container">
-        <div class="dropdown" nwDropdown>
+        <div class="dropdown" #fullWidth>
             <div class="dropdown-backdrop"></div>
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu1" nwDropdownToggle>
+            <button class="btn btn-secondary" type="button" id="dropdownMenu1" [cdkMenuTriggerFor]="dropdownMenu12">
                 This button opens a full width menu (with a backdrop)
                 <span class="caret"></span>
             </button>
-            <ul class="dropdown-menu dropdown-menu-block" aria-labelledby="dropdownMenu1" nwDropdownMenu>
-                <li><a href="#">Menu item 1</a></li>
-                <li><a href="#">Menu item 2</a></li>
-                <li><a href="#">Menu item 3</a></li>
-                <li><a href="#">Menu item 4</a></li>
-            </ul>
+            <ng-template #dropdownMenu12>
+                <div class="dropdown-menu" cdkMenu aria-labelledby="dropdownMenu1" [style.min-width.px]="fullWidth.clientWidth">
+                    <button cdkMenuItem class="menu-item">Menu item 1</button>
+                    <button cdkMenuItem class="menu-item">Menu item 2</button>
+                    <button cdkMenuItem class="menu-item">Menu item 3</button>
+                    <button cdkMenuItem class="menu-item">Menu item 4</button>
+                </div>
+            </ng-template>
         </div>
     </div>
 
+    <!--Not sure if it is worth keeping this in-->
     <h3>Dropdown with block button</h3>
 
     <div class="full-width-container">
-        <div class="dropdown" nwDropdown>
-            <button class="btn btn-secondary btn-block dropdown-toggle" type="button" nwDropdownToggle>
+        <div class="dropdown">
+            <button class="btn btn-secondary btn-block" type="button" [cdkMenuTriggerFor]="dropdownMenu13">
                 Full width button
                 <span class="caret"></span>
             </button>
-            <ul class="dropdown-menu" nwDropdownMenu>
-                <li><a href="#">Menu item 1</a></li>
-                <li><a href="#">Menu item 2</a></li>
-                <li><a href="#">Menu item 3</a></li>
-                <li><a href="#">Menu item 4</a></li>
-            </ul>
+            <ng-template #dropdownMenu13>
+                <div class="dropdown-menu dropdown-menu-block" cdkMenu>
+                    <button cdkMenuItem class="menu-item">Menu item 1</button>
+                    <button cdkMenuItem class="menu-item">Menu item 2</button>
+                    <button cdkMenuItem class="menu-item">Menu item 3</button>
+                    <button cdkMenuItem class="menu-item">Menu item 4</button>
+                </div>
+            </ng-template>
         </div>
     </div>
 
@@ -398,14 +417,16 @@
 
 
     <div class="full-width-container mt-16">
-        <div class="dropdown" nwDropdown>
-            <button class="btn btn-secondary btn-block dropdown-toggle" type="button" nwDropdownToggle nwTrigger="hover">
+        <div class="dropdown">
+            <button class="btn btn-secondary btn-block" type="button" [cdkMenuTriggerFor]="dropdownMenu14" nwDropdownToggle nwTrigger="hover">
                 Hover on large screen, click on small screen
                 <span class="caret"></span>
             </button>
-            <ul class="dropdown-menu" nwDropdownMenu>
-                <li><a href="#">Menu item 1</a></li>
-            </ul>
+            <ng-template #dropdownMenu14>
+                <div class="dropdown-menu" cdkMenu>
+                    <button cdkMenuItem class="menu-item">Menu item 1</button>
+                </div>
+            </ng-template>
         </div>
     </div>
 

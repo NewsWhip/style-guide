@@ -41,7 +41,6 @@ export class DropdownDirective implements OnInit, OnChanges, OnDestroy {
             // Store a reference to the "unlisten" functions returned from these methods
             // https://angular.io/api/core/Renderer2#listen
             this._documentUnlistener = this._renderer.listen('document', 'click', this.onDocumentClick.bind(this));
-            this._escapeUnlistener = this._renderer.listen('document', 'keydown.escape', this.onEscape.bind(this));
         });
     }
 
@@ -105,15 +104,6 @@ export class DropdownDirective implements OnInit, OnChanges, OnDestroy {
                     this._cdRef.detectChanges();
                 });
             }
-        }
-    }
-
-    onEscape(event: KeyboardEvent) {
-        if (this.isOpen) {
-            this._zone.run(() => {
-                this._service.close();
-                this._cdRef.detectChanges();
-            });
         }
     }
 
