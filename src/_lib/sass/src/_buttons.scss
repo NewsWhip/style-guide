@@ -250,24 +250,4 @@ input[type="button"] {
         align-items: center;
         justify-content: space-between;
     }
-
-    button {
-        &.disabled,
-        &[disabled],
-        fieldset[disabled] & {
-            cursor: variables.$cursor-disabled !important;
-            opacity: .50;
-            box-shadow: none;
-        }
-    }
-}
-
-[role="menuitem"] {
-    &.disabled,
-    &[disabled],
-    fieldset[disabled] & {
-        cursor: variables.$cursor-disabled !important;
-        opacity: .50;
-        box-shadow: none;
-    }
 }

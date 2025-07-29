@@ -64,7 +64,7 @@
         }
 
         // Gray out text and ensure the hover/focus state remains gray
-        &[disabled] {
+        &[disabled], &.disabled {
             &,
             &:hover,
             &:focus-visible {
