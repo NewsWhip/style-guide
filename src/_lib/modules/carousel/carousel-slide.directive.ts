@@ -2,7 +2,8 @@ import { Directive, Input, HostBinding } from '@angular/core';
 
 @Directive({
     selector: '[nwCarouselSlide]',
-    exportAs: 'nw-carousel-slide'
+    exportAs: 'nw-carousel-slide',
+    standalone: false
 })
 export class CarouselSlideDirective {
 

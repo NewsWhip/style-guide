@@ -13,7 +13,8 @@ import { ScaleTime } from 'd3-scale';
     templateUrl: './charts.component.html',
     styleUrls: ['./charts.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    providers: [DecimalPipe]
+    providers: [DecimalPipe],
+    standalone: false
 })
 export class ChartsComponent implements OnInit {
 

@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-relative-weight',
-  templateUrl: './relative-weight.component.html',
-  styleUrls: ['./relative-weight.component.scss']
+    selector: 'app-relative-weight',
+    templateUrl: './relative-weight.component.html',
+    styleUrls: ['./relative-weight.component.scss'],
+    standalone: false
 })
 export class RelativeWeightComponent implements OnInit {
 

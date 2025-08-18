@@ -15,7 +15,8 @@ import { trigger, transition, animate, style } from "@angular/animations";
             ])
         ])
     ],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class HotspotComponent {
 

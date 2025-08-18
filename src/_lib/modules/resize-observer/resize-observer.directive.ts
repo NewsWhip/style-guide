@@ -4,7 +4,8 @@ import { skip, debounceTime, takeUntil, tap } from "rxjs/operators";
 
 @Directive({
     selector: '[nwResizeObserver]',
-    exportAs: 'nwResizeObserver'
+    exportAs: 'nwResizeObserver',
+    standalone: false
 })
 export class ResizeObserverDirective implements OnInit, OnDestroy {
 

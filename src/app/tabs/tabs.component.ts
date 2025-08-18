@@ -10,7 +10,8 @@ import { uniqueId } from 'lodash-es';
             display: block;
             margin-bottom: 32px;
         }
-    `]
+    `],
+    standalone: false
 })
 export class TabsComponent {
     public tabCollection = [

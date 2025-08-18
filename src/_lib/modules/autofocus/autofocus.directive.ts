@@ -2,7 +2,8 @@ import { Directive, OnInit, ElementRef } from "@angular/core";
 
 @Directive({
     selector: '[nwAutofocus]',
-    exportAs: 'nw-autofocus'
+    exportAs: 'nw-autofocus',
+    standalone: false
 })
 export class AutoFocusDirective implements OnInit {
 

@@ -6,7 +6,8 @@ import { Observable, merge, Subject } from 'rxjs';
 
 @Directive({
     selector: '[nwDropdownMenu]',
-    exportAs: 'nw-dropdown-menu'
+    exportAs: 'nw-dropdown-menu',
+    standalone: false
 })
 export class DropdownMenuDirective implements AfterContentInit, OnDestroy {
 

@@ -15,7 +15,8 @@ import { ISnippet } from '../code/ISnippet';
         ol li {
             margin-bottom: 16px;
         }
-    `]
+    `],
+    standalone: false
 })
 export class EmailInputDemoComponent implements OnInit {
 
