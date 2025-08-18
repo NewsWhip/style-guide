@@ -1,10 +1,10 @@
-@import '../../_lib/sass/src/variables.scss';
+@use '../../_lib/sass/src/variables';
 
 .live-example-form {
     padding: 16px;
-    background-color: $level2;
+    background-color: variables.$level2;
     width: 300px;
-    border-radius: $border-radius-large;
+    border-radius: variables.$border-radius-large;
 }
 .examples {
     button {
@@ -19,8 +19,8 @@ h4, h5 {
     flex: 1;
     justify-content: center;
     align-items: center;
-    background-color: $level2;
-    border-radius: $border-radius-large;
+    background-color: variables.$level2;
+    border-radius: variables.$border-radius-large;
     margin-left: 16px;
     padding: 16px;
 }
