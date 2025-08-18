@@ -1,6 +1,6 @@
 import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { ISnippet } from './ISnippet';
-import * as prism from 'prismjs';
+import prism from 'prismjs';
 import 'prismjs/components/prism-typescript';
 import 'prismjs/plugins/normalize-whitespace/prism-normalize-whitespace';
 import 'prismjs/plugins/toolbar/prism-toolbar';
