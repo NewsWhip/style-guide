@@ -16,6 +16,10 @@
       "dom",
       "ES2019.Array"
     ],
+    "paths": {
+      "nw-style-guide": ["./dist/nw-style-guide"],
+      "nw-style-guide/*": ["./dist/nw-style-guide/*"]
+    },
     "module": "es2020",
     "baseUrl": "./",
     "useDefineForClassFields": false

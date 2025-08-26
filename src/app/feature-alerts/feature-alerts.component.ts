@@ -1,6 +1,5 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { WindowRef } from '../../_lib/modules/feature-alerts/windowref';
-import { FeatureAlertsService } from '../../_lib/modules/feature-alerts';
+import { FeatureAlertsService, WindowRef } from 'nw-style-guide/feature-alerts';
 
 @Component({
     selector: 'app-feature-alerts',

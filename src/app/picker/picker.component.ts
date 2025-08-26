@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IPickerItem } from "../../_lib/modules/picker";
+import { IPickerItem } from 'nw-style-guide/picker';
 
 @Component({
     selector: 'app-picker',
