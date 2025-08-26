@@ -129,7 +129,7 @@
     "nw-style-guide": {
       "projectType": "library",
       "root": "projects/nw-style-guide",
-      "sourceRoot": "projects/nw-style-guide/src",
+      "sourceRoot": "projects/nw-style-guide",
       "prefix": "nw",
       "architect": {
         "build": {
@@ -154,7 +154,8 @@
             "polyfills": [
               "zone.js",
               "zone.js/testing"
-            ]
+            ],
+            "karmaConfig": "./karma.conf.js"
           }
         },
         "lint": {
