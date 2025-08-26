@@ -16,6 +16,7 @@
       "dom",
       "ES2019.Array"
     ],
+    /* We use these paths to reference the built library in the demo app */
     "paths": {
       "nw-style-guide": ["./dist/nw-style-guide"],
       "nw-style-guide/*": ["./dist/nw-style-guide/*"]

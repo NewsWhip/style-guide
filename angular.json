@@ -22,17 +22,7 @@
             "assets": [
               {
                 "glob": "**/*",
-                "input": "src/assets",
-                "output": "/assets"
-              },
-              {
-                "glob": "README.md",
-                "input": "",
-                "output": "/assets"
-              },
-              {
-                "glob": "**/README.md",
-                "input": "src/_lib",
+                "input": "dist/nw-style-guide/assets",
                 "output": "/assets"
               }
             ],
@@ -98,17 +88,7 @@
             "assets": [
               {
                 "glob": "**/*",
-                "input": "src/assets",
-                "output": "/assets"
-              },
-              {
-                "glob": "README.md",
-                "input": "",
-                "output": "/assets"
-              },
-              {
-                "glob": "**/README.md",
-                "input": "src/_lib",
+                "input": "dist/nw-style-guide/assets",
                 "output": "/assets"
               }
             ]
