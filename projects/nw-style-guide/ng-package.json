@@ -11,6 +11,11 @@
       "glob": "**/*",
       "input": "src/lib/sass",
       "output": "sass"
+    },
+    {
+      "glob": "**/*",
+      "input": "src/linting-config",
+      "output": "linting-config"
     }
   ],
   "lib": {
