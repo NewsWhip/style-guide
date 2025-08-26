@@ -1,4 +1,4 @@
-import { Injectable, ComponentFactoryResolver, ApplicationRef, Injector, TemplateRef } from '@angular/core';
+import { Injectable, ApplicationRef, Injector, TemplateRef } from '@angular/core';
 import { ComponentPortal, DomPortalOutlet } from '@angular/cdk/portal';
 import { ToastsComponent } from './toasts.component';
 import { IToast } from './IToast';
@@ -15,7 +15,6 @@ export class Toaster {
     private _config: IToastConfig;
 
     constructor(
-        private _cfr: ComponentFactoryResolver,
         private _appRef: ApplicationRef,
         private _injector: Injector) {}
 
@@ -28,7 +27,7 @@ export class Toaster {
         }
         this._config = this._config || defaultConfig;
         this._toastPortal = new ComponentPortal(ToastsComponent);
-        this._outlet = new DomPortalOutlet(this._config.outletElement, this._cfr, this._appRef, this._injector);
+        this._outlet = new DomPortalOutlet(this._config.outletElement, undefined, this._appRef, this._injector);
         this._toastsComponentRef = this._outlet.attach(this._toastPortal).instance;
         return this._toastsComponentRef;
     }

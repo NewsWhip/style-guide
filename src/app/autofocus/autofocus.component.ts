@@ -6,7 +6,8 @@ import { Subscription } from 'rxjs';
     selector: 'app-autofocus',
     templateUrl: './autofocus.component.html',
     styleUrls: ['./autofocus.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class AutofocusComponent implements OnInit, OnDestroy {
 

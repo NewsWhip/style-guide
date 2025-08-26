@@ -392,7 +392,8 @@ describe('TooltipDirective', () => {
             border: 1px solid white;
             transition: width 100ms linear;
         }
-    `]
+    `],
+    standalone: false
 })
 class WrapperComponent implements OnInit {
 

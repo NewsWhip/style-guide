@@ -1,6 +1,6 @@
 import {Component, OnInit, ChangeDetectionStrategy, ViewChild, ViewChildren, QueryList} from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
-import * as moment from 'moment';
+import moment from 'moment';
 import { DecimalPipe } from '@angular/common';
 import { bisector } from 'd3-array';
 import { AxisTimeInterval } from 'd3-axis';
@@ -13,7 +13,8 @@ import { ScaleTime } from 'd3-scale';
     templateUrl: './charts.component.html',
     styleUrls: ['./charts.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    providers: [DecimalPipe]
+    providers: [DecimalPipe],
+    standalone: false
 })
 export class ChartsComponent implements OnInit {
 

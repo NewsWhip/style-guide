@@ -2,9 +2,10 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ISnippet } from '../code/ISnippet';
 
 @Component({
-  selector: 'app-spacing',
-  templateUrl: './spacing.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'app-spacing',
+    templateUrl: './spacing.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class SpacingComponent implements OnInit {
 

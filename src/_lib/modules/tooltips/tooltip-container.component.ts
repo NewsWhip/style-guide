@@ -21,7 +21,8 @@ import { TOOLTIP_CONTEXT_TOKEN } from "./config/tooltip-context-token";
             </div>
         </div>
     `,
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class TooltipContainerComponent {
 

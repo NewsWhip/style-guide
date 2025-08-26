@@ -44,7 +44,8 @@ import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
             ])
         ])
     ],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class ToastsComponent {
 

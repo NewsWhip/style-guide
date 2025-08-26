@@ -1,19 +1,19 @@
-@import '../../_lib/sass/src/variables.scss';
+@use '../../_lib/sass/src/variables';
 
 .word-cloud-container {
     width: 400px;
     height: 400px;
     margin-top: 16px;
-    background-color: $level2;
-    border-radius: $border-radius-large;
+    background-color: variables.$level2;
+    border-radius: variables.$border-radius-large;
     resize: both;
     overflow: hidden;
 
     nw-word {
-        color: $text-color-secondary;
+        color: variables.$text-color-secondary;
 
         &:hover {
-            color: $text-color;
+            color: variables.$text-color;
         }
     }
 }

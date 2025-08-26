@@ -24,7 +24,8 @@ import { trigger, transition, style, animate } from "@angular/animations";
             ])
         ])
     ],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 
 export class LoaderComponent implements OnInit {

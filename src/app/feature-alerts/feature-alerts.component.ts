@@ -17,7 +17,8 @@ import { FeatureAlertsService } from '../../_lib/modules/feature-alerts';
             border: 1px solid green;
         }
     `],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class FeatureAlertsComponent {
     message: string;

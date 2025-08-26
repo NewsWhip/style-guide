@@ -1,5 +1,6 @@
 @use './mixins/border-radius' as br;
 @use './variables';
+@use 'sass:math';
 //
 // Button groups
 // --------------------------------------------------
@@ -126,15 +127,15 @@
 	}
 }
 .btn-group-responsive-xl {
-  height: ceil(variables.$font-size-xl * variables.$line-height-xl) + (variables.$padding-xl-vertical * 2) + 2;
+  height: math.ceil(variables.$font-size-xl * variables.$line-height-xl) + (variables.$padding-xl-vertical * 2) + 2;
 }
 .btn-group-responsive-lg {
-  height: ceil(variables.$font-size-large * variables.$line-height-large) + (variables.$padding-large-vertical * 2) + 2;
+  height: math.ceil(variables.$font-size-large * variables.$line-height-large) + (variables.$padding-large-vertical * 2) + 2;
 }
 .btn-group-responsive-md {
-  height: ceil(14px * variables.$line-height-base) + (variables.$padding-base-vertical * 2) + 2;
+  height: math.ceil(14px * variables.$line-height-base) + (variables.$padding-base-vertical * 2) + 2;
 }
 .btn-group-responsive-sm {
-  height: ceil(variables.$font-size-small * variables.$line-height-small) + (variables.$padding-small-vertical * 2) + 2;
+  height: math.ceil(variables.$font-size-small * variables.$line-height-small) + (variables.$padding-small-vertical * 2) + 2;
 }
 

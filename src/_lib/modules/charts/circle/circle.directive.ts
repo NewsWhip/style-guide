@@ -9,7 +9,8 @@ import { NwXAxisScale } from '../axis/models/XAxisScale';
 @Directive({
     // eslint-disable-next-line @angular-eslint/directive-selector
     selector: 'circle[nw-circle]',
-    exportAs: 'nw-circle'
+    exportAs: 'nw-circle',
+    standalone: false
 })
 export class CircleDirective implements OnInit, OnChanges, OnDestroy {
 

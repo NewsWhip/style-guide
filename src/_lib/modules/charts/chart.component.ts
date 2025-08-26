@@ -24,7 +24,8 @@ import { debounceTime, takeUntil } from 'rxjs/operators';
     `,
     providers: [ChartUtils],
     exportAs: 'nw-chart',
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class ChartComponent implements OnInit, AfterViewInit, OnDestroy {
 

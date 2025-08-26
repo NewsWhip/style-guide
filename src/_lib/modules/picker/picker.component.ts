@@ -146,7 +146,8 @@ import { isUndefined } from 'lodash-es';
                 animate(200, style({ top: '100%', transform: 'scale(0)' }))
             ])
         ])
-    ]
+    ],
+    standalone: false
 })
 
 export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {

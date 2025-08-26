@@ -1,6 +1,6 @@
 import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { ISnippet } from './ISnippet';
-import * as prism from 'prismjs';
+import prism from 'prismjs';
 import 'prismjs/components/prism-typescript';
 import 'prismjs/plugins/normalize-whitespace/prism-normalize-whitespace';
 import 'prismjs/plugins/toolbar/prism-toolbar';
@@ -13,7 +13,8 @@ import 'prismjs/plugins/copy-to-clipboard/prism-copy-to-clipboard';
         <pre class="language-{{snippet.lang}}">
             <code #code class="language-{{snippet.lang}}"></code>
         </pre>
-    `
+    `,
+    standalone: false
 })
 export class AppCodeComponent implements AfterViewInit {
 

@@ -5,9 +5,10 @@ import { Subscription } from 'rxjs';
 import { Toaster } from '../../_lib/modules/toasts';
 
 @Component({
-  selector: 'app-toasts',
-  templateUrl: './toasts.component.html',
-  styleUrls: ['./toasts.component.scss']
+    selector: 'app-toasts',
+    templateUrl: './toasts.component.html',
+    styleUrls: ['./toasts.component.scss'],
+    standalone: false
 })
 export class ToastsComponent implements OnInit, OnDestroy {
 
