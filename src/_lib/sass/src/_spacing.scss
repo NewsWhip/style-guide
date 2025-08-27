@@ -1,3 +1,4 @@
+@use 'sass:list';
 
 // List of sizes to generate for each
 $sizes: 0, 2, 4, 8, 16, 24, auto;
@@ -11,9 +12,9 @@ $directions : (
 @mixin generateWithDirection($prefix, $property) {
     $class: null;
     $unit: null;
-    @for $i from 1 through length($sizes) {
+    @for $i from 1 through list.length($sizes) {
 
-        $size: nth($sizes, $i);
+        $size: list.nth($sizes, $i);
         
         @if $size == auto {
             $class : #{$prefix}-auto;
@@ -30,8 +31,8 @@ $directions : (
 }
 
 @mixin generateBiDirection($prefix, $property){
-    @for $i from 1 through length($sizes) {
-        $size: nth($sizes, $i);
+    @for $i from 1 through list.length($sizes) {
+        $size: list.nth($sizes, $i);
 
         @if $size == auto {
             .#{$prefix}x-auto {

@@ -33,7 +33,8 @@ import { Subscription } from 'rxjs';
         </div>
     `,
     changeDetection: ChangeDetectionStrategy.OnPush,
-    exportAs: 'nw-email-input'
+    exportAs: 'nw-email-input',
+    standalone: false
 })
 export class EmailInputComponent implements OnInit, OnDestroy {
 

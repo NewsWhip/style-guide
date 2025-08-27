@@ -5,7 +5,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 @Component({
     selector: 'app-modals',
     templateUrl: './modals.component.html',
-    styleUrls: ['./modals.component.scss']
+    styleUrls: ['./modals.component.scss'],
+    standalone: false
 })
 export class ModalsComponent implements OnInit {
 

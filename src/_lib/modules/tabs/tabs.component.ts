@@ -36,7 +36,8 @@ import { TabsService } from './tabs.service';
         :host, ul {
             position: relative;
         }
-    `]
+    `],
+    standalone: false
 })
 
 export class TabsComponent implements OnInit, AfterContentInit, OnDestroy {

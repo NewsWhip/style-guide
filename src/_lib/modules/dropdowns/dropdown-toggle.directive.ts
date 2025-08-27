@@ -9,7 +9,8 @@ import { Subscription, fromEvent } from 'rxjs';
     host: {
         'aria-haspopup': 'true',
         '[attr.aria-expanded]': 'isOpen'
-    }
+    },
+    standalone: false
 })
 export class DropdownToggleDirective implements OnInit, OnDestroy {
 

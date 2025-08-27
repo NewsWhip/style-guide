@@ -12,7 +12,8 @@ import { catchError, filter, map, startWith, take, timeout } from "rxjs/operator
 @Component({
     selector: 'nw-word-cloud',
     templateUrl: './word-cloud.component.html',
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class WordCloudComponent<T extends IWord> implements OnChanges {
 

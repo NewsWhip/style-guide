@@ -54,7 +54,8 @@ import { Subscription, fromEvent } from 'rxjs';
                 animate(`300ms linear`, style({ width: 0 }))
             ])
         ])
-    ]
+    ],
+    standalone: false
 })
 export class CarouselComponent implements OnInit, AfterViewInit, AfterContentInit, OnChanges, OnDestroy {
 

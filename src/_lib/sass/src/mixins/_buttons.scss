@@ -1,3 +1,5 @@
+@use 'sass:math';
+
 @mixin button-variant($color, $color-hover, $background, $bg-hover-or-active, $border: transparent, $border-hover: transparent) {
     color: $color;
     background-color: $background;
@@ -68,8 +70,8 @@
     justify-content: center;
     position: relative;
     padding: 0;
-    width:  floor($font-size * $line-height) + ($padding-vertical * 2) + 1 + 1;
-    height: floor($font-size * $line-height) + ($padding-vertical * 2) + 1 + 1;
+    width:  math.floor($font-size * $line-height) + ($padding-vertical * 2) + 1 + 1;
+    height: math.floor($font-size * $line-height) + ($padding-vertical * 2) + 1 + 1;
 }
 
 @mixin button-close($font-size, $line-height, $padding-vertical) {

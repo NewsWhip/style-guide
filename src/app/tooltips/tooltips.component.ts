@@ -5,9 +5,10 @@ import { Subscription } from 'rxjs';
 import { ISnippet } from '../code/ISnippet';
 
 @Component({
-  selector: 'app-tooltips',
-  templateUrl: './tooltips.component.html',
-  styleUrls: ['./tooltips.component.scss']
+    selector: 'app-tooltips',
+    templateUrl: './tooltips.component.html',
+    styleUrls: ['./tooltips.component.scss'],
+    standalone: false
 })
 export class TooltipsComponent implements OnInit, OnDestroy {
 

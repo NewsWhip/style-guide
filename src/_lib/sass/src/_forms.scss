@@ -2,6 +2,8 @@
 @use "./mixins/forms";
 @use "./mixins/clearfix";
 @use "./mixins/grid";
+@use 'sass:color';
+@use 'sass:math';
 //
 // Forms
 // --------------------------------------------------
@@ -555,7 +557,7 @@ input[type="checkbox"] {
     display: block; // account for any element using help-block
     margin-top: 5px;
     margin-bottom: 10px;
-    color: lighten(variables.$text-color, 25%); // lighten the text some for contrast
+    color: color.adjust(variables.$text-color, $lightness: 25%); // lighten the text some for contrast
     font-size: 12px;
 }
 // [converter] extracted as `@mixin form-inline` for libsass compatibility
@@ -610,7 +612,7 @@ input[type="checkbox"] {
     // Reposition the icon because it's now within a grid column and columns have
     // `position: relative;` on them. Also accounts for the grid gutter padding.
     .has-feedback .form-control-feedback {
-        right: floor((variables.$grid-gutter-width * 0.5));
+        right: math.floor((variables.$grid-gutter-width * 0.5));
     }
 
     // Form group sizes

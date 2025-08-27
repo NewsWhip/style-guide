@@ -1,5 +1,5 @@
 import { Component, ElementRef, ViewChild, AfterContentInit, ChangeDetectionStrategy, ContentChild } from "@angular/core";
-import * as Clipboard from 'clipboard';
+import Clipboard from 'clipboard';
 import { Toaster } from "../../_lib/modules/toasts";
 
 @Component({
@@ -17,7 +17,8 @@ import { Toaster } from "../../_lib/modules/toasts";
             cursor: pointer;
         }
     `],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class CopyCodeComponent implements AfterContentInit {
 

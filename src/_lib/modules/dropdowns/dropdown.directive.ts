@@ -6,7 +6,8 @@ import { filter } from 'rxjs/operators';
 @Directive({
     selector: '[nwDropdown]',
     exportAs: 'nw-dropdown',
-    providers: [DropdownService]
+    providers: [DropdownService],
+    standalone: false
 })
 export class DropdownDirective implements OnInit, OnChanges, OnDestroy {
 

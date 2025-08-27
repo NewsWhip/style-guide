@@ -13,7 +13,8 @@ interface IMyWord extends IWord {
 @Component({
     selector: 'app-home',
     templateUrl: './word-cloud.component.html',
-    styleUrls: ['./word-cloud.component.scss']
+    styleUrls: ['./word-cloud.component.scss'],
+    standalone: false
 })
 export class WordCloudDemoComponent implements OnInit {
 

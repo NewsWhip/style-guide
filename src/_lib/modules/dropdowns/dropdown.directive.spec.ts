@@ -114,7 +114,8 @@ describe('DropdownDirective', () => {
                 <li #dropdownItem>Item</li>
             </ul>
         </div>
-    `
+    `,
+    standalone: false
 })
 class TestComponent {
 
