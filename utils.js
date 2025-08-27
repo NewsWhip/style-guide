@@ -1,11 +1,8 @@
 const green = '\033[0;92m';
 const red = '\033[0;91m';
 const noColor = '\033[0m';
-const logSeparator = () => {
-    console.log("============================");
-}
 
-exports.distPath = 'distribution/';
+exports.distPath = 'dist/nw-style-guide/';
 exports.green = green;
 exports.red = red;
 exports.noColor = noColor;
@@ -20,10 +17,6 @@ exports.onError = () => {
     process.stdout.write('\n');
 };
 
-exports.onComplete = () => {
-    logSeparator();
-    process.stdout.write(`${green}Library built successfully${noColor}\n`);
-    logSeparator();
-}
-
-exports.logSeparator = logSeparator;
+exports.logSeparator = () => {
+    console.log("============================");
+};
