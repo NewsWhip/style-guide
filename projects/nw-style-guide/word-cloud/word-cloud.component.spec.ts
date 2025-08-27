@@ -1,6 +1,6 @@
 import { DebugElement, SimpleChange } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { ResizeObserverModule } from "nw-style-guide/resize-observer";
+import { ResizeObserverModule } from "../resize-observer";
 import { IBoundingBox } from "./models/IBoundingBox";
 import { IWord } from "./models/IWord";
 import { IWordWithPosition } from "./models/IWordWithPosition";
