@@ -19,25 +19,16 @@ or
 In your SASS file:
 
 ```scss
-// Import your own app variables (if you have any)
-@import './variables.scss';
+// Use your own app variables (if you have any)
+@use './variables.scss';
 
 // Import the entire NewsWhip style guide
-@import "node_modules/nw-style-guide/sass/styles.scss";
+@use "node_modules/nw-style-guide/sass/styles.scss";
 ```
-
-> :warning: If you are importing the entire `styles.scss` file you do not need to import the individual functions, mixins and variables as outlined below. The `styles.scss` bundle already includes these
-
 ---
 
-If you wish to import only specific parts of the style guide you first need to import the core library (functions, mixins and variables). The order of these imports is important
+If you wish to import only specific parts of the style guide you can do so by importing the individual files you need
 
-```scss
-// Import the core (required) files in this order
-@import "node_modules/nw-style-guide/sass/src/functions/functions";
-@import "node_modules/nw-style-guide/sass/src/mixins/mixins";
-@import "node_modules/nw-style-guide/sass/src/variables";
-```
 
 ```scss
 // Now you include the specific section of the style guide you require
@@ -49,7 +40,12 @@ In order to use the Proxima Nova font-family that comes bundled with the Style G
 
 ```scss
 // your variables.scss file
-$nw-font-path: '~nw-style-guide/assets/fonts';
+$font-path: '../../assets/fonts';
+
+// Import the nw-style-guide variables with the custom font path
+@use "node_modules/nw-style-guide/sass/src/variables" as nw-variables with (
+    $nw-font-path: $font-path
+);
 ```
 
 ---
@@ -87,7 +83,7 @@ Most of the time we would need to deploy our application (e.g. Spike) to a test 
 To do so we usually create a Beta version which we release to npm.
 
 To achieve this we need to:
-- Update the version of the style guide version property in `package.json` to a beta version using `npm version {{version_type}}` for example "npm version 14.0.1-beta.0" 
+- Update the version of the style guide version property in `projects/nw-style-guide/package.json` to a beta version using `npm version {{version_type}}` for example "npm version 14.0.1-beta.0". Run this command from the `projects/nw-style-guide` directory
 - Once updated we're now ready to push the new version to npm using this command `npm run package:release`
 - Once that version is pushed check the npm website where the package is deployed to confirm the latest version deployed is the one you just added https://www.npmjs.com/package/nw-style-guide.
 - In your Spike or other project change the `nw-style-guide` version in `package.json` to this new version and push and deploy the changes to a test env.
@@ -109,7 +105,7 @@ To achieve this we need to:
 1. Push changes
 1. PR is approved
 1. Merge pull request to master
-1. After merging to master, the docs will be deployed to Github pages, a new release will be created (if the version in package.json has changed), and a new version will be published to npm
+1. After merging to master, the docs will be deployed to Github pages, a new release will be created (if the version in `projects/nw-style-guide/package.json` has changed), and a new version will be published to npm
 
 ### Manually publishing the package to npm
 If there is an issue with Github Actions and we need to manually publish the package, we can do so with the `npm run package:release` script
@@ -118,17 +114,20 @@ If there is an issue with Github Actions and we need to manually publish the pac
 
 ### Development
 
-We use several npm scripts to generate modules, components and directives. The following is an example of creating a tabs module, component, and directive.
+There are two npm scripts that need to be run for local development.
 
-`> npm run g:module tabs`
+```shell
+npm run dev:lib
+```
+This builds the nw-style-guide library in `projects/nw-style-guide` and outputs the compilation to the `lib-dist` folder. `npm run dev:lib` watches for changes to library files and recompiles.
 
-`> npm run g:component tabs`
+```shell
+npm run dev:app
+```
 
-`> npm run g:directive tabs`
- 
-This is now what our `src` directory looks like
+This builds the demo app. This is what we use to view and test the changes to the library files. When merged to master, the demo app is what gets deployed to Github Pages. The demo app will be recompiled whenever there are changes to files in the demo app **or** there are changes to the library files.
 
-![src directory](https://i.imgur.com/BjSjf41.png)
+> :bulb: During local development you should run `npm run dev:lib` first and then `npm run dev:app` in another terminal window
 
 ### Further info on package release / publication
 
@@ -141,18 +140,14 @@ We don't want to publish all our assets to npm, only the assets required by the 
 > npm run package:release
 ```
 
-This script does a few things:
+This script does the following
 
 1. It runs the `build.js` script which does the following
-   - Cleans the `distribution` folder
-   - Compiles each Angular module with `ngc` using the specific `tsconfig.build.json` for that module
-   - Copies the `sass` folder 
-   - Copies the `README.md`
-2. Copies the `package.json` file
-3. Updates the copied `package.json` private property to `false`
-4. Publishes the `distribution` folder to npm
+   - Build the nw-style-guide library using ng-packagr. This outputs the build to the lib-dist directory
+   - Compiles the `styles.scss` file and copies it to the dist folder
+1. Publishes the `lib-dist/nw-style-guide` folder to npm
 
-> :warning: Publication will fail if the version in `package.json` has not been updated
+> :warning: Publication will fail if the version in `projects/nw-style-guide/package.json` has not been updated
 
 ### Github pages
 
