@@ -22,7 +22,7 @@
             "assets": [
               {
                 "glob": "**/*",
-                "input": "dist/nw-style-guide/assets",
+                "input": "lib-dist/nw-style-guide/assets",
                 "output": "/assets"
               }
             ],
@@ -112,7 +112,7 @@
             "assets": [
               {
                 "glob": "**/*",
-                "input": "dist/nw-style-guide/assets",
+                "input": "lib-dist/nw-style-guide/assets",
                 "output": "/assets"
               }
             ]

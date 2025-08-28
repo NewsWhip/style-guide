@@ -6,9 +6,8 @@
     "name": "Gareth Nolan"
   },
   "scripts": {
-    "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build --configuration production",
+    "dev:app": "ng serve demo-app",
+    "dev:lib": "ng build nw-style-guide --watch",
     "test": "ng test nw-style-guide",
     "test-single-run": "ng test nw-style-guide --watch=false --progress=false",
     "lint": "ng lint nw-style-guide",
