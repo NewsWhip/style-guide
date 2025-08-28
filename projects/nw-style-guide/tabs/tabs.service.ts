@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Subject, Observable } from "rxjs";
-import { TabDirective } from ".";
+import { TabDirective } from "./tab.directive";
 
 @Injectable()
 export class TabsService {
