@@ -19,7 +19,8 @@ const compileSass = () => {
 
     try {
         const result = sass.compile(sourceFile, {
-            style: 'compressed'
+            style: 'compressed',
+            loadPaths: ['node_modules']
         });
         fs.writeFileSync(destFile, result.css);
         utils.onSuccess();
