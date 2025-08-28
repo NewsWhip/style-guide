@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { ButtonsComponent } from './buttons/buttons.component';
 import { ColorsComponent } from './colors/colors.component';
 import { HomeComponent } from './home/home.component';
-import { DropdownsComponent } from './dropdowns/dropdowns.component';
 import { TabsComponent } from './tabs/tabs.component';
 import { BrandingComponent } from './branding/branding.component';
 import { ListComponent } from './list/list.component';
@@ -40,10 +39,6 @@ const appRoutes: Routes = [
     {
         path: 'colors',
         component: ColorsComponent
-    },
-    {
-        path: 'dropdowns',
-        component: DropdownsComponent
     },
     {
         path: 'tabs',
