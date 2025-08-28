@@ -2,7 +2,7 @@ import { Component, DebugElement, ElementRef, OnInit, ViewChild } from "@angular
 import { ComponentFixture, fakeAsync, TestBed, tick } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 import { TooltipContainerComponent } from "./tooltip-container.component";
-import { TooltipModule } from ".";
+import { TooltipModule } from "./tooltip.module";
 import { TooltipDirective } from "./tooltip.directive";
 import { Placement } from "./models/Placement.type";
 import { CdkScrollable, CdkScrollableModule } from "@angular/cdk/scrolling";

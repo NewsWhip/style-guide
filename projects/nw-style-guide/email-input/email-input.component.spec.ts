@@ -2,7 +2,7 @@ import { DebugElement } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { ReactiveFormsModule } from "@angular/forms";
 import { By } from "@angular/platform-browser";
-import { EmailInputComponent } from ".";
+import { EmailInputComponent } from "./email-input.component";
 
 let comp: EmailInputComponent;
 let fixture: ComponentFixture<EmailInputComponent>;
