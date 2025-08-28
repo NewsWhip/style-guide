@@ -15,7 +15,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "ngc": "ngc",
-    "ghpages": "ng build --configuration production --output-path docs  --base-href /style-guide/",
+    "ghpages": "ng build --configuration ghpages",
     "g:m": "ng g module --app=1",
     "g:c": "ng g component --app=1",
     "g:d": "ng g directive --app=1",
