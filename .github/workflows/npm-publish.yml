@@ -28,7 +28,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: my-package
-          path: dist
+          path: lib-dist
   release:
     needs: build
     runs-on: ubuntu-latest
@@ -37,12 +37,12 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: my-package
-          path: dist
+          path: lib-dist
       - uses: actions/setup-node@v3
         with:
           node-version: 22.16
           registry-url: https://registry.npmjs.org/
       - name: Publish
-        run: npm publish dist/
+        run: npm publish lib-dist/
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_PUBLISH_TOKEN}}
