@@ -11,7 +11,7 @@
     "test": "ng test nw-style-guide",
     "test-single-run": "ng test nw-style-guide --watch=false --progress=false",
     "lint": "ng lint nw-style-guide",
-    "ghpages": "ng build --configuration ghpages",
+    "ghpages": "ng build nw-style-guide && ng build --configuration ghpages",
     "package:build": "node scripts/build.js",
     "package:make-local-tgz": "node scripts/make-local-tgz.js",
     "package:release": "node scripts/release.js",
