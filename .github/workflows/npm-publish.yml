@@ -42,7 +42,9 @@ jobs:
         with:
           node-version: 22.16
           registry-url: https://registry.npmjs.org/
+      - name: Listing lib-dist directory structure
+        run: ls -la lib-dist
       - name: Publish
-        run: npm publish lib-dist/nw-style-guide
+        run: npm publish lib-dist/
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_PUBLISH_TOKEN}}
