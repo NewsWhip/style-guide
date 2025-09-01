@@ -8,7 +8,7 @@
 @use "../node_modules/prismjs/plugins/toolbar/prism-toolbar.css";
 
 // Import the style guide
-@use "_lib/sass/styles.scss";
+@use "../projects/nw-style-guide/src/lib/sass/styles.scss";
 
 body {
     margin: 0;

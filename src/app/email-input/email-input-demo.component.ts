@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy, ChangeDetectorRef, OnInit } from '@angular/core';
-import { IValidationChange } from "../../_lib/modules/email-input/models/IValidationChange";
+import { IValidationChange } from "nw-style-guide/email-input/models/IValidationChange";
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ISnippet } from '../code/ISnippet';

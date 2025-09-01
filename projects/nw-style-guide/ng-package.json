@@ -1,0 +1,24 @@
+{
+  "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
+  "dest": "../../lib-dist/nw-style-guide",
+  "assets": [
+    {
+      "glob": "**/*",
+      "input": "src/assets",
+      "output": "assets"
+    },
+    {
+      "glob": "**/*",
+      "input": "src/lib/sass",
+      "output": "sass"
+    },
+    {
+      "glob": "**/*",
+      "input": "src/linting-config",
+      "output": "linting-config"
+    }
+  ],
+  "lib": {
+    "entryFile": "src/public-api.ts"
+  }
+}
