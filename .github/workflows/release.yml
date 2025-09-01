@@ -32,6 +32,7 @@ jobs:
         #
         with:
           token: ${{secrets.GH_ACTIONS_STYLE_GUIDE_TOKEN}}
+          path: projects/nw-style-guide
       - name: Print release output
         if: ${{ steps.release.outputs.released == 'true' }}
         run: echo Release ID ${{ steps.release.outputs.release_id }}
