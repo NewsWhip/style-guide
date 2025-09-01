@@ -42,8 +42,6 @@ jobs:
         with:
           node-version: 22.16
           registry-url: https://registry.npmjs.org/
-      - name: Listing directory structure
-        run: ls -la lib-dist/nw-style-guide
       - name: Publish
         run: npm publish
         working-directory: lib-dist/nw-style-guide
