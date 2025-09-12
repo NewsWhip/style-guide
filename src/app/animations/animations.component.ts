@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NW_DURATION, NW_EASING } from '../../_lib/modules/animations'
+import { NW_DURATION, NW_EASING } from 'nw-style-guide/animations';
 
 @Component({
     selector: 'app-animations',

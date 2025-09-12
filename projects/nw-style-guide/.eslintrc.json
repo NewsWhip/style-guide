@@ -1,0 +1,11 @@
+{
+  "extends": "../../.eslintrc.json",
+  "ignorePatterns": [
+    "*.spec.ts"
+  ],
+  "parserOptions": {
+    "project": [
+      "projects/nw-style-guide/tsconfig.lib.prod.json"
+    ]
+  }
+}

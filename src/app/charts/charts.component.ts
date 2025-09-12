@@ -5,7 +5,7 @@ import { DecimalPipe } from '@angular/common';
 import { bisector } from 'd3-array';
 import { AxisTimeInterval } from 'd3-axis';
 import { curveCardinal, curveBasis, curveLinear, curveStep, curveStepAfter, curveStepBefore } from 'd3-shape';
-import { YAxisDirective, XAxisDirective, CircleDirective } from '../../_lib/modules/charts';
+import { YAxisDirective, XAxisDirective, CircleDirective } from 'nw-style-guide/charts';
 import { ScaleTime } from 'd3-scale';
 
 @Component({

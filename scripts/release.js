@@ -3,7 +3,6 @@ const utils = require('../utils');
 
 const run = () => {
     require('./build');
-    require('./copy-package-file');
 
     process.stdout.write('Publishing package \n');
 

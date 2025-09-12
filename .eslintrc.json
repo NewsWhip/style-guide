@@ -1,5 +1,9 @@
 {
   "root": true,
+  // We don't currently lint the demo app, but we should in the future. Some changes we'll need to make will
+  // be to remove this ignore pattern and update the prefix rule for components and directives. We'll then need
+  // to update the eslintrc.json file for the nw-style-guide project to have its own component and directive prefix
+  // rules
   "ignorePatterns": [
     "src/app/"
   ],
@@ -9,14 +13,12 @@
         "*.ts"
       ],
       "extends": [
-        "./linting-config/ts-files.json"
+        "./projects/nw-style-guide/src/linting-config/ts-files.json"
       ],
       "parserOptions": {
         "project": [
-          "src/tsconfig.app.json",
-          "src/tsconfig.spec.json"
-        ],
-        "createDefaultProgram": true
+          "src/tsconfig.app.json"
+        ]
       },
       "rules": {
         "@angular-eslint/component-selector": [
@@ -45,7 +47,7 @@
         "*.html"
       ],
       "extends": [
-        "./linting-config/html-files.json"
+        "./projects/nw-style-guide/src/linting-config/html-files.json"
       ]
     }
   ]

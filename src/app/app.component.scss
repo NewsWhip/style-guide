@@ -1,5 +1,5 @@
-@use "../_lib/sass/src/mixins/scrollbars";
-@use "../_lib/sass/src/variables" as variables;
+@use "nw-style-guide/sass/src/mixins/scrollbars";
+@use "nw-style-guide/sass/src/variables" as variables;
 
 :host {
     display: flex;

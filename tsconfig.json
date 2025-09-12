@@ -16,6 +16,11 @@
       "dom",
       "ES2019.Array"
     ],
+    /* We use these paths to reference the built library in the demo app */
+    "paths": {
+      "nw-style-guide": ["./lib-dist/nw-style-guide"],
+      "nw-style-guide/*": ["./lib-dist/nw-style-guide/*"]
+    },
     "module": "es2020",
     "baseUrl": "./",
     "useDefineForClassFields": false

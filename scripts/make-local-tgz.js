@@ -4,11 +4,9 @@
 const path = require('path');
 const execSync = require('child_process').execSync;
 const utils = require('../utils');
-const pjson = require('../package.json');
 
 const run = () => {
     require('./build');
-    require('./copy-package-file');
 
     process.stdout.write(`Navigating to ${utils.distPath} directory & compressing package \n`);
 
@@ -20,6 +18,8 @@ const run = () => {
     }
 
     utils.logSeparator();
+
+    const pjson = require(`../${utils.distPath}package.json`);
 
     const tgzAbsolutePath = path.join(process.cwd(), `${pjson.name}-${pjson.version}.tgz`);
 

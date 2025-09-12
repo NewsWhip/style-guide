@@ -1,0 +1,15 @@
+{
+  "name": "nw-style-guide",
+  "version": "19.1.4",
+  "peerDependencies": {
+    "@angular/common": "^19.2.0",
+    "@angular/core": "^19.2.0",
+    "@angular/forms": "^19.2.0",
+    "@angular/animations": "^19.2.0",
+    "@angular/cdk": "^19.2.0"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "sideEffects": false
+}

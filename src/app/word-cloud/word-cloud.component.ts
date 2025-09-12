@@ -1,10 +1,10 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
-import { IWordWithPosition } from '../../_lib/modules/word-cloud/models/IWordWithPosition';
-import { WordCloudComponent } from '../../_lib/modules/word-cloud';
-import { IWord } from '../../_lib/modules/word-cloud/models/IWord';
+import { IWordWithPosition } from 'nw-style-guide/word-cloud/models/IWordWithPosition';
+import { WordCloudComponent } from 'nw-style-guide/word-cloud';
+import { IWord } from 'nw-style-guide/word-cloud/models/IWord';
 import { ActivatedRoute } from '@angular/router';
 import { ISnippet } from '../code/ISnippet';
-import { IWordCloudConfig } from '../../_lib/modules/word-cloud/models/IWordCloudConfig';
+import { IWordCloudConfig } from 'nw-style-guide/word-cloud/models/IWordCloudConfig';
 
 interface IMyWord extends IWord {
     id: number;

@@ -1,6 +1,6 @@
-import { Component, ElementRef, ViewChild, AfterContentInit, ChangeDetectionStrategy, ContentChild } from "@angular/core";
+import { Component, ElementRef, ViewChild, AfterContentInit, ChangeDetectionStrategy } from "@angular/core";
 import Clipboard from 'clipboard';
-import { Toaster } from "../../_lib/modules/toasts";
+import { Toaster } from 'nw-style-guide/toasts';
 
 @Component({
     selector: 'app-copy-code',
