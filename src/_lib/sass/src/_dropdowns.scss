@@ -41,6 +41,7 @@
 
     // // Dividers (basically an hr) within the dropdown
     .divider {
+        border: none;
         @include nav-divider.nav-divider(variables.$dropdown-divider-bg);
     }
 
