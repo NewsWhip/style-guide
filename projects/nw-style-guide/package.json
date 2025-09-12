@@ -1,6 +1,6 @@
 {
   "name": "nw-style-guide",
-  "version": "19.1.4",
+  "version": "19.2.0-beta.1",
   "peerDependencies": {
     "@angular/common": "^19.2.0",
     "@angular/core": "^19.2.0",

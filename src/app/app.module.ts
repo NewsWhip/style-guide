@@ -12,7 +12,6 @@ import { ChartsModule } from 'nw-style-guide/charts';
 import { LoaderModule } from 'nw-style-guide/loader';
 import { CarouselModule } from 'nw-style-guide/carousel';
 import { WordCloudModule } from 'nw-style-guide/word-cloud';
-import { DropdownsModule } from 'nw-style-guide/dropdowns';
 
 import { AppComponent } from './app.component';
 import { ButtonsComponent } from './buttons/buttons.component';
