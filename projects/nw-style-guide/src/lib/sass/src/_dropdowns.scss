@@ -104,7 +104,7 @@
         &:hover,
         &:focus-visible {
             color: $dropdown-inverse-link-color;
-            background-color: $dropdown-inverese-link-active-bg;
+            background-color: variables.get-color("coolgray", 5x-light);
         }
 
         &.active {

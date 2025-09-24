@@ -45,7 +45,7 @@ import { isUndefined } from 'lodash-es';
 
                 <!-- Navigate up the tree -->
                 <div class="results-actions" *ngIf="parentId && displayItems.length && !searchTerm.value.length">
-                    <a href="javascript:;" class="picker-action" (click)="ascend(getParentItem(parentId))">
+                    <a href="javascript:;" class="picker-action" (click)="ascend($event, getParentItem(parentId))">
                         <i class="fas fa-long-arrow-alt-left" aria-hidden="true"></i>
                         {{getParentItem(parentId).displayName}}
                     </a>
@@ -56,7 +56,7 @@ import { isUndefined } from 'lodash-es';
 
                     <div class="results-actions" *ngIf="shouldShowSelections && !selectionsAreShowing && parentId == null && !searchTerm.value.length">
                         <ng-container *ngIf="getSelections().length">
-                            <a href="javascript:;" class="picker-action" (click)="selectionsAreShowing = true; edit.emit()">Edit selections</a>
+                            <a href="javascript:;" class="picker-action" (click)="editSelections($event)">Edit selections</a>
                             <a href="javascript:;" class="picker-action" (click)="clearSelections($event)">Clear selections</a>
                         </ng-container>
 
@@ -82,7 +82,7 @@ import { isUndefined } from 'lodash-es';
                                 <span class="result-item">
                                     <span class="item-label">{{item.displayName}}</span>
 
-                                    <button class="close" style="color: #000000" (click)="clearSelection(item)">
+                                    <button class="close" style="color: #000000" (click)="clearSelection($event, item)">
                                         &times;
                                     </button>
                                 </span>
@@ -222,7 +222,8 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
         this._subs.push(sub);
     }
 
-    ascend(item: IPickerItem) {
+    ascend(event: Event, item: IPickerItem) {
+        event.stopPropagation();
         this.setDisplayItemsFromParentId(item.parentId);
         this.asc.emit(item);
     }
@@ -256,7 +257,14 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
         return this.items.filter(i => i.parentId === id).length;
     }
 
-    clearSelection(item: IPickerItem) {
+    editSelections(event: Event) {
+        event.stopPropagation();
+        this.selectionsAreShowing = true;
+        this.edit.emit(event);
+    }
+
+    clearSelection(event: Event, item: IPickerItem) {
+        event.stopPropagation();
         item.added = false;
         item.excluded = false;
 
