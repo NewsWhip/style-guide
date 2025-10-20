@@ -61,7 +61,7 @@ jobs:
         id: tag
         shell: bash
         run: |
-          PACKAGE_JSON_PATH="../../projects/nw-style-guide/package.json"
+          PACKAGE_JSON_PATH="lib-dist/package.json"
           VERSION=$(node -p "require('${PACKAGE_JSON_PATH}').version")
 
           if [[ "$VERSION" == *-* ]]; then
