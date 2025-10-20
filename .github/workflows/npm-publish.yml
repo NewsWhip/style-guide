@@ -13,12 +13,17 @@ name: Build and publish package
 on:
   release:
     types: [published]
+
+permissions:
+  id-token: write  # Required for OIDC
+  contents: read
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
       - uses: ./.github/actions/npm-install
         with:
           token: ${{secrets.FONTAWESOME_NPM_AUTH_TOKEN}}
@@ -38,7 +43,7 @@ jobs:
         with:
           name: my-package
           path: lib-dist
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: 22.16
           registry-url: https://registry.npmjs.org/
