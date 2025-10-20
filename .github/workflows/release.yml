@@ -1,10 +1,10 @@
 # Create a new release on Github if the package.json version has changed
 name: Release
-# on:
-#   push:
-#     branches:
-#       - main
-#       - master
+on:
+  push:
+    branches:
+      - main
+      - master
 jobs:
   build:
     name: Release

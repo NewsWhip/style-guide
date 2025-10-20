@@ -10,15 +10,9 @@ name: Build and publish package
 # A standard `npm publish` would require a two-factor password. In place of a two-factor password we're using an automation
 # token generated specifically for the nw-style-guide package. This is stored in `secrets.NPM_PUBLISH_TOKEN`
 #
-# on:
-#   release:
-#     types: [published]
-
 on:
-  push:
-    branches:
-      - main
-      - master
+  release:
+    types: [published]
 
 permissions:
   id-token: write  # Required for OIDC
@@ -77,5 +71,3 @@ jobs:
           echo "Publishing with dist-tag '$TAG'"
           npm publish --tag "$TAG"
         working-directory: lib-dist/nw-style-guide
-        # env:
-        #   NODE_AUTH_TOKEN: ${{secrets.NPM_PUBLISH_TOKEN}}
