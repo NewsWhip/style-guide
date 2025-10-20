@@ -50,6 +50,21 @@ jobs:
       # Ensure npm 11.5.1 or later is installed for trusted publishing
       - name: Update npm
         run: npm install -g npm@latest
+      # Determine an appropriate dist-tag from the version
+      - name: Compute dist-tag
+        id: tag
+        shell: bash
+        run: |
+          PACKAGE_JSON_PATH="${{ github.workspace }}/projects/nw-style-guide/package.json"
+          VERSION=$(node -p "require('${PACKAGE_JSON_PATH}').version")
+
+          if [[ "$VERSION" == *-* ]]; then
+            # prerelease (e.g., 1.2.3-beta.1) -> use the preid as the tag if present, else 'next'
+            PREID=$(node -p "const v=require('semver').prerelease(require('${PACKAGE_JSON_PATH}').version); v && v[0] ? v[0] : ''" || true)
+            echo "value=${PREID:-next}" >> "$GITHUB_OUTPUT"
+          else
+            echo "value=latest" >> "$GITHUB_OUTPUT"
+          fi  
       - name: Publish
         run: npm publish
         working-directory: lib-dist/nw-style-guide
