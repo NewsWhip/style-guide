@@ -47,6 +47,9 @@ jobs:
         with:
           node-version: 22.16
           registry-url: https://registry.npmjs.org/
+      # Ensure npm 11.5.1 or later is installed for trusted publishing
+      - name: Update npm
+        run: npm install -g npm@latest
       - name: Publish
         run: npm publish
         working-directory: lib-dist/nw-style-guide
