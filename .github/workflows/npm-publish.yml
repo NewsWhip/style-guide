@@ -60,17 +60,16 @@ jobs:
       - name: Compute dist-tag
         id: tag
         shell: bash
+        working-directory: lib-dist/nw-style-guide
         run: |
-          PACKAGE_JSON_PATH="lib-dist/nw-style-guide/package.json"
-          VERSION=$(node -p "require('${PACKAGE_JSON_PATH}').version")
-
+          VERSION=$(node -p "require('./package.json').version")
           if [[ "$VERSION" == *-* ]]; then
             # prerelease (e.g., 1.2.3-beta.1) -> use the preid as the tag if present, else 'next'
-            PREID=$(node -p "const v=require('semver').prerelease(require('${PACKAGE_JSON_PATH}').version); v && v[0] ? v[0] : ''" || true)
+            PREID=$(node -p "const v=require('semver').prerelease(require('./package.json').version); v && v[0] ? v[0] : ''" || true)
             echo "value=${PREID:-next}" >> "$GITHUB_OUTPUT"
           else
             echo "value=latest" >> "$GITHUB_OUTPUT"
-          fi  
+          fi
       - name: Publish
         run: |
           TAG="${{ steps.tag.outputs.value }}"
