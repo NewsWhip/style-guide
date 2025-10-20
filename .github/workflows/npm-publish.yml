@@ -45,5 +45,5 @@ jobs:
       - name: Publish
         run: npm publish
         working-directory: lib-dist/nw-style-guide
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_PUBLISH_TOKEN}}
+        # env:
+        #   NODE_AUTH_TOKEN: ${{secrets.NPM_PUBLISH_TOKEN}}
