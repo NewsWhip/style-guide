@@ -13,12 +13,17 @@ name: Build and publish package
 on:
   release:
     types: [published]
+
+permissions:
+  id-token: write  # Required for OIDC
+  contents: read
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
       - uses: ./.github/actions/npm-install
         with:
           token: ${{secrets.FONTAWESOME_NPM_AUTH_TOKEN}}
@@ -38,12 +43,31 @@ jobs:
         with:
           name: my-package
           path: lib-dist
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: 22.16
           registry-url: https://registry.npmjs.org/
-      - name: Publish
-        run: npm publish
+      # Ensure npm 11.5.1 or later is installed for trusted publishing
+      - name: Update npm
+        run: npm install -g npm@latest
+      # Determine an appropriate dist-tag from the version
+      - name: Compute dist-tag
+        id: tag
+        shell: bash
         working-directory: lib-dist/nw-style-guide
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_PUBLISH_TOKEN}}
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          if [[ "$VERSION" == *-* ]]; then
+            # prerelease (e.g., 1.2.3-beta.1) -> use the preid as the tag if present, else 'next'
+            # Extract part before the first dot after the hyphen, e.g. "beta" from "1.2.3-beta.1"
+            PREID=$(echo "$VERSION" | sed -E 's/^[0-9]+\.[0-9]+\.[0-9]+-([a-zA-Z0-9]+).*/\1/' || true)
+            echo "value=${PREID:-next}" >> "$GITHUB_OUTPUT"
+          else
+            echo "value=latest" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Publish
+        run: |
+          TAG="${{ steps.tag.outputs.value }}"
+          echo "Publishing with dist-tag '$TAG'"
+          npm publish --tag "$TAG"
+        working-directory: lib-dist/nw-style-guide
