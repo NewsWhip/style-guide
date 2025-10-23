@@ -1,6 +1,7 @@
 @use "./variables";
 @use "./mixins/nav-divider";
 @use "./mixins/dropdowns";
+@use "./mixins/scrollbars";
 //
 // Dropdown menus
 // --------------------------------------------------
@@ -16,33 +17,22 @@
     border-top:   variables.$caret-width-base dashed;
     border-right: variables.$caret-width-base solid transparent;
     border-left:  variables.$caret-width-base solid transparent;
+
+    &.caret-up {
+        border-top: 0;
+        border-bottom: variables.$caret-width-base dashed;
+        content: "";
+    }
 }
 
-// The dropdown wrapper (div)
-.dropup,
-.dropdown {
-    position: relative;
-}
-
-// Prevent the focus on the dropdown toggle when closing dropdowns
-.dropdown-toggle:focus {
-    outline: 0;
-}
-
-// The dropdown menu (ul)
 .dropdown-menu {
-    position: absolute;
-    top: 100%;
-    left: 0;
+    display: inline-flex;
+    flex-direction: column;
     z-index: variables.$zindex-dropdown;
-    display: none; // none by default, but block on "open" of the menu
-    float: left;
     min-width: 160px;
     padding: 5px 0;
-    margin: 2px 0 0; // override default ul
-    list-style: none;
+    margin: 2px 0 0;
     font-size: 14px;
-    text-align: left; // Ensures proper alignment if parent has it changed (e.g., modal footer)
     background-color: variables.$dropdown-bg;
     border: 1px solid variables.$dropdown-border;
     border-radius: variables.$border-radius-base;
@@ -51,163 +41,42 @@
 
     // // Dividers (basically an hr) within the dropdown
     .divider {
+        border: none;
         @include nav-divider.nav-divider(variables.$dropdown-divider-bg);
     }
 
-    &.dropdown-menu-arrow {
-        &:after, &:before {
-            border-style: solid;
-            border-color: transparent;
-            content: " ";
-            height: 0;
-            width: 0;
-            bottom: 100%;
-            left: 17px;
-            position: absolute;
-            pointer-events: none;
-        }
-        &:after {
-            border-bottom-color: variables.$dropdown-bg;
-            border-width: 7px;
-            margin-left: -7px;
-        }
-        &:before {
-            border-bottom-color: variables.$dropdown-border;
-            border-width: 8px;
-            margin-left: -8px;
-        }
-        &.dropdown-menu-right {
-            &:after, &:before {
-                right: 0;
-                margin-left: 0;
-                left: auto;
-            }
-            &:after {
-                margin-right: 10px;
-            }
-            &:before {
-                margin-right: 9px;
-            }
-        }
-    }
-}
-
-//
-// The following is the full expected structure for nested dropdowns
-//
-// .dropdown
-//     .dropdown-toggle (class not required but some means of toggling the dropdown)
-//     .dropdown-menu
-//         li a
-//         li a
-//         ....
-//         ....
-//         ....
-//         li a
-//         ul.dropdown-submenu
-//             li (this will be the means of toggling if hover)
-//                 a (this will be the means of toggling if clicking)
-//                 .dropdown-menu
-//                     li a
-//                     li a
-//                     ....
-
-// Nested Dropdown
-.dropdown-submenu {
-    position:relative;
-    padding: 0;
-    list-style: none;
-
-    > li > .dropdown-menu {
-        left: 100%;
-        top: -8px;
+    // Dropdown section headers
+    .dropdown-header {
+        display: block;
+        padding: 3px 16px;
+        padding-top: 8px;
+        font-size: variables.$font-size-base;
+        line-height: variables.$line-height-base;
+        color: variables.$dropdown-header-color;
+        white-space: nowrap;
+        text-transform: uppercase;
     }
 
-    &.submenu-left {
-        > li > .dropdown-menu {
-            transform: translateX(-100%);
-            left: 0;
-        }
-    }
-}
-
-// Hover/Focus state
-.dropdown-menu,
-.dropdown-submenu {
-    > li > a {
-        // Links within the dropdown menu
+    .menu-item {
         @include dropdowns.dropdown-menu-link;
-    }
-}
 
-// Active state
-.dropdown-menu,
-.dropdown-submenu {
-    > .active > a {
-        @include dropdowns.dropdown-menu-link-active;
-    }
-}
+        &.active {
+            @include dropdowns.dropdown-menu-link-active;
+        }
 
-// Disabled state
-//
-// Gray out text and ensure the hover/focus state remains gray
-.dropdown-menu > .disabled > a,
-.dropdown-submenu > .disabled > a {
-    &,
-    &:hover,
-    &:focus {
-        @include dropdowns.dropdown-menu-link-disabled;
+        // Gray out text and ensure the hover/focus state remains gray
+        &[disabled], &.disabled {
+            &,
+            &:hover,
+            &:focus-visible {
+                @include dropdowns.dropdown-menu-link-disabled;
+            }
+        }
     }
-}
-
-// Open state for the dropdown
-.open {
-    // Show the menu,// Show the submenu
-    > .dropdown-menu, > li > .dropdown-menu {
-        display: block;
-    }
-    // Remove the outline when :focus is triggered
-    > a {
-        outline: 0;
-    }
-    > .dropdown-backdrop {
-        display: block;
-    }
-}
-
-// Menu positioning
-//
-// Add extra class to `.dropdown-menu` to flip the alignment of the dropdown
-// menu with the parent.
-.dropdown-menu-right {
-    left: auto; // Reset the default from `.dropdown-menu`
-    right: 0;
-}
-// With v3, we enabled auto-flipping if you have a dropdown within a right
-// aligned nav component. To enable the undoing of that, we provide an override
-// to restore the default dropdown menu alignment.
-//
-// This is only for left-aligning a dropdown menu within a `.navbar-right` or
-// `.pull-right` nav component.
-.dropdown-menu-left {
-    left: 0;
-    right: auto;
 }
 
 .dropdown-menu-block {
     width: 100%;
-}
-
-// Dropdown section headers
-.dropdown-header {
-    display: block;
-    padding: 3px 16px;
-    padding-top: 8px;
-    font-size: variables.$font-size-base;
-    line-height: variables.$line-height-base;
-    color: variables.$dropdown-header-color;
-    white-space: nowrap; // as with > li > a
-    text-transform: uppercase;
 }
 
 // Backdrop to catch body clicks on mobile, etc.
@@ -221,65 +90,39 @@
     display: none;
 }
 
-.dropup {
-    // Reverse the caret
-    .caret {
-        border-top: 0;
-        border-bottom: variables.$caret-width-base dashed;
-        content: "";
-    }
-    // Different positioning for bottom up menu
-    .dropdown-menu {
-        top: auto;
-        bottom: 100%;
-        margin-bottom: 2px;
-
-        &.dropdown-menu-arrow {
-            &:after, &:before {
-                top: 100%;
-                transform: rotateZ(180deg);
-            }
-        }
-        // For nested dropdowns
-        > .dropdown-submenu > li > .dropdown-menu {
-            top: unset;
-            bottom: -8px;
-        }
-    }
-}
-
 .dropdown-menu-inverse {
     $dropdown-inverse-link-color: variables.$level1;
     $dropdown-inverese-link-active-bg: variables.get-color("primary", 3x-light);
-
     background-color: #ffffff;
+
     .dropdown-header {
         color: variables.get-color("gray", x-light);
     }
-    > li > a {
+    .menu-item {
         color: $dropdown-inverse-link-color;
-        cursor: pointer;
 
         &:hover,
-        &:focus {
+        &:focus-visible {
             color: $dropdown-inverse-link-color;
-            background-color: $dropdown-inverese-link-active-bg;
+            background-color: variables.get-color("coolgray", 5x-light);
         }
-    }
-    > .disabled > a {
-        &,
-        &:hover,
-        &:focus {
-            color: $dropdown-inverse-link-color;
-            background-color: transparent;
+
+        &.active {
+            &,
+            &:hover,
+            &:focus-visible {
+                color: $dropdown-inverse-link-color;
+                background-color: $dropdown-inverese-link-active-bg;
+            }
         }
-    }
-    > .active > a {
-        &,
-        &:hover,
-        &:focus {
-            color: $dropdown-inverse-link-color;
-            background-color: $dropdown-inverese-link-active-bg;
+
+        &[disabled] {
+            &,
+            &:hover,
+            &:focus-visible {
+                color: $dropdown-inverse-link-color;
+                background-color: transparent;
+            }
         }
     }
     .divider {
@@ -296,5 +139,14 @@
 
     .tooltip-inner {
         padding: 0;
+    }
+}
+
+.cdk-overlay-pane{
+    @include scrollbars.scrollbars();
+
+    .dropdown-menu.scrollable {
+        max-height: 200px;
+        overflow-y: auto;
     }
 }
