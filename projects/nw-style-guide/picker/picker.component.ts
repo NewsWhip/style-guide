@@ -45,7 +45,9 @@ import { isUndefined } from 'lodash-es';
 
                 <!-- Navigate up the tree -->
                 <div class="results-actions" *ngIf="parentId && displayItems.length && !searchTerm.value.length">
-                    <a role="button" aria-label="Go Back" class="picker-action" (click)="ascend($event, getParentItem(parentId))">
+                    <a tabindex="0" role="button" aria-label="Go Back" class="picker-action" 
+                        (click)="ascend($event, getParentItem(parentId))"
+                        (keydown.enter)="ascend($event, getParentItem(parentId))">
                         <i class="fas fa-long-arrow-alt-left" aria-hidden="true"></i>
                         {{getParentItem(parentId).displayName}}
                     </a>
@@ -56,8 +58,8 @@ import { isUndefined } from 'lodash-es';
 
                     <div class="results-actions" *ngIf="shouldShowSelections && !selectionsAreShowing && parentId == null && !searchTerm.value.length">
                         <ng-container *ngIf="getSelections().length">
-                            <a role="button" class="picker-action" (click)="editSelections($event)">Edit selections</a>
-                            <a role="button" class="picker-action" (click)="clearSelections($event)">Clear selections</a>
+                            <a tabindex="0" role="button" class="picker-action" (click)="editSelections($event)" (keydown.enter)="editSelections($event)">Edit selections</a>
+                            <a tabindex="0" role="button" class="picker-action" (click)="clearSelections($event)" (keydown.enter)="clearSelections($event)">Clear selections</a>
                         </ng-container>
 
                         <ng-container *ngIf="!getSelections().length">
