@@ -1,11 +1,11 @@
-import { Component, ChangeDetectionStrategy, ChangeDetectorRef, OnInit } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ChangeDetectorRef, OnInit, OnDestroy } from '@angular/core';
 import { IValidationChange } from "nw-style-guide/email-input/models/IValidationChange";
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ISnippet } from '../code/ISnippet';
 
 @Component({
-    selector: 'app-email-input-demo',
+    selector: 'nw-app-email-input-demo',
     templateUrl: './email-input-demo.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
     styles: [`
@@ -18,7 +18,7 @@ import { ISnippet } from '../code/ISnippet';
     `],
     standalone: false
 })
-export class EmailInputDemoComponent implements OnInit {
+export class EmailInputDemoComponent implements OnInit, OnDestroy {
 
     public emails: string[] = [
         "valid.email@newswhip.com",
@@ -65,7 +65,7 @@ export class EmailInputDemoComponent implements OnInit {
                     (updated)="onChange($event)"></nw-email-input>
             `
         }
-    }
+    };
 
     private _getProperties(): { name: string; defaultValue: string; description: string }[] {
         return [
@@ -99,7 +99,7 @@ export class EmailInputDemoComponent implements OnInit {
                 defaultValue: null,
                 description: 'Emits a <code>IValidationChange</code>. Fired on intialization, every time the input value changes and whenever an email pill is removed.'
             },
-        ]
+        ];
     }
 
     ngOnDestroy() {

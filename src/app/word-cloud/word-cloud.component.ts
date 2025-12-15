@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { IWordWithPosition } from 'nw-style-guide/word-cloud/models/IWordWithPosition';
 import { WordCloudComponent } from 'nw-style-guide/word-cloud';
 import { IWord } from 'nw-style-guide/word-cloud/models/IWord';
@@ -11,9 +11,10 @@ interface IMyWord extends IWord {
 }
 
 @Component({
-    selector: 'app-home',
+    selector: 'nw-app-home',
     templateUrl: './word-cloud.component.html',
     styleUrls: ['./word-cloud.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class WordCloudDemoComponent implements OnInit {
@@ -25,7 +26,7 @@ export class WordCloudDemoComponent implements OnInit {
     public positionedWords: IWordWithPosition<IMyWord>[] = [];
     public config: Partial<IWordCloudConfig> = {
         debugMode: false
-    }
+    };
 
     constructor(
         private _route: ActivatedRoute,
@@ -102,7 +103,7 @@ export class WordCloudDemoComponent implements OnInit {
                 <nw-word>...</nw-word>
             `
         },
-    }
+    };
 
     public wordCloudPropertiesTable: [string, string, string][] = [
         [
@@ -153,7 +154,7 @@ export class WordCloudDemoComponent implements OnInit {
             name: 'exportColor: string',
             description: 'Any valid CSS color that will be used when exporting the cloud to an image'
         }
-    ]
+    ];
 
     public configInterfaceDetails = [
         {
@@ -192,7 +193,7 @@ export class WordCloudDemoComponent implements OnInit {
             name: 'resizeTolerance: number',
             description: 'A pixel value specifying the minimum change in height or width that triggers the resize event'
         }
-    ]
+    ];
 
     public wordWithPositionInterfaceDetails = [
         {
@@ -223,7 +224,7 @@ export class WordCloudDemoComponent implements OnInit {
             name: 'fontSize: number',
             description: 'The fontSize of the word'
         }
-    ]
+    ];
 
     private _generateInputWords(): IMyWord[] {
         const words = ["document", "scatter", "outside", "Compromise", "finished", "reluctance", "discount", "content-stuff", "banish", "mainstream", "sail", "porter", "climb", "Europe", "fixture", "fail", "revolution", "consideration", "reader", "receipt", "half", "concentrate", "dynamic", "continuation", "racism", "crack", "treat", "greet", "coalition", "grain"];

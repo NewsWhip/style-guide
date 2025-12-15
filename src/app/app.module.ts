@@ -12,7 +12,6 @@ import { ChartsModule } from 'nw-style-guide/charts';
 import { LoaderModule } from 'nw-style-guide/loader';
 import { CarouselModule } from 'nw-style-guide/carousel';
 import { WordCloudModule } from 'nw-style-guide/word-cloud';
-
 import { AppComponent } from './app.component';
 import { ButtonsComponent } from './buttons/buttons.component';
 import { routing } from './app.routing';
@@ -49,6 +48,7 @@ import { AppCodeComponent } from './code/code.component';
 import { FaqComponent } from './faq/faq-component';
 import { WordCloudDemoComponent } from './word-cloud/word-cloud.component';
 import { SpacingComponent } from './spacing/spacing.component';
+import { CdkMenuModule } from '@angular/cdk/menu';
 
 @NgModule({
     declarations: [
@@ -83,7 +83,7 @@ import { SpacingComponent } from './spacing/spacing.component';
         WordCloudDemoComponent,
         SpacingComponent
     ],
-     imports: [
+    imports: [
         BrowserModule,
         FormsModule,
         ReactiveFormsModule,
@@ -103,7 +103,8 @@ import { SpacingComponent } from './spacing/spacing.component';
         TooltipModule,
         ScrollingModule,
         WordCloudModule,
-        DialogModule
+        DialogModule,
+        CdkMenuModule
     ],
     providers: [provideHttpClient(withInterceptorsFromDi())],
     bootstrap: [AppComponent]

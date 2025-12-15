@@ -2,76 +2,69 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ISnippet } from '../code/ISnippet';
 
 @Component({
-    selector: 'app-spacing',
+    selector: 'nw-app-spacing',
     templateUrl: './spacing.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
-export class SpacingComponent implements OnInit {
+export class SpacingComponent {
 
-  public snippets: ISnippet[] = [
-    {
-      lang: 'css',
-      code: `
-        .ml-4 {
-          margin-left: 4px;
+    public snippets: ISnippet[] = [
+        {
+            lang: 'css',
+            code: `
+            .ml-4 {
+              margin-left: 4px;
+            }
+            `
+        },
+        {
+            lang: 'css',
+            code: `
+            .mt-16 {
+                margin-top: 16px;
+            }
+            `
+        },
+        {
+            lang: 'css',
+            code: `
+            .mx-4 {
+                margin-left: 4px;
+                margin-right: 4px;
+            }
+            `
+        },
+        {
+            lang: 'css',
+            code: `
+            .mr-auto {
+                margin-right: auto;
+            }
+            `
+        },
+        {
+            lang: 'css',
+            code: `
+            .p-8 {
+                padding: 8px;
+            }
+            `
         }
-      `
-    },
-    {
-      lang: 'css',
-      code: `
-      .mt-16 {
-        margin-top: 16px;
-      }
-      `
-    },
-    {
-      lang: 'css',
-      code: `
-      .mx-4 {
-        margin-left: 4px;
-        margin-right: 4px;
-      }
-      `
-    },
-    {
-      lang: 'css',
-      code: `
-      .mr-auto {
-        margin-right: auto;
-      }
-      `
-    },
-    {
-      lang: 'css',
-      code: `
-      .p-8 {
-        padding: 8px;
-      }
-      `
-    }
-  ];
+    ];
 
-  public usageSnippets: ISnippet[] = [
-    {
-      lang: 'html',
-      code: '<div class="mr-8">...</div>'
-    },
-    {
-      lang: 'html',
-      code: '<p class="my-16">...</p>'
-    },
-    {
-      lang: 'html',
-      code: '<ul class="pl-0">...</ul>'
-    },
-    
-  ]
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+    public usageSnippets: ISnippet[] = [
+        {
+            lang: 'html',
+            code: '<div class="mr-8">...</div>'
+        },
+        {
+            lang: 'html',
+            code: '<p class="my-16">...</p>'
+        },
+        {
+            lang: 'html',
+            code: '<ul class="pl-0">...</ul>'
+        }
+    ];
 }

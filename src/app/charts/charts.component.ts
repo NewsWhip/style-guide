@@ -9,7 +9,7 @@ import { YAxisDirective, XAxisDirective, CircleDirective } from 'nw-style-guide/
 import { ScaleTime } from 'd3-scale';
 
 @Component({
-    selector: 'app-charts',
+    selector: 'nw-app-charts',
     templateUrl: './charts.component.html',
     styleUrls: ['./charts.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -104,7 +104,7 @@ export class ChartsComponent implements OnInit {
     public yAxisTickFormat = (d: number) => this._decimalPipe.transform(d, '1.0-0');
 
     public isHovering: boolean = false;
-    public hoverPosition: [number, number] = [0,0];
+    public hoverPosition: [number, number] = [0, 0];
     public mainScaleHoverCoordinates: [Date, number];
     public randomScaleHoverCoordinates: [Date, number];
     public numRandomPoints: number = 10;
@@ -144,7 +144,7 @@ export class ChartsComponent implements OnInit {
         this.metricNames = this.getMetricNames();
         this.createForm();
 
-        this.generateRandomData()
+        this.generateRandomData();
 
         this.subscribeToFormChange();
     }
@@ -165,7 +165,7 @@ export class ChartsComponent implements OnInit {
     }
 
     getMetricNames() {
-        let names: string[] = [];
+        const names: string[] = [];
 
         for (const metric in this._timelineData) {
             names.push(metric);
@@ -175,8 +175,8 @@ export class ChartsComponent implements OnInit {
     }
 
     setActiveDomains() {
-        let xVals: number[] = this.randomData.map(d => d[0]);
-        let yVals: number[] = [];
+        const xVals: number[] = this.randomData.map(d => d[0]);
+        const yVals: number[] = [];
 
         for (const metric in this._timelineData) {
             if (this.isMetricSelected(metric)) {
@@ -194,7 +194,7 @@ export class ChartsComponent implements OnInit {
     }
 
     isMetricSelected(metricName: string): boolean {
-        let i = this.metricNames.indexOf(metricName);
+        const i = this.metricNames.indexOf(metricName);
 
         if (i > -1) {
             return (this.form.get('selectedMetrics') as FormArray).controls[i].value;
@@ -203,12 +203,12 @@ export class ChartsComponent implements OnInit {
     }
 
     getDataByMetric(metric: string): Array<[number, number]> {
-        let data = [];
+        const data = [];
 
         for (const timestamp in this._timelineData[metric]) {
             if (this._timelineData[metric].hasOwnProperty(timestamp)) {
                 const value = this._timelineData[metric][timestamp];
-                data.push([timestamp, value])
+                data.push([timestamp, value]);
             }
         }
 
@@ -216,7 +216,7 @@ export class ChartsComponent implements OnInit {
     }
 
     onPathAnimationEnd(metric: string) {
-        console.log(`${metric} animation ended`)
+        console.log(`${metric} animation ended`);
     }
 
     circleTrackValue(index: number, item: [number, number]) {
@@ -244,7 +244,7 @@ export class ChartsComponent implements OnInit {
         var bisectDate = bisector(d => d[0]).left;
         var i = bisectDate(data, coordinates[0]); // returns the index to the current data item
 
-        var d0 = data[i - 1]
+        var d0 = data[i - 1];
         var d1 = data[i];
         // work out which date value is closest to the mouse
         var d = +coordinates[0] - d0[0] > d1[0] - +coordinates[0] ? d1 : d0;
@@ -252,23 +252,23 @@ export class ChartsComponent implements OnInit {
         var x = this.xAxis.scale(d[0]);
         var y = this.yAxis.scale(d[1]);
 
-        console.log('Closest point', x, y)
+        console.log('Closest point', x, y);
     }
 
     positionToCoordinates(xDomain: [number, number], yDomain: [number, number], position: [number, number]): [Date, number] {
         return [
             (this.xAxis.scale as ScaleTime<number, number>).domain(xDomain).invert(position[0]),
             this.yAxis.scale.domain(yDomain).invert(position[1])
-        ]
+        ];
     }
 
     generateRandomData(): void {
-        let xDomain: [number, number] = [1545085287756, 1545085287756 + (1000*60*60*24*0.5)];
-        let yDomain: [number, number] = [0, 500];
-        let datapoints: Array<[number, number]> = [];
+        const xDomain: [number, number] = [1545085287756, 1545085287756 + (1000 * 60 * 60 * 24 * 0.5)];
+        const yDomain: [number, number] = [0, 500];
+        const datapoints: Array<[number, number]> = [];
 
         for (let index = 0; index < this.numRandomPoints; index++) {
-            datapoints.push([this._randomInDomain(xDomain), this._randomInDomain(yDomain)])
+            datapoints.push([this._randomInDomain(xDomain), this._randomInDomain(yDomain)]);
         }
         this.randomData = datapoints.sort();
         this.randomYDomain = [
@@ -278,7 +278,7 @@ export class ChartsComponent implements OnInit {
 
         this.randomData.forEach(rd => {
             rd[2] = rd[1] * 0.5;
-        })
+        });
 
         this.setActiveDomains();
     }
@@ -286,9 +286,9 @@ export class ChartsComponent implements OnInit {
     addRandomDataPoint(): void {
         this.numRandomPoints++;
 
-        let maxTime = Math.max(...this.randomData.map(rd => rd[0]));
+        const maxTime = Math.max(...this.randomData.map(rd => rd[0]));
 
-        this.randomData.push([maxTime + 1000*60*60*2, this._randomInDomain([0, 900])]);
+        this.randomData.push([maxTime + 1000 * 60 * 60 * 2, this._randomInDomain([0, 900])]);
 
         this.randomYDomain = [
             0,
@@ -314,7 +314,7 @@ export class ChartsComponent implements OnInit {
         this.brushBox = [
             this.positionToCoordinates(this.xDomain, this.yDomain, corners[0]),
             this.positionToCoordinates(this.xDomain, this.yDomain, corners[1]),
-        ]
+        ];
         console.log(this.brushBox);
     }
 
@@ -323,7 +323,7 @@ export class ChartsComponent implements OnInit {
     }
 
     onBgClick() {
-        console.info('Background click')
+        console.info('Background click');
     }
 
     log(msg: string) {

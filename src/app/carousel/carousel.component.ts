@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
-    selector: 'app-carousel',
+    selector: 'nw-app-carousel',
     templateUrl: './carousel.component.html',
     styleUrls: ['./carousel.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -29,7 +29,7 @@ export class CarouselComponent implements OnInit {
         <div class="slide" nwCarouselSlide snapAlign="center" (click)="log('test')"
             [style.background-image]="'url(https://picsum.photos/216/120?image=' + item +')'">Slide {{item}}</div>
     </ng-container>
-</nw-carousel>`
+</nw-carousel>`;
     }
 
     getExample2() {
@@ -53,7 +53,7 @@ export class CarouselComponent implements OnInit {
             {{page + 1}}
         </button>
     </div>
-</nw-carousel>`
+</nw-carousel>`;
     }
 
 }

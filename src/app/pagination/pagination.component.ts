@@ -1,16 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 
 @Component({
-    selector: 'app-pagination',
+    selector: 'nw-app-pagination',
     templateUrl: './pagination.component.html',
     styleUrls: ['./pagination.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
-export class PaginationComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
-  }
+export class PaginationComponent {
 
 }

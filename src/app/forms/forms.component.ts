@@ -1,18 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
-    selector: 'app-forms',
+    selector: 'nw-app-forms',
     templateUrl: './forms.component.html',
     styleUrls: [`./forms.component.scss`],
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
-export class FormsComponent implements OnInit {
+export class FormsComponent {
 
-  public showErrors: boolean = false;
-
-  constructor() { }
-
-  ngOnInit() {
-  }
+    public showErrors: boolean = false;
 
 }

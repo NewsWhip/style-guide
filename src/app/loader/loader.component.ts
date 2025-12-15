@@ -1,24 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
-    selector: 'app-loader',
+    selector: 'nw-app-loader',
     templateUrl: './loader.component.html',
     styleUrls: ['./loader.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
-export class LoaderComponent implements OnInit {
-  private _num: number = 6;
-  public size: string = 'md';
+export class LoaderComponent {
+    private _num: number = 6;
+    public size: string = 'md';
 
-  constructor() {}
+    get num(): number {
+        return this._num;
+    }
 
-  ngOnInit() {}
-
-  get num(): number {
-    return this._num;
-  }
-
-  set num(value: number) {
-    this._num = +value;
-  }
+    set num(value: number) {
+        this._num = +value;
+    }
 }

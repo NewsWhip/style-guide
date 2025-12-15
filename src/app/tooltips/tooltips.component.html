@@ -52,7 +52,7 @@
     <br>
     <br>
     <p>Tooltips (using the <code>nwTooltip</code> selector) will open on mouseenter and close on mouseleave. There is also a default delay of 500ms.</p>
-    <app-code [snippet]="snippets.basicTooltip"></app-code>
+    <nw-app-code [snippet]="snippets.basicTooltip"></nw-app-code>
   </div>
 
   <hr>
@@ -71,7 +71,7 @@
     <br>
     <br>
     <p>Tooltips (using the <code>nwPopover</code> selector) will open and close on click. There is no default delay.</p>
-    <app-code [snippet]="snippets.basicPopover"></app-code>
+    <nw-app-code [snippet]="snippets.basicPopover"></nw-app-code>
   </div>
   <hr>
 
@@ -98,7 +98,7 @@
     </ng-template>
   </div>
 
-  <app-code [snippet]="snippets.withCloseButton"></app-code>
+  <nw-app-code [snippet]="snippets.withCloseButton"></nw-app-code>
   <hr>
 
   <h4>Live example</h4>
@@ -193,12 +193,12 @@
     [delay]="0"
     [closeEvents]="['mouseleave']">Disabled element</button>
 
-  <app-code [snippet]="snippets.disabledExample"></app-code>
+  <nw-app-code [snippet]="snippets.disabledExample"></nw-app-code>
 </div>
 
 <div *ngIf="selectedTab === 'api'" class="tab-content">
   <h3>API reference for tooltips / popover</h3>
-  <app-code [snippet]="snippets.import"></app-code>
+  <nw-app-code [snippet]="snippets.import"></nw-app-code>
 
   <h4>Directives</h4>
 
@@ -259,34 +259,34 @@
   </table>
 
   <h5>Types and interfaces</h5>
-  <app-code [snippet]="snippets.placementType"></app-code>
+  <nw-app-code [snippet]="snippets.placementType"></nw-app-code>
 
   <h4>Troubleshooting</h4>
 
-  <app-faq>
+  <nw-app-faq>
     <p question>My tooltip is not closing on scroll even though I've set <code>[closeOnScroll]="true"</code>.</p>
     <p answer>If your tooltip is inside a scrollable container, that scrollable container needs to have the <code>cdkScrollable</code> directive attached.</p>
-  </app-faq>
+  </nw-app-faq>
 
-  <app-faq>
+  <nw-app-faq>
     <p question>My tooltip is not repositioning on scroll.</p>
     <p answer>As above, if your tooltip is inside a scrollable container, that scrollable container needs to have the <code>cdkScrollable</code> directive attached.</p>
-  </app-faq>
+  </nw-app-faq>
 
-  <app-faq>
+  <nw-app-faq>
     <p question>Do I use the nwTooltip selector or the nwPopover selector?</p>
     <p answer>
       The answer depends on your desired behaviour. The only differences between the two selectors are the default values of the inputs. Consult
       the properties table above to the differences between the default values.
     </p>
-  </app-faq>
+  </nw-app-faq>
 
-  <app-faq>
+  <nw-app-faq>
     <p question>How do I tweak the position of the tooltip?</p>
     <p answer>
       You can supply a containerClass input which you can apply styles against.
     </p>
-  </app-faq>
+  </nw-app-faq>
 </div>
 
 <ng-template #inputTableTowTmpl let-values="values">

@@ -1,9 +1,9 @@
-import { Component, ElementRef, ViewChild, AfterContentInit, ChangeDetectionStrategy } from "@angular/core";
+import { Component, ElementRef, ViewChild, AfterContentInit, ChangeDetectionStrategy, OnDestroy } from "@angular/core";
 import Clipboard from 'clipboard';
 import { Toaster } from 'nw-style-guide/toasts';
 
 @Component({
-    selector: 'app-copy-code',
+    selector: 'nw-app-copy-code',
     template: `
         <pre><code #code><ng-content></ng-content></code><i class="fal fa-copy copy-icon" #copyIcon></i></pre>
     `,
@@ -20,7 +20,7 @@ import { Toaster } from 'nw-style-guide/toasts';
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
-export class CopyCodeComponent implements AfterContentInit {
+export class CopyCodeComponent implements AfterContentInit, OnDestroy {
 
     @ViewChild('copyIcon', { static: true }) copyIcon: ElementRef<HTMLElement>;
     @ViewChild('code', { static: true }) code: ElementRef<HTMLElement>;
@@ -30,22 +30,22 @@ export class CopyCodeComponent implements AfterContentInit {
     constructor(private _toaster: Toaster) {}
 
     ngAfterContentInit() {
-		this.initializeClipboard();
-	}
+        this.initializeClipboard();
+    }
 
-	initializeClipboard() {
-		this._clipboard = new Clipboard(this.copyIcon.nativeElement, {
+    initializeClipboard() {
+        this._clipboard = new Clipboard(this.copyIcon.nativeElement, {
 		    text: () => {
 		    	return this.code.nativeElement.innerText.trim();
 		    }
         });
 
-		this._clipboard.on('success', e => this._toaster.success('Copied to clipboard'));
-		this._clipboard.on('error', e => this._toaster.error('Failed to copy'));
-	}
+        this._clipboard.on('success', e => this._toaster.success('Copied to clipboard'));
+        this._clipboard.on('error', e => this._toaster.error('Failed to copy'));
+    }
 
-	ngOnDestroy() {
-		this._clipboard.destroy();
-	}
+    ngOnDestroy() {
+        this._clipboard.destroy();
+    }
 
 }

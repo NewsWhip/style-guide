@@ -1,9 +1,10 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
-    selector: 'app-colors',
+    selector: 'nw-app-colors',
     templateUrl: './colors.component.html',
     styleUrls: ['./colors.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class ColorsComponent implements OnInit {
@@ -47,7 +48,7 @@ export class ColorsComponent implements OnInit {
     }
 
     getColors(splash):string {
-        let rgb = getComputedStyle(splash).backgroundColor;
+        const rgb = getComputedStyle(splash).backgroundColor;
 
         return `
             ${this.getHex(rgb)}<br><br>
@@ -66,27 +67,27 @@ export class ColorsComponent implements OnInit {
     }
 
     getHsb(rgbString) {
-        let rgb = rgbString.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
-        let hsv = this.rGBtoHsb(parseInt(rgb[1], 10), parseInt(rgb[2], 10), parseInt(rgb[3], 10));
-        let h = Math.round(hsv.h * 360);
-        let s = Math.round(hsv.s * 100);
-        let b = Math.round(hsv.v * 100);
+        const rgb = rgbString.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
+        const hsv = this.rGBtoHsb(parseInt(rgb[1], 10), parseInt(rgb[2], 10), parseInt(rgb[3], 10));
+        const h = Math.round(hsv.h * 360);
+        const s = Math.round(hsv.s * 100);
+        const b = Math.round(hsv.v * 100);
 
-        return `hsb(${h}, ${s}%, ${b}%)`
+        return `hsb(${h}, ${s}%, ${b}%)`;
     }
 
     getHsl(rgbString) {
-        let rgb = rgbString.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
-        let hsl = this.rgbToHsl(parseInt(rgb[1], 10), parseInt(rgb[2], 10), parseInt(rgb[3], 10));
-        let hue = Math.round(hsl[0]);
-        let sat = Math.round(hsl[1]);
-        let light = Math.round(hsl[2]);
+        const rgb = rgbString.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
+        const hsl = this.rgbToHsl(parseInt(rgb[1], 10), parseInt(rgb[2], 10), parseInt(rgb[3], 10));
+        const hue = Math.round(hsl[0]);
+        const sat = Math.round(hsl[1]);
+        const light = Math.round(hsl[2]);
 
         return `hsl(${hue}, ${sat}%, ${light}%)`;
     }
 
     rgb2hex(rgbString) {
-        let rgb = rgbString.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
+        const rgb = rgbString.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
         return (rgb && rgb.length === 4) ? "#" +
             ("0" + parseInt(rgb[1], 10).toString(16)).slice(-2) +
             ("0" + parseInt(rgb[2], 10).toString(16)).slice(-2) +
@@ -94,7 +95,9 @@ export class ColorsComponent implements OnInit {
     }
 
     rgbToHsl(r, g, b) {
-        r /= 255, g /= 255, b /= 255;
+        r /= 255;
+        g /= 255;
+        b /= 255;
 
         var max = Math.max(r, g, b), min = Math.min(r, g, b);
         var h, s, l = (max + min) / 2;
@@ -114,12 +117,14 @@ export class ColorsComponent implements OnInit {
             h *= 60;
         }
 
-        return [h, s * 100, l*100];
+        return [h, s * 100, l * 100];
     }
 
     rGBtoHsb(r, g, b) {
         if (arguments.length === 1) {
-            g = r.g, b = r.b, r = r.r;
+            g = r.g;
+            b = r.b;
+            r = r.r;
         }
         var max = Math.max(r, g, b), min = Math.min(r, g, b),
             d = max - min,
@@ -129,7 +134,7 @@ export class ColorsComponent implements OnInit {
 
         switch (max) {
             case min: h = 0; break;
-            case r: h = (g - b) + d * (g < b ? 6: 0); h /= 6 * d; break;
+            case r: h = (g - b) + d * (g < b ? 6 : 0); h /= 6 * d; break;
             case g: h = (b - r) + d * 2; h /= 6 * d; break;
             case b: h = (r - g) + d * 4; h /= 6 * d; break;
         }

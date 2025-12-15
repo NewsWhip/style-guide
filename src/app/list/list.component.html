@@ -27,14 +27,16 @@
                     <a href="#" class="list-group-item">Panel 7</a>
                     <div class="list-group-item-with-actions">
                         <div class="dropdown list-group-item-actions">
-                            <button aria-expanded="false" aria-haspopup="true" class="btn btn-ghost-alt dropdown-toggle" data-toggle="dropdown" id="dropdownMenu1" type="button">
+                            <button cdkMenuItem [cdkMenuTriggerFor]="dropdownMenu" class="btn btn-ghost-alt dropdown-toggle" id="dropdownMenu1" type="button">
                                 <i aria-hidden="true" class="fas fa-plus-circle"></i>
                             </button>
-                            <ul aria-labelledby="dropdownMenu1" class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
-                                <li><a href="#">Action</a></li>
-                                <li><a href="#">Another action</a></li>
-                                <li><a href="#">Something else here</a></li>
-                            </ul>
+                            <ng-template #dropdownMenu>
+                                <div cdkMenu aria-labelledby="dropdownMenu1" class="dropdown-menu dropdown-menu-arrow">
+                                    <button cdkMenuItem class="menu-item">Action</button>
+                                    <button cdkMenuItem class="menu-item">Another action</button>
+                                    <button cdkMenuItem class="menu-item">Something else here</button>
+                                </div>
+                            </ng-template>
                         </div>
 
                         <a class="list-group-item" href="javascript:;">
@@ -47,7 +49,7 @@
         </div>
 
         <div class="col-sm-6">
-            <pre style="margin-top: 100px;">{{listGroupHTML}}</pre>
+            <pre style="margin-top: 100px;">{{listGroupHTML()}}</pre>
         </div>
     </div>
 
@@ -94,7 +96,7 @@
         </div>
 
         <div class="col-sm-6">
-            <pre style="margin-top: 100px;">{{listGroupPrimaryHTML}}</pre>
+            <pre style="margin-top: 100px;">{{listGroupPrimaryHTML()}}</pre>
         </div>
     </div>
 
@@ -108,14 +110,16 @@
                         Collapse / expand menu
                         <div class="list-group-header-actions">
                             <div class="dropdown">
-                                <button aria-expanded="false" aria-haspopup="true" class="btn btn-ghost-alt dropdown-toggle" data-toggle="dropdown" id="dropdownMenu1" type="button">
+                                <button cdkMenuItem [cdkMenuTriggerFor]="dropdownMenu" class="btn btn-ghost-alt dropdown-toggle" id="dropdownMenu1" type="button">
                                     <i aria-hidden="true" class="fas fa-plus-circle"></i>
                                 </button>
-                                <ul aria-labelledby="dropdownMenu1" class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
-                                    <li><a href="#">Action</a></li>
-                                    <li><a href="#">Another action</a></li>
-                                    <li><a href="#">Something else here</a></li>
-                                </ul>
+                                <ng-template #dropdownMenu>
+                                    <div cdkMenu aria-labelledby="dropdownMenu1" class="dropdown-menu dropdown-menu-arrow">
+                                        <button cdkMenuItem class="menu-item">Action</button>
+                                        <button cdkMenuItem class="menu-item">Another action</button>
+                                        <button cdkMenuItem class="menu-item">Something else here</button>
+                                    </div>
+                                </ng-template>
                             </div>
                         </div>
                     </h5>
@@ -128,15 +132,17 @@
                     </div>
 
                     <div class="list-group-item-with-actions">
-                        <div class="dropdown list-group-item-actions" nwDropdown>
-                            <button aria-expanded="false" aria-haspopup="true" class="btn btn-ghost-alt dropdown-toggle" nwDropdownToggle id="dropdownMenu1" type="button">
+                        <div class="dropdown list-group-item-actions">
+                            <button cdkMenuItem [cdkMenuTriggerFor]="dropdownMenu" class="btn btn-ghost-alt dropdown-toggle" id="dropdownMenu1" type="button">
                                 <i class="far fa-ellipsis-v"></i>
                             </button>
-                            <ul aria-labelledby="dropdownMenu1" class="dropdown-menu dropdown-menu-arrow dropdown-menu-right" nwDropdownMenu>
-                                <li><a href="#">Action</a></li>
-                                <li><a href="#">Another action</a></li>
-                                <li><a href="#">Something else here</a></li>
-                            </ul>
+                            <ng-template #dropdownMenu>
+                                <div cdkMenu aria-labelledby="dropdownMenu1" class="dropdown-menu dropdown-menu-arrow">
+                                    <button cdkMenuItem class="menu-item">Action</button>
+                                    <button cdkMenuItem class="menu-item">Another action</button>
+                                    <button cdkMenuItem class="menu-item">Something else here</button>
+                                </div>
+                            </ng-template>
                         </div>
 
                         <a href="#folder2" class="list-group-item collapsed" data-toggle="collapse" aria-expanded="false" aria-controls="folder2">Folder 2</a>
@@ -168,7 +174,7 @@
         </div>
 
         <div class="col-sm-6">
-            <pre style="margin-top: 60px;">{{nestedLgHTML}}</pre>
+            <pre style="margin-top: 60px;">{{nestedLgHTML()}}</pre>
         </div>
     </div>
 

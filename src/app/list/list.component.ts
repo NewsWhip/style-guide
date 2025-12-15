@@ -1,33 +1,28 @@
-import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
-
-declare var html_beautify: any;
+import { Component, AfterViewInit, ViewChild, ElementRef, WritableSignal, signal, ChangeDetectionStrategy } from '@angular/core';
+import beautify from 'js-beautify';
 
 @Component({
-    selector: 'app-list',
+    selector: 'nw-app-list',
     templateUrl: './list.component.html',
     styleUrls: ['./list.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
-export class ListComponent implements OnInit, AfterViewInit {
+export class ListComponent implements AfterViewInit {
 
     @ViewChild('lg', { static: true }) lg: ElementRef;
     @ViewChild('lgPrimary', { static: true }) lgPrimary: ElementRef;
     @ViewChild('nestedLg', { static: true }) nestedLg: ElementRef;
 
-    public listGroupHTML: string;
-    public listGroupPrimaryHTML: string;
-    public nestedLgHTML: string;
-
-    constructor() { }
-
-    ngOnInit() {
-    }
+    public listGroupHTML: WritableSignal<string> = signal('');
+    public listGroupPrimaryHTML: WritableSignal<string> = signal('');
+    public nestedLgHTML: WritableSignal<string> = signal('');
 
     ngAfterViewInit() {
         setTimeout(() => {
-            this.listGroupHTML = html_beautify(this.lg.nativeElement.outerHTML);
-            this.listGroupPrimaryHTML = html_beautify(this.lgPrimary.nativeElement.outerHTML);
-            this.nestedLgHTML = html_beautify(this.nestedLg.nativeElement.outerHTML);
+            this.listGroupHTML.set(beautify.html(this.lg.nativeElement.outerHTML));
+            this.listGroupPrimaryHTML.set(beautify.html(this.lgPrimary.nativeElement.outerHTML));
+            this.nestedLgHTML.set(beautify.html(this.nestedLg.nativeElement.outerHTML));
         }, 0);
     }
 

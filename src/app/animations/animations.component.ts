@@ -1,20 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { NW_DURATION, NW_EASING } from 'nw-style-guide/animations';
 
 @Component({
-    selector: 'app-animations',
+    selector: 'nw-app-animations',
     templateUrl: './animations.component.html',
     styleUrls: ['./animations.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
-export class AnimationsComponent implements OnInit {
+export class AnimationsComponent {
 
     public duration = NW_DURATION;
     public easing = NW_EASING;
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
 }

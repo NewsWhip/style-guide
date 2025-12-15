@@ -1,14 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 
 @Component({
-    selector: 'app-branding',
+    selector: 'nw-app-branding',
     templateUrl: './branding.component.html',
     styleUrls: ['./branding.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
-export class BrandingComponent implements OnInit {
+export class BrandingComponent {
 
-    public unsafeHeadTag: string =`
+    public unsafeHeadTag: string = `
 <meta name="theme-color" content="#383838">
 
 <link rel="shortcut icon" type="image/png" href="images/favicons/favicon.ico">
@@ -16,9 +17,6 @@ export class BrandingComponent implements OnInit {
 <link rel="icon" type="image/png" href="images/favicons/favicon-32x32.png" sizes="32x32">
 <link rel="icon" type="image/png" href="images/favicons/favicon-16x16.png" sizes="16x16">
 <link rel="mask-icon" href="images/favicons/safari-pinned-tab.svg" color="#383838">`;
-
-    ngOnInit() {
-    }
 
     escapeHtml(unsafe: string) {
         return unsafe

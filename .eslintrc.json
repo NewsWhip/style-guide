@@ -4,9 +4,7 @@
   // be to remove this ignore pattern and update the prefix rule for components and directives. We'll then need
   // to update the eslintrc.json file for the nw-style-guide project to have its own component and directive prefix
   // rules
-  "ignorePatterns": [
-    "src/app/"
-  ],
+  "ignorePatterns": [],
   "overrides": [
     {
       "files": [

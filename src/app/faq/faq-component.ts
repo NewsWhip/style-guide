@@ -1,7 +1,7 @@
-import { Component } from "@angular/core";
+import { ChangeDetectionStrategy, Component } from "@angular/core";
 
 @Component({
-    selector: 'app-faq',
+    selector: 'nw-app-faq',
     template: `
         <div class="question" (click)="isOpen = !isOpen"
             [class.open]="isOpen">
@@ -13,6 +13,7 @@ import { Component } from "@angular/core";
         </div>
     `,
     styleUrls: ['./faq-component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class FaqComponent {

@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 @Component({
-    selector: 'app-autofocus',
+    selector: 'nw-app-autofocus',
     templateUrl: './autofocus.component.html',
     styleUrls: ['./autofocus.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,

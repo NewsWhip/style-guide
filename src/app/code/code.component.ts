@@ -7,7 +7,7 @@ import 'prismjs/plugins/toolbar/prism-toolbar';
 import 'prismjs/plugins/copy-to-clipboard/prism-copy-to-clipboard';
 
 @Component({
-    selector: 'app-code',
+    selector: 'nw-app-code',
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
         <pre class="language-{{snippet.lang}}">

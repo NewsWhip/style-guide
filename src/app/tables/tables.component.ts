@@ -1,18 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 
 @Component({
-    selector: 'app-tables',
+    selector: 'nw-app-tables',
     templateUrl: './tables.component.html',
     styleUrls: ['./tables.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
-export class TablesComponent implements OnInit {
+export class TablesComponent {
 
     public isTall: boolean = false;
-
-    constructor() { }
-
-    ngOnInit() {
-    }
 
 }

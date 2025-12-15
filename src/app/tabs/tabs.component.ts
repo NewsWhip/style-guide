@@ -2,7 +2,7 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { uniqueId } from 'lodash-es';
 
 @Component({
-    selector: 'app-tabs',
+    selector: 'nw-app-tabs',
     templateUrl: './tabs.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
     styles: [`
@@ -47,7 +47,7 @@ export class TabsComponent {
         this.tabCollection.push({
             name: uniqueId('Added '),
             isActive: false
-        })
+        });
     }
 
     removeLastTab(): void {
