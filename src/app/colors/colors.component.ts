@@ -1,10 +1,12 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
     selector: 'app-colors',
     templateUrl: './colors.component.html',
     styleUrls: ['./colors.component.scss'],
-    standalone: false
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [CommonModule]
 })
 export class ColorsComponent implements OnInit {
     public showColorCodes: boolean = false;

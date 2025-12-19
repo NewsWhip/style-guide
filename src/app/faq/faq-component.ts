@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { ChangeDetectionStrategy, Component } from "@angular/core";
 
 @Component({
     selector: 'app-faq',
@@ -13,7 +13,7 @@ import { Component } from "@angular/core";
         </div>
     `,
     styleUrls: ['./faq-component.scss'],
-    standalone: false
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FaqComponent {
 

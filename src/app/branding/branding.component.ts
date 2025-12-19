@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 
 @Component({
     selector: 'app-branding',
     templateUrl: './branding.component.html',
     styleUrls: ['./branding.component.scss'],
-    standalone: false
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BrandingComponent implements OnInit {
 

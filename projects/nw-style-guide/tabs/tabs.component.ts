@@ -1,4 +1,5 @@
 import { Component, ContentChildren, QueryList, Input, ElementRef, ViewChild, OnInit, ChangeDetectorRef, OnDestroy, ChangeDetectionStrategy, AfterContentInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { TabDirective } from './tab.directive';
 import { fromEvent, Subscription, Observable, merge } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
@@ -37,7 +38,7 @@ import { TabsService } from './tabs.service';
             position: relative;
         }
     `],
-    standalone: false
+    imports: [CommonModule]
 })
 
 export class TabsComponent implements OnInit, AfterContentInit, OnDestroy {

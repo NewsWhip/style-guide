@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { NW_DURATION, NW_EASING } from 'nw-style-guide/animations';
 
 @Component({
     selector: 'app-animations',
     templateUrl: './animations.component.html',
     styleUrls: ['./animations.component.scss'],
-    standalone: false
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AnimationsComponent implements OnInit {
 

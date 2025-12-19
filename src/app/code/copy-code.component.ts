@@ -18,7 +18,6 @@ import { Toaster } from 'nw-style-guide/toasts';
         }
     `],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
 })
 export class CopyCodeComponent implements AfterContentInit {
 

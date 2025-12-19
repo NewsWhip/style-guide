@@ -1,14 +1,18 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Toaster } from 'nw-style-guide/toasts';
+import { TabsModule } from 'nw-style-guide/tabs';
+import { CommonModule } from '@angular/common';
+import { CopyCodeComponent } from '../code/copy-code.component';
 
 @Component({
     selector: 'app-toasts',
     templateUrl: './toasts.component.html',
     styleUrls: ['./toasts.component.scss'],
-    standalone: false
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [TabsModule, RouterLink, CommonModule, CopyCodeComponent, ReactiveFormsModule]
 })
 export class ToastsComponent implements OnInit, OnDestroy {
 

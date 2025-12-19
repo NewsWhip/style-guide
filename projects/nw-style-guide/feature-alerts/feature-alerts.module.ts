@@ -7,13 +7,11 @@ import { FeatureAlertsDirective } from './feature-alerts.directive';
 
 @NgModule({
     imports: [
-        CommonModule
-    ],
-    providers: [WindowRef],
-    declarations: [
+        CommonModule,
         HotspotComponent,
         FeatureAlertsDirective
     ],
+    providers: [WindowRef],
     exports: [
         HotspotComponent,
         FeatureAlertsDirective

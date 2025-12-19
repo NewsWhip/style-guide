@@ -2,8 +2,7 @@ import { Directive, ElementRef, HostBinding, Input, OnChanges, SimpleChanges } f
 import { TabsService } from './tabs.service';
 
 @Directive({
-    selector: '[nwTab]',
-    standalone: false
+    selector: '[nwTab]'
 })
 export class TabDirective implements OnChanges {
 

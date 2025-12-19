@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild, ElementRef, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
-import { FormControl, Validators } from "@angular/forms";
+import { FormControl, ReactiveFormsModule, Validators } from "@angular/forms";
 import { IValidationChange } from "./models/IValidationChange";
 import { Subscription } from 'rxjs';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'nw-email-input',
@@ -34,7 +35,7 @@ import { Subscription } from 'rxjs';
     `,
     changeDetection: ChangeDetectionStrategy.OnPush,
     exportAs: 'nw-email-input',
-    standalone: false
+    imports: [CommonModule, ReactiveFormsModule]
 })
 export class EmailInputComponent implements OnInit, OnDestroy {
 

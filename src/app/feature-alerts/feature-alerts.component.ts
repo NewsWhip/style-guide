@@ -1,5 +1,6 @@
+import { CommonModule } from '@angular/common';
 import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { FeatureAlertsService, WindowRef } from 'nw-style-guide/feature-alerts';
+import { FeatureAlertsModule, WindowRef, FeatureAlertsService } from 'nw-style-guide/feature-alerts';
 
 @Component({
     selector: 'app-feature-alerts',
@@ -17,7 +18,7 @@ import { FeatureAlertsService, WindowRef } from 'nw-style-guide/feature-alerts';
         }
     `],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [FeatureAlertsModule, CommonModule]
 })
 export class FeatureAlertsComponent {
     message: string;

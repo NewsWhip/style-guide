@@ -1,13 +1,17 @@
 import { Component, OnInit, ChangeDetectionStrategy, OnDestroy, ChangeDetectorRef } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { AutoFocusModule } from 'nw-style-guide/autofocus';
 import { Subscription } from 'rxjs';
+import { TabsModule } from 'nw-style-guide/tabs';
+import { CommonModule } from '@angular/common';
+import { CopyCodeComponent } from '../code/copy-code.component';
 
 @Component({
     selector: 'app-autofocus',
     templateUrl: './autofocus.component.html',
     styleUrls: ['./autofocus.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [AutoFocusModule, TabsModule, RouterLink, CommonModule, CopyCodeComponent]
 })
 export class AutofocusComponent implements OnInit, OnDestroy {
 

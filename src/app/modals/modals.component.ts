@@ -1,12 +1,14 @@
 import { Dialog } from '@angular/cdk/dialog';
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
     selector: 'app-modals',
     templateUrl: './modals.component.html',
     styleUrls: ['./modals.component.scss'],
-    standalone: false
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [CommonModule, ReactiveFormsModule, FormsModule]
 })
 export class ModalsComponent implements OnInit {
 

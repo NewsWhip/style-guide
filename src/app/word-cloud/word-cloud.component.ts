@@ -1,10 +1,13 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { IWordWithPosition } from 'nw-style-guide/word-cloud/models/IWordWithPosition';
-import { WordCloudComponent } from 'nw-style-guide/word-cloud';
+import { WordCloudComponent, WordCloudModule } from 'nw-style-guide/word-cloud';
 import { IWord } from 'nw-style-guide/word-cloud/models/IWord';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ISnippet } from '../code/ISnippet';
 import { IWordCloudConfig } from 'nw-style-guide/word-cloud/models/IWordCloudConfig';
+import { AppCodeComponent } from '../code/code.component';
+import { CommonModule } from '@angular/common';
+import { TabsModule } from 'nw-style-guide/tabs';
 
 interface IMyWord extends IWord {
     id: number;
@@ -14,7 +17,8 @@ interface IMyWord extends IWord {
     selector: 'app-home',
     templateUrl: './word-cloud.component.html',
     styleUrls: ['./word-cloud.component.scss'],
-    standalone: false
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [TabsModule, RouterLink, CommonModule, AppCodeComponent, WordCloudModule]
 })
 export class WordCloudDemoComponent implements OnInit {
 

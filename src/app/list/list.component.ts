@@ -1,12 +1,15 @@
-import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
-
-declare var html_beautify: any;
+import { Component, AfterViewInit, ViewChild, ElementRef, WritableSignal, signal, ChangeDetectionStrategy, OnInit } from '@angular/core';
+import beautify from 'js-beautify';
+import { CommonModule } from '@angular/common';
+import { CdkMenuModule } from '@angular/cdk/menu';
+import { RouterLinkActive } from '@angular/router';
 
 @Component({
     selector: 'app-list',
     templateUrl: './list.component.html',
     styleUrls: ['./list.component.scss'],
-    standalone: false
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [CommonModule, CdkMenuModule, RouterLinkActive]
 })
 export class ListComponent implements OnInit, AfterViewInit {
 
@@ -14,9 +17,9 @@ export class ListComponent implements OnInit, AfterViewInit {
     @ViewChild('lgPrimary', { static: true }) lgPrimary: ElementRef;
     @ViewChild('nestedLg', { static: true }) nestedLg: ElementRef;
 
-    public listGroupHTML: string;
-    public listGroupPrimaryHTML: string;
-    public nestedLgHTML: string;
+    public listGroupHTML: WritableSignal<string> = signal('');
+    public listGroupPrimaryHTML: WritableSignal<string> = signal('');
+    public nestedLgHTML: WritableSignal<string> = signal('');
 
     constructor() { }
 
@@ -25,9 +28,9 @@ export class ListComponent implements OnInit, AfterViewInit {
 
     ngAfterViewInit() {
         setTimeout(() => {
-            this.listGroupHTML = html_beautify(this.lg.nativeElement.outerHTML);
-            this.listGroupPrimaryHTML = html_beautify(this.lgPrimary.nativeElement.outerHTML);
-            this.nestedLgHTML = html_beautify(this.nestedLg.nativeElement.outerHTML);
+            this.listGroupHTML.set(beautify.html(this.lg.nativeElement.outerHTML));
+            this.listGroupPrimaryHTML.set(beautify.html(this.lgPrimary.nativeElement.outerHTML));
+            this.nestedLgHTML.set(beautify.html(this.nestedLg.nativeElement.outerHTML));
         }, 0);
     }
 

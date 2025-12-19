@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 
 @Component({
     selector: 'app-relative-weight',
     templateUrl: './relative-weight.component.html',
     styleUrls: ['./relative-weight.component.scss'],
-    standalone: false
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [CommonModule]
 })
 export class RelativeWeightComponent implements OnInit {
 

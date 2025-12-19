@@ -27,7 +27,7 @@ import { AutofocusComponent } from './autofocus/autofocus.component';
 import { WordCloudDemoComponent } from './word-cloud/word-cloud.component';
 import { SpacingComponent } from './spacing/spacing.component';
 
-const appRoutes: Routes = [
+export const appRoutes: Routes = [
     {
         path: '',
         component: HomeComponent

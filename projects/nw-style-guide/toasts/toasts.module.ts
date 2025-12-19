@@ -5,9 +5,9 @@ import { Toaster } from './toasts.service';
 
 @NgModule({
     imports: [
-        CommonModule
+        CommonModule,
+        ToastsComponent
     ],
-    declarations: [ToastsComponent]
 })
 export class ToastsModule {
     static forRoot(): ModuleWithProviders<ToastsModule> {

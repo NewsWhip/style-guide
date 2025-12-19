@@ -1,14 +1,19 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ISnippet } from '../code/ISnippet';
+import { TabsModule } from 'nw-style-guide/tabs';
+import { CommonModule } from '@angular/common';
+import { TooltipModule } from 'nw-style-guide/tooltips';
+import { AppCodeComponent } from '../code/code.component';
+import { FaqComponent } from '../faq/faq-component';
 
 @Component({
     selector: 'app-tooltips',
     templateUrl: './tooltips.component.html',
     styleUrls: ['./tooltips.component.scss'],
-    standalone: false
+    imports: [TabsModule, RouterLink, CommonModule, TooltipModule, AppCodeComponent, FaqComponent]
 })
 export class TooltipsComponent implements OnInit, OnDestroy {
 

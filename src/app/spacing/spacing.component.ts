@@ -1,11 +1,13 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ISnippet } from '../code/ISnippet';
+import { AppCodeComponent } from '../code/code.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'app-spacing',
     templateUrl: './spacing.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [AppCodeComponent, CommonModule]
 })
 export class SpacingComponent implements OnInit {
 

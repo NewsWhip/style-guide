@@ -1,11 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { IPickerItem } from 'nw-style-guide/picker';
+import { NwPickerModule } from 'nw-style-guide/picker';
 
 @Component({
     selector: 'app-picker',
     templateUrl: './picker.component.html',
     styleUrls: ['./picker.component.scss'],
-    standalone: false
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [NwPickerModule]
 })
 export class PickerComponent implements OnInit {
 

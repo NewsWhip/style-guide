@@ -5,9 +5,10 @@ import { CarouselSlideDirective } from './carousel-slide.directive';
 
 @NgModule({
     imports: [
-        CommonModule
+        CommonModule,
+        CarouselComponent,
+        CarouselSlideDirective
     ],
-    declarations: [CarouselComponent, CarouselSlideDirective],
     exports: [CarouselComponent, CarouselSlideDirective]
 })
 export class CarouselModule { }

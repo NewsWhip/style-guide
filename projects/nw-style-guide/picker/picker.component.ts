@@ -1,9 +1,10 @@
 import { Component, Input, Output, ChangeDetectorRef, ChangeDetectionStrategy, EventEmitter, ViewChild, ElementRef, OnInit, OnDestroy, SimpleChanges, OnChanges } from '@angular/core';
 import { trigger, transition, animate, style } from '@angular/animations';
-import { FormControl } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { IPickerItem } from './IPickerItem';
 import { Subscription } from 'rxjs';
 import { isUndefined } from 'lodash-es';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'nw-angular-picker',
@@ -54,7 +55,7 @@ import { isUndefined } from 'lodash-es';
                 <div class="scroll-container" #searchResultsScrollEl
                     [style.max-height]="getMaxHeight(searchResultsScrollEl)">
 
-                    <div class="results-actions" *ngIf="shouldShowSelections && !selectionsAreShowing && parentId == null && !searchTerm.value.length">
+                    <div class="results-actions" *ngIf="shouldShowSelections && !selectionsAreShowing && parentId === null && !searchTerm.value.length">
                         <ng-container *ngIf="getSelections().length">
                             <a href="javascript:;" class="picker-action" (click)="editSelections($event)">Edit selections</a>
                             <a href="javascript:;" class="picker-action" (click)="clearSelections($event)">Clear selections</a>
@@ -147,7 +148,7 @@ import { isUndefined } from 'lodash-es';
             ])
         ])
     ],
-    standalone: false
+    imports: [CommonModule, ReactiveFormsModule]
 })
 
 export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {

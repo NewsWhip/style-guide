@@ -4,8 +4,7 @@ import { filter, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
 @Directive({
-    selector: '[nwFeatureAlert]',
-    standalone: false
+    selector: '[nwFeatureAlert]'
 })
 export class FeatureAlertsDirective implements OnInit, OnDestroy {
 

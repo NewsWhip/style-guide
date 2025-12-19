@@ -1,8 +1,7 @@
 import {AfterViewInit, Directive, ElementRef, Input, OnChanges, Renderer2, SimpleChanges} from '@angular/core';
 
 @Directive({
-    selector: '[nwChartTooltip]',
-    standalone: false
+    selector: '[nwChartTooltip]'
 })
 export class ChartTooltipDirective implements OnChanges, AfterViewInit {
     @Input() position: [number, number];

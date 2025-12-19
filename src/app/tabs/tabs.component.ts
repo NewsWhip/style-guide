@@ -1,5 +1,7 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { uniqueId } from 'lodash-es';
+import { CommonModule } from '@angular/common';
+import { TabsModule } from 'nw-style-guide/tabs';
 
 @Component({
     selector: 'app-tabs',
@@ -11,7 +13,7 @@ import { uniqueId } from 'lodash-es';
             margin-bottom: 32px;
         }
     `],
-    standalone: false
+    imports: [TabsModule, CommonModule]
 })
 export class TabsComponent {
     public tabCollection = [

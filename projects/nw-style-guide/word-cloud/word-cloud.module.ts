@@ -7,9 +7,7 @@ import { ResizeObserverModule } from 'nw-style-guide/resize-observer';
 @NgModule({
     imports: [
         CommonModule,
-        ResizeObserverModule
-    ],
-    declarations: [
+        ResizeObserverModule,
         WordCloudComponent,
         WordComponent
     ],

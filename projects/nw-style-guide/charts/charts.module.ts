@@ -16,9 +16,7 @@ import { TextDirective } from './text/text.directive';
 @NgModule({
     imports: [
         CommonModule,
-        ResizeObserverModule
-    ],
-    declarations: [
+        ResizeObserverModule,
         ChartComponent,
         PathDirective,
         XAxisDirective,

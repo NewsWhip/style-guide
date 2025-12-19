@@ -1,12 +1,14 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { CarouselModule } from 'nw-style-guide/carousel';
 
 @Component({
     selector: 'app-carousel',
     templateUrl: './carousel.component.html',
     styleUrls: ['./carousel.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [CarouselModule, CommonModule]
 })
 export class CarouselComponent implements OnInit {
 
