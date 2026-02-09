@@ -16,7 +16,7 @@ export class Toaster {
 
     constructor(
         private _appRef: ApplicationRef,
-        private _injector: Injector) {}
+        private _injector: Injector) { }
 
     private _attachOutlet(): ToastsComponent {
         /**
@@ -27,7 +27,7 @@ export class Toaster {
         }
         this._config = this._config || defaultConfig;
         this._toastPortal = new ComponentPortal(ToastsComponent);
-        this._outlet = new DomPortalOutlet(this._config.outletElement, undefined, this._appRef, this._injector);
+        this._outlet = new DomPortalOutlet(this._config.outletElement, this._appRef, this._injector);
         this._toastsComponentRef = this._outlet.attach(this._toastPortal).instance;
         return this._toastsComponentRef;
     }
