@@ -125,9 +125,9 @@ export class ColorsComponent implements OnInit {
             // eslint-disable-next-line @typescript-eslint/no-unused-expressions
             g = r.g, b = r.b, r = r.r;
         }
+        let h;
         const max = Math.max(r, g, b), min = Math.min(r, g, b),
             d = max - min,
-            h,
             s = (max === 0 ? 0 : d / max),
             v = max / 255;
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
     selector: 'app-tables',
@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./tables.component.scss'],
     standalone: false
 })
-export class TablesComponent implements OnInit {
+export class TablesComponent {
 
     public isTall: boolean = false;
 
