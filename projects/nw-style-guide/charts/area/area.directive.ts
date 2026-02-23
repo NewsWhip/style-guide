@@ -22,7 +22,7 @@ export class AreaDirective implements OnInit, OnChanges, OnDestroy {
      *
      * If there are 2 the area is drawn to the chart height
      */
-    @Input('nw-area') data: Array<AreaDatum> = [];
+    @Input('nw-area') data: AreaDatum[] = [];
     @Input() xDomain: [number, number];
     @Input() yDomain: [number, number];
     @Input() animDuration: number = ChartUtils.ANIMATION_DURATION;
@@ -30,7 +30,7 @@ export class AreaDirective implements OnInit, OnChanges, OnDestroy {
     @Input() easing: (normalizedTime: number) => number = ChartUtils.ANIMATION_EASING;
     @Input() xScale: NwXAxisScale = scaleTime();
 
-    public areaSelection: Selection<SVGPathElement, Array<AreaDatum>, SVGElement, any>;
+    public areaSelection: Selection<SVGPathElement, AreaDatum[], SVGElement, any>;
     public area: Area<AreaDatum>;
     public yScale: ScaleLinear<number, number> = scaleLinear();
 

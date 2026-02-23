@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
     selector: 'app-loader',
@@ -6,13 +6,9 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./loader.component.scss'],
     standalone: false
 })
-export class LoaderComponent implements OnInit {
+export class LoaderComponent {
   private _num: number = 6;
   public size: string = 'md';
-
-  constructor() {}
-
-  ngOnInit() {}
 
   get num(): number {
     return this._num;

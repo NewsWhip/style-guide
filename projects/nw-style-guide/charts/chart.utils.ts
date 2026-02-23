@@ -16,7 +16,7 @@ export class ChartUtils {
         this.chartResize$ = this._chartResize$.asObservable();
     }
 
-    static areDatasetsEqual(a: Array<[number, number]>, b: Array<[number, number]>) {
+    static areDatasetsEqual(a: [number, number][], b: [number, number][]) {
         return a.length === b.length &&
             a.every((value, index) => {
                 return value[0] === b[index][0] && value[1] === b[index][1];

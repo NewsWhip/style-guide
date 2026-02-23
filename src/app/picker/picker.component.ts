@@ -1428,8 +1428,6 @@ export class PickerComponent implements OnInit {
     }
   ]
 
-  constructor() { }
-
   ngOnInit() {
       console.log(this.countries)
   }

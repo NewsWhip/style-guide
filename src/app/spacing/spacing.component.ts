@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ISnippet } from '../code/ISnippet';
 
 @Component({
@@ -7,7 +7,7 @@ import { ISnippet } from '../code/ISnippet';
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
-export class SpacingComponent implements OnInit {
+export class SpacingComponent {
 
   public snippets: ISnippet[] = [
     {
@@ -68,10 +68,5 @@ export class SpacingComponent implements OnInit {
     },
     
   ]
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
 
 }

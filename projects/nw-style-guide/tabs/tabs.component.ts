@@ -111,7 +111,7 @@ export class TabsComponent implements OnInit, AfterContentInit, OnDestroy {
         return `nav-${this.size}`;
     }
 
-    getActiveStyles(): { [key: string]: string } {
+    getActiveStyles(): Record<string, string> {
         const tab: TabDirective = this.getActiveTab();
 
         if (tab) {

@@ -1,6 +1,7 @@
-import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 
-declare var html_beautify: any;
+// eslint-disable-next-line @typescript-eslint/naming-convention
+declare const html_beautify: any;
 
 @Component({
     selector: 'app-list',
@@ -8,7 +9,7 @@ declare var html_beautify: any;
     styleUrls: ['./list.component.scss'],
     standalone: false
 })
-export class ListComponent implements OnInit, AfterViewInit {
+export class ListComponent implements AfterViewInit {
 
     @ViewChild('lg', { static: true }) lg: ElementRef;
     @ViewChild('lgPrimary', { static: true }) lgPrimary: ElementRef;
@@ -17,11 +18,6 @@ export class ListComponent implements OnInit, AfterViewInit {
     public listGroupHTML: string;
     public listGroupPrimaryHTML: string;
     public nestedLgHTML: string;
-
-    constructor() { }
-
-    ngOnInit() {
-    }
 
     ngAfterViewInit() {
         setTimeout(() => {

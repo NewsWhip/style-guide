@@ -26,13 +26,13 @@ export class FeatureAlertsComponent {
     showResetButton: boolean;
 
     constructor(
-        private w: WindowRef,
+        private _w: WindowRef,
         private _featureAlertService: FeatureAlertsService
     ) {}
 
     clearLocalStorage() {
-        this.w.nativeWindow.localStorage.clear();
-        this.w.nativeWindow.location.reload();
+        this._w.nativeWindow.localStorage.clear();
+        this._w.nativeWindow.location.reload();
     }
 
     getFeatureAlertParams1() {

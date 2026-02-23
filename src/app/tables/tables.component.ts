@@ -10,9 +10,4 @@ export class TablesComponent implements OnInit {
 
     public isTall: boolean = false;
 
-    constructor() { }
-
-    ngOnInit() {
-    }
-
 }
