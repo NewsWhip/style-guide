@@ -1,5 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, Inject, Input, OnChanges, Output, Renderer2, SimpleChanges } from "@angular/core";
-import { DOCUMENT } from "@angular/common";
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, Inject, Input, OnChanges, Output, Renderer2, SimpleChanges, DOCUMENT } from "@angular/core";
 import { IBoundingBox } from "./models/IBoundingBox";
 import { IPoint } from "./models/IPoint";
 import { IWordCloudConfig } from "./models/IWordCloudConfig";
