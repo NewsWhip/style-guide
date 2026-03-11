@@ -107,14 +107,6 @@ nw-angular-picker {
 
                 .checkbox {
                     margin: 0;
-
-                    input {
-                        margin-top: 10px;
-                        display: block;
-                        left: 20px;
-                        opacity: 0;
-                        z-index: -1;
-                    }
                 }
             }
             &.excluded {

@@ -15,6 +15,7 @@ import { isUndefined } from 'lodash-es';
                     class="form-control search-input {{inputClasses}} text-ellipsis"
                     [formControl]="searchTerm"
                     (focus)="onFocus()"
+                    (blur)="closeResults()"
                     (keyup.escape)="inputEl.blur()"
                     [placeholder]="inputPlaceholderText"
                     [attr.aria-label]="inputPlaceholderText"/>
@@ -99,7 +100,6 @@ import { isUndefined } from 'lodash-es';
                             [attr.tabindex]="isMultiSelect ? -1 : 0"
                             [class.excluded]="item.excluded"
                             [class.has-children]="hasChildren(item.id)"
-                            (keydown)="onInputKeyDown($event, item)"
                             role="option">
 
                             <span class="result-item">
@@ -201,7 +201,6 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
     public parentId: any;
     public selectionsAreShowing: boolean = false;
     public maxHeight: number = 400;
-    public focusedItemIndex: number = -1;
     private _subs: Subscription[] = [];
 
     constructor(public chRef: ChangeDetectorRef) { }
@@ -432,7 +431,6 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
     closeResults() {
         this.canViewResults = false;
         this.searchTerm.setValue('');
-        this.focusedItemIndex = -1;
         this.closed.emit();
         this.chRef.detectChanges();
     }
@@ -441,40 +439,6 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
         this.clearSearch.emit();
         this.searchTerm.setValue('');
         this.showResults();
-    }
-
-    onInputKeyDown(event: KeyboardEvent, item: IPickerItem) {
-        if (!this.canViewResults || this.isMultiSelect) {
-            return;
-        }
-
-        switch (event.key) {
-            case 'ArrowDown':
-                this.navigateDown();
-                break;
-            case 'ArrowUp':
-                this.navigateUp();
-                break;
-            case 'Enter':
-                this.toggleItemInclusion(item, event);
-                break;
-        }
-    }
-
-    navigateDown() {
-        if (this.displayItems.length === 0) {
-            return;
-        }
-        
-        this.focusedItemIndex = this.focusedItemIndex < this.displayItems.length - 1 ? this.focusedItemIndex + 1 : 0;
-    }
-
-    navigateUp() {
-        if (this.displayItems.length === 0) {
-            return;
-        }
-        
-        this.focusedItemIndex = this.focusedItemIndex > 0 ? this.focusedItemIndex - 1 : this.displayItems.length - 1;
     }
 
     getPlaceholderText() {
