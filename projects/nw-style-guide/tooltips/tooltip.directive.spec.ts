@@ -17,14 +17,12 @@ const tickWaitMs: number = 500;
 describe('TooltipDirective', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TooltipModule,
-                CdkScrollableModule
-            ],
-            declarations: [
-                WrapperComponent
-            ]
-        });
+    imports: [
+        TooltipModule,
+        CdkScrollableModule,
+        WrapperComponent
+    ]
+});
         fixture = TestBed.createComponent(WrapperComponent);
         comp = fixture.componentInstance;
         de = fixture.debugElement;
@@ -393,7 +391,8 @@ describe('TooltipDirective', () => {
             transition: width 100ms linear;
         }
     `],
-    standalone: false
+    imports: [TooltipModule,
+        CdkScrollableModule]
 })
 class WrapperComponent implements OnInit {
 

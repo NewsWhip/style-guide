@@ -6,9 +6,9 @@ import { ReactiveFormsModule } from "@angular/forms";
 @NgModule({
     imports: [
         CommonModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        EmailInputComponent
     ],
-    declarations: [EmailInputComponent],
     exports: [EmailInputComponent]
 })
 export class EmailInputModule { }

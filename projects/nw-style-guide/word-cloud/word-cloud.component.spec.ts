@@ -24,11 +24,8 @@ describe('WordCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            declarations: [
-                WordCloudComponent
-            ],
-            imports: [ResizeObserverModule]
-        });
+    imports: [ResizeObserverModule, WordCloudComponent]
+});
         fixture = TestBed.createComponent(WordCloudComponent<IMyWord>);
         comp = fixture.componentInstance;
         de = fixture.debugElement;

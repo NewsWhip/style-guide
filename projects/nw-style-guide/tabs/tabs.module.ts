@@ -5,9 +5,7 @@ import { TabDirective } from './tab.directive';
 
 @NgModule({
     imports: [
-        CommonModule
-    ],
-    declarations: [
+        CommonModule,
         TabsComponent,
         TabDirective
     ],

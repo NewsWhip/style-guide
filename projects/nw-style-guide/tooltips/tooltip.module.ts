@@ -7,9 +7,7 @@ import { TooltipDirective } from "./tooltip.directive";
 @NgModule({
     imports: [
         CommonModule,
-        OverlayModule
-    ],
-    declarations: [
+        OverlayModule,
         TooltipDirective,
         TooltipContainerComponent
     ],

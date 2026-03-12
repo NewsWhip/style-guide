@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { LoaderModule } from 'nw-style-guide/loader';
 
 @Component({
     selector: 'app-loader',
     templateUrl: './loader.component.html',
     styleUrls: ['./loader.component.scss'],
-    standalone: false
+    imports: [FormsModule, LoaderModule]
 })
 export class LoaderComponent implements OnInit {
   private _num: number = 6;

@@ -6,9 +6,9 @@ import { NwPickerComponent } from './picker.component';
 @NgModule({
     imports: [
         CommonModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        NwPickerComponent
     ],
-    declarations: [NwPickerComponent],
     exports: [NwPickerComponent]
 })
 export class NwPickerModule { }

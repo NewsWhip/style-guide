@@ -1,9 +1,10 @@
 import { Component, Input, Output, ChangeDetectorRef, ChangeDetectionStrategy, EventEmitter, ViewChild, ElementRef, OnInit, OnDestroy, SimpleChanges, OnChanges } from '@angular/core';
 import { trigger, transition, animate, style } from '@angular/animations';
-import { FormControl } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { IPickerItem } from './IPickerItem';
 import { Subscription } from 'rxjs';
 import { isUndefined } from 'lodash-es';
+import { NgIf, NgFor, NgClass } from '@angular/common';
 
 @Component({
     selector: 'nw-angular-picker',
@@ -147,7 +148,7 @@ import { isUndefined } from 'lodash-es';
             ])
         ])
     ],
-    standalone: false
+    imports: [ReactiveFormsModule, NgIf, NgFor, NgClass]
 })
 
 export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {

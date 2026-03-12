@@ -1,4 +1,5 @@
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 declare var html_beautify: any;
 
@@ -6,7 +7,7 @@ declare var html_beautify: any;
     selector: 'app-list',
     templateUrl: './list.component.html',
     styleUrls: ['./list.component.scss'],
-    standalone: false
+    imports: [RouterLink, RouterLinkActive]
 })
 export class ListComponent implements OnInit, AfterViewInit {
 

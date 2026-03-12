@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from "@angular/forms";
+import { FormControl, FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { NgClass } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 @Component({
     selector: 'app-typography',
     templateUrl: './typography.component.html',
     styleUrls: ['./typography.component.scss'],
-    standalone: false
+    imports: [FormsModule, ReactiveFormsModule, NgClass, RouterLink]
 })
 export class TypographyComponent implements OnInit {
 

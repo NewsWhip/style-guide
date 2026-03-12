@@ -3,6 +3,7 @@ import { select, Selection, pointer } from 'd3-selection';
 import { ChartUtils } from './chart.utils';
 import { fromEvent, Subject, merge } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
+import { ResizeObserverModule } from 'nw-style-guide/resize-observer';
 
 @Component({
     selector: 'svg[nw-chart]',
@@ -25,7 +26,7 @@ import { debounceTime, takeUntil } from 'rxjs/operators';
     providers: [ChartUtils],
     exportAs: 'nw-chart',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [ResizeObserverModule]
 })
 export class ChartComponent implements OnInit, AfterViewInit, OnDestroy {
 
