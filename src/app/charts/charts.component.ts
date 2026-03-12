@@ -5,10 +5,10 @@ import { DecimalPipe, NgIf, NgFor, DatePipe } from '@angular/common';
 import { bisector } from 'd3-array';
 import { AxisTimeInterval } from 'd3-axis';
 import { curveCardinal, curveBasis, curveLinear, curveStep, curveStepAfter, curveStepBefore } from 'd3-shape';
-import { YAxisDirective, XAxisDirective, CircleDirective, ChartsModule } from 'nw-style-guide/charts';
+import { YAxisDirective, XAxisDirective, CircleDirective, CHARTS_DIRECTIVES } from 'nw-style-guide/charts';
 import { ScaleTime } from 'd3-scale';
-import { TabsModule } from 'nw-style-guide/tabs';
-import { TooltipModule } from 'nw-style-guide/tooltips';
+import { TABS_DIRECTIVES } from 'nw-style-guide/tabs';
+import { TooltipDirective } from 'nw-style-guide/tooltips';
 
 @Component({
     selector: 'app-charts',
@@ -16,7 +16,7 @@ import { TooltipModule } from 'nw-style-guide/tooltips';
     styleUrls: ['./charts.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [DecimalPipe],
-    imports: [TabsModule, NgIf, FormsModule, ReactiveFormsModule, NgFor, ChartsModule, TooltipModule, DecimalPipe, DatePipe]
+    imports: [TABS_DIRECTIVES, NgIf, FormsModule, ReactiveFormsModule, NgFor, CHARTS_DIRECTIVES, TooltipDirective, DecimalPipe, DatePipe]
 })
 export class ChartsComponent implements OnInit {
 

@@ -1,9 +1,9 @@
 import { Component, ChangeDetectionStrategy, ChangeDetectorRef, OnInit } from '@angular/core';
-import { IValidationChange, EmailInputModule } from "nw-style-guide/email-input";
+import { IValidationChange, EmailInputComponent } from "nw-style-guide/email-input";
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ISnippet } from '../code/ISnippet';
-import { TabsModule } from 'nw-style-guide/tabs';
+import { TABS_DIRECTIVES } from 'nw-style-guide/tabs';
 import { NgIf, NgFor } from '@angular/common';
 import { AppCodeComponent } from '../code/code.component';
 
@@ -19,7 +19,7 @@ import { AppCodeComponent } from '../code/code.component';
             margin-bottom: 16px;
         }
     `],
-    imports: [TabsModule, RouterLink, NgIf, EmailInputModule, AppCodeComponent, NgFor]
+    imports: [TABS_DIRECTIVES, RouterLink, NgIf, EmailInputComponent, AppCodeComponent, NgFor]
 })
 export class EmailInputDemoComponent implements OnInit {
 

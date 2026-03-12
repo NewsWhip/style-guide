@@ -3,7 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators, FormsModule, ReactiveF
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Toaster } from 'nw-style-guide/toasts';
-import { TabsModule } from 'nw-style-guide/tabs';
+import { TABS_DIRECTIVES } from 'nw-style-guide/tabs';
 import { NgIf, NgFor } from '@angular/common';
 import { CopyCodeComponent } from '../code/copy-code.component';
 
@@ -11,7 +11,7 @@ import { CopyCodeComponent } from '../code/copy-code.component';
     selector: 'app-toasts',
     templateUrl: './toasts.component.html',
     styleUrls: ['./toasts.component.scss'],
-    imports: [TabsModule, RouterLink, NgIf, FormsModule, ReactiveFormsModule, CopyCodeComponent, NgFor]
+    imports: [TABS_DIRECTIVES, RouterLink, NgIf, FormsModule, ReactiveFormsModule, CopyCodeComponent, NgFor]
 })
 export class ToastsComponent implements OnInit, OnDestroy {
 

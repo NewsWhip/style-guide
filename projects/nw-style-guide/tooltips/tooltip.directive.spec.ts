@@ -2,7 +2,6 @@ import { Component, DebugElement, ElementRef, OnInit, ViewChild } from "@angular
 import { ComponentFixture, fakeAsync, TestBed, tick } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 import { TooltipContainerComponent } from "./tooltip-container.component";
-import { TooltipModule } from "./tooltip.module";
 import { TooltipDirective } from "./tooltip.directive";
 import { Placement } from "./models/Placement.type";
 import { CdkScrollable, CdkScrollableModule } from "@angular/cdk/scrolling";
@@ -17,12 +16,11 @@ const tickWaitMs: number = 500;
 describe('TooltipDirective', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
-    imports: [
-        TooltipModule,
-        CdkScrollableModule,
-        WrapperComponent
-    ]
-});
+            imports: [
+                CdkScrollableModule,
+                WrapperComponent
+            ]
+        });
         fixture = TestBed.createComponent(WrapperComponent);
         comp = fixture.componentInstance;
         de = fixture.debugElement;
@@ -391,8 +389,7 @@ describe('TooltipDirective', () => {
             transition: width 100ms linear;
         }
     `],
-    imports: [TooltipModule,
-        CdkScrollableModule]
+    imports: [TooltipDirective, CdkScrollableModule]
 })
 class WrapperComponent implements OnInit {
 

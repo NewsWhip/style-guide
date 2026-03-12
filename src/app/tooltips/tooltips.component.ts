@@ -3,9 +3,9 @@ import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } 
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ISnippet } from '../code/ISnippet';
-import { TabsModule } from 'nw-style-guide/tabs';
+import { TABS_DIRECTIVES } from 'nw-style-guide/tabs';
 import { NgIf, NgTemplateOutlet, NgFor } from '@angular/common';
-import { TooltipModule } from 'nw-style-guide/tooltips';
+import { TooltipDirective } from 'nw-style-guide/tooltips';
 import { AppCodeComponent } from '../code/code.component';
 import { FaqComponent } from '../faq/faq-component';
 
@@ -13,7 +13,7 @@ import { FaqComponent } from '../faq/faq-component';
     selector: 'app-tooltips',
     templateUrl: './tooltips.component.html',
     styleUrls: ['./tooltips.component.scss'],
-    imports: [TabsModule, RouterLink, NgIf, TooltipModule, NgTemplateOutlet, AppCodeComponent, FormsModule, ReactiveFormsModule, NgFor, FaqComponent]
+    imports: [TABS_DIRECTIVES, RouterLink, NgIf, TooltipDirective, NgTemplateOutlet, AppCodeComponent, FormsModule, ReactiveFormsModule, NgFor, FaqComponent]
 })
 export class TooltipsComponent implements OnInit, OnDestroy {
 

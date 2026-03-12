@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { CarouselModule } from 'nw-style-guide/carousel';
+import { CAROUSEL_DIRECTIVES } from 'nw-style-guide/carousel';
 import { NgFor } from '@angular/common';
 
 @Component({
@@ -8,7 +8,7 @@ import { NgFor } from '@angular/common';
     templateUrl: './carousel.component.html',
     styleUrls: ['./carousel.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [CarouselModule, NgFor]
+    imports: [CAROUSEL_DIRECTIVES, NgFor]
 })
 export class CarouselComponent implements OnInit {
 

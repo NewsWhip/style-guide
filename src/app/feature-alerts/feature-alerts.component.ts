@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { FeatureAlertsService, WindowRef, FeatureAlertsModule } from 'nw-style-guide/feature-alerts';
+import { FeatureAlertsDirective, FeatureAlertsService, HotspotComponent, WindowRef } from 'nw-style-guide/feature-alerts';
 import { NgIf } from '@angular/common';
 
 @Component({
@@ -18,7 +18,7 @@ import { NgIf } from '@angular/common';
         }
     `],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [FeatureAlertsModule, NgIf]
+    imports: [NgIf, HotspotComponent, FeatureAlertsDirective]
 })
 export class FeatureAlertsComponent {
     message: string;
