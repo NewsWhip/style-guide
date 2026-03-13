@@ -22,6 +22,10 @@ import { ChartTooltipDirective } from './tooltip/chart-tooltip.directive';
 import { ForeignObjectDirective } from './foreign-object/foreign-object.directive';
 import { TextDirective } from './text/text.directive';
 
+/**
+ * Export cooperating directives
+ * https://v17.angular.io/guide/standalone-components#standalone-components-for-library-authors
+ */
 export const CHARTS_DIRECTIVES = [
     ChartComponent,
     PathDirective,
