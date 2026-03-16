@@ -5,7 +5,9 @@ import { trigger, transition, animate, style } from "@angular/animations";
 @Component({
     selector: 'nw-hotspot',
     template: `
-        <div [@fadeOut] *ngIf="isOpen" class="hotspot hotspot-{{position}}"></div>
+        @if (isOpen) {
+            <div [@fadeOut] class="hotspot hotspot-{{position}}"></div>
+        }
     `,
     animations: [
         trigger('fadeOut', [

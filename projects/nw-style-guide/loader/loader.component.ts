@@ -4,16 +4,20 @@ import { trigger, transition, style, animate } from "@angular/animations";
 @Component({
     selector: 'nw-loader',
     template: `
-        <div *ngIf="isLoading" class="loader" [@delayAndFadeIn]="animParams"
-            [ngClass]="sizeClass"
-            [class.loader-inline]="isInline"
-            [class.loader-color]="isColor">
-            <div class="dots-icon-wrapper">
-                <div class="dots">
-                    <span *ngFor="let d of dots" class="dot dot-{{d}}"></span>
+        @if (isLoading) {
+            <div class="loader" [@delayAndFadeIn]="animParams"
+                [ngClass]="sizeClass"
+                [class.loader-inline]="isInline"
+                [class.loader-color]="isColor">
+                <div class="dots-icon-wrapper">
+                    <div class="dots">
+                        @for (d of dots; track d) {
+                            <span class="dot dot-{{d}}"></span>
+                        }
+                    </div>
                 </div>
             </div>
-        </div>
+        }
     `,
     exportAs: 'nw-loader',
     animations: [

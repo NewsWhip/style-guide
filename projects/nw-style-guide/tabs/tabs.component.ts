@@ -15,21 +15,27 @@ import { TabsService } from './tabs.service';
             </ul>
         </div>
 
-        <div class="pagination-container" *ngIf="shouldShowPagination">
-            <div class="prev-page" *ngIf="shouldShowPrev" (click)="prev()" [ngStyle]="background">
-                <ng-container *ngTemplateOutlet="paginator"></ng-container>
+        @if (shouldShowPagination) {
+            <div class="pagination-container">
+                @if (shouldShowPrev) {
+                <div class="prev-page" (click)="prev()" [ngStyle]="background">
+                    <ng-container *ngTemplateOutlet="paginator"></ng-container>
+                </div>
+                }
+                @if (shouldShowNext) {
+                <div class="next-page" (click)="next()" [ngStyle]="background">
+                    <ng-container *ngTemplateOutlet="paginator"></ng-container>
+                </div>
+                }
             </div>
-            <div class="next-page" *ngIf="shouldShowNext" (click)="next()" [ngStyle]="background">
-                <ng-container *ngTemplateOutlet="paginator"></ng-container>
-            </div>
-        </div>
+        }
 
         <ng-template #paginator>
             <button class="btn btn-md btn-ghost-alt">
                 <i class="fas fa-chevron-left"></i>
             </button>
         </ng-template>
-     `,
+    `,
     providers: [TabsService],
     changeDetection: ChangeDetectionStrategy.OnPush,
     styles: [`

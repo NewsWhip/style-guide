@@ -8,40 +8,55 @@ import { Subscription, fromEvent } from 'rxjs';
     selector: 'nw-carousel',
     template: `
         <div class="carousel-container">
-            <div class="pagination-container" *ngIf="showPagination && !isFirstPage">
-                <button class="btn btn-carousel btn-carousel-prev" (click)="prev()"></button>
-            </div>
+            @if (showPagination && !isFirstPage) {
+                <div class="pagination-container">
+                    <button class="btn btn-carousel btn-carousel-prev" (click)="prev()"></button>
+                </div>
+            }
 
             <ng-content select=".pagination-left"></ng-content>
 
             <div class="carousel-content">
-                <div class="pagination-masks" *ngIf="showMask && pages.length > 1">
-                    <div class="pagination-mask pagination-mask-start" *ngIf="!isFirstPage" @collapse
-                        [ngStyle]="maskStyles"></div>
-
-                    <div class="pagination-mask pagination-mask-end" *ngIf="!isLastPage" @collapse
-                        [ngStyle]="maskStyles"></div>
-                </div>
+                @if (showMask && pages.length > 1) {
+                    <div class="pagination-masks">
+                        @if (!isFirstPage) {
+                            <div class="pagination-mask pagination-mask-start" @collapse
+                            [ngStyle]="maskStyles"></div>
+                        }
+                        @if (!isLastPage) {
+                            <div class="pagination-mask pagination-mask-end" @collapse
+                            [ngStyle]="maskStyles"></div>
+                        }
+                    </div>
+                }
 
                 <div class="carousel" #carousel [ngClass]="containerClass">
                     <ng-content></ng-content>
-
-                    <p *ngIf="slides.length === 0" class="nw-text text-center">{{noResultsText}}</p>
+                
+                    @if (slides.length === 0) {
+                        <p class="nw-text text-center">{{noResultsText}}</p>
+                    }
                 </div>
             </div>
 
-            <div class="pagination-container" *ngIf="showPagination && !isLastPage">
-                <button class="btn btn-carousel btn-carousel-next" (click)="next()"></button>
-            </div>
+            @if (showPagination && !isLastPage) {
+                <div class="pagination-container">
+                    <button class="btn btn-carousel btn-carousel-next" (click)="next()"></button>
+                </div>
+            }
 
             <ng-content select=".pagination-right"></ng-content>
         </div>
 
-        <div class="page-indicators" *ngIf="showPageIndicator && pages.length > 1">
-            <a href="javascript:;" class="page-indicator" *ngFor="let page of pages"
-                [class.active]="page === currPage"
-                (click)="goToPage(page)"></a>
-        </div>
+        @if (showPageIndicator && pages.length > 1) {
+            <div class="page-indicators">
+                @for (page of pages; track page) {
+                    <a href="javascript:;" class="page-indicator"
+                        [class.active]="page === currPage"
+                    (click)="goToPage(page)"></a>
+                }
+            </div>
+        }
 
         <ng-content select=".pagination-indicators"></ng-content>
     `,

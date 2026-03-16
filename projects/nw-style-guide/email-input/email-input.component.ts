@@ -12,12 +12,14 @@ import { Subscription } from 'rxjs';
             (paste)="onPaste($event)"
             [attr.data-placeholder-text]="placeholder">
 
-            <div class="pill pill-sm" *ngFor="let email of emails; let last = last;"
-                [class.invalid]="!isValid(email)"
-                [class.selected]="last && isPillSelected">
-                <span class="pill-label">{{email}}</span>
-                <button type="button" class="close" (click)="removeEmail(email)">×</button>
-            </div>
+            @for (email of emails; track email; let last = $last) {
+                <div class="pill pill-sm"
+                    [class.invalid]="!isValid(email)"
+                    [class.selected]="last && isPillSelected">
+                    <span class="pill-label">{{email}}</span>
+                    <button type="button" class="close" (click)="removeEmail(email)">×</button>
+                </div>
+            }
 
             <div class="input-container" [class.persistent-placeholder]="persistentPlaceholder">
                 <!-- pill-hidden is an invisble element that controls the width of the input -->
