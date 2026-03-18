@@ -22,11 +22,17 @@
         position: relative;
         display: inline-block;
 
-        > a {
+        > a,
+        > button {
             position: relative;
             display: block;
             @include nav-size.nav-size(variables.$padding-base-vertical, variables.$padding-base-horizontal, 14px, 1);
             color: variables.$text-color-secondary;
+            background: none;
+            border: none;
+            width: 100%;
+            text-align: left;
+            cursor: pointer;
             &:hover,
             &:focus {
                 text-decoration: none;
@@ -35,7 +41,8 @@
         }
 
         // Disabled state sets text to gray and nukes hover/tab effects
-        &.disabled > a {
+        &.disabled > a,
+        &.disabled > button {
             color: variables.$nav-disabled-link-color;
 
             &:hover,
@@ -49,7 +56,8 @@
     }
 
     // Open dropdowns
-    .open > a {
+    .open > a,
+    .open > button {
         &,
         &:hover,
         &:focus {
@@ -85,8 +93,9 @@
         margin: 0 12px;
         vertical-align: middle;
 
-        // Actual tabs (as links)
-        > a {
+        // Actual tabs (as links or buttons)
+        > a,
+        > button {
             color: variables.$text-color-secondary;
         }
         &:first-child {
@@ -97,7 +106,8 @@
         }
 
         // Active state, and its :hover to override normal :hover
-        &.active > a {
+        &.active > a,
+        &.active > button {
             &,
             &:hover,
             &:focus {
@@ -111,13 +121,16 @@
         @extend .nav-justified;
         @extend .nav-tabs-justified;
     }
-    &.nav-sm > li > a {
+    &.nav-sm > li > a,
+    &.nav-sm > li > button {
         @include nav-size.nav-size(variables.$padding-small-vertical + 1, 0, variables.$font-size-small, variables.$line-height-small);
     }
-    &.nav-md > li > a {
+    &.nav-md > li > a,
+    &.nav-md > li > button {
         @include nav-size.nav-size(variables.$padding-base-vertical + 1, 0, 14px, variables.$line-height-base);
     }
-    &.nav-lg > li > a {
+    &.nav-lg > li > a,
+    &.nav-lg > li > button {
         @include nav-size.nav-size(variables.$padding-large-vertical + 1, 0, variables.$font-size-large, variables.$line-height-large);
     }
 }
@@ -177,7 +190,8 @@ nw-tabs {
         float: left;
 
         // Links rendered as pills
-        > a {
+        > a,
+        > button {
             border-radius: variables.$nav-pills-border-radius;
             background-color: variables.$level1;
             text-decoration: none;
@@ -188,17 +202,20 @@ nw-tabs {
             }
         }
         &:not(:first-child):not(:last-child) {
-            > a {
+            > a,
+            > button {
                 border-radius: 0;
             }
         }
         &:first-child:not(:last-child) {
-            > a {
+            > a,
+            > button {
                 @include br.border-right-radius(0);
             }
         }
         &:last-child:not(:first-child) {
-            > a {
+            > a,
+            > button {
                 @include br.border-left-radius(0);
             }
         }
@@ -207,7 +224,8 @@ nw-tabs {
         }
 
         // Active state
-        &.active > a {
+        &.active > a,
+        &.active > button {
             &,
             &:hover,
             &:focus {
@@ -215,7 +233,8 @@ nw-tabs {
                 background-color: variables.$nav-pills-active-link-hover-bg;
             }
         }
-        &.disabled > a {
+        &.disabled > a,
+        &.disabled > button {
             color: variables.$nav-disabled-link-color;
             background-color: rgba(variables.$level1, 0.5);
 
@@ -253,7 +272,8 @@ nw-tabs {
 
     > li {
         float: none;
-        > a {
+        > a,
+        > button {
             text-align: center;
             margin-bottom: 5px;
         }
@@ -268,7 +288,8 @@ nw-tabs {
         > li {
             display: table-cell;
             width: 1%;
-            > a {
+            > a,
+            > button {
                 margin-bottom: 0;
             }
         }
@@ -281,7 +302,8 @@ nw-tabs {
 .nav-tabs-justified {
     border-bottom: 0;
 
-    > li > a {
+    > li > a,
+    > li > button {
         // Override margin from .nav-tabs
         margin-right: 0;
         border-radius: variables.$border-radius-base;
@@ -289,18 +311,25 @@ nw-tabs {
 
     > .active > a,
     > .active > a:hover,
-    > .active > a:focus {
+    > .active > a:focus,
+    > .active > button,
+    > .active > button:hover,
+    > .active > button:focus {
         border: 1px solid variables.$nav-tabs-justified-link-border-color;
     }
 
     @media (min-width: variables.$screen-sm-min) {
-        > li > a {
+        > li > a,
+        > li > button {
             border-bottom: 1px solid variables.$nav-tabs-justified-link-border-color;
             border-radius: variables.$border-radius-base variables.$border-radius-base 0 0;
         }
         > .active > a,
         > .active > a:hover,
-        > .active > a:focus {
+        > .active > a:focus,
+        > .active > button,
+        > .active > button:hover,
+        > .active > button:focus {
             border-bottom-color: variables.$nav-tabs-justified-active-link-border-color;
         }
     }
