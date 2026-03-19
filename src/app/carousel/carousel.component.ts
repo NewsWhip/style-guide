@@ -1,12 +1,14 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { CAROUSEL_DIRECTIVES } from 'nw-style-guide/carousel';
+import { NgFor } from '@angular/common';
 
 @Component({
     selector: 'app-carousel',
     templateUrl: './carousel.component.html',
     styleUrls: ['./carousel.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [CAROUSEL_DIRECTIVES, NgFor]
 })
 export class CarouselComponent implements OnInit {
 

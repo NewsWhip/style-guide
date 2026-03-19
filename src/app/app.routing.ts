@@ -1,5 +1,4 @@
-import { ModuleWithProviders, Injectable } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { Routes } from '@angular/router';
 import { ButtonsComponent } from './buttons/buttons.component';
 import { ColorsComponent } from './colors/colors.component';
 import { HomeComponent } from './home/home.component';
@@ -27,7 +26,7 @@ import { AutofocusComponent } from './autofocus/autofocus.component';
 import { WordCloudDemoComponent } from './word-cloud/word-cloud.component';
 import { SpacingComponent } from './spacing/spacing.component';
 
-const appRoutes: Routes = [
+export const appRoutes: Routes = [
     {
         path: '',
         component: HomeComponent
@@ -133,5 +132,3 @@ const appRoutes: Routes = [
         component: SpacingComponent
     }
 ];
-
-export const routing: ModuleWithProviders<RouterModule> = RouterModule.forRoot(appRoutes, { useHash: true });

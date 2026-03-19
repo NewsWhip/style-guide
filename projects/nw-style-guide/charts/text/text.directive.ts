@@ -9,8 +9,7 @@ import { NwXAxisScale } from '../axis/models/XAxisScale';
 @Directive({
     // eslint-disable-next-line @angular-eslint/directive-selector
     selector: 'text[nw-text]',
-    exportAs: 'nw-text',
-    standalone: false
+    exportAs: 'nw-text'
 })
 export class TextDirective implements OnInit, OnChanges, OnDestroy {
 
