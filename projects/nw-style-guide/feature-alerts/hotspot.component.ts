@@ -1,7 +1,6 @@
 import { Component, Input, ChangeDetectionStrategy, ChangeDetectorRef } from "@angular/core";
 import { FeatureAlertsService } from "./feature-alerts.service";
 import { trigger, transition, animate, style } from "@angular/animations";
-import { NgIf } from "@angular/common";
 
 @Component({
     selector: 'nw-hotspot',
@@ -18,8 +17,7 @@ import { NgIf } from "@angular/common";
             ])
         ])
     ],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [NgIf]
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HotspotComponent {
 

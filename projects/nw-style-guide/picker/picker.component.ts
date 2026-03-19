@@ -4,7 +4,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { IPickerItem } from './IPickerItem';
 import { Subscription } from 'rxjs';
 import { isUndefined } from 'lodash-es';
-import { NgIf, NgFor, NgClass } from '@angular/common';
+import { NgClass } from '@angular/common';
 
 @Component({
     selector: 'nw-angular-picker',
@@ -163,7 +163,7 @@ import { NgIf, NgFor, NgClass } from '@angular/common';
             ])
         ])
     ],
-    imports: [ReactiveFormsModule, NgIf, NgFor, NgClass]
+    imports: [ReactiveFormsModule, NgClass]
 })
 
 export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {

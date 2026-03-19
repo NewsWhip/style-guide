@@ -3,7 +3,7 @@ import { trigger, transition, style, animate, AUTO_STYLE } from '@angular/animat
 import { debounceTime } from "rxjs/operators";
 import { CarouselSlideDirective } from "./carousel-slide.directive";
 import { Subscription, fromEvent } from 'rxjs';
-import { NgIf, NgStyle, NgClass, NgFor } from '@angular/common';
+import { NgStyle, NgClass } from '@angular/common';
 
 @Component({
     selector: 'nw-carousel',
@@ -71,7 +71,7 @@ import { NgIf, NgStyle, NgClass, NgFor } from '@angular/common';
             ])
         ])
     ],
-    imports: [NgIf, NgStyle, NgClass, NgFor]
+    imports: [NgStyle, NgClass]
 })
 export class CarouselComponent implements OnInit, AfterViewInit, AfterContentInit, OnChanges, OnDestroy {
 

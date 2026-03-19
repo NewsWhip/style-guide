@@ -3,7 +3,7 @@ import {animate, keyframes, style, transition, trigger} from '@angular/animation
 import {IToast} from './IToast';
 import {Toast} from './Toast';
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
-import { NgFor, NgClass, NgIf, NgTemplateOutlet } from '@angular/common';
+import { NgClass, NgTemplateOutlet } from '@angular/common';
 
 @Component({
     selector: 'nw-toasts',
@@ -53,7 +53,7 @@ import { NgFor, NgClass, NgIf, NgTemplateOutlet } from '@angular/common';
         ])
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [NgFor, NgClass, NgIf, NgTemplateOutlet]
+    imports: [NgClass, NgTemplateOutlet]
 })
 export class ToastsComponent {
 

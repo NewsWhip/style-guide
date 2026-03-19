@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { trigger, transition, style, animate } from "@angular/animations";
-import { NgIf, NgClass, NgFor } from '@angular/common';
+import { NgClass } from '@angular/common';
 
 @Component({
     selector: 'nw-loader',
@@ -30,7 +30,7 @@ import { NgIf, NgClass, NgFor } from '@angular/common';
         ])
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [NgIf, NgClass, NgFor]
+    imports: [NgClass]
 })
 
 export class LoaderComponent implements OnInit {
