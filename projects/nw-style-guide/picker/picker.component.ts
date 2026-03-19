@@ -17,7 +17,8 @@ import { isUndefined } from 'lodash-es';
                     (focus)="onFocus()"
                     (blur)="closeResults()"
                     (keyup.escape)="inputEl.blur()"
-                    [placeholder]="inputPlaceholderText"/>
+                    [placeholder]="inputPlaceholderText"
+                    [attr.aria-label]="inputPlaceholderText"/>
 
                 <div class="input-placeholder text-ellipsis" [innerHTML]="getPlaceholderText()"></div>
 
@@ -36,7 +37,7 @@ import { isUndefined } from 'lodash-es';
             @if (searchTerm.value) {
                 <button
                     (mousedown)="preventBlur($event)"
-                    (click)="onReset($event);inputEl.focus()" class="close reset-icon">&times;</button>
+                    (click)="onReset($event);inputEl.focus()" class="close reset-icon" aria-label="Clear search">&times;</button>
             }
 
             @if (canViewResults) {
@@ -44,12 +45,14 @@ import { isUndefined } from 'lodash-es';
                     [@slideUpIn]="isMobileDisplay ? 'in' : false"
                     (mousedown)="preventBlur($event)">
                     <div class="results-header">
-                        <button class="close" (click)="closeResults()" style="color: #000">&times;</button>
+                        <button class="close" (click)="closeResults()" style="color: #000" aria-label="Close results">&times;</button>
                     </div>
                     <!-- Navigate up the tree -->
                     @if (parentId && displayItems.length && !searchTerm.value.length) {
                         <div class="results-actions">
-                            <a href="javascript:;" class="picker-action" (click)="ascend($event, getParentItem(parentId))">
+                            <a tabindex="0" role="button" aria-label="Go Back" class="picker-action"
+                                (click)="ascend($event, getParentItem(parentId))"
+                                (keydown.enter)="ascend($event, getParentItem(parentId))">
                                 <i class="fas fa-long-arrow-alt-left" aria-hidden="true"></i>
                                 {{getParentItem(parentId).displayName}}
                             </a>
@@ -60,8 +63,8 @@ import { isUndefined } from 'lodash-es';
                         @if (shouldShowSelections && !selectionsAreShowing && parentId == null && !searchTerm.value.length) {
                             <div class="results-actions">
                                 @if (getSelections().length) {
-                                    <a href="javascript:;" class="picker-action" (click)="editSelections($event)">Edit selections</a>
-                                    <a href="javascript:;" class="picker-action" (click)="clearSelections($event)">Clear selections</a>
+                                    <a tabindex="0" role="button" href="javascript:;" class="picker-action" (click)="editSelections($event)" (keydown.enter)="editSelections($event)">Edit selections</a>
+                                    <a tabindex="0" role="button" href="javascript:;" class="picker-action" (click)="clearSelections($event)" (keydown.enter)="clearSelections($event)">Clear selections</a>
                                 }
                                 @if (!getSelections().length) {
                                     <em>No selections</em>
@@ -71,11 +74,11 @@ import { isUndefined } from 'lodash-es';
                         <!-- DISPLAY THE SELECTED ITEMS -->
                         @if (selectionsAreShowing) {
                             <div class="results-actions">
-                                <a href="javascript:;" class="picker-action" (click)="selectionsAreShowing = false">
+                                <a role="button" class="picker-action" (click)="selectionsAreShowing = false">
                                     <i class="fas fa-long-arrow-alt-left" aria-hidden="true"></i> Back
                                 </a>
                                 @if (getSelections().length) {
-                                    <a href="javascript:;" class="picker-action" (click)="clearSelections($event)">Clear all</a>
+                                    <a role="button" class="picker-action" (click)="clearSelections($event)">Clear all</a>
                                 }
                             </div>
                             <div class="selected-items">
@@ -84,7 +87,7 @@ import { isUndefined } from 'lodash-es';
                                         [ngClass]="{ 'active': item.added, 'excluded': item.excluded }">
                                         <span class="result-item">
                                         <span class="item-label">{{item.displayName}}</span>
-                                            <button class="close" style="color: #000000" (click)="clearSelection($event, item)">
+                                            <button class="close" style="color: #000000" (click)="clearSelection($event, item)" [attr.aria-label]="'Remove ' + item.displayName">
                                                 &times;
                                             </button>
                                         </span>
@@ -97,12 +100,16 @@ import { isUndefined } from 'lodash-es';
                                 <div class="search-result"
                                     [class.active]="item.added"
                                     [class.excluded]="item.excluded"
-                                    [class.has-children]="hasChildren(item.id)">
+                                    [class.has-children]="hasChildren(item.id)"
+                                    role="option">
                                     <span class="result-item">
                                         @if (isMultiSelect) {
                                             <div class="checkbox checkbox-placeholder">
-                                                <input id="include-{{item.id}}" type="checkbox" (click)="toggleItemInclusion(item, $event)" [checked]="item.added">
-                                                <label for="include-{{item.id}}"></label>
+                                                <input tabindex="0" id="include-{{item.id}}" type="checkbox"
+                                                    (click)="toggleItemInclusion(item, $event)"
+                                                    [checked]="item.added"
+                                                    (keydown.enter)="toggleItemInclusion(item, $event)">
+                                                <label for="include-{{item.id}}" [attr.aria-label]="'Select ' + item.displayName"></label>
                                             </div>
                                         }
                                         @if (canExclude && isMultiSelect) {
@@ -122,7 +129,9 @@ import { isUndefined } from 'lodash-es';
                                             }
                                         </span>
                                         @if (hasChildren(item.id)) {
-                                            <button class="btn btn-ghost drilldown" (click)="setDisplayItemsFromParentId(item.id, $event); desc.emit(getParentItem(parentId))">
+                                            <button class="btn btn-ghost drilldown"
+                                                (click)="setDisplayItemsFromParentId(item.id, $event); desc.emit(getParentItem(parentId))"
+                                                [attr.aria-label]="'Expand ' + item.displayName">
                                                 <i class="fas fa-chevron-right" aria-hidden="true"></i>
                                             </button>
                                         }
