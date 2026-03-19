@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { IPickerItem } from 'nw-style-guide/picker';
+import { IPickerItem, NwPickerComponent } from 'nw-style-guide/picker';
 
 @Component({
     selector: 'app-picker',
     templateUrl: './picker.component.html',
     styleUrls: ['./picker.component.scss'],
-    standalone: false
+    imports: [NwPickerComponent]
 })
 export class PickerComponent implements OnInit {
 

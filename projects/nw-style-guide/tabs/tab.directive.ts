@@ -1,10 +1,7 @@
 import { Directive, ElementRef, HostBinding, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { TabsService } from './tabs.service';
 
-@Directive({
-    selector: '[nwTab]',
-    standalone: false
-})
+@Directive({ selector: '[nwTab]' })
 export class TabDirective implements OnChanges {
 
     @HostBinding('class.active') @Input() isActive: boolean = false;

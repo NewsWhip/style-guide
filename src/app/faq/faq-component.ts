@@ -12,8 +12,7 @@ import { Component } from "@angular/core";
             <ng-content select="[answer]"></ng-content>
         </div>
     `,
-    styleUrls: ['./faq-component.scss'],
-    standalone: false
+    styleUrls: ['./faq-component.scss']
 })
 export class FaqComponent {
 

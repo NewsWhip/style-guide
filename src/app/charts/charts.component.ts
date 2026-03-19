@@ -1,12 +1,14 @@
 import {Component, OnInit, ChangeDetectionStrategy, ViewChild, ViewChildren, QueryList} from '@angular/core';
-import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, FormArray, FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import moment from 'moment';
-import { DecimalPipe } from '@angular/common';
+import { DecimalPipe, NgIf, NgFor, DatePipe } from '@angular/common';
 import { bisector } from 'd3-array';
 import { AxisTimeInterval } from 'd3-axis';
 import { curveCardinal, curveBasis, curveLinear, curveStep, curveStepAfter, curveStepBefore } from 'd3-shape';
-import { YAxisDirective, XAxisDirective, CircleDirective } from 'nw-style-guide/charts';
+import { YAxisDirective, XAxisDirective, CircleDirective, CHARTS_DIRECTIVES } from 'nw-style-guide/charts';
 import { ScaleTime } from 'd3-scale';
+import { TABS_DIRECTIVES } from 'nw-style-guide/tabs';
+import { TooltipDirective } from 'nw-style-guide/tooltips';
 
 @Component({
     selector: 'app-charts',
@@ -14,7 +16,7 @@ import { ScaleTime } from 'd3-scale';
     styleUrls: ['./charts.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [DecimalPipe],
-    standalone: false
+    imports: [TABS_DIRECTIVES, NgIf, FormsModule, ReactiveFormsModule, NgFor, CHARTS_DIRECTIVES, TooltipDirective, DecimalPipe, DatePipe]
 })
 export class ChartsComponent implements OnInit {
 
