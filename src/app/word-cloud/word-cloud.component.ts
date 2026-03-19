@@ -1,7 +1,11 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
-import { IWord, IWordCloudConfig, IWordWithPosition, WordCloudComponent } from 'nw-style-guide/word-cloud';
-import { ActivatedRoute } from '@angular/router';
+import { IWord, IWordCloudConfig, IWordWithPosition, WordCloudComponent, WORD_CLOUD_COMPONENTS } from 'nw-style-guide/word-cloud';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ISnippet } from '../code/ISnippet';
+import { TABS_DIRECTIVES } from 'nw-style-guide/tabs';
+import { NgIf, NgFor, NgTemplateOutlet } from '@angular/common';
+import { TooltipDirective } from 'nw-style-guide/tooltips';
+import { AppCodeComponent } from '../code/code.component';
 
 interface IMyWord extends IWord {
     id: number;
@@ -11,7 +15,7 @@ interface IMyWord extends IWord {
     selector: 'app-home',
     templateUrl: './word-cloud.component.html',
     styleUrls: ['./word-cloud.component.scss'],
-    standalone: false
+    imports: [TABS_DIRECTIVES, RouterLink, NgIf, WORD_CLOUD_COMPONENTS, NgFor, TooltipDirective, AppCodeComponent, NgTemplateOutlet]
 })
 export class WordCloudDemoComponent implements OnInit {
 
