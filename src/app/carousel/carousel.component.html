@@ -12,10 +12,12 @@
 
 <div style="width: 1030px; max-width: 100%;">
     <nw-carousel maskColor="#373737">
-        <ng-container *ngFor="let item of items">
+        @for (item of items; track item) {
             <div class="slide" nwCarouselSlide snapAlign="center"
-                [style.background-image]="'url(https://picsum.photos/216/120?image=' + item +')'">Slide {{item}}</div>
-        </ng-container>
+                [style.background-image]="'url(https://picsum.photos/216/120?image=' + item +')'">
+                Slide {{item}}
+            </div>
+        }
     </nw-carousel>
 </div>
 
@@ -36,10 +38,12 @@
         [showPageIndicator]="false"
         [showPagination]="false"
         noResultsText="Sorry, no data available">
-        <ng-container *ngFor="let item of items">
+        @for (item of items; track item) {
             <div class="slide" nwCarouselSlide
-                [style.background-color]="'grey'">Slide {{item}}</div>
-        </ng-container>
+                [style.background-color]="'grey'">
+                Slide {{item}}
+            </div>
+        }
 
         <div class="pagination-left">
             <button class="btn btn-primary btn-md" (click)="carousel.prev()">Prev</button>
@@ -50,10 +54,12 @@
         </div>
 
         <div class="pagination-indicators" style="width: 100%; text-align: center;">
-            <button class="btn sm btn-primary" *ngFor="let page of carousel.getPages()" [class.active]="page === carousel.currPage"
-                (click)="carousel.goToPage(page)">
-                {{page + 1}}
-            </button>
+            @for (page of carousel.getPages(); track page) {
+                <button class="btn sm btn-primary" [class.active]="page === carousel.currPage"
+                    (click)="carousel.goToPage(page)">
+                    {{page + 1}}
+                </button>
+            }
         </div>
     </nw-carousel>
 </div>

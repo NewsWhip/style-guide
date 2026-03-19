@@ -42,9 +42,13 @@
 <hr>
 <h3>Examples</h3>
 
-<app-code *ngFor="let snippet of snippets" [snippet]="snippet"></app-code>
+@for (snippet of snippets; track snippet) {
+    <app-code [snippet]="snippet"></app-code>
+}
 
 <h3>Usage</h3>
-<app-code *ngFor="let snippet of usageSnippets" [snippet]="snippet"></app-code>
+@for (snippet of usageSnippets; track snippet) {
+    <app-code [snippet]="snippet"></app-code>
+}
 
 
