@@ -11,13 +11,11 @@ let de: DebugElement;
 describe('EmailInputComponent', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                ReactiveFormsModule
-            ],
-            declarations: [
-                EmailInputComponent
-            ]
-        });
+    imports: [
+        ReactiveFormsModule,
+        EmailInputComponent
+    ]
+});
         fixture = TestBed.createComponent(EmailInputComponent);
         comp = fixture.componentInstance;
         de = fixture.debugElement;

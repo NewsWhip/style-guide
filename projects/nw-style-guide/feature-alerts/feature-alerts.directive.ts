@@ -3,10 +3,7 @@ import { FeatureAlertsService } from './feature-alerts.service';
 import { filter, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
-@Directive({
-    selector: '[nwFeatureAlert]',
-    standalone: false
-})
+@Directive({ selector: '[nwFeatureAlert]' })
 export class FeatureAlertsDirective implements OnInit, OnDestroy {
 
     /**

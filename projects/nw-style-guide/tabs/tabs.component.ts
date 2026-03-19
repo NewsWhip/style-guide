@@ -3,6 +3,7 @@ import { TabDirective } from './tab.directive';
 import { fromEvent, Subscription, Observable, merge } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { TabsService } from './tabs.service';
+import { NgClass, NgStyle, NgIf, NgTemplateOutlet } from '@angular/common';
 
 @Component({
     selector: 'nw-tabs',
@@ -43,7 +44,7 @@ import { TabsService } from './tabs.service';
             position: relative;
         }
     `],
-    standalone: false
+    imports: [NgClass, NgStyle, NgIf, NgTemplateOutlet]
 })
 
 export class TabsComponent implements OnInit, AfterContentInit, OnDestroy {
