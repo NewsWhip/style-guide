@@ -19,14 +19,14 @@ import { NgClass, NgStyle, NgTemplateOutlet } from '@angular/common';
         @if (shouldShowPagination) {
             <div class="pagination-container">
                 @if (shouldShowPrev) {
-                <div class="prev-page" (click)="prev()" [ngStyle]="background">
-                    <ng-container *ngTemplateOutlet="paginator"></ng-container>
-                </div>
+                    <div class="prev-page" (click)="prev()" [ngStyle]="background">
+                        <ng-container *ngTemplateOutlet="paginator"></ng-container>
+                    </div>
                 }
                 @if (shouldShowNext) {
-                <div class="next-page" (click)="next()" [ngStyle]="background">
-                    <ng-container *ngTemplateOutlet="paginator"></ng-container>
-                </div>
+                    <div class="next-page" (click)="next()" [ngStyle]="background">
+                        <ng-container *ngTemplateOutlet="paginator"></ng-container>
+                    </div>
                 }
             </div>
         }
