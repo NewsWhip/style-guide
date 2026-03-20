@@ -6,7 +6,6 @@ export class TabDirective implements OnChanges {
 
     @HostBinding('class.active') @Input() isActive: boolean = false;
     @HostBinding('attr.role') role = 'tab';
-    @HostBinding('attr.tabindex') tabindex = 0;
 
     constructor(
         public elRef: ElementRef<HTMLElement>,
