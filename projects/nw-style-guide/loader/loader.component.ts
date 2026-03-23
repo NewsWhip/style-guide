@@ -1,14 +1,15 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
-import { trigger, transition, style, animate } from "@angular/animations";
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { NgIf, NgClass, NgFor } from '@angular/common';
 
 @Component({
     selector: 'nw-loader',
     template: `
-        <div *ngIf="isLoading" class="loader" [@delayAndFadeIn]="animParams"
+        <div *ngIf="isLoading" class="loader" animate.enter="delay-and-fade-in"
             [ngClass]="sizeClass"
             [class.loader-inline]="isInline"
-            [class.loader-color]="isColor">
+            [class.loader-color]="isColor"
+            [style.--fade-in-duration.ms]="fadeInMs"
+            [style.--fade-in-delay.ms]="delayMs">
             <div class="dots-icon-wrapper">
                 <div class="dots">
                     <span *ngFor="let d of dots" class="dot dot-{{d}}"></span>
@@ -17,19 +18,11 @@ import { NgIf, NgClass, NgFor } from '@angular/common';
         </div>
     `,
     exportAs: 'nw-loader',
-    animations: [
-        trigger('delayAndFadeIn', [
-            transition(':enter', [
-                style({ opacity: 0 }),
-                animate(`{{duration}}ms {{delay}}ms linear`, style({ opacity: 1 }))
-            ])
-        ])
-    ],
     changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [NgIf, NgClass, NgFor]
 })
 
-export class LoaderComponent implements OnInit {
+export class LoaderComponent {
 
     @Input() isLoading: boolean = false;
     @Input() numOfDots: number = 6;
@@ -38,18 +31,6 @@ export class LoaderComponent implements OnInit {
     @Input() isInline: boolean = false;
     @Input() delayMs: number = 700;
     @Input() fadeInMs: number = 700;
-
-    public animParams: any;
-
-    ngOnInit() {
-        this.animParams = {
-            value: '',
-            params: {
-                duration: this.fadeInMs,
-                delay: this.delayMs
-            }
-        };
-    }
 
     get dots(): number[] {
         return Array(this.numOfDots).fill(0).map((x, i) => i + 1);

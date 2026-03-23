@@ -1,5 +1,4 @@
 import { Component, ChangeDetectionStrategy, Input, ElementRef, ViewChild, Renderer2, ChangeDetectorRef, AfterViewInit, OnDestroy, OnInit, Output, EventEmitter, OnChanges, SimpleChanges, ContentChildren, QueryList, AfterContentInit } from '@angular/core';
-import { trigger, transition, style, animate, AUTO_STYLE } from '@angular/animations';
 import { debounceTime } from "rxjs/operators";
 import { CarouselSlideDirective } from "./carousel-slide.directive";
 import { Subscription, fromEvent } from 'rxjs';
@@ -17,11 +16,18 @@ import { NgIf, NgStyle, NgClass, NgFor } from '@angular/common';
 
             <div class="carousel-content">
                 <div class="pagination-masks" *ngIf="showMask && pages.length > 1">
-                    <div class="pagination-mask pagination-mask-start" *ngIf="!isFirstPage" @collapse
-                        [ngStyle]="maskStyles"></div>
-
-                    <div class="pagination-mask pagination-mask-end" *ngIf="!isLastPage" @collapse
-                        [ngStyle]="maskStyles"></div>
+                    <div class="collapse-expand-grid-container collapse-expand-container-start" *ngIf="!isFirstPage"
+                        animate.leave="collapse-animation">
+                        <div class="pagination-mask pagination-mask-start"
+                            [ngStyle]="maskStyles"></div>
+                    </div>
+                    
+                    <div class="collapse-expand-grid-container collapse-expand-container-end" *ngIf="!isLastPage" 
+                        animate.leave="collapse-animation">
+                        <div class="pagination-mask pagination-mask-end"
+                            [ngStyle]="maskStyles"></div>
+                    </div>
+                    
                 </div>
 
                 <div class="carousel" #carousel [ngClass]="containerClass">
@@ -48,14 +54,6 @@ import { NgIf, NgStyle, NgClass, NgFor } from '@angular/common';
     `,
     changeDetection: ChangeDetectionStrategy.OnPush,
     exportAs: 'nw-carousel',
-    animations: [
-        trigger('collapse', [
-            transition(':leave', [
-                style({ width: AUTO_STYLE }),
-                animate(`300ms linear`, style({ width: 0 }))
-            ])
-        ])
-    ],
     imports: [NgIf, NgStyle, NgClass, NgFor]
 })
 export class CarouselComponent implements OnInit, AfterViewInit, AfterContentInit, OnChanges, OnDestroy {
