@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
     selector: 'app-branding',
     templateUrl: './branding.component.html',
     styleUrls: ['./branding.component.scss']
 })
-export class BrandingComponent implements OnInit {
+export class BrandingComponent {
 
     public unsafeHeadTag: string =`
 <meta name="theme-color" content="#383838">
@@ -15,9 +15,6 @@ export class BrandingComponent implements OnInit {
 <link rel="icon" type="image/png" href="images/favicons/favicon-32x32.png" sizes="32x32">
 <link rel="icon" type="image/png" href="images/favicons/favicon-16x16.png" sizes="16x16">
 <link rel="mask-icon" href="images/favicons/safari-pinned-tab.svg" color="#383838">`;
-
-    ngOnInit() {
-    }
 
     escapeHtml(unsafe: string) {
         return unsafe

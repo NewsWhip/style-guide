@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { LoaderComponent as NWLoaderComponent } from 'nw-style-guide/loader';
 
@@ -8,13 +8,9 @@ import { LoaderComponent as NWLoaderComponent } from 'nw-style-guide/loader';
     styleUrls: ['./loader.component.scss'],
     imports: [FormsModule, NWLoaderComponent]
 })
-export class LoaderComponent implements OnInit {
+export class LoaderComponent {
   private _num: number = 6;
   public size: string = 'md';
-
-  constructor() {}
-
-  ngOnInit() {}
 
   get num(): number {
     return this._num;

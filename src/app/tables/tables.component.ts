@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgFor } from '@angular/common';
 
@@ -8,13 +8,8 @@ import { NgFor } from '@angular/common';
     styleUrls: ['./tables.component.scss'],
     imports: [FormsModule, NgFor]
 })
-export class TablesComponent implements OnInit {
+export class TablesComponent {
 
     public isTall: boolean = false;
-
-    constructor() { }
-
-    ngOnInit() {
-    }
 
 }
