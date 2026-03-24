@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
+import { NgFor } from '@angular/common';
 
 @Component({
     selector: 'app-relative-weight',
     templateUrl: './relative-weight.component.html',
     styleUrls: ['./relative-weight.component.scss'],
-    standalone: false
+    imports: [NgFor]
 })
 export class RelativeWeightComponent {
 

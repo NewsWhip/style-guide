@@ -1,9 +1,10 @@
 import { Component, Input, Output, ChangeDetectorRef, ChangeDetectionStrategy, EventEmitter, ViewChild, ElementRef, OnInit, OnDestroy, SimpleChanges, OnChanges } from '@angular/core';
 import { trigger, transition, animate, style } from '@angular/animations';
-import { FormControl } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { IPickerItem } from './IPickerItem';
 import { Subscription } from 'rxjs';
 import { isUndefined } from 'lodash-es';
+import { NgIf, NgFor, NgClass } from '@angular/common';
 
 @Component({
     selector: 'nw-angular-picker',
@@ -17,7 +18,8 @@ import { isUndefined } from 'lodash-es';
                     (focus)="onFocus()"
                     (blur)="closeResults()"
                     (keyup.escape)="inputEl.blur()"
-                    [placeholder]="inputPlaceholderText"/>
+                    [placeholder]="inputPlaceholderText"
+                    [attr.aria-label]="inputPlaceholderText"/>
 
                 <div class="input-placeholder text-ellipsis" [innerHTML]="getPlaceholderText()"></div>
 
@@ -33,19 +35,21 @@ import { isUndefined } from 'lodash-es';
 
             <button *ngIf="searchTerm.value"
                 (mousedown)="preventBlur($event)"
-                (click)="onReset($event);inputEl.focus()" class="close reset-icon">&times;</button>
+                (click)="onReset($event);inputEl.focus()" class="close reset-icon" aria-label="Clear search">&times;</button>
 
             <div class="search-results" *ngIf="canViewResults"
                 [@slideUpIn]="isMobileDisplay ? 'in' : false"
                 (mousedown)="preventBlur($event)">
 
                 <div class="results-header">
-                    <button class="close" (click)="closeResults()" style="color: #000">&times;</button>
+                    <button class="close" (click)="closeResults()" style="color: #000" aria-label="Close results">&times;</button>
                 </div>
 
                 <!-- Navigate up the tree -->
                 <div class="results-actions" *ngIf="parentId && displayItems.length && !searchTerm.value.length">
-                    <a href="javascript:;" class="picker-action" (click)="ascend($event, getParentItem(parentId))">
+                    <a tabindex="0" role="button" aria-label="Go Back" class="picker-action" 
+                        (click)="ascend($event, getParentItem(parentId))"
+                        (keydown.enter)="ascend($event, getParentItem(parentId))">
                         <i class="fas fa-long-arrow-alt-left" aria-hidden="true"></i>
                         {{getParentItem(parentId).displayName}}
                     </a>
@@ -56,8 +60,8 @@ import { isUndefined } from 'lodash-es';
 
                     <div class="results-actions" *ngIf="shouldShowSelections && !selectionsAreShowing && parentId == null && !searchTerm.value.length">
                         <ng-container *ngIf="getSelections().length">
-                            <a href="javascript:;" class="picker-action" (click)="editSelections($event)">Edit selections</a>
-                            <a href="javascript:;" class="picker-action" (click)="clearSelections($event)">Clear selections</a>
+                            <a tabindex="0" role="button" class="picker-action" (click)="editSelections($event)" (keydown.enter)="editSelections($event)">Edit selections</a>
+                            <a tabindex="0" role="button" class="picker-action" (click)="clearSelections($event)" (keydown.enter)="clearSelections($event)">Clear selections</a>
                         </ng-container>
 
                         <ng-container *ngIf="!getSelections().length">
@@ -68,10 +72,10 @@ import { isUndefined } from 'lodash-es';
                     <!-- DISPLAY THE SELECTED ITEMS -->
                     <ng-container *ngIf="selectionsAreShowing">
                         <div class="results-actions">
-                            <a href="javascript:;" class="picker-action" (click)="selectionsAreShowing = false">
+                            <a role="button" class="picker-action" (click)="selectionsAreShowing = false">
                                 <i class="fas fa-long-arrow-alt-left" aria-hidden="true"></i> Back
                             </a>
-                            <a href="javascript:;" class="picker-action" *ngIf="getSelections().length" (click)="clearSelections($event)">Clear all</a>
+                            <a role="button" class="picker-action" *ngIf="getSelections().length" (click)="clearSelections($event)">Clear all</a>
                         </div>
 
                         <div class="selected-items">
@@ -82,7 +86,7 @@ import { isUndefined } from 'lodash-es';
                                 <span class="result-item">
                                     <span class="item-label">{{item.displayName}}</span>
 
-                                    <button class="close" style="color: #000000" (click)="clearSelection($event, item)">
+                                    <button class="close" style="color: #000000" (click)="clearSelection($event, item)" [attr.aria-label]="'Remove ' + item.displayName">
                                         &times;
                                     </button>
                                 </span>
@@ -94,18 +98,26 @@ import { isUndefined } from 'lodash-es';
                     <ng-container *ngIf="!selectionsAreShowing">
                         <div class="search-result" *ngFor="let item of displayItems"
                             [class.active]="item.added"
+                            [attr.tabindex]="isMultiSelect ? -1 : 0"
                             [class.excluded]="item.excluded"
-                            [class.has-children]="hasChildren(item.id)">
+                            [class.has-children]="hasChildren(item.id)"
+                            role="option">
 
                             <span class="result-item">
                                 <div class="checkbox checkbox-placeholder" *ngIf="isMultiSelect">
-                                    <input id="include-{{item.id}}" type="checkbox" (click)="toggleItemInclusion(item, $event)" [checked]="item.added">
-                                    <label for="include-{{item.id}}"></label>
+                                    <input tabindex="0" id="include-{{item.id}}" type="checkbox" 
+                                        (click)="toggleItemInclusion(item, $event)" 
+                                        [checked]="item.added" 
+                                        (keydown.enter)="toggleItemInclusion(item, $event)">
+                                    <label for="include-{{item.id}}" [attr.aria-label]="'Select ' + item.displayName"></label>
                                 </div>
 
                                 <div class="checkbox checkbox-exclusion checkbox-placeholder" *ngIf="canExclude && isMultiSelect">
-                                    <input id="exclude-{{item.id}}" type="checkbox" (click)="toggleItemExclusion(item, $event)" [checked]="item.excluded">
-                                    <label for="exclude-{{item.id}}"></label>
+                                    <input tabindex="0" id="exclude-{{item.id}}" type="checkbox" 
+                                        (click)="toggleItemExclusion(item, $event)" 
+                                        [checked]="item.excluded" 
+                                        (keydown.enter)="toggleItemExclusion(item, $event)">
+                                    <label for="exclude-{{item.id}}" [attr.aria-label]="'Exclude ' + item.displayName"></label>
                                 </div>
 
                                 <span class="item-label" title="{{item.displayName}}" (click)="toggleItemInclusion(item, $event)">
@@ -117,7 +129,10 @@ import { isUndefined } from 'lodash-es';
                                     </ng-container>
                                 </span>
 
-                                <button class="btn btn-ghost drilldown" *ngIf="hasChildren(item.id)" (click)="setDisplayItemsFromParentId(item.id, $event); desc.emit(getParentItem(parentId))">
+                                <button class="btn btn-ghost drilldown" 
+                                    *ngIf="hasChildren(item.id)" 
+                                    (click)="setDisplayItemsFromParentId(item.id, $event); desc.emit(getParentItem(parentId))"
+                                    [attr.aria-label]="'Expand ' + item.displayName">
                                     <i class="fas fa-chevron-right" aria-hidden="true"></i>
                                 </button>
                             </span>
@@ -147,7 +162,7 @@ import { isUndefined } from 'lodash-es';
             ])
         ])
     ],
-    standalone: false
+    imports: [ReactiveFormsModule, NgIf, NgFor, NgClass]
 })
 
 export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {

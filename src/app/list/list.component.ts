@@ -1,4 +1,5 @@
 import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 declare const html_beautify: any;
@@ -7,7 +8,7 @@ declare const html_beautify: any;
     selector: 'app-list',
     templateUrl: './list.component.html',
     styleUrls: ['./list.component.scss'],
-    standalone: false
+    imports: [RouterLink, RouterLinkActive]
 })
 export class ListComponent implements AfterViewInit {
 
