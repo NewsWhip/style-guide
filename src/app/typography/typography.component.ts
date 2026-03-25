@@ -15,8 +15,6 @@ export class TypographyComponent implements OnInit {
   public exampleText: string = 'The quick brown fox jumps over the lazy dog';
   public randomLink: string ='';
 
-  constructor() { }
-
   ngOnInit() {
     this.randomLink = `https://www.google.ie/search?q=${Math.random() * (1000 - 99) + 99}`;
   }

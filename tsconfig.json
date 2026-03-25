@@ -12,9 +12,8 @@
       "node_modules/@types"
     ],
     "lib": [
-      "es2017",
-      "dom",
-      "ES2019.Array"
+      "ES2022",
+      "dom"
     ],
     /* We use these paths to reference the built library in the demo app */
     "paths": {

@@ -89,8 +89,6 @@ export class ChartComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     setHoverOverlay() {
-        const self = this;
-
         // This full height / width rect ensures that all mouse events will
         // be captured and delegated to the parent mouseEventCaptureContainer
         select(this.hoverOverlay.nativeElement)
@@ -104,7 +102,7 @@ export class ChartComponent implements OnInit, AfterViewInit, OnDestroy {
             .on('mouseleave', () => this.nwMouseleave.emit())
             .on('mousemove', e => {
                 // emits the current mouse position
-                self.nwMousemove.emit(pointer(e));
+                this.nwMousemove.emit(pointer(e));
             });
     }
 
