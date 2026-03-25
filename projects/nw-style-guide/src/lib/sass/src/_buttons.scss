@@ -151,6 +151,18 @@ a.btn {
     }
 }
 
+.btn-link {
+    padding: 0;
+    display: inline-block;
+    color: variables.$link-hover-color;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
 // Button Sizes
 // --------------------------------------------------
 
