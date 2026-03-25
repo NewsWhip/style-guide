@@ -58,3 +58,16 @@
     }
 }
 
+.fade-out {
+    opacity: 0.5;
+    animation: hotspot-fade-out 300ms forwards;
+}
+
+@keyframes hotspot-fade-out {
+    from {
+        opacity: 0.5;
+    }
+    to {
+        opacity: 0;
+    }
+}

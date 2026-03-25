@@ -1,5 +1,4 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, TemplateRef} from '@angular/core';
-import {animate, keyframes, style, transition, trigger} from '@angular/animations';
 import {IToast} from './IToast';
 import {Toast} from './Toast';
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
@@ -9,7 +8,7 @@ import { NgFor, NgClass, NgIf, NgTemplateOutlet } from '@angular/common';
     selector: 'nw-toasts',
     template: `
         <div class="toasts-container">
-            <div class="toast" *ngFor="let toast of toasts" [@slideInOut]
+            <div class="toast" *ngFor="let toast of toasts" animate.enter="toast-animate-in" animate.leave="toast-animate-out"
                 [ngClass]="['toast-' + toast.typeId, 'size-' + toast.size]">
                 <i class="fas fa-check toast-icon" *ngIf="toast.typeId === 'success'"></i>
                 <i class="fas fa-exclamation toast-icon" *ngIf="toast.typeId === 'error'"></i>
@@ -27,24 +26,6 @@ import { NgFor, NgClass, NgIf, NgTemplateOutlet } from '@angular/common';
             </div>
         </div>
     `,
-    animations: [
-        trigger('slideInOut', [
-            transition(':enter', [
-                animate('0.6s cubic-bezier(0.68, 0, 0.265, 1.75)', keyframes([
-                    style({ opacity: 0, transform: 'translate3d(0, -100px, 0)', offset: 0 }),
-                    style({ opacity: 1, transform: 'translate3d(0, -66px, 0)', offset: 0.33 }),
-                    style({ transform: 'translate3d(0, 0, 0)', offset: 1 })
-                ]))
-            ]),
-            transition(':leave', [
-                animate('0.8s linear', keyframes([
-                    style({ opacity: 0, top: 0, transform: 'translate3d(0, -500px, 0)', offset: 0.8 }),
-                    // Give the element no apparent height to cause stacked items to animate to their new positions
-                    style({ height: 0, offset: 1 })
-                ]))
-            ])
-        ])
-    ],
     changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [NgFor, NgClass, NgIf, NgTemplateOutlet]
 })

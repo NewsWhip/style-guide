@@ -1,21 +1,12 @@
 import { Component, Input, ChangeDetectionStrategy, ChangeDetectorRef } from "@angular/core";
 import { FeatureAlertsService } from "./feature-alerts.service";
-import { trigger, transition, animate, style } from "@angular/animations";
 import { NgIf } from "@angular/common";
 
 @Component({
     selector: 'nw-hotspot',
     template: `
-        <div [@fadeOut] *ngIf="isOpen" class="hotspot hotspot-{{position}}"></div>
+        <div animate.leave="fade-out" *ngIf="isOpen" class="hotspot hotspot-{{position}}"></div>
     `,
-    animations: [
-        trigger('fadeOut', [
-            transition(':leave', [
-                style({ opacity: 0.5 }),
-                animate(300, style({ opacity: 0 }))
-            ])
-        ])
-    ],
     changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [NgIf]
 })

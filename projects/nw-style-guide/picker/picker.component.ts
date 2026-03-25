@@ -1,5 +1,4 @@
 import { Component, Input, Output, ChangeDetectorRef, ChangeDetectionStrategy, EventEmitter, ViewChild, ElementRef, OnInit, OnDestroy, SimpleChanges, OnChanges } from '@angular/core';
-import { trigger, transition, animate, style } from '@angular/animations';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { IPickerItem } from './IPickerItem';
 import { Subscription } from 'rxjs';
@@ -38,7 +37,9 @@ import { NgIf, NgFor, NgClass } from '@angular/common';
                 (click)="onReset($event);inputEl.focus()" class="close reset-icon" aria-label="Clear search">&times;</button>
 
             <div class="search-results" *ngIf="canViewResults"
-                [@slideUpIn]="isMobileDisplay ? 'in' : false"
+                animate.enter="slide-up-in"
+                animate.leave="slide-down-out"
+                [class.no-animation]="!isMobileDisplay"
                 (mousedown)="preventBlur($event)">
 
                 <div class="results-header">
@@ -152,17 +153,6 @@ import { NgIf, NgFor, NgClass } from '@angular/common';
         </div>
 	`,
     changeDetection: ChangeDetectionStrategy.OnPush,
-    animations: [
-        trigger('slideUpIn', [
-            transition('void => in', [
-                style({ top: '100%', transform: 'scale(0)' }),
-                animate(200, style({ top: 0, transform: 'scale(1)' }))
-            ]),
-            transition('in => void', [
-                animate(200, style({ top: '100%', transform: 'scale(0)' }))
-            ])
-        ])
-    ],
     imports: [ReactiveFormsModule, NgIf, NgFor, NgClass]
 })
 
