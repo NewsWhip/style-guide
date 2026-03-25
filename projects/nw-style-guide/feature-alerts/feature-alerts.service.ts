@@ -32,7 +32,7 @@ export class FeatureAlertsService {
     wasAlertDismissed(id: string): boolean {
         const alerts = this._get();
 
-        if (alerts && alerts.hasOwnProperty(id)) {
+        if (alerts && Object.hasOwn(alerts, id)) {
             return alerts[id].dismissed;
         }
     }

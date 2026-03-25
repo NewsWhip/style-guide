@@ -30,8 +30,7 @@ export class AutofocusComponent implements OnInit, OnDestroy {
         });
     }
 
-    get importModule() {
-        return `import { AutoFocusModule } from 'nw-style-guide/autofocus';
+    readonly importModule = `import { AutoFocusModule } from 'nw-style-guide/autofocus';
 
     ...........
     ...........
@@ -46,11 +45,8 @@ export class AutofocusComponent implements OnInit, OnDestroy {
         bootstrap: [AppComponent]
     })
     export class AppModule { }`;
-    }
 
-    get example() {
-        return `<input type="text" nwAutofocus placeholder="This input box is autofocused on load" class="form-control">`;
-    }
+    readonly example = `<input type="text" nwAutofocus placeholder="This input box is autofocused on load" class="form-control">`;
 
     ngOnDestroy() {
         this._routeSub.unsubscribe();

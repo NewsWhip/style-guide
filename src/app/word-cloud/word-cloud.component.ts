@@ -57,7 +57,7 @@ export class WordCloudDemoComponent implements OnInit {
         this.positionedWords = words;
     }
 
-    public snippets: { [key: string]: ISnippet } = {
+    public snippets: Record<string, ISnippet> = {
         import: {
             lang: 'typescript',
             code: `

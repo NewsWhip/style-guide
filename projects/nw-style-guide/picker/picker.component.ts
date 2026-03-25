@@ -102,7 +102,8 @@ import { NgIf, NgFor, NgClass } from '@angular/common';
                             [attr.tabindex]="isMultiSelect ? -1 : 0"
                             [class.excluded]="item.excluded"
                             [class.has-children]="hasChildren(item.id)"
-                            role="option">
+                            role="option"
+                            [attr.aria-selected]="item.added">
 
                             <span class="result-item">
                                 <div class="checkbox checkbox-placeholder" *ngIf="isMultiSelect">

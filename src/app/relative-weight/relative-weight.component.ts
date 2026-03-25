@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { NgFor } from '@angular/common';
 
 @Component({
@@ -7,9 +7,7 @@ import { NgFor } from '@angular/common';
     styleUrls: ['./relative-weight.component.scss'],
     imports: [NgFor]
 })
-export class RelativeWeightComponent implements OnInit {
-
-  constructor() { }
+export class RelativeWeightComponent {
 
   public scores: number[] = [
     76,
@@ -19,9 +17,6 @@ export class RelativeWeightComponent implements OnInit {
     32,
     45
   ];
-
-  ngOnInit() {
-  }
 
   getWeight(score: number) {
     return Math.round((score / this.max) * 100);

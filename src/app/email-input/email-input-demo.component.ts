@@ -51,7 +51,7 @@ export class EmailInputDemoComponent implements OnInit {
         this._cdRef.detectChanges();
     }
 
-    public snippets: { [key: string]: ISnippet } = {
+    public snippets: Record<string, ISnippet> = {
         import: {
             lang: 'typescript',
             code: `

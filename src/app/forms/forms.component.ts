@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -7,13 +7,8 @@ import { FormsModule } from '@angular/forms';
     styleUrls: [`./forms.component.scss`],
     imports: [FormsModule]
 })
-export class FormsComponent implements OnInit {
+export class FormsComponent {
 
   public showErrors: boolean = false;
-
-  constructor() { }
-
-  ngOnInit() {
-  }
 
 }
