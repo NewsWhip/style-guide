@@ -44,4 +44,10 @@
         }
     </nw-tabs>
 
+    <h4>Buttons</h4>
+    <nw-tabs size="lg">
+        <li *ngFor="let tab of tabCollection" nwTab [isActive]="tab.isActive" role="presentation">
+            <button (click)="setSelectedTab(tab)">{{tab.name}}</button>
+        </li>
+    </nw-tabs>
 </div>

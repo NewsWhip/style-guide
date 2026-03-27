@@ -18,7 +18,7 @@ export abstract class AxisBase implements OnInit, OnChanges, OnDestroy {
     @Input() label: string = '';
 
     public axis: Axis<number | Date | { valueOf(): number }>;
-    public axisSelection: Selection<SVGGElement, Array<[number, number]>, SVGElement, any>;
+    public axisSelection: Selection<SVGGElement, [number, number][], SVGElement, any>;
     public axisLabelSelection: Selection<SVGTextElement, any, HTMLElement, any>;
 
     private _chartResizeSub: Subscription;

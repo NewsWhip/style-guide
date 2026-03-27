@@ -56,8 +56,7 @@ export class ToastsComponent implements OnInit, OnDestroy {
     });
   }
 
-  get importModule() {
-    return `import { ToastsModule } from 'nw-style-guide/toasts';
+  readonly importModule = `import { ToastsModule } from 'nw-style-guide/toasts';
 
 @NgModule({
   declarations: [...],
@@ -67,10 +66,8 @@ export class ToastsComponent implements OnInit, OnDestroy {
   bootstrap: [AppComponent]
 })
 export class AppModule { }`;
-  }
 
-  get example() {
-    return `export class TestComponent {
+  readonly example = `export class TestComponent {
 
   constructor(private _toaster: Toaster) {}
 
@@ -94,7 +91,6 @@ export class AppModule { }`;
   }
 }
 `;
-}
 
   getToasterMethods() {
     return [

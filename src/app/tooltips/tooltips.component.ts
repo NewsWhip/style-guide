@@ -178,7 +178,7 @@ export class TooltipsComponent implements OnInit, OnDestroy {
     });
   }
 
-  public snippets: { [key: string]: ISnippet } = {
+  public snippets: Record<string, ISnippet> = {
     import: {
       lang: 'typescript',
       code: `

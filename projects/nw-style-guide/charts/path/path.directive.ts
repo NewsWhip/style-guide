@@ -15,7 +15,7 @@ import { NwXAxisScale } from '../axis/models/XAxisScale';
 })
 export class PathDirective implements OnInit, OnChanges, OnDestroy {
 
-    @Input('nw-path') data: Array<[number, number]> = [];
+    @Input('nw-path') data: [number, number][] = [];
     @Input() xDomain: [number, number];
     @Input() yDomain: [number, number];
     @Input() animDuration: number = ChartUtils.ANIMATION_DURATION;
@@ -26,7 +26,7 @@ export class PathDirective implements OnInit, OnChanges, OnDestroy {
     @Output() animEnd: EventEmitter<void> = new EventEmitter();
 
     public line: Line<[number, number]>;
-    public path: Selection<SVGPathElement, Array<[number, number]>, SVGElement, any>;
+    public path: Selection<SVGPathElement, [number, number][], SVGElement, any>;
     public yScale: ScaleLinear<number, number> = scaleLinear();
 
     private _chartResizeSub: Subscription;
