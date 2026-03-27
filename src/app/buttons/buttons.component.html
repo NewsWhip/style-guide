@@ -4,9 +4,11 @@
     <h3>Sizes</h3>
 
     <div class="standalone-buttons">
-        <button class="btn btn-primary btn-{{size}}" *ngFor="let size of sizes">
-            Submit (.{{size}})
-        </button>
+        @for (size of sizes; track size) {
+            <button class="btn btn-primary btn-{{size}}">
+                Submit (.{{size}})
+            </button>
+        }
 
         <hr>
 
@@ -55,9 +57,11 @@
 
         <h3>Colors</h3>
 
-        <button class="btn btn-{{color}} btn-{{defaultBtnSize}}" *ngFor="let color of btnNames">
-            .btn-{{color}}
-        </button>
+        @for (color of btnNames; track color) {
+            <button class="btn btn-{{color}} btn-{{defaultBtnSize}}">
+                .btn-{{color}}
+            </button>
+        }
 
         <h3>Alternatives</h3>
 

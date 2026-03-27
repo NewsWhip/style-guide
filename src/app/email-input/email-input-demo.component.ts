@@ -4,7 +4,6 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ISnippet } from '../code/ISnippet';
 import { TABS_DIRECTIVES } from 'nw-style-guide/tabs';
-import { NgIf, NgFor } from '@angular/common';
 import { AppCodeComponent } from '../code/code.component';
 
 @Component({
@@ -19,7 +18,7 @@ import { AppCodeComponent } from '../code/code.component';
             margin-bottom: 16px;
         }
     `],
-    imports: [TABS_DIRECTIVES, RouterLink, NgIf, EmailInputComponent, AppCodeComponent, NgFor]
+    imports: [TABS_DIRECTIVES, RouterLink, EmailInputComponent, AppCodeComponent]
 })
 export class EmailInputDemoComponent implements OnInit {
 
