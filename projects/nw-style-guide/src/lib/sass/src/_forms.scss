@@ -272,9 +272,7 @@ input[type="search"] {
     input[type="radio"],
     input[type="checkbox"] {
         position: absolute;
-        margin-left: -20px;
-        margin-top: 4px \9;
-        display: none;
+        opacity: 0;
 
         &:checked {
             ~ label {
