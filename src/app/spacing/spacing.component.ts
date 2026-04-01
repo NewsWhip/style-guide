@@ -1,13 +1,12 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ISnippet } from '../code/ISnippet';
-import { NgFor } from '@angular/common';
 import { AppCodeComponent } from '../code/code.component';
 
 @Component({
     selector: 'app-spacing',
     templateUrl: './spacing.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [NgFor, AppCodeComponent]
+    imports: [AppCodeComponent]
 })
 export class SpacingComponent {
 

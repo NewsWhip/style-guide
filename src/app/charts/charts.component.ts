@@ -1,7 +1,7 @@
 import {Component, OnInit, ChangeDetectionStrategy, ViewChild, ViewChildren, QueryList} from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import moment from 'moment';
-import { DecimalPipe, NgIf, NgFor, DatePipe } from '@angular/common';
+import { DecimalPipe, DatePipe } from '@angular/common';
 import { bisector } from 'd3-array';
 import { AxisTimeInterval } from 'd3-axis';
 import { curveCardinal, curveBasis, curveLinear, curveStep, curveStepAfter, curveStepBefore } from 'd3-shape';
@@ -16,7 +16,7 @@ import { TooltipDirective } from 'nw-style-guide/tooltips';
     styleUrls: ['./charts.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [DecimalPipe],
-    imports: [TABS_DIRECTIVES, NgIf, FormsModule, ReactiveFormsModule, NgFor, CHARTS_DIRECTIVES, TooltipDirective, DecimalPipe, DatePipe]
+    imports: [TABS_DIRECTIVES, FormsModule, ReactiveFormsModule, CHARTS_DIRECTIVES, TooltipDirective, DecimalPipe, DatePipe]
 })
 export class ChartsComponent implements OnInit {
 
