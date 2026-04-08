@@ -1,4 +1,4 @@
-import { Directive, Input, OnInit, ElementRef, OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
+import { Directive, Input, OnInit, ElementRef, OnChanges, SimpleChanges, OnDestroy, inject } from '@angular/core';
 import { ChartUtils } from '../chart.utils';
 import { select, Selection } from 'd3-selection';
 import { ScaleLinear, scaleTime, scaleLinear } from 'd3-scale';
@@ -12,6 +12,10 @@ import { NwXAxisScale } from '../axis/models/XAxisScale';
     exportAs: 'nw-text'
 })
 export class TextDirective implements OnInit, OnChanges, OnDestroy {
+    private _elRef = inject<ElementRef<SVGTextElement>>(ElementRef);
+    private _chart = inject(ChartComponent);
+    private _chartUtils = inject(ChartUtils);
+
 
     @Input('nw-text') point: [number, number];
     @Input() xDomain: [number, number];
@@ -24,11 +28,6 @@ export class TextDirective implements OnInit, OnChanges, OnDestroy {
     public yScale: ScaleLinear<number, number> = scaleLinear();
 
     private _chartResizeSub: Subscription;
-
-    constructor(
-        private _elRef: ElementRef<SVGTextElement>,
-        private _chart: ChartComponent,
-        private _chartUtils: ChartUtils) {}
 
     ngOnInit() {
         this.text = select(this._elRef.nativeElement);

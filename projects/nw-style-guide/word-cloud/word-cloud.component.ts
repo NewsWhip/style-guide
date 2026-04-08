@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, Inject, Input, OnChanges, Output, Renderer2, SimpleChanges, DOCUMENT } from "@angular/core";
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnChanges, Output, Renderer2, SimpleChanges, DOCUMENT, inject } from "@angular/core";
 import { IBoundingBox } from "./models/IBoundingBox";
 import { IPoint } from "./models/IPoint";
 import { IWordCloudConfig } from "./models/IWordCloudConfig";
@@ -16,6 +16,12 @@ import { ResizeObserverDirective } from "nw-style-guide/resize-observer";
     imports: [ResizeObserverDirective]
 })
 export class WordCloudComponent<T extends IWord> implements OnChanges {
+    private _elRef = inject<ElementRef<HTMLElement>>(ElementRef);
+    private _renderer = inject(Renderer2);
+    private _cdRef = inject(ChangeDetectorRef);
+    private _document = inject<Document>(DOCUMENT);
+    elRef = inject<ElementRef<HTMLElement>>(ElementRef);
+
 
     @Input() words: T[];
     @Input() options: Partial<IWordCloudConfig> = {};
@@ -36,13 +42,6 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
     private _spiralResolution = 0.3;
 
     public config: IWordCloudConfig;
-
-    constructor(
-        private _elRef: ElementRef<HTMLElement>,
-        private _renderer: Renderer2,
-        private _cdRef: ChangeDetectorRef,
-        @Inject(DOCUMENT) private _document: Document,
-        public elRef: ElementRef<HTMLElement>) {}
 
     ngOnChanges(changes: SimpleChanges): void {
         const wordsChange = changes.words?.currentValue !== changes.words?.previousValue;

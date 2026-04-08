@@ -1,12 +1,12 @@
-import { Directive, OnInit, ElementRef } from "@angular/core";
+import { Directive, OnInit, ElementRef, inject } from "@angular/core";
 
 @Directive({
     selector: '[nwAutofocus]',
     exportAs: 'nw-autofocus'
 })
 export class AutoFocusDirective implements OnInit {
+    private _elRef = inject<ElementRef<HTMLElement>>(ElementRef);
 
-    constructor(private _elRef: ElementRef<HTMLElement>) {}
 
     ngOnInit() {
         this._elRef.nativeElement.focus();

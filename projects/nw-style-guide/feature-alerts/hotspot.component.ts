@@ -1,4 +1,4 @@
-import { Component, Input, ChangeDetectionStrategy, ChangeDetectorRef } from "@angular/core";
+import { Component, Input, ChangeDetectionStrategy, ChangeDetectorRef, inject } from "@angular/core";
 import { FeatureAlertsService } from "./feature-alerts.service";
 import { trigger, transition, animate, style } from "@angular/animations";
 import { NgIf } from "@angular/common";
@@ -20,13 +20,12 @@ import { NgIf } from "@angular/common";
     imports: [NgIf]
 })
 export class HotspotComponent {
+    private _featureAlertsService = inject(FeatureAlertsService);
+    private _cdRef = inject(ChangeDetectorRef);
+
 
     @Input() position: string = "left";
     @Input() id: any;
-
-    constructor(
-        private _featureAlertsService: FeatureAlertsService,
-        private _cdRef: ChangeDetectorRef) {}
 
     get isOpen(): boolean {
         return !this._featureAlertsService.wasAlertDismissed(this.id);

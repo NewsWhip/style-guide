@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, TemplateRef} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, TemplateRef, inject } from '@angular/core';
 import {animate, keyframes, style, transition, trigger} from '@angular/animations';
 import {IToast} from './IToast';
 import {Toast} from './Toast';
@@ -49,12 +49,11 @@ import { NgFor, NgClass, NgIf, NgTemplateOutlet } from '@angular/common';
     imports: [NgFor, NgClass, NgIf, NgTemplateOutlet]
 })
 export class ToastsComponent {
+    private _cdRef = inject(ChangeDetectorRef);
+    private _domSanitizer = inject(DomSanitizer);
+
 
     public toasts: Toast[] = [];
-
-    constructor(
-        private _cdRef: ChangeDetectorRef,
-        private _domSanitizer: DomSanitizer) { }
 
     isTemplateRef(value: string | TemplateRef<any>): boolean {
         return typeof value !== 'string';

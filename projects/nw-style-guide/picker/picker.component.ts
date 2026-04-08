@@ -1,4 +1,4 @@
-import { Component, Input, Output, ChangeDetectorRef, ChangeDetectionStrategy, EventEmitter, ViewChild, ElementRef, OnInit, OnDestroy, SimpleChanges, OnChanges } from '@angular/core';
+import { Component, Input, Output, ChangeDetectorRef, ChangeDetectionStrategy, EventEmitter, ViewChild, ElementRef, OnInit, OnDestroy, SimpleChanges, OnChanges, inject } from '@angular/core';
 import { trigger, transition, animate, style } from '@angular/animations';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { IPickerItem } from './IPickerItem';
@@ -167,6 +167,8 @@ import { NgIf, NgFor, NgClass } from '@angular/common';
 })
 
 export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
+    chRef = inject(ChangeDetectorRef);
+
 
     @Input() items: IPickerItem[];
     @Input() inputClasses: string = '';
@@ -204,8 +206,6 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
     public selectionsAreShowing: boolean = false;
     public maxHeight: number = 400;
     private _subs: Subscription[] = [];
-
-    constructor(public chRef: ChangeDetectorRef) { }
 
     ngOnInit() {
         this.parentId = this.initialParentId;

@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -14,6 +14,11 @@ import { CopyCodeComponent } from '../code/copy-code.component';
     imports: [TABS_DIRECTIVES, RouterLink, NgIf, FormsModule, ReactiveFormsModule, CopyCodeComponent, NgFor]
 })
 export class ToastsComponent implements OnInit, OnDestroy {
+  private _cdRef = inject(ChangeDetectorRef);
+  private _toaster = inject(Toaster);
+  private _route = inject(ActivatedRoute);
+  private _fb = inject(FormBuilder);
+
 
   public selectedTab: 'design' | 'api' = 'design';
   public form: FormGroup;
@@ -22,12 +27,6 @@ export class ToastsComponent implements OnInit, OnDestroy {
   public configExample: any;
 
   private _routeSub: Subscription;
-
-  constructor(
-    private _cdRef: ChangeDetectorRef,
-    private _toaster: Toaster,
-    private _route: ActivatedRoute,
-    private _fb: FormBuilder) { }
 
   ngOnInit() {
     this.form = this._fb.group({

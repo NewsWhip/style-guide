@@ -1,9 +1,7 @@
-import { Directive, ElementRef, Input, Output, EventEmitter } from '@angular/core';
+import { Directive, Input, Output, EventEmitter } from '@angular/core';
 import { axisLeft, axisRight } from 'd3-axis';
 import { AxisBase } from './axis-base';
 import { ScaleLinear, scaleLinear } from 'd3-scale';
-import { ChartComponent } from '../chart.component';
-import { ChartUtils } from "../chart.utils";
 
 @Directive({
     // eslint-disable-next-line @angular-eslint/directive-selector
@@ -18,14 +16,6 @@ export class YAxisDirective extends AxisBase {
     @Output() scaleUpdated: EventEmitter<ScaleLinear<number, number>> = new EventEmitter();
 
     public scale: ScaleLinear<number, number> = scaleLinear();
-
-    constructor(
-        elRef: ElementRef,
-        chart: ChartComponent,
-        chartUtils: ChartUtils) {
-
-        super(elRef, chart, chartUtils);
-    }
 
     createAxis() {
         this.axis = this.align === "left" ?

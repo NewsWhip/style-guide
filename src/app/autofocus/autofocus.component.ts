@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, OnDestroy, ChangeDetectorRef, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { TABS_DIRECTIVES } from 'nw-style-guide/tabs';
@@ -14,14 +14,13 @@ import { CopyCodeComponent } from '../code/copy-code.component';
     imports: [TABS_DIRECTIVES, RouterLink, NgIf, AutoFocusDirective, CopyCodeComponent]
 })
 export class AutofocusComponent implements OnInit, OnDestroy {
+    private _route = inject(ActivatedRoute);
+    private _cdRef = inject(ChangeDetectorRef);
+
 
     public selectedTab: 'design' | 'api' = 'design';
 
     private _routeSub: Subscription;
-
-    constructor(private _route: ActivatedRoute,
-                private _cdRef: ChangeDetectorRef) {
-    }
 
     ngOnInit(): void {
         this._routeSub = this._route.queryParams.subscribe(params => {

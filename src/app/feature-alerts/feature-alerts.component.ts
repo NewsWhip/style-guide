@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
 import { FeatureAlertsDirective, FeatureAlertsService, HotspotComponent, WindowRef } from 'nw-style-guide/feature-alerts';
 import { NgIf } from '@angular/common';
 
@@ -21,15 +21,13 @@ import { NgIf } from '@angular/common';
     imports: [NgIf, HotspotComponent, FeatureAlertsDirective]
 })
 export class FeatureAlertsComponent {
+    private _w = inject(WindowRef);
+    private _featureAlertService = inject(FeatureAlertsService);
+
     message: string;
 
     featureAlertIds: string[] = ['example-feature-1', 'example-feature-2'];
     showResetButton: boolean;
-
-    constructor(
-        private _w: WindowRef,
-        private _featureAlertService: FeatureAlertsService
-    ) {}
 
     clearLocalStorage() {
         this._w.nativeWindow.localStorage.clear();

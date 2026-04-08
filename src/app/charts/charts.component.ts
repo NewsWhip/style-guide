@@ -1,4 +1,4 @@
-import {Component, OnInit, ChangeDetectionStrategy, ViewChild, ViewChildren, QueryList} from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ViewChild, ViewChildren, QueryList, inject } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import moment from 'moment';
 import { DecimalPipe, NgIf, NgFor, DatePipe } from '@angular/common';
@@ -19,6 +19,9 @@ import { TooltipDirective } from 'nw-style-guide/tooltips';
     imports: [TABS_DIRECTIVES, NgIf, FormsModule, ReactiveFormsModule, NgFor, CHARTS_DIRECTIVES, TooltipDirective, DecimalPipe, DatePipe]
 })
 export class ChartsComponent implements OnInit {
+    private _fb = inject(FormBuilder);
+    private _decimalPipe = inject(DecimalPipe);
+
 
     public selectedTab: string = "demo";
 
@@ -137,10 +140,6 @@ export class ChartsComponent implements OnInit {
     @ViewChild('xAxis') xAxis: XAxisDirective;
     @ViewChild('yAxis') yAxis: YAxisDirective;
     @ViewChildren('circle') fbCircles: QueryList<CircleDirective>;
-
-    constructor(
-        private _fb: FormBuilder,
-        private _decimalPipe: DecimalPipe) { }
 
     ngOnInit() {
         this.metricNames = this.getMetricNames();

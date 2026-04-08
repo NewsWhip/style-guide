@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, ViewChild, AfterViewInit, ChangeDetectionStrategy, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild, AfterViewInit, ChangeDetectionStrategy, Output, EventEmitter, OnDestroy, inject } from '@angular/core';
 import { select, Selection, pointer } from 'd3-selection';
 import { ChartUtils } from './chart.utils';
 import { fromEvent, Subject, merge } from 'rxjs';
@@ -29,6 +29,9 @@ import { ResizeObserverDirective } from 'nw-style-guide/resize-observer';
     imports: [ResizeObserverDirective]
 })
 export class ChartComponent implements OnInit, AfterViewInit, OnDestroy {
+    private _elRef = inject<ElementRef<SVGSVGElement>>(ElementRef);
+    chartUtils = inject(ChartUtils);
+
 
     @Input('width') w: number;
     @Input('height') h: number;
@@ -52,10 +55,6 @@ export class ChartComponent implements OnInit, AfterViewInit, OnDestroy {
 
     private _destroyed$: Subject<void> = new Subject();
     private _chartDimensionsChange$: Subject<void> = new Subject();
-
-    constructor(
-        private _elRef: ElementRef<SVGSVGElement>,
-        public chartUtils: ChartUtils) {}
 
     ngOnInit() {
         this.parentElement = this._elRef.nativeElement.parentElement;

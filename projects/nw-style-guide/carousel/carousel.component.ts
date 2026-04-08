@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, Input, ElementRef, ViewChild, Renderer2, ChangeDetectorRef, AfterViewInit, OnDestroy, OnInit, Output, EventEmitter, OnChanges, SimpleChanges, ContentChildren, QueryList, AfterContentInit } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input, ElementRef, ViewChild, Renderer2, ChangeDetectorRef, AfterViewInit, OnDestroy, OnInit, Output, EventEmitter, OnChanges, SimpleChanges, ContentChildren, QueryList, AfterContentInit, inject } from '@angular/core';
 import { trigger, transition, style, animate, AUTO_STYLE } from '@angular/animations';
 import { debounceTime } from "rxjs/operators";
 import { CarouselSlideDirective } from "./carousel-slide.directive";
@@ -59,6 +59,9 @@ import { NgIf, NgStyle, NgClass, NgFor } from '@angular/common';
     imports: [NgIf, NgStyle, NgClass, NgFor]
 })
 export class CarouselComponent implements OnInit, AfterViewInit, AfterContentInit, OnChanges, OnDestroy {
+    private _renderer = inject(Renderer2);
+    private _cdRef = inject(ChangeDetectorRef);
+
 
     @Input() showPageIndicator: boolean = true;
     @Input() showPagination: boolean = true;
@@ -78,10 +81,6 @@ export class CarouselComponent implements OnInit, AfterViewInit, AfterContentIni
 
     private _windowResizeSub: Subscription;
     private _slidesSub: Subscription;
-
-    constructor(
-        private _renderer: Renderer2,
-        private _cdRef: ChangeDetectorRef) {}
 
     ngOnInit() {
         this.subscribeToWindowResize();

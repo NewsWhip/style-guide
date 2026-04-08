@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, inject } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { CAROUSEL_DIRECTIVES } from 'nw-style-guide/carousel';
 import { NgFor } from '@angular/common';
@@ -11,11 +11,11 @@ import { NgFor } from '@angular/common';
     imports: [CAROUSEL_DIRECTIVES, NgFor]
 })
 export class CarouselComponent implements OnInit {
+    private _domSanitizer = inject(DomSanitizer);
+
 
     public items: any[] = [];
     public numItems: number = 30;
-
-    constructor(private _domSanitizer: DomSanitizer) { }
 
     ngOnInit() {
         this.items = this.getItems();

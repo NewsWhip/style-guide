@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from "@angular/core";
+import { Directive, ElementRef, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, inject } from "@angular/core";
 import { scaleTime, ScaleLinear, scaleLinear } from "d3-scale";
 import { select, Selection } from 'd3-selection';
 import { Subscription } from "rxjs";
@@ -12,6 +12,10 @@ import { ChartUtils } from "../chart.utils";
     exportAs: 'nw-foreign-object'
 })
 export class ForeignObjectDirective implements OnInit, OnChanges, OnDestroy {
+    private _elRef = inject(ElementRef);
+    private _chart = inject(ChartComponent);
+    private _chartUtils = inject(ChartUtils);
+
 
     @Input() point: [number, number];
     @Input() xDomain: [number, number];
@@ -24,11 +28,6 @@ export class ForeignObjectDirective implements OnInit, OnChanges, OnDestroy {
     public yScale: ScaleLinear<number, number> = scaleLinear();
 
     private _chartResizeSub: Subscription;
-
-    constructor(
-        private _elRef: ElementRef,
-        private _chart: ChartComponent,
-        private _chartUtils: ChartUtils) {}
 
     ngOnInit() {
         this.foreignObject = select(this._elRef.nativeElement as SVGForeignObjectElement);

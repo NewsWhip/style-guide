@@ -1,15 +1,14 @@
-import { Directive, ElementRef, HostBinding, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Directive, ElementRef, HostBinding, Input, OnChanges, SimpleChanges, inject } from '@angular/core';
 import { TabsService } from './tabs.service';
 
 @Directive({ selector: '[nwTab]' })
 export class TabDirective implements OnChanges {
+    elRef = inject<ElementRef<HTMLElement>>(ElementRef);
+    private _tabsService = inject(TabsService);
+
 
     @HostBinding('class.active') @Input() isActive: boolean = false;
     @HostBinding('attr.role') role = 'tab';
-
-    constructor(
-        public elRef: ElementRef<HTMLElement>,
-        private _tabsService: TabsService) {}
 
     ngOnChanges(changes: SimpleChanges) {
         const hasChanged = changes.isActive &&

@@ -1,4 +1,4 @@
-import { Component, ContentChildren, QueryList, Input, ElementRef, ViewChild, OnInit, ChangeDetectorRef, OnDestroy, ChangeDetectionStrategy, AfterContentInit } from '@angular/core';
+import { Component, ContentChildren, QueryList, Input, ElementRef, ViewChild, OnInit, ChangeDetectorRef, OnDestroy, ChangeDetectionStrategy, AfterContentInit, inject } from '@angular/core';
 import { TabDirective } from './tab.directive';
 import { fromEvent, Subscription, Observable, merge } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
@@ -42,6 +42,9 @@ import { NgClass, NgStyle, NgIf, NgTemplateOutlet } from '@angular/common';
 })
 
 export class TabsComponent implements OnInit, AfterContentInit, OnDestroy {
+    private _cdRef = inject(ChangeDetectorRef);
+    private _tabsService = inject(TabsService);
+
 
     @Input() size: 'sm' | 'md' | 'lg' = 'md';
     @Input() maskColor: string = '#373737';
@@ -56,10 +59,6 @@ export class TabsComponent implements OnInit, AfterContentInit, OnDestroy {
     private _transitionEndSub: Subscription;
     private _tabsChangeSub: Subscription;
     private _paginationTolerance: number = 100;
-
-    constructor(
-        private _cdRef: ChangeDetectorRef,
-        private _tabsService: TabsService) {}
 
     ngOnInit() {
         const scrollStop$: Observable<Event> = fromEvent(this.scrollContainer.nativeElement, 'scroll');

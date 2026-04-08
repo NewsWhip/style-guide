@@ -1,4 +1,4 @@
-import { Directive, Output, EventEmitter, ElementRef, OnInit, OnDestroy, Input } from "@angular/core";
+import { Directive, Output, EventEmitter, ElementRef, OnInit, OnDestroy, Input, inject } from "@angular/core";
 import { Subject } from "rxjs";
 import { skip, debounceTime, takeUntil, tap } from "rxjs/operators";
 
@@ -25,7 +25,9 @@ export class ResizeObserverDirective implements OnInit, OnDestroy {
     private _destroyed$: Subject<void> = new Subject();
     private _currentElementRect: DOMRectReadOnly;
 
-    constructor(_elRef: ElementRef<HTMLElement>) {
+    constructor() {
+        const _elRef = inject<ElementRef<HTMLElement>>(ElementRef);
+
         this.element = this.element || _elRef.nativeElement;
     }
 

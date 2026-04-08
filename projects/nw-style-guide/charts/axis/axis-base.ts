@@ -1,4 +1,4 @@
-import { Input, OnInit, ElementRef, OnChanges, SimpleChanges, OnDestroy, Directive } from "@angular/core";
+import { Input, OnInit, ElementRef, OnChanges, SimpleChanges, OnDestroy, Directive, inject } from "@angular/core";
 import { Axis, AxisTimeInterval } from 'd3-axis';
 import { ChartUtils } from "../chart.utils";
 import { select, Selection } from "d3-selection";
@@ -7,6 +7,10 @@ import { Subscription } from "rxjs";
 
 @Directive()
 export abstract class AxisBase implements OnInit, OnChanges, OnDestroy {
+    private _elRef = inject(ElementRef);
+    chart = inject(ChartComponent);
+    private _chartUtils = inject(ChartUtils);
+
 
     @Input() tickFormat: (value: number | Date | { valueOf(): number }) => string;
     @Input() tickCount: number | AxisTimeInterval;
@@ -22,11 +26,6 @@ export abstract class AxisBase implements OnInit, OnChanges, OnDestroy {
     public axisLabelSelection: Selection<SVGTextElement, any, HTMLElement, any>;
 
     private _chartResizeSub: Subscription;
-
-    constructor(
-        private _elRef: ElementRef,
-        public chart: ChartComponent,
-        private _chartUtils: ChartUtils) {}
 
     ngOnInit() {
         this.axisSelection = select(this._elRef.nativeElement as SVGGElement);

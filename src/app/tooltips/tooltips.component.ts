@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -16,6 +16,10 @@ import { FaqComponent } from '../faq/faq-component';
     imports: [TABS_DIRECTIVES, RouterLink, NgIf, TooltipDirective, NgTemplateOutlet, AppCodeComponent, FormsModule, ReactiveFormsModule, NgFor, FaqComponent]
 })
 export class TooltipsComponent implements OnInit, OnDestroy {
+  private _fb = inject(FormBuilder);
+  private _cdRef = inject(ChangeDetectorRef);
+  private _route = inject(ActivatedRoute);
+
 
   public selectedTab: 'design' | 'api' = 'design';
   public form: FormGroup;
@@ -145,11 +149,6 @@ export class TooltipsComponent implements OnInit, OnDestroy {
   public tooltipText: string = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam repellat odio modi facilis expedita laudantium neque numquam enim tenetur totam, sint quia aspernatur maiores reiciendis corporis quae perspiciatis laboriosam perferendis?';
 
   private _routeSub: Subscription;
-
-  constructor(
-    private _fb: FormBuilder,
-    private _cdRef: ChangeDetectorRef,
-    private _route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.form = this._fb.group({

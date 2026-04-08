@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, Inject, TemplateRef, EventEmitter } from "@angular/core";
+import { Component, ChangeDetectionStrategy, TemplateRef, EventEmitter, inject } from "@angular/core";
 import { ITooltipData } from "./models/ITooltipData";
 import { TOOLTIP_CONTEXT_TOKEN } from "./config/tooltip-context-token";
 import { NgClass, NgIf, NgTemplateOutlet } from "@angular/common";
@@ -26,11 +26,15 @@ import { NgClass, NgIf, NgTemplateOutlet } from "@angular/common";
     imports: [NgClass, NgIf, NgTemplateOutlet]
 })
 export class TooltipContainerComponent {
+    data = inject<ITooltipData>(TOOLTIP_CONTEXT_TOKEN);
+
 
     public close: EventEmitter<void> = new EventEmitter();
     public isTemplateRef: boolean = false;
 
-    constructor(@Inject(TOOLTIP_CONTEXT_TOKEN) public data: ITooltipData) {
+    constructor() {
+        const data = this.data;
+
         this.isTemplateRef = data.tooltip instanceof TemplateRef;
     }
 }

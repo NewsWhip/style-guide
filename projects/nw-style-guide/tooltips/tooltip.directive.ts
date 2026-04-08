@@ -14,6 +14,11 @@ import { placementFlipMap } from "./config/placement-flip-map";
     exportAs: 'nw-tooltip,nw-popover'
 })
 export class TooltipDirective implements OnInit, OnChanges, OnDestroy {
+    private _elRef = inject<ElementRef<HTMLElement>>(ElementRef);
+    private _overlay = inject(Overlay);
+    private _vcRef = inject(ViewContainerRef);
+    private _injector = inject(Injector);
+
 
     /**
      * This directive can be invoked by using the `nwTooltip` or `nwPopover` attributes. The only differences between using these
@@ -103,12 +108,6 @@ export class TooltipDirective implements OnInit, OnChanges, OnDestroy {
      * A subject that emits when the TooltipContainerComponent is destroyed
      */
     private _tooltipContainerDestroyed$: Subject<void> = new Subject();
-
-    constructor(
-        private _elRef: ElementRef<HTMLElement>,
-        private _overlay: Overlay,
-        private _vcRef: ViewContainerRef,
-        private _injector: Injector) {}
 
     ngOnInit() {
         this._setInputDefaults();

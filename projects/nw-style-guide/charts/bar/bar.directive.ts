@@ -1,4 +1,4 @@
-import { Directive, Input, OnInit, OnChanges, ElementRef, SimpleChanges, OnDestroy } from '@angular/core';
+import { Directive, Input, OnInit, OnChanges, ElementRef, SimpleChanges, OnDestroy, inject } from '@angular/core';
 import { select, Selection } from 'd3-selection';
 import { ScaleLinear, scaleTime, scaleLinear } from 'd3-scale';
 import { ChartUtils } from '../chart.utils';
@@ -10,6 +10,10 @@ import { NwXAxisScale } from '../axis/models/XAxisScale';
     // eslint-disable-next-line @angular-eslint/directive-selector
     selector: 'rect[nw-bar]' })
 export class BarDirective implements OnInit, OnChanges, OnDestroy {
+    private _elRef = inject(ElementRef);
+    private _chart = inject(ChartComponent);
+    private _chartUtils = inject(ChartUtils);
+
 
     /**
      * [number, number] corresponds to a coordinate of [x, y]
@@ -29,11 +33,6 @@ export class BarDirective implements OnInit, OnChanges, OnDestroy {
     public yScale: ScaleLinear<number, number> = scaleLinear();
 
     private _chartResizeSub: Subscription;
-
-    constructor(
-        private _elRef: ElementRef,
-        private _chart: ChartComponent,
-        private _chartUtils: ChartUtils) { }
 
     ngOnInit() {
         this.rect = select(this._elRef.nativeElement as SVGRectElement);
