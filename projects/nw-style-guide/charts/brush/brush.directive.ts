@@ -1,4 +1,4 @@
-import { Directive, ElementRef, OnInit, Input, OnDestroy, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { Directive, ElementRef, OnInit, Input, OnDestroy, Output, EventEmitter, OnChanges, SimpleChanges, inject } from '@angular/core';
 import { select, Selection } from 'd3-selection';
 import { brush, BrushBehavior, brushX, brushY } from 'd3-brush';
 import { ChartComponent } from '../chart.component';
@@ -9,6 +9,9 @@ import { ChartComponent } from '../chart.component';
     exportAs: 'nw-brush'
 })
 export class BrushDirective implements OnInit, OnDestroy, OnChanges {
+    private _elRef = inject(ElementRef);
+    private _chart = inject(ChartComponent);
+
 
     @Input() extent: [[number, number], [number, number]];
     @Input() dimension: 'x' | 'y' | '' = '';
@@ -17,10 +20,6 @@ export class BrushDirective implements OnInit, OnDestroy, OnChanges {
 
     public brushSelection: Selection<SVGGElement, any, HTMLElement, any>;
     public brush: BrushBehavior<any>;
-
-    constructor(
-        private _elRef: ElementRef,
-        private _chart: ChartComponent) {}
 
     ngOnInit() {
         this.initialize();

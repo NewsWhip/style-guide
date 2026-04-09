@@ -1,4 +1,4 @@
-import { Directive, Input, ElementRef, OnInit, OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
+import { Directive, Input, ElementRef, OnInit, OnChanges, SimpleChanges, OnDestroy, inject } from '@angular/core';
 import { area, Area, CurveFactory, curveLinear } from 'd3-shape';
 import { ChartComponent } from '../chart.component';
 import { ScaleLinear, scaleTime, scaleLinear } from 'd3-scale';
@@ -15,6 +15,10 @@ type AreaDatum = [number, number] | [number, number, number];
     exportAs: 'nw-area'
 })
 export class AreaDirective implements OnInit, OnChanges, OnDestroy {
+    private _elRef = inject(ElementRef);
+    private _chart = inject(ChartComponent);
+    private _chartUtils = inject(ChartUtils);
+
 
     /**
      * Each data entry may have 2 or 3 values. If there are 3 the area is drawn within the bounds.
@@ -34,11 +38,6 @@ export class AreaDirective implements OnInit, OnChanges, OnDestroy {
     public yScale: ScaleLinear<number, number> = scaleLinear();
 
     private _chartResizeSub: Subscription;
-
-    constructor(
-        private _elRef: ElementRef,
-        private _chart: ChartComponent,
-        private _chartUtils: ChartUtils) {}
 
     ngOnInit() {
         this.areaSelection = select(this._elRef.nativeElement as SVGPathElement);

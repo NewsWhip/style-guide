@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy, Input, Output, EventEmitter, inject } from '@angular/core';
 import { FormControl, Validators, ReactiveFormsModule } from "@angular/forms";
 import { IValidationChange } from "./models/IValidationChange";
 import { Subscription } from 'rxjs';
@@ -38,6 +38,8 @@ import { NgFor } from '@angular/common';
     imports: [NgFor, ReactiveFormsModule]
 })
 export class EmailInputComponent implements OnInit, OnDestroy {
+    private _cdRef = inject(ChangeDetectorRef);
+
 
     @Input() emails: string[] = [];
     /**
@@ -63,8 +65,6 @@ export class EmailInputComponent implements OnInit, OnDestroy {
     private _validationFormControl: FormControl<string> = new FormControl();
     private _submitKeys: string[] = [",", "Enter", " ", ";"];
     private _valueChangesSub: Subscription;
-
-    constructor(private _cdRef: ChangeDetectorRef) { }
 
     ngOnInit() {
         this._subscribeToValueChanges();

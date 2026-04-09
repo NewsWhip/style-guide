@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, inject } from '@angular/core';
 import { NgFor, NgIf } from '@angular/common';
 
 @Component({
@@ -8,6 +8,8 @@ import { NgFor, NgIf } from '@angular/common';
     imports: [NgFor, NgIf]
 })
 export class ColorsComponent implements OnInit {
+    private _chRef = inject(ChangeDetectorRef);
+
     public showColorCodes: boolean = false;
     public colorNames = [
         "levels",
@@ -38,8 +40,6 @@ export class ColorsComponent implements OnInit {
         "green",
         "red"
     ];
-
-    constructor(private _chRef: ChangeDetectorRef) { }
 
     ngOnInit() {
         setTimeout(() => {

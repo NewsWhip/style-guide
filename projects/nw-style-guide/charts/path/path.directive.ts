@@ -1,4 +1,4 @@
-import { Directive, OnInit, Input, ElementRef, OnChanges, SimpleChanges, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Directive, OnInit, Input, ElementRef, OnChanges, SimpleChanges, Output, EventEmitter, OnDestroy, inject } from '@angular/core';
 import { select, Selection } from 'd3-selection';
 import { line, Line, curveLinear, CurveFactory } from 'd3-shape';
 import { ScaleLinear, scaleTime, scaleLinear } from 'd3-scale';
@@ -14,6 +14,10 @@ import { NwXAxisScale } from '../axis/models/XAxisScale';
     exportAs: 'nw-path'
 })
 export class PathDirective implements OnInit, OnChanges, OnDestroy {
+    private _elRef = inject(ElementRef);
+    private _chart = inject(ChartComponent);
+    private _chartUtils = inject(ChartUtils);
+
 
     @Input('nw-path') data: [number, number][] = [];
     @Input() xDomain: [number, number];
@@ -30,11 +34,6 @@ export class PathDirective implements OnInit, OnChanges, OnDestroy {
     public yScale: ScaleLinear<number, number> = scaleLinear();
 
     private _chartResizeSub: Subscription;
-
-    constructor(
-        private _elRef: ElementRef,
-        private _chart: ChartComponent,
-        private _chartUtils: ChartUtils) {}
 
     ngOnInit() {
         this.path = select(this._elRef.nativeElement as SVGPathElement);

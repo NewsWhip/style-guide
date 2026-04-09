@@ -1,9 +1,7 @@
-import { Directive, ElementRef, Input, Output, EventEmitter } from '@angular/core';
+import { Directive, Input, Output, EventEmitter } from '@angular/core';
 import { axisBottom, axisTop } from 'd3-axis';
 import { AxisBase } from './axis-base';
 import { scaleTime } from 'd3-scale';
-import { ChartComponent } from '../chart.component';
-import { ChartUtils } from "../chart.utils";
 import { NwXAxisScale } from './models/XAxisScale';
 
 @Directive({
@@ -18,14 +16,6 @@ export class XAxisDirective extends AxisBase {
     @Input() scale: NwXAxisScale = scaleTime();
 
     @Output() scaleUpdated: EventEmitter<NwXAxisScale> = new EventEmitter();
-
-    constructor(
-        elRef: ElementRef,
-        chart: ChartComponent,
-        chartUtils: ChartUtils) {
-
-        super(elRef, chart, chartUtils);
-    }
 
     createAxis() {
         this.axis = this.align === "bottom" ?

@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild, inject } from '@angular/core';
 import { IWord, IWordCloudConfig, IWordWithPosition, WordCloudComponent, WORD_CLOUD_COMPONENTS } from 'nw-style-guide/word-cloud';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ISnippet } from '../code/ISnippet';
@@ -18,6 +18,9 @@ interface IMyWord extends IWord {
     imports: [TABS_DIRECTIVES, RouterLink, NgIf, WORD_CLOUD_COMPONENTS, NgFor, TooltipDirective, AppCodeComponent, NgTemplateOutlet]
 })
 export class WordCloudDemoComponent implements OnInit {
+    private _route = inject(ActivatedRoute);
+    private _cdRef = inject(ChangeDetectorRef);
+
 
     @ViewChild(WordCloudComponent) wordCloud: WordCloudComponent<IMyWord>;
 
@@ -27,10 +30,6 @@ export class WordCloudDemoComponent implements OnInit {
     public config: Partial<IWordCloudConfig> = {
         debugMode: false
     }
-
-    constructor(
-        private _route: ActivatedRoute,
-        private _cdRef: ChangeDetectorRef) { }
 
     ngOnInit() {
         this.generateWords();

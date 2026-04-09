@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild, AfterContentInit, ChangeDetectionStrategy } from "@angular/core";
+import { Component, ElementRef, ViewChild, AfterContentInit, ChangeDetectionStrategy, inject } from "@angular/core";
 import Clipboard from 'clipboard';
 import { Toaster } from 'nw-style-guide/toasts';
 
@@ -20,13 +20,13 @@ import { Toaster } from 'nw-style-guide/toasts';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CopyCodeComponent implements AfterContentInit {
+    private _toaster = inject(Toaster);
+
 
     @ViewChild('copyIcon', { static: true }) copyIcon: ElementRef<HTMLElement>;
     @ViewChild('code', { static: true }) code: ElementRef<HTMLElement>;
 
     private _clipboard: Clipboard;
-
-    constructor(private _toaster: Toaster) {}
 
     ngAfterContentInit() {
 		this.initializeClipboard();

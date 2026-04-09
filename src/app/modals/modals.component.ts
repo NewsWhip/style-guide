@@ -1,5 +1,5 @@
 import { Dialog } from '@angular/cdk/dialog';
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild, inject } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgFor, NgIf } from '@angular/common';
 
@@ -10,6 +10,9 @@ import { NgFor, NgIf } from '@angular/common';
     imports: [FormsModule, ReactiveFormsModule, NgFor, NgIf]
 })
 export class ModalsComponent implements OnInit {
+    private _fb = inject(FormBuilder);
+    private _dialog = inject(Dialog);
+
 
     @ViewChild('modalTmpl') modalTmpl: TemplateRef<any>;
 
@@ -32,10 +35,6 @@ export class ModalsComponent implements OnInit {
             name: 'Fullscreen'
         }
     ];
-
-    constructor(
-        private _fb: FormBuilder,
-        private _dialog: Dialog) { }
 
     ngOnInit() {
         this.form = this._fb.group({

@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, ChangeDetectorRef, OnInit } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ChangeDetectorRef, OnInit, inject } from '@angular/core';
 import { IValidationChange, EmailInputComponent } from "nw-style-guide/email-input";
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -22,6 +22,9 @@ import { AppCodeComponent } from '../code/code.component';
     imports: [TABS_DIRECTIVES, RouterLink, NgIf, EmailInputComponent, AppCodeComponent, NgFor]
 })
 export class EmailInputDemoComponent implements OnInit {
+    private _cdRef = inject(ChangeDetectorRef);
+    private _route = inject(ActivatedRoute);
+
 
     public emails: string[] = [
         "valid.email@newswhip.com",
@@ -32,10 +35,6 @@ export class EmailInputDemoComponent implements OnInit {
     public properties: { name: string; defaultValue: string; description: string }[];
 
     private _routeSub: Subscription;
-
-    constructor(
-        private _cdRef: ChangeDetectorRef,
-        private _route: ActivatedRoute) {}
 
     ngOnInit() {
         this.properties = this._getProperties();

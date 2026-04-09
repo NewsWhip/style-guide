@@ -1,7 +1,10 @@
-import {AfterViewInit, Directive, ElementRef, Input, OnChanges, Renderer2, SimpleChanges} from '@angular/core';
+import { AfterViewInit, Directive, ElementRef, Input, OnChanges, Renderer2, SimpleChanges, inject } from '@angular/core';
 
 @Directive({ selector: '[nwChartTooltip]' })
 export class ChartTooltipDirective implements OnChanges, AfterViewInit {
+    private _elRef = inject(ElementRef);
+    private _renderer = inject(Renderer2);
+
     @Input() position: [number, number];
     @Input() chartWidth: number;
     @Input() chartHeight: number;
@@ -14,11 +17,6 @@ export class ChartTooltipDirective implements OnChanges, AfterViewInit {
     @Input() offsetX: number = 16;
     private _width: number;
     private _height: number;
-
-    constructor(
-        private _elRef: ElementRef,
-        private _renderer: Renderer2) {
-    }
 
     ngAfterViewInit() {
         this._setTooltipSize();
