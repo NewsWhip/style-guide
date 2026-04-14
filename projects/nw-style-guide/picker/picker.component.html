@@ -40,8 +40,6 @@
     <!-- START: IS xs screen -->
     <div
         (click)="showResults()"
-        (keydown.enter)="showResults()"
-        (keydown.space)="$event.preventDefault(); showResults()"
         tabindex="0"
         role="button"
         [attr.aria-expanded]="canViewResults"
@@ -56,11 +54,13 @@
 
     @if (searchTerm.value) {
         <button
-            (mousedown)="preventBlur($event)"
+            (mousedown)="$event.preventDefault()"
             (click)="onReset()"
             class="close reset-icon"
             aria-label="Clear search">
-            &times;
+            <i
+                class="fas fa-times"
+                aria-hidden="true"></i>
         </button>
     }
 
@@ -68,14 +68,15 @@
         <div
             class="search-results"
             [@slideUpIn]="isMobileDisplay ? 'in' : false"
-            (mousedown)="preventBlur($event)">
+            (mousedown)="$event.preventDefault()">
             <div class="results-header">
                 <button
                     class="close"
                     (click)="closeResults()"
-                    style="color: #000"
                     aria-label="Close results">
-                    &times;
+                    <i
+                        class="fas fa-times"
+                        aria-hidden="true"></i>
                 </button>
             </div>
             <!-- Navigate up the tree -->
@@ -142,27 +143,24 @@
                     <ul
                         class="selected-items"
                         role="listbox"
-                        [id]="pickerId + '-selections-listbox'"
                         aria-label="Current selections">
                         @for (item of getSelections(); track item; let i = $index) {
                             <li
+                                #selectionsListItems
                                 class="search-result"
                                 role="option"
                                 [id]="'selection-' + item.id"
-                                [attr.tabindex]="focusedIndex === i || (focusedIndex === -1 && i === 0) ? 0 : -1"
+                                [attr.tabindex]="getTabIndex(i)"
                                 [attr.aria-selected]="item.added || item.excluded"
                                 [attr.aria-label]="getAriaLabel(item)"
                                 (focusin)="focusedIndex = i"
-                                (keydown.arrowdown)="focusNextItem($event)"
-                                (keydown.arrowup)="focusPrevItem($event)"
-                                (keydown.enter)="clearSelection($event, item)"
-                                (keydown.escape)="onBackClick($event)"
+                                (keydown)="onSelectionItemKeydown($event, item)"
                                 [ngClass]="{ active: item.added, excluded: item.excluded }">
                                 <span class="result-item">
                                     <span class="item-label">{{ item.displayName }}</span>
                                     <button
                                         class="close"
-                                        style="color: #000000"
+                                        style="color: black"
                                         (click)="clearSelection($event, item)"
                                         [attr.aria-label]="'Remove ' + item.displayName">
                                         <i
@@ -177,11 +175,11 @@
                 @if (!selectionsAreShowing) {
                     <ul
                         role="listbox"
-                        [id]="pickerId + '-listbox'"
                         class="picker-options-list"
                         [attr.aria-label]="searchTerm.value ? 'Search results' : 'Options'">
                         @for (item of displayItems; track item; let i = $index) {
                             <li
+                                #optionsListItems
                                 role="option"
                                 [id]="pickerId + '-option-' + item.id"
                                 class="search-result"
@@ -189,23 +187,18 @@
                                 [class.excluded]="item.excluded"
                                 [class.has-children]="hasChildren(item.id)"
                                 [class.keyboard-focused]="focusedIndex === i"
-                                [attr.tabindex]="focusedIndex === i || (focusedIndex === -1 && i === 0) ? 0 : -1"
+                                [attr.tabindex]="getTabIndex(i)"
                                 [attr.aria-selected]="item.added"
                                 [attr.aria-label]="getAriaLabel(item)"
                                 (focusin)="focusedIndex = i"
-                                (keydown.arrowdown)="focusNextItem($event)"
-                                (keydown.arrowup)="focusPrevItem($event)"
-                                (keydown.arrowleft)="onArrowLeft($event)"
-                                (keydown.arrowright)="onDrilldown(item, $event)"
-                                (keydown.enter)="toggleItemInclusion(item, $event)"
-                                (keydown.escape)="onListItemEscape($event, i)">
+                                (keydown)="onOptionItemKeydown($event, item, i)">
                                 <span class="result-item">
                                     @if (isMultiSelect) {
                                         <div class="checkbox checkbox-placeholder">
                                             <input
                                                 [id]="'include-' + item.id"
                                                 type="checkbox"
-                                                [attr.tabindex]="focusedIndex === i ? 0 : -1"
+                                                [attr.tabindex]="getChildTabIndex(i)"
                                                 [attr.aria-label]="'Include ' + item.displayName"
                                                 (click)="toggleItemInclusion(item, $event)"
                                                 [checked]="item.added"
@@ -220,7 +213,7 @@
                                             <input
                                                 [id]="'exclude-' + item.id"
                                                 type="checkbox"
-                                                [attr.tabindex]="focusedIndex === i ? 0 : -1"
+                                                [attr.tabindex]="getChildTabIndex(i)"
                                                 [attr.aria-label]="'Exclude ' + item.displayName"
                                                 (click)="toggleItemExclusion(item, $event)"
                                                 [checked]="item.excluded"
@@ -247,7 +240,7 @@
                                     @if (hasChildren(item.id)) {
                                         <button
                                             class="btn btn-ghost drilldown"
-                                            [attr.tabindex]="focusedIndex === i ? 0 : -1"
+                                            [attr.tabindex]="getChildTabIndex(i)"
                                             (click)="onDrilldown(item, $event)"
                                             [attr.aria-label]="'Expand ' + item.displayName">
                                             <i

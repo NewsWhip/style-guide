@@ -6,7 +6,9 @@ import {
     ChangeDetectionStrategy,
     EventEmitter,
     ViewChild,
+    ViewChildren,
     ElementRef,
+    QueryList,
     OnInit,
     OnDestroy,
     SimpleChanges,
@@ -37,12 +39,14 @@ import { LiveAnnouncer } from '@angular/cdk/a11y';
     imports: [ReactiveFormsModule, NgClass]
 })
 export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
-    chRef = inject(ChangeDetectorRef);
+    private _cdRef = inject(ChangeDetectorRef);
+    private _elementRef = inject(ElementRef);
+    private _liveAnnouncer = inject(LiveAnnouncer);
 
     private static _idCounter = 0;
-    public readonly pickerId: string;
+    public readonly pickerId = `nw-picker-${++NwPickerComponent._idCounter}`;
 
-    @Input() items: IPickerItem[];
+    @Input() items: IPickerItem[] = [];
     @Input() inputClasses: string = '';
     @Input() placeholderText: string = 'Search...';
     @Input() inputPlaceholderText: string = 'Search...';
@@ -50,7 +54,7 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
     @Input() initialParentId: any = null;
     @Input() shouldShowSelections: boolean = true;
     @Input() canExclude: boolean = true;
-    @Input() isHeightDynamic: boolean;
+    @Input() isHeightDynamic: boolean = false;
     @Input() isMultiSelect: boolean = true;
     @Input() isMobileDisplay: boolean = false;
     @Input() isDisabled: boolean = false;
@@ -67,7 +71,6 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
     }>();
     @Output() edit: EventEmitter<any> = new EventEmitter<any>();
     @Output() closed: EventEmitter<any> = new EventEmitter<any>();
-    // eslint-disable-next-line @angular-eslint/no-output-native
     @Output() focus: EventEmitter<ElementRef> = new EventEmitter<ElementRef>();
     @Output() blur: EventEmitter<ElementRef> = new EventEmitter<ElementRef>();
     @Output() clearAll: EventEmitter<any> = new EventEmitter<any>();
@@ -76,9 +79,11 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
     @Output() desc: EventEmitter<IPickerItem> = new EventEmitter<IPickerItem>();
     @Output() asc: EventEmitter<IPickerItem> = new EventEmitter<IPickerItem>();
 
-    @ViewChild('inputEl', { static: true }) inputEl: ElementRef;
+    @ViewChild('inputEl', { static: true }) inputEl!: ElementRef;
+    @ViewChildren('selectionsListItems') selectionsListItems!: QueryList<ElementRef>;
+    @ViewChildren('optionsListItems') optionsListItems!: QueryList<ElementRef>;
 
-    public displayItems: IPickerItem[];
+    public displayItems: IPickerItem[] = [];
     public searchTerm: FormControl<string> = new FormControl();
     public canViewResults: boolean = false;
     public parentId: any;
@@ -86,13 +91,6 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
     public maxHeight: number = 400;
     public focusedIndex: number = -1;
     private _subs: Subscription[] = [];
-
-    constructor(
-        private _elementRef: ElementRef,
-        private _liveAnnouncer: LiveAnnouncer
-    ) {
-        this.pickerId = `nw-picker-${++NwPickerComponent._idCounter}`;
-    }
 
     get focusedItemId(): string | null {
         if (this.focusedIndex >= 0 && this.displayItems?.[this.focusedIndex]) {
@@ -103,7 +101,7 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
 
     ngOnInit() {
         this.parentId = this.initialParentId;
-        this.subscribeToSearchTermChanges();
+        this._subscribeToSearchTermChanges();
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -112,54 +110,14 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    subscribeToSearchTermChanges() {
-        const sub = this.searchTerm.valueChanges.subscribe(val => {
-            this.selectionsAreShowing = false;
-            this.focusedIndex = -1;
-            this.canViewResults = true;
-
-            if (val.length) {
-                const displayItems = this.items.filter(item => {
-                    return (
-                        (item.searchValues || []).some(value => {
-                            return value.toLowerCase().includes(val.toLowerCase());
-                        }) || item.displayName.toLowerCase().includes(val.toLowerCase())
-                    );
-                });
-                // remove duplicate items
-                this.displayItems = displayItems.reduce(
-                    (items, item) => (items.find(x => x.id === item.id) ? [...items] : [...items, item]),
-                    []
-                );
-            } else {
-                this.setDisplayItemsFromParentId(this.parentId);
-            }
-        });
-
-        this._subs.push(sub);
-    }
-
     ascend(event: Event, item: IPickerItem) {
         event.stopPropagation();
-        // Move focus to input before re-rendering the list, so removing the
-        // currently-focused <li> from the DOM doesn't fire a focusout with
-        // relatedTarget=null, which would otherwise close the dropdown.
         this.inputEl.nativeElement.focus();
-        this.setDisplayItemsFromParentId(item.parentId);
+        this._setDisplayItemsFromParentId(item.parentId);
         this.asc.emit(item);
-        this.chRef.detectChanges();
+        this._cdRef.detectChanges();
         this.focusedIndex = 0;
-        this.focusListItem(0);
-    }
-
-    setDisplayItemsFromParentId(parentId) {
-        if (!this.hasChildren(parentId)) {
-            return;
-        }
-        this.resetSearchTerm();
-        this.parentId = parentId;
-        this.displayItems = this.items.filter(i => i.parentId === this.parentId);
-        this.focusedIndex = -1;
+        this._focusListItem(0);
     }
 
     displaySelectedItems() {
@@ -170,11 +128,11 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
         return this.items.filter(ci => ci.added || ci.excluded);
     }
 
-    getParentItem(parentId) {
+    getParentItem(parentId: number | string) {
         return this.items.find(i => i.id === parentId);
     }
 
-    hasChildren(id) {
+    hasChildren(id: number | string | null) {
         return this.items.filter(i => i.parentId === id).length;
     }
 
@@ -190,8 +148,48 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
         event.stopPropagation();
         this.inputEl.nativeElement.focus();
         this.selectionsAreShowing = false;
-        this.setDisplayItemsFromParentId(null);
+        this._setDisplayItemsFromParentId(null);
         this.selections.emit(this.getSelections());
+    }
+
+    onOptionItemKeydown(e: KeyboardEvent, item: IPickerItem, index: number) {
+        switch (e.key) {
+            case 'ArrowDown':
+                this.focusNextItem(e);
+                break;
+            case 'ArrowUp':
+                this._focusPrevItem(e);
+                break;
+            case 'ArrowLeft':
+                this._onArrowLeft(e);
+                break;
+            case 'ArrowRight':
+                this.onDrilldown(item);
+                break;
+            case 'Enter':
+                this.toggleItemInclusion(item, e);
+                break;
+            case 'Escape':
+                this._onListItemEscape(e, index);
+                break;
+        }
+    }
+
+    onSelectionItemKeydown(e: KeyboardEvent, item: IPickerItem) {
+        switch (e.key) {
+            case 'ArrowDown':
+                this.focusNextItem(e);
+                break;
+            case 'ArrowUp':
+                this._focusPrevItem(e);
+                break;
+            case 'Enter':
+                this.clearSelection(e, item);
+                break;
+            case 'Escape':
+                this.onBackClick(e);
+                break;
+        }
     }
 
     clearSelection(event: Event, item: IPickerItem) {
@@ -204,7 +202,7 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
         this.clearSingle.emit(item);
 
         if (this.getSelections().length < 1) {
-            this.setDisplayItemsFromParentId(null);
+            this._setDisplayItemsFromParentId(null);
             this.selectionsAreShowing = false;
         }
 
@@ -225,15 +223,15 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
 
         this.clearAll.emit();
 
-        this.setDisplayItemsFromParentId(null);
+        this._setDisplayItemsFromParentId(null);
         this.selectionsAreShowing = false;
 
         this.selections.emit(this.getSelections());
-        this.announce('All selections cleared');
+        this._announce('All selections cleared');
     }
 
-    toggleItemInclusion(item: IPickerItem, e: Event) {
-        e.stopPropagation();
+    toggleItemInclusion(item: IPickerItem, event: Event) {
+        event.stopPropagation();
 
         // we're assuming that if the component is not multiSelect, then only
         // one item can be selected at any time
@@ -255,20 +253,20 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
             });
         }
 
-        this.toggleAncestors(item, false, false);
-        this.toggleDescendants(item, false);
+        this._toggleAncestors(item, false, false);
+        this._toggleDescendants(item, false);
 
         this.toggleInclude.emit({ item: item, searchTerm: this.searchTerm.value });
         this.selections.emit(this.getSelections());
-        this.announce(`${item.displayName} ${item.added ? 'selected' : 'deselected'}`);
+        this._announce(`${item.displayName} ${item.added ? 'selected' : 'deselected'}`);
 
         if (!this.isMultiSelect) {
             this.closeResults();
         }
     }
 
-    toggleItemExclusion(item: IPickerItem, e: Event) {
-        e.stopPropagation();
+    toggleItemExclusion(item: IPickerItem, event: Event) {
+        event.stopPropagation();
 
         item.added = false;
         item.excluded = !item.excluded;
@@ -281,48 +279,26 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
             });
         }
 
-        this.toggleDescendants(item, false, false);
-        this.toggleAncestors(item, undefined, false);
+        this._toggleDescendants(item, false, false);
+        this._toggleAncestors(item, undefined, false);
 
         this.toggleExclude.emit({ item: item, searchTerm: this.searchTerm.value });
         this.selections.emit(this.getSelections());
-        this.announce(`${item.displayName} ${item.excluded ? 'excluded' : 'exclusion removed'}`);
+        this._announce(`${item.displayName} ${item.excluded ? 'excluded' : 'exclusion removed'}`);
 
         if (!this.isMultiSelect) {
             this.closeResults();
         }
     }
 
-    toggleDescendants(item: IPickerItem, add?: boolean, exclude?: boolean) {
-        this.items
-            .filter(ci => ci.parentId === item.id)
-            .forEach(ci => {
-                if (!isUndefined(add)) {
-                    ci.added = add;
-                }
-
-                if (!isUndefined(exclude)) {
-                    ci.excluded = exclude;
-                }
-
-                this.toggleDescendants(ci, add, exclude);
-            });
+    // Returns 0 for the focused row, or the first row when nothing is focused (roving tabindex)
+    getTabIndex(i: number): number {
+        return this.focusedIndex === i || (this.focusedIndex === -1 && i === 0) ? 0 : -1;
     }
 
-    toggleAncestors(item: IPickerItem, add?: boolean, exclude?: boolean) {
-        this.items
-            .filter(ci => ci.id === item.parentId)
-            .forEach(ci => {
-                if (!isUndefined(add)) {
-                    ci.added = add;
-                }
-
-                if (!isUndefined(exclude)) {
-                    ci.excluded = exclude;
-                }
-
-                this.toggleAncestors(ci, add, exclude);
-            });
+    // Returns 0 only when this row is focused (for child elements like checkboxes and buttons)
+    getChildTabIndex(i: number): number {
+        return this.focusedIndex === i ? 0 : -1;
     }
 
     getAriaLabel(item: IPickerItem) {
@@ -333,112 +309,45 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
         return label;
     }
 
-    // ── Keyboard navigation ────────────────────────────────────────────────
-
-    focusNextItem(e: Event) {
-        e.preventDefault();
+    focusNextItem(event: Event) {
+        event.preventDefault();
         if (!this.canViewResults) {
             this.showResults();
-            this.chRef.detectChanges();
+            this._cdRef.detectChanges();
             this.focusedIndex = 0;
-            this.focusListItem(0);
+            this._focusListItem(0);
             return;
         }
         const listLength = this.selectionsAreShowing ? this.getSelections().length : this.displayItems?.length;
         if (listLength) {
-            const newIndex = Math.min(this.getActiveItemIndex() + 1, listLength - 1);
+            const newIndex = Math.min(this._getActiveItemIndex() + 1, listLength - 1);
             this.focusedIndex = newIndex;
-            this.focusListItem(newIndex);
-            this.chRef.markForCheck();
+            this._focusListItem(newIndex);
+            this._cdRef.markForCheck();
         }
     }
 
-    focusPrevItem(e: Event) {
-        e.preventDefault();
-        const listLength = this.selectionsAreShowing ? this.getSelections().length : this.displayItems?.length;
-        if (!listLength) {
-            return;
-        }
-        const currentIndex = this.getActiveItemIndex();
-        if (currentIndex <= 0) {
-            this.focusedIndex = -1;
-            this.inputEl.nativeElement.focus();
-            return;
-        }
-        const newIndex = currentIndex - 1;
-        this.focusedIndex = newIndex;
-        this.focusListItem(newIndex);
-        this.chRef.markForCheck();
-    }
-
-    onInputEnter(e: Event) {
+    onInputEnter(event: Event) {
         if (!this.canViewResults) {
             this.showResults();
-            this.chRef.detectChanges();
+            this._cdRef.detectChanges();
             this.focusedIndex = 0;
-            this.focusListItem(0);
+            this._focusListItem(0);
             return;
         }
         if (this.focusedIndex >= 0 && this.displayItems?.[this.focusedIndex]) {
-            e.preventDefault();
-            this.toggleItemInclusion(this.displayItems[this.focusedIndex], e);
+            event.preventDefault();
+            this.toggleItemInclusion(this.displayItems[this.focusedIndex], event);
         }
-    }
-
-    onListItemEscape(e: Event, index: number) {
-        const li = this._elementRef.nativeElement.querySelector(
-            `#${this.pickerId}-option-${this.displayItems[index].id}`
-        );
-        if (e.target === li) {
-            this.closeResults();
-        } else {
-            e.stopPropagation();
-            li?.focus();
-        }
-    }
-
-    private getActiveListbox(): Element | null {
-        const id = this.selectionsAreShowing ? `${this.pickerId}-selections-listbox` : `${this.pickerId}-listbox`;
-        return this._elementRef.nativeElement.querySelector(`#${id}`);
-    }
-
-    private focusListItem(index: number) {
-        const items = this.getActiveListbox()?.querySelectorAll(':scope > li') as NodeListOf<HTMLElement> | undefined;
-        items?.[index]?.focus();
-    }
-
-    private getActiveItemIndex(): number {
-        const listbox = this.getActiveListbox();
-        if (!listbox) {
-            return this.focusedIndex;
-        }
-        const items = Array.from(listbox.querySelectorAll(':scope > li')) as HTMLElement[];
-        const idx = items.findIndex(li => li === document.activeElement || li.contains(document.activeElement));
-        return idx >= 0 ? idx : this.focusedIndex;
     }
 
     onContainerFocusOut() {
-        // Defer the check so that programmatic focus changes (e.g. focusListItem)
-        // and DOM re-renders (which can fire focusout with relatedTarget=null when
-        // the focused element is destroyed) have all settled before we decide
-        // whether focus has genuinely left the component.
         setTimeout(() => {
             if (!this._elementRef.nativeElement.contains(document.activeElement)) {
                 this.closeResults(false);
                 this.blur.emit(this.inputEl);
             }
         });
-    }
-
-    // ── Misc ───────────────────────────────────────────────────────────────
-
-    preventBlur(e: Event) {
-        // prevent blurring of the search input
-        e.preventDefault();
-    }
-
-    resetSearchTerm() {
-        this.searchTerm.setValue('', { emitEvent: false });
     }
 
     onFocus() {
@@ -451,7 +360,7 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
         if (!this.isDisabled) {
             this.parentId = this.initialParentId;
             this.canViewResults = true;
-            this.setDisplayItemsFromParentId(this.parentId);
+            this._setDisplayItemsFromParentId(this.parentId);
         }
     }
 
@@ -467,7 +376,7 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
         this.focusedIndex = -1;
         this.searchTerm.setValue('', { emitEvent: false });
         this.closed.emit();
-        this.chRef.detectChanges();
+        this._cdRef.detectChanges();
         if (refocusInput) {
             this.inputEl?.nativeElement.focus();
         }
@@ -485,28 +394,12 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
         this.inputEl.nativeElement.focus();
     }
 
-    onDrilldown(item: IPickerItem, e: Event) {
-        this.setDisplayItemsFromParentId(item.id);
+    onDrilldown(item: IPickerItem) {
+        this._setDisplayItemsFromParentId(item.id);
         this.desc.emit(item);
-        this.chRef.detectChanges();
+        this._cdRef.detectChanges();
         this.focusedIndex = 0;
-        this.focusListItem(0);
-    }
-
-    onArrowLeft(e: Event) {
-        if (!this.parentId) {
-            return;
-        }
-        e.preventDefault();
-        e.stopPropagation();
-        const parentItem = this.getParentItem(this.parentId);
-        this.inputEl.nativeElement.focus();
-        this.setDisplayItemsFromParentId(parentItem.parentId);
-        this.asc.emit(parentItem);
-        this.chRef.detectChanges();
-        const idx = this.displayItems.findIndex(i => i.id === parentItem.id);
-        this.focusedIndex = idx >= 0 ? idx : 0;
-        this.focusListItem(this.focusedIndex);
+        this._focusListItem(0);
     }
 
     getPlaceholderText() {
@@ -534,7 +427,147 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
         return;
     }
 
-    private announce(text: string) {
+    private _setDisplayItemsFromParentId(parentId: number | string | null) {
+        if (!this.hasChildren(parentId)) {
+            return;
+        }
+        this._resetSearchTerm();
+        this.parentId = parentId;
+        this.displayItems = this.items.filter(i => i.parentId === this.parentId);
+        this.focusedIndex = -1;
+    }
+
+    private _focusPrevItem(event: Event) {
+        event.preventDefault();
+        const listLength = this.selectionsAreShowing ? this.getSelections().length : this.displayItems?.length;
+        if (!listLength) {
+            return;
+        }
+        const currentIndex = this._getActiveItemIndex();
+        if (currentIndex <= 0) {
+            this.focusedIndex = -1;
+            this.inputEl.nativeElement.focus();
+            return;
+        }
+        const newIndex = currentIndex - 1;
+        this.focusedIndex = newIndex;
+        this._focusListItem(newIndex);
+        this._cdRef.markForCheck();
+    }
+
+    private _toggleDescendants(item: IPickerItem, add?: boolean, exclude?: boolean) {
+        this.items
+            .filter(ci => ci.parentId === item.id)
+            .forEach(ci => {
+                if (!isUndefined(add)) {
+                    ci.added = add;
+                }
+
+                if (!isUndefined(exclude)) {
+                    ci.excluded = exclude;
+                }
+
+                this._toggleDescendants(ci, add, exclude);
+            });
+    }
+
+    private _toggleAncestors(item: IPickerItem, add?: boolean, exclude?: boolean) {
+        this.items
+            .filter(ci => ci.id === item.parentId)
+            .forEach(ci => {
+                if (!isUndefined(add)) {
+                    ci.added = add;
+                }
+
+                if (!isUndefined(exclude)) {
+                    ci.excluded = exclude;
+                }
+
+                this._toggleAncestors(ci, add, exclude);
+            });
+    }
+
+    private _onListItemEscape(event: Event, index: number) {
+        const li = this._elementRef.nativeElement.querySelector(
+            `#${this.pickerId}-option-${this.displayItems[index].id}`
+        );
+        if (event.target === li) {
+            this.closeResults();
+        } else {
+            event.stopPropagation();
+            li?.focus();
+        }
+    }
+
+    private _getActiveListItems(): QueryList<ElementRef> {
+        return this.selectionsAreShowing ? this.selectionsListItems : this.optionsListItems;
+    }
+
+    private _focusListItem(index: number) {
+        const items = this._getActiveListItems().toArray();
+        items?.[index]?.nativeElement.focus();
+    }
+
+    private _getActiveItemIndex(): number {
+        const items = this._getActiveListItems();
+        if (!items.length) {
+            return this.focusedIndex;
+        }
+        const itemsArray = items.toArray();
+        const idx = itemsArray.findIndex(
+            item => item.nativeElement === document.activeElement || item.nativeElement.contains(document.activeElement)
+        );
+        return idx >= 0 ? idx : this.focusedIndex;
+    }
+
+    private _onArrowLeft(event: Event) {
+        if (!this.parentId) {
+            return;
+        }
+        event.preventDefault();
+        event.stopPropagation();
+        const parentItem = this.getParentItem(this.parentId);
+        this.inputEl.nativeElement.focus();
+        this._setDisplayItemsFromParentId(parentItem!.parentId);
+        this.asc.emit(parentItem);
+        this._cdRef.detectChanges();
+        const idx = this.displayItems.findIndex(i => i.id === parentItem!.id);
+        this.focusedIndex = idx >= 0 ? idx : 0;
+        this._focusListItem(this.focusedIndex);
+    }
+
+    private _resetSearchTerm() {
+        this.searchTerm.setValue('', { emitEvent: false });
+    }
+
+    private _subscribeToSearchTermChanges() {
+        const sub = this.searchTerm.valueChanges.subscribe(val => {
+            this.selectionsAreShowing = false;
+            this.focusedIndex = -1;
+            this.canViewResults = true;
+
+            if (val.length) {
+                const displayItems = this.items.filter(item => {
+                    return (
+                        (item.searchValues || []).some(value => {
+                            return value.toLowerCase().includes(val.toLowerCase());
+                        }) || item.displayName.toLowerCase().includes(val.toLowerCase())
+                    );
+                });
+                // remove duplicate items
+                this.displayItems = displayItems.reduce<IPickerItem[]>(
+                    (items, item) => (items.find(x => x.id === item.id) ? items : [...items, item]),
+                    []
+                );
+            } else {
+                this._setDisplayItemsFromParentId(this.parentId);
+            }
+        });
+
+        this._subs.push(sub);
+    }
+
+    private _announce(text: string) {
         this._liveAnnouncer.announce(text, 'polite');
     }
 
