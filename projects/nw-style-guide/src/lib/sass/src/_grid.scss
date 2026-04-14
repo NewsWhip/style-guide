@@ -5,25 +5,23 @@
 // Grid system
 // --------------------------------------------------
 
-
 // Container widths
 //
 // Set the container width, and override it for fixed navbars in media queries.
 
 .container {
-  @include grid.container-fixed;
+    @include grid.container-fixed;
 
-  @media (min-width: variables.$screen-sm-min) {
-    width: variables.$container-sm;
-  }
-  @media (min-width: variables.$screen-md-min) {
-    width: variables.$container-md;
-  }
-  @media (min-width: variables.$screen-lg-min) {
-    width: variables.$container-lg;
-  }
+    @media (min-width: variables.$screen-sm-min) {
+        width: variables.$container-sm;
+    }
+    @media (min-width: variables.$screen-md-min) {
+        width: variables.$container-md;
+    }
+    @media (min-width: variables.$screen-lg-min) {
+        width: variables.$container-lg;
+    }
 }
-
 
 // Fluid container
 //
@@ -31,35 +29,32 @@
 // width for fluid, full width layouts.
 
 .container-fluid {
-  @include grid.container-fixed;
+    @include grid.container-fixed;
 }
-
 
 // Row
 //
 // Rows contain and clear the floats of your columns.
 
 .row {
-  @include grid.make-row;
+    @include grid.make-row;
 }
 
 .row-no-gutters {
-  margin-right: 0;
-  margin-left: 0;
+    margin-right: 0;
+    margin-left: 0;
 
-  [class*="col-"] {
-    padding-right: 0;
-    padding-left: 0;
-  }
+    [class*='col-'] {
+        padding-right: 0;
+        padding-left: 0;
+    }
 }
-
 
 // Columns
 //
 // Common styles for small and large grid columns
 
 @include grid-framework.make-grid-columns;
-
 
 // Extra small grid
 //
@@ -68,30 +63,27 @@
 
 @include grid-framework.make-grid(xs);
 
-
 // Small grid
 //
 // Columns, offsets, pushes, and pulls for the small device range, from phones
 // to tablets.
 
 @media (min-width: variables.$screen-sm-min) {
-  @include grid-framework.make-grid(sm);
+    @include grid-framework.make-grid(sm);
 }
-
 
 // Medium grid
 //
 // Columns, offsets, pushes, and pulls for the desktop device range.
 
 @media (min-width: variables.$screen-md-min) {
-  @include grid-framework.make-grid(md);
+    @include grid-framework.make-grid(md);
 }
-
 
 // Large grid
 //
 // Columns, offsets, pushes, and pulls for the large desktop device range.
 
 @media (min-width: variables.$screen-lg-min) {
-  @include grid-framework.make-grid(lg);
+    @include grid-framework.make-grid(lg);
 }

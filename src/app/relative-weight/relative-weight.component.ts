@@ -8,22 +8,13 @@ import { NgFor } from '@angular/common';
     imports: [NgFor]
 })
 export class RelativeWeightComponent {
+    public scores: number[] = [76, 65, 87, 12, 32, 45];
 
-  public scores: number[] = [
-    76,
-    65,
-    87,
-    12,
-    32,
-    45
-  ];
+    getWeight(score: number) {
+        return Math.round((score / this.max) * 100);
+    }
 
-  getWeight(score: number) {
-    return Math.round((score / this.max) * 100);
-  }
-
-  get max(): number {
-    return this.scores.reduce((a, b) => Math.max(a, b));
-  }
-
+    get max(): number {
+        return this.scores.reduce((a, b) => Math.max(a, b));
+    }
 }

@@ -1,4 +1,15 @@
-import { Directive, ElementRef, OnInit, Input, OnDestroy, Output, EventEmitter, OnChanges, SimpleChanges, inject } from '@angular/core';
+import {
+    Directive,
+    ElementRef,
+    OnInit,
+    Input,
+    OnDestroy,
+    Output,
+    EventEmitter,
+    OnChanges,
+    SimpleChanges,
+    inject
+} from '@angular/core';
 import { select, Selection } from 'd3-selection';
 import { brush, BrushBehavior, brushX, brushY } from 'd3-brush';
 import { ChartComponent } from '../chart.component';
@@ -11,7 +22,6 @@ import { ChartComponent } from '../chart.component';
 export class BrushDirective implements OnInit, OnDestroy, OnChanges {
     private _elRef = inject(ElementRef);
     private _chart = inject(ChartComponent);
-
 
     @Input() extent: [[number, number], [number, number]];
     @Input() dimension: 'x' | 'y' | '' = '';
@@ -27,7 +37,11 @@ export class BrushDirective implements OnInit, OnDestroy, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (changes.dimension && !changes.dimension.firstChange && changes.dimension.previousValue !== changes.dimension.currentValue) {
+        if (
+            changes.dimension &&
+            !changes.dimension.firstChange &&
+            changes.dimension.previousValue !== changes.dimension.currentValue
+        ) {
             this.reset();
         }
     }
@@ -66,10 +80,12 @@ export class BrushDirective implements OnInit, OnDestroy, OnChanges {
     }
 
     getExtent(): [[number, number], [number, number]] {
-        return this.extent || [
-            [0, 0],
-            [this._chart.width, this._chart.height]
-        ];
+        return (
+            this.extent || [
+                [0, 0],
+                [this._chart.width, this._chart.height]
+            ]
+        );
     }
 
     private _subscribeToBrushEndEvent() {
@@ -80,9 +96,7 @@ export class BrushDirective implements OnInit, OnDestroy, OnChanges {
                 +selection.attr('x') + +selection.attr('width'),
                 +selection.attr('y') + +selection.attr('height')
             ];
-            const emission: [[number, number], [number, number]] = nw[0] === se[0] && nw[1] === se[1] ?
-                null :
-                [nw, se];
+            const emission: [[number, number], [number, number]] = nw[0] === se[0] && nw[1] === se[1] ? null : [nw, se];
 
             this.brushEnd.emit(emission);
         });
@@ -100,5 +114,4 @@ export class BrushDirective implements OnInit, OnDestroy, OnChanges {
     ngOnDestroy() {
         this._unbindEvents();
     }
-
 }

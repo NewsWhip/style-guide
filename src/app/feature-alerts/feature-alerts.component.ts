@@ -1,22 +1,29 @@
 import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
-import { FeatureAlertsDirective, FeatureAlertsService, HotspotComponent, WindowRef } from 'nw-style-guide/feature-alerts';
+import {
+    FeatureAlertsDirective,
+    FeatureAlertsService,
+    HotspotComponent,
+    WindowRef
+} from 'nw-style-guide/feature-alerts';
 import { NgIf } from '@angular/common';
 
 @Component({
     selector: 'app-feature-alerts',
     templateUrl: './feature-alerts.component.html',
     styleUrls: ['./feature-alerts.component.scss'],
-    styles: [`
-        :host ::ng-deep .feature-alert.feat-alert-for-inline-element{
-            border: 1px solid black;
-            min-width: 300px;
-        }
+    styles: [
+        `
+            :host ::ng-deep .feature-alert.feat-alert-for-inline-element {
+                border: 1px solid black;
+                min-width: 300px;
+            }
 
-        :host ::ng-deep .feat-alert-max-width-300{
-            max-width: 300px;
-            border: 1px solid green;
-        }
-    `],
+            :host ::ng-deep .feat-alert-max-width-300 {
+                max-width: 300px;
+                border: 1px solid green;
+            }
+        `
+    ],
     changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [NgIf, HotspotComponent, FeatureAlertsDirective]
 })
@@ -58,9 +65,10 @@ export class FeatureAlertsComponent {
         return {
             id: 'thirdFA',
             title: 'Second Alert',
-            message: 'The `isBlockEl` flag is not defined here, so the feature alert treats the anchor as inline element.',
+            message:
+                'The `isBlockEl` flag is not defined here, so the feature alert treats the anchor as inline element.',
             placement: 'bottom',
-            containerClass: 'feat-alert-max-width-300',
+            containerClass: 'feat-alert-max-width-300'
         };
     }
 

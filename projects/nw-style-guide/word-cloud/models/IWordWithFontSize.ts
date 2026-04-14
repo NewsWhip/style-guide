@@ -1,4 +1,4 @@
-import { IWord } from "./IWord";
+import { IWord } from './IWord';
 
 export type IWordWithFontSize<T extends IWord> = T & {
     fontSize: number;

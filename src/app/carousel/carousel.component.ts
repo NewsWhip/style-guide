@@ -13,7 +13,6 @@ import { NgFor } from '@angular/common';
 export class CarouselComponent implements OnInit {
     private _domSanitizer = inject(DomSanitizer);
 
-
     public items: any[] = [];
     public numItems: number = 30;
 
@@ -31,7 +30,7 @@ export class CarouselComponent implements OnInit {
         <div class="slide" nwCarouselSlide snapAlign="center" (click)="log('test')"
             [style.background-image]="'url(https://picsum.photos/216/120?image=' + item +')'">Slide {{item}}</div>
     </ng-container>
-</nw-carousel>`
+</nw-carousel>`;
     }
 
     getExample2() {
@@ -55,7 +54,6 @@ export class CarouselComponent implements OnInit {
             {{page + 1}}
         </button>
     </div>
-</nw-carousel>`
+</nw-carousel>`;
     }
-
 }

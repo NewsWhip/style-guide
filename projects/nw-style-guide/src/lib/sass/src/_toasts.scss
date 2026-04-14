@@ -17,18 +17,18 @@
     margin: 8px auto;
     padding: 16px 24px;
     max-width: 500px;
-    background: variables.get-color("gray", light);
+    background: variables.get-color('gray', light);
     color: #ffffff;
     border-radius: 5px;
 
     &.toast-success {
-        background: variables.get-color("secondary", base);
+        background: variables.get-color('secondary', base);
         .toast-icon {
             font-weight: normal;
         }
     }
     &.toast-error {
-        background: variables.get-color("tertiary", base);
+        background: variables.get-color('tertiary', base);
     }
     .toast-message {
         flex: 1;

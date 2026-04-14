@@ -18,5 +18,5 @@ exports.onError = () => {
 };
 
 exports.logSeparator = () => {
-    console.log("============================");
+    console.log('============================');
 };

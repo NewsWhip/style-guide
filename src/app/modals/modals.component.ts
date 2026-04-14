@@ -13,7 +13,6 @@ export class ModalsComponent implements OnInit {
     private _fb = inject(FormBuilder);
     private _dialog = inject(Dialog);
 
-
     @ViewChild('modalTmpl') modalTmpl: TemplateRef<any>;
 
     public form: FormGroup;
@@ -45,9 +44,9 @@ export class ModalsComponent implements OnInit {
     }
 
     openModal() {
-        const backdropClass = this.form.get('transparentBackdrop').value ?
-            ['modal-backdrop', 'transparent'] :
-            'modal-backdrop';
+        const backdropClass = this.form.get('transparentBackdrop').value
+            ? ['modal-backdrop', 'transparent']
+            : 'modal-backdrop';
 
         this._dialog.open(this.modalTmpl, {
             backdropClass

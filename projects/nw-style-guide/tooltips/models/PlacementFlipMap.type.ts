@@ -1,3 +1,3 @@
-import { Placement } from "./Placement.type";
+import { Placement } from './Placement.type';
 
 export type PlacementFlipMap = Record<Placement, Placement>;

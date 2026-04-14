@@ -1,5 +1,5 @@
-@use "nw-style-guide/sass/src/mixins/scrollbars";
-@use "nw-style-guide/sass/src/variables" as variables;
+@use 'nw-style-guide/sass/src/mixins/scrollbars';
+@use 'nw-style-guide/sass/src/variables' as variables;
 
 :host {
     display: flex;
@@ -13,7 +13,7 @@
         position: fixed;
         width: 200px;
         height: 100vh;
-        background: variables.get-color("gray", dark);
+        background: variables.get-color('gray', dark);
         overflow-y: scroll;
 
         .app-logo {
@@ -35,7 +35,7 @@
         }
         // Page headers should span the full width and negate the container padding
         .tabs-container {
-            background-color: variables.get-color("gray", dark);
+            background-color: variables.get-color('gray', dark);
             padding-left: 32px;
             padding-right: 32px;
             margin-left: -32px;

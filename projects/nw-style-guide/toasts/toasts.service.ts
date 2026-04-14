@@ -11,7 +11,6 @@ export class Toaster {
     private _appRef = inject(ApplicationRef);
     private _injector = inject(Injector);
 
-
     private _toastPortal: ComponentPortal<ToastsComponent>;
     private _outlet: DomPortalOutlet;
     private _toastsComponentRef: ToastsComponent;

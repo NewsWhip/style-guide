@@ -17,7 +17,6 @@ export class AutofocusComponent implements OnInit, OnDestroy {
     private _route = inject(ActivatedRoute);
     private _cdRef = inject(ChangeDetectorRef);
 
-
     public selectedTab: 'design' | 'api' = 'design';
 
     private _routeSub: Subscription;

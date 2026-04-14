@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy, ChangeDetectorRef, OnInit, inject } from '@angular/core';
-import { IValidationChange, EmailInputComponent } from "nw-style-guide/email-input";
+import { IValidationChange, EmailInputComponent } from 'nw-style-guide/email-input';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ISnippet } from '../code/ISnippet';
@@ -11,25 +11,23 @@ import { AppCodeComponent } from '../code/code.component';
     selector: 'app-email-input-demo',
     templateUrl: './email-input-demo.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    styles: [`
-        li {
-            font-size: 14px;
-        }
-        ol li {
-            margin-bottom: 16px;
-        }
-    `],
+    styles: [
+        `
+            li {
+                font-size: 14px;
+            }
+            ol li {
+                margin-bottom: 16px;
+            }
+        `
+    ],
     imports: [TABS_DIRECTIVES, RouterLink, NgIf, EmailInputComponent, AppCodeComponent, NgFor]
 })
 export class EmailInputDemoComponent implements OnInit {
     private _cdRef = inject(ChangeDetectorRef);
     private _route = inject(ActivatedRoute);
 
-
-    public emails: string[] = [
-        "valid.email@newswhip.com",
-        "invalid.email"
-    ];
+    public emails: string[] = ['valid.email@newswhip.com', 'invalid.email'];
     public validationState: IValidationChange;
     public selectedTab: 'design' | 'api' = 'design';
     public properties: { name: string; defaultValue: string; description: string }[];
@@ -67,19 +65,20 @@ export class EmailInputDemoComponent implements OnInit {
                     (updated)="onChange($event)"></nw-email-input>
             `
         }
-    }
+    };
 
     private _getProperties(): { name: string; defaultValue: string; description: string }[] {
         return [
             {
                 name: '@Input() emails: string[] = []',
-                defaultValue: "[]",
+                defaultValue: '[]',
                 description: 'Collection of strings that the component should be initialized with.'
             },
             {
                 name: '@Input() inputId: string',
                 defaultValue: `""`,
-                description: 'Applied to the <code>HTMLInputElement</code>. Mostly useful for label using the <code>for</code> attribute.'
+                description:
+                    'Applied to the <code>HTMLInputElement</code>. Mostly useful for label using the <code>for</code> attribute.'
             },
             {
                 name: `@Input() placeholder: string`,
@@ -94,18 +93,19 @@ export class EmailInputDemoComponent implements OnInit {
             {
                 name: `@Input() blacklist: (string | RegExp)[]`,
                 defaultValue: `[]`,
-                description: 'A list of strings or RegExp to be matched against the inputted list of emails. Any emails that match entries in the blacklist will be marked as invalid'
+                description:
+                    'A list of strings or RegExp to be matched against the inputted list of emails. Any emails that match entries in the blacklist will be marked as invalid'
             },
             {
                 name: `@Output() change: EventEmitter<IValidationChange>`,
                 defaultValue: null,
-                description: 'Emits a <code>IValidationChange</code>. Fired on intialization, every time the input value changes and whenever an email pill is removed.'
-            },
-        ]
+                description:
+                    'Emits a <code>IValidationChange</code>. Fired on intialization, every time the input value changes and whenever an email pill is removed.'
+            }
+        ];
     }
 
     ngOnDestroy() {
         this._routeSub.unsubscribe();
     }
-
 }

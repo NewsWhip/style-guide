@@ -9,14 +9,14 @@ import { LoaderComponent as NWLoaderComponent } from 'nw-style-guide/loader';
     imports: [FormsModule, NWLoaderComponent]
 })
 export class LoaderComponent {
-  private _num: number = 6;
-  public size: string = 'md';
+    private _num: number = 6;
+    public size: string = 'md';
 
-  get num(): number {
-    return this._num;
-  }
+    get num(): number {
+        return this._num;
+    }
 
-  set num(value: number) {
-    this._num = +value;
-  }
+    set num(value: number) {
+        this._num = +value;
+    }
 }

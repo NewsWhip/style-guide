@@ -10,13 +10,12 @@ import 'prismjs/plugins/copy-to-clipboard/prism-copy-to-clipboard';
     selector: 'app-code',
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
-        <pre class="language-{{snippet.lang}}">
+        <pre class="language-{{ snippet.lang }}">
             <code #code class="language-{{snippet.lang}}"></code>
         </pre>
     `
 })
 export class AppCodeComponent implements AfterViewInit {
-
     @ViewChild('code', { static: true }) codeEl: ElementRef<HTMLElement>;
 
     @Input() snippet: ISnippet;

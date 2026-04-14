@@ -11,7 +11,13 @@
     cursor: pointer;
     background-image: none; // Reset unusual Firefox-on-Android default style; see https://github.com/necolas/normalize.css/issues/214
     white-space: nowrap;
-    @include buttons.button-size(variables.$padding-base-vertical, variables.$padding-base-horizontal, 14px, variables.$line-height-base, variables.$btn-border-radius-base);
+    @include buttons.button-size(
+        variables.$padding-base-vertical,
+        variables.$padding-base-horizontal,
+        14px,
+        variables.$line-height-base,
+        variables.$btn-border-radius-base
+    );
     user-select: none;
     border-style: solid;
     border-width: 1px;
@@ -38,7 +44,7 @@
     &[disabled],
     fieldset[disabled] & {
         cursor: variables.$cursor-disabled;
-        opacity: .50;
+        opacity: 0.5;
         box-shadow: none;
     }
     // Icons inside buttons
@@ -54,7 +60,6 @@ a.btn {
     }
 }
 
-
 // Alternate buttons
 // --------------------------------------------------
 .btn-primary {
@@ -62,28 +67,32 @@ a.btn {
         #ffffff,
         #ffffff,
         variables.get-color('primary'),
-        variables.get-color('primary', light));
+        variables.get-color('primary', light)
+    );
 }
 .btn-secondary {
     @include buttons.button-variant(
         variables.$text-color,
         variables.$text-color,
         rgba(variables.$text-color, 0.15),
-        rgba(variables.$text-color, 0.20));
+        rgba(variables.$text-color, 0.2)
+    );
 }
 .btn-secondary-inverse {
     @include buttons.button-variant(
-        variables.get-color("gray", base),
-        variables.get-color("gray", base),
-        variables.get-color("gray", 6x-light),
-        variables.get-color("gray", 5x-light));
+        variables.get-color('gray', base),
+        variables.get-color('gray', base),
+        variables.get-color('gray', 6x-light),
+        variables.get-color('gray', 5x-light)
+    );
 }
 .btn-danger {
     @include buttons.button-variant(
         #ffffff,
         #ffffff,
         variables.get-color('tertiary'),
-        variables.get-color('tertiary', light));
+        variables.get-color('tertiary', light)
+    );
 }
 .btn-alt {
     @include buttons.button-variant(
@@ -92,28 +101,32 @@ a.btn {
         transparent,
         transparent,
         variables.$text-color,
-        variables.get-color('primary', 2x-light));
+        variables.get-color('primary', 2x-light)
+    );
 }
 .btn-ghost {
     @include buttons.button-variant(
         variables.$text-color-secondary,
         variables.$text-color,
         transparent,
-        rgba(variables.$text-color, 0.1));
+        rgba(variables.$text-color, 0.1)
+    );
 }
 .btn-ghost-alt {
     @include buttons.button-variant(
         variables.$text-color-secondary,
         variables.get-color('primary', 2x-light),
         transparent,
-        transparent);
+        transparent
+    );
 }
 .btn-activate {
     @include buttons.button-variant(
         variables.$text-color,
         variables.$text-color,
-        variables.get-color("secondary", base),
-        variables.get-color("secondary", light));
+        variables.get-color('secondary', base),
+        variables.get-color('secondary', light)
+    );
 }
 // applying sizes to this element will not do anything
 // as currently this button has a fixed size
@@ -122,7 +135,8 @@ a.btn {
         variables.$text-color-secondary,
         variables.get-color('primary', light),
         transparent,
-        transparent);
+        transparent
+    );
 
     padding: 16px 0 !important;
 
@@ -167,47 +181,95 @@ a.btn {
 // --------------------------------------------------
 
 .btn-xl {
-    @include buttons.button-size(variables.$padding-xl-vertical, variables.$padding-xl-horizontal, variables.$font-size-xl, variables.$line-height-xl, variables.$btn-border-radius-xl);
+    @include buttons.button-size(
+        variables.$padding-xl-vertical,
+        variables.$padding-xl-horizontal,
+        variables.$font-size-xl,
+        variables.$line-height-xl,
+        variables.$btn-border-radius-xl
+    );
 
     &.btn-round {
-        @include buttons.button-round(variables.$font-size-xl, variables.$line-height-xl, variables.$padding-xl-vertical);
+        @include buttons.button-round(
+            variables.$font-size-xl,
+            variables.$line-height-xl,
+            variables.$padding-xl-vertical
+        );
     }
 
     &.btn-close {
-        @include buttons.button-close(variables.$font-size-xl, variables.$line-height-xl, variables.$padding-xl-vertical)
+        @include buttons.button-close(
+            variables.$font-size-xl,
+            variables.$line-height-xl,
+            variables.$padding-xl-vertical
+        );
     }
 }
 .btn-lg {
-    @include buttons.button-size(variables.$padding-large-vertical, variables.$padding-large-horizontal, variables.$font-size-large, variables.$line-height-large, variables.$btn-border-radius-large);
+    @include buttons.button-size(
+        variables.$padding-large-vertical,
+        variables.$padding-large-horizontal,
+        variables.$font-size-large,
+        variables.$line-height-large,
+        variables.$btn-border-radius-large
+    );
 
     &.btn-round {
-        @include buttons.button-round(variables.$font-size-large, variables.$line-height-large, variables.$padding-large-vertical);
+        @include buttons.button-round(
+            variables.$font-size-large,
+            variables.$line-height-large,
+            variables.$padding-large-vertical
+        );
     }
 
     &.btn-close {
-        @include buttons.button-close(variables.$font-size-large, variables.$line-height-large, variables.$padding-large-vertical)
+        @include buttons.button-close(
+            variables.$font-size-large,
+            variables.$line-height-large,
+            variables.$padding-large-vertical
+        );
     }
 }
 .btn-md {
-    @include buttons.button-size(variables.$padding-base-vertical, variables.$padding-base-horizontal, 14px, variables.$line-height-base, variables.$btn-border-radius-base);
+    @include buttons.button-size(
+        variables.$padding-base-vertical,
+        variables.$padding-base-horizontal,
+        14px,
+        variables.$line-height-base,
+        variables.$btn-border-radius-base
+    );
 
     &.btn-round {
         @include buttons.button-round(14px, variables.$line-height-base, variables.$padding-base-vertical);
     }
 
     &.btn-close {
-        @include buttons.button-close(14px, variables.$line-height-base, variables.$padding-base-vertical)
+        @include buttons.button-close(14px, variables.$line-height-base, variables.$padding-base-vertical);
     }
 }
 .btn-sm {
-    @include buttons.button-size(variables.$padding-small-vertical, variables.$padding-small-horizontal, variables.$font-size-small, variables.$line-height-small, variables.$btn-border-radius-small);
+    @include buttons.button-size(
+        variables.$padding-small-vertical,
+        variables.$padding-small-horizontal,
+        variables.$font-size-small,
+        variables.$line-height-small,
+        variables.$btn-border-radius-small
+    );
 
     &.btn-round {
-        @include buttons.button-round(variables.$font-size-small, variables.$line-height-small, variables.$padding-small-vertical);
+        @include buttons.button-round(
+            variables.$font-size-small,
+            variables.$line-height-small,
+            variables.$padding-small-vertical
+        );
     }
 
     &.btn-close {
-        @include buttons.button-close(variables.$font-size-small, variables.$line-height-small, variables.$padding-small-vertical)
+        @include buttons.button-close(
+            variables.$font-size-small,
+            variables.$line-height-small,
+            variables.$padding-small-vertical
+        );
     }
 }
 .btn-xs {
@@ -218,7 +280,7 @@ a.btn {
     }
 
     &.btn-close {
-        @include buttons.button-close(12px, 1.333333333333, 0)
+        @include buttons.button-close(12px, 1.333333333333, 0);
     }
 }
 .btn-slim {
@@ -243,9 +305,9 @@ a.btn {
 }
 
 // Specificity overrides
-input[type="submit"],
-input[type="reset"],
-input[type="button"] {
+input[type='submit'],
+input[type='reset'],
+input[type='button'] {
     &.btn-block {
         width: 100%;
     }

@@ -9,7 +9,6 @@ import { ScaleLinear, scaleLinear } from 'd3-scale';
     exportAs: 'nw-y-axis'
 })
 export class YAxisDirective extends AxisBase {
-
     @Input() align: 'left' | 'right' | 'center' = 'left';
     @Input() domain: [number, number];
 
@@ -18,9 +17,7 @@ export class YAxisDirective extends AxisBase {
     public scale: ScaleLinear<number, number> = scaleLinear();
 
     createAxis() {
-        this.axis = this.align === "left" ?
-            axisLeft(this.scale) :
-            axisRight(this.scale);
+        this.axis = this.align === 'left' ? axisLeft(this.scale) : axisRight(this.scale);
     }
 
     setTicks() {
@@ -43,14 +40,14 @@ export class YAxisDirective extends AxisBase {
         if (this.label) {
             const rotationAngle = this.align === 'left' ? '-90' : '90';
             const y = this.align === 'left' ? 0 : -this.fullWidth;
-            const x = this.align === 'left' ? -(this.fullHeight / 2) : (this.fullHeight / 2);
+            const x = this.align === 'left' ? -(this.fullHeight / 2) : this.fullHeight / 2;
 
             this.axisLabelSelection
                 .attr('class', 'axis-label ' + this.align)
                 .attr('transform', `rotate(${rotationAngle})`)
                 .attr('y', y)
                 .attr('x', x)
-                .attr('dy', "1em")
+                .attr('dy', '1em')
                 .text(this.label);
         }
     }
@@ -58,9 +55,7 @@ export class YAxisDirective extends AxisBase {
     render() {
         const xTranslation = this._getAxisTranslation();
 
-        this.axisSelection
-            .attr('transform', "translate(" + xTranslation + ", 0)")
-            .call(this.axis);
+        this.axisSelection.attr('transform', 'translate(' + xTranslation + ', 0)').call(this.axis);
 
         this.positionLabel();
     }
@@ -76,5 +71,4 @@ export class YAxisDirective extends AxisBase {
 
         return 0;
     }
-
 }

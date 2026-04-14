@@ -2,17 +2,20 @@
 
 <h3>How it works</h3>
 
-<p>Assign margin or padding values to an element or a subset of its sides with shorthand classes. Includes support for
-    individual properties, all properties, and vertical and horizontal properties.</p>
-    
-<p>Classes are built from a Sass map
-    ranging with the following sizes : 0px, 2px, 4px, 8px, 16px, 24px</p>
+<p>
+    Assign margin or padding values to an element or a subset of its sides with shorthand classes. Includes support for
+    individual properties, all properties, and vertical and horizontal properties.
+</p>
 
-<hr>
+<p>Classes are built from a Sass map ranging with the following sizes : 0px, 2px, 4px, 8px, 16px, 24px</p>
+
+<hr />
 <h3>Notation</h3>
-<p>The classes are named using the format <code>{{'{property}{side}-{size}'}}</code></p>
+<p>
+    The classes are named using the format <code>{{ '{property}{side}-{size}' }}</code>
+</p>
 
-<p class="mt-16"> Where property is one of:</p>
+<p class="mt-16">Where property is one of:</p>
 <ul>
     <li>m - for classes that set margin</li>
     <li>p - for classes that set padding</li>
@@ -39,12 +42,14 @@
     <li>auto - for classes that set the margin to auto</li>
 </ul>
 
-<hr>
+<hr />
 <h3>Examples</h3>
 
-<app-code *ngFor="let snippet of snippets" [snippet]="snippet"></app-code>
+<app-code
+    *ngFor="let snippet of snippets"
+    [snippet]="snippet"></app-code>
 
 <h3>Usage</h3>
-<app-code *ngFor="let snippet of usageSnippets" [snippet]="snippet"></app-code>
-
-
+<app-code
+    *ngFor="let snippet of usageSnippets"
+    [snippet]="snippet"></app-code>

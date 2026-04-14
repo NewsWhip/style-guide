@@ -1,4 +1,17 @@
-import { Component, ContentChildren, QueryList, Input, ElementRef, ViewChild, OnInit, ChangeDetectorRef, OnDestroy, ChangeDetectionStrategy, AfterContentInit, inject } from '@angular/core';
+import {
+    Component,
+    ContentChildren,
+    QueryList,
+    Input,
+    ElementRef,
+    ViewChild,
+    OnInit,
+    ChangeDetectorRef,
+    OnDestroy,
+    ChangeDetectionStrategy,
+    AfterContentInit,
+    inject
+} from '@angular/core';
 import { TabDirective } from './tab.directive';
 import { fromEvent, Subscription, Observable, merge } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
@@ -8,19 +21,37 @@ import { NgClass, NgStyle, NgIf, NgTemplateOutlet } from '@angular/common';
 @Component({
     selector: 'nw-tabs',
     template: `
-        <div class="scroll-container" #scrollContainer>
-            <ul class="nav nav-tabs" [ngClass]="tabSizeClass" role="tablist">
+        <div
+            class="scroll-container"
+            #scrollContainer>
+            <ul
+                class="nav nav-tabs"
+                [ngClass]="tabSizeClass"
+                role="tablist">
                 <ng-content></ng-content>
 
-                <li #activeBar class="nav-tabs-active-bar" [ngStyle]="getActiveStyles()"></li>
+                <li
+                    #activeBar
+                    class="nav-tabs-active-bar"
+                    [ngStyle]="getActiveStyles()"></li>
             </ul>
         </div>
 
-        <div class="pagination-container" *ngIf="shouldShowPagination">
-            <div class="prev-page" *ngIf="shouldShowPrev" (click)="prev()" [ngStyle]="background">
+        <div
+            class="pagination-container"
+            *ngIf="shouldShowPagination">
+            <div
+                class="prev-page"
+                *ngIf="shouldShowPrev"
+                (click)="prev()"
+                [ngStyle]="background">
                 <ng-container *ngTemplateOutlet="paginator"></ng-container>
             </div>
-            <div class="next-page" *ngIf="shouldShowNext" (click)="next()" [ngStyle]="background">
+            <div
+                class="next-page"
+                *ngIf="shouldShowNext"
+                (click)="next()"
+                [ngStyle]="background">
                 <ng-container *ngTemplateOutlet="paginator"></ng-container>
             </div>
         </div>
@@ -30,21 +61,22 @@ import { NgClass, NgStyle, NgIf, NgTemplateOutlet } from '@angular/common';
                 <i class="fas fa-chevron-left"></i>
             </button>
         </ng-template>
-     `,
+    `,
     providers: [TabsService],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    styles: [`
-        :host, ul {
-            position: relative;
-        }
-    `],
+    styles: [
+        `
+            :host,
+            ul {
+                position: relative;
+            }
+        `
+    ],
     imports: [NgClass, NgStyle, NgIf, NgTemplateOutlet]
 })
-
 export class TabsComponent implements OnInit, AfterContentInit, OnDestroy {
     private _cdRef = inject(ChangeDetectorRef);
     private _tabsService = inject(TabsService);
-
 
     @Input() size: 'sm' | 'md' | 'lg' = 'md';
     @Input() maskColor: string = '#373737';
@@ -129,7 +161,7 @@ export class TabsComponent implements OnInit, AfterContentInit, OnDestroy {
 
     get background() {
         return {
-            'background': `linear-gradient(to left, rgba(0,0,0,0), ${this.maskColor})`
+            background: `linear-gradient(to left, rgba(0,0,0,0), ${this.maskColor})`
         };
     }
 
@@ -150,11 +182,11 @@ export class TabsComponent implements OnInit, AfterContentInit, OnDestroy {
     }
 
     prev(): void {
-        this.getScrollEl().scrollLeft -= (this.clientWidth - this._paginationTolerance);
+        this.getScrollEl().scrollLeft -= this.clientWidth - this._paginationTolerance;
     }
 
     next() {
-        this.getScrollEl().scrollLeft += (this.clientWidth - this._paginationTolerance);
+        this.getScrollEl().scrollLeft += this.clientWidth - this._paginationTolerance;
     }
 
     scrollToTabIfRequired(tab: TabDirective) {
@@ -165,7 +197,7 @@ export class TabsComponent implements OnInit, AfterContentInit, OnDestroy {
         };
 
         const shouldScrollLeft: boolean = position.left < this.getScrollEl().scrollLeft;
-        const shouldScrollRight: boolean = position.right > (this.getScrollEl().scrollLeft + this.clientWidth);
+        const shouldScrollRight: boolean = position.right > this.getScrollEl().scrollLeft + this.clientWidth;
 
         if (shouldScrollLeft) {
             this.getScrollEl().scrollLeft = position.left - 30;

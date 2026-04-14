@@ -5,12 +5,12 @@
 
     .rel-weight-bar {
         width: 0;
-        background: variables.get-color("secondary", base);
-        border: 1px solid variables.get-color("secondary", base);
+        background: variables.get-color('secondary', base);
+        border: 1px solid variables.get-color('secondary', base);
         color: white;
         transition: width 0.3s ease-in-out;
-        padding-top: variables.$padding-base-vertical; 
-        padding-bottom: variables.$padding-base-vertical; 
+        padding-top: variables.$padding-base-vertical;
+        padding-bottom: variables.$padding-base-vertical;
         padding-left: 16px;
         padding-right: 16px;
         font-size: variables.$font-size-base;

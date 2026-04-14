@@ -8,7 +8,7 @@ import { FormsModule } from '@angular/forms';
     styleUrls: ['./buttons.component.scss'],
     imports: [NgFor, FormsModule]
 })
-export class ButtonsComponent{
+export class ButtonsComponent {
     public sizes = ['xs', 'sm', 'md', 'lg'];
     public btnNames = ['primary', 'secondary', 'danger', 'ghost', 'alt', 'activate'];
     public defaultBtnSize: string = 'lg';
