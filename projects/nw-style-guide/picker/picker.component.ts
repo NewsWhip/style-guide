@@ -4,153 +4,12 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { IPickerItem } from './IPickerItem';
 import { Subscription } from 'rxjs';
 import { isUndefined } from 'lodash-es';
-import { NgIf, NgFor, NgClass } from '@angular/common';
+import { NgClass } from '@angular/common';
+import { LiveAnnouncer } from '@angular/cdk/a11y';
 
 @Component({
     selector: 'nw-angular-picker',
-    template: `
-        <div class="nw-picker">
-            <!-- START: NOT xs screen -->
-            <div class="input-container hidden-xs" [class.disabled]="isDisabled">
-                <input type="text" #inputEl
-                    class="form-control search-input {{inputClasses}} text-ellipsis"
-                    [formControl]="searchTerm"
-                    (focus)="onFocus()"
-                    (blur)="closeResults()"
-                    (keyup.escape)="inputEl.blur()"
-                    [placeholder]="inputPlaceholderText"
-                    [attr.aria-label]="inputPlaceholderText"/>
-
-                <div class="input-placeholder text-ellipsis" [innerHTML]="getPlaceholderText()"></div>
-
-                <i *ngIf="!isChevronHidden" (click)="showResults();inputEl.focus()" class="caret dropdown-icon"></i>
-            </div>
-
-            <!-- END: NOT xs screen -->
-
-            <!-- START: IS xs screen -->
-            <div (click)="showResults()" class="form-control search-input hidden-sm hidden-md hidden-lg text-ellipsis" [innerHTML]="getPlaceholderText()"></div>
-            <i (click)="showResults()" class="caret dropdown-icon hidden-sm hidden-md hidden-lg"></i>
-            <!-- END: IS xs screen -->
-
-            <button *ngIf="searchTerm.value"
-                (mousedown)="preventBlur($event)"
-                (click)="onReset($event);inputEl.focus()" class="close reset-icon" aria-label="Clear search">&times;</button>
-
-            <div class="search-results" *ngIf="canViewResults"
-                [@slideUpIn]="isMobileDisplay ? 'in' : false"
-                (mousedown)="preventBlur($event)">
-
-                <div class="results-header">
-                    <button class="close" (click)="closeResults()" style="color: #000" aria-label="Close results">&times;</button>
-                </div>
-
-                <!-- Navigate up the tree -->
-                <div class="results-actions" *ngIf="parentId && displayItems.length && !searchTerm.value.length">
-                    <a tabindex="0" role="button" aria-label="Go Back" class="picker-action" 
-                        (click)="ascend($event, getParentItem(parentId))"
-                        (keydown.enter)="ascend($event, getParentItem(parentId))">
-                        <i class="fas fa-long-arrow-alt-left" aria-hidden="true"></i>
-                        {{getParentItem(parentId).displayName}}
-                    </a>
-                </div>
-
-                <div class="scroll-container" #searchResultsScrollEl
-                    [style.max-height]="getMaxHeight(searchResultsScrollEl)">
-
-                    <div class="results-actions" *ngIf="shouldShowSelections && !selectionsAreShowing && parentId == null && !searchTerm.value.length">
-                        <ng-container *ngIf="getSelections().length">
-                            <a tabindex="0" role="button" class="picker-action" (click)="editSelections($event)" (keydown.enter)="editSelections($event)">Edit selections</a>
-                            <a tabindex="0" role="button" class="picker-action" (click)="clearSelections($event)" (keydown.enter)="clearSelections($event)">Clear selections</a>
-                        </ng-container>
-
-                        <ng-container *ngIf="!getSelections().length">
-                            <em>No selections</em>
-                        </ng-container>
-                    </div>
-
-                    <!-- DISPLAY THE SELECTED ITEMS -->
-                    <ng-container *ngIf="selectionsAreShowing">
-                        <div class="results-actions">
-                            <a role="button" class="picker-action" (click)="selectionsAreShowing = false">
-                                <i class="fas fa-long-arrow-alt-left" aria-hidden="true"></i> Back
-                            </a>
-                            <a role="button" class="picker-action" *ngIf="getSelections().length" (click)="clearSelections($event)">Clear all</a>
-                        </div>
-
-                        <div class="selected-items">
-                            <div class="search-result"
-                                [ngClass]="{ 'active': item.added, 'excluded': item.excluded }"
-                                *ngFor="let item of getSelections()">
-
-                                <span class="result-item">
-                                    <span class="item-label">{{item.displayName}}</span>
-
-                                    <button class="close" style="color: #000000" (click)="clearSelection($event, item)" [attr.aria-label]="'Remove ' + item.displayName">
-                                        &times;
-                                    </button>
-                                </span>
-
-                            </div>
-                        </div>
-                    </ng-container>
-
-                    <ng-container *ngIf="!selectionsAreShowing">
-                        <div class="search-result" *ngFor="let item of displayItems"
-                            [class.active]="item.added"
-                            [attr.tabindex]="isMultiSelect ? -1 : 0"
-                            [class.excluded]="item.excluded"
-                            [class.has-children]="hasChildren(item.id)"
-                            role="option"
-                            [attr.aria-selected]="item.added">
-
-                            <span class="result-item">
-                                <div class="checkbox checkbox-placeholder" *ngIf="isMultiSelect">
-                                    <input tabindex="0" id="include-{{item.id}}" type="checkbox" 
-                                        (click)="toggleItemInclusion(item, $event)" 
-                                        [checked]="item.added" 
-                                        (keydown.enter)="toggleItemInclusion(item, $event)">
-                                    <label for="include-{{item.id}}" [attr.aria-label]="'Select ' + item.displayName"></label>
-                                </div>
-
-                                <div class="checkbox checkbox-exclusion checkbox-placeholder" *ngIf="canExclude && isMultiSelect">
-                                    <input tabindex="0" id="exclude-{{item.id}}" type="checkbox" 
-                                        (click)="toggleItemExclusion(item, $event)" 
-                                        [checked]="item.excluded" 
-                                        (keydown.enter)="toggleItemExclusion(item, $event)">
-                                    <label for="exclude-{{item.id}}" [attr.aria-label]="'Exclude ' + item.displayName"></label>
-                                </div>
-
-                                <span class="item-label" title="{{item.displayName}}" (click)="toggleItemInclusion(item, $event)">
-                                    {{item.displayName}}
-                                    <ng-container *ngIf="searchTerm.value.length && item.searchValues?.length">
-                                        <span> -
-                                            <em class="small" *ngFor="let val of item.searchValues; let isLast=last">{{val}}{{isLast ? '' : ', '}}</em>
-                                        </span>
-                                    </ng-container>
-                                </span>
-
-                                <button class="btn btn-ghost drilldown" 
-                                    *ngIf="hasChildren(item.id)" 
-                                    (click)="setDisplayItemsFromParentId(item.id, $event); desc.emit(getParentItem(parentId))"
-                                    [attr.aria-label]="'Expand ' + item.displayName">
-                                    <i class="fas fa-chevron-right" aria-hidden="true"></i>
-                                </button>
-                            </span>
-
-                        </div>
-
-
-                        <div class="results-actions" *ngIf="displayItems.length < 1">
-                            <em>No results</em>
-                        </div>
-                    </ng-container>
-                </div>
-
-                <ng-content select=".results-footer"></ng-content>
-            </div>
-        </div>
-	`,
+    templateUrl: './picker.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
     animations: [
         trigger('slideUpIn', [
@@ -163,10 +22,13 @@ import { NgIf, NgFor, NgClass } from '@angular/common';
             ])
         ])
     ],
-    imports: [ReactiveFormsModule, NgIf, NgFor, NgClass]
+    imports: [ReactiveFormsModule, NgClass]
 })
 
 export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
+
+    private static _idCounter = 0;
+    public readonly pickerId: string;
 
     @Input() items: IPickerItem[];
     @Input() inputClasses: string = '';
@@ -189,6 +51,7 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
     @Output() closed: EventEmitter<any> = new EventEmitter<any>();
     // eslint-disable-next-line @angular-eslint/no-output-native
     @Output() focus: EventEmitter<ElementRef> = new EventEmitter<ElementRef>();
+    @Output() blur: EventEmitter<ElementRef> = new EventEmitter<ElementRef>();
     @Output() clearAll: EventEmitter<any> = new EventEmitter<any>();
     @Output() clearSingle: EventEmitter<IPickerItem> = new EventEmitter<IPickerItem>();
     @Output() clearSearch: EventEmitter<any> = new EventEmitter<any>();
@@ -203,9 +66,19 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
     public parentId: any;
     public selectionsAreShowing: boolean = false;
     public maxHeight: number = 400;
+    public focusedIndex: number = -1;
     private _subs: Subscription[] = [];
 
-    constructor(public chRef: ChangeDetectorRef) { }
+    constructor(public chRef: ChangeDetectorRef, private _elementRef: ElementRef, private _liveAnnouncer: LiveAnnouncer) {
+        this.pickerId = `nw-picker-${++NwPickerComponent._idCounter}`;
+    }
+
+    get focusedItemId(): string | null {
+        if (this.focusedIndex >= 0 && this.displayItems?.[this.focusedIndex]) {
+            return `${this.pickerId}-option-${this.displayItems[this.focusedIndex].id}`;
+        }
+        return null;
+    }
 
     ngOnInit() {
         this.parentId = this.initialParentId;
@@ -221,6 +94,8 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
     subscribeToSearchTermChanges() {
         const sub = this.searchTerm.valueChanges.subscribe(val => {
             this.selectionsAreShowing = false;
+            this.focusedIndex = -1;
+            this.canViewResults = true;
 
             if (val.length) {
                 const displayItems = this.items.filter(item => {
@@ -240,21 +115,25 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
 
     ascend(event: Event, item: IPickerItem) {
         event.stopPropagation();
+        // Move focus to input before re-rendering the list, so removing the
+        // currently-focused <li> from the DOM doesn't fire a focusout with
+        // relatedTarget=null, which would otherwise close the dropdown.
+        this.inputEl.nativeElement.focus();
         this.setDisplayItemsFromParentId(item.parentId);
         this.asc.emit(item);
+        this.chRef.detectChanges();
+        this.focusedIndex = 0;
+        this.focusListItem(0);
     }
 
-    setDisplayItemsFromParentId(parentId, e?: KeyboardEvent) {
-        if (e) {
-            e.stopPropagation();
-        }
-
+    setDisplayItemsFromParentId(parentId) {
         if (!this.hasChildren(parentId)) {
             return;
         }
         this.resetSearchTerm();
         this.parentId = parentId;
         this.displayItems = this.items.filter(i => i.parentId === this.parentId);
+        this.focusedIndex = -1;
     }
 
     displaySelectedItems() {
@@ -275,12 +154,24 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
 
     editSelections(event: Event) {
         event.stopPropagation();
+        this.inputEl.nativeElement.focus();
         this.selectionsAreShowing = true;
         this.edit.emit(event);
     }
 
-    clearSelection(event: Event, item: IPickerItem) {
+    onBackClick(event: Event) {
+        event.preventDefault();
         event.stopPropagation();
+        this.inputEl.nativeElement.focus();
+        this.selectionsAreShowing = false;
+        this.setDisplayItemsFromParentId(null);
+        this.selections.emit(this.getSelections());
+    }
+
+    clearSelection(event: Event, item: IPickerItem) {
+        event.preventDefault();
+        event.stopPropagation();
+        this.inputEl.nativeElement.focus();
         item.added = false;
         item.excluded = false;
 
@@ -294,7 +185,7 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
         this.selections.emit(this.getSelections());
     }
 
-    clearSelections(e?: KeyboardEvent) {
+    clearSelections(e?: Event) {
         if (e) {
             e.stopPropagation();
         }
@@ -312,9 +203,10 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
         this.selectionsAreShowing = false;
 
         this.selections.emit(this.getSelections());
+        this.announce('All selections cleared');
     }
 
-    toggleItemInclusion(item: IPickerItem, e: KeyboardEvent) {
+    toggleItemInclusion(item: IPickerItem, e: Event) {
         e.stopPropagation();
 
         // we're assuming that if the component is not multiSelect, then only
@@ -342,13 +234,14 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
 
         this.toggleInclude.emit({ item: item, searchTerm: this.searchTerm.value });
         this.selections.emit(this.getSelections());
+        this.announce(`${item.displayName} ${item.added ? 'selected' : 'deselected'}`);
 
         if (!this.isMultiSelect) {
-            this.inputEl.nativeElement.blur();
+            this.closeResults();
         }
     }
 
-    toggleItemExclusion(item: IPickerItem, e: KeyboardEvent) {
+    toggleItemExclusion(item: IPickerItem, e: Event) {
         e.stopPropagation();
 
         item.added = false;
@@ -367,9 +260,10 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
 
         this.toggleExclude.emit({ item: item, searchTerm: this.searchTerm.value });
         this.selections.emit(this.getSelections());
+        this.announce(`${item.displayName} ${item.excluded ? 'excluded' : 'exclusion removed'}`);
 
         if (!this.isMultiSelect) {
-            this.inputEl.nativeElement.blur();
+            this.closeResults();
         }
     }
 
@@ -401,7 +295,114 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
         });
     }
 
-    preventBlur(e: KeyboardEvent) {
+    getAriaLabel(item: IPickerItem) {
+        let label = item.displayName;
+        if (item.added) label += ', selected';
+        if (item.excluded) label += ', excluded';
+        if (this.hasChildren(item.id)) label += ', has sub-items';
+        return label;
+    }
+
+    // ── Keyboard navigation ────────────────────────────────────────────────
+
+    focusNextItem(e: Event) {
+        e.preventDefault();
+        if (!this.canViewResults) {
+            this.showResults();
+            this.chRef.detectChanges();
+            this.focusedIndex = 0;
+            this.focusListItem(0);
+            return;
+        }
+        const listLength = this.selectionsAreShowing ? this.getSelections().length : this.displayItems?.length;
+        if (listLength) {
+            const newIndex = Math.min(this.getActiveItemIndex() + 1, listLength - 1);
+            this.focusedIndex = newIndex;
+            this.focusListItem(newIndex);
+            this.chRef.markForCheck();
+        }
+    }
+
+    focusPrevItem(e: Event) {
+        e.preventDefault();
+        const listLength = this.selectionsAreShowing ? this.getSelections().length : this.displayItems?.length;
+        if (!listLength) { 
+            return; 
+        }
+        const currentIndex = this.getActiveItemIndex();
+        if (currentIndex <= 0) {
+            this.focusedIndex = -1;
+            this.inputEl.nativeElement.focus();
+            return;
+        }
+        const newIndex = currentIndex - 1;
+        this.focusedIndex = newIndex;
+        this.focusListItem(newIndex);
+        this.chRef.markForCheck();
+    }
+
+    onInputEnter(e: Event) {
+        if (!this.canViewResults) {
+            this.showResults();
+            this.chRef.detectChanges();
+            this.focusedIndex = 0;
+            this.focusListItem(0);
+            return;
+        }
+        if (this.focusedIndex >= 0 && this.displayItems?.[this.focusedIndex]) {
+            e.preventDefault();
+            this.toggleItemInclusion(this.displayItems[this.focusedIndex], e);
+        }
+    }
+
+    onListItemEscape(e: Event, index: number) {
+        const li = this._elementRef.nativeElement.querySelector(
+            `#${this.pickerId}-option-${this.displayItems[index].id}`
+        );
+        if (e.target === li) {
+            this.closeResults();
+        } else {
+            e.stopPropagation();
+            li?.focus();
+        }
+    }
+
+    private getActiveListbox(): Element | null {
+        const id = this.selectionsAreShowing
+            ? `${this.pickerId}-selections-listbox`
+            : `${this.pickerId}-listbox`;
+        return this._elementRef.nativeElement.querySelector(`#${id}`);
+    }
+
+    private focusListItem(index: number) {
+        const items = this.getActiveListbox()?.querySelectorAll(':scope > li') as NodeListOf<HTMLElement> | undefined;
+        items?.[index]?.focus();
+    }
+
+    private getActiveItemIndex(): number {
+        const listbox = this.getActiveListbox();
+        if (!listbox) { return this.focusedIndex; }
+        const items = Array.from(listbox.querySelectorAll(':scope > li')) as HTMLElement[];
+        const idx = items.findIndex(li => li === document.activeElement || li.contains(document.activeElement));
+        return idx >= 0 ? idx : this.focusedIndex;
+    }
+
+    onContainerFocusOut() {
+        // Defer the check so that programmatic focus changes (e.g. focusListItem)
+        // and DOM re-renders (which can fire focusout with relatedTarget=null when
+        // the focused element is destroyed) have all settled before we decide
+        // whether focus has genuinely left the component.
+        setTimeout(() => {
+            if (!this._elementRef.nativeElement.contains(document.activeElement)) {
+                this.closeResults(false);
+                this.blur.emit(this.inputEl);
+            }
+        });
+    }
+
+    // ── Misc ───────────────────────────────────────────────────────────────
+
+    preventBlur(e: Event) {
         // prevent blurring of the search input
         e.preventDefault();
     }
@@ -412,7 +413,6 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
 
     onFocus() {
         if (!this.isDisabled) {
-            this.showResults();
             this.focus.emit(this.inputEl);
         }
     }
@@ -421,7 +421,6 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
         if (!this.isDisabled) {
             this.parentId = this.initialParentId;
             this.canViewResults = true;
-
             this.setDisplayItemsFromParentId(this.parentId);
         }
     }
@@ -430,17 +429,50 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
         this.inputEl.nativeElement.blur();
     }
 
-    closeResults() {
+    closeResults(refocusInput: boolean = true) {
+        if (!this.canViewResults) { return; }
         this.canViewResults = false;
-        this.searchTerm.setValue('');
+        this.focusedIndex = -1;
+        this.searchTerm.setValue('', { emitEvent: false });
         this.closed.emit();
         this.chRef.detectChanges();
+        if (refocusInput) {
+            this.inputEl?.nativeElement.focus();
+        }
     }
 
-    onReset($event?: KeyboardEvent) {
+    onReset() {
         this.clearSearch.emit();
         this.searchTerm.setValue('');
         this.showResults();
+        this.inputEl.nativeElement.focus();
+    }
+
+    onChevronClick() {
+        this.showResults();
+        this.inputEl.nativeElement.focus();
+    }
+
+    onDrilldown(item: IPickerItem, e: Event) {
+        this.setDisplayItemsFromParentId(item.id);
+        this.desc.emit(item);
+        this.chRef.detectChanges();
+        this.focusedIndex = 0;
+        this.focusListItem(0);
+    }
+
+    onArrowLeft(e: Event) {
+        if (!this.parentId) { return; }
+        e.preventDefault();
+        e.stopPropagation();
+        const parentItem = this.getParentItem(this.parentId);
+        this.inputEl.nativeElement.focus();
+        this.setDisplayItemsFromParentId(parentItem.parentId);
+        this.asc.emit(parentItem);
+        this.chRef.detectChanges();
+        const idx = this.displayItems.findIndex(i => i.id === parentItem.id);
+        this.focusedIndex = idx >= 0 ? idx : 0;
+        this.focusListItem(this.focusedIndex);
     }
 
     getPlaceholderText() {
@@ -468,6 +500,10 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
             }
         }
         return;
+    }
+
+    private announce(text: string) {
+        this._liveAnnouncer.announce(text, 'polite');
     }
 
     ngOnDestroy() {
