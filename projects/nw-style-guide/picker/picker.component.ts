@@ -87,7 +87,10 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
     public focusedIndex: number = -1;
     private _subs: Subscription[] = [];
 
-    constructor(private _elementRef: ElementRef, private _liveAnnouncer: LiveAnnouncer) {
+    constructor(
+        private _elementRef: ElementRef,
+        private _liveAnnouncer: LiveAnnouncer
+    ) {
         this.pickerId = `nw-picker-${++NwPickerComponent._idCounter}`;
     }
 
@@ -353,8 +356,8 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
     focusPrevItem(e: Event) {
         e.preventDefault();
         const listLength = this.selectionsAreShowing ? this.getSelections().length : this.displayItems?.length;
-        if (!listLength) { 
-            return; 
+        if (!listLength) {
+            return;
         }
         const currentIndex = this.getActiveItemIndex();
         if (currentIndex <= 0) {
@@ -395,9 +398,7 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     private getActiveListbox(): Element | null {
-        const id = this.selectionsAreShowing
-            ? `${this.pickerId}-selections-listbox`
-            : `${this.pickerId}-listbox`;
+        const id = this.selectionsAreShowing ? `${this.pickerId}-selections-listbox` : `${this.pickerId}-listbox`;
         return this._elementRef.nativeElement.querySelector(`#${id}`);
     }
 
@@ -408,7 +409,9 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
 
     private getActiveItemIndex(): number {
         const listbox = this.getActiveListbox();
-        if (!listbox) { return this.focusedIndex; }
+        if (!listbox) {
+            return this.focusedIndex;
+        }
         const items = Array.from(listbox.querySelectorAll(':scope > li')) as HTMLElement[];
         const idx = items.findIndex(li => li === document.activeElement || li.contains(document.activeElement));
         return idx >= 0 ? idx : this.focusedIndex;
@@ -457,7 +460,9 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     closeResults(refocusInput: boolean = true) {
-        if (!this.canViewResults) { return; }
+        if (!this.canViewResults) {
+            return;
+        }
         this.canViewResults = false;
         this.focusedIndex = -1;
         this.searchTerm.setValue('', { emitEvent: false });
@@ -489,7 +494,9 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     onArrowLeft(e: Event) {
-        if (!this.parentId) { return; }
+        if (!this.parentId) {
+            return;
+        }
         e.preventDefault();
         e.stopPropagation();
         const parentItem = this.getParentItem(this.parentId);

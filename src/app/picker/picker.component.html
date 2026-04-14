@@ -4,29 +4,36 @@
     <div class="row">
         <div class="col-md-6 col-sm-12">
             <div>
-                <label style="margin-bottom: 8px; display: block;">Multi select picker with custom placeholder
-                    text</label>
-                <nw-angular-picker #picker
+                <label style="margin-bottom: 8px; display: block"
+                    >Multi select picker with custom placeholder text</label
+                >
+                <nw-angular-picker
+                    #picker
                     [items]="countries"
                     [placeholderText]="getCountryPlaceholder()"
                     inputPlaceholderText="Custom input placeholder text">
                     <div class="text-right results-footer">
-                        <button class="btn btn-primary"
+                        <button
+                            class="btn btn-primary"
                             (click)="picker.closeResults()"
                             tabindex="0"
-                            role="button">Done</button>
+                            role="button">
+                            Done
+                        </button>
                     </div>
                 </nw-angular-picker>
             </div>
         </div>
     </div>
 
-    <div class="row"
-        style="margin-top: 32px;">
+    <div
+        class="row"
+        style="margin-top: 32px">
         <div class="col-md-6 col-sm-12">
             <div>
-                <label style="margin-bottom: 8px; display: block;">Single select picker</label>
-                <nw-angular-picker #picker
+                <label style="margin-bottom: 8px; display: block">Single select picker</label>
+                <nw-angular-picker
+                    #picker
                     [items]="foods"
                     [placeholderText]="getFoodPlaceholder()"
                     [isMultiSelect]="false"

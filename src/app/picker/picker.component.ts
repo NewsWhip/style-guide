@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { IPickerItem, NwPickerComponent } from 'nw-style-guide/picker';
 
 @Component({
@@ -7,7 +7,7 @@ import { IPickerItem, NwPickerComponent } from 'nw-style-guide/picker';
     styleUrls: ['./picker.component.scss'],
     imports: [NwPickerComponent]
 })
-export class PickerComponent implements OnInit {
+export class PickerComponent {
     public countries: IPickerItem[] = [
         {
             id: 'regionCode-na',
@@ -1428,42 +1428,34 @@ export class PickerComponent implements OnInit {
     ];
 
     public foods: IPickerItem[] = [
-        { "id": "food-pizza", "parentId": null, "key": "food", "displayName": "Pizza", "value": "pizza", "added": false },
-        { "id": "food-sushi", "parentId": null, "key": "food", "displayName": "Sushi", "value": "sushi", "added": false },
-        { "id": "food-tacos", "parentId": null, "key": "food", "displayName": "Tacos", "value": "tacos", "added": false },
-        { "id": "food-pasta", "parentId": null, "key": "food", "displayName": "Pasta", "value": "pasta", "added": false },
-        { "id": "food-burger", "parentId": null, "key": "food", "displayName": "Burger", "value": "burger", "added": false },
-        { "id": "food-ramen", "parentId": null, "key": "food", "displayName": "Ramen", "value": "ramen", "added": false },
-        { "id": "food-salad", "parentId": null, "key": "food", "displayName": "Salad", "value": "salad", "added": false },
-        { "id": "food-curry", "parentId": null, "key": "food", "displayName": "Curry", "value": "curry", "added": false },
-        { "id": "food-steak", "parentId": null, "key": "food", "displayName": "Steak", "value": "steak", "added": false },
-        { "id": "food-falafel", "parentId": null, "key": "food", "displayName": "Falafel", "value": "falafel", "added": false }
-    ]
-
-    ngOnInit() {
-        console.log(this.countries)
-    }
+        { id: 'food-pizza', parentId: null, key: 'food', displayName: 'Pizza', value: 'pizza', added: false },
+        { id: 'food-sushi', parentId: null, key: 'food', displayName: 'Sushi', value: 'sushi', added: false },
+        { id: 'food-tacos', parentId: null, key: 'food', displayName: 'Tacos', value: 'tacos', added: false },
+        { id: 'food-pasta', parentId: null, key: 'food', displayName: 'Pasta', value: 'pasta', added: false },
+        { id: 'food-burger', parentId: null, key: 'food', displayName: 'Burger', value: 'burger', added: false },
+        { id: 'food-ramen', parentId: null, key: 'food', displayName: 'Ramen', value: 'ramen', added: false },
+        { id: 'food-salad', parentId: null, key: 'food', displayName: 'Salad', value: 'salad', added: false },
+        { id: 'food-curry', parentId: null, key: 'food', displayName: 'Curry', value: 'curry', added: false },
+        { id: 'food-steak', parentId: null, key: 'food', displayName: 'Steak', value: 'steak', added: false },
+        { id: 'food-falafel', parentId: null, key: 'food', displayName: 'Falafel', value: 'falafel', added: false }
+    ];
 
     getFoodPlaceholder(): string {
         return this.foods.find(f => f.added)?.displayName || '';
     }
 
     getCountryPlaceholder(): string {
-        const selections = this.countries
-            .filter(c => c.added || c.excluded);
+        const selections = this.countries.filter(c => c.added || c.excluded);
 
         const placeholder = selections
             .slice(0, 3)
             .map(c => {
-                return c.added ?
-                    c.displayName :
-                    `<span class="excluded">${c.displayName}</span>`
+                return c.added ? c.displayName : `<span class="excluded">${c.displayName}</span>`;
             })
             .join(', ');
 
-        const moreItems: string = selections.length > 3 ?
-            `<span class="more-items">&nbsp;+ ${selections.length - 3} more</span>` :
-            `<span>`;
+        const moreItems: string =
+            selections.length > 3 ? `<span class="more-items">&nbsp;+ ${selections.length - 3} more</span>` : `<span>`;
 
         return `
         <span class="custom-placeholder">

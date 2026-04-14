@@ -30,12 +30,12 @@ nw-angular-picker {
     .search-input {
         cursor: pointer;
 
-        &[aria-expanded="true"] {
+        &[aria-expanded='true'] {
             ~ .input-placeholder {
                 display: none;
             }
         }
-        &:not([aria-expanded="true"]) {
+        &:not([aria-expanded='true']) {
             @extend .btn-secondary;
 
             &::placeholder {
@@ -95,7 +95,8 @@ nw-angular-picker {
             font-style: italic;
         }
 
-        .search-result, .parent {
+        .search-result,
+        .parent {
             position: relative;
             padding-left: 8px;
             font-size: 14px;
@@ -104,7 +105,7 @@ nw-angular-picker {
 
             &:hover,
             &.keyboard-focused {
-                background: variables.get-color("coolgray", 5x-light);
+                background: variables.get-color('coolgray', 5x-light);
             }
 
             &.keyboard-focused {
@@ -144,7 +145,7 @@ nw-angular-picker {
             }
         }
         .picker-action {
-            color: variables.get-color("primary", base);
+            color: variables.get-color('primary', base);
             font-size: 13px;
         }
         @media (max-width: variables.$screen-sm) {
