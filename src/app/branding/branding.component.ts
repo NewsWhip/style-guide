@@ -6,8 +6,7 @@ import { Component } from '@angular/core';
     styleUrls: ['./branding.component.scss']
 })
 export class BrandingComponent {
-
-    public unsafeHeadTag: string =`
+    public unsafeHeadTag: string = `
 <meta name="theme-color" content="#383838">
 
 <link rel="shortcut icon" type="image/png" href="images/favicons/favicon.ico">
@@ -19,11 +18,10 @@ export class BrandingComponent {
     escapeHtml(unsafe: string) {
         return unsafe
             .trim()
-            .replace(/&/g, "&amp;")
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;")
-            .replace(/"/g, "&quot;")
-            .replace(/'/g, "&#039;");
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;');
     }
-
 }

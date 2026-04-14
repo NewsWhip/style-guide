@@ -1,10 +1,10 @@
-import { DebugElement, SimpleChange } from "@angular/core";
-import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { ResizeObserverDirective } from "../resize-observer/resize-observer.directive";
-import { IBoundingBox } from "./models/IBoundingBox";
-import { IWord } from "./models/IWord";
-import { IWordWithPosition } from "./models/IWordWithPosition";
-import { WordCloudComponent } from "./word-cloud.component";
+import { DebugElement, SimpleChange } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ResizeObserverDirective } from '../resize-observer/resize-observer.directive';
+import { IBoundingBox } from './models/IBoundingBox';
+import { IWord } from './models/IWord';
+import { IWordWithPosition } from './models/IWordWithPosition';
+import { WordCloudComponent } from './word-cloud.component';
 
 interface IMyWord extends IWord {
     id: number;
@@ -86,7 +86,7 @@ describe('WordCloudComponent', () => {
             comp['_positionedWords'] = [
                 { x: 20, y: 20, width: 10, height: 10 },
                 { x: 30, y: 30, width: 10, height: 10 },
-                { x: 40, y: 40, width: 10, height: 10 },
+                { x: 40, y: 40, width: 10, height: 10 }
             ] as IWordWithPosition<any>;
             const result = comp['_isIntersecting'](boundingBox);
             expect(result).toBe(false);
@@ -97,7 +97,7 @@ describe('WordCloudComponent', () => {
             comp['_positionedWords'] = [
                 { x: 0, y: 0, width: 10, height: 10 },
                 { x: 30, y: 30, width: 10, height: 10 },
-                { x: 10, y: 15, width: 10, height: 10 },
+                { x: 10, y: 15, width: 10, height: 10 }
             ] as IWordWithPosition<any>;
             const result = comp['_isIntersecting'](boundingBox);
             expect(result).toBe(true);
@@ -107,7 +107,7 @@ describe('WordCloudComponent', () => {
             const boundingBox: IBoundingBox = { x: 10, y: 10, width: 20, height: 20 };
             comp['_positionedWords'] = [
                 { x: 0, y: 0, width: 50, height: 50 },
-                { x: 30, y: 30, width: 10, height: 10 },
+                { x: 30, y: 30, width: 10, height: 10 }
             ] as IWordWithPosition<any>;
             const result = comp['_isIntersecting'](boundingBox);
             expect(result).toBe(true);
@@ -117,7 +117,7 @@ describe('WordCloudComponent', () => {
             const boundingBox: IBoundingBox = { x: 10, y: 10, width: 5, height: 5 };
             comp['_positionedWords'] = [
                 { x: 0, y: 0, width: 50, height: 50 },
-                { x: 30, y: 30, width: 10, height: 10 },
+                { x: 30, y: 30, width: 10, height: 10 }
             ] as IWordWithPosition<any>;
             const result = comp['_isIntersecting'](boundingBox);
             expect(result).toBe(true);
@@ -128,7 +128,7 @@ describe('WordCloudComponent', () => {
             comp['_positionedWords'] = [
                 { x: 0, y: 0, width: 50, height: 50 },
                 { x: 30, y: 30, width: 10, height: 10 },
-                { x: 5, y: 5, width: 20, height: 20 },
+                { x: 5, y: 5, width: 20, height: 20 }
             ] as IWordWithPosition<any>;
             const result = comp['_isIntersecting'](boundingBox);
             expect(result).toBe(true);
@@ -145,14 +145,14 @@ describe('WordCloudComponent', () => {
         });
 
         it('should not truncate words that do not exceed the max character count', () => {
-            const word = {...mockWord};
+            const word = { ...mockWord };
             const [result] = comp['_getTruncatedWordsWithFontSize']([word]);
             expect(result.truncatedValue).toEqual('my test string');
         });
 
         it('should truncate words that exceed the max character count', () => {
-            const word = {...mockWord};
-            word.value = "a string that exceeds the max character count";
+            const word = { ...mockWord };
+            word.value = 'a string that exceeds the max character count';
             const [result] = comp['_getTruncatedWordsWithFontSize']([word]);
             expect(result.truncatedValue).toEqual('a string that exceed...');
         });

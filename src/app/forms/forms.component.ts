@@ -8,7 +8,5 @@ import { FormsModule } from '@angular/forms';
     imports: [FormsModule]
 })
 export class FormsComponent {
-
-  public showErrors: boolean = false;
-
+    public showErrors: boolean = false;
 }

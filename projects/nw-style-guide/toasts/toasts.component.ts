@@ -1,27 +1,40 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, TemplateRef} from '@angular/core';
-import {animate, keyframes, style, transition, trigger} from '@angular/animations';
-import {IToast} from './IToast';
-import {Toast} from './Toast';
-import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, TemplateRef, inject } from '@angular/core';
+import { animate, keyframes, style, transition, trigger } from '@angular/animations';
+import { IToast } from './IToast';
+import { Toast } from './Toast';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { NgFor, NgClass, NgIf, NgTemplateOutlet } from '@angular/common';
 
 @Component({
     selector: 'nw-toasts',
     template: `
         <div class="toasts-container">
-            <div class="toast" *ngFor="let toast of toasts" [@slideInOut]
+            <div
+                class="toast"
+                *ngFor="let toast of toasts"
+                [@slideInOut]
                 [ngClass]="['toast-' + toast.typeId, 'size-' + toast.size]">
-                <i class="fas fa-check toast-icon" *ngIf="toast.typeId === 'success'"></i>
-                <i class="fas fa-exclamation toast-icon" *ngIf="toast.typeId === 'error'"></i>
+                <i
+                    class="fas fa-check toast-icon"
+                    *ngIf="toast.typeId === 'success'"></i>
+                <i
+                    class="fas fa-exclamation toast-icon"
+                    *ngIf="toast.typeId === 'error'"></i>
 
                 <!-- If templateRef render via ngTemplateOutlet-->
                 <ng-container *ngIf="isTemplateRef(toast.message)">
                     <ng-container *ngTemplateOutlet="toast.message"></ng-container>
                 </ng-container>
 
-                <p *ngIf="!isTemplateRef(toast.message)" class="toast-message" [innerHTML]="getInnerHTML(toast.message)"></p>
+                <p
+                    *ngIf="!isTemplateRef(toast.message)"
+                    class="toast-message"
+                    [innerHTML]="getInnerHTML(toast.message)"></p>
 
-                <button class="btn btn-md btn-ghost-alt btn-no-padding close-button" *ngIf="toast.isDismissable" (click)="dismiss(toast)">
+                <button
+                    class="btn btn-md btn-ghost-alt btn-no-padding close-button"
+                    *ngIf="toast.isDismissable"
+                    (click)="dismiss(toast)">
                     <i class="far fa-times"></i>
                 </button>
             </div>
@@ -30,18 +43,24 @@ import { NgFor, NgClass, NgIf, NgTemplateOutlet } from '@angular/common';
     animations: [
         trigger('slideInOut', [
             transition(':enter', [
-                animate('0.6s cubic-bezier(0.68, 0, 0.265, 1.75)', keyframes([
-                    style({ opacity: 0, transform: 'translate3d(0, -100px, 0)', offset: 0 }),
-                    style({ opacity: 1, transform: 'translate3d(0, -66px, 0)', offset: 0.33 }),
-                    style({ transform: 'translate3d(0, 0, 0)', offset: 1 })
-                ]))
+                animate(
+                    '0.6s cubic-bezier(0.68, 0, 0.265, 1.75)',
+                    keyframes([
+                        style({ opacity: 0, transform: 'translate3d(0, -100px, 0)', offset: 0 }),
+                        style({ opacity: 1, transform: 'translate3d(0, -66px, 0)', offset: 0.33 }),
+                        style({ transform: 'translate3d(0, 0, 0)', offset: 1 })
+                    ])
+                )
             ]),
             transition(':leave', [
-                animate('0.8s linear', keyframes([
-                    style({ opacity: 0, top: 0, transform: 'translate3d(0, -500px, 0)', offset: 0.8 }),
-                    // Give the element no apparent height to cause stacked items to animate to their new positions
-                    style({ height: 0, offset: 1 })
-                ]))
+                animate(
+                    '0.8s linear',
+                    keyframes([
+                        style({ opacity: 0, top: 0, transform: 'translate3d(0, -500px, 0)', offset: 0.8 }),
+                        // Give the element no apparent height to cause stacked items to animate to their new positions
+                        style({ height: 0, offset: 1 })
+                    ])
+                )
             ])
         ])
     ],
@@ -49,12 +68,10 @@ import { NgFor, NgClass, NgIf, NgTemplateOutlet } from '@angular/common';
     imports: [NgFor, NgClass, NgIf, NgTemplateOutlet]
 })
 export class ToastsComponent {
+    private _cdRef = inject(ChangeDetectorRef);
+    private _domSanitizer = inject(DomSanitizer);
 
     public toasts: Toast[] = [];
-
-    constructor(
-        private _cdRef: ChangeDetectorRef,
-        private _domSanitizer: DomSanitizer) { }
 
     isTemplateRef(value: string | TemplateRef<any>): boolean {
         return typeof value !== 'string';
@@ -112,5 +129,4 @@ export class ToastsComponent {
     getToastIndex(toast: Toast): number {
         return this.toasts.indexOf(toast);
     }
-
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgClass } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
@@ -10,16 +10,15 @@ import { RouterLink } from '@angular/router';
     imports: [FormsModule, ReactiveFormsModule, NgClass, RouterLink]
 })
 export class TypographyComponent implements OnInit {
+    public textColor: FormControl = new FormControl('light');
+    public exampleText: string = 'The quick brown fox jumps over the lazy dog';
+    public randomLink: string = '';
 
-  public textColor: FormControl = new FormControl('light');
-  public exampleText: string = 'The quick brown fox jumps over the lazy dog';
-  public randomLink: string ='';
+    ngOnInit() {
+        this.randomLink = `https://www.google.ie/search?q=${Math.random() * (1000 - 99) + 99}`;
+    }
 
-  ngOnInit() {
-    this.randomLink = `https://www.google.ie/search?q=${Math.random() * (1000 - 99) + 99}`;
-  }
-
-  get colorVariant(): string {
-    return this.textColor.value === 'light' ? '' : `nw-text-${this.textColor.value}`;
-  }
+    get colorVariant(): string {
+        return this.textColor.value === 'light' ? '' : `nw-text-${this.textColor.value}`;
+    }
 }

@@ -5,11 +5,15 @@
 // Typography
 // --------------------------------------------------
 
-
 // Headings
 // -------------------------
 
-.h1, .h2, .h3, .h4, .h5, .h6 {
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
     font-family: variables.$headings-font-family;
     font-weight: variables.$headings-font-weight;
     line-height: variables.$headings-line-height;
@@ -47,7 +51,6 @@
 .h6 {
     font-size: variables.$font-size-h6;
 }
-
 
 // Body text
 // -------------------------
@@ -102,7 +105,8 @@ small,
     text-transform: lowercase;
 }
 
-.text-uppercase, .text-upper {
+.text-uppercase,
+.text-upper {
     text-transform: uppercase;
 }
 
@@ -130,7 +134,7 @@ small,
 
 @include te.text-emphasis-variant('.text-yellow', variables.$yellow);
 
-@include te.text-emphasis-variant('.text-verified', #1CCAFD); // Twitter color
+@include te.text-emphasis-variant('.text-verified', #1ccafd); // Twitter color
 
 // Page header
 // -------------------------
@@ -139,7 +143,6 @@ small,
     padding: 32px 0 16px 0;
     margin-bottom: 32px;
 }
-
 
 // Lists
 // -------------------------
@@ -169,7 +172,6 @@ ol {
     @include list-unstyled;
 }
 
-
 // Inline turns list items into inline-block
 .list-inline {
     @include list-unstyled;
@@ -181,7 +183,6 @@ ol {
         padding-right: 5px;
     }
 }
-
 
 // Misc
 // -------------------------
@@ -241,7 +242,7 @@ blockquote {
 }
 
 // Custom interactive text styling
-[class*="nw-link-"] {
+[class*='nw-link-'] {
     text-decoration: none;
     &:hover,
     &:hover:visited,
@@ -265,7 +266,7 @@ blockquote {
 }
 
 .nw-link-tertiary {
-    color: variables.get-color("primary", x-light);
+    color: variables.get-color('primary', x-light);
 
     &:hover {
         text-decoration: underline;
@@ -282,5 +283,5 @@ blockquote {
 }
 
 .nw-text-dark {
-    color: variables.get-color("gray");
+    color: variables.get-color('gray');
 }

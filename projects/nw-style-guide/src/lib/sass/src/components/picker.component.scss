@@ -1,13 +1,13 @@
-@use "../variables";
-@use "../mixins/border-radius" as br;
-@use "../mixins/scrollbars";
-@use "../buttons";
+@use '../variables';
+@use '../mixins/border-radius' as br;
+@use '../mixins/scrollbars';
+@use '../buttons';
 
 nw-angular-picker {
     @include scrollbars.scrollbars();
 
-    .disabled  {
-        opacity: .50;
+    .disabled {
+        opacity: 0.5;
     }
 
     .nw-picker {
@@ -42,7 +42,8 @@ nw-angular-picker {
                 color: transparent;
             }
         }
-        ~ .dropdown-icon, ~ .reset-icon {
+        ~ .dropdown-icon,
+        ~ .reset-icon {
             position: absolute;
             right: 10px;
             font-size: 24px;
@@ -52,7 +53,7 @@ nw-angular-picker {
             cursor: pointer;
         }
         ~ .reset-icon {
-            color: variables.get-color("gray");
+            color: variables.get-color('gray');
             right: 5px;
         }
     }
@@ -70,7 +71,7 @@ nw-angular-picker {
         justify-content: space-between;
         padding: 0 8px;
         line-height: 32px;
-        color: variables.get-color("gray");
+        color: variables.get-color('gray');
         border-bottom: 1px solid variables.$divider-color-primary;
     }
     .search-results {
@@ -98,7 +99,7 @@ nw-angular-picker {
             position: relative;
             padding-left: 8px;
             font-size: 14px;
-            color: variables.get-color("gray");
+            color: variables.get-color('gray');
             cursor: pointer;
 
             &:hover,
@@ -117,7 +118,7 @@ nw-angular-picker {
                 flex: 1;
             }
             .btn-ghost:not(:hover) {
-                color: variables.get-color("gray");
+                color: variables.get-color('gray');
             }
             .result-item {
                 display: flex;
@@ -175,13 +176,6 @@ nw-angular-picker {
         .results-footer {
             padding: 8px;
             border-top: 1px solid variables.$divider-color-primary;
-
-            button {
-                &:focus-visible {
-                    outline: 2px solid red;
-                    outline-offset: -2px;
-                }
-            }
         }
     }
 }

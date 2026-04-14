@@ -2,10 +2,10 @@
 
 // List of sizes to generate for each
 $sizes: 0, 2, 4, 8, 16, 24, auto;
-$directions : (
+$directions: (
     t: top,
     b: bottom,
-    l: left, 
+    l: left,
     r: right
 );
 
@@ -13,15 +13,14 @@ $directions : (
     $class: null;
     $unit: null;
     @for $i from 1 through list.length($sizes) {
-
         $size: list.nth($sizes, $i);
-        
+
         @if $size == auto {
-            $class : #{$prefix}-auto;
-            $unit : auto;
+            $class: #{$prefix}-auto;
+            $unit: auto;
         } @else {
-            $class : #{$prefix}-#{$size};
-            $unit : #{$size}px;
+            $class: #{$prefix}-#{$size};
+            $unit: #{$size}px;
         }
 
         .#{$class} {
@@ -30,7 +29,7 @@ $directions : (
     }
 }
 
-@mixin generateBiDirection($prefix, $property){
+@mixin generateBiDirection($prefix, $property) {
     @for $i from 1 through list.length($sizes) {
         $size: list.nth($sizes, $i);
 
@@ -43,7 +42,7 @@ $directions : (
                 #{$property}-top: auto !important;
                 #{$property}-bottom: auto !important;
             }
-        } @else{   
+        } @else {
             .#{$prefix}x-#{$size} {
                 #{$property}-left: #{$size}px !important;
                 #{$property}-right: #{$size}px !important;
@@ -57,7 +56,7 @@ $directions : (
 }
 
 // Create basic classes for each direction - ml-2, ml-8, mr-auto, mb-16 etc
-@each $key,$val in $directions {
+@each $key, $val in $directions {
     @include generateWithDirection(m#{$key}, margin-#{$val});
     @include generateWithDirection(p#{$key}, padding-#{$val});
 }
@@ -69,5 +68,3 @@ $directions : (
 // Create bidirectional classes - mx-2, mx-auto, py-8 etc
 @include generateBiDirection(p, padding);
 @include generateBiDirection(m, margin);
-
-

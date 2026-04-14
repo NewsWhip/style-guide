@@ -1,4 +1,4 @@
-@use "../variables";
+@use '../variables';
 
 nw-loader {
     $base-dot-size: 8px;
@@ -7,14 +7,18 @@ nw-loader {
         $maxDots: 9;
 
         @keyframes moveUpAndDown {
-            0% { transform: translateY(0px) }
-            100% { transform: translateY(2em) }
+            0% {
+                transform: translateY(0px);
+            }
+            100% {
+                transform: translateY(2em);
+            }
         }
 
         @for $i from 1 through $maxDots {
             // Add a negative 1 second offset delay so that the
             // animation appears to already be running when instantiated
-            $animDelay: -1s + ($i * .2s);
+            $animDelay: -1s + ($i * 0.2s);
 
             &.dot-#{$i} {
                 animation: moveUpAndDown $animTime $animDelay ease-in-out alternate infinite;
@@ -46,17 +50,17 @@ nw-loader {
             transform: translateY(-2em);
         }
         .dot {
-            background-color: variables.get-color("gray", 3x-light);
+            background-color: variables.get-color('gray', 3x-light);
             width: 1em;
             height: 1em;
             border-radius: 0.5em;
             margin-right: 1em;
 
-            @include get-dots-animations(.5s);
+            @include get-dots-animations(0.5s);
         }
         &.loader-color {
             .dot {
-                background-color: variables.get-color("primary");
+                background-color: variables.get-color('primary');
             }
         }
         &.loader-sm {

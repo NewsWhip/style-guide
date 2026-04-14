@@ -1,4 +1,18 @@
-import { Component, Input, Output, ChangeDetectorRef, ChangeDetectionStrategy, EventEmitter, ViewChild, ElementRef, OnInit, OnDestroy, SimpleChanges, OnChanges } from '@angular/core';
+import {
+    Component,
+    Input,
+    Output,
+    ChangeDetectorRef,
+    ChangeDetectionStrategy,
+    EventEmitter,
+    ViewChild,
+    ElementRef,
+    OnInit,
+    OnDestroy,
+    SimpleChanges,
+    OnChanges,
+    inject
+} from '@angular/core';
 import { trigger, transition, animate, style } from '@angular/animations';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { IPickerItem } from './IPickerItem';
@@ -17,15 +31,13 @@ import { LiveAnnouncer } from '@angular/cdk/a11y';
                 style({ top: '100%', transform: 'scale(0)' }),
                 animate(200, style({ top: 0, transform: 'scale(1)' }))
             ]),
-            transition('in => void', [
-                animate(200, style({ top: '100%', transform: 'scale(0)' }))
-            ])
+            transition('in => void', [animate(200, style({ top: '100%', transform: 'scale(0)' }))])
         ])
     ],
     imports: [ReactiveFormsModule, NgClass]
 })
-
 export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
+    chRef = inject(ChangeDetectorRef);
 
     private static _idCounter = 0;
     public readonly pickerId: string;
@@ -45,8 +57,14 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
     @Input() isChevronHidden: boolean = false;
 
     @Output() selections: EventEmitter<IPickerItem[]> = new EventEmitter<IPickerItem[]>();
-    @Output() toggleInclude: EventEmitter<{ item: IPickerItem; searchTerm: string }> = new EventEmitter<{ item: IPickerItem; searchTerm: string }>();
-    @Output() toggleExclude: EventEmitter<{ item: IPickerItem; searchTerm: string }> = new EventEmitter<{ item: IPickerItem; searchTerm: string }>();
+    @Output() toggleInclude: EventEmitter<{ item: IPickerItem; searchTerm: string }> = new EventEmitter<{
+        item: IPickerItem;
+        searchTerm: string;
+    }>();
+    @Output() toggleExclude: EventEmitter<{ item: IPickerItem; searchTerm: string }> = new EventEmitter<{
+        item: IPickerItem;
+        searchTerm: string;
+    }>();
     @Output() edit: EventEmitter<any> = new EventEmitter<any>();
     @Output() closed: EventEmitter<any> = new EventEmitter<any>();
     // eslint-disable-next-line @angular-eslint/no-output-native
@@ -69,7 +87,7 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
     public focusedIndex: number = -1;
     private _subs: Subscription[] = [];
 
-    constructor(public chRef: ChangeDetectorRef, private _elementRef: ElementRef, private _liveAnnouncer: LiveAnnouncer) {
+    constructor(private _elementRef: ElementRef, private _liveAnnouncer: LiveAnnouncer) {
         this.pickerId = `nw-picker-${++NwPickerComponent._idCounter}`;
     }
 
@@ -99,12 +117,17 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
 
             if (val.length) {
                 const displayItems = this.items.filter(item => {
-                    return (item.searchValues || []).some(value => {
-                        return value.toLowerCase().includes(val.toLowerCase());
-                    }) || item.displayName.toLowerCase().includes(val.toLowerCase());
+                    return (
+                        (item.searchValues || []).some(value => {
+                            return value.toLowerCase().includes(val.toLowerCase());
+                        }) || item.displayName.toLowerCase().includes(val.toLowerCase())
+                    );
                 });
                 // remove duplicate items
-                this.displayItems = displayItems.reduce((items, item) => items.find(x => x.id === item.id) ? [...items] : [...items, item], []);
+                this.displayItems = displayItems.reduce(
+                    (items, item) => (items.find(x => x.id === item.id) ? [...items] : [...items, item]),
+                    []
+                );
             } else {
                 this.setDisplayItemsFromParentId(this.parentId);
             }
@@ -268,31 +291,35 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     toggleDescendants(item: IPickerItem, add?: boolean, exclude?: boolean) {
-        this.items.filter(ci => ci.parentId === item.id).forEach(ci => {
-            if (!isUndefined(add)) {
-                ci.added = add;
-            }
+        this.items
+            .filter(ci => ci.parentId === item.id)
+            .forEach(ci => {
+                if (!isUndefined(add)) {
+                    ci.added = add;
+                }
 
-            if (!isUndefined(exclude)) {
-                ci.excluded = exclude;
-            }
+                if (!isUndefined(exclude)) {
+                    ci.excluded = exclude;
+                }
 
-            this.toggleDescendants(ci, add, exclude);
-        });
+                this.toggleDescendants(ci, add, exclude);
+            });
     }
 
     toggleAncestors(item: IPickerItem, add?: boolean, exclude?: boolean) {
-        this.items.filter(ci => ci.id === item.parentId).forEach(ci => {
-            if (!isUndefined(add)) {
-                ci.added = add;
-            }
+        this.items
+            .filter(ci => ci.id === item.parentId)
+            .forEach(ci => {
+                if (!isUndefined(add)) {
+                    ci.added = add;
+                }
 
-            if (!isUndefined(exclude)) {
-                ci.excluded = exclude;
-            }
+                if (!isUndefined(exclude)) {
+                    ci.excluded = exclude;
+                }
 
-            this.toggleAncestors(ci, add, exclude);
-        });
+                this.toggleAncestors(ci, add, exclude);
+            });
     }
 
     getAriaLabel(item: IPickerItem) {
@@ -476,9 +503,7 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     getPlaceholderText() {
-        return this.getSelections().length ?
-            this.placeholderText :
-            this.noSelectionsPlaceholderText;
+        return this.getSelections().length ? this.placeholderText : this.noSelectionsPlaceholderText;
     }
 
     getMaxHeight(el: HTMLElement) {
@@ -509,5 +534,4 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
     ngOnDestroy() {
         this._subs.forEach(sub => sub.unsubscribe());
     }
-
 }

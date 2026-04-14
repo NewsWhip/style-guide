@@ -1,0 +1,11 @@
+# Ignore artifacts:
+.angular
+.claude
+.idea
+.vscode
+dist
+lib-dist
+node_modules
+vendor-packages
+CLAUDE.md
+package-lock.json

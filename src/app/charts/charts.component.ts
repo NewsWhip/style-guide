@@ -1,4 +1,4 @@
-import {Component, OnInit, ChangeDetectionStrategy, ViewChild, ViewChildren, QueryList} from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ViewChild, ViewChildren, QueryList, inject } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import moment from 'moment';
 import { DecimalPipe, NgIf, NgFor, DatePipe } from '@angular/common';
@@ -16,86 +16,98 @@ import { TooltipDirective } from 'nw-style-guide/tooltips';
     styleUrls: ['./charts.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [DecimalPipe],
-    imports: [TABS_DIRECTIVES, NgIf, FormsModule, ReactiveFormsModule, NgFor, CHARTS_DIRECTIVES, TooltipDirective, DecimalPipe, DatePipe]
+    imports: [
+        TABS_DIRECTIVES,
+        NgIf,
+        FormsModule,
+        ReactiveFormsModule,
+        NgFor,
+        CHARTS_DIRECTIVES,
+        TooltipDirective,
+        DecimalPipe,
+        DatePipe
+    ]
 })
 export class ChartsComponent implements OnInit {
+    private _fb = inject(FormBuilder);
+    private _decimalPipe = inject(DecimalPipe);
 
-    public selectedTab: string = "demo";
+    public selectedTab: string = 'demo';
 
     private _timelineData = {
-        "fbComments": {
-            "1545085287756": 0,
-            "1545085587748": 0,
-            "1545085887881": 0,
-            "1545086187810": 0,
-            "1545086487824": 0,
-            "1545086787850": 0,
-            "1545087088176": 157,
-            "1545087387868": 418,
-            "1545087687762": 612,
-            "1545087988068": 803,
-            "1545088467902": 1059,
-            "1545089487690": 1641,
-            "1545090387958": 2067,
-            "1545091287918": 2399,
-            "1545092187876": 2654,
-            "1545093987782": 3734,
-            "1545094887685": 3959,
-            "1545095667793": 4130,
-            "1545097587695": 4549,
-            "1545099387868": 4885,
-            "1545105387773": 5707,
-            "1545111387844": 6100,
-            "1545120987862": 6487
+        fbComments: {
+            '1545085287756': 0,
+            '1545085587748': 0,
+            '1545085887881': 0,
+            '1545086187810': 0,
+            '1545086487824': 0,
+            '1545086787850': 0,
+            '1545087088176': 157,
+            '1545087387868': 418,
+            '1545087687762': 612,
+            '1545087988068': 803,
+            '1545088467902': 1059,
+            '1545089487690': 1641,
+            '1545090387958': 2067,
+            '1545091287918': 2399,
+            '1545092187876': 2654,
+            '1545093987782': 3734,
+            '1545094887685': 3959,
+            '1545095667793': 4130,
+            '1545097587695': 4549,
+            '1545099387868': 4885,
+            '1545105387773': 5707,
+            '1545111387844': 6100,
+            '1545120987862': 6487
         },
-        "twShares": {
-            "1545085122428": 0,
-            "1545085439969": 0,
-            "1545085979977": 5,
-            "1545086290769": 6,
-            "1545086741856": 6,
-            "1545087521852": 155,
-            "1545088302372": 300,
-            "1545089082941": 439,
-            "1545090043470": 569,
-            "1545091244208": 773,
-            "1545092684818": 843,
-            "1545094126864": 1007,
-            "1545095807739": 1134,
-            "1545097729060": 1259,
-            "1545099950618": 1333,
-            "1545102473618": 1629,
-            "1545105294554": 2773,
-            "1545108114705": 2974,
-            "1545111416106": 3572,
-            "1545115196656": 3709,
-            "1545119579490": 3851,
-            "1545124562507": 3880
+        twShares: {
+            '1545085122428': 0,
+            '1545085439969': 0,
+            '1545085979977': 5,
+            '1545086290769': 6,
+            '1545086741856': 6,
+            '1545087521852': 155,
+            '1545088302372': 300,
+            '1545089082941': 439,
+            '1545090043470': 569,
+            '1545091244208': 773,
+            '1545092684818': 843,
+            '1545094126864': 1007,
+            '1545095807739': 1134,
+            '1545097729060': 1259,
+            '1545099950618': 1333,
+            '1545102473618': 1629,
+            '1545105294554': 2773,
+            '1545108114705': 2974,
+            '1545111416106': 3572,
+            '1545115196656': 3709,
+            '1545119579490': 3851,
+            '1545124562507': 3880
         },
-        "fbTotalEngagement": {
-            "1545085287756": 0,
-            "1545085587748": 0,
-            "1545085887881": 0,
-            "1545086187810": 0,
-            "1545086487824": 0,
-            "1545086787850": 13,
-            "1545087088176": 1751,
-            "1545087387868": 4398,
-            "1545087687762": 6506,
-            "1545087988068": 8524,
-            "1545088467902": 11472,
-            "1545089487690": 17211,
-            "1545090387958": 21563,
-            "1545091287918": 24906,
-            "1545092187876": 27788,
-            "1545093987782": 39378,
-            "1545094887685": 41586,
-            "1545095667793": 43323,
-            "1545097587695": 47307,
-            "1545099387868": 50314,
-            "1545105387773": 58536,
-            "1545111387844": 62550,
-            "1545120987862": 65198
+        fbTotalEngagement: {
+            '1545085287756': 0,
+            '1545085587748': 0,
+            '1545085887881': 0,
+            '1545086187810': 0,
+            '1545086487824': 0,
+            '1545086787850': 13,
+            '1545087088176': 1751,
+            '1545087387868': 4398,
+            '1545087687762': 6506,
+            '1545087988068': 8524,
+            '1545088467902': 11472,
+            '1545089487690': 17211,
+            '1545090387958': 21563,
+            '1545091287918': 24906,
+            '1545092187876': 27788,
+            '1545093987782': 39378,
+            '1545094887685': 41586,
+            '1545095667793': 43323,
+            '1545097587695': 47307,
+            '1545099387868': 50314,
+            '1545105387773': 58536,
+            '1545111387844': 62550,
+            '1545120987862': 65198
         }
     };
 
@@ -106,7 +118,7 @@ export class ChartsComponent implements OnInit {
     public yAxisTickFormat = (d: number) => this._decimalPipe.transform(d, '1.0-0');
 
     public isHovering: boolean = false;
-    public hoverPosition: [number, number] = [0,0];
+    public hoverPosition: [number, number] = [0, 0];
     public mainScaleHoverCoordinates: [Date, number];
     public randomScaleHoverCoordinates: [Date, number];
     public numRandomPoints: number = 10;
@@ -114,14 +126,14 @@ export class ChartsComponent implements OnInit {
     public randomYDomain: [number, number];
     public randomAsBars: FormControl = new FormControl(false);
     public randomArea: FormControl = new FormControl(false);
-    public randomLineCurve = {label: 'Linear', curve: curveLinear};
+    public randomLineCurve = { label: 'Linear', curve: curveLinear };
     public randomLineCurvesOptions = [
-        {label: 'Linear', curve: curveLinear},
-        {label: 'Basis', curve: curveBasis},
-        {label: 'Cardinal', curve: curveCardinal},
-        {label: 'Step', curve: curveStep},
-        {label: 'Step before', curve: curveStepBefore},
-        {label: 'Step after', curve: curveStepAfter}
+        { label: 'Linear', curve: curveLinear },
+        { label: 'Basis', curve: curveBasis },
+        { label: 'Cardinal', curve: curveCardinal },
+        { label: 'Step', curve: curveStep },
+        { label: 'Step before', curve: curveStepBefore },
+        { label: 'Step after', curve: curveStepAfter }
     ];
 
     public metricNames: string[] = [];
@@ -138,25 +150,18 @@ export class ChartsComponent implements OnInit {
     @ViewChild('yAxis') yAxis: YAxisDirective;
     @ViewChildren('circle') fbCircles: QueryList<CircleDirective>;
 
-    constructor(
-        private _fb: FormBuilder,
-        private _decimalPipe: DecimalPipe) { }
-
     ngOnInit() {
         this.metricNames = this.getMetricNames();
         this.createForm();
 
-        this.generateRandomData()
+        this.generateRandomData();
 
         this.subscribeToFormChange();
     }
 
     createForm() {
         this.form = this._fb.group({
-            selectedMetrics: new FormArray(
-                this.metricNames
-                    .map(mn => new FormControl(true))
-            )
+            selectedMetrics: new FormArray(this.metricNames.map(mn => new FormControl(true)))
         });
     }
 
@@ -210,7 +215,7 @@ export class ChartsComponent implements OnInit {
         for (const timestamp in this._timelineData[metric]) {
             if (Object.hasOwn(this._timelineData[metric], timestamp)) {
                 const value = this._timelineData[metric][timestamp];
-                data.push([timestamp, value])
+                data.push([timestamp, value]);
             }
         }
 
@@ -218,7 +223,7 @@ export class ChartsComponent implements OnInit {
     }
 
     onPathAnimationEnd(metric: string) {
-        console.log(`${metric} animation ended`)
+        console.log(`${metric} animation ended`);
     }
 
     circleTrackValue(index: number, item: [number, number]) {
@@ -246,7 +251,7 @@ export class ChartsComponent implements OnInit {
         const bisectDate = bisector(d => d[0]).left;
         const i = bisectDate(data, coordinates[0]); // returns the index to the current data item
 
-        const d0 = data[i - 1]
+        const d0 = data[i - 1];
         const d1 = data[i];
         // work out which date value is closest to the mouse
         const d = +coordinates[0] - d0[0] > d1[0] - +coordinates[0] ? d1 : d0;
@@ -254,33 +259,34 @@ export class ChartsComponent implements OnInit {
         const x = this.xAxis.scale(d[0]);
         const y = this.yAxis.scale(d[1]);
 
-        console.log('Closest point', x, y)
+        console.log('Closest point', x, y);
     }
 
-    positionToCoordinates(xDomain: [number, number], yDomain: [number, number], position: [number, number]): [Date, number] {
+    positionToCoordinates(
+        xDomain: [number, number],
+        yDomain: [number, number],
+        position: [number, number]
+    ): [Date, number] {
         return [
             (this.xAxis.scale as ScaleTime<number, number>).domain(xDomain).invert(position[0]),
             this.yAxis.scale.domain(yDomain).invert(position[1])
-        ]
+        ];
     }
 
     generateRandomData(): void {
-        const xDomain: [number, number] = [1545085287756, 1545085287756 + (1000*60*60*24*0.5)];
+        const xDomain: [number, number] = [1545085287756, 1545085287756 + 1000 * 60 * 60 * 24 * 0.5];
         const yDomain: [number, number] = [0, 500];
         const datapoints: [number, number][] = [];
 
         for (let index = 0; index < this.numRandomPoints; index++) {
-            datapoints.push([this._randomInDomain(xDomain), this._randomInDomain(yDomain)])
+            datapoints.push([this._randomInDomain(xDomain), this._randomInDomain(yDomain)]);
         }
         this.randomData = datapoints.sort();
-        this.randomYDomain = [
-            0,
-            Math.max(...this.randomData.map(x => x[1])),
-        ];
+        this.randomYDomain = [0, Math.max(...this.randomData.map(x => x[1]))];
 
         this.randomData.forEach(rd => {
             rd[2] = rd[1] * 0.5;
-        })
+        });
 
         this.setActiveDomains();
     }
@@ -290,12 +296,9 @@ export class ChartsComponent implements OnInit {
 
         const maxTime = Math.max(...this.randomData.map(rd => rd[0]));
 
-        this.randomData.push([maxTime + 1000*60*60*2, this._randomInDomain([0, 900])]);
+        this.randomData.push([maxTime + 1000 * 60 * 60 * 2, this._randomInDomain([0, 900])]);
 
-        this.randomYDomain = [
-            0,
-            Math.max(...this.randomData.map(x => x[1]))
-        ];
+        this.randomYDomain = [0, Math.max(...this.randomData.map(x => x[1]))];
 
         this.setActiveDomains();
     }
@@ -311,12 +314,12 @@ export class ChartsComponent implements OnInit {
 
     onBrushSelection(corners: [[number, number], [number, number]]) {
         if (!corners) {
-            return this.brushBox = null;
+            return (this.brushBox = null);
         }
         this.brushBox = [
             this.positionToCoordinates(this.xDomain, this.yDomain, corners[0]),
-            this.positionToCoordinates(this.xDomain, this.yDomain, corners[1]),
-        ]
+            this.positionToCoordinates(this.xDomain, this.yDomain, corners[1])
+        ];
         console.log(this.brushBox);
     }
 
@@ -325,11 +328,10 @@ export class ChartsComponent implements OnInit {
     }
 
     onBgClick() {
-        console.info('Background click')
+        console.info('Background click');
     }
 
     log(msg: string) {
         console.log(msg);
     }
-
 }

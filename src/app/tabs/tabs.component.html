@@ -5,43 +5,93 @@
 
     <div>
         <ul class="nav nav-pills">
-            <li role="presentation" class="active"><a href="#">Tab 1 active</a></li>
+            <li
+                role="presentation"
+                class="active">
+                <a href="#">Tab 1 active</a>
+            </li>
             <li role="presentation"><a href="#">Tab2</a></li>
             <li role="presentation"><a href="#">Tab 3</a></li>
-            <li role="presentation" class="disabled"><a>Tab 4 disabled</a></li>
+            <li
+                role="presentation"
+                class="disabled">
+                <a>Tab 4 disabled</a>
+            </li>
         </ul>
     </div>
 
     <h3>Nav Tabs</h3>
 
-    <button class="btn btn-md btn-primary" (click)="addTab()">Add Tab</button>
-    <button class="btn btn-md btn-secondary" (click)="removeLastTab()">Remove last tab</button>
+    <button
+        class="btn btn-md btn-primary"
+        (click)="addTab()">
+        Add Tab
+    </button>
+    <button
+        class="btn btn-md btn-secondary"
+        (click)="removeLastTab()">
+        Remove last tab
+    </button>
 
     <h4>Small</h4>
     <nw-tabs size="sm">
-        <li *ngFor="let tab of tabCollection" nwTab [isActive]="tab.isActive" (click)="setSelectedTab(tab)" role="presentation">
-            <a href="javascript:;" [attr.aria-controls]="tab.name" role="tab">{{tab.name}}</a>
+        <li
+            *ngFor="let tab of tabCollection"
+            nwTab
+            [isActive]="tab.isActive"
+            (click)="setSelectedTab(tab)"
+            role="presentation">
+            <a
+                href="javascript:;"
+                [attr.aria-controls]="tab.name"
+                role="tab"
+                >{{ tab.name }}</a
+            >
         </li>
     </nw-tabs>
 
     <h4>Medium / default</h4>
     <nw-tabs size="md">
-        <li *ngFor="let tab of tabCollection" nwTab [isActive]="tab.isActive" (click)="setSelectedTab(tab)" role="presentation">
-            <a href="javascript:;" [attr.aria-controls]="tab.name" role="tab">{{tab.name}}</a>
+        <li
+            *ngFor="let tab of tabCollection"
+            nwTab
+            [isActive]="tab.isActive"
+            (click)="setSelectedTab(tab)"
+            role="presentation">
+            <a
+                href="javascript:;"
+                [attr.aria-controls]="tab.name"
+                role="tab"
+                >{{ tab.name }}</a
+            >
         </li>
     </nw-tabs>
 
     <h4>Large</h4>
     <nw-tabs size="lg">
-        <li *ngFor="let tab of tabCollection" nwTab [isActive]="tab.isActive" (click)="setSelectedTab(tab)" role="presentation">
-            <a href="javascript:;" [attr.aria-controls]="tab.name" role="tab">{{tab.name}}</a>
+        <li
+            *ngFor="let tab of tabCollection"
+            nwTab
+            [isActive]="tab.isActive"
+            (click)="setSelectedTab(tab)"
+            role="presentation">
+            <a
+                href="javascript:;"
+                [attr.aria-controls]="tab.name"
+                role="tab"
+                >{{ tab.name }}</a
+            >
         </li>
     </nw-tabs>
 
     <h4>Buttons</h4>
     <nw-tabs size="lg">
-        <li *ngFor="let tab of tabCollection" nwTab [isActive]="tab.isActive" role="presentation">
-            <button (click)="setSelectedTab(tab)">{{tab.name}}</button>
+        <li
+            *ngFor="let tab of tabCollection"
+            nwTab
+            [isActive]="tab.isActive"
+            role="presentation">
+            <button (click)="setSelectedTab(tab)">{{ tab.name }}</button>
         </li>
     </nw-tabs>
 </div>

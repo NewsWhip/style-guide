@@ -9,7 +9,5 @@ import { NgFor } from '@angular/common';
     imports: [FormsModule, NgFor]
 })
 export class TablesComponent {
-
     public isTall: boolean = false;
-
 }

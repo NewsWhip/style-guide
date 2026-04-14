@@ -1,17 +1,22 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
-import { trigger, transition, style, animate } from "@angular/animations";
+import { trigger, transition, style, animate } from '@angular/animations';
 import { NgIf, NgClass, NgFor } from '@angular/common';
 
 @Component({
     selector: 'nw-loader',
     template: `
-        <div *ngIf="isLoading" class="loader" [@delayAndFadeIn]="animParams"
+        <div
+            *ngIf="isLoading"
+            class="loader"
+            [@delayAndFadeIn]="animParams"
             [ngClass]="sizeClass"
             [class.loader-inline]="isInline"
             [class.loader-color]="isColor">
             <div class="dots-icon-wrapper">
                 <div class="dots">
-                    <span *ngFor="let d of dots" class="dot dot-{{d}}"></span>
+                    <span
+                        *ngFor="let d of dots"
+                        class="dot dot-{{ d }}"></span>
                 </div>
             </div>
         </div>
@@ -28,9 +33,7 @@ import { NgIf, NgClass, NgFor } from '@angular/common';
     changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [NgIf, NgClass, NgFor]
 })
-
 export class LoaderComponent implements OnInit {
-
     @Input() isLoading: boolean = false;
     @Input() numOfDots: number = 6;
     @Input() size: 'sm' | 'md' | 'lg' = 'md';
@@ -52,7 +55,9 @@ export class LoaderComponent implements OnInit {
     }
 
     get dots(): number[] {
-        return Array(this.numOfDots).fill(0).map((x, i) => i + 1);
+        return Array(this.numOfDots)
+            .fill(0)
+            .map((x, i) => i + 1);
     }
 
     get sizeClass(): string {

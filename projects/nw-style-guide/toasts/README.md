@@ -1,4 +1,4 @@
-*app.module.ts*
+_app.module.ts_
 
 ```javascript
 import { ToastsModule } from 'nw-style-guide/toasts';
@@ -18,7 +18,7 @@ import { ToastsModule } from 'nw-style-guide/toasts';
 export class AppModule { }
 ```
 
-*my-feature.component.ts*
+_my-feature.component.ts_
 
 ```javascript
 import { Toaster, IToast } from "nw-style-guide/toasts";
@@ -32,7 +32,7 @@ export class MyFeature {
 
     constructor(private _toaster: Toaster) {}
     _dismissibleOnDemandToast: IToast;
-    
+
     showSuccess() {
         this._toaster.success('Some successful message');
     }
@@ -56,7 +56,7 @@ export class MyFeature {
     dismissOnDemand() {
         this._toaster.dismiss(this._dismissibleOnDemandToast);
     }
-    
+
     addDismissibleOnDemand() {
         this._dismissibleOnDemandToast = this._toaster.show({
           typeId: 'error',

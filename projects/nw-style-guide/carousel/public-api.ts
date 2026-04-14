@@ -8,7 +8,4 @@ import { CarouselSlideDirective } from './carousel-slide.directive';
  * Export cooperating directives
  * https://v17.angular.io/guide/standalone-components#standalone-components-for-library-authors
  */
-export const CAROUSEL_DIRECTIVES = [
-    CarouselComponent,
-    CarouselSlideDirective
-] as const;
+export const CAROUSEL_DIRECTIVES = [CarouselComponent, CarouselSlideDirective] as const;
