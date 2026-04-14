@@ -17,7 +17,9 @@
     "package:build": "node scripts/build.js",
     "package:make-local-tgz": "node scripts/make-local-tgz.js",
     "package:release": "node scripts/release.js",
-    "prepackage:release": "npm run test-single-run"
+    "prepackage:release": "npm run test-single-run",
+    "prettier:check": "prettier --check .",
+    "prettier:fix": "prettier --write ."
   },
   "private": true,
   "devDependencies": {
@@ -54,6 +56,7 @@
     "karma-jasmine-html-reporter": "^1.5.0",
     "moment": "^2.23.0",
     "ng-packagr": "^20.3.2",
+    "prettier": "3.8.2",
     "rimraf": "^2.6.3",
     "rxjs": "^7.8.1",
     "typescript": "^5.9.3",
