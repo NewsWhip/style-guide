@@ -1,35 +1,60 @@
-import { Component, OnInit, ViewChild, ElementRef, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy, Input, Output, EventEmitter, inject } from '@angular/core';
-import { FormControl, Validators, ReactiveFormsModule } from "@angular/forms";
-import { IValidationChange } from "./models/IValidationChange";
+import {
+    Component,
+    OnInit,
+    ViewChild,
+    ElementRef,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    OnDestroy,
+    Input,
+    Output,
+    EventEmitter,
+    inject
+} from '@angular/core';
+import { FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
+import { IValidationChange } from './models/IValidationChange';
 import { Subscription } from 'rxjs';
 import { NgFor } from '@angular/common';
 
 @Component({
     selector: 'nw-email-input',
     template: `
-        <div class="emails-container form-control input-lg" #container
+        <div
+            class="emails-container form-control input-lg"
+            #container
             [class.show-placeholder]="emails.length < 1 && emailInputControl.value.length < 1"
             (click)="onContainerClick($event)"
             (paste)="onPaste($event)"
             [attr.data-placeholder-text]="placeholder">
-
-            <div class="pill pill-sm" *ngFor="let email of emails; let last = last;"
+            <div
+                class="pill pill-sm"
+                *ngFor="let email of emails; let last = last"
                 [class.invalid]="!isValid(email)"
                 [class.selected]="last && isPillSelected">
-                <span class="pill-label">{{email}}</span>
-                <button type="button" class="close" (click)="removeEmail(email)">×</button>
+                <span class="pill-label">{{ email }}</span>
+                <button
+                    type="button"
+                    class="close"
+                    (click)="removeEmail(email)">
+                    ×
+                </button>
             </div>
 
-            <div class="input-container" [class.persistent-placeholder]="persistentPlaceholder">
+            <div
+                class="input-container"
+                [class.persistent-placeholder]="persistentPlaceholder">
                 <!-- pill-hidden is an invisble element that controls the width of the input -->
-                <div class="pill pill-sm pill-hidden">{{emailInputControl.value}}</div>
-                <input type="text" #inputEl [id]="inputId"
+                <div class="pill pill-sm pill-hidden">{{ emailInputControl.value }}</div>
+                <input
+                    type="text"
+                    #inputEl
+                    [id]="inputId"
                     [formControl]="emailInputControl"
                     (keydown)="onKeydown($event)"
                     (keydown.tab)="onTab($event)"
                     (keyup.backspace)="onBackspace()"
                     [placeholder]="persistentPlaceholder"
-                    (blur)="onBlur()">
+                    (blur)="onBlur()" />
             </div>
         </div>
     `,
@@ -40,12 +65,11 @@ import { NgFor } from '@angular/common';
 export class EmailInputComponent implements OnInit, OnDestroy {
     private _cdRef = inject(ChangeDetectorRef);
 
-
     @Input() emails: string[] = [];
     /**
      * Applied to the HTMLInputElement. Mostly useful for label using the "for" attribute
      */
-    @Input() inputId: string = "";
+    @Input() inputId: string = '';
     @Input() placeholder: string = '';
     @Input() persistentPlaceholder: string = '';
     /**
@@ -59,11 +83,11 @@ export class EmailInputComponent implements OnInit, OnDestroy {
     @ViewChild('inputEl', { static: true }) inputEl: ElementRef;
     @ViewChild('container', { static: true }) container: ElementRef;
 
-    public emailInputControl: FormControl<string> = new FormControl("", Validators.email);
+    public emailInputControl: FormControl<string> = new FormControl('', Validators.email);
     public isPillSelected: boolean = false;
 
     private _validationFormControl: FormControl<string> = new FormControl();
-    private _submitKeys: string[] = [",", "Enter", " ", ";"];
+    private _submitKeys: string[] = [',', 'Enter', ' ', ';'];
     private _valueChangesSub: Subscription;
 
     ngOnInit() {
@@ -103,7 +127,7 @@ export class EmailInputComponent implements OnInit, OnDestroy {
             this.focus();
         }
 
-        if (event.key === "Escape") {
+        if (event.key === 'Escape') {
             event.stopPropagation();
             this.emailInputControl.setValue('');
             (this.inputEl.nativeElement as HTMLInputElement).blur();
@@ -158,9 +182,9 @@ export class EmailInputComponent implements OnInit, OnDestroy {
 
             const selectionStart: number = (this.inputEl.nativeElement as HTMLInputElement).selectionStart;
             const selectionEnd: number = (this.inputEl.nativeElement as HTMLInputElement).selectionEnd;
-            const controlValue: string = (this.emailInputControl.value as string);
+            const controlValue: string = this.emailInputControl.value as string;
 
-            let pastedData: string = event.clipboardData.getData("text");
+            let pastedData: string = event.clipboardData.getData('text');
 
             /**
              * We need to check if the input already has a value when the user pasted
@@ -173,7 +197,8 @@ export class EmailInputComponent implements OnInit, OnDestroy {
                     const newValue: string = controlValue.slice(0, selectionStart) + controlValue.slice(selectionEnd);
                     pastedData = newValue.slice(0, selectionStart) + pastedData + newValue.slice(selectionStart);
                 } else {
-                    pastedData = controlValue.slice(0, selectionStart) + pastedData + controlValue.slice(selectionStart);
+                    pastedData =
+                        controlValue.slice(0, selectionStart) + pastedData + controlValue.slice(selectionStart);
                 }
             }
 

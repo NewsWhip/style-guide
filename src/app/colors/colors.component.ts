@@ -11,35 +11,13 @@ export class ColorsComponent implements OnInit {
     private _chRef = inject(ChangeDetectorRef);
 
     public showColorCodes: boolean = false;
-    public colorNames = [
-        "levels",
-        "gray",
-        "primary",
-        "secondary",
-        "tertiary",
-        "alt",
-        "coolgray"
-    ];
+    public colorNames = ['levels', 'gray', 'primary', 'secondary', 'tertiary', 'alt', 'coolgray'];
 
-    public shades = [
-        "dark",
-        "base",
-        "light",
-        "x-light",
-        "2x-light",
-        "3x-light",
-        "4x-light",
-        "5x-light",
-        "6x-light"
-    ];
+    public shades = ['dark', 'base', 'light', 'x-light', '2x-light', '3x-light', '4x-light', '5x-light', '6x-light'];
 
     public levels = Array.from(Array(7).keys()); // create array & fill with 0-6
 
-    public standaloneColors = [
-        "yellow",
-        "green",
-        "red"
-    ];
+    public standaloneColors = ['yellow', 'green', 'red'];
 
     ngOnInit() {
         setTimeout(() => {
@@ -47,7 +25,7 @@ export class ColorsComponent implements OnInit {
         }, 100);
     }
 
-    getColors(splash):string {
+    getColors(splash): string {
         const rgb = getComputedStyle(splash).backgroundColor;
 
         return `
@@ -73,7 +51,7 @@ export class ColorsComponent implements OnInit {
         const s = Math.round(hsv.s * 100);
         const b = Math.round(hsv.v * 100);
 
-        return `hsb(${h}, ${s}%, ${b}%)`
+        return `hsb(${h}, ${s}%, ${b}%)`;
     }
 
     getHsl(rgbString) {
@@ -88,17 +66,20 @@ export class ColorsComponent implements OnInit {
 
     rgb2hex(rgbString) {
         const rgb = rgbString.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
-        return (rgb && rgb.length === 4) ? "#" +
-            ("0" + parseInt(rgb[1], 10).toString(16)).slice(-2) +
-            ("0" + parseInt(rgb[2], 10).toString(16)).slice(-2) +
-            ("0" + parseInt(rgb[3], 10).toString(16)).slice(-2) : '';
+        return rgb && rgb.length === 4
+            ? '#' +
+                  ('0' + parseInt(rgb[1], 10).toString(16)).slice(-2) +
+                  ('0' + parseInt(rgb[2], 10).toString(16)).slice(-2) +
+                  ('0' + parseInt(rgb[3], 10).toString(16)).slice(-2)
+            : '';
     }
 
     rgbToHsl(r, g, b) {
         // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-        r /= 255, g /= 255, b /= 255;
+        ((r /= 255), (g /= 255), (b /= 255));
 
-        const max = Math.max(r, g, b), min = Math.min(r, g, b);
+        const max = Math.max(r, g, b),
+            min = Math.min(r, g, b);
         let h, s;
         const l = (max + min) / 2;
 
@@ -109,34 +90,51 @@ export class ColorsComponent implements OnInit {
             s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
 
             switch (max) {
-                case r: h = (g - b) / d + (g < b ? 6 : 0); break;
-                case g: h = (b - r) / d + 2; break;
-                case b: h = (r - g) / d + 4; break;
+                case r:
+                    h = (g - b) / d + (g < b ? 6 : 0);
+                    break;
+                case g:
+                    h = (b - r) / d + 2;
+                    break;
+                case b:
+                    h = (r - g) / d + 4;
+                    break;
             }
 
             h *= 60;
         }
 
-        return [h, s * 100, l*100];
+        return [h, s * 100, l * 100];
     }
 
-    
     rGBtoHsb(r, g, b) {
         if (arguments.length === 1) {
             // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-            g = r.g, b = r.b, r = r.r;
+            ((g = r.g), (b = r.b), (r = r.r));
         }
         let h;
-        const max = Math.max(r, g, b), min = Math.min(r, g, b),
+        const max = Math.max(r, g, b),
+            min = Math.min(r, g, b),
             d = max - min,
-            s = (max === 0 ? 0 : d / max),
+            s = max === 0 ? 0 : d / max,
             v = max / 255;
 
         switch (max) {
-            case min: h = 0; break;
-            case r: h = (g - b) + d * (g < b ? 6: 0); h /= 6 * d; break;
-            case g: h = (b - r) + d * 2; h /= 6 * d; break;
-            case b: h = (r - g) + d * 4; h /= 6 * d; break;
+            case min:
+                h = 0;
+                break;
+            case r:
+                h = g - b + d * (g < b ? 6 : 0);
+                h /= 6 * d;
+                break;
+            case g:
+                h = b - r + d * 2;
+                h /= 6 * d;
+                break;
+            case b:
+                h = r - g + d * 4;
+                h /= 6 * d;
+                break;
         }
 
         return {
@@ -145,5 +143,4 @@ export class ColorsComponent implements OnInit {
             v: v
         };
     }
-
 }

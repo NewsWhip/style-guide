@@ -16,7 +16,6 @@ export class CircleDirective implements OnInit, OnChanges, OnDestroy {
     private _chart = inject(ChartComponent);
     private _chartUtils = inject(ChartUtils);
 
-
     @Input('nw-circle') point: [number, number];
     @Input() xDomain: [number, number];
     @Input() yDomain: [number, number];
@@ -39,8 +38,12 @@ export class CircleDirective implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        const isDomainChange = (changes.xDomain || changes.yDomain) && ChartUtils.haveDomainsChanged(changes.xDomain, changes.yDomain);
-        const isDataChange = changes.point && !changes.point.firstChange && !ChartUtils.areDatasetsEqual([changes.point.previousValue], [changes.point.currentValue]);
+        const isDomainChange =
+            (changes.xDomain || changes.yDomain) && ChartUtils.haveDomainsChanged(changes.xDomain, changes.yDomain);
+        const isDataChange =
+            changes.point &&
+            !changes.point.firstChange &&
+            !ChartUtils.areDatasetsEqual([changes.point.previousValue], [changes.point.currentValue]);
 
         if (isDomainChange || isDataChange) {
             this.setDomains();
@@ -54,16 +57,11 @@ export class CircleDirective implements OnInit, OnChanges, OnDestroy {
     }
 
     draw(): void {
-        this.circle
-            .attr("transform", this.transform);
+        this.circle.attr('transform', this.transform);
     }
 
     update() {
-        this.circle
-            .transition()
-            .duration(this.animDuration)
-            .ease(this.easing)
-            .attr("transform", this.transform);
+        this.circle.transition().duration(this.animDuration).ease(this.easing).attr('transform', this.transform);
     }
 
     get transform(): string {
@@ -79,15 +77,13 @@ export class CircleDirective implements OnInit, OnChanges, OnDestroy {
     }
 
     private _subscribeToChartResize() {
-        this._chartResizeSub = this._chartUtils.chartResize$
-            .subscribe(_ => {
-                this.setDomains();
-                this.draw();
-            });
+        this._chartResizeSub = this._chartUtils.chartResize$.subscribe(_ => {
+            this.setDomains();
+            this.draw();
+        });
     }
 
     ngOnDestroy() {
         this._chartResizeSub.unsubscribe();
     }
-
 }

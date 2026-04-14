@@ -10,7 +10,6 @@ import { NwXAxisScale } from './models/XAxisScale';
     exportAs: 'nw-x-axis'
 })
 export class XAxisDirective extends AxisBase {
-
     @Input() align: 'top' | 'bottom' | 'center' = 'bottom';
     @Input() domain: [number, number];
     @Input() scale: NwXAxisScale = scaleTime();
@@ -18,9 +17,7 @@ export class XAxisDirective extends AxisBase {
     @Output() scaleUpdated: EventEmitter<NwXAxisScale> = new EventEmitter();
 
     createAxis() {
-        this.axis = this.align === "bottom" ?
-            axisBottom(this.scale) :
-            axisTop(this.scale);
+        this.axis = this.align === 'bottom' ? axisBottom(this.scale) : axisTop(this.scale);
     }
 
     setTicks() {
@@ -42,7 +39,7 @@ export class XAxisDirective extends AxisBase {
     positionLabel() {
         if (this.label) {
             const y = this.align === 'top' ? 0 : this.fullHeight;
-            const dy = this.align === 'top' ? "1em" : "-0.5em";
+            const dy = this.align === 'top' ? '1em' : '-0.5em';
 
             this.axisLabelSelection
                 .attr('class', 'axis-label ' + this.align)
@@ -55,9 +52,7 @@ export class XAxisDirective extends AxisBase {
     render() {
         const yTranslation = this._getAxisTranslation();
 
-        this.axisSelection
-            .attr('transform', "translate(0," + yTranslation + ")")
-            .call(this.axis);
+        this.axisSelection.attr('transform', 'translate(0,' + yTranslation + ')').call(this.axis);
 
         this.positionLabel();
     }
@@ -73,5 +68,4 @@ export class XAxisDirective extends AxisBase {
 
         return 0;
     }
-
 }

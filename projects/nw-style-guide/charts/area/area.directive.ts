@@ -19,7 +19,6 @@ export class AreaDirective implements OnInit, OnChanges, OnDestroy {
     private _chart = inject(ChartComponent);
     private _chartUtils = inject(ChartUtils);
 
-
     /**
      * Each data entry may have 2 or 3 values. If there are 3 the area is drawn within the bounds.
      *
@@ -50,9 +49,14 @@ export class AreaDirective implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        const isDomainChange = (changes.xDomain || changes.yDomain) && ChartUtils.haveDomainsChanged(changes.xDomain, changes.yDomain);
-        const isDataChange = changes.data && !changes.data.firstChange && !ChartUtils.areDatasetsEqual(changes.data.previousValue, changes.data.currentValue);
-        const isCurveChange = changes.curve && !changes.curve.firstChange && (changes.curve.currentValue !== changes.curve.previousValue);
+        const isDomainChange =
+            (changes.xDomain || changes.yDomain) && ChartUtils.haveDomainsChanged(changes.xDomain, changes.yDomain);
+        const isDataChange =
+            changes.data &&
+            !changes.data.firstChange &&
+            !ChartUtils.areDatasetsEqual(changes.data.previousValue, changes.data.currentValue);
+        const isCurveChange =
+            changes.curve && !changes.curve.firstChange && changes.curve.currentValue !== changes.curve.previousValue;
 
         if (isDomainChange || isDataChange || isCurveChange) {
             this.setDomains();
@@ -69,14 +73,12 @@ export class AreaDirective implements OnInit, OnChanges, OnDestroy {
     setArea(): void {
         this.area = area<AreaDatum>()
             .x(d => this.xScale(d[0]))
-            .y0(d => d[2] ? this.yScale(d[2]) : this._chart.height)
+            .y0(d => (d[2] ? this.yScale(d[2]) : this._chart.height))
             .y1(d => this.yScale(d[1]));
     }
 
     drawArea(): void {
-        this.areaSelection
-            .datum(this.data)
-            .attr('d', this.area);
+        this.areaSelection.datum(this.data).attr('d', this.area);
     }
 
     updateArea(): void {
@@ -89,16 +91,14 @@ export class AreaDirective implements OnInit, OnChanges, OnDestroy {
     }
 
     private _subscribeToChartResize() {
-        this._chartResizeSub = this._chartUtils.chartResize$
-            .subscribe(_ => {
-                this.setDomains();
-                this.setArea();
-                this.drawArea();
-            });
+        this._chartResizeSub = this._chartUtils.chartResize$.subscribe(_ => {
+            this.setDomains();
+            this.setArea();
+            this.drawArea();
+        });
     }
 
     ngOnDestroy() {
         this._chartResizeSub.unsubscribe();
     }
-
 }

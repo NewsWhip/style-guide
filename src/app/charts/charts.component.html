@@ -1,115 +1,181 @@
 <div>
     <h2 class="page-header">Charts</h2>
 
-    <div style="margin-bottom: 16px;">
+    <div style="margin-bottom: 16px">
         <nw-tabs>
-            <li nwTab role="presentation" (click)="setSelectedTab('demo')" [isActive]="selectedTab === 'demo'">
-                <a href="javascript:;" aria-controls="Demo" role="tab">Demo</a>
+            <li
+                nwTab
+                role="presentation"
+                (click)="setSelectedTab('demo')"
+                [isActive]="selectedTab === 'demo'">
+                <a
+                    href="javascript:;"
+                    aria-controls="Demo"
+                    role="tab"
+                    >Demo</a
+                >
             </li>
-            <li nwTab role="presentation" (click)="setSelectedTab('docs')" [isActive]="selectedTab === 'docs'">
-                <a href="javascript:;" aria-controls="Docs" role="tab">Docs</a>
+            <li
+                nwTab
+                role="presentation"
+                (click)="setSelectedTab('docs')"
+                [isActive]="selectedTab === 'docs'">
+                <a
+                    href="javascript:;"
+                    aria-controls="Docs"
+                    role="tab"
+                    >Docs</a
+                >
             </li>
         </nw-tabs>
     </div>
 
     <ng-container *ngIf="selectedTab === 'demo'">
         <form [formGroup]="form">
-            <div formArrayName="selectedMetrics" style="display: flex; flex-direction: row;">
-                <div class="checkbox" style="margin-right: 8px;" *ngFor="let metric of form.controls.selectedMetrics.controls; let i = index">
-                    <input id="metric-{{i}}" type="checkbox" [formControlName]="i">
-                    <label for="metric-{{i}}">
-                        {{metricNames[i]}}
+            <div
+                formArrayName="selectedMetrics"
+                style="display: flex; flex-direction: row">
+                <div
+                    class="checkbox"
+                    style="margin-right: 8px"
+                    *ngFor="let metric of form.controls.selectedMetrics.controls; let i = index">
+                    <input
+                        id="metric-{{ i }}"
+                        type="checkbox"
+                        [formControlName]="i" />
+                    <label for="metric-{{ i }}">
+                        {{ metricNames[i] }}
                     </label>
                 </div>
             </div>
         </form>
 
         <div style="display: flex; flex-direction: row; position: relative">
-            <svg nw-chart #chart="nw-chart" style="width: 700px; height: 400px;"
+            <svg
+                nw-chart
+                #chart="nw-chart"
+                style="width: 700px; height: 400px"
                 [margins]="chartMargins"
                 (nwMousemove)="onMousemove($event)"
                 (nwMouseleave)="onMouseleave()"
                 (bgClick)="onBgClick()">
-
-                <g nw-brush *ngIf="showBrush.value"
+                <g
+                    nw-brush
+                    *ngIf="showBrush.value"
                     [dimension]="brushType.value"
                     (brushEnd)="onBrushSelection($event)"></g>
 
                 <!-- Axes -->
-                <g class="x axis" nw-x-axis #xAxis="nw-x-axis"
+                <g
+                    class="x axis"
+                    nw-x-axis
+                    #xAxis="nw-x-axis"
                     [domain]="xDomain"
                     [tickFormat]="xAxisTickFormat"
                     label="Axis label"
                     [tickCount]="xAxisTickCount"></g>
 
-                <g class="y axis" nw-y-axis #yAxis="nw-y-axis"
+                <g
+                    class="y axis"
+                    nw-y-axis
+                    #yAxis="nw-y-axis"
                     [domain]="yDomain"
                     label="Axis label"
                     [tickFormat]="yAxisTickFormat"
                     [showGuidlines]="true"></g>
 
-                <g class="y axis random-axis" nw-y-axis align="right"
+                <g
+                    class="y axis random-axis"
+                    nw-y-axis
+                    align="right"
                     [domain]="randomYDomain"
                     [tickCount]="4"
                     label="Axis label"
                     [showGuidlines]="yDomain[0] === 0 && yDomain[1] === 0"></g>
 
                 <!-- Hover lines -->
-                <path class="hover-path nw-slot-1" *ngIf="isHovering"
-                    [nw-path]="[[mainScaleHoverCoordinates[0], yDomain[0]], [mainScaleHoverCoordinates[0], yDomain[1]]]"
+                <path
+                    class="hover-path nw-slot-1"
+                    *ngIf="isHovering"
+                    [nw-path]="[
+                        [mainScaleHoverCoordinates[0], yDomain[0]],
+                        [mainScaleHoverCoordinates[0], yDomain[1]]
+                    ]"
                     [xDomain]="xDomain"
                     [yDomain]="yDomain"
                     [animDuration]="0"></path>
 
-                <path class="hover-path nw-slot-1" *ngIf="isHovering"
-                    [nw-path]="[[xDomain[0], mainScaleHoverCoordinates[1]], [xDomain[1], mainScaleHoverCoordinates[1]]]"
+                <path
+                    class="hover-path nw-slot-1"
+                    *ngIf="isHovering"
+                    [nw-path]="[
+                        [xDomain[0], mainScaleHoverCoordinates[1]],
+                        [xDomain[1], mainScaleHoverCoordinates[1]]
+                    ]"
                     [xDomain]="xDomain"
                     [yDomain]="yDomain"
                     [animDuration]="0"></path>
 
                 <!-- Paths -->
-                <path class="fb-comments" *ngIf="isMetricSelected('fbComments')"
+                <path
+                    class="fb-comments"
+                    *ngIf="isMetricSelected('fbComments')"
                     [nw-path]="getDataByMetric('fbComments')"
                     [xDomain]="xDomain"
                     [yDomain]="yDomain"
                     (animEnd)="onPathAnimationEnd('fbComments')"></path>
 
-                <path class="tw-shares" *ngIf="isMetricSelected('twShares')"
+                <path
+                    class="tw-shares"
+                    *ngIf="isMetricSelected('twShares')"
                     [nw-path]="getDataByMetric('twShares')"
                     [xDomain]="xDomain"
                     [yDomain]="yDomain"></path>
 
-                <path class="fb-total" *ngIf="isMetricSelected('fbTotalEngagement')"
+                <path
+                    class="fb-total"
+                    *ngIf="isMetricSelected('fbTotalEngagement')"
                     [nw-path]="getDataByMetric('fbTotalEngagement')"
                     [xDomain]="xDomain"
                     [yDomain]="yDomain"></path>
 
-                <path class="random"
+                <path
+                    class="random"
                     [nw-path]="randomData"
                     [xDomain]="xDomain"
                     [yDomain]="randomYDomain"
                     [curve]="randomLineCurve.curve"></path>
 
-                <path style="fill: url(#myGradient); stroke: none" *ngIf="randomArea.value"
+                <path
+                    style="fill: url(#myGradient); stroke: none"
+                    *ngIf="randomArea.value"
                     [nw-area]="randomData"
                     [xDomain]="xDomain"
                     [yDomain]="randomYDomain"
                     [curve]="randomLineCurve.curve"></path>
 
                 <defs>
-                    <linearGradient id="myGradient" gradientUnits="userSpaceOnUse">
-                        <stop offset="0%"  stop-color="gold" />
-                        <stop offset="100%" stop-color="red" />
+                    <linearGradient
+                        id="myGradient"
+                        gradientUnits="userSpaceOnUse">
+                        <stop
+                            offset="0%"
+                            stop-color="gold" />
+                        <stop
+                            offset="100%"
+                            stop-color="red" />
                     </linearGradient>
                 </defs>
 
                 <!-- Circles with popovers -->
                 <ng-container *ngIf="isMetricSelected('fbComments')">
-                    <circle *ngFor="let point of getDataByMetric('fbComments'); trackBy:circleTrackValue"
-                        [nw-circle]="point" #circle="nw-circle"
+                    <circle
+                        *ngFor="let point of getDataByMetric('fbComments'); trackBy: circleTrackValue"
+                        [nw-circle]="point"
+                        #circle="nw-circle"
                         [xDomain]="xDomain"
                         [yDomain]="yDomain"
-                        r=5
+                        r="5"
                         [nwPopover]="circlePopTemplate"
                         [context]="{ point: point }"
                         container="body"
@@ -117,11 +183,12 @@
                 </ng-container>
 
                 <ng-container *ngIf="!randomAsBars.value">
-                    <circle *ngFor="let point of randomData; trackBy:circleTrackIndex"
+                    <circle
+                        *ngFor="let point of randomData; trackBy: circleTrackIndex"
                         [nw-circle]="point"
                         [xDomain]="xDomain"
                         [yDomain]="randomYDomain"
-                        r=5
+                        r="5"
                         [nwPopover]="circlePopTemplate"
                         [context]="{ point: point }"
                         container="body"
@@ -129,7 +196,9 @@
                 </ng-container>
 
                 <ng-container *ngIf="randomAsBars.value">
-                    <rect *ngFor="let point of randomData; trackBy:circleTrackIndex" class="nw-bar"
+                    <rect
+                        *ngFor="let point of randomData; trackBy: circleTrackIndex"
+                        class="nw-bar"
                         [nw-bar]="point"
                         [xDomain]="xDomain"
                         [yDomain]="randomYDomain"
@@ -140,7 +209,8 @@
                         [closeOnOutsideClick]="true"></rect>
                 </ng-container>
 
-                <foreignObject *ngIf="showForeignObject.value"
+                <foreignObject
+                    *ngIf="showForeignObject.value"
                     [nw-foreign-object]
                     [point]="[1545095807739, 60000]"
                     [xDomain]="xDomain"
@@ -148,130 +218,187 @@
                     width="250"
                     height="150">
                     <xhtml:div>
-                        <button class="btn btn-primary"
+                        <button
+                            class="btn btn-primary"
                             (click)="log('button clicked')">
                             Button rendered inside SVG
                         </button>
-                        <p class="nw-text-dark">Rendered at 60,000 interactions<br/>{{1545095807739 | date:'medium'}}</p>
+                        <p class="nw-text-dark">
+                            Rendered at 60,000 interactions<br />{{ 1545095807739 | date: 'medium' }}
+                        </p>
                     </xhtml:div>
-                  </foreignObject>
+                </foreignObject>
             </svg>
 
-            <div *ngIf="isHovering && showTooltip.value" nwChartTooltip
-                 class="tooltip in" role="tooltip"
-                 [position]="hoverPosition"
-                 [chartWidth]="chart.width"
-                 [chartHeight]="chart.height"
-                 [chartMargins]="chartMargins">
+            <div
+                *ngIf="isHovering && showTooltip.value"
+                nwChartTooltip
+                class="tooltip in"
+                role="tooltip"
+                [position]="hoverPosition"
+                [chartWidth]="chart.width"
+                [chartHeight]="chart.height"
+                [chartMargins]="chartMargins">
                 <div class="tooltip-inner">
                     <h3>Tooltip title</h3>
-                    <p>hoverPosition[0]: {{hoverPosition[0]}}</p>
-                    <p>hoverPosition[1]: {{hoverPosition[1]}}</p>
+                    <p>hoverPosition[0]: {{ hoverPosition[0] }}</p>
+                    <p>hoverPosition[1]: {{ hoverPosition[1] }}</p>
                 </div>
             </div>
 
-            <ng-template #circlePopTemplate let-point="point">
-                <p>{{point[0] | date: 'medium'}}</p>
-                <strong>{{point[1] | number: '1.0-0'}}</strong>
+            <ng-template
+                #circlePopTemplate
+                let-point="point">
+                <p>{{ point[0] | date: 'medium' }}</p>
+                <strong>{{ point[1] | number: '1.0-0' }}</strong>
             </ng-template>
 
-            <div style="margin-left: 16px;">
+            <div style="margin-left: 16px">
                 <div class="checkbox">
-                    <input type="checkbox" [formControl]="showBrush" id="show-brush">
+                    <input
+                        type="checkbox"
+                        [formControl]="showBrush"
+                        id="show-brush" />
                     <label for="show-brush">Show brush</label>
                 </div>
 
                 <ng-container *ngIf="showBrush.value">
                     <div class="radio">
-                        <input type="radio" [formControl]="brushType" id="brush-type-both" value="">
+                        <input
+                            type="radio"
+                            [formControl]="brushType"
+                            id="brush-type-both"
+                            value="" />
                         <label for="brush-type-both">Both</label>
                     </div>
                     <div class="radio">
-                        <input type="radio" [formControl]="brushType" id="brush-type-x" value="x">
+                        <input
+                            type="radio"
+                            [formControl]="brushType"
+                            id="brush-type-x"
+                            value="x" />
                         <label for="brush-type-x">X</label>
                     </div>
                     <div class="radio">
-                        <input type="radio" [formControl]="brushType" id="brush-type-y" value="y">
+                        <input
+                            type="radio"
+                            [formControl]="brushType"
+                            id="brush-type-y"
+                            value="y" />
                         <label for="brush-type-y">Y</label>
                     </div>
 
                     <div *ngIf="brushBox">
                         <h5>X Range</h5>
-                        <p>
-                            {{brushBox[0][0] | date:'medium'}} - {{brushBox[1][0] | date:'medium'}}
-                        </p>
+                        <p>{{ brushBox[0][0] | date: 'medium' }} - {{ brushBox[1][0] | date: 'medium' }}</p>
 
                         <h5>Y Range</h5>
 
-                        <p>
-                            {{brushBox[1][1] | number: '1.0-0'}} - {{brushBox[0][1] | number: '1.0-0'}}
-                        </p>
+                        <p>{{ brushBox[1][1] | number: '1.0-0' }} - {{ brushBox[0][1] | number: '1.0-0' }}</p>
                     </div>
                 </ng-container>
 
                 <div class="checkbox">
-                    <input type="checkbox" [formControl]="randomArea" id="random-area">
+                    <input
+                        type="checkbox"
+                        [formControl]="randomArea"
+                        id="random-area" />
                     <label for="random-area">Show random area</label>
                 </div>
 
                 <div class="checkbox">
-                    <input type="checkbox" [formControl]="showTooltip" id="show-tooltip">
+                    <input
+                        type="checkbox"
+                        [formControl]="showTooltip"
+                        id="show-tooltip" />
                     <label for="show-tooltip">Show tooltip</label>
                 </div>
 
                 <div class="checkbox">
-                    <input type="checkbox" [formControl]="showForeignObject" id="show-foreign-object">
+                    <input
+                        type="checkbox"
+                        [formControl]="showForeignObject"
+                        id="show-foreign-object" />
                     <label for="show-foreign-object">Show foreign object</label>
                 </div>
 
                 <div class="checkbox">
-                    <input type="checkbox" [formControl]="randomAsBars" id="random-as-circles">
+                    <input
+                        type="checkbox"
+                        [formControl]="randomAsBars"
+                        id="random-as-circles" />
                     <label for="random-as-circles">Use bars for random dataset</label>
                 </div>
 
-                <div class="form-group" *ngIf="randomAsBars.value">
+                <div
+                    class="form-group"
+                    *ngIf="randomAsBars.value">
                     <label for="bar-width">Bar width</label>
-                    <input type="number" [formControl]="barWidth" id="bar-width" class="form-control">
+                    <input
+                        type="number"
+                        [formControl]="barWidth"
+                        id="bar-width"
+                        class="form-control" />
                 </div>
 
                 <div class="form-group">
                     <label for="random-line-curve">Random line curve</label>
 
-                    <select class="form-control" [(ngModel)]="randomLineCurve" id="random-line-curve">
-                        <option *ngFor="let option of randomLineCurvesOptions" [ngValue]="option">
-                            {{option.label}}
+                    <select
+                        class="form-control"
+                        [(ngModel)]="randomLineCurve"
+                        id="random-line-curve">
+                        <option
+                            *ngFor="let option of randomLineCurvesOptions"
+                            [ngValue]="option">
+                            {{ option.label }}
                         </option>
                     </select>
                 </div>
             </div>
 
-            <div *ngIf="isHovering" style="margin-left: 16px;">
+            <div
+                *ngIf="isHovering"
+                style="margin-left: 16px">
                 <h3>Hover data</h3>
-                <hr>
+                <hr />
                 <p>
-                    {{mainScaleHoverCoordinates[0] | date: 'medium'}}
+                    {{ mainScaleHoverCoordinates[0] | date: 'medium' }}
                 </p>
                 <p>
-                    {{mainScaleHoverCoordinates[1] | number: '1.0-0'}}
+                    {{ mainScaleHoverCoordinates[1] | number: '1.0-0' }}
                 </p>
 
                 <p>
-                    {{randomScaleHoverCoordinates[1] | number: '1.0-0'}}
+                    {{ randomScaleHoverCoordinates[1] | number: '1.0-0' }}
                 </p>
             </div>
         </div>
 
         <div style="margin-top: 8px">
-            <button class="btn btn-md btn-primary" (click)="generateRandomData()">Randomise</button>
-            <button class="btn btn-md btn-primary" (click)="addRandomDataPoint()">Add random point</button>
-            <button class="btn btn-md btn-primary" (click)="resetRandomData()" [disabled]="randomData.length === 10">Reset random data</button>
+            <button
+                class="btn btn-md btn-primary"
+                (click)="generateRandomData()">
+                Randomise
+            </button>
+            <button
+                class="btn btn-md btn-primary"
+                (click)="addRandomDataPoint()">
+                Add random point
+            </button>
+            <button
+                class="btn btn-md btn-primary"
+                (click)="resetRandomData()"
+                [disabled]="randomData.length === 10">
+                Reset random data
+            </button>
         </div>
     </ng-container>
 
     <ng-container *ngIf="selectedTab === 'docs'">
         <h3>Importing</h3>
 
-<pre><code>
+        <pre><code>
 {{'import { ChartsModule } from "nw-style-guide/charts";
 
 @NgModule({
@@ -292,18 +419,17 @@ export class AppModule { }
         <h3>Chart wrapper</h3>
 
         <p>
-            This component (attached via an attribute selector) will generally wrap all other chart directives and components.
-            This component <strong>must</strong> be attached to an SVG element (<code>SVGSVGElement</code>).
+            This component (attached via an attribute selector) will generally wrap all other chart directives and
+            components. This component <strong>must</strong> be attached to an SVG element (<code>SVGSVGElement</code>).
         </p>
 
         <p>
-            <code>nw-chart</code> renders it's children with <code>ng-content</code>. If you'd like more control over where your
-            child components and directives are rendered, there are 10 "slots" available. <code>.nw-slot-1</code> to <code>.nw-slot-10</code>.
+            <code>nw-chart</code> renders it's children with <code>ng-content</code>. If you'd like more control over
+            where your child components and directives are rendered, there are 10 "slots" available.
+            <code>.nw-slot-1</code> to <code>.nw-slot-10</code>.
         </p>
 
-        <p>
-            The view box of the SVG is based on the width, height and the corresponding margin inputs.
-        </p>
+        <p>The view box of the SVG is based on the width, height and the corresponding margin inputs.</p>
 
         <div class="row">
             <div class="col-sm-6">
@@ -322,7 +448,7 @@ export class AppModule { }
             </div>
 
             <div class="col-sm-6">
-<pre><code>&lt;svg nw-chart
+                <pre><code>&lt;svg nw-chart
     [width]="600"
     [height]="400"
     [margins]="chartMargins"
@@ -344,17 +470,25 @@ export class AppModule { }
                     <td><code>width</code></td>
                     <td><code>number</code></td>
                     <td>Optional</td>
-                    <td>If not set, the width is obtained from the <code>clientWidth</code> of the svg the <code>nw-chart</code> is attached to.</td>
+                    <td>
+                        If not set, the width is obtained from the <code>clientWidth</code> of the svg the
+                        <code>nw-chart</code> is attached to.
+                    </td>
                 </tr>
                 <tr>
                     <td><code>height</code></td>
                     <td><code>number</code></td>
                     <td>Optional</td>
-                    <td>If not set, the height is obtained from the <code>clientHeight</code> of the svg the <code>nw-chart</code> is attached to.</td>
+                    <td>
+                        If not set, the height is obtained from the <code>clientHeight</code> of the svg the
+                        <code>nw-chart</code> is attached to.
+                    </td>
                 </tr>
                 <tr>
                     <td><code>margins</code></td>
-                    <td><code>{{'{ top?: number; bottom?: number; left?: number; right?: number; }'}}</code></td>
+                    <td>
+                        <code>{{ '{ top?: number; bottom?: number; left?: number; right?: number; }' }}</code>
+                    </td>
                     <td>Optional</td>
                     <td>If not set, each margin defaults to <code>0</code>.</td>
                 </tr>
@@ -376,7 +510,7 @@ export class AppModule { }
             </tbody>
         </table>
 
-        <hr>
+        <hr />
 
         <h3>X-Axis</h3>
 
@@ -397,7 +531,7 @@ export class AppModule { }
             </div>
 
             <div class="col-sm-6">
-<pre><code>&lt;g class="x axis nw-slot-2" nw-x-axis
+                <pre><code>&lt;g class="x axis nw-slot-2" nw-x-axis
     [domain]="xDomain"
     [tickFormat]="xAxisTickFormat"
     [tickCount]="xAxisTickCount">&lt;/g></code></pre>
@@ -422,7 +556,9 @@ export class AppModule { }
                 </tr>
                 <tr>
                     <td><code>tickFormat</code></td>
-                    <td><code>{{'(value: number | Date | { valueOf(): number; }) => string'}}</code></td>
+                    <td>
+                        <code>{{ '(value: number | Date | { valueOf(): number; }) => string' }}</code>
+                    </td>
                     <td>Required</td>
                     <td>A function that takes the x value and returns a value you require as a <code>string</code>.</td>
                 </tr>
@@ -436,13 +572,22 @@ export class AppModule { }
                     <td><code>tickSizeOuter</code></td>
                     <td><code>number</code></td>
                     <td>Optional</td>
-                    <td>Defaults to <code>6</code>. The outer tick size controls the length of the square ends of the domain path, offset from the native position of the axis. Thus, the “outer ticks” are not actually ticks but part of the domain path, and their position is determined by the associated scale’s domain extent. Thus, outer ticks may overlap with the first or last inner tick. An outer tick size of 0 suppresses the square ends of the domain path, instead producing a straight line.</td>
+                    <td>
+                        Defaults to <code>6</code>. The outer tick size controls the length of the square ends of the
+                        domain path, offset from the native position of the axis. Thus, the “outer ticks” are not
+                        actually ticks but part of the domain path, and their position is determined by the associated
+                        scale’s domain extent. Thus, outer ticks may overlap with the first or last inner tick. An outer
+                        tick size of 0 suppresses the square ends of the domain path, instead producing a straight line.
+                    </td>
                 </tr>
                 <tr>
                     <td><code>showGuidlines</code></td>
                     <td><code>boolean</code></td>
                     <td>Optional</td>
-                    <td>Defaults to <code>false</code>. Defines whether each tick on the axis is extended along the chart width.</td>
+                    <td>
+                        Defaults to <code>false</code>. Defines whether each tick on the axis is extended along the
+                        chart width.
+                    </td>
                 </tr>
                 <tr>
                     <td><code>animDuration</code></td>
@@ -452,9 +597,14 @@ export class AppModule { }
                 </tr>
                 <tr>
                     <td><code>easing</code></td>
-                    <td><code>{{'(normalizedTime: number) => number'}}</code></td>
+                    <td>
+                        <code>{{ '(normalizedTime: number) => number' }}</code>
+                    </td>
                     <td>Optional</td>
-                    <td>Defaults to d3's <code>easeCubicInOut</code>. Specifies the easing transition when the domain or tick inputs change.</td>
+                    <td>
+                        Defaults to d3's <code>easeCubicInOut</code>. Specifies the easing transition when the domain or
+                        tick inputs change.
+                    </td>
                 </tr>
                 <tr>
                     <td><code>label</code></td>
@@ -465,7 +615,7 @@ export class AppModule { }
             </tbody>
         </table>
 
-        <hr>
+        <hr />
 
         <h3>Y-Axis</h3>
 
@@ -486,7 +636,7 @@ export class AppModule { }
             </div>
 
             <div class="col-sm-6">
-<pre><code>&lt;g class="y axis nw-slot-2" nw-y-axis
+                <pre><code>&lt;g class="y axis nw-slot-2" nw-y-axis
     [domain]="yDomain"
     [tickFormat]="yAxisTickFormat"
     [showGuidlines]="true">&lt;/g></code></pre>
@@ -511,7 +661,9 @@ export class AppModule { }
                 </tr>
                 <tr>
                     <td><code>tickFormat</code></td>
-                    <td><code>{{'(value: number | Date | { valueOf(): number; }) => string'}}</code></td>
+                    <td>
+                        <code>{{ '(value: number | Date | { valueOf(): number; }) => string' }}</code>
+                    </td>
                     <td>Required</td>
                     <td>A function that takes the x value and returns a value you require as a <code>string</code>.</td>
                 </tr>
@@ -525,13 +677,22 @@ export class AppModule { }
                     <td><code>tickSizeOuter</code></td>
                     <td><code>number</code></td>
                     <td>Optional</td>
-                    <td>Defaults to <code>6</code>. The outer tick size controls the length of the square ends of the domain path, offset from the native position of the axis. Thus, the “outer ticks” are not actually ticks but part of the domain path, and their position is determined by the associated scale’s domain extent. Thus, outer ticks may overlap with the first or last inner tick. An outer tick size of 0 suppresses the square ends of the domain path, instead producing a straight line.</td>
+                    <td>
+                        Defaults to <code>6</code>. The outer tick size controls the length of the square ends of the
+                        domain path, offset from the native position of the axis. Thus, the “outer ticks” are not
+                        actually ticks but part of the domain path, and their position is determined by the associated
+                        scale’s domain extent. Thus, outer ticks may overlap with the first or last inner tick. An outer
+                        tick size of 0 suppresses the square ends of the domain path, instead producing a straight line.
+                    </td>
                 </tr>
                 <tr>
                     <td><code>showGuidlines</code></td>
                     <td><code>boolean</code></td>
                     <td>Optional</td>
-                    <td>Defaults to <code>false</code>. Defines whether each tick on the axis is extended along the chart width.</td>
+                    <td>
+                        Defaults to <code>false</code>. Defines whether each tick on the axis is extended along the
+                        chart width.
+                    </td>
                 </tr>
                 <tr>
                     <td><code>animDuration</code></td>
@@ -541,9 +702,14 @@ export class AppModule { }
                 </tr>
                 <tr>
                     <td><code>easing</code></td>
-                    <td><code>{{'(normalizedTime: number) => number'}}</code></td>
+                    <td>
+                        <code>{{ '(normalizedTime: number) => number' }}</code>
+                    </td>
                     <td>Optional</td>
-                    <td>Defaults to d3's <code>easeCubicInOut</code>. Specifies the easing transition when the domain or tick inputs change.</td>
+                    <td>
+                        Defaults to d3's <code>easeCubicInOut</code>. Specifies the easing transition when the domain or
+                        tick inputs change.
+                    </td>
                 </tr>
                 <tr>
                     <td><code>label</code></td>
@@ -553,7 +719,5 @@ export class AppModule { }
                 </tr>
             </tbody>
         </table>
-
     </ng-container>
-
 </div>

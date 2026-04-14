@@ -1,4 +1,9 @@
-p,h1,h2,h3,h4,h5 {
+p,
+h1,
+h2,
+h3,
+h4,
+h5 {
     margin: 8px 0 !important;
 }
 svg {
@@ -79,7 +84,7 @@ circle {
 }
 .hover-path {
     stroke-dasharray: 2px;
-    stroke: rgb(114, 197, 142)
+    stroke: rgb(114, 197, 142);
 }
 .sliding-hover-data {
     position: absolute;

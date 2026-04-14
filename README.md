@@ -23,17 +23,17 @@ In your SASS file:
 @use './variables.scss';
 
 // Import the entire NewsWhip style guide
-@use "node_modules/nw-style-guide/sass/styles.scss";
+@use 'node_modules/nw-style-guide/sass/styles.scss';
 ```
+
 ---
 
 If you wish to import only specific parts of the style guide you can do so by importing the individual files you need
 
-
 ```scss
 // Now you include the specific section of the style guide you require
-@import "node_modules/nw-style-guide/sass/src/labels";
-@import "node_modules/nw-style-guide/sass/src/forms";
+@import 'node_modules/nw-style-guide/sass/src/labels';
+@import 'node_modules/nw-style-guide/sass/src/forms';
 ```
 
 In order to use the Proxima Nova font-family that comes bundled with the Style Guide, you will need to set the `$nw-font-path` variable in your own `variables.scss` file. This variable is a path that points to the fonts folder in the installed `nw-style-guide` package in your `node_modules` folder.
@@ -43,7 +43,7 @@ In order to use the Proxima Nova font-family that comes bundled with the Style G
 $font-path: '../../assets/fonts';
 
 // Import the nw-style-guide variables with the custom font path
-@use "node_modules/nw-style-guide/sass/src/variables" as nw-variables with (
+@use 'node_modules/nw-style-guide/sass/src/variables' as nw-variables with (
     $nw-font-path: $font-path
 );
 ```
@@ -55,20 +55,21 @@ $font-path: '../../assets/fonts';
 ### Prerequisites
 
 - If you don't have one, you'll need to [create an npm account](https://www.npmjs.com/signup)
-- You'll need to  [login](https://docs.npmjs.com/creating-a-new-npm-user-account#testing-your-new-account-with-npm-login) on a local command line
+- You'll need to [login](https://docs.npmjs.com/creating-a-new-npm-user-account#testing-your-new-account-with-npm-login) on a local command line
 - Request to be added as a maintainer to the nw-style-guide [npm package](https://www.npmjs.com/package/nw-style-guide)
 - [Enable 2FA](https://docs.npmjs.com/configuring-two-factor-authentication) on your npm account
-- Add Font Awesome registry and authentication token to your global .npmrc file which is generated after logging in to npm 
+- Add Font Awesome registry and authentication token to your global .npmrc file which is generated after logging in to npm
+
 ```
     @fortawesome:registry=https://npm.fontawesome.com/
     /npm.fontawesome.com/:_authToken=xxxxxxxxxxxxxxxxxxxxxxx // replace with Fontawesome Pro authToken
     //registry.npmjs.org/:_authToken=xxxxxxxxxxxxxxxxxxxxxxx // replace with your authToken from npm
 ```
 
-
 ### Building local versions
 
-Sometimes when making extensive changes that require continuous local testing inside the product we need to create local versions. For this purpose we can run the `make-local-tgz` script and use it as follows:  
+Sometimes when making extensive changes that require continuous local testing inside the product we need to create local versions. For this purpose we can run the `make-local-tgz` script and use it as follows:
+
 - Make a `.tgz` package of Style Guide by running `npm run package:make-local-tgz`.
 - Copy absolute path of newly built `.tgz` package from console logs.
 - Paste it into the product's (e.g. Spike's) `package.json` file in place of the current `nw-style-guide` version to test your SG changes locally, without the need to publish a beta version.
@@ -83,18 +84,18 @@ Most of the time we would need to deploy our application (e.g. Spike) to a test 
 To do so we usually create a Beta version which we release to npm.
 
 To achieve this we need to:
+
 - Update the version of the style guide version property in `projects/nw-style-guide/package.json` to a beta version using `npm version {{version_type}}` for example "npm version 14.0.1-beta.0". Run this command from the `projects/nw-style-guide` directory
 - Once updated we're now ready to push the new version to npm using this command `npm run package:release`
 - Once that version is pushed check the npm website where the package is deployed to confirm the latest version deployed is the one you just added https://www.npmjs.com/package/nw-style-guide.
 - In your Spike or other project change the `nw-style-guide` version in `package.json` to this new version and push and deploy the changes to a test env.
 - Once changes are approved and everything is looking fine we then need to update the `nw-style-guide` version to remove the beta.0. to do that we call the same command we called earlier `npm version {{version_type}}` it can also be done manually but this command is better as it auto commits the changes.
-(just a note from my experience you don't need to include the beta.0 but I'm guessing i'ts good here because if we want to deploy another beta version we would only need to increment that 0 to 1 and so on).
+  (just a note from my experience you don't need to include the beta.0 but I'm guessing i'ts good here because if we want to deploy another beta version we would only need to increment that 0 to 1 and so on).
 - Then we push the latest changes to Github.
 - Once approved, merge the changes into master and a new version will be released shortly automatically. You'll most likely recieve a notification via email and or slack of this new version.
 - Go back to your project (e.g. Spike) and update the nw-style-guide version in the `package.json` to use the new version you just committed.
 - push changes and merge, assuming it has been approved.
 - Thats it you're done.
-
 
 ### Features and fixes
 
@@ -108,6 +109,7 @@ To achieve this we need to:
 1. After merging to master, the docs will be deployed to Github pages, a new release will be created (if the version in `projects/nw-style-guide/package.json` has changed), and a new version will be published to npm
 
 ### Manually publishing the package to npm
+
 If there is an issue with Github Actions and we need to manually publish the package, we can do so with the `npm run package:release` script
 
 > :bulb: At the end of the `package:release` script you will be prompted for a one-time-password (OTP). You should get this OTP from whatever authenticator app you're using
@@ -119,6 +121,7 @@ There are two npm scripts that need to be run for local development.
 ```shell
 npm run dev:lib
 ```
+
 This builds the nw-style-guide library in `projects/nw-style-guide` and outputs the compilation to the `lib-dist` folder. `npm run dev:lib` watches for changes to library files and recompiles.
 
 ```shell
@@ -132,6 +135,7 @@ This builds the demo app. This is what we use to view and test the changes to th
 ### Further info on package release / publication
 
 This final step in the release process above is
+
 > Publish the new package version to npm
 
 We don't want to publish all our assets to npm, only the assets required by the consumer. In order to achieve this we run our release script which builds the required files to the `distribution` folder.
@@ -143,8 +147,8 @@ We don't want to publish all our assets to npm, only the assets required by the 
 This script does the following
 
 1. It runs the `build.js` script which does the following
-   - Build the nw-style-guide library using ng-packagr. This outputs the build to the lib-dist directory
-   - Compiles the `styles.scss` file and copies it to the dist folder
+    - Build the nw-style-guide library using ng-packagr. This outputs the build to the lib-dist directory
+    - Compiles the `styles.scss` file and copies it to the dist folder
 1. Publishes the `lib-dist/nw-style-guide` folder to npm
 
 > :warning: Publication will fail if the version in `projects/nw-style-guide/package.json` has not been updated

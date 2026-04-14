@@ -1,4 +1,4 @@
-*app.module.ts*
+_app.module.ts_
 
 ```javascript
 import { TabsModule } from 'nw-style-guide/tabs';
@@ -18,7 +18,7 @@ import { TabsModule } from 'nw-style-guide/tabs';
 export class AppModule { }
 ```
 
-*my-feature.component.ts*
+_my-feature.component.ts_
 
 ```javascript
 
@@ -37,7 +37,7 @@ export class AppModule { }
 export class MyFeature {
 
     constructor() {}
-    
+
     public yourTabCollection = [
         {
             name: 'Home',
@@ -60,7 +60,7 @@ export class MyFeature {
             isActive: false
         }
     ];
-    
+
     setSelectedTab(selectedTab) {
         this.tabCollection.forEach(tab => {
             tab.isActive = tab.name === selectedTab.name;

@@ -5,7 +5,6 @@ import { Subject } from 'rxjs';
 
 @Directive({ selector: '[nwFeatureAlert]' })
 export class FeatureAlertsDirective implements OnInit, OnDestroy {
-
     /**
      * This directive shows/hides content depending on whether or not a given feature ID is enabled/disabled in local storage
      * It listens for changes on the FeatureAlertsService _dismissSubject and shows/hides accordingly
@@ -23,7 +22,6 @@ export class FeatureAlertsDirective implements OnInit, OnDestroy {
      * }
      */
 
-
     /**
      * ID of the new feature to be stored in local storage
      */
@@ -37,11 +35,12 @@ export class FeatureAlertsDirective implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this._toggleFeatureAlert(this.nwFeatureAlert);
-        this._featureAlertsService.dismiss$.pipe(
-            filter((id: string) => id === this.nwFeatureAlert),
-            takeUntil(this._destroyed$)
-
-        ).subscribe(id => this._toggleFeatureAlert(id));
+        this._featureAlertsService.dismiss$
+            .pipe(
+                filter((id: string) => id === this.nwFeatureAlert),
+                takeUntil(this._destroyed$)
+            )
+            .subscribe(id => this._toggleFeatureAlert(id));
     }
 
     private _toggleFeatureAlert(id: string) {

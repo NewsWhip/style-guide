@@ -4,7 +4,6 @@
 // Responsive: Utility classes
 // --------------------------------------------------
 
-
 // IE10 in Windows (Phone) 8
 //
 // Support for responsive views via media queries is kind of borked in IE10, for
@@ -21,11 +20,10 @@
 // Source: https://timkadlec.com/2012/10/ie10-snap-mode-and-responsive-design/
 
 @at-root {
-  @-ms-viewport {
-    width: device-width;
-  }
+    @-ms-viewport {
+        width: device-width;
+    }
 }
-
 
 // Visibility utilities
 // Note: Deprecated .visible-xs, .visible-sm, .visible-md, and .visible-lg as of v3.2.0
@@ -47,101 +45,100 @@
 .visible-lg-block,
 .visible-lg-inline,
 .visible-lg-inline-block {
-  display: none !important;
+    display: none !important;
 }
 
 @media (max-width: variables.$screen-xs-max) {
-  @include rv.responsive-visibility('.visible-xs');
+    @include rv.responsive-visibility('.visible-xs');
 }
 .visible-xs-block {
-  @media (max-width: variables.$screen-xs-max) {
-    display: block !important;
-  }
+    @media (max-width: variables.$screen-xs-max) {
+        display: block !important;
+    }
 }
 .visible-xs-inline {
-  @media (max-width: variables.$screen-xs-max) {
-    display: inline !important;
-  }
+    @media (max-width: variables.$screen-xs-max) {
+        display: inline !important;
+    }
 }
 .visible-xs-inline-block {
-  @media (max-width: variables.$screen-xs-max) {
-    display: inline-block !important;
-  }
+    @media (max-width: variables.$screen-xs-max) {
+        display: inline-block !important;
+    }
 }
 
 @media (min-width: variables.$screen-sm-min) and (max-width: variables.$screen-sm-max) {
-  @include rv.responsive-visibility('.visible-sm');
+    @include rv.responsive-visibility('.visible-sm');
 }
 .visible-sm-block {
-  @media (min-width: variables.$screen-sm-min) and (max-width: variables.$screen-sm-max) {
-    display: block !important;
-  }
+    @media (min-width: variables.$screen-sm-min) and (max-width: variables.$screen-sm-max) {
+        display: block !important;
+    }
 }
 .visible-sm-inline {
-  @media (min-width: variables.$screen-sm-min) and (max-width: variables.$screen-sm-max) {
-    display: inline !important;
-  }
+    @media (min-width: variables.$screen-sm-min) and (max-width: variables.$screen-sm-max) {
+        display: inline !important;
+    }
 }
 .visible-sm-inline-block {
-  @media (min-width: variables.$screen-sm-min) and (max-width: variables.$screen-sm-max) {
-    display: inline-block !important;
-  }
+    @media (min-width: variables.$screen-sm-min) and (max-width: variables.$screen-sm-max) {
+        display: inline-block !important;
+    }
 }
 
 @media (min-width: variables.$screen-md-min) and (max-width: variables.$screen-md-max) {
-  @include rv.responsive-visibility('.visible-md');
+    @include rv.responsive-visibility('.visible-md');
 }
 .visible-md-block {
-  @media (min-width: variables.$screen-md-min) and (max-width: variables.$screen-md-max) {
-    display: block !important;
-  }
+    @media (min-width: variables.$screen-md-min) and (max-width: variables.$screen-md-max) {
+        display: block !important;
+    }
 }
 .visible-md-inline {
-  @media (min-width: variables.$screen-md-min) and (max-width: variables.$screen-md-max) {
-    display: inline !important;
-  }
+    @media (min-width: variables.$screen-md-min) and (max-width: variables.$screen-md-max) {
+        display: inline !important;
+    }
 }
 .visible-md-inline-block {
-  @media (min-width: variables.$screen-md-min) and (max-width: variables.$screen-md-max) {
-    display: inline-block !important;
-  }
+    @media (min-width: variables.$screen-md-min) and (max-width: variables.$screen-md-max) {
+        display: inline-block !important;
+    }
 }
 
 @media (min-width: variables.$screen-lg-min) {
-  @include rv.responsive-visibility('.visible-lg');
+    @include rv.responsive-visibility('.visible-lg');
 }
 .visible-lg-block {
-  @media (min-width: variables.$screen-lg-min) {
-    display: block !important;
-  }
+    @media (min-width: variables.$screen-lg-min) {
+        display: block !important;
+    }
 }
 .visible-lg-inline {
-  @media (min-width: variables.$screen-lg-min) {
-    display: inline !important;
-  }
+    @media (min-width: variables.$screen-lg-min) {
+        display: inline !important;
+    }
 }
 .visible-lg-inline-block {
-  @media (min-width: variables.$screen-lg-min) {
-    display: inline-block !important;
-  }
+    @media (min-width: variables.$screen-lg-min) {
+        display: inline-block !important;
+    }
 }
 
 @media (max-width: variables.$screen-xs-max) {
-  @include rv.responsive-invisibility('.hidden-xs');
+    @include rv.responsive-invisibility('.hidden-xs');
 }
 
 @media (min-width: variables.$screen-sm-min) and (max-width: variables.$screen-sm-max) {
-  @include rv.responsive-invisibility('.hidden-sm');
+    @include rv.responsive-invisibility('.hidden-sm');
 }
 
 @media (min-width: variables.$screen-md-min) and (max-width: variables.$screen-md-max) {
-  @include rv.responsive-invisibility('.hidden-md');
+    @include rv.responsive-invisibility('.hidden-md');
 }
 
 @media (min-width: variables.$screen-lg-min) {
-  @include rv.responsive-invisibility('.hidden-lg');
+    @include rv.responsive-invisibility('.hidden-lg');
 }
-
 
 // Print utilities
 //
@@ -152,30 +149,30 @@
 @include rv.responsive-invisibility('.visible-print');
 
 @media print {
-  @include rv.responsive-visibility('.visible-print');
+    @include rv.responsive-visibility('.visible-print');
 }
 .visible-print-block {
-  display: none !important;
+    display: none !important;
 
-  @media print {
-    display: block !important;
-  }
+    @media print {
+        display: block !important;
+    }
 }
 .visible-print-inline {
-  display: none !important;
+    display: none !important;
 
-  @media print {
-    display: inline !important;
-  }
+    @media print {
+        display: inline !important;
+    }
 }
 .visible-print-inline-block {
-  display: none !important;
+    display: none !important;
 
-  @media print {
-    display: inline-block !important;
-  }
+    @media print {
+        display: inline-block !important;
+    }
 }
 
 @media print {
-  @include rv.responsive-invisibility('.hidden-print');
+    @include rv.responsive-invisibility('.hidden-print');
 }

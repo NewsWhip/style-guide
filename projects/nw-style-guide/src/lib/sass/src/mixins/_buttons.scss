@@ -1,6 +1,13 @@
 @use 'sass:math';
 
-@mixin button-variant($color, $color-hover, $background, $bg-hover-or-active, $border: transparent, $border-hover: transparent) {
+@mixin button-variant(
+    $color,
+    $color-hover,
+    $background,
+    $bg-hover-or-active,
+    $border: transparent,
+    $border-hover: transparent
+) {
     color: $color;
     background-color: $background;
     border-color: $border;
@@ -17,7 +24,7 @@
         }
     }
     // Override active button state for dropdown toggles
-    &[aria-expanded="true"] {
+    &[aria-expanded='true'] {
         color: $color-hover;
         background-color: $bg-hover-or-active;
         border-color: $border-hover;
@@ -34,7 +41,8 @@
             border-color: $border;
 
             &.btn-close {
-                &:before, &:after {
+                &:before,
+                &:after {
                     background-color: $color;
                 }
             }
@@ -70,7 +78,7 @@
     justify-content: center;
     position: relative;
     padding: 0;
-    width:  math.floor($font-size * $line-height) + ($padding-vertical * 2) + 1 + 1;
+    width: math.floor($font-size * $line-height) + ($padding-vertical * 2) + 1 + 1;
     height: math.floor($font-size * $line-height) + ($padding-vertical * 2) + 1 + 1;
 }
 

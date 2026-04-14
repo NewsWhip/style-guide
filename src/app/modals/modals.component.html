@@ -1,20 +1,30 @@
-<div class="page-header" style="padding-bottom: 0;">
+<div
+    class="page-header"
+    style="padding-bottom: 0">
     <h3>Modals</h3>
 </div>
 
 <div class="tab-content">
-    <h4 style="margin-bottom: 16px;">Live Example</h4>
+    <h4 style="margin-bottom: 16px">Live Example</h4>
 
     <div class="live-example-form">
         <form [formGroup]="form">
             <div class="form-group">
                 <label>Modal type</label>
                 <div class="radio">
-                    <input formControlName="modalType" id="type-standard" [value]="'standard'" type="radio">
+                    <input
+                        formControlName="modalType"
+                        id="type-standard"
+                        [value]="'standard'"
+                        type="radio" />
                     <label for="type-standard">Standard</label>
                 </div>
                 <div class="radio">
-                    <input formControlName="modalType" id="type-media" [value]="'media'" type="radio">
+                    <input
+                        formControlName="modalType"
+                        id="type-media"
+                        [value]="'media'"
+                        type="radio" />
                     <label for="type-media">Media</label>
                 </div>
             </div>
@@ -22,52 +32,84 @@
             <div class="form-group">
                 <label>Size</label>
 
-                <div class="radio" *ngFor="let size of sizes">
-                    <input formControlName="size" id="size-{{size.id}}" [value]="size.id" type="radio">
-                    <label for="size-{{size.id}}">{{size.name}}</label>
+                <div
+                    class="radio"
+                    *ngFor="let size of sizes">
+                    <input
+                        formControlName="size"
+                        id="size-{{ size.id }}"
+                        [value]="size.id"
+                        type="radio" />
+                    <label for="size-{{ size.id }}">{{ size.name }}</label>
                 </div>
             </div>
 
             <div class="form-group">
                 <div class="checkbox">
-                    <input formControlName="transparentBackdrop" id="backdrop" type="checkbox">
+                    <input
+                        formControlName="transparentBackdrop"
+                        id="backdrop"
+                        type="checkbox" />
                     <label for="backdrop">Transparent backdrop</label>
                 </div>
             </div>
 
             <div class="form-group">
-                <button class="btn btn-md btn-primary btn-block"
+                <button
+                    class="btn btn-md btn-primary btn-block"
                     [disabled]="form.invalid"
-                    (click)="openModal()">Open modal</button>
+                    (click)="openModal()">
+                    Open modal
+                </button>
             </div>
         </form>
     </div>
 </div>
 
 <ng-template #modalTmpl>
-    <div *ngIf="form.get('modalType').value === 'standard'" class="modal-dialog modal-{{form.get('size').value}}">
+    <div
+        *ngIf="form.get('modalType').value === 'standard'"
+        class="modal-dialog modal-{{ form.get('size').value }}">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Modal title</h4>
-                <button type="button" class="btn btn-close btn-md btn-ghost" (click)="closeModal()"></button>
+                <button
+                    type="button"
+                    class="btn btn-close btn-md btn-ghost"
+                    (click)="closeModal()"></button>
             </div>
             <div class="modal-body">
                 <p>This is some sample modal content</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary btn-md" (click)="closeModal()">Close</button>
-                <button type="button" class="btn btn-primary btn-md" (click)="closeModal()">Save</button>
+                <button
+                    type="button"
+                    class="btn btn-secondary btn-md"
+                    (click)="closeModal()">
+                    Close
+                </button>
+                <button
+                    type="button"
+                    class="btn btn-primary btn-md"
+                    (click)="closeModal()">
+                    Save
+                </button>
             </div>
         </div>
     </div>
 
-    <div *ngIf="form.get('modalType').value === 'media'" class="modal-dialog modal-media modal-{{form.get('size').value}}">
+    <div
+        *ngIf="form.get('modalType').value === 'media'"
+        class="modal-dialog modal-media modal-{{ form.get('size').value }}">
         <div class="modal-content">
             <div class="modal-body">
-                <button class="btn btn-lg btn-secondary btn-close" (click)="closeModal()" type="button"></button>
+                <button
+                    class="btn btn-lg btn-secondary btn-close"
+                    (click)="closeModal()"
+                    type="button"></button>
 
                 <div class="media-content">
-                    <img src="https://picsum.photos/500/500">
+                    <img src="https://picsum.photos/500/500" />
                 </div>
             </div>
         </div>

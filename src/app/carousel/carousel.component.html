@@ -4,22 +4,31 @@
 
 <div class="row">
     <div class="col-sm-6">
-<pre><code [innerText]="getExample1()"></code></pre>
+        <pre><code [innerText]="getExample1()"></code></pre>
     </div>
 </div>
 
-<button class="btn btn-alt" (click)="items.pop()">Remove last slide</button>
+<button
+    class="btn btn-alt"
+    (click)="items.pop()">
+    Remove last slide
+</button>
 
-<div style="width: 1030px; max-width: 100%;">
+<div style="width: 1030px; max-width: 100%">
     <nw-carousel maskColor="#373737">
         <ng-container *ngFor="let item of items">
-            <div class="slide" nwCarouselSlide snapAlign="center"
-                [style.background-image]="'url(https://picsum.photos/216/120?image=' + item +')'">Slide {{item}}</div>
+            <div
+                class="slide"
+                nwCarouselSlide
+                snapAlign="center"
+                [style.background-image]="'url(https://picsum.photos/216/120?image=' + item + ')'">
+                Slide {{ item }}
+            </div>
         </ng-container>
     </nw-carousel>
 </div>
 
-<hr>
+<hr />
 
 <h2>Custom paginators and page indicators</h2>
 
@@ -29,7 +38,7 @@
     </div>
 </div>
 
-<div style="width: 100%;">
+<div style="width: 100%">
     <nw-carousel
         maskColor="#373737"
         #carousel="nw-carousel"
@@ -37,28 +46,47 @@
         [showPagination]="false"
         noResultsText="Sorry, no data available">
         <ng-container *ngFor="let item of items">
-            <div class="slide" nwCarouselSlide
-                [style.background-color]="'grey'">Slide {{item}}</div>
+            <div
+                class="slide"
+                nwCarouselSlide
+                [style.background-color]="'grey'">
+                Slide {{ item }}
+            </div>
         </ng-container>
 
         <div class="pagination-left">
-            <button class="btn btn-primary btn-md" (click)="carousel.prev()">Prev</button>
+            <button
+                class="btn btn-primary btn-md"
+                (click)="carousel.prev()">
+                Prev
+            </button>
         </div>
 
         <div class="pagination-right">
-            <button class="btn btn-primary btn-md" (click)="carousel.next()">Next</button>
+            <button
+                class="btn btn-primary btn-md"
+                (click)="carousel.next()">
+                Next
+            </button>
         </div>
 
-        <div class="pagination-indicators" style="width: 100%; text-align: center;">
-            <button class="btn sm btn-primary" *ngFor="let page of carousel.getPages()" [class.active]="page === carousel.currPage"
+        <div
+            class="pagination-indicators"
+            style="width: 100%; text-align: center">
+            <button
+                class="btn sm btn-primary"
+                *ngFor="let page of carousel.getPages()"
+                [class.active]="page === carousel.currPage"
                 (click)="carousel.goToPage(page)">
-                {{page + 1}}
+                {{ page + 1 }}
             </button>
         </div>
     </nw-carousel>
 </div>
 
-<div class="row" style="margin-top: 24px">
+<div
+    class="row"
+    style="margin-top: 24px">
     <div class="col-sm-6">
         <h4>Importing</h4>
         <pre><code>{{"// app.module.ts
@@ -71,13 +99,14 @@ import {CarouselModule} from 'nw-style-guide/carousel';
     ....
     CarouselModule
 })"}}</code></pre>
-        </div>
+    </div>
 
     <div class="col-sm-6"></div>
 </div>
 
-
-<div class="row" style="margin-top: 24px">
+<div
+    class="row"
+    style="margin-top: 24px">
     <div class="col-sm-6">
         <h4>Carousel Component</h4>
         <table class="table table-bordered">
@@ -97,7 +126,9 @@ import {CarouselModule} from 'nw-style-guide/carousel';
     <div class="col-sm-6"></div>
 </div>
 
-<div class="row" style="margin-top: 24px">
+<div
+    class="row"
+    style="margin-top: 24px">
     <div class="col-sm-6">
         <h5>Inputs</h5>
 
@@ -119,13 +150,19 @@ import {CarouselModule} from 'nw-style-guide/carousel';
                     <td><code>showMask</code></td>
                     <td><code>boolean</code></td>
                     <td>Optional</td>
-                    <td>Show a gradient when there are more items before / after the current page. Defaults to <code>true</code></td>
+                    <td>
+                        Show a gradient when there are more items before / after the current page. Defaults to
+                        <code>true</code>
+                    </td>
                 </tr>
                 <tr>
                     <td><code>maskColor</code></td>
                     <td><code>string</code></td>
                     <td>Optional</td>
-                    <td>The color of the mask. Should match the carousel background for correct blending. Defaults to <code>#ffffff</code></td>
+                    <td>
+                        The color of the mask. Should match the carousel background for correct blending. Defaults to
+                        <code>#ffffff</code>
+                    </td>
                 </tr>
                 <tr>
                     <td><code>containerClass</code></td>
@@ -138,7 +175,9 @@ import {CarouselModule} from 'nw-style-guide/carousel';
     </div>
 </div>
 
-<div class="row" style="margin-top: 24px">
+<div
+    class="row"
+    style="margin-top: 24px">
     <div class="col-sm-6">
         <h4>Carousel Slide Directive</h4>
         <table class="table table-bordered">
@@ -158,7 +197,9 @@ import {CarouselModule} from 'nw-style-guide/carousel';
     <div class="col-sm-6"></div>
 </div>
 
-<div class="row" style="margin-top: 24px">
+<div
+    class="row"
+    style="margin-top: 24px">
     <div class="col-sm-6">
         <h5>Inputs</h5>
 

@@ -1,14 +1,14 @@
 name: Prettier
 on:
-  pull_request:
+    pull_request:
 jobs:
-  prettier:
-    name: Prettier check
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: ./.github/actions/npm-install
-        with:
-          token: ${{secrets.FONTAWESOME_NPM_AUTH_TOKEN}}
-      - name: Run Prettier check
-        run: npm run prettier:check
+    prettier:
+        name: Prettier check
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+            - uses: ./.github/actions/npm-install
+              with:
+                  token: ${{secrets.FONTAWESOME_NPM_AUTH_TOKEN}}
+            - name: Run Prettier check
+              run: npm run prettier:check

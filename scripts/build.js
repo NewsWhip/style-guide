@@ -9,7 +9,7 @@ const run = () => {
     execSync('ng build nw-style-guide', { stdio: 'inherit' });
     utils.logSeparator();
     compileSass();
-}
+};
 
 const compileSass = () => {
     process.stdout.write('Compiling SCSS to CSS for CDN delivery');
@@ -24,10 +24,10 @@ const compileSass = () => {
         });
         fs.writeFileSync(destFile, result.css);
         utils.onSuccess();
-    } catch(err) {
+    } catch (err) {
         utils.onError();
         throw err;
     }
-}
+};
 
 run();
