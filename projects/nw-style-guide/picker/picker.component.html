@@ -8,13 +8,14 @@
         <input
             type="text"
             #inputEl
-            class="form-control search-input {{ inputClasses }} text-ellipsis"
+            class="form-control search-input text-ellipsis"
+            [class]="inputClasses"
             [formControl]="searchTerm"
             (focus)="onFocus()"
             (click)="showResults()"
             (keydown.escape)="closeResults()"
             (keydown.arrowdown)="focusNextItem($event)"
-            (keydown.enter)="onInputEnter($event)"
+            (keydown.enter)="onInputEnter()"
             [placeholder]="inputPlaceholderText"
             role="combobox"
             [attr.aria-expanded]="canViewResults"
@@ -243,7 +244,8 @@
                                         <button
                                             class="btn btn-ghost drilldown"
                                             [attr.tabindex]="getChildTabIndex(i)"
-                                            (click)="onDrilldown(item, $event)"
+                                            (click)="onDrilldown(item)"
+                                            (keydown.enter)="$event.stopPropagation()"
                                             [attr.aria-label]="'Expand ' + item.displayName">
                                             <i
                                                 class="fas fa-chevron-right"

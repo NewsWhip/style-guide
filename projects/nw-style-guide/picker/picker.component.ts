@@ -43,6 +43,7 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
     private _elementRef = inject(ElementRef);
     private _liveAnnouncer = inject(LiveAnnouncer);
 
+    // static counter to generate unique ids for multiple instances of the component on the same page
     private static _idCounter = 0;
     public readonly pickerId = `nw-picker-${++NwPickerComponent._idCounter}`;
 
@@ -79,9 +80,9 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
     @Output() desc: EventEmitter<IPickerItem> = new EventEmitter<IPickerItem>();
     @Output() asc: EventEmitter<IPickerItem> = new EventEmitter<IPickerItem>();
 
-    @ViewChild('inputEl', { static: true }) inputEl!: ElementRef;
-    @ViewChildren('selectionsListItems') selectionsListItems!: QueryList<ElementRef>;
-    @ViewChildren('optionsListItems') optionsListItems!: QueryList<ElementRef>;
+    @ViewChild('inputEl', { static: true }) inputEl: ElementRef;
+    @ViewChildren('selectionsListItems') selectionsListItems: QueryList<ElementRef>;
+    @ViewChildren('optionsListItems') optionsListItems: QueryList<ElementRef>;
 
     public displayItems: IPickerItem[] = [];
     public searchTerm: FormControl<string> = new FormControl();
@@ -104,7 +105,7 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
         this._subscribeToSearchTermChanges();
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges() {
         if (this.isDisabled) {
             this.searchTerm.disable();
         }
@@ -112,7 +113,7 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
 
     ascend(event: Event, item: IPickerItem) {
         event.stopPropagation();
-        this.inputEl.nativeElement.focus();
+        this._focusInput();
         this._setDisplayItemsFromParentId(item.parentId);
         this.asc.emit(item);
         this._cdRef.detectChanges();
@@ -132,13 +133,13 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
         return this.items.find(i => i.id === parentId);
     }
 
-    hasChildren(id: number | string | null) {
+    hasChildren(id: number | string) {
         return this.items.filter(i => i.parentId === id).length;
     }
 
     editSelections(event: Event) {
         event.stopPropagation();
-        this.inputEl.nativeElement.focus();
+        this._focusInput();
         this.selectionsAreShowing = true;
         this.edit.emit(event);
     }
@@ -146,10 +147,9 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
     onBackClick(event: Event) {
         event.preventDefault();
         event.stopPropagation();
-        this.inputEl.nativeElement.focus();
+        this._focusInput();
         this.selectionsAreShowing = false;
         this._setDisplayItemsFromParentId(null);
-        this.selections.emit(this.getSelections());
     }
 
     onOptionItemKeydown(e: KeyboardEvent, item: IPickerItem, index: number) {
@@ -195,7 +195,7 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
     clearSelection(event: Event, item: IPickerItem) {
         event.preventDefault();
         event.stopPropagation();
-        this.inputEl.nativeElement.focus();
+        this._focusInput();
         item.added = false;
         item.excluded = false;
 
@@ -312,13 +312,10 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
     focusNextItem(event: Event) {
         event.preventDefault();
         if (!this.canViewResults) {
-            this.showResults();
-            this._cdRef.detectChanges();
-            this.focusedIndex = 0;
-            this._focusListItem(0);
+            this._openResultsAndFocusFirstItem();
             return;
         }
-        const listLength = this.selectionsAreShowing ? this.getSelections().length : this.displayItems?.length;
+        const listLength = this.selectionsAreShowing ? this.getSelections().length : this.displayItems.length;
         if (listLength) {
             const newIndex = Math.min(this._getActiveItemIndex() + 1, listLength - 1);
             this.focusedIndex = newIndex;
@@ -327,17 +324,10 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    onInputEnter(event: Event) {
+    onInputEnter() {
         if (!this.canViewResults) {
-            this.showResults();
-            this._cdRef.detectChanges();
-            this.focusedIndex = 0;
-            this._focusListItem(0);
+            this._openResultsAndFocusFirstItem();
             return;
-        }
-        if (this.focusedIndex >= 0 && this.displayItems?.[this.focusedIndex]) {
-            event.preventDefault();
-            this.toggleItemInclusion(this.displayItems[this.focusedIndex], event);
         }
     }
 
@@ -383,11 +373,12 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
         }
         this.canViewResults = false;
         this.focusedIndex = -1;
+        this.selectionsAreShowing = false;
         this.searchTerm.setValue('', { emitEvent: false });
         this.closed.emit();
         this._cdRef.detectChanges();
         if (refocusInput) {
-            this.inputEl?.nativeElement.focus();
+            this._focusInput();
         }
     }
 
@@ -395,12 +386,12 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
         this.clearSearch.emit();
         this.searchTerm.setValue('');
         this.showResults();
-        this.inputEl.nativeElement.focus();
+        this._focusInput();
     }
 
     onChevronClick() {
         this.showResults();
-        this.inputEl.nativeElement.focus();
+        this._focusInput();
     }
 
     onDrilldown(item: IPickerItem) {
@@ -446,6 +437,21 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
         this.focusedIndex = -1;
     }
 
+    // Returns focus to the search input and clears the focused list item index.
+    private _focusInput() {
+        this.focusedIndex = -1;
+        this.inputEl.nativeElement.focus();
+    }
+
+    // Opens the results dropdown and moves focus to the first list item.
+    // Used when the user triggers a key action (ArrowDown/Enter) while the dropdown is closed.
+    private _openResultsAndFocusFirstItem() {
+        this.showResults();
+        this._cdRef.detectChanges();
+        this.focusedIndex = 0;
+        this._focusListItem(0);
+    }
+
     private _focusPrevItem(event: Event) {
         event.preventDefault();
         const listLength = this.selectionsAreShowing ? this.getSelections().length : this.displayItems?.length;
@@ -454,8 +460,7 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
         }
         const currentIndex = this._getActiveItemIndex();
         if (currentIndex <= 0) {
-            this.focusedIndex = -1;
-            this.inputEl.nativeElement.focus();
+            this._focusInput();
             return;
         }
         const newIndex = currentIndex - 1;
@@ -536,7 +541,7 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
         event.preventDefault();
         event.stopPropagation();
         const parentItem = this.getParentItem(this.parentId);
-        this.inputEl.nativeElement.focus();
+        this._focusInput();
         this._setDisplayItemsFromParentId(parentItem!.parentId);
         this.asc.emit(parentItem);
         this._cdRef.detectChanges();
