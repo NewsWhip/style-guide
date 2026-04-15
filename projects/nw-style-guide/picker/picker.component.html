@@ -143,7 +143,8 @@
                     <ul
                         class="selected-items"
                         role="listbox"
-                        aria-label="Current selections">
+                        aria-label="Current selections"
+                        (focusout)="onListFocusOut($event)">
                         @for (item of getSelections(); track item; let i = $index) {
                             <li
                                 #selectionsListItems
@@ -176,7 +177,8 @@
                     <ul
                         role="listbox"
                         class="picker-options-list"
-                        [attr.aria-label]="searchTerm.value ? 'Search results' : 'Options'">
+                        [attr.aria-label]="searchTerm.value ? 'Search results' : 'Options'"
+                        (focusout)="onListFocusOut($event)">
                         @for (item of displayItems; track item; let i = $index) {
                             <li
                                 #optionsListItems

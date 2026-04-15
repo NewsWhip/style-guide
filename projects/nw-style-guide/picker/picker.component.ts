@@ -341,6 +341,15 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
+    onListFocusOut(event: FocusEvent) {
+        const list = event.currentTarget as HTMLElement;
+        const relatedTarget = event.relatedTarget as HTMLElement;
+        if (!list.contains(relatedTarget)) {
+            this.focusedIndex = -1;
+            this._cdRef.markForCheck();
+        }
+    }
+
     onContainerFocusOut() {
         setTimeout(() => {
             if (!this._elementRef.nativeElement.contains(document.activeElement)) {
