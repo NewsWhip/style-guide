@@ -54,7 +54,7 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
     @Input() initialParentId: any = null;
     @Input() shouldShowSelections: boolean = true;
     @Input() canExclude: boolean = true;
-    @Input() isHeightDynamic: boolean = false;
+    @Input() isHeightDynamic: boolean;
     @Input() isMultiSelect: boolean = true;
     @Input() isMobileDisplay: boolean = false;
     @Input() isDisabled: boolean = false;
