@@ -11,7 +11,8 @@ import { NgFor, NgClass, NgIf, NgTemplateOutlet } from '@angular/common';
             <div
                 class="toast"
                 *ngFor="let toast of toasts"
-                animate.enter="toast-animate-in" animate.leave="toast-animate-out"
+                animate.enter="toast-animate-in"
+                animate.leave="toast-animate-out"
                 [ngClass]="['toast-' + toast.typeId, 'size-' + toast.size]">
                 <i
                     class="fas fa-check toast-icon"

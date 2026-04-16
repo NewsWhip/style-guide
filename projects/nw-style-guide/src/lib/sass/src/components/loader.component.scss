@@ -73,10 +73,7 @@ nw-loader {
 
     .delay-and-fade-in {
         opacity: 0;
-        animation: delay-and-fade-in
-            var(--fade-in-duration, 0)
-            var(--fade-in-delay, 0)
-            linear;
+        animation: delay-and-fade-in var(--fade-in-duration, 0) var(--fade-in-delay, 0) linear;
     }
 
     @keyframes delay-and-fade-in {

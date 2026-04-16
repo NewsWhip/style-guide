@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { NgIf, NgClass, NgFor } from '@angular/common';
 
 @Component({
@@ -26,7 +26,7 @@ import { NgIf, NgClass, NgFor } from '@angular/common';
     changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [NgIf, NgClass, NgFor]
 })
-export class LoaderComponent implements OnInit {
+export class LoaderComponent {
     @Input() isLoading: boolean = false;
     @Input() numOfDots: number = 6;
     @Input() size: 'sm' | 'md' | 'lg' = 'md';
