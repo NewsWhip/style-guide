@@ -18,7 +18,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { IPickerItem } from './IPickerItem';
 import { Subscription } from 'rxjs';
 import { isUndefined } from 'lodash-es';
-import { NgIf, NgFor, NgClass } from '@angular/common';
+import { NgClass } from '@angular/common';
 
 @Component({
     selector: 'nw-angular-picker',
@@ -43,10 +43,11 @@ import { NgIf, NgFor, NgClass } from '@angular/common';
                     class="input-placeholder text-ellipsis"
                     [innerHTML]="getPlaceholderText()"></div>
 
-                <i
-                    *ngIf="!isChevronHidden"
-                    (click)="showResults(); inputEl.focus()"
-                    class="caret dropdown-icon"></i>
+                @if (!isChevronHidden) {
+                    <i
+                        (click)="showResults(); inputEl.focus()"
+                        class="caret dropdown-icon"></i>
+                }
             </div>
 
             <!-- END: NOT xs screen -->
@@ -61,207 +62,202 @@ import { NgIf, NgFor, NgClass } from '@angular/common';
                 class="caret dropdown-icon hidden-sm hidden-md hidden-lg"></i>
             <!-- END: IS xs screen -->
 
-            <button
-                *ngIf="searchTerm.value"
-                (mousedown)="preventBlur($event)"
-                (click)="onReset($event); inputEl.focus()"
-                class="close reset-icon"
-                aria-label="Clear search">
-                &times;
-            </button>
+            @if (searchTerm.value) {
+                <button
+                    (mousedown)="preventBlur($event)"
+                    (click)="onReset($event); inputEl.focus()"
+                    class="close reset-icon"
+                    aria-label="Clear search">
+                    &times;
+                </button>
+            }
 
-            <div
-                class="search-results"
-                *ngIf="canViewResults"
-                [@slideUpIn]="isMobileDisplay ? 'in' : false"
-                (mousedown)="preventBlur($event)">
-                <div class="results-header">
-                    <button
-                        class="close"
-                        (click)="closeResults()"
-                        style="color: #000"
-                        aria-label="Close results">
-                        &times;
-                    </button>
-                </div>
-
-                <!-- Navigate up the tree -->
+            @if (canViewResults) {
                 <div
-                    class="results-actions"
-                    *ngIf="parentId && displayItems.length && !searchTerm.value.length">
-                    <a
-                        tabindex="0"
-                        role="button"
-                        aria-label="Go Back"
-                        class="picker-action"
-                        (click)="ascend($event, getParentItem(parentId))"
-                        (keydown.enter)="ascend($event, getParentItem(parentId))">
-                        <i
-                            class="fas fa-long-arrow-alt-left"
-                            aria-hidden="true"></i>
-                        {{ getParentItem(parentId).displayName }}
-                    </a>
-                </div>
-
-                <div
-                    class="scroll-container"
-                    #searchResultsScrollEl
-                    [style.max-height]="getMaxHeight(searchResultsScrollEl)">
+                    class="search-results"
+                    [@slideUpIn]="isMobileDisplay ? 'in' : false"
+                    (mousedown)="preventBlur($event)">
+                    <div class="results-header">
+                        <button
+                            class="close"
+                            (click)="closeResults()"
+                            style="color: #000"
+                            aria-label="Close results">
+                            &times;
+                        </button>
+                    </div>
+                    <!-- Navigate up the tree -->
+                    @if (parentId && displayItems.length && !searchTerm.value.length) {
+                        <div class="results-actions">
+                            <a
+                                tabindex="0"
+                                role="button"
+                                aria-label="Go Back"
+                                class="picker-action"
+                                (click)="ascend($event, getParentItem(parentId))"
+                                (keydown.enter)="ascend($event, getParentItem(parentId))">
+                                <i
+                                    class="fas fa-long-arrow-alt-left"
+                                    aria-hidden="true"></i>
+                                {{ getParentItem(parentId).displayName }}
+                            </a>
+                        </div>
+                    }
                     <div
-                        class="results-actions"
-                        *ngIf="
+                        class="scroll-container"
+                        #searchResultsScrollEl
+                        [style.max-height]="getMaxHeight(searchResultsScrollEl)">
+                        @if (
                             shouldShowSelections &&
                             !selectionsAreShowing &&
                             parentId == null &&
                             !searchTerm.value.length
-                        ">
-                        <ng-container *ngIf="getSelections().length">
-                            <a
-                                tabindex="0"
-                                role="button"
-                                class="picker-action"
-                                (click)="editSelections($event)"
-                                (keydown.enter)="editSelections($event)"
-                                >Edit selections</a
-                            >
-                            <a
-                                tabindex="0"
-                                role="button"
-                                class="picker-action"
-                                (click)="clearSelections($event)"
-                                (keydown.enter)="clearSelections($event)"
-                                >Clear selections</a
-                            >
-                        </ng-container>
-
-                        <ng-container *ngIf="!getSelections().length">
-                            <em>No selections</em>
-                        </ng-container>
-                    </div>
-
-                    <!-- DISPLAY THE SELECTED ITEMS -->
-                    <ng-container *ngIf="selectionsAreShowing">
-                        <div class="results-actions">
-                            <a
-                                role="button"
-                                class="picker-action"
-                                (click)="selectionsAreShowing = false">
-                                <i
-                                    class="fas fa-long-arrow-alt-left"
-                                    aria-hidden="true"></i>
-                                Back
-                            </a>
-                            <a
-                                role="button"
-                                class="picker-action"
-                                *ngIf="getSelections().length"
-                                (click)="clearSelections($event)"
-                                >Clear all</a
-                            >
-                        </div>
-
-                        <div class="selected-items">
-                            <div
-                                class="search-result"
-                                [ngClass]="{ active: item.added, excluded: item.excluded }"
-                                *ngFor="let item of getSelections()">
-                                <span class="result-item">
-                                    <span class="item-label">{{ item.displayName }}</span>
-
-                                    <button
-                                        class="close"
-                                        style="color: #000000"
-                                        (click)="clearSelection($event, item)"
-                                        [attr.aria-label]="'Remove ' + item.displayName">
-                                        &times;
-                                    </button>
-                                </span>
+                        ) {
+                            <div class="results-actions">
+                                @if (getSelections().length) {
+                                    <a
+                                        tabindex="0"
+                                        role="button"
+                                        href="javascript:;"
+                                        class="picker-action"
+                                        (click)="editSelections($event)"
+                                        (keydown.enter)="editSelections($event)"
+                                        >Edit selections</a
+                                    >
+                                    <a
+                                        tabindex="0"
+                                        role="button"
+                                        href="javascript:;"
+                                        class="picker-action"
+                                        (click)="clearSelections($event)"
+                                        (keydown.enter)="clearSelections($event)"
+                                        >Clear selections</a
+                                    >
+                                }
+                                @if (!getSelections().length) {
+                                    <em>No selections</em>
+                                }
                             </div>
-                        </div>
-                    </ng-container>
-
-                    <ng-container *ngIf="!selectionsAreShowing">
-                        <div
-                            class="search-result"
-                            *ngFor="let item of displayItems"
-                            [class.active]="item.added"
-                            [attr.tabindex]="isMultiSelect ? -1 : 0"
-                            [class.excluded]="item.excluded"
-                            [class.has-children]="hasChildren(item.id)"
-                            role="option"
-                            [attr.aria-selected]="item.added">
-                            <span class="result-item">
-                                <div
-                                    class="checkbox checkbox-placeholder"
-                                    *ngIf="isMultiSelect">
-                                    <input
-                                        tabindex="0"
-                                        id="include-{{ item.id }}"
-                                        type="checkbox"
-                                        (click)="toggleItemInclusion(item, $event)"
-                                        [checked]="item.added"
-                                        (keydown.enter)="toggleItemInclusion(item, $event)" />
-                                    <label
-                                        for="include-{{ item.id }}"
-                                        [attr.aria-label]="'Select ' + item.displayName"></label>
-                                </div>
-
-                                <div
-                                    class="checkbox checkbox-exclusion checkbox-placeholder"
-                                    *ngIf="canExclude && isMultiSelect">
-                                    <input
-                                        tabindex="0"
-                                        id="exclude-{{ item.id }}"
-                                        type="checkbox"
-                                        (click)="toggleItemExclusion(item, $event)"
-                                        [checked]="item.excluded"
-                                        (keydown.enter)="toggleItemExclusion(item, $event)" />
-                                    <label
-                                        for="exclude-{{ item.id }}"
-                                        [attr.aria-label]="'Exclude ' + item.displayName"></label>
-                                </div>
-
-                                <span
-                                    class="item-label"
-                                    title="{{ item.displayName }}"
-                                    (click)="toggleItemInclusion(item, $event)">
-                                    {{ item.displayName }}
-                                    <ng-container *ngIf="searchTerm.value.length && item.searchValues?.length">
-                                        <span>
-                                            -
-                                            <em
-                                                class="small"
-                                                *ngFor="let val of item.searchValues; let isLast = last"
-                                                >{{ val }}{{ isLast ? '' : ', ' }}</em
-                                            >
-                                        </span>
-                                    </ng-container>
-                                </span>
-
-                                <button
-                                    class="btn btn-ghost drilldown"
-                                    *ngIf="hasChildren(item.id)"
-                                    (click)="
-                                        setDisplayItemsFromParentId(item.id, $event); desc.emit(getParentItem(parentId))
-                                    "
-                                    [attr.aria-label]="'Expand ' + item.displayName">
+                        }
+                        <!-- DISPLAY THE SELECTED ITEMS -->
+                        @if (selectionsAreShowing) {
+                            <div class="results-actions">
+                                <a
+                                    role="button"
+                                    class="picker-action"
+                                    (click)="selectionsAreShowing = false">
                                     <i
-                                        class="fas fa-chevron-right"
+                                        class="fas fa-long-arrow-alt-left"
                                         aria-hidden="true"></i>
-                                </button>
-                            </span>
-                        </div>
-
-                        <div
-                            class="results-actions"
-                            *ngIf="displayItems.length < 1">
-                            <em>No results</em>
-                        </div>
-                    </ng-container>
+                                    Back
+                                </a>
+                                @if (getSelections().length) {
+                                    <a
+                                        role="button"
+                                        class="picker-action"
+                                        (click)="clearSelections($event)"
+                                        >Clear all</a
+                                    >
+                                }
+                            </div>
+                            <div class="selected-items">
+                                @for (item of getSelections(); track item) {
+                                    <div
+                                        class="search-result"
+                                        [ngClass]="{ active: item.added, excluded: item.excluded }">
+                                        <span class="result-item">
+                                            <span class="item-label">{{ item.displayName }}</span>
+                                            <button
+                                                class="close"
+                                                style="color: #000000"
+                                                (click)="clearSelection($event, item)"
+                                                [attr.aria-label]="'Remove ' + item.displayName">
+                                                &times;
+                                            </button>
+                                        </span>
+                                    </div>
+                                }
+                            </div>
+                        }
+                        @if (!selectionsAreShowing) {
+                            @for (item of displayItems; track item) {
+                                <div
+                                    class="search-result"
+                                    [class.active]="item.added"
+                                    [attr.tabindex]="isMultiSelect ? -1 : 0"
+                                    [class.excluded]="item.excluded"
+                                    [class.has-children]="hasChildren(item.id)"
+                                    role="option"
+                                    [attr.aria-selected]="item.added">
+                                    <span class="result-item">
+                                        @if (isMultiSelect) {
+                                            <div class="checkbox checkbox-placeholder">
+                                                <input
+                                                    tabindex="0"
+                                                    id="include-{{ item.id }}"
+                                                    type="checkbox"
+                                                    (click)="toggleItemInclusion(item, $event)"
+                                                    [checked]="item.added"
+                                                    (keydown.enter)="toggleItemInclusion(item, $event)" />
+                                                <label
+                                                    for="include-{{ item.id }}"
+                                                    [attr.aria-label]="'Select ' + item.displayName"></label>
+                                            </div>
+                                        }
+                                        @if (canExclude && isMultiSelect) {
+                                            <div class="checkbox checkbox-exclusion checkbox-placeholder">
+                                                <input
+                                                    tabindex="0"
+                                                    id="exclude-{{ item.id }}"
+                                                    type="checkbox"
+                                                    (click)="toggleItemExclusion(item, $event)"
+                                                    [checked]="item.excluded"
+                                                    (keydown.enter)="toggleItemExclusion(item, $event)" />
+                                                <label
+                                                    for="exclude-{{ item.id }}"
+                                                    [attr.aria-label]="'Exclude ' + item.displayName"></label>
+                                            </div>
+                                        }
+                                        <span
+                                            class="item-label"
+                                            title="{{ item.displayName }}"
+                                            (click)="toggleItemInclusion(item, $event)">
+                                            {{ item.displayName }}
+                                            @if (searchTerm.value.length && item.searchValues?.length) {
+                                                <span>
+                                                    -
+                                                    @for (val of item.searchValues; track val; let isLast = $last) {
+                                                        <em class="small">{{ val }}{{ isLast ? '' : ', ' }}</em>
+                                                    }
+                                                </span>
+                                            }
+                                        </span>
+                                        @if (hasChildren(item.id)) {
+                                            <button
+                                                class="btn btn-ghost drilldown"
+                                                (click)="
+                                                    setDisplayItemsFromParentId(item.id, $event);
+                                                    desc.emit(getParentItem(parentId))
+                                                "
+                                                [attr.aria-label]="'Expand ' + item.displayName">
+                                                <i
+                                                    class="fas fa-chevron-right"
+                                                    aria-hidden="true"></i>
+                                            </button>
+                                        }
+                                    </span>
+                                </div>
+                            }
+                            @if (displayItems.length < 1) {
+                                <div class="results-actions">
+                                    <em>No results</em>
+                                </div>
+                            }
+                        }
+                    </div>
+                    <ng-content select=".results-footer"></ng-content>
                 </div>
-
-                <ng-content select=".results-footer"></ng-content>
-            </div>
+            }
         </div>
     `,
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -274,7 +270,7 @@ import { NgIf, NgFor, NgClass } from '@angular/common';
             transition('in => void', [animate(200, style({ top: '100%', transform: 'scale(0)' }))])
         ])
     ],
-    imports: [ReactiveFormsModule, NgIf, NgFor, NgClass]
+    imports: [ReactiveFormsModule, NgClass]
 })
 export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
     chRef = inject(ChangeDetectorRef);
@@ -460,7 +456,10 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
         this.toggleAncestors(item, false, false);
         this.toggleDescendants(item, false);
 
-        this.toggleInclude.emit({ item: item, searchTerm: this.searchTerm.value });
+        this.toggleInclude.emit({
+            item: item,
+            searchTerm: this.searchTerm.value
+        });
         this.selections.emit(this.getSelections());
 
         if (!this.isMultiSelect) {
@@ -485,7 +484,10 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
         this.toggleDescendants(item, false, false);
         this.toggleAncestors(item, undefined, false);
 
-        this.toggleExclude.emit({ item: item, searchTerm: this.searchTerm.value });
+        this.toggleExclude.emit({
+            item: item,
+            searchTerm: this.searchTerm.value
+        });
         this.selections.emit(this.getSelections());
 
         if (!this.isMultiSelect) {

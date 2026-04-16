@@ -14,7 +14,6 @@ import {
 import { FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { IValidationChange } from './models/IValidationChange';
 import { Subscription } from 'rxjs';
-import { NgFor } from '@angular/common';
 
 @Component({
     selector: 'nw-email-input',
@@ -26,19 +25,20 @@ import { NgFor } from '@angular/common';
             (click)="onContainerClick($event)"
             (paste)="onPaste($event)"
             [attr.data-placeholder-text]="placeholder">
-            <div
-                class="pill pill-sm"
-                *ngFor="let email of emails; let last = last"
-                [class.invalid]="!isValid(email)"
-                [class.selected]="last && isPillSelected">
-                <span class="pill-label">{{ email }}</span>
-                <button
-                    type="button"
-                    class="close"
-                    (click)="removeEmail(email)">
-                    ×
-                </button>
-            </div>
+            @for (email of emails; track email; let last = $last) {
+                <div
+                    class="pill pill-sm"
+                    [class.invalid]="!isValid(email)"
+                    [class.selected]="last && isPillSelected">
+                    <span class="pill-label">{{ email }}</span>
+                    <button
+                        type="button"
+                        class="close"
+                        (click)="removeEmail(email)">
+                        ×
+                    </button>
+                </div>
+            }
 
             <div
                 class="input-container"
@@ -60,7 +60,7 @@ import { NgFor } from '@angular/common';
     `,
     changeDetection: ChangeDetectionStrategy.OnPush,
     exportAs: 'nw-email-input',
-    imports: [NgFor, ReactiveFormsModule]
+    imports: [ReactiveFormsModule]
 })
 export class EmailInputComponent implements OnInit, OnDestroy {
     private _cdRef = inject(ChangeDetectorRef);

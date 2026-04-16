@@ -4,14 +4,13 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Toaster } from 'nw-style-guide/toasts';
 import { TABS_DIRECTIVES } from 'nw-style-guide/tabs';
-import { NgIf, NgFor } from '@angular/common';
 import { CopyCodeComponent } from '../code/copy-code.component';
 
 @Component({
     selector: 'app-toasts',
     templateUrl: './toasts.component.html',
     styleUrls: ['./toasts.component.scss'],
-    imports: [TABS_DIRECTIVES, RouterLink, NgIf, FormsModule, ReactiveFormsModule, CopyCodeComponent, NgFor]
+    imports: [TABS_DIRECTIVES, RouterLink, FormsModule, ReactiveFormsModule, CopyCodeComponent]
 })
 export class ToastsComponent implements OnInit, OnDestroy {
     private _cdRef = inject(ChangeDetectorRef);

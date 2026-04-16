@@ -31,239 +31,350 @@
     </div>
 </div>
 
-<div
-    *ngIf="selectedTab === 'design'"
-    class="tab-content">
-    <h4>Tooltip variations</h4>
+@if (selectedTab === 'design') {
+    <div class="tab-content">
+        <h4>Tooltip variations</h4>
 
-    <div style="padding-bottom: 120px; display: flex">
-        <div [style.width.px]="316">
-            <span
-                [nwPopover]="tooltipText"
-                [placement]="'bottom-start'"
-                [openEvents]="[]"
-                [closeEvents]="[]"
-                [autoFlip]="false"
-                [isOpen]="true"
-                >Dark (default)</span
-            >
+        <div style="padding-bottom: 120px; display: flex">
+            <div [style.width.px]="316">
+                <span
+                    [nwPopover]="tooltipText"
+                    [placement]="'bottom-start'"
+                    [openEvents]="[]"
+                    [closeEvents]="[]"
+                    [autoFlip]="false"
+                    [isOpen]="true"
+                    >Dark (default)</span
+                >
+            </div>
+            <div [style.width.px]="316">
+                <span
+                    [nwPopover]="tooltipText"
+                    [placement]="'bottom-start'"
+                    [containerClass]="'tooltip-light'"
+                    [openEvents]="[]"
+                    [closeEvents]="[]"
+                    [autoFlip]="false"
+                    [isOpen]="true"
+                    >Light</span
+                >
+            </div>
         </div>
-        <div [style.width.px]="316">
-            <span
-                [nwPopover]="tooltipText"
-                [placement]="'bottom-start'"
-                [containerClass]="'tooltip-light'"
-                [openEvents]="[]"
-                [closeEvents]="[]"
-                [autoFlip]="false"
-                [isOpen]="true"
-                >Light</span
-            >
-        </div>
-    </div>
 
-    <h4>Basic examples</h4>
+        <h4>Basic examples</h4>
 
-    <div class="examples">
-        <ng-container *ngTemplateOutlet="basicExampleTooltipTmpl; context: { placement: 'top' }"></ng-container>
-        <ng-container *ngTemplateOutlet="basicExampleTooltipTmpl; context: { placement: 'right' }"></ng-container>
-        <ng-container *ngTemplateOutlet="basicExampleTooltipTmpl; context: { placement: 'left' }"></ng-container>
-        <ng-container *ngTemplateOutlet="basicExampleTooltipTmpl; context: { placement: 'bottom' }"></ng-container>
+        <div class="examples">
+            <ng-container *ngTemplateOutlet="basicExampleTooltipTmpl; context: { placement: 'top' }"></ng-container>
+            <ng-container *ngTemplateOutlet="basicExampleTooltipTmpl; context: { placement: 'right' }"></ng-container>
+            <ng-container *ngTemplateOutlet="basicExampleTooltipTmpl; context: { placement: 'left' }"></ng-container>
+            <ng-container *ngTemplateOutlet="basicExampleTooltipTmpl; context: { placement: 'bottom' }"></ng-container>
 
-        <ng-template
-            #basicExampleTooltipTmpl
-            let-placement="placement">
-            <button
-                class="btn btn-md btn-primary"
-                [nwTooltip]="tooltipText"
-                [placement]="placement">
-                Tooltip on {{ placement }}
-            </button>
-        </ng-template>
-        <br />
-        <br />
-        <p>
-            Tooltips (using the <code>nwTooltip</code> selector) will open on mouseenter and close on mouseleave. There
-            is also a default delay of 500ms.
-        </p>
-        <app-code [snippet]="snippets.basicTooltip"></app-code>
-    </div>
-
-    <hr />
-
-    <div
-        class="examples"
-        [style.marginTop.px]="16">
-        <ng-container *ngTemplateOutlet="basicExamplePopoverTmpl; context: { placement: 'top' }"></ng-container>
-        <ng-container *ngTemplateOutlet="basicExamplePopoverTmpl; context: { placement: 'right' }"></ng-container>
-        <ng-container *ngTemplateOutlet="basicExamplePopoverTmpl; context: { placement: 'left' }"></ng-container>
-        <ng-container *ngTemplateOutlet="basicExamplePopoverTmpl; context: { placement: 'bottom' }"></ng-container>
-
-        <ng-template
-            #basicExamplePopoverTmpl
-            let-placement="placement">
-            <button
-                class="btn btn-md btn-primary"
-                [nwPopover]="tooltipText"
-                [placement]="placement">
-                Popover on {{ placement }}
-            </button>
-        </ng-template>
-        <br />
-        <br />
-        <p>
-            Tooltips (using the <code>nwPopover</code> selector) will open and close on click. There is no default
-            delay.
-        </p>
-        <app-code [snippet]="snippets.basicPopover"></app-code>
-    </div>
-    <hr />
-
-    <h4>Popover with close button</h4>
-    <div
-        class="examples"
-        [style.margin]="'16px 0'">
-        <button
-            class="btn btn-md btn-primary"
-            [nwPopover]="closeBtnTmpl"
-            [closeOnOutsideClick]="true"
-            placement="bottom-start"
-            [withClose]="true">
-            Default popover with close button
-        </button>
-
-        <button
-            class="btn btn-md btn-primary"
-            [nwPopover]="closeBtnTmpl"
-            [closeOnOutsideClick]="true"
-            placement="bottom-start"
-            containerClass="tooltip-light"
-            [withClose]="true">
-            Light popover with close button
-        </button>
-
-        <ng-template #closeBtnTmpl>
+            <ng-template
+                #basicExampleTooltipTmpl
+                let-placement="placement">
+                <button
+                    class="btn btn-md btn-primary"
+                    [nwTooltip]="tooltipText"
+                    [placement]="placement">
+                    Tooltip on {{ placement }}
+                </button>
+            </ng-template>
+            <br />
+            <br />
             <p>
-                <strong>Popover with close button</strong>
+                Tooltips (using the <code>nwTooltip</code> selector) will open on mouseenter and close on mouseleave.
+                There is also a default delay of 500ms.
             </p>
-            <small>The close button is always absolutely positioned in the top right of the popover</small>
-        </ng-template>
-    </div>
-
-    <app-code [snippet]="snippets.withCloseButton"></app-code>
-    <hr />
-
-    <h4>Live example</h4>
-
-    <div style="display: flex">
-        <div class="live-example-form">
-            <form [formGroup]="form">
-                <div class="form-group">
-                    <div class="switch switch-sm">
-                        <input
-                            type="checkbox"
-                            id="forceOpen"
-                            formControlName="forceOpen" />
-                        <label
-                            for="forceOpen"
-                            class="switch-toggle">
-                            <span class="on-off no-text"></span>
-                        </label>
-                        <label for="forceOpen"> Open tooltip </label>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Content (plaintext or HTML)</label>
-                    <textarea
-                        class="form-control"
-                        formControlName="tooltip"
-                        placeholder="Tooltip text"
-                        rows="8"></textarea>
-                </div>
-
-                <div class="form-group">
-                    <label>Placement</label>
-                    <select
-                        formControlName="placement"
-                        class="form-control">
-                        <option [value]="'top'">top</option>
-                        <option [value]="'top-start'">top-start</option>
-                        <option [value]="'top-end'">top-end</option>
-                        <option [value]="'bottom'">bottom</option>
-                        <option [value]="'bottom-start'">bottom-start</option>
-                        <option [value]="'bottom-end'">bottom-end</option>
-                        <option [value]="'right'">right</option>
-                        <option [value]="'right-start'">right-start</option>
-                        <option [value]="'right-end'">right-end</option>
-                        <option [value]="'left'">left</option>
-                        <option [value]="'left-start'">left-start</option>
-                        <option [value]="'left-end'">left-end</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <div class="switch switch-sm">
-                        <input
-                            type="checkbox"
-                            id="with-delay"
-                            formControlName="withDelay" />
-                        <label
-                            for="with-delay"
-                            class="switch-toggle">
-                            <span class="on-off no-text"></span>
-                        </label>
-                        <label for="with-delay"> Use delay </label>
-                    </div>
-                </div>
-            </form>
+            <app-code [snippet]="snippets.basicTooltip"></app-code>
         </div>
 
-        <div class="tooltip-test-wrapper">
+        <hr />
+
+        <div
+            class="examples"
+            [style.marginTop.px]="16">
+            <ng-container *ngTemplateOutlet="basicExamplePopoverTmpl; context: { placement: 'top' }"></ng-container>
+            <ng-container *ngTemplateOutlet="basicExamplePopoverTmpl; context: { placement: 'right' }"></ng-container>
+            <ng-container *ngTemplateOutlet="basicExamplePopoverTmpl; context: { placement: 'left' }"></ng-container>
+            <ng-container *ngTemplateOutlet="basicExamplePopoverTmpl; context: { placement: 'bottom' }"></ng-container>
+
+            <ng-template
+                #basicExamplePopoverTmpl
+                let-placement="placement">
+                <button
+                    class="btn btn-md btn-primary"
+                    [nwPopover]="tooltipText"
+                    [placement]="placement">
+                    Popover on {{ placement }}
+                </button>
+            </ng-template>
+            <br />
+            <br />
+            <p>
+                Tooltips (using the <code>nwPopover</code> selector) will open and close on click. There is no default
+                delay.
+            </p>
+            <app-code [snippet]="snippets.basicPopover"></app-code>
+        </div>
+        <hr />
+
+        <h4>Popover with close button</h4>
+        <div
+            class="examples"
+            [style.margin]="'16px 0'">
             <button
                 class="btn btn-md btn-primary"
-                [nwTooltip]="tooltipTmplRef"
-                [placement]="form.get('placement').value"
-                [isOpen]="form.get('forceOpen').value"
-                [delay]="form.get('withDelay').value ? 500 : 0"
-                [openEvents]="[]"
-                [closeEvents]="[]"
-                disabled>
-                Tooltip anchor
+                [nwPopover]="closeBtnTmpl"
+                [closeOnOutsideClick]="true"
+                placement="bottom-start"
+                [withClose]="true">
+                Default popover with close button
             </button>
+
+            <button
+                class="btn btn-md btn-primary"
+                [nwPopover]="closeBtnTmpl"
+                [closeOnOutsideClick]="true"
+                placement="bottom-start"
+                containerClass="tooltip-light"
+                [withClose]="true">
+                Light popover with close button
+            </button>
+
+            <ng-template #closeBtnTmpl>
+                <p>
+                    <strong>Popover with close button</strong>
+                </p>
+                <small>The close button is always absolutely positioned in the top right of the popover</small>
+            </ng-template>
         </div>
+
+        <app-code [snippet]="snippets.withCloseButton"></app-code>
+        <hr />
+
+        <h4>Live example</h4>
+
+        <div style="display: flex">
+            <div class="live-example-form">
+                <form [formGroup]="form">
+                    <div class="form-group">
+                        <div class="switch switch-sm">
+                            <input
+                                type="checkbox"
+                                id="forceOpen"
+                                formControlName="forceOpen" />
+                            <label
+                                for="forceOpen"
+                                class="switch-toggle">
+                                <span class="on-off no-text"></span>
+                            </label>
+                            <label for="forceOpen"> Open tooltip </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Content (plaintext or HTML)</label>
+                        <textarea
+                            class="form-control"
+                            formControlName="tooltip"
+                            placeholder="Tooltip text"
+                            rows="8"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Placement</label>
+                        <select
+                            formControlName="placement"
+                            class="form-control">
+                            <option [value]="'top'">top</option>
+                            <option [value]="'top-start'">top-start</option>
+                            <option [value]="'top-end'">top-end</option>
+                            <option [value]="'bottom'">bottom</option>
+                            <option [value]="'bottom-start'">bottom-start</option>
+                            <option [value]="'bottom-end'">bottom-end</option>
+                            <option [value]="'right'">right</option>
+                            <option [value]="'right-start'">right-start</option>
+                            <option [value]="'right-end'">right-end</option>
+                            <option [value]="'left'">left</option>
+                            <option [value]="'left-start'">left-start</option>
+                            <option [value]="'left-end'">left-end</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="switch switch-sm">
+                            <input
+                                type="checkbox"
+                                id="with-delay"
+                                formControlName="withDelay" />
+                            <label
+                                for="with-delay"
+                                class="switch-toggle">
+                                <span class="on-off no-text"></span>
+                            </label>
+                            <label for="with-delay"> Use delay </label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="tooltip-test-wrapper">
+                <button
+                    class="btn btn-md btn-primary"
+                    [nwTooltip]="tooltipTmplRef"
+                    [placement]="form.get('placement').value"
+                    [isOpen]="form.get('forceOpen').value"
+                    [delay]="form.get('withDelay').value ? 500 : 0"
+                    [openEvents]="[]"
+                    [closeEvents]="[]"
+                    disabled>
+                    Tooltip anchor
+                </button>
+            </div>
+        </div>
+
+        <ng-template #tooltipTmplRef>
+            <div [innerHTML]="form.get('tooltip').value"></div>
+        </ng-template>
+        <hr />
+
+        <h4>Example of customising close events</h4>
+
+        <p>
+            Although not common, there are times when we want a tooltip to show on a disabled item but not be dismissed
+            on click (which is the default behaviour). This is largely because of our default delay of 500ms. If the
+            user clicks the element to which the tooltip is attached before the 500ms passes they won't see the tooltip
+            which is, more than likely, explaining why the element is disabled.
+        </p>
+        <p>
+            We can achieve the desired behaviour by specifying the events we want to close the tooltip, using the
+            <code>closeEvents</code> input.
+        </p>
+
+        <button
+            class="btn btn-md btn-primary disabled"
+            style="margin: 16px 0"
+            nwTooltip="This feature is disabled and this tooltip will not be dismissed on click"
+            placement="right"
+            [delay]="0"
+            [closeEvents]="['mouseleave']">
+            Disabled element
+        </button>
+
+        <app-code [snippet]="snippets.disabledExample"></app-code>
     </div>
+}
 
-    <ng-template #tooltipTmplRef>
-        <div [innerHTML]="form.get('tooltip').value"></div>
-    </ng-template>
-    <hr />
+@if (selectedTab === 'api') {
+    <div class="tab-content">
+        <h3>API reference for tooltips / popover</h3>
+        <app-code [snippet]="snippets.import"></app-code>
 
-    <h4>Example of customising close events</h4>
+        <h4>Directives</h4>
 
-    <p>
-        Although not common, there are times when we want a tooltip to show on a disabled item but not be dismissed on
-        click (which is the default behaviour). This is largely because of our default delay of 500ms. If the user
-        clicks the element to which the tooltip is attached before the 500ms passes they won't see the tooltip which is,
-        more than likely, explaining why the element is disabled.
-    </p>
-    <p>
-        We can achieve the desired behaviour by specifying the events we want to close the tooltip, using the
-        <code>closeEvents</code> input.
-    </p>
+        <h5><code>TooltipDirective</code></h5>
+        <p>Directive that attaches a tooltip / popover to the host element.</p>
+        <p>Selector: <code>[nwTooltip],[nwPopover]</code></p>
+        <p>Exported as: <code>nw-tooltip,nw-popover</code></p>
+        <small
+            >This directive can be invoked by using the <code>nwTooltip</code> or <code>nwPopover</code> attributes. The
+            only differences between using these attributes are the default values of certain properties, e.g. `delay`
+            and open and close events</small
+        >
+        <h5>Properties</h5>
 
-    <button
-        class="btn btn-md btn-primary disabled"
-        style="margin: 16px 0"
-        nwTooltip="This feature is disabled and this tooltip will not be dismissed on click"
-        placement="right"
-        [delay]="0"
-        [closeEvents]="['mouseleave']">
-        Disabled element
-    </button>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th rowspan="2">Name</th>
+                    <th rowspan="2">Description</th>
+                    <th colspan="2">Default values</th>
+                </tr>
+                <tr>
+                    <th><code style="text-transform: initial">nwTooltip</code></th>
+                    <th><code style="text-transform: initial">nwPopover</code></th>
+                </tr>
+            </thead>
 
-    <app-code [snippet]="snippets.disabledExample"></app-code>
-</div>
+            <tbody>
+                @for (row of propertiesTable; track row) {
+                    <ng-container *ngTemplateOutlet="inputTableTowTmpl; context: { values: row }"></ng-container>
+                }
+            </tbody>
+        </table>
+
+        <h5>Methods</h5>
+
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>
+                        <code class="light">{{ 'show(): void' }}</code>
+                    </td>
+                    <td>Can be called manually from the exported directive to open the tooltip</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <code class="light">{{ 'hide(): void' }}</code>
+                    </td>
+                    <td>Can be called manually from the exported directive to close the tooltip</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <code class="light">{{ 'toggle(): void' }}</code>
+                    </td>
+                    <td>Can be called manually from the exported directive to toggle the tooltip</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h5>Types and interfaces</h5>
+        <app-code [snippet]="snippets.placementType"></app-code>
+
+        <h4>Troubleshooting</h4>
+
+        <app-faq>
+            <p question>
+                My tooltip is not closing on scroll even though I've set <code>[closeOnScroll]="true"</code>.
+            </p>
+            <p answer>
+                If your tooltip is inside a scrollable container, that scrollable container needs to have the
+                <code>cdkScrollable</code> directive attached.
+            </p>
+        </app-faq>
+
+        <app-faq>
+            <p question>My tooltip is not repositioning on scroll.</p>
+            <p answer>
+                As above, if your tooltip is inside a scrollable container, that scrollable container needs to have the
+                <code>cdkScrollable</code> directive attached.
+            </p>
+        </app-faq>
+
+        <app-faq>
+            <p question>Do I use the nwTooltip selector or the nwPopover selector?</p>
+            <p answer>
+                The answer depends on your desired behaviour. The only differences between the two selectors are the
+                default values of the inputs. Consult the properties table above to the differences between the default
+                values.
+            </p>
+        </app-faq>
+
+        <app-faq>
+            <p question>How do I tweak the position of the tooltip?</p>
+            <p answer>You can supply a containerClass input which you can apply styles against.</p>
+        </app-faq>
+    </div>
+}
 
 <div
     *ngIf="selectedTab === 'api'"

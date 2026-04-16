@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
-import { NgFor } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 @Component({
     selector: 'app-buttons',
     templateUrl: './buttons.component.html',
     styleUrls: ['./buttons.component.scss'],
-    imports: [NgFor, FormsModule]
+    imports: [FormsModule]
 })
 export class ButtonsComponent {
     public sizes = ['xs', 'sm', 'md', 'lg'];

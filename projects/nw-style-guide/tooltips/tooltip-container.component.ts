@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy, TemplateRef, EventEmitter, inject } from '@angular/core';
 import { ITooltipData } from './models/ITooltipData';
 import { TOOLTIP_CONTEXT_TOKEN } from './config/tooltip-context-token';
-import { NgClass, NgIf, NgTemplateOutlet } from '@angular/common';
+import { NgClass, NgTemplateOutlet } from '@angular/common';
 
 @Component({
     selector: 'nw-tooltip-container',
@@ -9,25 +9,25 @@ import { NgClass, NgIf, NgTemplateOutlet } from '@angular/common';
         <div
             class="tooltip"
             [ngClass]="data.containerClass">
-            <div
-                class="tooltip-arrow"
-                *ngIf="data.withArrow"></div>
+            @if (data.withArrow) {
+                <div class="tooltip-arrow"></div>
+            }
             <div class="tooltip-inner">
-                <button
-                    *ngIf="data.withClose"
-                    (click)="close.emit()"
-                    class="btn btn-ghost-alt btn-sm btn-close close-button"></button>
-                <ng-container *ngIf="isTemplateRef; else stringTmpl">
+                @if (data.withClose) {
+                    <button
+                        (click)="close.emit()"
+                        class="btn btn-ghost-alt btn-sm btn-close close-button"></button>
+                }
+                @if (isTemplateRef) {
                     <ng-container *ngTemplateOutlet="data.tooltip; context: data.templateRefContext"></ng-container>
-                </ng-container>
-                <ng-template #stringTmpl>
+                } @else {
                     <div [outerHTML]="data.tooltip"></div>
-                </ng-template>
+                }
             </div>
         </div>
     `,
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [NgClass, NgIf, NgTemplateOutlet]
+    imports: [NgClass, NgTemplateOutlet]
 })
 export class TooltipContainerComponent {
     data = inject<ITooltipData>(TOOLTIP_CONTEXT_TOKEN);

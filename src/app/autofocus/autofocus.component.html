@@ -33,36 +33,36 @@
     </div>
 </div>
 
-<div
-    *ngIf="selectedTab === 'design'"
-    class="tab-content">
-    <h4 style="margin-bottom: 16px">Live Example</h4>
-    <input
-        style="width: 300px"
-        type="text"
-        nwAutofocus
-        placeholder="This input box is autofocused on load"
-        class="form-control" />
-</div>
+@if (selectedTab === 'design') {
+    <div class="tab-content">
+        <h4 style="margin-bottom: 16px">Live Example</h4>
+        <input
+            style="width: 300px"
+            type="text"
+            nwAutofocus
+            placeholder="This input box is autofocused on load"
+            class="form-control" />
+    </div>
+}
 
-<div
-    *ngIf="selectedTab === 'api'"
-    class="tab-content">
-    <div class="demo-section">
-        <div class="row">
-            <div class="col-md-8 col-sm-12">
-                <h4>Importing</h4>
-                <app-copy-code>{{ importModule }}</app-copy-code>
+@if (selectedTab === 'api') {
+    <div class="tab-content">
+        <div class="demo-section">
+            <div class="row">
+                <div class="col-md-8 col-sm-12">
+                    <h4>Importing</h4>
+                    <app-copy-code>{{ importModule }}</app-copy-code>
+                </div>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <div class="row">
+                <div class="col-md-8 col-sm-12">
+                    <h4>Basic example</h4>
+                    <app-copy-code>{{ example }}</app-copy-code>
+                </div>
             </div>
         </div>
     </div>
-
-    <div class="demo-section">
-        <div class="row">
-            <div class="col-md-8 col-sm-12">
-                <h4>Basic example</h4>
-                <app-copy-code>{{ example }}</app-copy-code>
-            </div>
-        </div>
-    </div>
-</div>
+}

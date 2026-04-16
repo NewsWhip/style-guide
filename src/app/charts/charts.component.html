@@ -30,23 +30,24 @@
         </nw-tabs>
     </div>
 
-    <ng-container *ngIf="selectedTab === 'demo'">
+    @if (selectedTab === 'demo') {
         <form [formGroup]="form">
             <div
                 formArrayName="selectedMetrics"
                 style="display: flex; flex-direction: row">
-                <div
-                    class="checkbox"
-                    style="margin-right: 8px"
-                    *ngFor="let metric of form.controls.selectedMetrics.controls; let i = index">
-                    <input
-                        id="metric-{{ i }}"
-                        type="checkbox"
-                        [formControlName]="i" />
-                    <label for="metric-{{ i }}">
-                        {{ metricNames[i] }}
-                    </label>
-                </div>
+                @for (metric of form.controls.selectedMetrics.controls; track metric; let i = $index) {
+                    <div
+                        class="checkbox"
+                        style="margin-right: 8px">
+                        <input
+                            id="metric-{{ i }}"
+                            type="checkbox"
+                            [formControlName]="i" />
+                        <label for="metric-{{ i }}">
+                            {{ metricNames[i] }}
+                        </label>
+                    </div>
+                }
             </div>
         </form>
 
@@ -59,11 +60,12 @@
                 (nwMousemove)="onMousemove($event)"
                 (nwMouseleave)="onMouseleave()"
                 (bgClick)="onBgClick()">
-                <g
-                    nw-brush
-                    *ngIf="showBrush.value"
-                    [dimension]="brushType.value"
-                    (brushEnd)="onBrushSelection($event)"></g>
+                @if (showBrush.value) {
+                    <g
+                        nw-brush
+                        [dimension]="brushType.value"
+                        (brushEnd)="onBrushSelection($event)"></g>
+                }
 
                 <!-- Axes -->
                 <g
@@ -94,50 +96,55 @@
                     [showGuidlines]="yDomain[0] === 0 && yDomain[1] === 0"></g>
 
                 <!-- Hover lines -->
-                <path
-                    class="hover-path nw-slot-1"
-                    *ngIf="isHovering"
-                    [nw-path]="[
-                        [mainScaleHoverCoordinates[0], yDomain[0]],
-                        [mainScaleHoverCoordinates[0], yDomain[1]]
-                    ]"
-                    [xDomain]="xDomain"
-                    [yDomain]="yDomain"
-                    [animDuration]="0"></path>
+                @if (isHovering) {
+                    <path
+                        class="hover-path nw-slot-1"
+                        [nw-path]="[
+                            [mainScaleHoverCoordinates[0], yDomain[0]],
+                            [mainScaleHoverCoordinates[0], yDomain[1]]
+                        ]"
+                        [xDomain]="xDomain"
+                        [yDomain]="yDomain"
+                        [animDuration]="0"></path>
+                }
 
-                <path
-                    class="hover-path nw-slot-1"
-                    *ngIf="isHovering"
-                    [nw-path]="[
-                        [xDomain[0], mainScaleHoverCoordinates[1]],
-                        [xDomain[1], mainScaleHoverCoordinates[1]]
-                    ]"
-                    [xDomain]="xDomain"
-                    [yDomain]="yDomain"
-                    [animDuration]="0"></path>
+                @if (isHovering) {
+                    <path
+                        class="hover-path nw-slot-1"
+                        [nw-path]="[
+                            [xDomain[0], mainScaleHoverCoordinates[1]],
+                            [xDomain[1], mainScaleHoverCoordinates[1]]
+                        ]"
+                        [xDomain]="xDomain"
+                        [yDomain]="yDomain"
+                        [animDuration]="0"></path>
+                }
 
                 <!-- Paths -->
-                <path
-                    class="fb-comments"
-                    *ngIf="isMetricSelected('fbComments')"
-                    [nw-path]="getDataByMetric('fbComments')"
-                    [xDomain]="xDomain"
-                    [yDomain]="yDomain"
-                    (animEnd)="onPathAnimationEnd('fbComments')"></path>
+                @if (isMetricSelected('fbComments')) {
+                    <path
+                        class="fb-comments"
+                        [nw-path]="getDataByMetric('fbComments')"
+                        [xDomain]="xDomain"
+                        [yDomain]="yDomain"
+                        (animEnd)="onPathAnimationEnd('fbComments')"></path>
+                }
 
-                <path
-                    class="tw-shares"
-                    *ngIf="isMetricSelected('twShares')"
-                    [nw-path]="getDataByMetric('twShares')"
-                    [xDomain]="xDomain"
-                    [yDomain]="yDomain"></path>
+                @if (isMetricSelected('twShares')) {
+                    <path
+                        class="tw-shares"
+                        [nw-path]="getDataByMetric('twShares')"
+                        [xDomain]="xDomain"
+                        [yDomain]="yDomain"></path>
+                }
 
-                <path
-                    class="fb-total"
-                    *ngIf="isMetricSelected('fbTotalEngagement')"
-                    [nw-path]="getDataByMetric('fbTotalEngagement')"
-                    [xDomain]="xDomain"
-                    [yDomain]="yDomain"></path>
+                @if (isMetricSelected('fbTotalEngagement')) {
+                    <path
+                        class="fb-total"
+                        [nw-path]="getDataByMetric('fbTotalEngagement')"
+                        [xDomain]="xDomain"
+                        [yDomain]="yDomain"></path>
+                }
 
                 <path
                     class="random"
@@ -146,13 +153,14 @@
                     [yDomain]="randomYDomain"
                     [curve]="randomLineCurve.curve"></path>
 
-                <path
-                    style="fill: url(#myGradient); stroke: none"
-                    *ngIf="randomArea.value"
-                    [nw-area]="randomData"
-                    [xDomain]="xDomain"
-                    [yDomain]="randomYDomain"
-                    [curve]="randomLineCurve.curve"></path>
+                @if (randomArea.value) {
+                    <path
+                        style="fill: url(#myGradient); stroke: none"
+                        [nw-area]="randomData"
+                        [xDomain]="xDomain"
+                        [yDomain]="randomYDomain"
+                        [curve]="randomLineCurve.curve"></path>
+                }
 
                 <defs>
                     <linearGradient
@@ -168,83 +176,94 @@
                 </defs>
 
                 <!-- Circles with popovers -->
-                <ng-container *ngIf="isMetricSelected('fbComments')">
-                    <circle
-                        *ngFor="let point of getDataByMetric('fbComments'); trackBy: circleTrackValue"
-                        [nw-circle]="point"
-                        #circle="nw-circle"
+                @if (isMetricSelected('fbComments')) {
+                    <ng-container>
+                        @for (point of getDataByMetric('fbComments'); track circleTrackValue($index, point)) {
+                            <circle
+                                [nw-circle]="point"
+                                #circle="nw-circle"
+                                [xDomain]="xDomain"
+                                [yDomain]="yDomain"
+                                r="5"
+                                [nwPopover]="circlePopTemplate"
+                                [context]="{ point: point }"
+                                container="body"
+                                [closeOnOutsideClick]="true"></circle>
+                        }
+                    </ng-container>
+                }
+
+                @if (!randomAsBars.value) {
+                    <ng-container>
+                        @for (point of randomData; track circleTrackIndex($index, point)) {
+                            <circle
+                                [nw-circle]="point"
+                                [xDomain]="xDomain"
+                                [yDomain]="randomYDomain"
+                                r="5"
+                                [nwPopover]="circlePopTemplate"
+                                [context]="{ point: point }"
+                                container="body"
+                                [closeOnOutsideClick]="true"></circle>
+                        }
+                    </ng-container>
+                }
+
+                @if (randomAsBars.value) {
+                    <ng-container>
+                        @for (point of randomData; track circleTrackIndex($index, point)) {
+                            <rect
+                                class="nw-bar"
+                                [nw-bar]="point"
+                                [xDomain]="xDomain"
+                                [yDomain]="randomYDomain"
+                                [barWidth]="barWidth.value"
+                                [nwPopover]="circlePopTemplate"
+                                [context]="{ point: point }"
+                                container="body"
+                                [closeOnOutsideClick]="true"></rect>
+                        }
+                    </ng-container>
+                }
+
+                @if (showForeignObject.value) {
+                    <foreignObject
+                        [nw-foreign-object]
+                        [point]="[1545095807739, 60000]"
                         [xDomain]="xDomain"
                         [yDomain]="yDomain"
-                        r="5"
-                        [nwPopover]="circlePopTemplate"
-                        [context]="{ point: point }"
-                        container="body"
-                        [closeOnOutsideClick]="true"></circle>
-                </ng-container>
-
-                <ng-container *ngIf="!randomAsBars.value">
-                    <circle
-                        *ngFor="let point of randomData; trackBy: circleTrackIndex"
-                        [nw-circle]="point"
-                        [xDomain]="xDomain"
-                        [yDomain]="randomYDomain"
-                        r="5"
-                        [nwPopover]="circlePopTemplate"
-                        [context]="{ point: point }"
-                        container="body"
-                        [closeOnOutsideClick]="true"></circle>
-                </ng-container>
-
-                <ng-container *ngIf="randomAsBars.value">
-                    <rect
-                        *ngFor="let point of randomData; trackBy: circleTrackIndex"
-                        class="nw-bar"
-                        [nw-bar]="point"
-                        [xDomain]="xDomain"
-                        [yDomain]="randomYDomain"
-                        [barWidth]="barWidth.value"
-                        [nwPopover]="circlePopTemplate"
-                        [context]="{ point: point }"
-                        container="body"
-                        [closeOnOutsideClick]="true"></rect>
-                </ng-container>
-
-                <foreignObject
-                    *ngIf="showForeignObject.value"
-                    [nw-foreign-object]
-                    [point]="[1545095807739, 60000]"
-                    [xDomain]="xDomain"
-                    [yDomain]="yDomain"
-                    width="250"
-                    height="150">
-                    <xhtml:div>
-                        <button
-                            class="btn btn-primary"
-                            (click)="log('button clicked')">
-                            Button rendered inside SVG
-                        </button>
-                        <p class="nw-text-dark">
-                            Rendered at 60,000 interactions<br />{{ 1545095807739 | date: 'medium' }}
-                        </p>
-                    </xhtml:div>
-                </foreignObject>
+                        width="250"
+                        height="150">
+                        <xhtml:div>
+                            <button
+                                class="btn btn-primary"
+                                (click)="log('button clicked')">
+                                Button rendered inside SVG
+                            </button>
+                            <p class="nw-text-dark">
+                                Rendered at 60,000 interactions<br />{{ 1545095807739 | date: 'medium' }}
+                            </p>
+                        </xhtml:div>
+                    </foreignObject>
+                }
             </svg>
 
-            <div
-                *ngIf="isHovering && showTooltip.value"
-                nwChartTooltip
-                class="tooltip in"
-                role="tooltip"
-                [position]="hoverPosition"
-                [chartWidth]="chart.width"
-                [chartHeight]="chart.height"
-                [chartMargins]="chartMargins">
-                <div class="tooltip-inner">
-                    <h3>Tooltip title</h3>
-                    <p>hoverPosition[0]: {{ hoverPosition[0] }}</p>
-                    <p>hoverPosition[1]: {{ hoverPosition[1] }}</p>
+            @if (isHovering && showTooltip.value) {
+                <div
+                    nwChartTooltip
+                    class="tooltip in"
+                    role="tooltip"
+                    [position]="hoverPosition"
+                    [chartWidth]="chart.width"
+                    [chartHeight]="chart.height"
+                    [chartMargins]="chartMargins">
+                    <div class="tooltip-inner">
+                        <h3>Tooltip title</h3>
+                        <p>hoverPosition[0]: {{ hoverPosition[0] }}</p>
+                        <p>hoverPosition[1]: {{ hoverPosition[1] }}</p>
+                    </div>
                 </div>
-            </div>
+            }
 
             <ng-template
                 #circlePopTemplate
@@ -262,7 +281,7 @@
                     <label for="show-brush">Show brush</label>
                 </div>
 
-                <ng-container *ngIf="showBrush.value">
+                @if (showBrush.value) {
                     <div class="radio">
                         <input
                             type="radio"
@@ -288,15 +307,17 @@
                         <label for="brush-type-y">Y</label>
                     </div>
 
-                    <div *ngIf="brushBox">
-                        <h5>X Range</h5>
-                        <p>{{ brushBox[0][0] | date: 'medium' }} - {{ brushBox[1][0] | date: 'medium' }}</p>
+                    @if (brushBox) {
+                        <div>
+                            <h5>X Range</h5>
+                            <p>{{ brushBox[0][0] | date: 'medium' }} - {{ brushBox[1][0] | date: 'medium' }}</p>
 
-                        <h5>Y Range</h5>
+                            <h5>Y Range</h5>
 
-                        <p>{{ brushBox[1][1] | number: '1.0-0' }} - {{ brushBox[0][1] | number: '1.0-0' }}</p>
-                    </div>
-                </ng-container>
+                            <p>{{ brushBox[1][1] | number: '1.0-0' }} - {{ brushBox[0][1] | number: '1.0-0' }}</p>
+                        </div>
+                    }
+                }
 
                 <div class="checkbox">
                     <input
@@ -330,16 +351,16 @@
                     <label for="random-as-circles">Use bars for random dataset</label>
                 </div>
 
-                <div
-                    class="form-group"
-                    *ngIf="randomAsBars.value">
-                    <label for="bar-width">Bar width</label>
-                    <input
-                        type="number"
-                        [formControl]="barWidth"
-                        id="bar-width"
-                        class="form-control" />
-                </div>
+                @if (randomAsBars.value) {
+                    <div class="form-group">
+                        <label for="bar-width">Bar width</label>
+                        <input
+                            type="number"
+                            [formControl]="barWidth"
+                            id="bar-width"
+                            class="form-control" />
+                    </div>
+                }
 
                 <div class="form-group">
                     <label for="random-line-curve">Random line curve</label>
@@ -348,31 +369,31 @@
                         class="form-control"
                         [(ngModel)]="randomLineCurve"
                         id="random-line-curve">
-                        <option
-                            *ngFor="let option of randomLineCurvesOptions"
-                            [ngValue]="option">
-                            {{ option.label }}
-                        </option>
+                        @for (option of randomLineCurvesOptions; track option) {
+                            <option [ngValue]="option">
+                                {{ option.label }}
+                            </option>
+                        }
                     </select>
                 </div>
             </div>
 
-            <div
-                *ngIf="isHovering"
-                style="margin-left: 16px">
-                <h3>Hover data</h3>
-                <hr />
-                <p>
-                    {{ mainScaleHoverCoordinates[0] | date: 'medium' }}
-                </p>
-                <p>
-                    {{ mainScaleHoverCoordinates[1] | number: '1.0-0' }}
-                </p>
+            @if (isHovering) {
+                <div style="margin-left: 16px">
+                    <h3>Hover data</h3>
+                    <hr />
+                    <p>
+                        {{ mainScaleHoverCoordinates[0] | date: 'medium' }}
+                    </p>
+                    <p>
+                        {{ mainScaleHoverCoordinates[1] | number: '1.0-0' }}
+                    </p>
 
-                <p>
-                    {{ randomScaleHoverCoordinates[1] | number: '1.0-0' }}
-                </p>
-            </div>
+                    <p>
+                        {{ randomScaleHoverCoordinates[1] | number: '1.0-0' }}
+                    </p>
+                </div>
+            }
         </div>
 
         <div style="margin-top: 8px">
@@ -393,9 +414,9 @@
                 Reset random data
             </button>
         </div>
-    </ng-container>
+    }
 
-    <ng-container *ngIf="selectedTab === 'docs'">
+    @if (selectedTab === 'docs') {
         <h3>Importing</h3>
 
         <pre><code>
@@ -719,5 +740,5 @@ export class AppModule { }
                 </tr>
             </tbody>
         </table>
-    </ng-container>
+    }
 </div>

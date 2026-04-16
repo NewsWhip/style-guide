@@ -38,15 +38,15 @@
                     Dismiss New badge
                 </button>
             </div>
-            <div
-                *ngIf="showResetButton"
-                style="margin-bottom: 20px">
-                <button
-                    class="btn btn-primary"
-                    (click)="resetFeatureAlert()">
-                    Reset Feature Alerts
-                </button>
-            </div>
+            @if (showResetButton) {
+                <div style="margin-bottom: 20px">
+                    <button
+                        class="btn btn-primary"
+                        (click)="resetFeatureAlert()">
+                        Reset Feature Alerts
+                    </button>
+                </div>
+            }
         </div>
     </div>
     <hr />
