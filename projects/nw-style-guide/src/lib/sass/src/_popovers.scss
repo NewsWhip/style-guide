@@ -12,17 +12,25 @@
     display: none;
     padding: 1px;
     font-size: variables.$font-size-base;
-    color: variables.get-color("gray");
+    color: variables.get-color('gray');
     background-color: variables.$popover-bg;
     background-clip: padding-box;
     border: 1px solid variables.$popover-border-color;
     border-radius: 3px;
 
     // Offset the popover to account for the popover arrow
-    &.top     { margin-top: -#{variables.$popover-arrow-width}; }
-    &.right   { margin-left: variables.$popover-arrow-width; }
-    &.bottom  { margin-top: variables.$popover-arrow-width; }
-    &.left    { margin-left: -#{variables.$popover-arrow-width}; }
+    &.top {
+        margin-top: -#{variables.$popover-arrow-width};
+    }
+    &.right {
+        margin-left: variables.$popover-arrow-width;
+    }
+    &.bottom {
+        margin-top: variables.$popover-arrow-width;
+    }
+    &.left {
+        margin-left: -#{variables.$popover-arrow-width};
+    }
 }
 
 .popover-title {
@@ -37,16 +45,18 @@
 .popover-content {
     padding: 24px;
 
-    h5, p, .close{
-        color: variables.get-color("gray");
+    h5,
+    p,
+    .close {
+        color: variables.get-color('gray');
     }
 
-    h5{
+    h5 {
         font-size: 16px;
         margin-bottom: 8px;
     }
 
-    p{
+    p {
         font-size: 14px;
         line-height: 17px;
     }
@@ -65,24 +75,24 @@
 // .arrow is outer, .arrow:after is inner
 
 //overwrite default arrow border color;
-.popover.popover-top.bs-popover-top > .popover-arrow.arrow{
+.popover.popover-top.bs-popover-top > .popover-arrow.arrow {
     border-top-color: variables.$popover-border-color;
 }
 
-.popover.popover-right.bs-popover-right > .popover-arrow.arrow{
+.popover.popover-right.bs-popover-right > .popover-arrow.arrow {
     border-right-color: variables.$popover-border-color;
 }
 
-.popover.popover-bottom.bs-popover-bottom > .popover-arrow.arrow{
+.popover.popover-bottom.bs-popover-bottom > .popover-arrow.arrow {
     border-bottom-color: variables.$popover-border-color;
 }
 
-.popover.popover-left.bs-popover-left > .popover-arrow.arrow{
+.popover.popover-left.bs-popover-left > .popover-arrow.arrow {
     border-left-color: variables.$popover-border-color;
 }
 
 .popover > .arrow,
-.popover > .arrow:after{
+.popover > .arrow:after {
     position: absolute;
     display: block;
     width: 0;
@@ -97,7 +107,7 @@
 
 .popover > .arrow:after {
     border-width: variables.$popover-arrow-width;
-    content: "";
+    content: '';
 }
 
 .popover.top > .arrow {
@@ -109,7 +119,7 @@
     bottom: -#{variables.$popover-arrow-outer-width};
 
     &:after {
-        content: " ";
+        content: ' ';
         bottom: 1px;
         margin-left: -#{variables.$popover-arrow-width};
         border-bottom-width: 0;
@@ -126,7 +136,7 @@
     border-right-color: variables.$popover-arrow-outer-color;
 
     &:after {
-        content: " ";
+        content: ' ';
         left: 1px;
         bottom: -#{variables.$popover-arrow-width};
         border-left-width: 0;
@@ -143,7 +153,7 @@
     top: -#{variables.$popover-arrow-outer-width};
 
     &:after {
-        content: " ";
+        content: ' ';
         top: 1px;
         margin-left: -#{variables.$popover-arrow-width};
         border-top-width: 0;
@@ -160,7 +170,7 @@
     border-left-color: variables.$popover-arrow-outer-color;
 
     &:after {
-        content: " ";
+        content: ' ';
         right: 1px;
         border-right-width: 0;
         border-left-color: variables.$popover-arrow-color;
@@ -180,7 +190,9 @@
         box-shadow: 2px 2px 8px 0 variables.$tooltip-box-shadow-color;
         border-radius: variables.$border-radius-base;
 
-        h5, p, .close {
+        h5,
+        p,
+        .close {
             color: variables.$text-color;
         }
     }

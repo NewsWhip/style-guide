@@ -1,12 +1,15 @@
-import { Input, OnInit, ElementRef, OnChanges, SimpleChanges, OnDestroy, Directive } from "@angular/core";
+import { Input, OnInit, ElementRef, OnChanges, SimpleChanges, OnDestroy, Directive, inject } from '@angular/core';
 import { Axis, AxisTimeInterval } from 'd3-axis';
-import { ChartUtils } from "../chart.utils";
-import { select, Selection } from "d3-selection";
-import { ChartComponent } from "../chart.component";
-import { Subscription } from "rxjs";
+import { ChartUtils } from '../chart.utils';
+import { select, Selection } from 'd3-selection';
+import { ChartComponent } from '../chart.component';
+import { Subscription } from 'rxjs';
 
 @Directive()
 export abstract class AxisBase implements OnInit, OnChanges, OnDestroy {
+    private _elRef = inject(ElementRef);
+    chart = inject(ChartComponent);
+    private _chartUtils = inject(ChartUtils);
 
     @Input() tickFormat: (value: number | Date | { valueOf(): number }) => string;
     @Input() tickCount: number | AxisTimeInterval;
@@ -23,11 +26,6 @@ export abstract class AxisBase implements OnInit, OnChanges, OnDestroy {
 
     private _chartResizeSub: Subscription;
 
-    constructor(
-        private _elRef: ElementRef,
-        public chart: ChartComponent,
-        private _chartUtils: ChartUtils) {}
-
     ngOnInit() {
         this.axisSelection = select(this._elRef.nativeElement as SVGGElement);
 
@@ -42,7 +40,8 @@ export abstract class AxisBase implements OnInit, OnChanges, OnDestroy {
 
     ngOnChanges(c: SimpleChanges) {
         const isDomainChange = ChartUtils.hasInputChanged(c.domain);
-        const isTickSettingsChange = ChartUtils.hasInputChanged(c.tickCount) ||
+        const isTickSettingsChange =
+            ChartUtils.hasInputChanged(c.tickCount) ||
             ChartUtils.hasInputChanged(c.tickSizeOuter) ||
             ChartUtils.hasInputChanged(c.showGuidlines) ||
             ChartUtils.hasInputChanged(c.tickValues);
@@ -55,7 +54,7 @@ export abstract class AxisBase implements OnInit, OnChanges, OnDestroy {
     }
 
     createAxis(): any {
-        throw new Error("Method not implemented.");
+        throw new Error('Method not implemented.');
     }
 
     setTicks() {
@@ -67,24 +66,19 @@ export abstract class AxisBase implements OnInit, OnChanges, OnDestroy {
     }
 
     setDomain() {
-        throw new Error("Method not implemented.");
+        throw new Error('Method not implemented.');
     }
 
     createLabel() {
-        this.axisLabelSelection = this.chart.svg.append('text')
-            .style('text-anchor', 'middle');
+        this.axisLabelSelection = this.chart.svg.append('text').style('text-anchor', 'middle');
     }
 
     render(): any {
-        throw new Error("Method not implemented.");
+        throw new Error('Method not implemented.');
     }
 
     update() {
-        this.axisSelection
-            .transition()
-            .duration(this.animDuration)
-            .ease(this.easing)
-            .call(this.axis);
+        this.axisSelection.transition().duration(this.animDuration).ease(this.easing).call(this.axis);
     }
 
     get fullWidth() {
@@ -96,16 +90,14 @@ export abstract class AxisBase implements OnInit, OnChanges, OnDestroy {
     }
 
     private _subscribeToChartResize() {
-        this._chartResizeSub = this._chartUtils.chartResize$
-            .subscribe(_ => {
-                this.setDomain();
-                this.setTicks();
-                this.render();
-            });
+        this._chartResizeSub = this._chartUtils.chartResize$.subscribe(_ => {
+            this.setDomain();
+            this.setTicks();
+            this.render();
+        });
     }
 
     ngOnDestroy() {
         this._chartResizeSub.unsubscribe();
     }
-
 }

@@ -1,10 +1,10 @@
-import { Component, DebugElement, ElementRef, OnInit, ViewChild } from "@angular/core";
-import { ComponentFixture, fakeAsync, TestBed, tick } from "@angular/core/testing";
-import { By } from "@angular/platform-browser";
-import { TooltipContainerComponent } from "./tooltip-container.component";
-import { TooltipDirective } from "./tooltip.directive";
-import { Placement } from "./models/Placement.type";
-import { CdkScrollable, CdkScrollableModule } from "@angular/cdk/scrolling";
+import { Component, DebugElement, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
+import { TooltipContainerComponent } from './tooltip-container.component';
+import { TooltipDirective } from './tooltip.directive';
+import { Placement } from './models/Placement.type';
+import { CdkScrollable, CdkScrollableModule } from '@angular/cdk/scrolling';
 
 let comp: WrapperComponent;
 let fixture: ComponentFixture<WrapperComponent>;
@@ -16,10 +16,7 @@ const tickWaitMs: number = 500;
 describe('TooltipDirective', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                CdkScrollableModule,
-                WrapperComponent
-            ]
+            imports: [CdkScrollableModule, WrapperComponent]
         });
         fixture = TestBed.createComponent(WrapperComponent);
         comp = fixture.componentInstance;
@@ -115,7 +112,7 @@ describe('TooltipDirective', () => {
         const tooltipElRect = tooltip.getBoundingClientRect();
         // plus 8 for 5px arrow size and 3px manual offset
         expect(tooltipElRect.top).toEqual(connectionElRect.bottom + 8);
-        const leftPos = connectionElRect.left + (connectionElRect.width / 2) - (tooltipElRect.width / 2);
+        const leftPos = connectionElRect.left + connectionElRect.width / 2 - tooltipElRect.width / 2;
         expect(Math.round(tooltipElRect.left)).toEqual(Math.round(leftPos));
     }));
 
@@ -328,8 +325,12 @@ describe('TooltipDirective', () => {
 // eslint-disable-next-line @angular-eslint/prefer-on-push-component-change-detection
 @Component({
     template: `
-        <div class="wrapper-el" cdkScrollable>
-            <button class="btn btn-md btn-primary" #tooltip="nw-tooltip"
+        <div
+            class="wrapper-el"
+            cdkScrollable>
+            <button
+                class="btn btn-md btn-primary"
+                #tooltip="nw-tooltip"
                 [nwTooltip]="'Some tooltip text'"
                 [placement]="tooltipPlacement"
                 [isDisabled]="isDisabled"
@@ -343,9 +344,13 @@ describe('TooltipDirective', () => {
                 [openEvents]="openEvents"
                 [closeEvents]="closeEvents"
                 [connectedTo]="connectedTo"
-                containerClass="test-tooltip-container-class">Hover on me</button>
-    
-            <button class="btn btn-md btn-primary" #popover="nw-popover"
+                containerClass="test-tooltip-container-class">
+                Hover on me
+            </button>
+
+            <button
+                class="btn btn-md btn-primary"
+                #popover="nw-popover"
                 [nwPopover]="'Some popover text'"
                 [placement]="'right'"
                 [isDisabled]="isDisabled"
@@ -359,40 +364,45 @@ describe('TooltipDirective', () => {
                 [openEvents]="openEvents"
                 [closeEvents]="closeEvents"
                 [connectedTo]="connectedTo"
-                (nwClose)="onCloseBtnClicked()">Button text</button>
+                (nwClose)="onCloseBtnClicked()">
+                Button text
+            </button>
         </div>
 
-        <div class="connected-to-el" #connectionEl></div>
+        <div
+            class="connected-to-el"
+            #connectionEl></div>
     `,
-    styles: [`
-        .wrapper-el {
-            overflow-y: auto;
-            height: 200px;
-            position: relative;
-        }
-        .wrapper-el:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 400px;
-        }
-        .connected-to-el {
-            position: absolute;
-            width: 300px;
-            height: 300px;
-            top: 400px;
-            left: 150px;
-            display: block;
-            border: 1px solid white;
-            transition: width 100ms linear;
-        }
-    `],
+    styles: [
+        `
+            .wrapper-el {
+                overflow-y: auto;
+                height: 200px;
+                position: relative;
+            }
+            .wrapper-el:before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 400px;
+            }
+            .connected-to-el {
+                position: absolute;
+                width: 300px;
+                height: 300px;
+                top: 400px;
+                left: 150px;
+                display: block;
+                border: 1px solid white;
+                transition: width 100ms linear;
+            }
+        `
+    ],
     imports: [TooltipDirective, CdkScrollableModule]
 })
 class WrapperComponent implements OnInit {
-
     @ViewChild('tooltip') tooltip: TooltipDirective;
     @ViewChild('popover') popover: TooltipDirective;
     @ViewChild('connectionEl', { static: true }) connectionEl: ElementRef<HTMLElement>;
@@ -420,5 +430,4 @@ class WrapperComponent implements OnInit {
 
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     onCloseBtnClicked() {}
-
 }

@@ -1,15 +1,17 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { WindowRef } from './windowref';
 import { Observable, Subject } from 'rxjs';
 
 @Injectable()
 export class FeatureAlertsService {
+    private _w = inject(WindowRef);
+
     LOCAL_STORAGE_KEY = 'nwAlerts';
 
     private _dismissSubject = new Subject<string>();
     public dismiss$ = new Observable<string>();
 
-    constructor(private _w: WindowRef) {
+    constructor() {
         this.dismiss$ = this._dismissSubject.asObservable();
     }
 

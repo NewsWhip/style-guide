@@ -11,7 +11,6 @@ declare const html_beautify: any;
     imports: [RouterLink, RouterLinkActive]
 })
 export class ListComponent implements AfterViewInit {
-
     @ViewChild('lg', { static: true }) lg: ElementRef;
     @ViewChild('lgPrimary', { static: true }) lgPrimary: ElementRef;
     @ViewChild('nestedLg', { static: true }) nestedLg: ElementRef;
@@ -31,11 +30,10 @@ export class ListComponent implements AfterViewInit {
     escapeHtml(unsafe: string) {
         return unsafe
             .trim()
-            .replace(/&/g, "&amp;")
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;")
-            .replace(/"/g, "&quot;")
-            .replace(/'/g, "&#039;");
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;');
     }
-
 }

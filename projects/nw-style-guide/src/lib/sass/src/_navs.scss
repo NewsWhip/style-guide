@@ -8,7 +8,6 @@
 // Navs
 // --------------------------------------------------
 
-
 // Base class
 // --------------------------------------------------
 
@@ -83,7 +82,6 @@
     }
 }
 
-
 // Tabs
 // -------------------------
 
@@ -123,7 +121,12 @@
     }
     &.nav-sm > li > a,
     &.nav-sm > li > button {
-        @include nav-size.nav-size(variables.$padding-small-vertical + 1, 0, variables.$font-size-small, variables.$line-height-small);
+        @include nav-size.nav-size(
+            variables.$padding-small-vertical + 1,
+            0,
+            variables.$font-size-small,
+            variables.$line-height-small
+        );
     }
     &.nav-md > li > a,
     &.nav-md > li > button {
@@ -131,7 +134,12 @@
     }
     &.nav-lg > li > a,
     &.nav-lg > li > button {
-        @include nav-size.nav-size(variables.$padding-large-vertical + 1, 0, variables.$font-size-large, variables.$line-height-large);
+        @include nav-size.nav-size(
+            variables.$padding-large-vertical + 1,
+            0,
+            variables.$font-size-large,
+            variables.$line-height-large
+        );
     }
 }
 
@@ -158,7 +166,8 @@ nw-tabs {
         left: 0;
         pointer-events: none;
 
-        .prev-page, .next-page {
+        .prev-page,
+        .next-page {
             position: absolute;
             top: 0;
             height: 100%;
@@ -178,7 +187,7 @@ nw-tabs {
         display: block;
         height: 3px;
         position: absolute;
-        background-color: variables.get-color("primary", base);
+        background-color: variables.get-color('primary', base);
         transition: all ease-in-out 200ms;
     }
 }
@@ -248,7 +257,6 @@ nw-tabs {
     }
 }
 
-
 // Stacked pills
 .nav-stacked {
     > li {
@@ -259,7 +267,6 @@ nw-tabs {
         }
     }
 }
-
 
 // Nav variations
 // --------------------------------------------------
@@ -335,7 +342,6 @@ nw-tabs {
     }
 }
 
-
 // Tabbable tabs
 // -------------------------
 
@@ -348,7 +354,6 @@ nw-tabs {
         display: block;
     }
 }
-
 
 // Dropdowns
 // -------------------------

@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, Component, HostBinding, Input, OnChanges, SimpleChanges } from "@angular/core";
-import { IWord } from "./models/IWord";
-import { IWordWithPosition } from "./models/IWordWithPosition";
+import { ChangeDetectionStrategy, Component, HostBinding, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { IWord } from './models/IWord';
+import { IWordWithPosition } from './models/IWordWithPosition';
 
 @Component({
     selector: 'nw-word',
@@ -8,7 +8,6 @@ import { IWordWithPosition } from "./models/IWordWithPosition";
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class WordComponent<T extends IWord> implements OnChanges {
-
     @Input() word: IWordWithPosition<T>;
 
     @HostBinding('style.translate')
@@ -28,5 +27,4 @@ export class WordComponent<T extends IWord> implements OnChanges {
             this.width = this.word.width;
         }
     }
-
 }

@@ -1,4 +1,4 @@
-@use "../variables";
+@use '../variables';
 
 nw-carousel {
     .carousel-container {
@@ -34,10 +34,10 @@ nw-carousel {
             border-radius: 50%;
             margin: 0 4px;
             display: inline-block;
-            background-color: variables.get-color("gray", 4x-light);
+            background-color: variables.get-color('gray', 4x-light);
 
             &.active {
-                background-color: variables.get-color("primary", base);
+                background-color: variables.get-color('primary', base);
             }
             &:hover {
                 background-color: #ffffff;

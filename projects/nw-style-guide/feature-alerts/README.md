@@ -1,4 +1,4 @@
-*app.module.ts*
+_app.module.ts_
 
 ```javascript
 import { FeatureAlertsModule } from 'nw-style-guide/feature-alerts';
@@ -18,7 +18,7 @@ import { FeatureAlertsModule } from 'nw-style-guide/feature-alerts';
 export class AppModule { }
 ```
 
-*my-feature.component.ts*
+_my-feature.component.ts_
 
 ```javascript
 import { IFeatureAlertParams } from "nw-style-guide/feature-alerts";
@@ -44,15 +44,15 @@ export class MyFeature {
             title: 'Introducing % Change',
             message: 'Some short custom message.',
             containerClass: 'reporting-percentage-change-cta',   // all feature alerts share .feature-alert class but you can add more
-            triggers: '',                                        // (space separated) mouseenter focus click dblclick keypress 
+            triggers: '',                                        // (space separated) mouseenter focus click dblclick keypress
             placement: 'bottom',
             container: ''                                        // '' or 'body' or any other DOM container
         };
     }
-    
+
     onCTAClick() {
         // the parent component can react to 'Try it Now' button clicked in the feature alert
-        // e.g. navigate to feature, highlight some UI components,    
+        // e.g. navigate to feature, highlight some UI components,
     }
 
 }

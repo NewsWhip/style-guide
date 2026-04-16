@@ -1,19 +1,45 @@
-import { CloseScrollStrategy, ConnectionPositionPair, FlexibleConnectedPositionStrategy, Overlay, OverlayRef, RepositionScrollStrategy } from "@angular/cdk/overlay";
-import { ComponentPortal } from "@angular/cdk/portal";
-import { ComponentRef, Directive, ElementRef, EventEmitter, Injector, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, TemplateRef, ViewContainerRef, inject } from "@angular/core";
-import { Placement } from "./models/Placement.type";
+import {
+    CloseScrollStrategy,
+    ConnectionPositionPair,
+    FlexibleConnectedPositionStrategy,
+    Overlay,
+    OverlayRef,
+    RepositionScrollStrategy
+} from '@angular/cdk/overlay';
+import { ComponentPortal } from '@angular/cdk/portal';
+import {
+    ComponentRef,
+    Directive,
+    ElementRef,
+    EventEmitter,
+    Injector,
+    Input,
+    OnChanges,
+    OnDestroy,
+    OnInit,
+    Output,
+    SimpleChanges,
+    TemplateRef,
+    ViewContainerRef,
+    inject
+} from '@angular/core';
+import { Placement } from './models/Placement.type';
 import { Subject, fromEvent, merge, EMPTY, of, Observable, animationFrameScheduler, timer, interval } from 'rxjs';
 import { takeUntil, filter, tap, map, debounce, switchMap, delay } from 'rxjs/operators';
-import { TOOLTIP_CONTEXT_TOKEN } from "./config/tooltip-context-token";
-import { TooltipContainerComponent } from "./tooltip-container.component";
-import { ITooltipData } from "./models/ITooltipData";
-import { placementFlipMap } from "./config/placement-flip-map";
+import { TOOLTIP_CONTEXT_TOKEN } from './config/tooltip-context-token';
+import { TooltipContainerComponent } from './tooltip-container.component';
+import { ITooltipData } from './models/ITooltipData';
+import { placementFlipMap } from './config/placement-flip-map';
 
 @Directive({
     selector: '[nwTooltip],[nwPopover]',
     exportAs: 'nw-tooltip,nw-popover'
 })
 export class TooltipDirective implements OnInit, OnChanges, OnDestroy {
+    private _elRef = inject<ElementRef<HTMLElement>>(ElementRef);
+    private _overlay = inject(Overlay);
+    private _vcRef = inject(ViewContainerRef);
+    private _injector = inject(Injector);
 
     /**
      * This directive can be invoked by using the `nwTooltip` or `nwPopover` attributes. The only differences between using these
@@ -85,7 +111,7 @@ export class TooltipDirective implements OnInit, OnChanges, OnDestroy {
      */
     @Input() pointerEvents: 'auto' | 'none';
     /**
-     * The screen size at which the tooltip should treated as a popover as there is no hover events on mobile 
+     * The screen size at which the tooltip should treated as a popover as there is no hover events on mobile
      */
     @Input() breakpoint: number = 767;
     @Input() hostElementZIndex: number;
@@ -103,12 +129,6 @@ export class TooltipDirective implements OnInit, OnChanges, OnDestroy {
      * A subject that emits when the TooltipContainerComponent is destroyed
      */
     private _tooltipContainerDestroyed$: Subject<void> = new Subject();
-
-    constructor(
-        private _elRef: ElementRef<HTMLElement>,
-        private _overlay: Overlay,
-        private _vcRef: ViewContainerRef,
-        private _injector: Injector) {}
 
     ngOnInit() {
         this._setInputDefaults();
@@ -132,10 +152,12 @@ export class TooltipDirective implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnChanges(c: SimpleChanges): void {
-        const shouldUpdatePositionStrategy = ['placement', 'withArrow', 'autoFlip']
-            .some(inputProp => c[inputProp]?.previousValue !== c[inputProp]?.currentValue && !c[inputProp]?.firstChange);
+        const shouldUpdatePositionStrategy = ['placement', 'withArrow', 'autoFlip'].some(
+            inputProp => c[inputProp]?.previousValue !== c[inputProp]?.currentValue && !c[inputProp]?.firstChange
+        );
         const isOpenChange: boolean = c.isOpen?.previousValue !== c.isOpen?.currentValue && !c.isOpen.firstChange;
-        const shouldUpdateScrollStrategy: boolean = c.closeOnScroll?.previousValue !== c.closeOnScroll?.currentValue && !c.closeOnScroll.firstChange;
+        const shouldUpdateScrollStrategy: boolean =
+            c.closeOnScroll?.previousValue !== c.closeOnScroll?.currentValue && !c.closeOnScroll.firstChange;
 
         if (shouldUpdatePositionStrategy) {
             this._updatePositionStrategy(this.placement);
@@ -187,8 +209,8 @@ export class TooltipDirective implements OnInit, OnChanges, OnDestroy {
          */
         if ((this.popover !== undefined && this.popover !== null) || isMobileScreenSize) {
             this.delay = getDefaultValue(this.delay, 0);
-            this.openEvents = getDefaultValue(this.openEvents, ["click"]);
-            this.closeEvents = getDefaultValue(this.closeEvents, ["click"]);
+            this.openEvents = getDefaultValue(this.openEvents, ['click']);
+            this.closeEvents = getDefaultValue(this.closeEvents, ['click']);
             this.closeOnScroll = getDefaultValue(this.closeOnScroll, false);
             this.pointerEvents = getDefaultValue(this.pointerEvents, 'auto');
             if (isMobileScreenSize) {
@@ -196,8 +218,8 @@ export class TooltipDirective implements OnInit, OnChanges, OnDestroy {
             }
         } else {
             this.delay = getDefaultValue(this.delay, 500);
-            this.openEvents = getDefaultValue(this.openEvents, ["mouseenter"]);
-            this.closeEvents = getDefaultValue(this.closeEvents, ["click", "mouseleave"]);
+            this.openEvents = getDefaultValue(this.openEvents, ['mouseenter']);
+            this.closeEvents = getDefaultValue(this.closeEvents, ['click', 'mouseleave']);
             this.closeOnScroll = getDefaultValue(this.closeOnScroll, true);
             this.pointerEvents = getDefaultValue(this.pointerEvents, 'none');
         }
@@ -209,11 +231,7 @@ export class TooltipDirective implements OnInit, OnChanges, OnDestroy {
 
     private _open(): ComponentRef<TooltipContainerComponent> {
         if (!this._overlayRef.hasAttached()) {
-            const portal = new ComponentPortal(
-                TooltipContainerComponent,
-                this._vcRef,
-                this._createInjector()
-            );
+            const portal = new ComponentPortal(TooltipContainerComponent, this._vcRef, this._createInjector());
             const ref = this._overlayRef.attach(portal);
             this.nwShown.emit();
             return ref;
@@ -231,8 +249,13 @@ export class TooltipDirective implements OnInit, OnChanges, OnDestroy {
         const positionStrategy = this._getPositionStrategy(this.placement);
         const scrollStrategy = this._getScrollStrategy(this.closeOnScroll);
         const disposeOnNavigation = true;
-        const panelClasses: string[] = ["tooltip-overlay", `pointer-events-${this.pointerEvents}`];
-        this._overlayRef = this._overlay.create({ positionStrategy, scrollStrategy, disposeOnNavigation, panelClass: panelClasses });
+        const panelClasses: string[] = ['tooltip-overlay', `pointer-events-${this.pointerEvents}`];
+        this._overlayRef = this._overlay.create({
+            positionStrategy,
+            scrollStrategy,
+            disposeOnNavigation,
+            panelClass: panelClasses
+        });
 
         if (this.hostElementZIndex) {
             this._overlayRef.hostElement.style.zIndex = this.hostElementZIndex.toString();
@@ -253,9 +276,7 @@ export class TooltipDirective implements OnInit, OnChanges, OnDestroy {
 
         return Injector.create({
             parent: this._injector,
-            providers: [
-                { provide: TOOLTIP_CONTEXT_TOKEN, useValue: tooltipData }
-            ]
+            providers: [{ provide: TOOLTIP_CONTEXT_TOKEN, useValue: tooltipData }]
         });
     }
 
@@ -275,14 +296,14 @@ export class TooltipDirective implements OnInit, OnChanges, OnDestroy {
             );
         });
 
-        const outsideClick$: Observable<boolean> = this.closeOnOutsideClick ?
-            this._overlayRef.outsidePointerEvents()
-                .pipe(
-                    filter(_ => this._overlayRef.hasAttached()),
-                    // The element that this tooltip is attached to should not be included as an outside click
-                    filter(event => event.target !== this._elRef.nativeElement),
-                    map(_ => false)
-                ) : EMPTY;
+        const outsideClick$: Observable<boolean> = this.closeOnOutsideClick
+            ? this._overlayRef.outsidePointerEvents().pipe(
+                  filter(_ => this._overlayRef.hasAttached()),
+                  // The element that this tooltip is attached to should not be included as an outside click
+                  filter(event => event.target !== this._elRef.nativeElement),
+                  map(_ => false)
+              )
+            : EMPTY;
 
         /**
          * Merge all open and close events into a single stream that emits a boolean that indicates whether
@@ -308,10 +329,7 @@ export class TooltipDirective implements OnInit, OnChanges, OnDestroy {
                  */
                 switchMap(isOpenEvent => {
                     if (isOpenEvent && this.delay) {
-                        return of(isOpenEvent).pipe(
-                            delay(this.delay),
-                            takeUntil(this._cancelDelayedOpen$)
-                        );
+                        return of(isOpenEvent).pipe(delay(this.delay), takeUntil(this._cancelDelayedOpen$));
                     }
                     return of(isOpenEvent);
                 }),
@@ -326,12 +344,10 @@ export class TooltipDirective implements OnInit, OnChanges, OnDestroy {
                      */
                     if (ref) {
                         ref.changeDetectorRef.detectChanges();
-                        ref.instance.close
-                            .pipe(takeUntil(this._tooltipContainerDestroyed$))
-                            .subscribe(_ => {
-                                this.nwClose.emit();
-                                this._close();
-                            });
+                        ref.instance.close.pipe(takeUntil(this._tooltipContainerDestroyed$)).subscribe(_ => {
+                            this.nwClose.emit();
+                            this._close();
+                        });
 
                         /**
                          * When the TooltipContainerComponent is destroyed we fire the _tooltipContainerDestroyed$
@@ -378,8 +394,8 @@ export class TooltipDirective implements OnInit, OnChanges, OnDestroy {
          * The default position when no placement is specified
          */
         const bottom = new ConnectionPositionPair(
-            { originX: "center", originY: "bottom" },
-            { overlayX: "center", overlayY: "top" },
+            { originX: 'center', originY: 'bottom' },
+            { overlayX: 'center', overlayY: 'top' },
             null,
             getYOffset('bottom'),
             getPanelClass('bottom')
@@ -388,8 +404,8 @@ export class TooltipDirective implements OnInit, OnChanges, OnDestroy {
         switch (placement) {
             case 'top':
                 return new ConnectionPositionPair(
-                    { originX: "center", originY: "top" },
-                    { overlayX: "center", overlayY: "bottom" },
+                    { originX: 'center', originY: 'top' },
+                    { overlayX: 'center', overlayY: 'bottom' },
                     null,
                     getYOffset(placement),
                     getPanelClass(placement)
@@ -397,8 +413,8 @@ export class TooltipDirective implements OnInit, OnChanges, OnDestroy {
 
             case 'top-start':
                 return new ConnectionPositionPair(
-                    { originX: "start", originY: "top" },
-                    { overlayX: "start", overlayY: "bottom" },
+                    { originX: 'start', originY: 'top' },
+                    { overlayX: 'start', overlayY: 'bottom' },
                     null,
                     getYOffset(placement),
                     getPanelClass(placement)
@@ -406,8 +422,8 @@ export class TooltipDirective implements OnInit, OnChanges, OnDestroy {
 
             case 'top-end':
                 return new ConnectionPositionPair(
-                    { originX: "end", originY: "top" },
-                    { overlayX: "end", overlayY: "bottom" },
+                    { originX: 'end', originY: 'top' },
+                    { overlayX: 'end', overlayY: 'bottom' },
                     null,
                     getYOffset(placement),
                     getPanelClass(placement)
@@ -418,8 +434,8 @@ export class TooltipDirective implements OnInit, OnChanges, OnDestroy {
 
             case 'bottom-start':
                 return new ConnectionPositionPair(
-                    { originX: "start", originY: "bottom" },
-                    { overlayX: "start", overlayY: "top" },
+                    { originX: 'start', originY: 'bottom' },
+                    { overlayX: 'start', overlayY: 'top' },
                     null,
                     getYOffset(placement),
                     getPanelClass(placement)
@@ -427,8 +443,8 @@ export class TooltipDirective implements OnInit, OnChanges, OnDestroy {
 
             case 'bottom-end':
                 return new ConnectionPositionPair(
-                    { originX: "end", originY: "bottom" },
-                    { overlayX: "end", overlayY: "top" },
+                    { originX: 'end', originY: 'bottom' },
+                    { overlayX: 'end', overlayY: 'top' },
                     null,
                     getYOffset(placement),
                     getPanelClass(placement)
@@ -436,8 +452,8 @@ export class TooltipDirective implements OnInit, OnChanges, OnDestroy {
 
             case 'right':
                 return new ConnectionPositionPair(
-                    { originX: "end", originY: "center" },
-                    { overlayX: "start", overlayY: "center" },
+                    { originX: 'end', originY: 'center' },
+                    { overlayX: 'start', overlayY: 'center' },
                     getXOffset(placement),
                     null,
                     getPanelClass(placement)
@@ -445,8 +461,8 @@ export class TooltipDirective implements OnInit, OnChanges, OnDestroy {
 
             case 'right-start':
                 return new ConnectionPositionPair(
-                    { originX: "end", originY: "top" },
-                    { overlayX: "start", overlayY: "top" },
+                    { originX: 'end', originY: 'top' },
+                    { overlayX: 'start', overlayY: 'top' },
                     getXOffset(placement),
                     null,
                     getPanelClass(placement)
@@ -454,8 +470,8 @@ export class TooltipDirective implements OnInit, OnChanges, OnDestroy {
 
             case 'right-end':
                 return new ConnectionPositionPair(
-                    { originX: "end", originY: "bottom" },
-                    { overlayX: "start", overlayY: "bottom" },
+                    { originX: 'end', originY: 'bottom' },
+                    { overlayX: 'start', overlayY: 'bottom' },
                     getXOffset(placement),
                     null,
                     getPanelClass(placement)
@@ -463,8 +479,8 @@ export class TooltipDirective implements OnInit, OnChanges, OnDestroy {
 
             case 'left':
                 return new ConnectionPositionPair(
-                    { originX: "start", originY: "center" },
-                    { overlayX: "end", overlayY: "center" },
+                    { originX: 'start', originY: 'center' },
+                    { overlayX: 'end', overlayY: 'center' },
                     getXOffset(placement),
                     null,
                     getPanelClass(placement)
@@ -472,8 +488,8 @@ export class TooltipDirective implements OnInit, OnChanges, OnDestroy {
 
             case 'left-start':
                 return new ConnectionPositionPair(
-                    { originX: "start", originY: "top" },
-                    { overlayX: "end", overlayY: "top" },
+                    { originX: 'start', originY: 'top' },
+                    { overlayX: 'end', overlayY: 'top' },
                     getXOffset(placement),
                     null,
                     getPanelClass(placement)
@@ -481,8 +497,8 @@ export class TooltipDirective implements OnInit, OnChanges, OnDestroy {
 
             case 'left-end':
                 return new ConnectionPositionPair(
-                    { originX: "start", originY: "bottom" },
-                    { overlayX: "end", overlayY: "bottom" },
+                    { originX: 'start', originY: 'bottom' },
+                    { overlayX: 'end', overlayY: 'bottom' },
                     getXOffset(placement),
                     null,
                     getPanelClass(placement)
@@ -506,9 +522,9 @@ export class TooltipDirective implements OnInit, OnChanges, OnDestroy {
          * If `autoFlip` is enabled, include the inverse position of each `placement` input. Each of this inverse positions
          * will have a lower priority than each of the preferred positions generated from the `placement` input
          */
-        const positions = this.autoFlip ?
-            [...primaryPositions, ...placementsList.map(p => this._getPositionPair(placementFlipMap[p]))] :
-            [...primaryPositions];
+        const positions = this.autoFlip
+            ? [...primaryPositions, ...placementsList.map(p => this._getPositionPair(placementFlipMap[p]))]
+            : [...primaryPositions];
 
         return this._overlay
             .position()

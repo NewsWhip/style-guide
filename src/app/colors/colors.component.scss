@@ -1,5 +1,5 @@
-@use "nw-style-guide/sass/src/variables";
-@use "sass:map";
+@use 'nw-style-guide/sass/src/variables';
+@use 'sass:map';
 
 .color-variants {
     display: flex;
@@ -40,24 +40,52 @@
 @each $color-settings in variables.$color-settings-maps {
     $name: map.get($color-settings, name);
 
-    .bg-#{$name}-base { background: variables.get-color($name, base) };
-    .bg-#{$name}-dark { background: variables.get-color($name, dark) };
-    .bg-#{$name}-light { background: variables.get-color($name, light) };
-    .bg-#{$name}-x-light { background: variables.get-color($name, x-light) };
-    .bg-#{$name}-2x-light { background: variables.get-color($name, 2x-light) };
-    .bg-#{$name}-3x-light { background: variables.get-color($name, 3x-light) };
-    .bg-#{$name}-4x-light { background: variables.get-color($name, 4x-light) };
-    .bg-#{$name}-5x-light { background: variables.get-color($name, 5x-light) };
+    .bg-#{$name}-base {
+        background: variables.get-color($name, base);
+    }
+    .bg-#{$name}-dark {
+        background: variables.get-color($name, dark);
+    }
+    .bg-#{$name}-light {
+        background: variables.get-color($name, light);
+    }
+    .bg-#{$name}-x-light {
+        background: variables.get-color($name, x-light);
+    }
+    .bg-#{$name}-2x-light {
+        background: variables.get-color($name, 2x-light);
+    }
+    .bg-#{$name}-3x-light {
+        background: variables.get-color($name, 3x-light);
+    }
+    .bg-#{$name}-4x-light {
+        background: variables.get-color($name, 4x-light);
+    }
+    .bg-#{$name}-5x-light {
+        background: variables.get-color($name, 5x-light);
+    }
 
     @if $name == 'gray' {
-        .bg-#{$name}-6x-light { background: variables.get-color($name, 6x-light) };
+        .bg-#{$name}-6x-light {
+            background: variables.get-color($name, 6x-light);
+        }
     }
 }
 
-$levels-map: (0: variables.$level0, 1: variables.$level1, 2: variables.$level2, 3: variables.$level3, 4: variables.$level4, 5: variables.$level5, 6: variables.$level6);
+$levels-map: (
+    0: variables.$level0,
+    1: variables.$level1,
+    2: variables.$level2,
+    3: variables.$level3,
+    4: variables.$level4,
+    5: variables.$level5,
+    6: variables.$level6
+);
 
 @each $index, $var in $levels-map {
-    .bg-levels-level#{$index} {background-color: $var;}
+    .bg-levels-level#{$index} {
+        background-color: $var;
+    }
 }
 
 .bg-yellow {

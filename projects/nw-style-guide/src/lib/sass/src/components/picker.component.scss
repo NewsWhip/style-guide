@@ -1,13 +1,13 @@
-@use "../variables";
-@use "../mixins/border-radius" as br;
-@use "../mixins/scrollbars";
-@use "../buttons";
+@use '../variables';
+@use '../mixins/border-radius' as br;
+@use '../mixins/scrollbars';
+@use '../buttons';
 
 nw-angular-picker {
     @include scrollbars.scrollbars();
 
-    .disabled  {
-        opacity: .50;
+    .disabled {
+        opacity: 0.5;
     }
 
     .nw-picker {
@@ -42,7 +42,8 @@ nw-angular-picker {
                 color: transparent;
             }
         }
-        ~ .dropdown-icon, ~ .reset-icon {
+        ~ .dropdown-icon,
+        ~ .reset-icon {
             position: absolute;
             right: 10px;
             font-size: 24px;
@@ -52,7 +53,7 @@ nw-angular-picker {
             cursor: pointer;
         }
         ~ .reset-icon {
-            color: variables.get-color("gray");
+            color: variables.get-color('gray');
             right: 5px;
         }
     }
@@ -70,7 +71,7 @@ nw-angular-picker {
         justify-content: space-between;
         padding: 0 8px;
         line-height: 32px;
-        color: variables.get-color("gray");
+        color: variables.get-color('gray');
         border-bottom: 1px solid variables.$divider-color-primary;
     }
     .search-results {
@@ -80,15 +81,16 @@ nw-angular-picker {
         background-color: #fff;
         z-index: 10;
 
-        .search-result, .parent {
+        .search-result,
+        .parent {
             position: relative;
             padding-left: 8px;
             font-size: 14px;
-            color: variables.get-color("gray");
+            color: variables.get-color('gray');
             cursor: pointer;
 
             &:hover {
-                background: variables.get-color("coolgray", 5x-light);
+                background: variables.get-color('coolgray', 5x-light);
             }
             .item-label {
                 overflow: hidden;
@@ -97,7 +99,7 @@ nw-angular-picker {
                 flex: 1;
             }
             .btn-ghost:not(:hover) {
-                color: variables.get-color("gray");
+                color: variables.get-color('gray');
             }
             .result-item {
                 display: flex;
@@ -119,7 +121,7 @@ nw-angular-picker {
             }
         }
         .picker-action {
-            color: variables.get-color("primary", base);
+            color: variables.get-color('primary', base);
         }
         @media (max-width: variables.$screen-sm) {
             display: flex;

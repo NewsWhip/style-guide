@@ -7,12 +7,14 @@ import { NgFor } from '@angular/common';
     selector: 'app-tabs',
     templateUrl: './tabs.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    styles: [`
-        nw-tabs {
-            display: block;
-            margin-bottom: 32px;
-        }
-    `],
+    styles: [
+        `
+            nw-tabs {
+                display: block;
+                margin-bottom: 32px;
+            }
+        `
+    ],
     imports: [TABS_DIRECTIVES, NgFor]
 })
 export class TabsComponent {
@@ -49,7 +51,7 @@ export class TabsComponent {
         this.tabCollection.push({
             name: uniqueId('Added '),
             isActive: false
-        })
+        });
     }
 
     removeLastTab(): void {

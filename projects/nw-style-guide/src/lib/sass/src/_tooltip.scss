@@ -1,115 +1,115 @@
 @use './variables';
 
 .tooltip {
-  z-index: variables.$zindex-tooltip;
-  display: block;
-  font-size: variables.$font-size-small;
-  --tooltip-arrow-color: #{variables.$tooltip-arrow-color};
-  --tooltip-bg-color: #{variables.$tooltip-bg};
-  --tooltip-color: #{variables.$tooltip-color};
-  --tooltip-padding-horizontal: 8px;
-  // Reduced padding to compensate for line-height
-  --tooltip-padding-vertical: 6px;
+    z-index: variables.$zindex-tooltip;
+    display: block;
+    font-size: variables.$font-size-small;
+    --tooltip-arrow-color: #{variables.$tooltip-arrow-color};
+    --tooltip-bg-color: #{variables.$tooltip-bg};
+    --tooltip-color: #{variables.$tooltip-color};
+    --tooltip-padding-horizontal: 8px;
+    // Reduced padding to compensate for line-height
+    --tooltip-padding-vertical: 6px;
 
-  &.tooltip-light {
-    --tooltip-arrow-color: #{variables.$tooltip-arrow-color-light};
-    --tooltip-bg-color: #{variables.$tooltip-bg-light};
-    --tooltip-color: #{variables.$tooltip-color-light};
+    &.tooltip-light {
+        --tooltip-arrow-color: #{variables.$tooltip-arrow-color-light};
+        --tooltip-bg-color: #{variables.$tooltip-bg-light};
+        --tooltip-color: #{variables.$tooltip-color-light};
 
-    .close-button {
-      color: variables.$level1;
+        .close-button {
+            color: variables.$level1;
+        }
     }
-  }
-  // Wrapper for the tooltip content
-  .tooltip-inner {
-    max-width: variables.$tooltip-max-width;
-    padding: var(--tooltip-padding-vertical) var(--tooltip-padding-horizontal);
-    color: var(--tooltip-color);
-    text-align: left;
-    background-color: var(--tooltip-bg-color);
-    border-radius: variables.$border-radius-base;
-    box-shadow: 2px 2px 8px 0 variables.$tooltip-box-shadow-color;
+    // Wrapper for the tooltip content
+    .tooltip-inner {
+        max-width: variables.$tooltip-max-width;
+        padding: var(--tooltip-padding-vertical) var(--tooltip-padding-horizontal);
+        color: var(--tooltip-color);
+        text-align: left;
+        background-color: var(--tooltip-bg-color);
+        border-radius: variables.$border-radius-base;
+        box-shadow: 2px 2px 8px 0 variables.$tooltip-box-shadow-color;
 
-    .close-button {
-      position: absolute;
-      top: calc(var(--tooltip-padding-horizontal) / 2);
-      right: calc(var(--tooltip-padding-horizontal) / 2);
+        .close-button {
+            position: absolute;
+            top: calc(var(--tooltip-padding-horizontal) / 2);
+            right: calc(var(--tooltip-padding-horizontal) / 2);
+        }
     }
-  }
-  .tooltip-arrow {
-    position: absolute;
-    width: 0;
-    height: 0;
-    border-color: transparent;
-    border-style: solid;
-  }
+    .tooltip-arrow {
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-color: transparent;
+        border-style: solid;
+    }
 }
 .cdk-overlay-pane.tooltip-overlay {
-  z-index: variables.$zindex-popover;
+    z-index: variables.$zindex-popover;
 
-  &.pointer-events-none {
-    pointer-events: none;
-  }
+    &.pointer-events-none {
+        pointer-events: none;
+    }
 
-  &[class*="tooltip-top"] .tooltip-arrow {
-    bottom: -#{variables.$tooltip-arrow-width};
-    left: 50%;
-    margin-left: -#{variables.$tooltip-arrow-width};
-    border-width: variables.$tooltip-arrow-width variables.$tooltip-arrow-width 0;
-    border-top-color: var(--tooltip-arrow-color);
-  }
-  &[class*="tooltip-bottom"] .tooltip-arrow {
-    top: -#{variables.$tooltip-arrow-width};
-    left: 50%;
-    margin-left: -#{variables.$tooltip-arrow-width};
-    border-width: 0 variables.$tooltip-arrow-width variables.$tooltip-arrow-width;
-    border-bottom-color: var(--tooltip-arrow-color);
-  }
-  &[class*="tooltip-right"] .tooltip-arrow {
-    top: 50%;
-    left: -#{variables.$tooltip-arrow-width};
-    margin-top: -#{variables.$tooltip-arrow-width};
-    border-width: variables.$tooltip-arrow-width variables.$tooltip-arrow-width variables.$tooltip-arrow-width 0;
-    border-right-color: var(--tooltip-arrow-color);
-  }
-  &[class*="tooltip-left"] .tooltip-arrow {
-    top: 50%;
-    right: -#{variables.$tooltip-arrow-width};
-    margin-top: -#{variables.$tooltip-arrow-width};
-    border-width: variables.$tooltip-arrow-width 0 variables.$tooltip-arrow-width variables.$tooltip-arrow-width;
-    border-left-color: var(--tooltip-arrow-color);
-  }
+    &[class*='tooltip-top'] .tooltip-arrow {
+        bottom: -#{variables.$tooltip-arrow-width};
+        left: 50%;
+        margin-left: -#{variables.$tooltip-arrow-width};
+        border-width: variables.$tooltip-arrow-width variables.$tooltip-arrow-width 0;
+        border-top-color: var(--tooltip-arrow-color);
+    }
+    &[class*='tooltip-bottom'] .tooltip-arrow {
+        top: -#{variables.$tooltip-arrow-width};
+        left: 50%;
+        margin-left: -#{variables.$tooltip-arrow-width};
+        border-width: 0 variables.$tooltip-arrow-width variables.$tooltip-arrow-width;
+        border-bottom-color: var(--tooltip-arrow-color);
+    }
+    &[class*='tooltip-right'] .tooltip-arrow {
+        top: 50%;
+        left: -#{variables.$tooltip-arrow-width};
+        margin-top: -#{variables.$tooltip-arrow-width};
+        border-width: variables.$tooltip-arrow-width variables.$tooltip-arrow-width variables.$tooltip-arrow-width 0;
+        border-right-color: var(--tooltip-arrow-color);
+    }
+    &[class*='tooltip-left'] .tooltip-arrow {
+        top: 50%;
+        right: -#{variables.$tooltip-arrow-width};
+        margin-top: -#{variables.$tooltip-arrow-width};
+        border-width: variables.$tooltip-arrow-width 0 variables.$tooltip-arrow-width variables.$tooltip-arrow-width;
+        border-left-color: var(--tooltip-arrow-color);
+    }
 
-  // Arrow adjustments
-  &.tooltip-top-start,
-  &.tooltip-bottom-start {
-    .tooltip-arrow {
-      left: calc(variables.$tooltip-arrow-width + var(--tooltip-padding-horizontal));
+    // Arrow adjustments
+    &.tooltip-top-start,
+    &.tooltip-bottom-start {
+        .tooltip-arrow {
+            left: calc(variables.$tooltip-arrow-width + var(--tooltip-padding-horizontal));
+        }
     }
-  }
-  &.tooltip-top-end,
-  &.tooltip-bottom-end {
-    .tooltip-arrow {
-      left: unset;
-      right: var(--tooltip-padding-horizontal);
+    &.tooltip-top-end,
+    &.tooltip-bottom-end {
+        .tooltip-arrow {
+            left: unset;
+            right: var(--tooltip-padding-horizontal);
+        }
     }
-  }
-  &.tooltip-right-start,
-  &.tooltip-left-start {
-    .tooltip-arrow {
-      top: calc(variables.$tooltip-arrow-width + var(--tooltip-padding-horizontal));
+    &.tooltip-right-start,
+    &.tooltip-left-start {
+        .tooltip-arrow {
+            top: calc(variables.$tooltip-arrow-width + var(--tooltip-padding-horizontal));
+        }
     }
-  }
-  &.tooltip-right-end,
-  &.tooltip-left-end {
-    .tooltip-arrow {
-      top: unset;
-      bottom: var(--tooltip-padding-horizontal);
+    &.tooltip-right-end,
+    &.tooltip-left-end {
+        .tooltip-arrow {
+            top: unset;
+            bottom: var(--tooltip-padding-horizontal);
+        }
     }
-  }
 }
 
 .tooltip-signal {
-  border-bottom: 1px dashed variables.get-color("gray", 3x-light);
-  cursor: help;
+    border-bottom: 1px dashed variables.get-color('gray', 3x-light);
+    cursor: help;
 }

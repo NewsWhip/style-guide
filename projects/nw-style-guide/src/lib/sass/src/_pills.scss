@@ -2,7 +2,7 @@
 
 .pill {
     display: inline-flex;
-    background: variables.get-color("primary", 2x-light);
+    background: variables.get-color('primary', 2x-light);
     height: variables.$input-height-base;
     line-height: variables.$input-height-base;
     padding: 0 variables.$padding-base-horizontal;
@@ -10,11 +10,11 @@
     margin-bottom: 4px;
     font-weight: 600;
     font-size: variables.$font-size-base;
-    color: variables.get-color("gray", base);
+    color: variables.get-color('gray', base);
     border-radius: 3px;
 
     .close {
-        color: variables.get-color("primary", base);
+        color: variables.get-color('primary', base);
         font-size: 160%;
         // Negate the 6px padding on the close button
         position: relative;
@@ -22,7 +22,7 @@
         margin-left: -6px;
 
         &:hover {
-            color: variables.get-color("primary", dark);
+            color: variables.get-color('primary', dark);
         }
     }
     &.pill-sm {
@@ -31,7 +31,6 @@
         height: variables.$input-height-small;
         line-height: variables.$input-height-small;
         border-radius: 3px;
-
     }
     &.pill-lg {
         padding: 0 variables.$padding-large-horizontal;
@@ -55,29 +54,29 @@
     }
     &.pill-editable {
         &:hover:not(.disabled) {
-            background: variables.get-color("primary", 3x-light);
+            background: variables.get-color('primary', 3x-light);
 
             &.invalid {
-                background-color: variables.get-color("tertiary", 3x-light);
+                background-color: variables.get-color('tertiary', 3x-light);
             }
         }
     }
     &.invalid {
-        background-color: variables.get-color("tertiary", 2x-light);
+        background-color: variables.get-color('tertiary', 2x-light);
 
         .close {
-            color: variables.get-color("tertiary", base);
+            color: variables.get-color('tertiary', base);
 
             &:hover {
-                color: variables.get-color("tertiary", dark);
+                color: variables.get-color('tertiary', dark);
             }
         }
     }
     &.selected {
-        box-shadow: 0 0 0 1px variables.get-color("primary", dark);
+        box-shadow: 0 0 0 1px variables.get-color('primary', dark);
 
         &.invalid {
-            box-shadow: 0 0 0 1px variables.get-color("tertiary", dark);
+            box-shadow: 0 0 0 1px variables.get-color('tertiary', dark);
         }
     }
 }

@@ -1,30 +1,59 @@
-<div class="page-header" style="padding-bottom: 0;">
+<div
+    class="page-header"
+    style="padding-bottom: 0">
     <h3>Word Cloud</h3>
 
     <div class="tabs-container">
         <nw-tabs size="md">
-            <li nwTab [isActive]="selectedTab === 'design'" role="presentation">
-                <a [routerLink]="['.']" [queryParams]="{section: 'design'}" role="tab">Design</a>
+            <li
+                nwTab
+                [isActive]="selectedTab === 'design'"
+                role="presentation">
+                <a
+                    [routerLink]="['.']"
+                    [queryParams]="{ section: 'design' }"
+                    role="tab"
+                    >Design</a
+                >
             </li>
-            <li nwTab [isActive]="selectedTab === 'api'" role="presentation">
-                <a [routerLink]="['.']" [queryParams]="{section: 'api'}" role="tab">API</a>
+            <li
+                nwTab
+                [isActive]="selectedTab === 'api'"
+                role="presentation">
+                <a
+                    [routerLink]="['.']"
+                    [queryParams]="{ section: 'api' }"
+                    role="tab"
+                    >API</a
+                >
             </li>
         </nw-tabs>
     </div>
 </div>
 
-<div *ngIf="selectedTab === 'design'" class="tab-content">
+<div
+    *ngIf="selectedTab === 'design'"
+    class="tab-content">
     <h4>Demo</h4>
-    <button class="btn btn-md btn-primary" (click)="generateWords()">Update weights</button>
-    <button class="btn btn-md btn-primary" (click)="download()" [style.marginLeft.px]="16">Download image</button>
-    
+    <button
+        class="btn btn-md btn-primary"
+        (click)="generateWords()">
+        Update weights
+    </button>
+    <button
+        class="btn btn-md btn-primary"
+        (click)="download()"
+        [style.marginLeft.px]="16">
+        Download image
+    </button>
+
     <div class="word-cloud-container">
         <nw-word-cloud
             [words]="words"
             [options]="config"
             (wordsPositioned)="onWordsPositioned($event)">
-    
-            <nw-word *ngFor="let word of positionedWords; trackBy: wordTrack"
+            <nw-word
+                *ngFor="let word of positionedWords; trackBy: wordTrack"
                 [word]="word"
                 [nwTooltip]="word.value + ' has a weight of ' + word.weight"
                 placement="top"
@@ -39,7 +68,9 @@
     <app-code [snippet]="snippets.exampleWithAdditions"></app-code>
 </div>
 
-<div *ngIf="selectedTab === 'api'" class="tab-content">
+<div
+    *ngIf="selectedTab === 'api'"
+    class="tab-content">
     <h3>API reference for tooltips / popover</h3>
 
     <h4>Importing</h4>
@@ -47,31 +78,36 @@
 
     <h4>Usage notes</h4>
     <p>
-        The <code>WordCloudComponent</code> is responsible for taking a collection of word objects and an optional config, and determining the size and
-        position of those words in the word cloud. When those sizes and positions are calculated, the are emitted via an output in the form of <code>IWordWithPosition&lt;T&gt;[]</code>
-        where <code>T</code> is a generic word object that satisifes the <code>IWord</code> interface below.
+        The <code>WordCloudComponent</code> is responsible for taking a collection of word objects and an optional
+        config, and determining the size and position of those words in the word cloud. When those sizes and positions
+        are calculated, the are emitted via an output in the form of <code>IWordWithPosition&lt;T&gt;[]</code> where
+        <code>T</code> is a generic word object that satisifes the <code>IWord</code> interface below.
     </p>
-    <br>
+    <br />
     <p>
-        The onus is on the consumer to then project the outputted word via <code>ng-content</code> using the <code>{{snippets.wordComponentSelector.code}}</code> component as shown
-        in the example below. This is designed as such so that the consumer has more control over each individual word, allowing them to attach directives like tooltips and popovers, customizing
-        styles and binding custom events.
+        The onus is on the consumer to then project the outputted word via <code>ng-content</code> using the
+        <code>{{ snippets.wordComponentSelector.code }}</code> component as shown in the example below. This is designed
+        as such so that the consumer has more control over each individual word, allowing them to attach directives like
+        tooltips and popovers, customizing styles and binding custom events.
     </p>
 
     <h5>Animations</h5>
     <p>
-        By default, when the position of a word in the cloud changes it animates to its new position over <code>600ms</code> with an easing
-        of <code>cubic-bezier(0.49, 0.07, 0.2, 0.99)</code>. The same timing and easing are used to the animate the font-size, line-height and width. To adjust the timing and easing any
-        parent element can define the <code>--nw-word-cloud-transition</code> CSS variable, for example <code>--nw-word-cloud-transition: 300ms linear;</code>, or to disable the animations
+        By default, when the position of a word in the cloud changes it animates to its new position over
+        <code>600ms</code> with an easing of <code>cubic-bezier(0.49, 0.07, 0.2, 0.99)</code>. The same timing and
+        easing are used to the animate the font-size, line-height and width. To adjust the timing and easing any parent
+        element can define the <code>--nw-word-cloud-transition</code> CSS variable, for example
+        <code>--nw-word-cloud-transition: 300ms linear;</code>, or to disable the animations
         <code>--nw-word-cloud-transition: 0 linear;</code>
     </p>
-
 
     <h4>Components</h4>
 
     <h5><code>WordCloudComponent</code></h5>
     <p>The component that take the input words and calculates their size and position in the word cloud.</p>
-    <p>Selector: <code>{{snippets.selector.code}}</code></p>
+    <p>
+        Selector: <code>{{ snippets.selector.code }}</code>
+    </p>
     <h5>Properties</h5>
 
     <table class="table table-bordered">
@@ -114,7 +150,9 @@
 
     <h5><code>WordComponent</code></h5>
     <p>The component responsible for rendering individual words</p>
-    <p>Selector: <code>{{snippets.selector.wordComponentSelector}}</code></p>
+    <p>
+        Selector: <code>{{ snippets.selector.wordComponentSelector }}</code>
+    </p>
     <h5>Properties</h5>
 
     <table class="table table-bordered">
@@ -134,7 +172,7 @@
     </table>
 
     <h4>Types and interfaces</h4>
-    
+
     <h5>IWord interface</h5>
     <table class="table table-bordered">
         <thead>
@@ -145,7 +183,9 @@
         </thead>
         <tbody>
             <tr *ngFor="let item of wordInterfaceDetails">
-                <td><code class="light">{{item.name}}</code></td>
+                <td>
+                    <code class="light">{{ item.name }}</code>
+                </td>
                 <td [innerHTML]="item.description"></td>
             </tr>
         </tbody>
@@ -161,7 +201,9 @@
         </thead>
         <tbody>
             <tr *ngFor="let item of configInterfaceDetails">
-                <td><code class="light">{{item.name}}</code></td>
+                <td>
+                    <code class="light">{{ item.name }}</code>
+                </td>
                 <td [innerHTML]="item.description"></td>
             </tr>
         </tbody>
@@ -177,19 +219,23 @@
         </thead>
         <tbody>
             <tr *ngFor="let item of wordWithPositionInterfaceDetails">
-                <td><code class="light">{{item.name}}</code></td>
+                <td>
+                    <code class="light">{{ item.name }}</code>
+                </td>
                 <td [innerHTML]="item.description"></td>
             </tr>
         </tbody>
     </table>
 </div>
 
-<ng-template #inputTableTowTmpl let-values="values">
+<ng-template
+    #inputTableTowTmpl
+    let-values="values">
     <tr>
         <td>
-            <code class="light">{{values[0]}}</code>
+            <code class="light">{{ values[0] }}</code>
         </td>
         <td [innerHTML]="values[1]"></td>
-        <td>{{values[2]}}</td>
+        <td>{{ values[2] }}</td>
     </tr>
 </ng-template>

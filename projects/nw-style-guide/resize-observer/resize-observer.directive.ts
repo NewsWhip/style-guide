@@ -1,13 +1,12 @@
-import { Directive, Output, EventEmitter, ElementRef, OnInit, OnDestroy, Input } from "@angular/core";
-import { Subject } from "rxjs";
-import { skip, debounceTime, takeUntil, tap } from "rxjs/operators";
+import { Directive, Output, EventEmitter, ElementRef, OnInit, OnDestroy, Input, inject } from '@angular/core';
+import { Subject } from 'rxjs';
+import { skip, debounceTime, takeUntil, tap } from 'rxjs/operators';
 
 @Directive({
     selector: '[nwResizeObserver]',
     exportAs: 'nwResizeObserver'
 })
 export class ResizeObserverDirective implements OnInit, OnDestroy {
-
     /**
      * Optional element to listen to the resize event for. If not
      * provided defaults to the element the directive is attached to
@@ -25,7 +24,9 @@ export class ResizeObserverDirective implements OnInit, OnDestroy {
     private _destroyed$: Subject<void> = new Subject();
     private _currentElementRect: DOMRectReadOnly;
 
-    constructor(_elRef: ElementRef<HTMLElement>) {
+    constructor() {
+        const _elRef = inject<ElementRef<HTMLElement>>(ElementRef);
+
         this.element = this.element || _elRef.nativeElement;
     }
 
@@ -44,19 +45,22 @@ export class ResizeObserverDirective implements OnInit, OnDestroy {
          * don't want and to debounce as we don't want to emit hundreds of events
          * if, for example, the width or height of the element is being animated
          */
-        this._nwResize.asObservable().pipe(
-            /**
-             * Store the contentRect of the element so that we can compare changes
-             */
-            tap(entry => this._currentElementRect = entry.contentRect),
-            /**
-             * use skip(1) because an event is emitting immediately
-             * after calling .observe on the observer
-             */
-            skip(1),
-            debounceTime(50),
-            takeUntil(this._destroyed$)
-        ).subscribe(res => this.nwResize.emit());
+        this._nwResize
+            .asObservable()
+            .pipe(
+                /**
+                 * Store the contentRect of the element so that we can compare changes
+                 */
+                tap(entry => (this._currentElementRect = entry.contentRect)),
+                /**
+                 * use skip(1) because an event is emitting immediately
+                 * after calling .observe on the observer
+                 */
+                skip(1),
+                debounceTime(50),
+                takeUntil(this._destroyed$)
+            )
+            .subscribe(res => this.nwResize.emit());
     }
 
     createObserver() {
@@ -64,7 +68,7 @@ export class ResizeObserverDirective implements OnInit, OnDestroy {
             const widthChange = Math.abs(element.contentRect.width - (this._currentElementRect?.width ?? 0));
             const heightChange = Math.abs(element.contentRect.height - (this._currentElementRect?.height ?? 0));
 
-            if ((widthChange >= this.tolerance) || (heightChange >= this.tolerance)) {
+            if (widthChange >= this.tolerance || heightChange >= this.tolerance) {
                 this._nwResize.next(element);
             }
         });
@@ -78,5 +82,4 @@ export class ResizeObserverDirective implements OnInit, OnDestroy {
         this._destroyed$.next();
         this._destroyed$.complete();
     }
-
 }

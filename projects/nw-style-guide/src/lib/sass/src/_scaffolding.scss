@@ -3,7 +3,6 @@
 // Scaffolding
 // --------------------------------------------------
 
-
 // Reset the box-sizing
 //
 // Heads up! This reset may cause conflicts with some third-party widgets.
@@ -17,12 +16,11 @@
     box-sizing: border-box;
 }
 
-
 // Body reset
 
 html {
     font-size: 10px;
-    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     height: 100%;
 }
 
@@ -58,20 +56,19 @@ img {
 
 // Horizontal rules
 hr {
-    margin-top:    24px;
+    margin-top: 24px;
     margin-bottom: 24px;
     border: 0;
     border-top: 1px solid variables.$hr-border;
     width: 100%;
 }
 
-
 // iOS "clickable elements" fix for role="button"
 //
 // Fixes "clickability" issue (and more generally, the firing of events such as focus as well)
 // for traditionally non-focusable elements with role="button"
 // see https://developer.mozilla.org/en-US/docs/Web/Events/click#Safari_Mobile
-[role="button"] {
+[role='button'] {
     cursor: pointer;
 }
 
@@ -80,5 +77,5 @@ hr {
 }
 
 svg {
-	overflow: visible;
+    overflow: visible;
 }
