@@ -11,7 +11,6 @@ import {
     QueryList,
     OnInit,
     OnDestroy,
-    SimpleChanges,
     OnChanges,
     inject
 } from '@angular/core';
@@ -113,7 +112,6 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
 
     ascend(event: Event, item: IPickerItem) {
         event.stopPropagation();
-        this._focusInput();
         this._setDisplayItemsFromParentId(item.parentId);
         this.asc.emit(item);
         this._cdRef.detectChanges();
@@ -317,7 +315,7 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
         }
         const listLength = this.selectionsAreShowing ? this.getSelections().length : this.displayItems.length;
         if (listLength) {
-            const newIndex = Math.min(this._getActiveItemIndex() + 1, listLength - 1);
+            const newIndex = Math.min(this.focusedIndex + 1, listLength - 1);
             this.focusedIndex = newIndex;
             this._focusListItem(newIndex);
             this._cdRef.markForCheck();
@@ -433,7 +431,7 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
         }
         this._resetSearchTerm();
         this.parentId = parentId;
-        this.displayItems = this.items.filter(i => i.parentId === this.parentId);
+        this.displayItems = this.items.filter(i => i.parentId === parentId);
         this.focusedIndex = -1;
     }
 
@@ -454,16 +452,11 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
 
     private _focusPrevItem(event: Event) {
         event.preventDefault();
-        const listLength = this.selectionsAreShowing ? this.getSelections().length : this.displayItems?.length;
-        if (!listLength) {
-            return;
-        }
-        const currentIndex = this._getActiveItemIndex();
-        if (currentIndex <= 0) {
+        if (this.focusedIndex <= 0) {
             this._focusInput();
             return;
         }
-        const newIndex = currentIndex - 1;
+        const newIndex = this.focusedIndex - 1;
         this.focusedIndex = newIndex;
         this._focusListItem(newIndex);
         this._cdRef.markForCheck();
@@ -519,19 +512,7 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
 
     private _focusListItem(index: number) {
         const items = this._getActiveListItems().toArray();
-        items?.[index]?.nativeElement.focus();
-    }
-
-    private _getActiveItemIndex(): number {
-        const items = this._getActiveListItems();
-        if (!items.length) {
-            return this.focusedIndex;
-        }
-        const itemsArray = items.toArray();
-        const idx = itemsArray.findIndex(
-            item => item.nativeElement === document.activeElement || item.nativeElement.contains(document.activeElement)
-        );
-        return idx >= 0 ? idx : this.focusedIndex;
+        items?.[index].nativeElement.focus();
     }
 
     private _onArrowLeft(event: Event) {
@@ -541,7 +522,6 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
         event.preventDefault();
         event.stopPropagation();
         const parentItem = this.getParentItem(this.parentId);
-        this._focusInput();
         this._setDisplayItemsFromParentId(parentItem!.parentId);
         this.asc.emit(parentItem);
         this._cdRef.detectChanges();
