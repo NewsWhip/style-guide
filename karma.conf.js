@@ -29,12 +29,6 @@ export default function (config) {
                 seed: ''
             }
         },
-        coverageIstanbulReporter: {
-            dir: path.join(__dirname, 'coverage'),
-            reports: ['html', 'lcovonly'],
-            fixWebpackSourcePaths: true
-        },
-
         reporters: ['progress', 'kjhtml', 'jasmine-seed'],
         port: 9876,
         colors: true,
