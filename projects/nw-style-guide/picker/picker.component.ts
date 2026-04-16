@@ -392,6 +392,19 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
         this._focusInput();
     }
 
+    onDrilldownTab(event: KeyboardEvent, index: number) {
+        const nextIndex = index + 1;
+        if (nextIndex >= this.displayItems.length) {
+            return;
+        }
+        event.preventDefault();
+        this.focusedIndex = nextIndex;
+        this._cdRef.detectChanges();
+        const nextItem = this.optionsListItems.toArray()[nextIndex];
+        const checkbox = nextItem?.nativeElement.querySelector('input[type="checkbox"]');
+        checkbox.focus();
+    }
+
     onDrilldown(item: IPickerItem) {
         this._setDisplayItemsFromParentId(item.id);
         this.desc.emit(item);
