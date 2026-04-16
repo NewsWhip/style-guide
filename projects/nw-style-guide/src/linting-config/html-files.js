@@ -1,8 +1,8 @@
 // @ts-check
-const { defineConfig } = require('eslint/config');
-const angular = require('angular-eslint');
+import { defineConfig } from 'eslint/config';
+import angular from 'angular-eslint';
 
-module.exports = defineConfig({
+export default defineConfig({
     extends: [angular.configs.templateRecommended, angular.configs.templateAccessibility],
     processor: angular.processInlineTemplates,
     rules: {

@@ -1,5 +1,6 @@
 {
     "name": "nw-style-guide",
+    "type": "module",
     "version": "21.0.0-beta.0",
     "repository": {
         "type": "git",

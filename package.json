@@ -1,5 +1,6 @@
 {
     "name": "nw-style-guide-demo-app",
+    "type": "module",
     "license": "MIT",
     "author": {
         "email": "garethdn@gmail.com",

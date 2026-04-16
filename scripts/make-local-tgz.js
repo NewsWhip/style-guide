@@ -1,12 +1,16 @@
 /* Produces a .tgz package of the Style Guide for local use.
  *  Useful for local testing, eliminates need to publish frequent beta versions.
  * */
-const path = require('path');
-const execSync = require('child_process').execSync;
-const utils = require('../utils');
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { execSync } from 'child_process';
+import * as utils from '../utils.js';
+import { readFileSync } from 'fs';
 
-const run = () => {
-    require('./build');
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+const run = async () => {
+    await import('./build.js');
 
     process.stdout.write(`Navigating to ${utils.distPath} directory & compressing package \n`);
 
@@ -19,7 +23,7 @@ const run = () => {
 
     utils.logSeparator();
 
-    const pjson = require(`../${utils.distPath}package.json`);
+    const pjson = JSON.parse(readFileSync(path.join(__dirname, '..', utils.distPath, 'package.json'), 'utf8'));
 
     const tgzAbsolutePath = path.join(process.cwd(), `${pjson.name}-${pjson.version}.tgz`);
 

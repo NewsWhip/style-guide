@@ -1,9 +1,9 @@
 // @ts-check
-const fs = require('fs-extra');
-const path = require('path');
-const sass = require('sass');
-const utils = require('../utils');
-const { execSync } = require('child_process');
+import fs from 'fs-extra';
+import path from 'path';
+import sass from 'sass';
+import * as utils from '../utils.js';
+import { execSync } from 'child_process';
 
 const run = () => {
     execSync('ng build nw-style-guide', { stdio: 'inherit' });
