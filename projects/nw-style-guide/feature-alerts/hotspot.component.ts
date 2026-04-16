@@ -1,12 +1,14 @@
-import { Component, Input, ChangeDetectionStrategy, ChangeDetectorRef, inject } from "@angular/core";
-import { FeatureAlertsService } from "./feature-alerts.service";
-import { trigger, transition, animate, style } from "@angular/animations";
+import { Component, Input, ChangeDetectionStrategy, ChangeDetectorRef, inject } from '@angular/core';
+import { FeatureAlertsService } from './feature-alerts.service';
+import { trigger, transition, animate, style } from '@angular/animations';
 
 @Component({
     selector: 'nw-hotspot',
     template: `
         @if (isOpen) {
-            <div [@fadeOut] class="hotspot hotspot-{{position}}"></div>
+            <div
+                [@fadeOut]
+                class="hotspot hotspot-{{ position }}"></div>
         }
     `,
     animations: [

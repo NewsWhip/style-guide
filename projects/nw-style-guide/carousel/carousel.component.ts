@@ -30,7 +30,9 @@ import { NgStyle, NgClass } from '@angular/common';
         <div class="carousel-container">
             @if (showPagination && !isFirstPage) {
                 <div class="pagination-container">
-                    <button class="btn btn-carousel btn-carousel-prev" (click)="prev()"></button>
+                    <button
+                        class="btn btn-carousel btn-carousel-prev"
+                        (click)="prev()"></button>
                 </div>
             }
 
@@ -40,12 +42,16 @@ import { NgStyle, NgClass } from '@angular/common';
                 @if (showMask && pages.length > 1) {
                     <div class="pagination-masks">
                         @if (!isFirstPage) {
-                            <div class="pagination-mask pagination-mask-start" @collapse
-                            [ngStyle]="maskStyles"></div>
+                            <div
+                                class="pagination-mask pagination-mask-start"
+                                @collapse
+                                [ngStyle]="maskStyles"></div>
                         }
                         @if (!isLastPage) {
-                            <div class="pagination-mask pagination-mask-end" @collapse
-                            [ngStyle]="maskStyles"></div>
+                            <div
+                                class="pagination-mask pagination-mask-end"
+                                @collapse
+                                [ngStyle]="maskStyles"></div>
                         }
                     </div>
                 }
@@ -55,16 +61,18 @@ import { NgStyle, NgClass } from '@angular/common';
                     #carousel
                     [ngClass]="containerClass">
                     <ng-content></ng-content>
-                
+
                     @if (slides.length === 0) {
-                        <p class="nw-text text-center">{{noResultsText}}</p>
+                        <p class="nw-text text-center">{{ noResultsText }}</p>
                     }
                 </div>
             </div>
 
             @if (showPagination && !isLastPage) {
                 <div class="pagination-container">
-                    <button class="btn btn-carousel btn-carousel-next" (click)="next()"></button>
+                    <button
+                        class="btn btn-carousel btn-carousel-next"
+                        (click)="next()"></button>
                 </div>
             }
 
@@ -74,9 +82,11 @@ import { NgStyle, NgClass } from '@angular/common';
         @if (showPageIndicator && pages.length > 1) {
             <div class="page-indicators">
                 @for (page of pages; track page) {
-                    <a href="javascript:;" class="page-indicator"
+                    <a
+                        href="javascript:;"
+                        class="page-indicator"
                         [class.active]="page === currPage"
-                    (click)="goToPage(page)"></a>
+                        (click)="goToPage(page)"></a>
                 }
             </div>
         }

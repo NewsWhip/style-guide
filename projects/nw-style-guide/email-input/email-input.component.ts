@@ -25,13 +25,18 @@ import { Subscription } from 'rxjs';
             (click)="onContainerClick($event)"
             (paste)="onPaste($event)"
             [attr.data-placeholder-text]="placeholder">
-
             @for (email of emails; track email; let last = $last) {
-                <div class="pill pill-sm"
+                <div
+                    class="pill pill-sm"
                     [class.invalid]="!isValid(email)"
                     [class.selected]="last && isPillSelected">
-                    <span class="pill-label">{{email}}</span>
-                    <button type="button" class="close" (click)="removeEmail(email)">×</button>
+                    <span class="pill-label">{{ email }}</span>
+                    <button
+                        type="button"
+                        class="close"
+                        (click)="removeEmail(email)">
+                        ×
+                    </button>
                 </div>
             }
 
