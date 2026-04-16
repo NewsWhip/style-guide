@@ -1,4 +1,4 @@
-import { Injectable, ApplicationRef, Injector, TemplateRef } from '@angular/core';
+import { Injectable, ApplicationRef, Injector, TemplateRef, inject } from '@angular/core';
 import { ComponentPortal, DomPortalOutlet } from '@angular/cdk/portal';
 import { ToastsComponent } from './toasts.component';
 import { IToast } from './IToast';
@@ -8,15 +8,13 @@ import { defaultConfig } from './config';
 
 @Injectable()
 export class Toaster {
+    private _appRef = inject(ApplicationRef);
+    private _injector = inject(Injector);
 
     private _toastPortal: ComponentPortal<ToastsComponent>;
     private _outlet: DomPortalOutlet;
     private _toastsComponentRef: ToastsComponent;
     private _config: IToastConfig;
-
-    constructor(
-        private _appRef: ApplicationRef,
-        private _injector: Injector) { }
 
     private _attachOutlet(): ToastsComponent {
         /**

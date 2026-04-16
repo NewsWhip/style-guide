@@ -1,7 +1,26 @@
-import { Component, ChangeDetectionStrategy, Input, ElementRef, ViewChild, Renderer2, ChangeDetectorRef, AfterViewInit, OnDestroy, OnInit, Output, EventEmitter, OnChanges, SimpleChanges, ContentChildren, QueryList, AfterContentInit } from '@angular/core';
+import {
+    Component,
+    ChangeDetectionStrategy,
+    Input,
+    ElementRef,
+    ViewChild,
+    Renderer2,
+    ChangeDetectorRef,
+    AfterViewInit,
+    OnDestroy,
+    OnInit,
+    Output,
+    EventEmitter,
+    OnChanges,
+    SimpleChanges,
+    ContentChildren,
+    QueryList,
+    AfterContentInit,
+    inject
+} from '@angular/core';
 import { trigger, transition, style, animate, AUTO_STYLE } from '@angular/animations';
-import { debounceTime } from "rxjs/operators";
-import { CarouselSlideDirective } from "./carousel-slide.directive";
+import { debounceTime } from 'rxjs/operators';
+import { CarouselSlideDirective } from './carousel-slide.directive';
 import { Subscription, fromEvent } from 'rxjs';
 import { NgStyle, NgClass } from '@angular/common';
 
@@ -31,7 +50,10 @@ import { NgStyle, NgClass } from '@angular/common';
                     </div>
                 }
 
-                <div class="carousel" #carousel [ngClass]="containerClass">
+                <div
+                    class="carousel"
+                    #carousel
+                    [ngClass]="containerClass">
                     <ng-content></ng-content>
                 
                     @if (slides.length === 0) {
@@ -65,15 +87,14 @@ import { NgStyle, NgClass } from '@angular/common';
     exportAs: 'nw-carousel',
     animations: [
         trigger('collapse', [
-            transition(':leave', [
-                style({ width: AUTO_STYLE }),
-                animate(`300ms linear`, style({ width: 0 }))
-            ])
+            transition(':leave', [style({ width: AUTO_STYLE }), animate(`300ms linear`, style({ width: 0 }))])
         ])
     ],
     imports: [NgStyle, NgClass]
 })
 export class CarouselComponent implements OnInit, AfterViewInit, AfterContentInit, OnChanges, OnDestroy {
+    private _renderer = inject(Renderer2);
+    private _cdRef = inject(ChangeDetectorRef);
 
     @Input() showPageIndicator: boolean = true;
     @Input() showPagination: boolean = true;
@@ -81,7 +102,7 @@ export class CarouselComponent implements OnInit, AfterViewInit, AfterContentIni
     @Input() maskColor: string = '#ffffff';
     @Input() containerClass: string;
     @Input() currPage: number = 0;
-    @Input() noResultsText: string = "No results";
+    @Input() noResultsText: string = 'No results';
 
     @Output() currPageChange: EventEmitter<number> = new EventEmitter();
 
@@ -93,10 +114,6 @@ export class CarouselComponent implements OnInit, AfterViewInit, AfterContentIni
 
     private _windowResizeSub: Subscription;
     private _slidesSub: Subscription;
-
-    constructor(
-        private _renderer: Renderer2,
-        private _cdRef: ChangeDetectorRef) {}
 
     ngOnInit() {
         this.subscribeToWindowResize();
@@ -145,7 +162,9 @@ export class CarouselComponent implements OnInit, AfterViewInit, AfterContentIni
     }
 
     getPages() {
-        const estimatedPages: number = +(this.carouselNativeElement.scrollWidth / this.carouselNativeElement.clientWidth).toFixed(1);
+        const estimatedPages: number = +(
+            this.carouselNativeElement.scrollWidth / this.carouselNativeElement.clientWidth
+        ).toFixed(1);
         const numOfPages: number = Math.ceil(estimatedPages);
 
         return [...Array(numOfPages).fill(1)].map((_, i) => i);
@@ -157,7 +176,7 @@ export class CarouselComponent implements OnInit, AfterViewInit, AfterContentIni
     }
 
     get carouselNativeElement(): HTMLDivElement {
-        return (this.carousel.nativeElement as HTMLDivElement);
+        return this.carousel.nativeElement as HTMLDivElement;
     }
 
     get isFirstPage(): boolean {
@@ -192,5 +211,4 @@ export class CarouselComponent implements OnInit, AfterViewInit, AfterContentIni
         this._windowResizeSub.unsubscribe();
         this._slidesSub.unsubscribe();
     }
-
 }

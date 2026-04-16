@@ -3,49 +3,62 @@
 
     <div class="pull-right">
         <div class="checkbox-inline">
-            <input type="checkbox" id="tall-switch" [(ngModel)]="isTall">
-            <label for="tall-switch">
-                "tall" variant
-            </label>
+            <input
+                type="checkbox"
+                id="tall-switch"
+                [(ngModel)]="isTall" />
+            <label for="tall-switch"> "tall" variant </label>
         </div>
     </div>
 </h2>
 
-<table class="table" [class.table-tall]="isTall">
+<table
+    class="table"
+    [class.table-tall]="isTall">
     <thead>
-    <tr>
-        <th>Regular Table</th>
-        <th>Header Two <i class="fas fa-sort"></i></th>
-        <th>Header Three <i class="fas fa-sort-up"></i></th>
-        <th>Header Four <i class="fas fa-sort-down"></i></th>
-        <th>Header Five</th>
-    </tr>
+        <tr>
+            <th>Regular Table</th>
+            <th>Header Two <i class="fas fa-sort"></i></th>
+            <th>Header Three <i class="fas fa-sort-up"></i></th>
+            <th>Header Four <i class="fas fa-sort-down"></i></th>
+            <th>Header Five</th>
+        </tr>
     </thead>
     <tbody>
-    @for (x of [1,2,3]; track x) {
-        <tr>
-            @for (i of [1,2,3,4,5]; track i) {
-                <td>Table Cell</td>
-            }
-        </tr>
-    }
+        @for (x of [1, 2, 3]; track x) {
+            <tr>
+                @for (i of [1, 2, 3, 4, 5]; track i) {
+                    <td>Table Cell</td>
+                }
+            </tr>
+        }
     </tbody>
 </table>
 
-<table class="table table-bordered" [class.table-tall]="isTall">
+<table
+    class="table table-bordered"
+    [class.table-tall]="isTall">
     <thead>
         <tr>
-            <th colspan="5">
-                Bordered Table (with optional shadow)
-            </th>
+            <th>Regular Table</th>
+            <th>Header Two <i class="fas fa-sort"></i></th>
+            <th>Header Three <i class="fas fa-sort-up"></i></th>
+            <th>Header Four <i class="fas fa-sort-down"></i></th>
+            <th>Header Five</th>
         </tr>
     </thead>
     <tbody>
-        @for (x of [1,2,3]; track x) {
+        @for (x of [1, 2, 3]; track x) {
             <tr>
                 <td>Table Cell</td>
                 <td class="no-border">Cell with no border.</td>
-                <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec consequat aliquet egestas. Morbi vel dignissim felis. Suspendisse ac justo cursus, tincidunt neque ut, pharetra ante. Vivamus id tempus nisl, sit amet ornare quam. Fusce vulputate justo dapibus nibh ultrices bibendum. Nulla augue metus, hendrerit in felis ut, cursus malesuada eros. Quisque ullamcorper rutrum cursus. Vivamus rutrum mollis tortor, in rutrum sapien tincidunt in. Praesent nec enim mollis, rhoncus velit at</td>
+                <td>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec consequat aliquet egestas. Morbi vel
+                    dignissim felis. Suspendisse ac justo cursus, tincidunt neque ut, pharetra ante. Vivamus id tempus
+                    nisl, sit amet ornare quam. Fusce vulputate justo dapibus nibh ultrices bibendum. Nulla augue metus,
+                    hendrerit in felis ut, cursus malesuada eros. Quisque ullamcorper rutrum cursus. Vivamus rutrum
+                    mollis tortor, in rutrum sapien tincidunt in. Praesent nec enim mollis, rhoncus velit at
+                </td>
                 <td>Table Cell</td>
                 <td>Table Cell</td>
             </tr>
@@ -58,76 +71,81 @@
     </tfoot>
 </table>
 
-<table class="table table-striped" [class.table-tall]="isTall">
+<table
+    class="table table-striped"
+    [class.table-tall]="isTall">
     <thead>
-    <tr>
-        <th colspan="5">
-            Striped Table
-        </th>
-    </tr>
+        <tr>
+            <th colspan="5">Striped Table</th>
+        </tr>
     </thead>
     <tbody>
-    @for (x of [1,2,3]; track x) {
-        <tr>
-        @for (i of [1,2,3,4,5]; track i) {
-            <td>Table Cell</td>
+        @for (x of [1, 2, 3]; track x) {
+            <tr>
+                @for (i of [1, 2, 3, 4, 5]; track i) {
+                    <td>Table Cell</td>
+                }
+            </tr>
         }
-        </tr>
-    }
     </tbody>
     <tfoot>
-    <tr>
-        <td colspan="5"><nav aria-label="Page navigation">
-            <ul class="pagination pull-right">
-                <li disabled class="disabled">
-                    <a aria-label="First">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-                <li disabled class="disabled">
-                    <a aria-label="Previous">
-                        <span aria-hidden="true">&lsaquo;</span>
-                    </a>
-                </li>
-                <li class="active"><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">5</a></li>
-                <li><a href="#">6</a></li>
-                <li><a href="#">7</a></li>
-                <li><a href="#">8</a></li>
-                <li><a href="#">9</a></li>
-                <li><a href="#">10</a></li>
-                <li>
-                    <a href="#" aria-label="Next">
-                        <span aria-hidden="true">&rsaquo;</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" aria-label="Last">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-        </td>
-    </tr>
+        <tr>
+            <td colspan="5">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination pull-right">
+                        <li
+                            disabled
+                            class="disabled">
+                            <a aria-label="First">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li
+                            disabled
+                            class="disabled">
+                            <a aria-label="Previous">
+                                <span aria-hidden="true">&lsaquo;</span>
+                            </a>
+                        </li>
+                        <li class="active"><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">4</a></li>
+                        <li><a href="#">5</a></li>
+                        <li><a href="#">6</a></li>
+                        <li><a href="#">7</a></li>
+                        <li><a href="#">8</a></li>
+                        <li><a href="#">9</a></li>
+                        <li><a href="#">10</a></li>
+                        <li>
+                            <a
+                                href="#"
+                                aria-label="Next">
+                                <span aria-hidden="true">&rsaquo;</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                href="#"
+                                aria-label="Last">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </td>
+        </tr>
     </tfoot>
 </table>
 
-<table class="table table-skeleton" [class.table-tall]="isTall">
+<table
+    class="table table-skeleton"
+    [class.table-tall]="isTall">
     <thead>
         <tr>
-            <th colspan="3">
-                Skeleton Table
-            </th>
-            <th>
-                Col 2
-            </th>
-            <th>
-                Col 3
-            </th>
+            <th colspan="3">Skeleton Table</th>
+            <th>Col 2</th>
+            <th>Col 3</th>
         </tr>
     </thead>
     <tbody>
@@ -155,18 +173,14 @@
     </tbody>
 </table>
 
-<table class="table table-skeleton" [class.table-tall]="isTall">
+<table
+    class="table table-skeleton"
+    [class.table-tall]="isTall">
     <thead>
         <tr>
-            <th colspan="3">
-                Skeleton Table (with footer)
-            </th>
-            <th>
-                Col 2
-            </th>
-            <th>
-                Col 3
-            </th>
+            <th colspan="3">Skeleton Table (with footer)</th>
+            <th>Col 2</th>
+            <th>Col 3</th>
         </tr>
     </thead>
     <tbody>
@@ -201,40 +215,34 @@
 
 <table class="table table-pilled-rows">
     <thead>
-    <tr>
-        <th>
-            Table with pilled rows*
-        </th>
-        <th>
-            Col 2
-        </th>
-        <th>
-            Col 3
-        </th>
-    </tr>
+        <tr>
+            <th>Table with pilled rows*</th>
+            <th>Col 2</th>
+            <th>Col 3</th>
+        </tr>
     </thead>
     <tbody>
-    <tr>
-        <td>Some text in here</td>
-        <td>Table Cell</td>
-        <td>Table Cell</td>
-    </tr>
-    <tr>
-        <td>Some text in here</td>
-        <td>Table Cell</td>
-        <td>Table Cell</td>
-    </tr>
-    <tr>
-        <td>Some text in here</td>
-        <td>Table Cell</td>
-        <td>Table Cell</td>
-    </tr>
+        <tr>
+            <td>Some text in here</td>
+            <td>Table Cell</td>
+            <td>Table Cell</td>
+        </tr>
+        <tr>
+            <td>Some text in here</td>
+            <td>Table Cell</td>
+            <td>Table Cell</td>
+        </tr>
+        <tr>
+            <td>Some text in here</td>
+            <td>Table Cell</td>
+            <td>Table Cell</td>
+        </tr>
     </tbody>
     <tfoot>
-    <tr>
-        <td colspan="3">
-            <em>*Table with rows has no "tall" variant as it already has cell padding of 16px.</em>
-        </td>
-    </tr>
+        <tr>
+            <td colspan="3">
+                <em>*Table with rows has no "tall" variant as it already has cell padding of 16px.</em>
+            </td>
+        </tr>
     </tfoot>
 </table>

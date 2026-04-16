@@ -1,4 +1,4 @@
-import { Directive, Input, OnInit, ElementRef, OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
+import { Directive, Input, OnInit, ElementRef, OnChanges, SimpleChanges, OnDestroy, inject } from '@angular/core';
 import { ChartUtils } from '../chart.utils';
 import { select, Selection } from 'd3-selection';
 import { ScaleLinear, scaleTime, scaleLinear } from 'd3-scale';
@@ -12,6 +12,9 @@ import { NwXAxisScale } from '../axis/models/XAxisScale';
     exportAs: 'nw-text'
 })
 export class TextDirective implements OnInit, OnChanges, OnDestroy {
+    private _elRef = inject<ElementRef<SVGTextElement>>(ElementRef);
+    private _chart = inject(ChartComponent);
+    private _chartUtils = inject(ChartUtils);
 
     @Input('nw-text') point: [number, number];
     @Input() xDomain: [number, number];
@@ -25,11 +28,6 @@ export class TextDirective implements OnInit, OnChanges, OnDestroy {
 
     private _chartResizeSub: Subscription;
 
-    constructor(
-        private _elRef: ElementRef<SVGTextElement>,
-        private _chart: ChartComponent,
-        private _chartUtils: ChartUtils) {}
-
     ngOnInit() {
         this.text = select(this._elRef.nativeElement);
 
@@ -40,8 +38,12 @@ export class TextDirective implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        const isDomainChange = (changes.xDomain || changes.yDomain) && ChartUtils.haveDomainsChanged(changes.xDomain, changes.yDomain);
-        const isDataChange = changes.point && !changes.point.firstChange && !ChartUtils.areDatasetsEqual([changes.point.previousValue], [changes.point.currentValue]);
+        const isDomainChange =
+            (changes.xDomain || changes.yDomain) && ChartUtils.haveDomainsChanged(changes.xDomain, changes.yDomain);
+        const isDataChange =
+            changes.point &&
+            !changes.point.firstChange &&
+            !ChartUtils.areDatasetsEqual([changes.point.previousValue], [changes.point.currentValue]);
 
         if (isDomainChange || isDataChange) {
             this.setDomains();
@@ -55,18 +57,11 @@ export class TextDirective implements OnInit, OnChanges, OnDestroy {
     }
 
     draw(): void {
-        this.text
-            .attr("x", this.x)
-            .attr("y", this.y);
+        this.text.attr('x', this.x).attr('y', this.y);
     }
 
     update() {
-        this.text
-            .transition()
-            .duration(this.animDuration)
-            .ease(this.easing)
-            .attr("x", this.x)
-            .attr("y", this.y);
+        this.text.transition().duration(this.animDuration).ease(this.easing).attr('x', this.x).attr('y', this.y);
     }
 
     get x(): number {
@@ -78,15 +73,13 @@ export class TextDirective implements OnInit, OnChanges, OnDestroy {
     }
 
     private _subscribeToChartResize() {
-        this._chartResizeSub = this._chartUtils.chartResize$
-            .subscribe(_ => {
-                this.setDomains();
-                this.draw();
-            });
+        this._chartResizeSub = this._chartUtils.chartResize$.subscribe(_ => {
+            this.setDomains();
+            this.draw();
+        });
     }
 
     ngOnDestroy() {
         this._chartResizeSub.unsubscribe();
     }
-
 }

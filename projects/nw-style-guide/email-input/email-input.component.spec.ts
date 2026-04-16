@@ -1,8 +1,8 @@
-import { DebugElement } from "@angular/core";
-import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { ReactiveFormsModule } from "@angular/forms";
-import { By } from "@angular/platform-browser";
-import { EmailInputComponent } from "./email-input.component";
+import { DebugElement } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ReactiveFormsModule } from '@angular/forms';
+import { By } from '@angular/platform-browser';
+import { EmailInputComponent } from './email-input.component';
 
 let comp: EmailInputComponent;
 let fixture: ComponentFixture<EmailInputComponent>;
@@ -11,11 +11,8 @@ let de: DebugElement;
 describe('EmailInputComponent', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
-    imports: [
-        ReactiveFormsModule,
-        EmailInputComponent
-    ]
-});
+            imports: [ReactiveFormsModule, EmailInputComponent]
+        });
         fixture = TestBed.createComponent(EmailInputComponent);
         comp = fixture.componentInstance;
         de = fixture.debugElement;
@@ -118,41 +115,51 @@ describe('EmailInputComponent', () => {
 
         it('should add an email on tab', () => {
             const input = getInput();
-            input.dispatchEvent(new KeyboardEvent("keydown", {
-                key: 'Tab'
-            }));
+            input.dispatchEvent(
+                new KeyboardEvent('keydown', {
+                    key: 'Tab'
+                })
+            );
             expect(comp.emails.length).toEqual(3);
         });
 
         it('should add an email on space', () => {
             const input = getInput();
-            input.dispatchEvent(new KeyboardEvent("keydown", {
-                key: " "
-            }));
+            input.dispatchEvent(
+                new KeyboardEvent('keydown', {
+                    key: ' '
+                })
+            );
             expect(comp.emails.length).toEqual(3);
         });
 
         it('should add an email on comma', () => {
             const input = getInput();
-            input.dispatchEvent(new KeyboardEvent("keydown", {
-                key: ","
-            }));
+            input.dispatchEvent(
+                new KeyboardEvent('keydown', {
+                    key: ','
+                })
+            );
             expect(comp.emails.length).toEqual(3);
         });
 
         it('should add an email on semi-colon', () => {
             const input = getInput();
-            input.dispatchEvent(new KeyboardEvent("keydown", {
-                key: ";"
-            }));
+            input.dispatchEvent(
+                new KeyboardEvent('keydown', {
+                    key: ';'
+                })
+            );
             expect(comp.emails.length).toEqual(3);
         });
 
         it('should clear the input on Escape', () => {
             const input = getInput();
-            input.dispatchEvent(new KeyboardEvent("keydown", {
-                key: "Escape"
-            }));
+            input.dispatchEvent(
+                new KeyboardEvent('keydown', {
+                    key: 'Escape'
+                })
+            );
             expect(comp.emails.length).toEqual(2);
             expect(comp.emailInputControl.value).toEqual('');
         });

@@ -1,6 +1,6 @@
 /* Produces a .tgz package of the Style Guide for local use.
-*  Useful for local testing, eliminates need to publish frequent beta versions.
-* */
+ *  Useful for local testing, eliminates need to publish frequent beta versions.
+ * */
 const path = require('path');
 const execSync = require('child_process').execSync;
 const utils = require('../utils');
@@ -13,7 +13,7 @@ const run = () => {
     try {
         process.chdir(utils.distPath);
         execSync('npm pack');
-    } catch(err) {
+    } catch (err) {
         throw err;
     }
 
@@ -26,10 +26,9 @@ const run = () => {
     process.stdout.write(`
     Style Guide package path is:\n
     ${tgzAbsolutePath}\n
-    Replace the nw-style-guide version in spike3/package.json with it to run locally. \n\n`
-    );
+    Replace the nw-style-guide version in spike3/package.json with it to run locally. \n\n`);
 
     utils.logSeparator();
-}
+};
 
 run();

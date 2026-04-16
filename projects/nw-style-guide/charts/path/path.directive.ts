@@ -1,4 +1,15 @@
-import { Directive, OnInit, Input, ElementRef, OnChanges, SimpleChanges, Output, EventEmitter, OnDestroy } from '@angular/core';
+import {
+    Directive,
+    OnInit,
+    Input,
+    ElementRef,
+    OnChanges,
+    SimpleChanges,
+    Output,
+    EventEmitter,
+    OnDestroy,
+    inject
+} from '@angular/core';
 import { select, Selection } from 'd3-selection';
 import { line, Line, curveLinear, CurveFactory } from 'd3-shape';
 import { ScaleLinear, scaleTime, scaleLinear } from 'd3-scale';
@@ -14,6 +25,9 @@ import { NwXAxisScale } from '../axis/models/XAxisScale';
     exportAs: 'nw-path'
 })
 export class PathDirective implements OnInit, OnChanges, OnDestroy {
+    private _elRef = inject(ElementRef);
+    private _chart = inject(ChartComponent);
+    private _chartUtils = inject(ChartUtils);
 
     @Input('nw-path') data: [number, number][] = [];
     @Input() xDomain: [number, number];
@@ -31,11 +45,6 @@ export class PathDirective implements OnInit, OnChanges, OnDestroy {
 
     private _chartResizeSub: Subscription;
 
-    constructor(
-        private _elRef: ElementRef,
-        private _chart: ChartComponent,
-        private _chartUtils: ChartUtils) {}
-
     ngOnInit() {
         this.path = select(this._elRef.nativeElement as SVGPathElement);
 
@@ -47,9 +56,14 @@ export class PathDirective implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        const isDomainChange = (changes.xDomain || changes.yDomain) && ChartUtils.haveDomainsChanged(changes.xDomain, changes.yDomain);
-        const isDataChange = changes.data && !changes.data.firstChange && !ChartUtils.areDatasetsEqual(changes.data.previousValue, changes.data.currentValue);
-        const isCurveChange = changes.curve && !changes.curve.firstChange && (changes.curve.currentValue !== changes.curve.previousValue);
+        const isDomainChange =
+            (changes.xDomain || changes.yDomain) && ChartUtils.haveDomainsChanged(changes.xDomain, changes.yDomain);
+        const isDataChange =
+            changes.data &&
+            !changes.data.firstChange &&
+            !ChartUtils.areDatasetsEqual(changes.data.previousValue, changes.data.currentValue);
+        const isCurveChange =
+            changes.curve && !changes.curve.firstChange && changes.curve.currentValue !== changes.curve.previousValue;
 
         if (isDomainChange || isDataChange || isCurveChange) {
             this.setDomains();
@@ -64,15 +78,14 @@ export class PathDirective implements OnInit, OnChanges, OnDestroy {
     }
 
     setLine(): void {
-        this.line = line().curve(this.curve)
+        this.line = line()
+            .curve(this.curve)
             .x(d => this.xScale(d[0]))
             .y(d => this.yScale(d[1]));
     }
 
     drawLine(): void {
-        this.path
-            .datum(this.data)
-            .attr('d', this.line);
+        this.path.datum(this.data).attr('d', this.line);
     }
 
     updateLine(): void {
@@ -86,15 +99,13 @@ export class PathDirective implements OnInit, OnChanges, OnDestroy {
     }
 
     private _subscribeToChartResize() {
-        this._chartResizeSub = this._chartUtils.chartResize$
-            .subscribe(_ => {
-                this.setDomains();
-                this.drawLine();
-            });
+        this._chartResizeSub = this._chartUtils.chartResize$.subscribe(_ => {
+            this.setDomains();
+            this.drawLine();
+        });
     }
 
     ngOnDestroy() {
         this._chartResizeSub.unsubscribe();
     }
-
 }

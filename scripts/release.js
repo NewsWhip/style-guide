@@ -17,10 +17,9 @@ const run = () => {
         execSync(`npm publish ${utils.distPath}`, {
             stdio: 'inherit'
         });
-    } catch(err) {
+    } catch (err) {
         throw err;
     }
-}
+};
 
 run();
-

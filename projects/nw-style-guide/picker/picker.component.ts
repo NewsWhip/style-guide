@@ -1,4 +1,18 @@
-import { Component, Input, Output, ChangeDetectorRef, ChangeDetectionStrategy, EventEmitter, ViewChild, ElementRef, OnInit, OnDestroy, SimpleChanges, OnChanges } from '@angular/core';
+import {
+    Component,
+    Input,
+    Output,
+    ChangeDetectorRef,
+    ChangeDetectionStrategy,
+    EventEmitter,
+    ViewChild,
+    ElementRef,
+    OnInit,
+    OnDestroy,
+    SimpleChanges,
+    OnChanges,
+    inject
+} from '@angular/core';
 import { trigger, transition, animate, style } from '@angular/animations';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { IPickerItem } from './IPickerItem';
@@ -7,65 +21,118 @@ import { isUndefined } from 'lodash-es';
 import { NgClass } from '@angular/common';
 
 @Component({
-    selector: "nw-angular-picker",
+    selector: 'nw-angular-picker',
     template: `
         <div class="nw-picker">
             <!-- START: NOT xs screen -->
-            <div class="input-container hidden-xs" [class.disabled]="isDisabled">
-                <input type="text" #inputEl
-                    class="form-control search-input {{inputClasses}} text-ellipsis"
+            <div
+                class="input-container hidden-xs"
+                [class.disabled]="isDisabled">
+                <input
+                    type="text"
+                    #inputEl
+                    class="form-control search-input {{ inputClasses }} text-ellipsis"
                     [formControl]="searchTerm"
                     (focus)="onFocus()"
                     (blur)="closeResults()"
                     (keyup.escape)="inputEl.blur()"
                     [placeholder]="inputPlaceholderText"
-                    [attr.aria-label]="inputPlaceholderText"/>
+                    [attr.aria-label]="inputPlaceholderText" />
 
-                <div class="input-placeholder text-ellipsis" [innerHTML]="getPlaceholderText()"></div>
+                <div
+                    class="input-placeholder text-ellipsis"
+                    [innerHTML]="getPlaceholderText()"></div>
 
                 @if (!isChevronHidden) {
-                    <i (click)="showResults();inputEl.focus()" class="caret dropdown-icon"></i>
+                    <i
+                        (click)="showResults(); inputEl.focus()"
+                        class="caret dropdown-icon"></i>
                 }
             </div>
 
             <!-- END: NOT xs screen -->
 
             <!-- START: IS xs screen -->
-            <div (click)="showResults()" class="form-control search-input hidden-sm hidden-md hidden-lg text-ellipsis" [innerHTML]="getPlaceholderText()"></div>
-            <i (click)="showResults()" class="caret dropdown-icon hidden-sm hidden-md hidden-lg"></i>
+            <div
+                (click)="showResults()"
+                class="form-control search-input hidden-sm hidden-md hidden-lg text-ellipsis"
+                [innerHTML]="getPlaceholderText()"></div>
+            <i
+                (click)="showResults()"
+                class="caret dropdown-icon hidden-sm hidden-md hidden-lg"></i>
             <!-- END: IS xs screen -->
 
             @if (searchTerm.value) {
                 <button
                     (mousedown)="preventBlur($event)"
-                    (click)="onReset($event);inputEl.focus()" class="close reset-icon" aria-label="Clear search">&times;</button>
+                    (click)="onReset($event); inputEl.focus()"
+                    class="close reset-icon"
+                    aria-label="Clear search">
+                    &times;
+                </button>
             }
 
             @if (canViewResults) {
-                <div class="search-results"
+                <div
+                    class="search-results"
                     [@slideUpIn]="isMobileDisplay ? 'in' : false"
                     (mousedown)="preventBlur($event)">
                     <div class="results-header">
-                        <button class="close" (click)="closeResults()" style="color: #000" aria-label="Close results">&times;</button>
+                        <button
+                            class="close"
+                            (click)="closeResults()"
+                            style="color: #000"
+                            aria-label="Close results">
+                            &times;
+                        </button>
                     </div>
                     <!-- Navigate up the tree -->
                     @if (parentId && displayItems.length && !searchTerm.value.length) {
                         <div class="results-actions">
-                            <a tabindex="0" role="button" aria-label="Go Back" class="picker-action"
+                            <a
+                                tabindex="0"
+                                role="button"
+                                aria-label="Go Back"
+                                class="picker-action"
                                 (click)="ascend($event, getParentItem(parentId))"
                                 (keydown.enter)="ascend($event, getParentItem(parentId))">
-                                <i class="fas fa-long-arrow-alt-left" aria-hidden="true"></i>
-                                {{getParentItem(parentId).displayName}}
+                                <i
+                                    class="fas fa-long-arrow-alt-left"
+                                    aria-hidden="true"></i>
+                                {{ getParentItem(parentId).displayName }}
                             </a>
                         </div>
                     }
-                    <div class="scroll-container" #searchResultsScrollEl
+                    <div
+                        class="scroll-container"
+                        #searchResultsScrollEl
                         [style.max-height]="getMaxHeight(searchResultsScrollEl)">
-                        @if (shouldShowSelections && !selectionsAreShowing && parentId == null && !searchTerm.value.length) {
+                        @if (
+                            shouldShowSelections &&
+                            !selectionsAreShowing &&
+                            parentId == null &&
+                            !searchTerm.value.length
+                        ) {
                             <div class="results-actions">
                                 @if (getSelections().length) {
-                                    <a tabindex="0" role="button" href="javascript:;" class="picker-action" (click)="editSelections($event)" (keydown.enter)="editSelections($event)">Edit selections</a>
-                                    <a tabindex="0" role="button" href="javascript:;" class="picker-action" (click)="clearSelections($event)" (keydown.enter)="clearSelections($event)">Clear selections</a>
+                                    <a
+                                        tabindex="0"
+                                        role="button"
+                                        href="javascript:;"
+                                        class="picker-action"
+                                        (click)="editSelections($event)"
+                                        (keydown.enter)="editSelections($event)"
+                                        >Edit selections</a
+                                    >
+                                    <a
+                                        tabindex="0"
+                                        role="button"
+                                        href="javascript:;"
+                                        class="picker-action"
+                                        (click)="clearSelections($event)"
+                                        (keydown.enter)="clearSelections($event)"
+                                        >Clear selections</a
+                                    >
                                 }
                                 @if (!getSelections().length) {
                                     <em>No selections</em>
@@ -75,20 +142,36 @@ import { NgClass } from '@angular/common';
                         <!-- DISPLAY THE SELECTED ITEMS -->
                         @if (selectionsAreShowing) {
                             <div class="results-actions">
-                                <a role="button" class="picker-action" (click)="selectionsAreShowing = false">
-                                    <i class="fas fa-long-arrow-alt-left" aria-hidden="true"></i> Back
+                                <a
+                                    role="button"
+                                    class="picker-action"
+                                    (click)="selectionsAreShowing = false">
+                                    <i
+                                        class="fas fa-long-arrow-alt-left"
+                                        aria-hidden="true"></i>
+                                    Back
                                 </a>
                                 @if (getSelections().length) {
-                                    <a role="button" class="picker-action" (click)="clearSelections($event)">Clear all</a>
+                                    <a
+                                        role="button"
+                                        class="picker-action"
+                                        (click)="clearSelections($event)"
+                                        >Clear all</a
+                                    >
                                 }
                             </div>
                             <div class="selected-items">
                                 @for (item of getSelections(); track item) {
-                                    <div class="search-result"
-                                        [ngClass]="{ 'active': item.added, 'excluded': item.excluded }">
+                                    <div
+                                        class="search-result"
+                                        [ngClass]="{ active: item.added, excluded: item.excluded }">
                                         <span class="result-item">
-                                        <span class="item-label">{{item.displayName}}</span>
-                                            <button class="close" style="color: #000000" (click)="clearSelection($event, item)" [attr.aria-label]="'Remove ' + item.displayName">
+                                            <span class="item-label">{{ item.displayName }}</span>
+                                            <button
+                                                class="close"
+                                                style="color: #000000"
+                                                (click)="clearSelection($event, item)"
+                                                [attr.aria-label]="'Remove ' + item.displayName">
                                                 &times;
                                             </button>
                                         </span>
@@ -98,7 +181,8 @@ import { NgClass } from '@angular/common';
                         }
                         @if (!selectionsAreShowing) {
                             @for (item of displayItems; track item) {
-                                <div class="search-result"
+                                <div
+                                    class="search-result"
                                     [class.active]="item.added"
                                     [attr.tabindex]="isMultiSelect ? -1 : 0"
                                     [class.excluded]="item.excluded"
@@ -108,37 +192,57 @@ import { NgClass } from '@angular/common';
                                     <span class="result-item">
                                         @if (isMultiSelect) {
                                             <div class="checkbox checkbox-placeholder">
-                                                <input tabindex="0" id="include-{{item.id}}" type="checkbox"
+                                                <input
+                                                    tabindex="0"
+                                                    id="include-{{ item.id }}"
+                                                    type="checkbox"
                                                     (click)="toggleItemInclusion(item, $event)"
                                                     [checked]="item.added"
-                                                    (keydown.enter)="toggleItemInclusion(item, $event)">
-                                                <label for="include-{{item.id}}" [attr.aria-label]="'Select ' + item.displayName"></label>
+                                                    (keydown.enter)="toggleItemInclusion(item, $event)" />
+                                                <label
+                                                    for="include-{{ item.id }}"
+                                                    [attr.aria-label]="'Select ' + item.displayName"></label>
                                             </div>
                                         }
                                         @if (canExclude && isMultiSelect) {
                                             <div class="checkbox checkbox-exclusion checkbox-placeholder">
-                                                <input tabindex="0" id="exclude-{{item.id}}" type="checkbox"
+                                                <input
+                                                    tabindex="0"
+                                                    id="exclude-{{ item.id }}"
+                                                    type="checkbox"
                                                     (click)="toggleItemExclusion(item, $event)"
                                                     [checked]="item.excluded"
-                                                    (keydown.enter)="toggleItemExclusion(item, $event)">
-                                                <label for="exclude-{{item.id}}" [attr.aria-label]="'Exclude ' + item.displayName"></label>
+                                                    (keydown.enter)="toggleItemExclusion(item, $event)" />
+                                                <label
+                                                    for="exclude-{{ item.id }}"
+                                                    [attr.aria-label]="'Exclude ' + item.displayName"></label>
                                             </div>
                                         }
-                                        <span class="item-label" title="{{item.displayName}}" (click)="toggleItemInclusion(item, $event)">
-                                            {{item.displayName}}
+                                        <span
+                                            class="item-label"
+                                            title="{{ item.displayName }}"
+                                            (click)="toggleItemInclusion(item, $event)">
+                                            {{ item.displayName }}
                                             @if (searchTerm.value.length && item.searchValues?.length) {
-                                                <span> -
-                                                @for (val of item.searchValues; track val; let isLast = $last) {
-                                                    <em class="small">{{val}}{{isLast ? '' : ', '}}</em>
-                                                }
+                                                <span>
+                                                    -
+                                                    @for (val of item.searchValues; track val; let isLast = $last) {
+                                                        <em class="small">{{ val }}{{ isLast ? '' : ', ' }}</em>
+                                                    }
                                                 </span>
                                             }
                                         </span>
                                         @if (hasChildren(item.id)) {
-                                            <button class="btn btn-ghost drilldown"
-                                                (click)="setDisplayItemsFromParentId(item.id, $event); desc.emit(getParentItem(parentId))"
+                                            <button
+                                                class="btn btn-ghost drilldown"
+                                                (click)="
+                                                    setDisplayItemsFromParentId(item.id, $event);
+                                                    desc.emit(getParentItem(parentId))
+                                                "
                                                 [attr.aria-label]="'Expand ' + item.displayName">
-                                                <i class="fas fa-chevron-right" aria-hidden="true"></i>
+                                                <i
+                                                    class="fas fa-chevron-right"
+                                                    aria-hidden="true"></i>
                                             </button>
                                         }
                                     </span>
@@ -158,24 +262,24 @@ import { NgClass } from '@angular/common';
     `,
     changeDetection: ChangeDetectionStrategy.OnPush,
     animations: [
-        trigger("slideUpIn", [
-            transition("void => in", [
-                style({ top: "100%", transform: "scale(0)" }),
-                animate(200, style({ top: 0, transform: "scale(1)" })),
+        trigger('slideUpIn', [
+            transition('void => in', [
+                style({ top: '100%', transform: 'scale(0)' }),
+                animate(200, style({ top: 0, transform: 'scale(1)' }))
             ]),
-            transition("in => void", [
-                animate(200, style({ top: "100%", transform: "scale(0)" })),
-            ]),
-        ]),
+            transition('in => void', [animate(200, style({ top: '100%', transform: 'scale(0)' }))])
+        ])
     ],
-    imports: [ReactiveFormsModule, NgClass],
+    imports: [ReactiveFormsModule, NgClass]
 })
 export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
+    chRef = inject(ChangeDetectorRef);
+
     @Input() items: IPickerItem[];
-    @Input() inputClasses: string = "";
-    @Input() placeholderText: string = "Search...";
-    @Input() inputPlaceholderText: string = "Search...";
-    @Input() noSelectionsPlaceholderText: string = "Search...";
+    @Input() inputClasses: string = '';
+    @Input() placeholderText: string = 'Search...';
+    @Input() inputPlaceholderText: string = 'Search...';
+    @Input() noSelectionsPlaceholderText: string = 'Search...';
     @Input() initialParentId: any = null;
     @Input() shouldShowSelections: boolean = true;
     @Input() canExclude: boolean = true;
@@ -185,29 +289,26 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
     @Input() isDisabled: boolean = false;
     @Input() isChevronHidden: boolean = false;
 
-    @Output() selections: EventEmitter<IPickerItem[]> = new EventEmitter<
-        IPickerItem[]
-    >();
-    @Output() toggleInclude: EventEmitter<{
+    @Output() selections: EventEmitter<IPickerItem[]> = new EventEmitter<IPickerItem[]>();
+    @Output() toggleInclude: EventEmitter<{ item: IPickerItem; searchTerm: string }> = new EventEmitter<{
         item: IPickerItem;
         searchTerm: string;
-    }> = new EventEmitter<{ item: IPickerItem; searchTerm: string }>();
-    @Output() toggleExclude: EventEmitter<{
+    }>();
+    @Output() toggleExclude: EventEmitter<{ item: IPickerItem; searchTerm: string }> = new EventEmitter<{
         item: IPickerItem;
         searchTerm: string;
-    }> = new EventEmitter<{ item: IPickerItem; searchTerm: string }>();
+    }>();
     @Output() edit: EventEmitter<any> = new EventEmitter<any>();
     @Output() closed: EventEmitter<any> = new EventEmitter<any>();
     // eslint-disable-next-line @angular-eslint/no-output-native
     @Output() focus: EventEmitter<ElementRef> = new EventEmitter<ElementRef>();
     @Output() clearAll: EventEmitter<any> = new EventEmitter<any>();
-    @Output() clearSingle: EventEmitter<IPickerItem> =
-        new EventEmitter<IPickerItem>();
+    @Output() clearSingle: EventEmitter<IPickerItem> = new EventEmitter<IPickerItem>();
     @Output() clearSearch: EventEmitter<any> = new EventEmitter<any>();
     @Output() desc: EventEmitter<IPickerItem> = new EventEmitter<IPickerItem>();
     @Output() asc: EventEmitter<IPickerItem> = new EventEmitter<IPickerItem>();
 
-    @ViewChild("inputEl", { static: true }) inputEl: ElementRef;
+    @ViewChild('inputEl', { static: true }) inputEl: ElementRef;
 
     public displayItems: IPickerItem[];
     public searchTerm: FormControl<string> = new FormControl();
@@ -216,8 +317,6 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
     public selectionsAreShowing: boolean = false;
     public maxHeight: number = 400;
     private _subs: Subscription[] = [];
-
-    constructor(public chRef: ChangeDetectorRef) {}
 
     ngOnInit() {
         this.parentId = this.initialParentId;
@@ -231,29 +330,21 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     subscribeToSearchTermChanges() {
-        const sub = this.searchTerm.valueChanges.subscribe((val) => {
+        const sub = this.searchTerm.valueChanges.subscribe(val => {
             this.selectionsAreShowing = false;
 
             if (val.length) {
-                const displayItems = this.items.filter((item) => {
+                const displayItems = this.items.filter(item => {
                     return (
-                        (item.searchValues || []).some((value) => {
-                            return value
-                                .toLowerCase()
-                                .includes(val.toLowerCase());
-                        }) ||
-                        item.displayName
-                            .toLowerCase()
-                            .includes(val.toLowerCase())
+                        (item.searchValues || []).some(value => {
+                            return value.toLowerCase().includes(val.toLowerCase());
+                        }) || item.displayName.toLowerCase().includes(val.toLowerCase())
                     );
                 });
                 // remove duplicate items
                 this.displayItems = displayItems.reduce(
-                    (items, item) =>
-                        items.find((x) => x.id === item.id)
-                            ? [...items]
-                            : [...items, item],
-                    [],
+                    (items, item) => (items.find(x => x.id === item.id) ? [...items] : [...items, item]),
+                    []
                 );
             } else {
                 this.setDisplayItemsFromParentId(this.parentId);
@@ -279,9 +370,7 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
         }
         this.resetSearchTerm();
         this.parentId = parentId;
-        this.displayItems = this.items.filter(
-            (i) => i.parentId === this.parentId,
-        );
+        this.displayItems = this.items.filter(i => i.parentId === this.parentId);
     }
 
     displaySelectedItems() {
@@ -289,15 +378,15 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     getSelections() {
-        return this.items.filter((ci) => ci.added || ci.excluded);
+        return this.items.filter(ci => ci.added || ci.excluded);
     }
 
     getParentItem(parentId) {
-        return this.items.find((i) => i.id === parentId);
+        return this.items.find(i => i.id === parentId);
     }
 
     hasChildren(id) {
-        return this.items.filter((i) => i.parentId === id).length;
+        return this.items.filter(i => i.parentId === id).length;
     }
 
     editSelections(event: Event) {
@@ -326,7 +415,7 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
             e.stopPropagation();
         }
 
-        this.items = this.items.map((ci) => {
+        this.items = this.items.map(ci => {
             ci.added = false;
             ci.excluded = false;
 
@@ -347,7 +436,7 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
         // we're assuming that if the component is not multiSelect, then only
         // one item can be selected at any time
         if (!this.isMultiSelect) {
-            this.items.forEach((item) => {
+            this.items.forEach(item => {
                 item.added = false;
                 item.excluded = false;
             });
@@ -357,7 +446,7 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
 
         // setting flag for duplicate id's as in case of location for selection and deselection on checkbox click
         if (this.isMultiSelect) {
-            this.items.forEach((pickerItem) => {
+            this.items.forEach(pickerItem => {
                 if (item.id === pickerItem.id) {
                     pickerItem.added = item.added;
                 }
@@ -369,7 +458,7 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
 
         this.toggleInclude.emit({
             item: item,
-            searchTerm: this.searchTerm.value,
+            searchTerm: this.searchTerm.value
         });
         this.selections.emit(this.getSelections());
 
@@ -385,7 +474,7 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
         item.excluded = !item.excluded;
         // setting flag for duplicate id's as in case of location for selection and deselection on checkbox click
         if (this.isMultiSelect) {
-            this.items.forEach((pickerItem) => {
+            this.items.forEach(pickerItem => {
                 if (item.id === pickerItem.id) {
                     pickerItem.excluded = item.excluded;
                 }
@@ -397,7 +486,7 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
 
         this.toggleExclude.emit({
             item: item,
-            searchTerm: this.searchTerm.value,
+            searchTerm: this.searchTerm.value
         });
         this.selections.emit(this.getSelections());
 
@@ -408,8 +497,8 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
 
     toggleDescendants(item: IPickerItem, add?: boolean, exclude?: boolean) {
         this.items
-            .filter((ci) => ci.parentId === item.id)
-            .forEach((ci) => {
+            .filter(ci => ci.parentId === item.id)
+            .forEach(ci => {
                 if (!isUndefined(add)) {
                     ci.added = add;
                 }
@@ -424,8 +513,8 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
 
     toggleAncestors(item: IPickerItem, add?: boolean, exclude?: boolean) {
         this.items
-            .filter((ci) => ci.id === item.parentId)
-            .forEach((ci) => {
+            .filter(ci => ci.id === item.parentId)
+            .forEach(ci => {
                 if (!isUndefined(add)) {
                     ci.added = add;
                 }
@@ -444,7 +533,7 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     resetSearchTerm() {
-        this.searchTerm.setValue("", { emitEvent: false });
+        this.searchTerm.setValue('', { emitEvent: false });
     }
 
     onFocus() {
@@ -469,21 +558,19 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
 
     closeResults() {
         this.canViewResults = false;
-        this.searchTerm.setValue("");
+        this.searchTerm.setValue('');
         this.closed.emit();
         this.chRef.detectChanges();
     }
 
     onReset($event?: KeyboardEvent) {
         this.clearSearch.emit();
-        this.searchTerm.setValue("");
+        this.searchTerm.setValue('');
         this.showResults();
     }
 
     getPlaceholderText() {
-        return this.getSelections().length
-            ? this.placeholderText
-            : this.noSelectionsPlaceholderText;
+        return this.getSelections().length ? this.placeholderText : this.noSelectionsPlaceholderText;
     }
 
     getMaxHeight(el: HTMLElement) {
@@ -493,26 +580,21 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
         }
 
         if (this.isHeightDynamic) {
-            const appContainer = document.querySelector(
-                ".app-container",
-            ) as HTMLElement;
-            const appContainerOffsetTop =
-                appContainer.getBoundingClientRect().top;
+            const appContainer = document.querySelector('.app-container') as HTMLElement;
+            const appContainerOffsetTop = appContainer.getBoundingClientRect().top;
             const elOffsetTop = el.getBoundingClientRect().top;
             const buffer = 50;
 
-            const height =
-                appContainer.offsetHeight -
-                (elOffsetTop - appContainerOffsetTop);
+            const height = appContainer.offsetHeight - (elOffsetTop - appContainerOffsetTop);
 
             if (height < this.maxHeight) {
-                return height - buffer + "px";
+                return height - buffer + 'px';
             }
         }
         return;
     }
 
     ngOnDestroy() {
-        this._subs.forEach((sub) => sub.unsubscribe());
+        this._subs.forEach(sub => sub.unsubscribe());
     }
 }

@@ -17,9 +17,9 @@
     vertical-align: baseline;
 
     &.label-badge {
-        color: variables.get-color("gray", 4x-light);
-        background: variables.get-color("gray", light);
-        border-color: variables.get-color("gray", light);
+        color: variables.get-color('gray', 4x-light);
+        background: variables.get-color('gray', light);
+        border-color: variables.get-color('gray', light);
     }
     &.label-danger {
         color: #ffffff;
@@ -27,30 +27,30 @@
         border-color: variables.get-color('tertiary');
     }
     &.label-alt {
-        color: variables.get-color("alt", light);
-        background: variables.get-color("gray", dark);
-        border-color: variables.get-color("gray", dark);
+        color: variables.get-color('alt', light);
+        background: variables.get-color('gray', dark);
+        border-color: variables.get-color('gray', dark);
     }
     &.label-new {
         color: #ffffff;
-        background: variables.get-color("tertiary");
-        border-color: variables.get-color("tertiary");
+        background: variables.get-color('tertiary');
+        border-color: variables.get-color('tertiary');
     }
     &.label-beta {
-        color: variables.get-color("alt");
+        color: variables.get-color('alt');
         background: transparent;
-        border-color: variables.get-color("alt");
+        border-color: variables.get-color('alt');
     }
     &.label-op {
         text-transform: initial;
         color: #ffffff;
-        background: variables.get-color("secondary", base);
-        border-color: variables.get-color("secondary", base);
+        background: variables.get-color('secondary', base);
+        border-color: variables.get-color('secondary', base);
     }
     &.label-alt-badge {
         color: #000000;
-        background: variables.get-color("alt");
-        border-color: variables.get-color("alt"); 
+        background: variables.get-color('alt');
+        border-color: variables.get-color('alt');
     }
 }
 .label-round {

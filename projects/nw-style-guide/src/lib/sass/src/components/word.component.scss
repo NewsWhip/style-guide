@@ -6,7 +6,8 @@ nw-word {
     left: 0;
     white-space: nowrap;
     text-align: center;
-    transition: translate $transition,
+    transition:
+        translate $transition,
         font-size $transition,
         line-height $transition,
         width $transition;

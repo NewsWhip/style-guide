@@ -11,7 +11,4 @@ import { WordComponent } from './word.component';
  * Export cooperating directives
  * https://v17.angular.io/guide/standalone-components#standalone-components-for-library-authors
  */
-export const WORD_CLOUD_COMPONENTS = [
-    WordCloudComponent,
-    WordComponent
-] as const;
+export const WORD_CLOUD_COMPONENTS = [WordCloudComponent, WordComponent] as const;

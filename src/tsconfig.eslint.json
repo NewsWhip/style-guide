@@ -3,7 +3,5 @@
     "compilerOptions": {
         "outDir": "../out-tsc/spec"
     },
-    "include": [
-        "**/*.ts"
-    ]
+    "include": ["**/*.ts"]
 }

@@ -5,17 +5,12 @@ import { NwPickerModule } from 'nw-style-guide/picker';
 import { AppComponent } from './app.component';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule,
-    NwPickerModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+    declarations: [AppComponent],
+    imports: [BrowserModule, NwPickerModule],
+    providers: [],
+    bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
 ```
 
 ```javascript
@@ -89,7 +84,9 @@ public colors: IPickerItem[] = [
 ```
 
 ```html
-<nw-angular-picker [items]="colors" [canExclude]="false"></nw-angular-picker>
+<nw-angular-picker
+    [items]="colors"
+    [canExclude]="false"></nw-angular-picker>
 ```
 
 ## Picker Inputs
@@ -98,74 +95,73 @@ public colors: IPickerItem[] = [
 
 A flat list of picker items
 
-----
-
+---
 
 `inputClasses:string = '';`
 
 Classes to add the form input
 
-----
+---
 
 `placeholderText:string = 'Search...';`
 
 Default placeholder text
 
-----
+---
 
 `noSelectionsPlaceholderText:string = 'Search...';`
 
 Placeholder text to display when no items are selected
 
-----
+---
 
 `initialParentId:any = null;`
 
 For nested lists, allow the picker to open at any level in the hierarchy
 
-----
+---
 
 `shouldShowSelections:boolean = true;`
 
 Allow the option to view the selected items shortcut
 
-----
+---
 
 `canExclude:boolean = true;`
 
 Allow items to be excluded
 
-----
+---
 
 `isHeightDynamic:boolean;`
 
 Dynamically calculate the height of the dropdown (only applicable if `isMobileDisplay` is false)
 
-----
+---
 
 `isMultiSelect:boolean = true;`
 
 Can multiple items be selected. If `false`, dropdown closes on selection
 
-----
+---
 
 `isMobileDisplay: boolean = false;`
 
 Animates the opening of the dropdown
 
-----
+---
 
 `isDisabled: boolean = false;`
 
 Disables input field and functionality
 
-----
+---
 
 `isChevronHidden: boolean = false;`
 
 show or hide the expand chevron
 
-----
+---
 
 ## Picker Outputs
 
@@ -173,57 +169,67 @@ show or hide the expand chevron
 
 When an item is toggled, all selected items are emitted
 
-----
+---
+
 `toggleInclude: EventEmitter<{ item: IPickerItem, searchTerm:string }> = new EventEmitter<{ item: IPickerItem, searchTerm:string }>();`
 
 Emits the included item plus any search term
 
-----
+---
+
 `toggleExclude: EventEmitter<{ item: IPickerItem, searchTerm:string }> = new EventEmitter<{ item: IPickerItem, searchTerm:string }>();`
 
 Emits the excluded item plus any search term
 
-----
+---
+
 `edit: EventEmitter<any> = new EventEmitter<any>();`
 
 Triggered when the user clicks to edit selections
 
-----
+---
+
 `closed: EventEmitter<any> = new EventEmitter<any>();`
 
 Emitted when the dropdown closes
 
-----
+---
+
 `focus: EventEmitter<ElementRef> = new EventEmitter<ElementRef>();`
 
 Emitted on input focus
 
-----
+---
+
 `clearAll: EventEmitter<any> = new EventEmitter<any>();`
 
 Emitted when all selections are cleared
 
-----
+---
+
 `clearSingle: EventEmitter<IPickerItem> = new EventEmitter<IPickerItem>();`
 
 Emits a single cleared item
 
-----
+---
+
 `clearSearch: EventEmitter<any> = new EventEmitter<any>();`
 
 Emitted when the search term is cleared
 
-----
+---
+
 `desc: EventEmitter<IPickerItem> = new EventEmitter<IPickerItem>();`
 
 Emitted when descending the hierarchy
 
-----
+---
+
 `asc: EventEmitter<IPickerItem> = new EventEmitter<IPickerItem>();`
 
 Emitted when ascending the hierarchy
 
-----
+---
 
 ## Projected content
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, inject } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { CAROUSEL_DIRECTIVES } from 'nw-style-guide/carousel';
 
@@ -10,11 +10,10 @@ import { CAROUSEL_DIRECTIVES } from 'nw-style-guide/carousel';
     imports: [CAROUSEL_DIRECTIVES]
 })
 export class CarouselComponent implements OnInit {
+    private _domSanitizer = inject(DomSanitizer);
 
     public items: any[] = [];
     public numItems: number = 30;
-
-    constructor(private _domSanitizer: DomSanitizer) { }
 
     ngOnInit() {
         this.items = this.getItems();
@@ -30,7 +29,7 @@ export class CarouselComponent implements OnInit {
         <div class="slide" nwCarouselSlide snapAlign="center" (click)="log('test')"
             [style.background-image]="'url(https://picsum.photos/216/120?image=' + item +')'">Slide {{item}}</div>
     </ng-container>
-</nw-carousel>`
+</nw-carousel>`;
     }
 
     getExample2() {
@@ -54,7 +53,6 @@ export class CarouselComponent implements OnInit {
             {{page + 1}}
         </button>
     </div>
-</nw-carousel>`
+</nw-carousel>`;
     }
-
 }

@@ -5,108 +5,159 @@
 
     <div class="standalone-buttons">
         @for (size of sizes; track size) {
-            <button class="btn btn-primary btn-{{size}}">
-                Submit (.{{size}})
-            </button>
+            <button class="btn btn-primary btn-{{ size }}">Submit (.{{ size }})</button>
         }
 
-        <hr>
+        <hr />
 
         <h3>Variations</h3>
 
-        <div style="width: 300px;">
-            <button class="btn btn-primary btn-{{defaultBtnSize}} btn-block">
-                .btn-block
-            </button>
+        <div style="width: 300px">
+            <button class="btn btn-primary btn-{{ defaultBtnSize }} btn-block">.btn-block</button>
         </div>
 
-        <button class="btn btn-primary btn-{{defaultBtnSize}} btn-round">
+        <button class="btn btn-primary btn-{{ defaultBtnSize }} btn-round">
             <i class="fas fa-plus"></i>
         </button>
 
-        <button class="btn btn-primary btn-{{defaultBtnSize}} btn-close"></button>
+        <button class="btn btn-primary btn-{{ defaultBtnSize }} btn-close"></button>
 
-        <button class="btn btn-primary btn-{{defaultBtnSize}}">
+        <button class="btn btn-primary btn-{{ defaultBtnSize }}">
             <i class="fab fa-facebook btn-icon"></i> With icon
         </button>
 
-        <button class="btn btn-primary btn-{{defaultBtnSize}} btn-no-padding">
-            No padding (.btn-no-padding)
-        </button>
+        <button class="btn btn-primary btn-{{ defaultBtnSize }} btn-no-padding">No padding (.btn-no-padding)</button>
 
         <button class="btn btn-carousel btn-carousel-prev"></button>
         <button class="btn btn-carousel"></button>
 
-        <button class="btn btn-link">
-            .btn-link
-        </button>
+        <button class="btn btn-link">.btn-link</button>
 
-        <hr>
+        <hr />
 
         <h3>States</h3>
 
-        <button class="btn btn-primary btn-{{defaultBtnSize}} disabled" disabled>
+        <button
+            class="btn btn-primary btn-{{ defaultBtnSize }} disabled"
+            disabled>
             .disabled
         </button>
 
-        <button class="btn btn-primary btn-{{defaultBtnSize}} active">
-            .active
-        </button>
+        <button class="btn btn-primary btn-{{ defaultBtnSize }} active">.active</button>
 
-        <hr>
+        <hr />
 
         <h3>Colors</h3>
 
         @for (color of btnNames; track color) {
-            <button class="btn btn-{{color}} btn-{{defaultBtnSize}}">
-                .btn-{{color}}
-            </button>
+            <button class="btn btn-{{ color }} btn-{{ defaultBtnSize }}">.btn-{{ color }}</button>
         }
 
         <h3>Alternatives</h3>
 
-        <div class="light-bg" style="padding: 16px">
-            <button class="btn btn-secondary-inverse btn-{{defaultBtnSize}}">
-                .btn-secondary-inverse
+        <div
+            class="light-bg"
+            style="padding: 16px">
+            <button class="btn btn-secondary-inverse btn-{{ defaultBtnSize }}">.btn-secondary-inverse</button>
+        </div>
+    </div>
+
+    <hr />
+
+    <h3>Button groups</h3>
+
+    <div style="margin-bottom: 20px">
+        <div
+            class="btn-group"
+            role="group">
+            <button
+                type="button"
+                class="btn btn-ghost btn-md">
+                Button 1
+            </button>
+            <button
+                type="button"
+                class="btn btn-ghost btn-md"
+                disabled>
+                Button 2 disabled
+            </button>
+            <button
+                type="button"
+                class="btn btn-ghost btn-md">
+                Button 3
+            </button>
+            <button
+                type="button"
+                class="btn btn-ghost btn-md">
+                <i class="fas fa-ellipsis-h"></i>
             </button>
         </div>
     </div>
 
-    <hr>
-
-    <h3>Button groups</h3>
-
-    <div style="margin-bottom: 20px;">
-        <div class="btn-group" role="group">
-            <button type="button" class="btn btn-ghost btn-md">Button 1</button>
-            <button type="button" class="btn btn-ghost btn-md" disabled>Button 2 disabled</button>
-            <button type="button" class="btn btn-ghost btn-md">Button 3</button>
-            <button type="button" class="btn btn-ghost btn-md"><i class="fas fa-ellipsis-h"></i></button>
+    <div style="margin-bottom: 20px">
+        <div
+            class="btn-group"
+            role="group">
+            <button
+                type="button"
+                class="btn btn-secondary btn-{{ defaultBtnSize }}">
+                Button 1
+            </button>
+            <button
+                type="button"
+                class="btn btn-secondary active btn-{{ defaultBtnSize }}">
+                Button 2 active (optional)
+            </button>
+            <button
+                type="button"
+                class="btn btn-secondary btn-{{ defaultBtnSize }}">
+                Button 3
+            </button>
+            <button
+                type="button"
+                class="btn btn-secondary btn-{{ defaultBtnSize }}"
+                disabled>
+                Button 4 disabled
+            </button>
         </div>
     </div>
 
-    <div style="margin-bottom: 20px;">
-        <div class="btn-group" role="group">
-            <button type="button" class="btn btn-secondary btn-{{defaultBtnSize}}">Button 1</button>
-            <button type="button" class="btn btn-secondary active btn-{{defaultBtnSize}}">Button 2 active (optional)</button>
-            <button type="button" class="btn btn-secondary btn-{{defaultBtnSize}}">Button 3</button>
-            <button type="button" class="btn btn-secondary btn-{{defaultBtnSize}}" disabled>Button 4 disabled</button>
+    <div style="margin-bottom: 20px">
+        <div
+            class="btn-group"
+            role="group">
+            <button
+                type="button"
+                class="btn btn-primary btn-{{ defaultBtnSize }}">
+                Button 1
+            </button>
+            <button
+                type="button"
+                class="btn btn-primary active btn-{{ defaultBtnSize }}">
+                Button 2 active (optional)
+            </button>
+            <button
+                type="button"
+                class="btn btn-primary btn-{{ defaultBtnSize }}">
+                Button 3
+            </button>
+            <button
+                type="button"
+                class="btn btn-primary btn-{{ defaultBtnSize }}"
+                disabled>
+                Button 4 disabled
+            </button>
         </div>
     </div>
 
-    <div style="margin-bottom: 20px;">
-        <div class="btn-group" role="group">
-            <button type="button" class="btn btn-primary btn-{{defaultBtnSize}}">Button 1</button>
-            <button type="button" class="btn btn-primary active btn-{{defaultBtnSize}}">Button 2 active (optional)</button>
-            <button type="button" class="btn btn-primary btn-{{defaultBtnSize}}">Button 3</button>
-            <button type="button" class="btn btn-primary btn-{{defaultBtnSize}}" disabled>Button 4 disabled</button>
-        </div>
-    </div>
-
-    <div style="display: flex; flex-direction: row; align-items: center;">
+    <div style="display: flex; flex-direction: row; align-items: center">
         <h4>Reponsive button groups</h4>
 
-        <select class="form-control" [(ngModel)]="btnGroupSize" [ngModelOptions]="{standalone: true}" style="width: 100px; margin-left: 20px">
+        <select
+            class="form-control"
+            [(ngModel)]="btnGroupSize"
+            [ngModelOptions]="{ standalone: true }"
+            style="width: 100px; margin-left: 20px">
             <option value="10%">10%</option>
             <option value="25%">25%</option>
             <option value="50%">50%</option>
@@ -115,29 +166,84 @@
         </select>
     </div>
 
-    <div class="responsive-container" [style.width]="btnGroupSize">
-        <div class="btn-group btn-group-responsive btn-group-responsive-md" role="group">
-            <button type="button" class="btn btn-secondary"><i class="fas fa-adjust"></i></button>
-            <button type="button" class="btn btn-secondary"><i class="far fa-bell"></i></button>
-            <button type="button" class="btn btn-secondary"><i class="fas fa-sliders-h"></i></button>
-            <button type="button" class="btn btn-secondary"><i class="far fa-star"></i></button>
-            <button type="button" class="btn btn-secondary"><i class="far fa-bookmark"></i></button>
+    <div
+        class="responsive-container"
+        [style.width]="btnGroupSize">
+        <div
+            class="btn-group btn-group-responsive btn-group-responsive-md"
+            role="group">
+            <button
+                type="button"
+                class="btn btn-secondary">
+                <i class="fas fa-adjust"></i>
+            </button>
+            <button
+                type="button"
+                class="btn btn-secondary">
+                <i class="far fa-bell"></i>
+            </button>
+            <button
+                type="button"
+                class="btn btn-secondary">
+                <i class="fas fa-sliders-h"></i>
+            </button>
+            <button
+                type="button"
+                class="btn btn-secondary">
+                <i class="far fa-star"></i>
+            </button>
+            <button
+                type="button"
+                class="btn btn-secondary">
+                <i class="far fa-bookmark"></i>
+            </button>
         </div>
     </div>
 
     <h4>Ghost alternative with dropdown</h4>
-    <div style="margin-bottom: 20px;">
-        <div class="btn-group" role="group">
-            <button type="button" class="btn btn-ghost-alt btn-lg"><i class="fas fa-adjust"></i></button>
-            <button type="button" class="btn btn-ghost-alt btn-lg"><i class="far fa-bell"></i></button>
-            <button type="button" class="btn btn-ghost-alt btn-lg"><i class="fas fa-sliders-h"></i></button>
-            <button type="button" class="btn btn-ghost-alt btn-lg" disabled><i class="far fa-star"></i></button>
-            <div class="btn-group" role="group">
+    <div style="margin-bottom: 20px">
+        <div
+            class="btn-group"
+            role="group">
+            <button
+                type="button"
+                class="btn btn-ghost-alt btn-lg">
+                <i class="fas fa-adjust"></i>
+            </button>
+            <button
+                type="button"
+                class="btn btn-ghost-alt btn-lg">
+                <i class="far fa-bell"></i>
+            </button>
+            <button
+                type="button"
+                class="btn btn-ghost-alt btn-lg">
+                <i class="fas fa-sliders-h"></i>
+            </button>
+            <button
+                type="button"
+                class="btn btn-ghost-alt btn-lg"
+                disabled>
+                <i class="far fa-star"></i>
+            </button>
+            <div
+                class="btn-group"
+                role="group">
                 <div class="dropdown">
-                    <button class="btn btn-ghost-alt btn-lg dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fas fa-ellipsis-h" aria-hidden="true"></i>
+                    <button
+                        class="btn btn-ghost-alt btn-lg dropdown-toggle"
+                        type="button"
+                        id="dropdownMenu1"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false">
+                        <i
+                            class="fas fa-ellipsis-h"
+                            aria-hidden="true"></i>
                     </button>
-                    <ul class="dropdown-menu dropdown-menu-arrow dropdown-menu-right" aria-labelledby="dropdownMenu1">
+                    <ul
+                        class="dropdown-menu dropdown-menu-arrow dropdown-menu-right"
+                        aria-labelledby="dropdownMenu1">
                         <li><a href="#">Action</a></li>
                         <li><a href="#">Another action</a></li>
                         <li><a href="#">Something else here</a></li>
@@ -146,5 +252,4 @@
             </div>
         </div>
     </div>
-
 </div>

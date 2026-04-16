@@ -2,45 +2,54 @@
     <h2 class="page-header">Color palette</h2>
     @for (colorName of colorNames; track colorName; let cIndex = $index) {
         <div>
-            <h3 style="text-transform: capitalize">{{colorName}}</h3>
-                @if (colorName === 'levels') {
-                    <div class="color-variants">
-                        @for (level of levels; track level) {
-                            <div class="color">
-                                @if (showColorCodes) {
-                                    <code [innerHTML]="getColors(splash)" class="hex text-center">
-                                    </code>
-                                }
-                                <div #splash class="splash bg-{{colorName}}-level{{level}}"></div>
-
-                                <code class="sass-code">
-                                    <strong>$level{{level}}</strong>
+            <h3 style="text-transform: capitalize">{{ colorName }}</h3>
+            @if (colorName === 'levels') {
+                <div class="color-variants">
+                    @for (level of levels; track level) {
+                        <div class="color">
+                            @if (showColorCodes) {
+                                <code
+                                    [innerHTML]="getColors(splash)"
+                                    class="hex text-center">
                                 </code>
-                            </div>
-                        }
-                    </div>
-                    <em>
-                        "Levels" colours should be used directly through variables <strong>$level0-5</strong> rather than with <code>get-color()</code>,
-                        e.g <code>background-color: $level1;</code>
-                    </em>
-                }
+                            }
+                            <div
+                                #splash
+                                class="splash bg-{{ colorName }}-level{{ level }}"></div>
 
-                @if (colorName !== 'levels') {
-                    <div class="color-variants">
-                        @for (shade of shades; track shade; let sIndex = $index) {
-                            <div class="color">
-                                @if (showColorCodes) {
-                                    <code class="hex text-center" [innerHTML]="getColors(splash)">
-                                    </code>
-                                }
-                                <div #splash class="splash bg-{{colorName}}-{{shade}}"></div>
-                                <code class="sass-code">
-                                    get-color("{{colorName}}", <strong>{{shade}}</strong>)
+                            <code class="sass-code">
+                                <strong>$level{{ level }}</strong>
+                            </code>
+                        </div>
+                    }
+                </div>
+                <em>
+                    "Levels" colours should be used directly through variables <strong>$level0-5</strong> rather than
+                    with <code>get-color()</code>, e.g <code>background-color: $level1;</code>
+                </em>
+            }
+
+            @if (colorName !== 'levels') {
+                <div class="color-variants">
+                    @for (shade of shades; track shade; let sIndex = $index) {
+                        <div class="color">
+                            @if (showColorCodes) {
+                                <code
+                                    class="hex text-center"
+                                    [innerHTML]="getColors(splash)">
                                 </code>
-                            </div>
-                        }
-                    </div>
-                }
+                            }
+                            <div
+                                #splash
+                                class="splash bg-{{ colorName }}-{{ shade }}"></div>
+                            <code class="sass-code">
+                                get-color("{{ colorName }}", <strong>{{ shade }}</strong
+                                >)
+                            </code>
+                        </div>
+                    }
+                </div>
+            }
         </div>
     }
 
@@ -50,14 +59,16 @@
         @for (colorName of standaloneColors; track colorName) {
             <div class="color">
                 @if (showColorCodes) {
-                    <code class="hex text-center" [innerHTML]="getColors(splash)">
+                    <code
+                        class="hex text-center"
+                        [innerHTML]="getColors(splash)">
                     </code>
                 }
-                <div #splash class="splash bg-{{colorName}}"></div>
+                <div
+                    #splash
+                    class="splash bg-{{ colorName }}"></div>
 
-                <code class="sass-code">
-                    ${{colorName}}
-                </code>
+                <code class="sass-code"> ${{ colorName }} </code>
             </div>
         }
     </div>

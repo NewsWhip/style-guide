@@ -1,5 +1,11 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
-import { IWord, IWordCloudConfig, IWordWithPosition, WordCloudComponent, WORD_CLOUD_COMPONENTS } from 'nw-style-guide/word-cloud';
+import { ChangeDetectorRef, Component, OnInit, ViewChild, inject } from '@angular/core';
+import {
+    IWord,
+    IWordCloudConfig,
+    IWordWithPosition,
+    WordCloudComponent,
+    WORD_CLOUD_COMPONENTS
+} from 'nw-style-guide/word-cloud';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ISnippet } from '../code/ISnippet';
 import { TABS_DIRECTIVES } from 'nw-style-guide/tabs';
@@ -18,6 +24,8 @@ interface IMyWord extends IWord {
     imports: [TABS_DIRECTIVES, RouterLink, WORD_CLOUD_COMPONENTS, TooltipDirective, AppCodeComponent, NgTemplateOutlet]
 })
 export class WordCloudDemoComponent implements OnInit {
+    private _route = inject(ActivatedRoute);
+    private _cdRef = inject(ChangeDetectorRef);
 
     @ViewChild(WordCloudComponent) wordCloud: WordCloudComponent<IMyWord>;
 
@@ -26,11 +34,7 @@ export class WordCloudDemoComponent implements OnInit {
     public positionedWords: IWordWithPosition<IMyWord>[] = [];
     public config: Partial<IWordCloudConfig> = {
         debugMode: false
-    }
-
-    constructor(
-        private _route: ActivatedRoute,
-        private _cdRef: ChangeDetectorRef) { }
+    };
 
     ngOnInit() {
         this.generateWords();
@@ -102,17 +106,17 @@ export class WordCloudDemoComponent implements OnInit {
             code: `
                 <nw-word>...</nw-word>
             `
-        },
-    }
+        }
+    };
 
     public wordCloudPropertiesTable: [string, string, string][] = [
         [
-            "@Input() words: T[]",
-            "A generic collecion of word objects that must satisfy the <code>IWord</code> interface",
-            "undefined"
+            '@Input() words: T[]',
+            'A generic collecion of word objects that must satisfy the <code>IWord</code> interface',
+            'undefined'
         ],
         [
-            "@Input() options: Partial<IWordCloudConfig>",
+            '@Input() options: Partial<IWordCloudConfig>',
             'An optional config to override the default word cloud config',
             `{
                 debugMode: false,
@@ -127,17 +131,17 @@ export class WordCloudDemoComponent implements OnInit {
             }`
         ],
         [
-            "@Output() wordsPositioned: EventEmitter<IWordWithPosition<T>[]>",
-            "An event emitter that fires when the words have been sized and positioned",
-            "-"
+            '@Output() wordsPositioned: EventEmitter<IWordWithPosition<T>[]>',
+            'An event emitter that fires when the words have been sized and positioned',
+            '-'
         ]
     ];
 
     public wordComponentPropertiesTable: [string, string, string][] = [
         [
-            "@Input() word: IWordWithPosition<T>",
-            "A single word from the generic collecion of word objects emitted from the <code>WordCloudComponent</code>",
-            "undefined"
+            '@Input() word: IWordWithPosition<T>',
+            'A single word from the generic collecion of word objects emitted from the <code>WordCloudComponent</code>',
+            'undefined'
         ]
     ];
 
@@ -148,18 +152,20 @@ export class WordCloudDemoComponent implements OnInit {
         },
         {
             name: 'weight: number',
-            description: 'The weight of the word relative to the others. This could be based on a score, engagement, frequency etc.'
+            description:
+                'The weight of the word relative to the others. This could be based on a score, engagement, frequency etc.'
         },
         {
             name: 'exportColor: string',
             description: 'Any valid CSS color that will be used when exporting the cloud to an image'
         }
-    ]
+    ];
 
     public configInterfaceDetails = [
         {
             name: 'debugMode: boolean',
-            description: 'When set to true, logs debug information and renders a canvas to help debug sizing and positioning'
+            description:
+                'When set to true, logs debug information and renders a canvas to help debug sizing and positioning'
         },
         {
             name: 'fontFamily: string',
@@ -193,7 +199,7 @@ export class WordCloudDemoComponent implements OnInit {
             name: 'resizeTolerance: number',
             description: 'A pixel value specifying the minimum change in height or width that triggers the resize event'
         }
-    ]
+    ];
 
     public wordWithPositionInterfaceDetails = [
         {
@@ -224,10 +230,41 @@ export class WordCloudDemoComponent implements OnInit {
             name: 'fontSize: number',
             description: 'The fontSize of the word'
         }
-    ]
+    ];
 
     private _generateInputWords(): IMyWord[] {
-        const words = ["document", "scatter", "outside", "Compromise", "finished", "reluctance", "discount", "content-stuff", "banish", "mainstream", "sail", "porter", "climb", "Europe", "fixture", "fail", "revolution", "consideration", "reader", "receipt", "half", "concentrate", "dynamic", "continuation", "racism", "crack", "treat", "greet", "coalition", "grain"];
+        const words = [
+            'document',
+            'scatter',
+            'outside',
+            'Compromise',
+            'finished',
+            'reluctance',
+            'discount',
+            'content-stuff',
+            'banish',
+            'mainstream',
+            'sail',
+            'porter',
+            'climb',
+            'Europe',
+            'fixture',
+            'fail',
+            'revolution',
+            'consideration',
+            'reader',
+            'receipt',
+            'half',
+            'concentrate',
+            'dynamic',
+            'continuation',
+            'racism',
+            'crack',
+            'treat',
+            'greet',
+            'coalition',
+            'grain'
+        ];
 
         return words.map((value, i) => {
             return {
@@ -239,5 +276,4 @@ export class WordCloudDemoComponent implements OnInit {
             };
         });
     }
-
 }

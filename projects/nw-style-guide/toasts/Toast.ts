@@ -1,4 +1,4 @@
-import { TemplateRef } from "@angular/core";
+import { TemplateRef } from '@angular/core';
 import { IToast } from './IToast';
 
 export class Toast implements IToast {

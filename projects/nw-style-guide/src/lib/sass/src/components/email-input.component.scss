@@ -1,5 +1,5 @@
-@use "../variables";
-@use "../mixins/forms";
+@use '../variables';
+@use '../mixins/forms';
 
 nw-email-input {
     .emails-container {
@@ -59,7 +59,7 @@ nw-email-input {
             height: 0;
             padding: 0;
             margin: 0;
-        }      
+        }
     }
     .pill-hidden {
         visibility: hidden;
@@ -68,17 +68,17 @@ nw-email-input {
         font-size: 16px !important;
     }
 
-    .persistent-placeholder{
+    .persistent-placeholder {
         input {
             width: 100%;
-            height: 100%;  
+            height: 100%;
             background-color: transparent;
             padding-bottom: 6px;
             &:focus {
                 margin: 0;
                 margin-left: -2px;
             }
-            &::placeholder {             
+            &::placeholder {
                 font-size: 16px;
                 color: variables.$input-color-placeholder;
             }

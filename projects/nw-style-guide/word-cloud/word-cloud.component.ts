@@ -1,13 +1,26 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, Inject, Input, OnChanges, Output, Renderer2, SimpleChanges, DOCUMENT } from "@angular/core";
-import { IBoundingBox } from "./models/IBoundingBox";
-import { IPoint } from "./models/IPoint";
-import { IWordCloudConfig } from "./models/IWordCloudConfig";
-import { IWord } from "./models/IWord";
-import { IWordWithFontSize } from "./models/IWordWithFontSize";
-import { IWordWithPosition } from "./models/IWordWithPosition";
-import { interval, Observable, of } from "rxjs";
-import { catchError, filter, map, startWith, take, timeout } from "rxjs/operators";
-import { ResizeObserverDirective } from "nw-style-guide/resize-observer";
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    ElementRef,
+    EventEmitter,
+    Input,
+    OnChanges,
+    Output,
+    Renderer2,
+    SimpleChanges,
+    DOCUMENT,
+    inject
+} from '@angular/core';
+import { IBoundingBox } from './models/IBoundingBox';
+import { IPoint } from './models/IPoint';
+import { IWordCloudConfig } from './models/IWordCloudConfig';
+import { IWord } from './models/IWord';
+import { IWordWithFontSize } from './models/IWordWithFontSize';
+import { IWordWithPosition } from './models/IWordWithPosition';
+import { interval, Observable, of } from 'rxjs';
+import { catchError, filter, map, startWith, take, timeout } from 'rxjs/operators';
+import { ResizeObserverDirective } from 'nw-style-guide/resize-observer';
 
 @Component({
     selector: 'nw-word-cloud',
@@ -16,6 +29,11 @@ import { ResizeObserverDirective } from "nw-style-guide/resize-observer";
     imports: [ResizeObserverDirective]
 })
 export class WordCloudComponent<T extends IWord> implements OnChanges {
+    private _elRef = inject<ElementRef<HTMLElement>>(ElementRef);
+    private _renderer = inject(Renderer2);
+    private _cdRef = inject(ChangeDetectorRef);
+    private _document = inject<Document>(DOCUMENT);
+    elRef = inject<ElementRef<HTMLElement>>(ElementRef);
 
     @Input() words: T[];
     @Input() options: Partial<IWordCloudConfig> = {};
@@ -36,13 +54,6 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
     private _spiralResolution = 0.3;
 
     public config: IWordCloudConfig;
-
-    constructor(
-        private _elRef: ElementRef<HTMLElement>,
-        private _renderer: Renderer2,
-        private _cdRef: ChangeDetectorRef,
-        @Inject(DOCUMENT) private _document: Document,
-        public elRef: ElementRef<HTMLElement>) {}
 
     ngOnChanges(changes: SimpleChanges): void {
         const wordsChange = changes.words?.currentValue !== changes.words?.previousValue;
@@ -79,13 +90,18 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
         });
 
         /*
-        * Get the lowest & highest words positions from the y-axis and based on that we get the word cloud content height
-        * which we then use in order to extract only the content of the word cloud excluding white space and set it to a new canvas.
-        */
+         * Get the lowest & highest words positions from the y-axis and based on that we get the word cloud content height
+         * which we then use in order to extract only the content of the word cloud excluding white space and set it to a new canvas.
+         */
         const lowestPointOnTheYAxis = Math.min(...this._positionedWords.map(pw => pw.canvasY - pw.height / 2));
         const highestPointOnTheYAxis = Math.max(...this._positionedWords.map(pw => pw.canvasY + pw.height / 2));
         const heightOfWordCloudContent = (highestPointOnTheYAxis - lowestPointOnTheYAxis) * ratio;
-        const extractWordCloudImageData = exportCtx.getImageData(0, lowestPointOnTheYAxis * ratio, exportCanvas.width, heightOfWordCloudContent);
+        const extractWordCloudImageData = exportCtx.getImageData(
+            0,
+            lowestPointOnTheYAxis * ratio,
+            exportCanvas.width,
+            heightOfWordCloudContent
+        );
 
         const canvas = this._renderer.createElement('canvas') as HTMLCanvasElement;
         const context = canvas.getContext('2d');
@@ -140,13 +156,15 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
         const minWeight: number = Math.min(...weights);
         const maxWeight: number = Math.max(...weights);
 
-        return words.map(word => {
-            return {
-                ...word,
-                fontSize: this._getFontSize(word.weight, minWeight, maxWeight),
-                truncatedValue: this._truncateWord(word.value)
-            };
-        }).sort((a, b) => b.weight - a.weight);
+        return words
+            .map(word => {
+                return {
+                    ...word,
+                    fontSize: this._getFontSize(word.weight, minWeight, maxWeight),
+                    truncatedValue: this._truncateWord(word.value)
+                };
+            })
+            .sort((a, b) => b.weight - a.weight);
     }
 
     private _drawCanvas(): void {
@@ -185,8 +203,8 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
              * Adjust the x and y based on textAlign = "center" and textBaseline = "middle";
              */
             const boundingBox: IBoundingBox = {
-                x: point.x - (width / 2),
-                y: point.y - (height / 2),
+                x: point.x - width / 2,
+                y: point.y - height / 2,
                 width,
                 height
             };
@@ -243,8 +261,8 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
 
     private _setFontDetails(ctx: CanvasRenderingContext2D, fontSize: number): void {
         ctx.font = `${this.config.fontWeight} ${fontSize}px/1 ${this.config.fontFamily}`;
-        ctx.textAlign = "center";
-        ctx.textBaseline = "middle";
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
     }
 
     private _isIntersecting(boundingBox: IBoundingBox): boolean {
@@ -252,10 +270,12 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
          * Check whether or not two bounding boxes overlap
          */
         const doBoxesOverlap = (boxA: IBoundingBox, boxB: IBoundingBox): boolean => {
-            return !(boxA.x + boxA.width < boxB.x ||
+            return !(
+                boxA.x + boxA.width < boxB.x ||
                 boxB.x + boxB.width < boxA.x ||
                 boxA.y + boxA.height < boxB.y ||
-                boxB.y + boxB.height < boxA.y);
+                boxB.y + boxB.height < boxA.y
+            );
         };
 
         /**
@@ -271,7 +291,7 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
     private _getFontSize(wordWeight: number, minWeight: number, maxWeight: number): number {
         const weightDiff = maxWeight - minWeight;
         const factor = (wordWeight - minWeight) / weightDiff;
-        const fontSize = ((this.config.maxFontSize - this.config.minFontSize) * factor) + this.config.minFontSize;
+        const fontSize = (this.config.maxFontSize - this.config.minFontSize) * factor + this.config.minFontSize;
 
         /**
          * fontSize may be NaN if all words have the same weight. If they do, return the fontSize that is midway
@@ -304,10 +324,12 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
     }
 
     private _isOutsideCanvas(boundingBox: IBoundingBox, canvasWidth: number, canvasHeight: number): boolean {
-        return (boundingBox.x + boundingBox.width) > canvasWidth ||
+        return (
+            boundingBox.x + boundingBox.width > canvasWidth ||
             boundingBox.x < 0 ||
-            (boundingBox.y + boundingBox.height) > canvasHeight ||
-            boundingBox.y < 0;
+            boundingBox.y + boundingBox.height > canvasHeight ||
+            boundingBox.y < 0
+        );
     }
 
     /**
@@ -349,7 +371,9 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
      * words back inside the canvas, and update and return the placed words with the scaling factor applied
      */
     private _scalePositionedWords(positionedWords: IWordWithPosition<T>[]): IWordWithPosition<T>[] {
-        const outOfBounds = positionedWords.filter(word => this._isOutsideCanvas(word, this._canvas.width, this._canvas.height));
+        const outOfBounds = positionedWords.filter(word =>
+            this._isOutsideCanvas(word, this._canvas.width, this._canvas.height)
+        );
 
         /**
          * Determine the minimum and maximum x-coordinates of the words that are outside the canvas. The minimum x-coordinate is the leftmost
@@ -362,7 +386,7 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
          * exceed the left edge of the canvas, and `overflowRight` is the amount by which they exceed the right edge of the canvas
          */
         const overflowLeft = minX < 0 ? Math.abs(minX) : 0;
-        const overflowRight = maxX > this._canvas.width ? (maxX - this._canvas.width) : 0;
+        const overflowRight = maxX > this._canvas.width ? maxX - this._canvas.width : 0;
         /**
          * Find the largest horizontal overflow and double it. As we're scaling towards the center, rather than summing the left
          * and right overflows we need to take the largest and double it to ensure we don't end up with words being positioned out
@@ -382,7 +406,7 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
         const minY = Math.min(...outOfBounds.map(oob => oob.y));
         const maxY = Math.max(...outOfBounds.map(oob => oob.y + oob.height));
         const overflowTop = minY < 0 ? Math.abs(minY) : 0;
-        const overflowBottom = maxY > this._canvas.height ? (maxY - this._canvas.height) : 0;
+        const overflowBottom = maxY > this._canvas.height ? maxY - this._canvas.height : 0;
         /**
          * Find the largest vertical overflow and double it. As we're scaling towards the center, rather than summing the top
          * and bottom overflows we need to take the largest and double it to ensure we don't end up with words being positioned out
@@ -404,7 +428,7 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
              * Determine the distance between the current position and the target position (the center) and
              * multiply it by our scale (between 0 and 1) to move partway towards the target
              */
-            const dist = Math.sqrt((dx * dx) + (dy * dy)) * (1 - scale);
+            const dist = Math.sqrt(dx * dx + dy * dy) * (1 - scale);
             /**
              * Calculate the angle at which we should move and the update our x and y using our calculated distance and angle
              *
@@ -413,8 +437,8 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
             const angle = Math.atan2(dy, dx);
 
             return {
-                x: x + (dist * Math.cos(angle)),
-                y: y + (dist * Math.sin(angle))
+                x: x + dist * Math.cos(angle),
+                y: y + dist * Math.sin(angle)
             };
         };
 

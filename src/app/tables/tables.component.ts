@@ -8,7 +8,5 @@ import { FormsModule } from '@angular/forms';
     imports: [FormsModule]
 })
 export class TablesComponent {
-
     public isTall: boolean = false;
-
 }

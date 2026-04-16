@@ -1,4 +1,16 @@
-import { Component, ElementRef, Input, OnInit, ViewChild, AfterViewInit, ChangeDetectionStrategy, Output, EventEmitter, OnDestroy } from '@angular/core';
+import {
+    Component,
+    ElementRef,
+    Input,
+    OnInit,
+    ViewChild,
+    AfterViewInit,
+    ChangeDetectionStrategy,
+    Output,
+    EventEmitter,
+    OnDestroy,
+    inject
+} from '@angular/core';
 import { select, Selection, pointer } from 'd3-selection';
 import { ChartUtils } from './chart.utils';
 import { fromEvent, Subject, merge } from 'rxjs';
@@ -8,16 +20,21 @@ import { ResizeObserverDirective } from 'nw-style-guide/resize-observer';
 @Component({
     selector: 'svg[nw-chart]',
     template: `
-        <svg:g #chartContainer
+        <svg:g
+            #chartContainer
             nwResizeObserver
             [element]="parentElement"
             (nwResize)="onChartDimensionsChange()">
             <!-- Keep axes outside the main rendering container so
             that we only get mouse events from graphical elements -->
             <ng-content select="[nw-x-axis],[nw-y-axis]"></ng-content>
-            <svg:g #mouseEventCaptureContainer class="mouse-event-capture-container">
+            <svg:g
+                #mouseEventCaptureContainer
+                class="mouse-event-capture-container">
                 <ng-content select=".nw-slot-1"></ng-content>
-                <svg:rect #hoverOverlay (click)="onBackgroundClick()"></svg:rect>
+                <svg:rect
+                    #hoverOverlay
+                    (click)="onBackgroundClick()"></svg:rect>
                 <ng-content select=".nw-slot-2"></ng-content>
                 <ng-content></ng-content>
             </svg:g>
@@ -29,6 +46,8 @@ import { ResizeObserverDirective } from 'nw-style-guide/resize-observer';
     imports: [ResizeObserverDirective]
 })
 export class ChartComponent implements OnInit, AfterViewInit, OnDestroy {
+    private _elRef = inject<ElementRef<SVGSVGElement>>(ElementRef);
+    chartUtils = inject(ChartUtils);
 
     @Input('width') w: number;
     @Input('height') h: number;
@@ -53,10 +72,6 @@ export class ChartComponent implements OnInit, AfterViewInit, OnDestroy {
     private _destroyed$: Subject<void> = new Subject();
     private _chartDimensionsChange$: Subject<void> = new Subject();
 
-    constructor(
-        private _elRef: ElementRef<SVGSVGElement>,
-        public chartUtils: ChartUtils) {}
-
     ngOnInit() {
         this.parentElement = this._elRef.nativeElement.parentElement;
 
@@ -70,30 +85,38 @@ export class ChartComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     get width(): number {
-        return (this.w || this._elRef.nativeElement.getBoundingClientRect().width) - this.margins.left - this.margins.right;
+        return (
+            (this.w || this._elRef.nativeElement.getBoundingClientRect().width) - this.margins.left - this.margins.right
+        );
     }
 
     get height(): number {
-        return (this.h || this._elRef.nativeElement.getBoundingClientRect().height) - this.margins.top - this.margins.bottom;
+        return (
+            (this.h || this._elRef.nativeElement.getBoundingClientRect().height) -
+            this.margins.top -
+            this.margins.bottom
+        );
     }
 
     setSvg(): void {
         this.svg = select(this._elRef.nativeElement)
-            .attr("width", this.width + this.margins.left + this.margins.right)
-            .attr("height", this.height + this.margins.top + this.margins.bottom);
+            .attr('width', this.width + this.margins.left + this.margins.right)
+            .attr('height', this.height + this.margins.top + this.margins.bottom);
     }
 
     appendContainer(): void {
-        select(this.chartContainer.nativeElement)
-            .attr("transform", "translate(" + this.margins.left + "," + this.margins.top + ")");
+        select(this.chartContainer.nativeElement).attr(
+            'transform',
+            'translate(' + this.margins.left + ',' + this.margins.top + ')'
+        );
     }
 
     setHoverOverlay() {
         // This full height / width rect ensures that all mouse events will
         // be captured and delegated to the parent mouseEventCaptureContainer
         select(this.hoverOverlay.nativeElement)
-            .attr("width", this.width)
-            .attr("height", this.height)
+            .attr('width', this.width)
+            .attr('height', this.height)
             .style('fill', 'none')
             .style('pointer-events', 'all');
 
@@ -120,10 +143,7 @@ export class ChartComponent implements OnInit, AfterViewInit, OnDestroy {
         const windowResize$ = fromEvent(window, 'resize');
 
         merge(windowResize$, this._chartDimensionsChange$)
-            .pipe(
-                debounceTime(100),
-                takeUntil(this._destroyed$)
-            )
+            .pipe(debounceTime(100), takeUntil(this._destroyed$))
             .subscribe(_ => this.chartUtils.notifyChartResize());
     }
 
