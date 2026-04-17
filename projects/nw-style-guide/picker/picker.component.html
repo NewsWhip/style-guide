@@ -206,7 +206,8 @@
                                                 (click)="toggleItemInclusion(item, $event)"
                                                 [checked]="item.added"
                                                 (keydown.enter)="toggleItemInclusion(item, $event)"
-                                                (keydown.tab)="onListItemTab($event, i)" />
+                                                (keydown.tab)="onListItemTab($event, i)"
+                                                (keydown.shift.tab)="onListItemShiftTab($event, i)" />
                                             <label
                                                 [for]="'include-' + item.id"
                                                 aria-hidden="true"></label>
@@ -222,7 +223,8 @@
                                                 (click)="toggleItemExclusion(item, $event)"
                                                 [checked]="item.excluded"
                                                 (keydown.enter)="toggleItemExclusion(item, $event)"
-                                                (keydown.tab)="onListItemTab($event, i)" />
+                                                (keydown.tab)="onListItemTab($event, i)"
+                                                (keydown.shift.tab)="onListItemShiftTab($event, i)" />
                                             <label
                                                 [for]="'exclude-' + item.id"
                                                 aria-hidden="true"></label>
@@ -249,6 +251,7 @@
                                             (click)="onDrilldown(item)"
                                             (keydown.enter)="$event.stopPropagation()"
                                             (keydown.tab)="onListItemTab($event, i)"
+                                            (keydown.shift.tab)="onListItemShiftTab($event, i)"
                                             [attr.aria-label]="'Expand ' + item.displayName">
                                             <i
                                                 class="fas fa-chevron-right"

@@ -390,36 +390,34 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     onListItemTab(event: KeyboardEvent, index: number) {
-        const getChildren = (el: HTMLElement) => Array.from(el.querySelectorAll('input, button')) as HTMLElement[];
-        const items = this.optionsListItems.toArray();
-        const li = items[index]?.nativeElement;
-        const children = getChildren(li);
-        const target = event.target as HTMLElement;
-        const firstFocusableChild = children[0] ?? li;
+        const { li, children } = this._focusableChildren(index);
         const lastFocusableChild = children[children.length - 1] ?? li;
 
-        if (event.shiftKey) {
-            if (target !== firstFocusableChild) return;
-            event.preventDefault();
-            if (index === 0) {
-                this._focusInput();
-                return;
-            }
-            this.focusedIndex = index - 1;
-        } else {
-            if (target !== lastFocusableChild) return;
-            if (index + 1 >= this.displayItems.length) return;
-            event.preventDefault();
-            this.focusedIndex = index + 1;
-        }
+        if (event.target !== lastFocusableChild) return;
+        if (index + 1 >= this.displayItems.length) return;
+        event.preventDefault();
+        this.focusedIndex = index + 1;
 
         this._cdRef.detectChanges();
-        const adjacentLi = items[this.focusedIndex].nativeElement;
-        const adjacentChildren = getChildren(adjacentLi);
-        const focusTarget = event.shiftKey
-            ? (adjacentChildren[adjacentChildren.length - 1] ?? adjacentLi)
-            : (adjacentChildren[0] ?? adjacentLi);
-        focusTarget.focus();
+        const next = this._focusableChildren(this.focusedIndex);
+        (next.children[0] ?? next.li).focus();
+    }
+
+    onListItemShiftTab(event: KeyboardEvent, index: number) {
+        const { li, children } = this._focusableChildren(index);
+        const firstFocusableChild = children[0] ?? li;
+
+        if (event.target !== firstFocusableChild) return;
+        event.preventDefault();
+        if (index === 0) {
+            this._focusInput();
+            return;
+        }
+        this.focusedIndex = index - 1;
+
+        this._cdRef.detectChanges();
+        const prev = this._focusableChildren(this.focusedIndex);
+        (prev.children[prev.children.length - 1] ?? prev.li).focus();
     }
 
     onDrilldown(item: IPickerItem) {
@@ -554,6 +552,12 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
         this._cdRef.detectChanges();
         const index = this.displayItems.findIndex(i => i.id === parentItem!.id);
         this._focusListItem(index >= 0 ? index : 0);
+    }
+
+    private _focusableChildren(index: number): { li: HTMLElement; children: HTMLElement[] } {
+        const li = this.optionsListItems.toArray()[index]?.nativeElement as HTMLElement;
+        const children = Array.from(li?.querySelectorAll('input, button') ?? []) as HTMLElement[];
+        return { li, children };
     }
 
     private _resetSearchTerm() {
