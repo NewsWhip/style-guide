@@ -127,6 +127,11 @@ nw-angular-picker {
                 align-items: center;
                 line-height: 32px;
 
+                input[type='checkbox']:focus:not(:focus-visible) ~ label::before {
+                    outline: none;
+                    box-shadow: none;
+                }
+
                 .checkbox {
                     margin: 0;
                 }

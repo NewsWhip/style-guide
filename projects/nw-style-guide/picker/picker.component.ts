@@ -338,7 +338,7 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
     onContainerFocusOut() {
         setTimeout(() => {
             if (!this._elementRef.nativeElement.contains(document.activeElement)) {
-                this.closeResults(false);
+                this.closeResults({ refocusInput: false });
                 this.blur.emit(this.inputEl);
             }
         });
@@ -362,7 +362,7 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
         this.inputEl.nativeElement.blur();
     }
 
-    closeResults(refocusInput: boolean = true) {
+    closeResults({refocusInput = true} = {}) {
         if (!this.canViewResults) {
             return;
         }
