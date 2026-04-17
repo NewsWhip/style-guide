@@ -401,7 +401,10 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
         if (event.shiftKey) {
             if (target !== firstFocusableChild) return;
             event.preventDefault();
-            if (index === 0) { this._focusInput(); return; }
+            if (index === 0) {
+                this._focusInput();
+                return;
+            }
             this.focusedIndex = index - 1;
         } else {
             if (target !== lastFocusableChild) return;

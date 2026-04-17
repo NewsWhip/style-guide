@@ -278,7 +278,6 @@ describe('NwPickerComponent', () => {
                 dispatchKeydown(lastCheckbox, 'Tab');
                 expect(spy).not.toHaveBeenCalled();
             });
-
         });
 
         describe('items with children (drilldown button)', () => {
@@ -302,7 +301,6 @@ describe('NwPickerComponent', () => {
                 expect(document.activeElement).toBe(nextCheckbox);
             });
         });
-
     });
 
     describe('drilldown button', () => {
