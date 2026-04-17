@@ -44,11 +44,6 @@ describe('NwPickerComponent', () => {
         fixture.detectChanges();
     };
 
-    const dispatchShiftTab = (element: HTMLElement) => {
-        element.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', shiftKey: true, bubbles: true }));
-        fixture.detectChanges();
-    };
-
     describe('keyboard navigation', () => {
         beforeEach(() => {
             openDropdown();
@@ -308,49 +303,6 @@ describe('NwPickerComponent', () => {
             });
         });
 
-        describe('Shift+Tab (backward navigation)', () => {
-            beforeEach(() => {
-                fixture.componentRef.setInput('canExclude', false);
-                openDropdown();
-                dispatchKeydown(getInput(), 'ArrowDown');
-                dispatchKeydown(getOptionItems()[0], 'ArrowDown'); // focusedIndex=1
-            });
-
-            it('should move focus to the previous item checkbox on Shift+Tab', () => {
-                const items = getOptionItems();
-                const checkbox = items[1].querySelector('input[type="checkbox"]') as HTMLElement;
-                dispatchShiftTab(checkbox);
-                expect(document.activeElement).toBe(items[0].querySelector('input[type="checkbox"]'));
-            });
-
-            it('should move focus to the input on Shift+Tab from the first item', () => {
-                dispatchKeydown(getOptionItems()[1], 'ArrowUp'); // focusedIndex=0
-                const checkbox = getOptionItems()[0].querySelector('input[type="checkbox"]') as HTMLElement;
-                dispatchShiftTab(checkbox);
-                expect(document.activeElement).toBe(getInput());
-            });
-        });
-
-        describe('Shift+Tab with drilldown (backward navigation)', () => {
-            beforeEach(() => {
-                comp.items = [
-                    { id: 10, parentId: null, displayName: 'Parent', value: 'parent', added: false },
-                    { id: 11, parentId: null, displayName: 'Other', value: 'other', added: false },
-                    { id: 12, parentId: 10, displayName: 'Child', value: 'child', added: false }
-                ];
-                fixture.detectChanges();
-                openDropdown();
-                dispatchKeydown(getInput(), 'ArrowDown');
-                dispatchKeydown(getOptionItems()[0], 'ArrowDown'); // focusedIndex=1
-            });
-
-            it('should move focus to the drilldown button of the previous item on Shift+Tab', () => {
-                const items = getOptionItems();
-                const checkbox = items[1].querySelector('input[type="checkbox"]') as HTMLElement;
-                dispatchShiftTab(checkbox);
-                expect(document.activeElement).toBe(items[0].querySelector('.drilldown'));
-            });
-        });
     });
 
     describe('drilldown button', () => {

@@ -115,7 +115,6 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
         this._setDisplayItemsFromParentId(item.parentId);
         this.asc.emit(item);
         this._cdRef.detectChanges();
-        this.focusedIndex = 0;
         this._focusListItem(0);
     }
 
@@ -315,9 +314,7 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
         }
         const listLength = this.selectionsAreShowing ? this.getSelections().length : this.displayItems.length;
         if (listLength) {
-            const newIndex = Math.min(this.focusedIndex + 1, listLength - 1);
-            this.focusedIndex = newIndex;
-            this._focusListItem(newIndex);
+            this._focusListItem(Math.min(this.focusedIndex + 1, listLength - 1));
             this._cdRef.markForCheck();
         }
     }
@@ -426,7 +423,6 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
         this._setDisplayItemsFromParentId(item.id);
         this.desc.emit(item);
         this._cdRef.detectChanges();
-        this.focusedIndex = 0;
         this._focusListItem(0);
     }
 
@@ -476,7 +472,6 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
     private _openResultsAndFocusFirstItem() {
         this.showResults();
         this._cdRef.detectChanges();
-        this.focusedIndex = 0;
         this._focusListItem(0);
     }
 
@@ -486,9 +481,7 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
             this._focusInput();
             return;
         }
-        const newIndex = this.focusedIndex - 1;
-        this.focusedIndex = newIndex;
-        this._focusListItem(newIndex);
+        this._focusListItem(this.focusedIndex - 1);
         this._cdRef.markForCheck();
     }
 
@@ -541,6 +534,7 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     private _focusListItem(index: number) {
+        this.focusedIndex = index;
         const items = this._getActiveListItems().toArray();
         items?.[index].nativeElement.focus();
     }
@@ -555,9 +549,8 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
         this._setDisplayItemsFromParentId(parentItem!.parentId);
         this.asc.emit(parentItem);
         this._cdRef.detectChanges();
-        const idx = this.displayItems.findIndex(i => i.id === parentItem!.id);
-        this.focusedIndex = idx >= 0 ? idx : 0;
-        this._focusListItem(this.focusedIndex);
+        const index = this.displayItems.findIndex(i => i.id === parentItem!.id);
+        this._focusListItem(index >= 0 ? index : 0);
     }
 
     private _resetSearchTerm() {
