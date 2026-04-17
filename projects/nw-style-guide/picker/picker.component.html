@@ -246,7 +246,6 @@
                                             [attr.tabindex]="getChildTabIndex(i)"
                                             (click)="onDrilldown(item)"
                                             (keydown.enter)="$event.stopPropagation()"
-                                            (keydown.tab)="onDrilldownTab($event, i)"
                                             [attr.aria-label]="'Expand ' + item.displayName">
                                             <i
                                                 class="fas fa-chevron-right"

@@ -170,6 +170,9 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
             case 'Escape':
                 this._onListItemEscape(e, index);
                 break;
+            case 'Tab':
+                this.onListItemTab(e, index);
+                break;
         }
     }
 
@@ -392,17 +395,24 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
         this._focusInput();
     }
 
-    onDrilldownTab(event: KeyboardEvent, index: number) {
-        const nextIndex = index + 1;
-        if (nextIndex >= this.displayItems.length) {
+    onListItemTab(event: KeyboardEvent, index: number) {
+        const items = this.optionsListItems.toArray();
+        const li = items[index]?.nativeElement;
+        const focusable = (Array.from(li.querySelectorAll('input, button')) as HTMLElement[]).filter(
+            el => el.tabIndex >= 0
+        );
+        const lastFocusable = focusable[focusable.length - 1] ?? li;
+        const isLeavingRow = document.activeElement === lastFocusable;
+        const hasNextItem = index + 1 < this.displayItems.length;
+        if (!isLeavingRow || !hasNextItem) {
             return;
         }
         event.preventDefault();
-        this.focusedIndex = nextIndex;
+        this.focusedIndex = index + 1;
         this._cdRef.detectChanges();
-        const nextItem = this.optionsListItems.toArray()[nextIndex];
-        const checkbox = nextItem?.nativeElement.querySelector('input[type="checkbox"]');
-        checkbox.focus();
+        const nextLi = items[index + 1].nativeElement;
+        const checkbox = nextLi.querySelector('input[type="checkbox"]') as HTMLElement | null;
+        (checkbox ?? nextLi).focus();
     }
 
     onDrilldown(item: IPickerItem) {

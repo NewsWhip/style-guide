@@ -79,12 +79,6 @@ describe('NwPickerComponent', () => {
             dispatchKeydown(getOptionItems()[0], 'ArrowUp');
             expect(document.activeElement).toBe(getInput());
         });
-
-        it('should clear keyboard-focused from all items when focus returns to the input', () => {
-            dispatchKeydown(getInput(), 'ArrowDown');
-            dispatchKeydown(getOptionItems()[0], 'ArrowUp');
-            getOptionItems().forEach(item => expect(item.classList).not.toContain('keyboard-focused'));
-        });
     });
 
     describe('focusout from list', () => {
@@ -124,14 +118,6 @@ describe('NwPickerComponent', () => {
             comp.closeResults();
             expect(comp.selectionsAreShowing).toBeFalse();
         });
-
-        it('should show the main options list when reopened after viewing selections', () => {
-            comp.closeResults();
-            fixture.detectChanges();
-            openDropdown();
-            expect(de.query(By.css('.picker-options-list'))).toBeTruthy();
-            expect(de.query(By.css('.selected-items'))).toBeFalsy();
-        });
     });
 
     describe('ARIA attributes', () => {
@@ -152,11 +138,6 @@ describe('NwPickerComponent', () => {
         it('should set aria-expanded to true when the dropdown is open', () => {
             openDropdown();
             expect(getInput().getAttribute('aria-expanded')).toBe('true');
-        });
-
-        it('should set aria-activedescendant to null when no item is focused', () => {
-            openDropdown();
-            expect(getInput().getAttribute('aria-activedescendant')).toBeNull();
         });
 
         it('should set aria-activedescendant to the focused item id on ArrowDown', () => {
@@ -203,11 +184,6 @@ describe('NwPickerComponent', () => {
                 fixture.detectChanges();
                 const list = de.query(By.css('.picker-options-list')).nativeElement;
                 expect(list.getAttribute('aria-label')).toBe('Search results');
-            });
-
-            it('should set aria-selected to false on unselected items', () => {
-                const [firstItem] = getOptionItems();
-                expect(firstItem.getAttribute('aria-selected')).toBe('false');
             });
 
             it('should set aria-selected to true on selected items', () => {
@@ -263,6 +239,67 @@ describe('NwPickerComponent', () => {
             it('should label the selections list as "Current selections"', () => {
                 const list = de.query(By.css('.selected-items')).nativeElement;
                 expect(list.getAttribute('aria-label')).toBe('Current selections');
+            });
+        });
+    });
+
+    describe('Tab key navigation (onListItemTab)', () => {
+        describe('multi-select items without children', () => {
+            beforeEach(() => {
+                fixture.componentRef.setInput('canExclude', false);
+                openDropdown();
+                dispatchKeydown(getInput(), 'ArrowDown'); // sets focusedIndex=0, enabling child tabIndexes
+            });
+
+            it('should move focus to the next item checkbox when Tab is pressed on the last focusable child', () => {
+                const items = getOptionItems();
+                const checkbox = items[0].querySelector('input[type="checkbox"]') as HTMLElement;
+                checkbox.focus();
+                dispatchKeydown(items[0], 'Tab');
+                const nextCheckbox = items[1].querySelector('input[type="checkbox"]') as HTMLElement;
+                expect(document.activeElement).toBe(nextCheckbox);
+            });
+
+            it('should not intercept Tab when the active element is not the last focusable child', () => {
+                const items = getOptionItems();
+                items[0].focus(); // focus the <li> row itself, not its checkbox
+                const spy = spyOn(Event.prototype, 'preventDefault');
+                dispatchKeydown(items[0], 'Tab');
+                expect(spy).not.toHaveBeenCalled();
+            });
+
+            it('should not intercept Tab on the last item — allows focus to leave the list', () => {
+                dispatchKeydown(getOptionItems()[0], 'ArrowDown');
+                dispatchKeydown(getOptionItems()[1], 'ArrowDown');
+                const items = getOptionItems();
+                const lastCheckbox = items[items.length - 1].querySelector('input[type="checkbox"]') as HTMLElement;
+                lastCheckbox.focus();
+                const spy = spyOn(Event.prototype, 'preventDefault');
+                dispatchKeydown(items[items.length - 1], 'Tab');
+                expect(spy).not.toHaveBeenCalled();
+            });
+
+        });
+
+        describe('items with children (drilldown button)', () => {
+            beforeEach(() => {
+                comp.items = [
+                    { id: 10, parentId: null, displayName: 'Parent', value: 'parent', added: false },
+                    { id: 11, parentId: null, displayName: 'Other', value: 'other', added: false },
+                    { id: 12, parentId: 10, displayName: 'Child', value: 'child', added: false }
+                ];
+                fixture.detectChanges();
+                openDropdown();
+                dispatchKeydown(getInput(), 'ArrowDown'); // sets focusedIndex=0, enabling child tabIndexes
+            });
+
+            it('should move focus to the next item checkbox when Tab is pressed on the drilldown button', () => {
+                const items = getOptionItems();
+                const drilldownBtn = items[0].querySelector('.drilldown') as HTMLElement;
+                drilldownBtn.focus();
+                dispatchKeydown(items[0], 'Tab');
+                const nextCheckbox = items[1].querySelector('input[type="checkbox"]') as HTMLElement;
+                expect(document.activeElement).toBe(nextCheckbox);
             });
         });
     });

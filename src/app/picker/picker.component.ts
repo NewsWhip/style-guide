@@ -18,6 +18,14 @@ export class PickerComponent {
             added: false
         },
         {
+            id: 'regionCode-mars',
+            parentId: null,
+            key: 'regionCode',
+            displayName: 'Mars',
+            value: 'mars',
+            added: false
+        },
+        {
             id: 'countryCode-us',
             parentId: 'regionCode-na',
             key: 'countryCode',
