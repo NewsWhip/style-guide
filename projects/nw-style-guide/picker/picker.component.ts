@@ -170,9 +170,6 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
             case 'Escape':
                 this._onListItemEscape(e, index);
                 break;
-            case 'Tab':
-                this.onListItemTab(e, index);
-                break;
         }
     }
 
@@ -396,23 +393,33 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     onListItemTab(event: KeyboardEvent, index: number) {
+        const getChildren = (el: HTMLElement) => Array.from(el.querySelectorAll('input, button')) as HTMLElement[];
         const items = this.optionsListItems.toArray();
         const li = items[index]?.nativeElement;
-        const focusable = (Array.from(li.querySelectorAll('input, button')) as HTMLElement[]).filter(
-            el => el.tabIndex >= 0
-        );
-        const lastFocusable = focusable[focusable.length - 1] ?? li;
-        const isLeavingRow = document.activeElement === lastFocusable;
-        const hasNextItem = index + 1 < this.displayItems.length;
-        if (!isLeavingRow || !hasNextItem) {
-            return;
+        const children = getChildren(li);
+        const target = event.target as HTMLElement;
+        const firstFocusableChild = children[0] ?? li;
+        const lastFocusableChild = children[children.length - 1] ?? li;
+
+        if (event.shiftKey) {
+            if (target !== firstFocusableChild) return;
+            event.preventDefault();
+            if (index === 0) { this._focusInput(); return; }
+            this.focusedIndex = index - 1;
+        } else {
+            if (target !== lastFocusableChild) return;
+            if (index + 1 >= this.displayItems.length) return;
+            event.preventDefault();
+            this.focusedIndex = index + 1;
         }
-        event.preventDefault();
-        this.focusedIndex = index + 1;
+
         this._cdRef.detectChanges();
-        const nextLi = items[index + 1].nativeElement;
-        const checkbox = nextLi.querySelector('input[type="checkbox"]') as HTMLElement | null;
-        (checkbox ?? nextLi).focus();
+        const adjacentLi = items[this.focusedIndex].nativeElement;
+        const adjacentChildren = getChildren(adjacentLi);
+        const focusTarget = event.shiftKey
+            ? (adjacentChildren[adjacentChildren.length - 1] ?? adjacentLi)
+            : (adjacentChildren[0] ?? adjacentLi);
+        focusTarget.focus();
     }
 
     onDrilldown(item: IPickerItem) {
