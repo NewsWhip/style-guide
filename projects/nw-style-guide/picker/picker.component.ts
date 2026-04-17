@@ -362,7 +362,7 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
         this.inputEl.nativeElement.blur();
     }
 
-    closeResults({refocusInput = true} = {}) {
+    closeResults({ refocusInput = true } = {}) {
         if (!this.canViewResults) {
             return;
         }
