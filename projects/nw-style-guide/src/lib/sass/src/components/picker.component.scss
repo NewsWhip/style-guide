@@ -30,12 +30,12 @@ nw-angular-picker {
     .search-input {
         cursor: pointer;
 
-        &:focus {
+        &[aria-expanded='true'] {
             ~ .input-placeholder {
                 display: none;
             }
         }
-        &:not(:focus) {
+        &:not([aria-expanded='true']) {
             @extend .btn-secondary;
 
             &::placeholder {
@@ -46,7 +46,7 @@ nw-angular-picker {
         ~ .reset-icon {
             position: absolute;
             right: 10px;
-            font-size: 24px;
+            font-size: 18px;
             font-weight: 100;
             top: 50%;
             transform: translateY(-50%);
@@ -81,6 +81,20 @@ nw-angular-picker {
         background-color: #fff;
         z-index: 10;
 
+        .picker-options-list,
+        .selected-items {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .no-results-text,
+        .no-selections-text {
+            padding: 8px;
+            margin: 0;
+            font-style: italic;
+        }
+
         .search-result,
         .parent {
             position: relative;
@@ -89,8 +103,14 @@ nw-angular-picker {
             color: variables.get-color('gray');
             cursor: pointer;
 
-            &:hover {
+            &:hover,
+            &.keyboard-focused {
                 background: variables.get-color('coolgray', 5x-light);
+            }
+
+            &.keyboard-focused {
+                outline: 2px solid variables.$primary-base;
+                outline-offset: -2px;
             }
             .item-label {
                 overflow: hidden;
@@ -107,6 +127,11 @@ nw-angular-picker {
                 align-items: center;
                 line-height: 32px;
 
+                input[type='checkbox']:focus:not(:focus-visible) ~ label::before {
+                    outline: none;
+                    box-shadow: none;
+                }
+
                 .checkbox {
                     margin: 0;
                 }
@@ -118,10 +143,15 @@ nw-angular-picker {
             }
             .drilldown {
                 @include br.border-left-radius(0);
+                &:focus-visible {
+                    outline: 2px solid variables.$primary-base;
+                    outline-offset: -2px;
+                }
             }
         }
         .picker-action {
             color: variables.get-color('primary', base);
+            font-size: 13px;
         }
         @media (max-width: variables.$screen-sm) {
             display: flex;
@@ -152,6 +182,14 @@ nw-angular-picker {
         .results-footer {
             padding: 8px;
             border-top: 1px solid variables.$divider-color-primary;
+            button {
+                &:focus-visible {
+                    outline: none;
+                    box-shadow:
+                        0 0 0 2px white,
+                        0 0 0 4px variables.$primary-base;
+                }
+            }
         }
     }
 }
