@@ -53,8 +53,7 @@ nw-carousel {
 
         .pagination-mask {
             position: absolute;
-            top: 0;
-            width: 100px;
+            width: 100%;
             height: 100%;
 
             &.pagination-mask-start {
@@ -64,6 +63,35 @@ nw-carousel {
                 right: 0;
                 transform: rotate(180deg);
             }
+        }
+    }
+
+    .collapse-expand-grid-container {
+        position: absolute;
+        bottom: 0;
+        top: 0;
+        width: 100px;
+        overflow: hidden;
+    }
+
+    .collapse-expand-container-start {
+        left: 0;
+    }
+
+    .collapse-expand-container-end {
+        right: 0;
+    }
+
+    .collapse-animation {
+        animation: collapse 300ms linear forwards;
+    }
+
+    @keyframes collapse {
+        from {
+            width: 100px;
+        }
+        to {
+            width: 0;
         }
     }
 }
