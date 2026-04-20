@@ -35,4 +35,4 @@ const run = async () => {
     utils.logSeparator();
 };
 
-run();
+await run();
