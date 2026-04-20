@@ -68,7 +68,9 @@
     @if (canViewResults) {
         <div
             class="search-results"
-            [@slideUpIn]="isMobileDisplay ? 'in' : false"
+            animate.enter="slide-up-in"
+            animate.leave="slide-down-out"
+            [class.no-animation]="!isMobileDisplay"
             (mousedown)="$event.preventDefault()">
             <div class="results-header">
                 <button

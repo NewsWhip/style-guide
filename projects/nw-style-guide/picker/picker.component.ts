@@ -14,7 +14,6 @@ import {
     OnChanges,
     inject
 } from '@angular/core';
-import { trigger, transition, animate, style } from '@angular/animations';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { IPickerItem } from './IPickerItem';
 import { Subscription } from 'rxjs';
@@ -26,15 +25,6 @@ import { LiveAnnouncer } from '@angular/cdk/a11y';
     selector: 'nw-angular-picker',
     templateUrl: './picker.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    animations: [
-        trigger('slideUpIn', [
-            transition('void => in', [
-                style({ top: '100%', transform: 'scale(0)' }),
-                animate(200, style({ top: 0, transform: 'scale(1)' }))
-            ]),
-            transition('in => void', [animate(200, style({ top: '100%', transform: 'scale(0)' }))])
-        ])
-    ],
     imports: [ReactiveFormsModule, NgClass]
 })
 export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {

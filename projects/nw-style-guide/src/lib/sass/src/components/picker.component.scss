@@ -164,6 +164,13 @@ nw-angular-picker {
             max-height: initial;
             overflow-y: auto;
             z-index: 100;
+
+            &.slide-up-in {
+                animation: picker-slide-up-in 200ms linear forwards;
+            }
+            &.slide-down-out {
+                animation: picker-slide-down-out 200ms linear forwards;
+            }
         }
         .results-header {
             display: none;
@@ -190,6 +197,28 @@ nw-angular-picker {
                         0 0 0 4px variables.$primary-base;
                 }
             }
+        }
+    }
+
+    @keyframes picker-slide-up-in {
+        from {
+            top: 100%;
+            transform: scale(0);
+        }
+        to {
+            top: 0;
+            transform: scale(1);
+        }
+    }
+
+    @keyframes picker-slide-down-out {
+        from {
+            top: 0;
+            transform: scale(1);
+        }
+        to {
+            top: 100%;
+            transform: scale(0);
         }
     }
 }
