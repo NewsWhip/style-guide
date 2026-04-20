@@ -18,7 +18,6 @@ import {
     AfterContentInit,
     inject
 } from '@angular/core';
-import { trigger, transition, style, animate, AUTO_STYLE } from '@angular/animations';
 import { debounceTime } from 'rxjs/operators';
 import { CarouselSlideDirective } from './carousel-slide.directive';
 import { Subscription, fromEvent } from 'rxjs';
@@ -43,15 +42,22 @@ import { NgStyle, NgClass } from '@angular/common';
                     <div class="pagination-masks">
                         @if (!isFirstPage) {
                             <div
-                                class="pagination-mask pagination-mask-start"
-                                @collapse
-                                [ngStyle]="maskStyles"></div>
+                                class="collapse-expand-grid-container collapse-expand-container-start"
+                                animate.leave="collapse-animation">
+                                <div
+                                    class="pagination-mask pagination-mask-start"
+                                    [ngStyle]="maskStyles"></div>
+                            </div>
                         }
-                        @if (!isLastPage) {
+
+                        @if (!isFirstPage) {
                             <div
-                                class="pagination-mask pagination-mask-end"
-                                @collapse
-                                [ngStyle]="maskStyles"></div>
+                                class="collapse-expand-grid-container collapse-expand-container-end"
+                                animate.leave="collapse-animation">
+                                <div
+                                    class="pagination-mask pagination-mask-end"
+                                    [ngStyle]="maskStyles"></div>
+                            </div>
                         }
                     </div>
                 }
@@ -95,11 +101,6 @@ import { NgStyle, NgClass } from '@angular/common';
     `,
     changeDetection: ChangeDetectionStrategy.OnPush,
     exportAs: 'nw-carousel',
-    animations: [
-        trigger('collapse', [
-            transition(':leave', [style({ width: AUTO_STYLE }), animate(`300ms linear`, style({ width: 0 }))])
-        ])
-    ],
     imports: [NgStyle, NgClass]
 })
 export class CarouselComponent implements OnInit, AfterViewInit, AfterContentInit, OnChanges, OnDestroy {
