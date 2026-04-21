@@ -4,7 +4,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ISnippet } from '../code/ISnippet';
 import { TABS_DIRECTIVES } from 'nw-style-guide/tabs';
-import { NgIf, NgTemplateOutlet, NgFor } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import { TooltipDirective } from 'nw-style-guide/tooltips';
 import { AppCodeComponent } from '../code/code.component';
 import { FaqComponent } from '../faq/faq-component';
@@ -16,13 +16,11 @@ import { FaqComponent } from '../faq/faq-component';
     imports: [
         TABS_DIRECTIVES,
         RouterLink,
-        NgIf,
         TooltipDirective,
         NgTemplateOutlet,
         AppCodeComponent,
         FormsModule,
         ReactiveFormsModule,
-        NgFor,
         FaqComponent
     ]
 })

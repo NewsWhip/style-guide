@@ -1,17 +1,16 @@
 import { Component, Input, ChangeDetectionStrategy, ChangeDetectorRef, inject } from '@angular/core';
 import { FeatureAlertsService } from './feature-alerts.service';
-import { NgIf } from '@angular/common';
 
 @Component({
     selector: 'nw-hotspot',
     template: `
-        <div
-            animate.leave="fade-out"
-            *ngIf="isOpen"
-            class="hotspot hotspot-{{ position }}"></div>
+        @if (isOpen) {
+            <div
+                animate.leave="fade-out"
+                class="hotspot hotspot-{{ position }}"></div>
+        }
     `,
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [NgIf]
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HotspotComponent {
     private _featureAlertsService = inject(FeatureAlertsService);

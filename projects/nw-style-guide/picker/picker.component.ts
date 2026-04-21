@@ -243,7 +243,10 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
         this._toggleAncestors(item, false, false);
         this._toggleDescendants(item, false);
 
-        this.toggleInclude.emit({ item: item, searchTerm: this.searchTerm.value });
+        this.toggleInclude.emit({
+            item: item,
+            searchTerm: this.searchTerm.value
+        });
         this.selections.emit(this.getSelections());
         this._announce(`${item.displayName} ${item.added ? 'selected' : 'deselected'}`);
 
@@ -269,7 +272,10 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
         this._toggleDescendants(item, false, false);
         this._toggleAncestors(item, undefined, false);
 
-        this.toggleExclude.emit({ item: item, searchTerm: this.searchTerm.value });
+        this.toggleExclude.emit({
+            item: item,
+            searchTerm: this.searchTerm.value
+        });
         this.selections.emit(this.getSelections());
         this._announce(`${item.displayName} ${item.excluded ? 'excluded' : 'exclusion removed'}`);
 

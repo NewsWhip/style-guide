@@ -9,7 +9,7 @@ import {
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ISnippet } from '../code/ISnippet';
 import { TABS_DIRECTIVES } from 'nw-style-guide/tabs';
-import { NgIf, NgFor, NgTemplateOutlet } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import { TooltipDirective } from 'nw-style-guide/tooltips';
 import { AppCodeComponent } from '../code/code.component';
 
@@ -21,16 +21,7 @@ interface IMyWord extends IWord {
     selector: 'app-home',
     templateUrl: './word-cloud.component.html',
     styleUrls: ['./word-cloud.component.scss'],
-    imports: [
-        TABS_DIRECTIVES,
-        RouterLink,
-        NgIf,
-        WORD_CLOUD_COMPONENTS,
-        NgFor,
-        TooltipDirective,
-        AppCodeComponent,
-        NgTemplateOutlet
-    ]
+    imports: [TABS_DIRECTIVES, RouterLink, WORD_CLOUD_COMPONENTS, TooltipDirective, AppCodeComponent, NgTemplateOutlet]
 })
 export class WordCloudDemoComponent implements OnInit {
     private _route = inject(ActivatedRoute);

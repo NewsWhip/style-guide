@@ -1,30 +1,31 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { NgIf, NgClass, NgFor } from '@angular/common';
+import { NgClass } from '@angular/common';
 
 @Component({
     selector: 'nw-loader',
     template: `
-        <div
-            *ngIf="isLoading"
-            class="loader"
-            animate.enter="delay-and-fade-in"
-            [ngClass]="sizeClass"
-            [class.loader-inline]="isInline"
-            [class.loader-color]="isColor"
-            [style.--fade-in-duration.ms]="fadeInMs"
-            [style.--fade-in-delay.ms]="delayMs">
-            <div class="dots-icon-wrapper">
-                <div class="dots">
-                    <span
-                        *ngFor="let d of dots"
-                        class="dot dot-{{ d }}"></span>
+        @if (isLoading) {
+            <div
+                class="loader"
+                animate.enter="delay-and-fade-in"
+                [ngClass]="sizeClass"
+                [class.loader-inline]="isInline"
+                [class.loader-color]="isColor"
+                [style.--fade-in-duration.ms]="fadeInMs"
+                [style.--fade-in-delay.ms]="delayMs">
+                <div class="dots-icon-wrapper">
+                    <div class="dots">
+                        @for (d of dots; track d) {
+                            <span class="dot dot-{{ d }}"></span>
+                        }
+                    </div>
                 </div>
             </div>
-        </div>
+        }
     `,
     exportAs: 'nw-loader',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [NgIf, NgClass, NgFor]
+    imports: [NgClass]
 })
 export class LoaderComponent {
     @Input() isLoading: boolean = false;

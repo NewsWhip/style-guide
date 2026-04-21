@@ -1,7 +1,6 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { uniqueId } from 'lodash-es';
 import { TABS_DIRECTIVES } from 'nw-style-guide/tabs';
-import { NgFor } from '@angular/common';
 
 @Component({
     selector: 'app-tabs',
@@ -15,7 +14,7 @@ import { NgFor } from '@angular/common';
             }
         `
     ],
-    imports: [TABS_DIRECTIVES, NgFor]
+    imports: [TABS_DIRECTIVES]
 })
 export class TabsComponent {
     public tabCollection = [

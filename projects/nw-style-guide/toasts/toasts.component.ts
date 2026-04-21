@@ -2,46 +2,49 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, TemplateRef, inj
 import { IToast } from './IToast';
 import { Toast } from './Toast';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { NgFor, NgClass, NgIf, NgTemplateOutlet } from '@angular/common';
+import { NgClass, NgTemplateOutlet } from '@angular/common';
 
 @Component({
     selector: 'nw-toasts',
     template: `
         <div class="toasts-container">
-            <div
-                class="toast"
-                *ngFor="let toast of toasts"
-                animate.enter="toast-animate-in"
-                animate.leave="toast-animate-out"
-                [ngClass]="['toast-' + toast.typeId, 'size-' + toast.size]">
-                <i
-                    class="fas fa-check toast-icon"
-                    *ngIf="toast.typeId === 'success'"></i>
-                <i
-                    class="fas fa-exclamation toast-icon"
-                    *ngIf="toast.typeId === 'error'"></i>
+            @for (toast of toasts; track toast) {
+                <div
+                    class="toast"
+                    animate.enter="toast-animate-in"
+                    animate.leave="toast-animate-out"
+                    [ngClass]="['toast-' + toast.typeId, 'size-' + toast.size]">
+                    @if (toast.typeId === 'success') {
+                        <i class="fas fa-check toast-icon"></i>
+                    }
+                    @if (toast.typeId === 'error') {
+                        <i class="fas fa-exclamation toast-icon"></i>
+                    }
 
-                <!-- If templateRef render via ngTemplateOutlet-->
-                <ng-container *ngIf="isTemplateRef(toast.message)">
-                    <ng-container *ngTemplateOutlet="toast.message"></ng-container>
-                </ng-container>
+                    <!-- If templateRef render via ngTemplateOutlet-->
+                    @if (isTemplateRef(toast.message)) {
+                        <ng-container *ngTemplateOutlet="toast.message"></ng-container>
+                    }
 
-                <p
-                    *ngIf="!isTemplateRef(toast.message)"
-                    class="toast-message"
-                    [innerHTML]="getInnerHTML(toast.message)"></p>
+                    @if (!isTemplateRef(toast.message)) {
+                        <p
+                            class="toast-message"
+                            [innerHTML]="getInnerHTML(toast.message)"></p>
+                    }
 
-                <button
-                    class="btn btn-md btn-ghost-alt btn-no-padding close-button"
-                    *ngIf="toast.isDismissable"
-                    (click)="dismiss(toast)">
-                    <i class="far fa-times"></i>
-                </button>
-            </div>
+                    @if (toast.isDismissable) {
+                        <button
+                            class="btn btn-md btn-ghost-alt btn-no-padding close-button"
+                            (click)="dismiss(toast)">
+                            <i class="far fa-times"></i>
+                        </button>
+                    }
+                </div>
+            }
         </div>
     `,
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [NgFor, NgClass, NgIf, NgTemplateOutlet]
+    imports: [NgClass, NgTemplateOutlet]
 })
 export class ToastsComponent {
     private _cdRef = inject(ChangeDetectorRef);

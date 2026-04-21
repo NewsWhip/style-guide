@@ -21,44 +21,46 @@ import {
 import { debounceTime } from 'rxjs/operators';
 import { CarouselSlideDirective } from './carousel-slide.directive';
 import { Subscription, fromEvent } from 'rxjs';
-import { NgIf, NgStyle, NgClass, NgFor } from '@angular/common';
+import { NgStyle, NgClass } from '@angular/common';
 
 @Component({
     selector: 'nw-carousel',
     template: `
         <div class="carousel-container">
-            <div
-                class="pagination-container"
-                *ngIf="showPagination && !isFirstPage">
-                <button
-                    class="btn btn-carousel btn-carousel-prev"
-                    (click)="prev()"></button>
-            </div>
+            @if (showPagination && !isFirstPage) {
+                <div class="pagination-container">
+                    <button
+                        class="btn btn-carousel btn-carousel-prev"
+                        (click)="prev()"></button>
+                </div>
+            }
 
             <ng-content select=".pagination-left"></ng-content>
 
             <div class="carousel-content">
-                <div
-                    class="pagination-masks"
-                    *ngIf="showMask && pages.length > 1">
-                    <div
-                        class="collapse-expand-grid-container collapse-expand-container-start"
-                        *ngIf="!isFirstPage"
-                        animate.leave="collapse-animation">
-                        <div
-                            class="pagination-mask pagination-mask-start"
-                            [ngStyle]="maskStyles"></div>
-                    </div>
+                @if (showMask && pages.length > 1) {
+                    <div class="pagination-masks">
+                        @if (!isFirstPage) {
+                            <div
+                                class="collapse-expand-grid-container collapse-expand-container-start"
+                                animate.leave="collapse-animation">
+                                <div
+                                    class="pagination-mask pagination-mask-start"
+                                    [ngStyle]="maskStyles"></div>
+                            </div>
+                        }
 
-                    <div
-                        class="collapse-expand-grid-container collapse-expand-container-end"
-                        *ngIf="!isLastPage"
-                        animate.leave="collapse-animation">
-                        <div
-                            class="pagination-mask pagination-mask-end"
-                            [ngStyle]="maskStyles"></div>
+                        @if (!isFirstPage) {
+                            <div
+                                class="collapse-expand-grid-container collapse-expand-container-end"
+                                animate.leave="collapse-animation">
+                                <div
+                                    class="pagination-mask pagination-mask-end"
+                                    [ngStyle]="maskStyles"></div>
+                            </div>
+                        }
                     </div>
-                </div>
+                }
 
                 <div
                     class="carousel"
@@ -66,41 +68,40 @@ import { NgIf, NgStyle, NgClass, NgFor } from '@angular/common';
                     [ngClass]="containerClass">
                     <ng-content></ng-content>
 
-                    <p
-                        *ngIf="slides.length === 0"
-                        class="nw-text text-center">
-                        {{ noResultsText }}
-                    </p>
+                    @if (slides.length === 0) {
+                        <p class="nw-text text-center">{{ noResultsText }}</p>
+                    }
                 </div>
             </div>
 
-            <div
-                class="pagination-container"
-                *ngIf="showPagination && !isLastPage">
-                <button
-                    class="btn btn-carousel btn-carousel-next"
-                    (click)="next()"></button>
-            </div>
+            @if (showPagination && !isLastPage) {
+                <div class="pagination-container">
+                    <button
+                        class="btn btn-carousel btn-carousel-next"
+                        (click)="next()"></button>
+                </div>
+            }
 
             <ng-content select=".pagination-right"></ng-content>
         </div>
 
-        <div
-            class="page-indicators"
-            *ngIf="showPageIndicator && pages.length > 1">
-            <a
-                href="javascript:;"
-                class="page-indicator"
-                *ngFor="let page of pages"
-                [class.active]="page === currPage"
-                (click)="goToPage(page)"></a>
-        </div>
+        @if (showPageIndicator && pages.length > 1) {
+            <div class="page-indicators">
+                @for (page of pages; track page) {
+                    <a
+                        href="javascript:;"
+                        class="page-indicator"
+                        [class.active]="page === currPage"
+                        (click)="goToPage(page)"></a>
+                }
+            </div>
+        }
 
         <ng-content select=".pagination-indicators"></ng-content>
     `,
     changeDetection: ChangeDetectionStrategy.OnPush,
     exportAs: 'nw-carousel',
-    imports: [NgIf, NgStyle, NgClass, NgFor]
+    imports: [NgStyle, NgClass]
 })
 export class CarouselComponent implements OnInit, AfterViewInit, AfterContentInit, OnChanges, OnDestroy {
     private _renderer = inject(Renderer2);
