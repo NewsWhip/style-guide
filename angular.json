@@ -91,23 +91,6 @@
                         }
                     }
                 },
-                "test": {
-                    "builder": "@angular/build:karma",
-                    "options": {
-                        "main": "src/test.ts",
-                        "karmaConfig": "./karma.conf.js",
-                        "polyfills": ["src/polyfills.ts"],
-                        "tsConfig": "src/tsconfig.spec.json",
-                        "styles": ["src/demo.scss"],
-                        "assets": [
-                            {
-                                "glob": "**/*",
-                                "input": "lib-dist/nw-style-guide/assets",
-                                "output": "/assets"
-                            }
-                        ]
-                    }
-                },
                 "lint": {
                     "builder": "@angular-eslint/builder:lint",
                     "options": {
