@@ -1,10 +1,10 @@
 // @ts-check
-const { defineConfig } = require('eslint/config');
-const angular = require('angular-eslint');
-const nwStyleGuideTsFiles = require('./projects/nw-style-guide/src/linting-config/ts-files');
-const nwStyleGuideHtmlFiles = require('./projects/nw-style-guide/src/linting-config/html-files');
+import { defineConfig } from 'eslint/config';
+import angular from 'angular-eslint';
+import nwStyleGuideTsFiles from './projects/nw-style-guide/src/linting-config/ts-files.js';
+import nwStyleGuideHtmlFiles from './projects/nw-style-guide/src/linting-config/html-files.js';
 
-module.exports = defineConfig([
+export default defineConfig([
     // Library files
     {
         files: ['./projects/nw-style-guide/**/*.ts'],

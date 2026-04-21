@@ -1,22 +1,20 @@
-const green = '\033[0;92m';
-const red = '\033[0;91m';
-const noColor = '\033[0m';
+const green = '\x1b[0;92m';
+const red = '\x1b[0;91m';
+const noColor = '\x1b[0m';
 
-exports.distPath = 'lib-dist/nw-style-guide/';
-exports.green = green;
-exports.red = red;
-exports.noColor = noColor;
+export const distPath = 'lib-dist/nw-style-guide/';
+export { green, red, noColor };
 
-exports.onSuccess = () => {
+export const onSuccess = () => {
     process.stdout.write(`${green} ✔ ${noColor}`);
     process.stdout.write('\n');
 };
 
-exports.onError = () => {
+export const onError = () => {
     process.stdout.write(`${red} ✘ ${noColor}`);
     process.stdout.write('\n');
 };
 
-exports.logSeparator = () => {
+export const logSeparator = () => {
     console.log('============================');
 };

@@ -1,8 +1,8 @@
-const execSync = require('child_process').execSync;
-const utils = require('../utils');
+import { execSync } from 'child_process';
+import * as utils from '../utils.js';
 
-const run = () => {
-    require('./build');
+const run = async () => {
+    await import('./build.js');
 
     process.stdout.write('Publishing package \n');
 
@@ -22,4 +22,4 @@ const run = () => {
     }
 };
 
-run();
+await run();

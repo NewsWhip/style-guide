@@ -9,7 +9,6 @@
         "experimentalDecorators": true,
         "target": "ES2022",
         "typeRoots": ["node_modules/@types"],
-        "lib": ["ES2022", "dom"],
         /* We use these paths to reference the built library in the demo app */
         "paths": {
             "nw-style-guide": ["./lib-dist/nw-style-guide"],
