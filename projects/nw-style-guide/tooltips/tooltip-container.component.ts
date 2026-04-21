@@ -34,7 +34,7 @@ export class TooltipContainerComponent {
 
     public close: EventEmitter<void> = new EventEmitter();
 
-    isTemplateRef(value: unknown): value is TemplateRef<unknown> {                                              
-        return value instanceof TemplateRef;                                                                    
-    } 
+    isTemplateRef(value: unknown): value is TemplateRef<unknown> {
+        return value instanceof TemplateRef;
+    }
 }
