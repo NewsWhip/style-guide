@@ -10,7 +10,7 @@ import { LoaderComponent as NWLoaderComponent } from 'nw-style-guide/loader';
 })
 export class LoaderComponent {
     private _num: number = 6;
-    public size: string = 'md';
+    public size: 'sm' | 'md' | 'lg' = 'md';
 
     get num(): number {
         return this._num;
