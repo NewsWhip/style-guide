@@ -24,9 +24,7 @@ import { NgClass, NgTemplateOutlet } from '@angular/common';
                     <!-- If templateRef render via ngTemplateOutlet-->
                     @if (isTemplateRef(toast.message)) {
                         <ng-container *ngTemplateOutlet="toast.message"></ng-container>
-                    }
-
-                    @if (!isTemplateRef(toast.message)) {
+                    } @else {
                         <p
                             class="toast-message"
                             [innerHTML]="getInnerHTML(toast.message)"></p>
@@ -52,7 +50,7 @@ export class ToastsComponent {
 
     public toasts: Toast[] = [];
 
-    isTemplateRef(value: string | TemplateRef<any>): boolean {
+    isTemplateRef(value: string | TemplateRef<any>): value is TemplateRef<any> {
         return typeof value !== 'string';
     }
 
