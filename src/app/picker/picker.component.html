@@ -2,21 +2,43 @@
     <h1 class="page-header">Picker / Searchable dropdown</h1>
 
     <div class="row">
-        <div class="col-md-3 col-sm-12">
+        <div class="col-md-6 col-sm-12">
             <div>
-                <em style="margin-bottom: 8px; display: block">Picker with custom placeholder text</em>
+                <label style="margin-bottom: 8px; display: block"
+                    >Multi select picker with custom placeholder text</label
+                >
                 <nw-angular-picker
                     #picker
                     [items]="countries"
-                    [placeholderText]="getPlaceholder()"
+                    [placeholderText]="getCountryPlaceholder()"
                     inputPlaceholderText="Custom input placeholder text">
-                    <div class="results-footer text-right">
+                    <div class="text-right results-footer">
                         <button
                             class="btn btn-primary"
-                            (click)="picker.closeResults()">
+                            (click)="picker.closeResults()"
+                            tabindex="0"
+                            role="button">
                             Done
                         </button>
                     </div>
+                </nw-angular-picker>
+            </div>
+        </div>
+    </div>
+
+    <div
+        class="row"
+        style="margin-top: 32px">
+        <div class="col-md-6 col-sm-12">
+            <div>
+                <label style="margin-bottom: 8px; display: block">Single select picker</label>
+                <nw-angular-picker
+                    #picker
+                    [items]="foods"
+                    [placeholderText]="getFoodPlaceholder()"
+                    [isMultiSelect]="false"
+                    [shouldShowSelections]="false"
+                    inputPlaceholderText="Single select picker">
                 </nw-angular-picker>
             </div>
         </div>

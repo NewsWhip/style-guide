@@ -6,10 +6,11 @@ import {
     ChangeDetectionStrategy,
     EventEmitter,
     ViewChild,
+    ViewChildren,
     ElementRef,
+    QueryList,
     OnInit,
     OnDestroy,
-    SimpleChanges,
     OnChanges,
     inject
 } from '@angular/core';
@@ -18,257 +19,24 @@ import { IPickerItem } from './IPickerItem';
 import { Subscription } from 'rxjs';
 import { isUndefined } from 'lodash-es';
 import { NgClass } from '@angular/common';
+import { LiveAnnouncer } from '@angular/cdk/a11y';
 
 @Component({
     selector: 'nw-angular-picker',
-    template: `
-        <div class="nw-picker">
-            <!-- START: NOT xs screen -->
-            <div
-                class="input-container hidden-xs"
-                [class.disabled]="isDisabled">
-                <input
-                    type="text"
-                    #inputEl
-                    class="form-control search-input {{ inputClasses }} text-ellipsis"
-                    [formControl]="searchTerm"
-                    (focus)="onFocus()"
-                    (blur)="closeResults()"
-                    (keyup.escape)="inputEl.blur()"
-                    [placeholder]="inputPlaceholderText"
-                    [attr.aria-label]="inputPlaceholderText" />
-
-                <div
-                    class="input-placeholder text-ellipsis"
-                    [innerHTML]="getPlaceholderText()"></div>
-
-                @if (!isChevronHidden) {
-                    <i
-                        (click)="showResults(); inputEl.focus()"
-                        class="caret dropdown-icon"></i>
-                }
-            </div>
-
-            <!-- END: NOT xs screen -->
-
-            <!-- START: IS xs screen -->
-            <div
-                (click)="showResults()"
-                class="form-control search-input hidden-sm hidden-md hidden-lg text-ellipsis"
-                [innerHTML]="getPlaceholderText()"></div>
-            <i
-                (click)="showResults()"
-                class="caret dropdown-icon hidden-sm hidden-md hidden-lg"></i>
-            <!-- END: IS xs screen -->
-
-            @if (searchTerm.value) {
-                <button
-                    (mousedown)="preventBlur($event)"
-                    (click)="onReset($event); inputEl.focus()"
-                    class="close reset-icon"
-                    aria-label="Clear search">
-                    &times;
-                </button>
-            }
-
-            @if (canViewResults) {
-                <div
-                    class="search-results"
-                    animate.enter="slide-up-in"
-                    animate.leave="slide-down-out"
-                    [class.no-animation]="!isMobileDisplay"
-                    (mousedown)="preventBlur($event)">
-                    <div class="results-header">
-                        <button
-                            class="close"
-                            (click)="closeResults()"
-                            style="color: #000"
-                            aria-label="Close results">
-                            &times;
-                        </button>
-                    </div>
-
-                    <!-- Navigate up the tree -->
-                    @if (parentId && displayItems.length && !searchTerm.value.length) {
-                        <div class="results-actions">
-                            <a
-                                tabindex="0"
-                                role="button"
-                                aria-label="Go Back"
-                                class="picker-action"
-                                (click)="ascend($event, getParentItem(parentId))"
-                                (keydown.enter)="ascend($event, getParentItem(parentId))">
-                                <i
-                                    class="fas fa-long-arrow-alt-left"
-                                    aria-hidden="true"></i>
-                                {{ getParentItem(parentId).displayName }}
-                            </a>
-                        </div>
-                    }
-                    <div
-                        class="scroll-container"
-                        #searchResultsScrollEl
-                        [style.max-height]="getMaxHeight(searchResultsScrollEl)">
-                        @if (
-                            shouldShowSelections &&
-                            !selectionsAreShowing &&
-                            parentId == null &&
-                            !searchTerm.value.length
-                        ) {
-                            <div class="results-actions">
-                                @if (getSelections().length) {
-                                    <a
-                                        tabindex="0"
-                                        role="button"
-                                        href="javascript:;"
-                                        class="picker-action"
-                                        (click)="editSelections($event)"
-                                        (keydown.enter)="editSelections($event)"
-                                        >Edit selections</a
-                                    >
-                                    <a
-                                        tabindex="0"
-                                        role="button"
-                                        href="javascript:;"
-                                        class="picker-action"
-                                        (click)="clearSelections($event)"
-                                        (keydown.enter)="clearSelections($event)"
-                                        >Clear selections</a
-                                    >
-                                }
-                                @if (!getSelections().length) {
-                                    <em>No selections</em>
-                                }
-                            </div>
-                        }
-                        <!-- DISPLAY THE SELECTED ITEMS -->
-                        @if (selectionsAreShowing) {
-                            <div class="results-actions">
-                                <a
-                                    role="button"
-                                    class="picker-action"
-                                    (click)="selectionsAreShowing = false">
-                                    <i
-                                        class="fas fa-long-arrow-alt-left"
-                                        aria-hidden="true"></i>
-                                    Back
-                                </a>
-                                @if (getSelections().length) {
-                                    <a
-                                        role="button"
-                                        class="picker-action"
-                                        (click)="clearSelections($event)"
-                                        >Clear all</a
-                                    >
-                                }
-                            </div>
-                            <div class="selected-items">
-                                @for (item of getSelections(); track item) {
-                                    <div
-                                        class="search-result"
-                                        [ngClass]="{ active: item.added, excluded: item.excluded }">
-                                        <span class="result-item">
-                                            <span class="item-label">{{ item.displayName }}</span>
-                                            <button
-                                                class="close"
-                                                style="color: #000000"
-                                                (click)="clearSelection($event, item)"
-                                                [attr.aria-label]="'Remove ' + item.displayName">
-                                                &times;
-                                            </button>
-                                        </span>
-                                    </div>
-                                }
-                            </div>
-                        }
-                        @if (!selectionsAreShowing) {
-                            @for (item of displayItems; track item) {
-                                <div
-                                    class="search-result"
-                                    [class.active]="item.added"
-                                    [attr.tabindex]="isMultiSelect ? -1 : 0"
-                                    [class.excluded]="item.excluded"
-                                    [class.has-children]="hasChildren(item.id)"
-                                    role="option"
-                                    [attr.aria-selected]="item.added">
-                                    <span class="result-item">
-                                        @if (isMultiSelect) {
-                                            <div class="checkbox checkbox-placeholder">
-                                                <input
-                                                    tabindex="0"
-                                                    id="include-{{ item.id }}"
-                                                    type="checkbox"
-                                                    (click)="toggleItemInclusion(item, $event)"
-                                                    [checked]="item.added"
-                                                    (keydown.enter)="toggleItemInclusion(item, $event)" />
-                                                <label
-                                                    for="include-{{ item.id }}"
-                                                    [attr.aria-label]="'Select ' + item.displayName"></label>
-                                            </div>
-                                        }
-                                        @if (canExclude && isMultiSelect) {
-                                            <div class="checkbox checkbox-exclusion checkbox-placeholder">
-                                                <input
-                                                    tabindex="0"
-                                                    id="exclude-{{ item.id }}"
-                                                    type="checkbox"
-                                                    (click)="toggleItemExclusion(item, $event)"
-                                                    [checked]="item.excluded"
-                                                    (keydown.enter)="toggleItemExclusion(item, $event)" />
-                                                <label
-                                                    for="exclude-{{ item.id }}"
-                                                    [attr.aria-label]="'Exclude ' + item.displayName"></label>
-                                            </div>
-                                        }
-                                        <span
-                                            class="item-label"
-                                            title="{{ item.displayName }}"
-                                            (click)="toggleItemInclusion(item, $event)">
-                                            {{ item.displayName }}
-                                            @if (searchTerm.value.length && item.searchValues?.length) {
-                                                <span>
-                                                    -
-                                                    @for (val of item.searchValues; track val; let isLast = $last) {
-                                                        <em class="small">{{ val }}{{ isLast ? '' : ', ' }}</em>
-                                                    }
-                                                </span>
-                                            }
-                                        </span>
-                                        @if (hasChildren(item.id)) {
-                                            <button
-                                                class="btn btn-ghost drilldown"
-                                                (click)="
-                                                    setDisplayItemsFromParentId(item.id, $event);
-                                                    desc.emit(getParentItem(parentId))
-                                                "
-                                                [attr.aria-label]="'Expand ' + item.displayName">
-                                                <i
-                                                    class="fas fa-chevron-right"
-                                                    aria-hidden="true"></i>
-                                            </button>
-                                        }
-                                    </span>
-                                </div>
-                            }
-                            @if (displayItems.length < 1) {
-                                <div class="results-actions">
-                                    <em>No results</em>
-                                </div>
-                            }
-                        }
-                    </div>
-                    <ng-content select=".results-footer"></ng-content>
-                </div>
-            }
-        </div>
-    `,
+    templateUrl: './picker.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [ReactiveFormsModule, NgClass]
 })
 export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
-    chRef = inject(ChangeDetectorRef);
+    private _cdRef = inject(ChangeDetectorRef);
+    private _elementRef = inject(ElementRef);
+    private _liveAnnouncer = inject(LiveAnnouncer);
 
-    @Input() items: IPickerItem[];
+    // static counter to generate unique ids for multiple instances of the component on the same page
+    private static _idCounter = 0;
+    public readonly pickerId = `nw-picker-${++NwPickerComponent._idCounter}`;
+
+    @Input() items: IPickerItem[] = [];
     @Input() inputClasses: string = '';
     @Input() placeholderText: string = 'Search...';
     @Input() inputPlaceholderText: string = 'Search...';
@@ -293,8 +61,8 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
     }>();
     @Output() edit: EventEmitter<any> = new EventEmitter<any>();
     @Output() closed: EventEmitter<any> = new EventEmitter<any>();
-    // eslint-disable-next-line @angular-eslint/no-output-native
     @Output() focus: EventEmitter<ElementRef> = new EventEmitter<ElementRef>();
+    @Output() blur: EventEmitter<ElementRef> = new EventEmitter<ElementRef>();
     @Output() clearAll: EventEmitter<any> = new EventEmitter<any>();
     @Output() clearSingle: EventEmitter<IPickerItem> = new EventEmitter<IPickerItem>();
     @Output() clearSearch: EventEmitter<any> = new EventEmitter<any>();
@@ -302,68 +70,42 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
     @Output() asc: EventEmitter<IPickerItem> = new EventEmitter<IPickerItem>();
 
     @ViewChild('inputEl', { static: true }) inputEl: ElementRef;
+    @ViewChildren('selectionsListItems') selectionsListItems: QueryList<ElementRef>;
+    @ViewChildren('optionsListItems') optionsListItems: QueryList<ElementRef>;
 
-    public displayItems: IPickerItem[];
+    public displayItems: IPickerItem[] = [];
     public searchTerm: FormControl<string> = new FormControl();
     public canViewResults: boolean = false;
     public parentId: any;
     public selectionsAreShowing: boolean = false;
     public maxHeight: number = 400;
+    public focusedIndex: number = -1;
     private _subs: Subscription[] = [];
+
+    get focusedItemId(): string | null {
+        if (this.focusedIndex >= 0 && this.displayItems?.[this.focusedIndex]) {
+            return `${this.pickerId}-option-${this.displayItems[this.focusedIndex].id}`;
+        }
+        return null;
+    }
 
     ngOnInit() {
         this.parentId = this.initialParentId;
-        this.subscribeToSearchTermChanges();
+        this._subscribeToSearchTermChanges();
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges() {
         if (this.isDisabled) {
             this.searchTerm.disable();
         }
     }
 
-    subscribeToSearchTermChanges() {
-        const sub = this.searchTerm.valueChanges.subscribe(val => {
-            this.selectionsAreShowing = false;
-
-            if (val.length) {
-                const displayItems = this.items.filter(item => {
-                    return (
-                        (item.searchValues || []).some(value => {
-                            return value.toLowerCase().includes(val.toLowerCase());
-                        }) || item.displayName.toLowerCase().includes(val.toLowerCase())
-                    );
-                });
-                // remove duplicate items
-                this.displayItems = displayItems.reduce(
-                    (items, item) => (items.find(x => x.id === item.id) ? [...items] : [...items, item]),
-                    []
-                );
-            } else {
-                this.setDisplayItemsFromParentId(this.parentId);
-            }
-        });
-
-        this._subs.push(sub);
-    }
-
     ascend(event: Event, item: IPickerItem) {
         event.stopPropagation();
-        this.setDisplayItemsFromParentId(item.parentId);
+        this._setDisplayItemsFromParentId(item.parentId);
         this.asc.emit(item);
-    }
-
-    setDisplayItemsFromParentId(parentId, e?: KeyboardEvent) {
-        if (e) {
-            e.stopPropagation();
-        }
-
-        if (!this.hasChildren(parentId)) {
-            return;
-        }
-        this.resetSearchTerm();
-        this.parentId = parentId;
-        this.displayItems = this.items.filter(i => i.parentId === this.parentId);
+        this._cdRef.detectChanges();
+        this._focusListItem(0);
     }
 
     displaySelectedItems() {
@@ -374,36 +116,87 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
         return this.items.filter(ci => ci.added || ci.excluded);
     }
 
-    getParentItem(parentId) {
+    getParentItem(parentId: number | string) {
         return this.items.find(i => i.id === parentId);
     }
 
-    hasChildren(id) {
+    hasChildren(id: number | string) {
         return this.items.filter(i => i.parentId === id).length;
     }
 
     editSelections(event: Event) {
         event.stopPropagation();
+        this._focusInput();
         this.selectionsAreShowing = true;
         this.edit.emit(event);
     }
 
-    clearSelection(event: Event, item: IPickerItem) {
+    onBackClick(event: Event) {
+        event.preventDefault();
         event.stopPropagation();
+        this._focusInput();
+        this.selectionsAreShowing = false;
+        this._setDisplayItemsFromParentId(null);
+    }
+
+    onOptionItemKeydown(e: KeyboardEvent, item: IPickerItem, index: number) {
+        switch (e.key) {
+            case 'ArrowDown':
+                this.focusNextItem(e);
+                break;
+            case 'ArrowUp':
+                this._focusPrevItem(e);
+                break;
+            case 'ArrowLeft':
+                this._onArrowLeft(e);
+                break;
+            case 'ArrowRight':
+                this.onDrilldown(item);
+                break;
+            case 'Enter':
+                this.toggleItemInclusion(item, e);
+                break;
+            case 'Escape':
+                this._onListItemEscape(e, index);
+                break;
+        }
+    }
+
+    onSelectionItemKeydown(e: KeyboardEvent, item: IPickerItem) {
+        switch (e.key) {
+            case 'ArrowDown':
+                this.focusNextItem(e);
+                break;
+            case 'ArrowUp':
+                this._focusPrevItem(e);
+                break;
+            case 'Enter':
+                this.clearSelection(e, item);
+                break;
+            case 'Escape':
+                this.onBackClick(e);
+                break;
+        }
+    }
+
+    clearSelection(event: Event, item: IPickerItem) {
+        event.preventDefault();
+        event.stopPropagation();
+        this._focusInput();
         item.added = false;
         item.excluded = false;
 
         this.clearSingle.emit(item);
 
         if (this.getSelections().length < 1) {
-            this.setDisplayItemsFromParentId(null);
+            this._setDisplayItemsFromParentId(null);
             this.selectionsAreShowing = false;
         }
 
         this.selections.emit(this.getSelections());
     }
 
-    clearSelections(e?: KeyboardEvent) {
+    clearSelections(e?: Event) {
         if (e) {
             e.stopPropagation();
         }
@@ -417,14 +210,15 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
 
         this.clearAll.emit();
 
-        this.setDisplayItemsFromParentId(null);
+        this._setDisplayItemsFromParentId(null);
         this.selectionsAreShowing = false;
 
         this.selections.emit(this.getSelections());
+        this._announce('All selections cleared');
     }
 
-    toggleItemInclusion(item: IPickerItem, e: KeyboardEvent) {
-        e.stopPropagation();
+    toggleItemInclusion(item: IPickerItem, event: Event) {
+        event.stopPropagation();
 
         // we're assuming that if the component is not multiSelect, then only
         // one item can be selected at any time
@@ -446,22 +240,23 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
             });
         }
 
-        this.toggleAncestors(item, false, false);
-        this.toggleDescendants(item, false);
+        this._toggleAncestors(item, false, false);
+        this._toggleDescendants(item, false);
 
         this.toggleInclude.emit({
             item: item,
             searchTerm: this.searchTerm.value
         });
         this.selections.emit(this.getSelections());
+        this._announce(`${item.displayName} ${item.added ? 'selected' : 'deselected'}`);
 
         if (!this.isMultiSelect) {
-            this.inputEl.nativeElement.blur();
+            this.closeResults();
         }
     }
 
-    toggleItemExclusion(item: IPickerItem, e: KeyboardEvent) {
-        e.stopPropagation();
+    toggleItemExclusion(item: IPickerItem, event: Event) {
+        event.stopPropagation();
 
         item.added = false;
         item.excluded = !item.excluded;
@@ -474,64 +269,79 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
             });
         }
 
-        this.toggleDescendants(item, false, false);
-        this.toggleAncestors(item, undefined, false);
+        this._toggleDescendants(item, false, false);
+        this._toggleAncestors(item, undefined, false);
 
         this.toggleExclude.emit({
             item: item,
             searchTerm: this.searchTerm.value
         });
         this.selections.emit(this.getSelections());
+        this._announce(`${item.displayName} ${item.excluded ? 'excluded' : 'exclusion removed'}`);
 
         if (!this.isMultiSelect) {
-            this.inputEl.nativeElement.blur();
+            this.closeResults();
         }
     }
 
-    toggleDescendants(item: IPickerItem, add?: boolean, exclude?: boolean) {
-        this.items
-            .filter(ci => ci.parentId === item.id)
-            .forEach(ci => {
-                if (!isUndefined(add)) {
-                    ci.added = add;
-                }
-
-                if (!isUndefined(exclude)) {
-                    ci.excluded = exclude;
-                }
-
-                this.toggleDescendants(ci, add, exclude);
-            });
+    // Returns 0 for the focused row, or the first row when nothing is focused (roving tabindex)
+    getTabIndex(i: number): number {
+        return this.focusedIndex === i || (this.focusedIndex === -1 && i === 0) ? 0 : -1;
     }
 
-    toggleAncestors(item: IPickerItem, add?: boolean, exclude?: boolean) {
-        this.items
-            .filter(ci => ci.id === item.parentId)
-            .forEach(ci => {
-                if (!isUndefined(add)) {
-                    ci.added = add;
-                }
-
-                if (!isUndefined(exclude)) {
-                    ci.excluded = exclude;
-                }
-
-                this.toggleAncestors(ci, add, exclude);
-            });
+    // Returns 0 only when this row is focused (for child elements like checkboxes and buttons)
+    getChildTabIndex(i: number): number {
+        return this.focusedIndex === i ? 0 : -1;
     }
 
-    preventBlur(e: KeyboardEvent) {
-        // prevent blurring of the search input
-        e.preventDefault();
+    getAriaLabel(item: IPickerItem) {
+        let label = item.displayName;
+        if (item.added) label += ', selected';
+        if (item.excluded) label += ', excluded';
+        if (this.hasChildren(item.id)) label += ', has sub-items';
+        return label;
     }
 
-    resetSearchTerm() {
-        this.searchTerm.setValue('', { emitEvent: false });
+    focusNextItem(event: Event) {
+        event.preventDefault();
+        if (!this.canViewResults) {
+            this._openResultsAndFocusFirstItem();
+            return;
+        }
+        const listLength = this.selectionsAreShowing ? this.getSelections().length : this.displayItems.length;
+        if (listLength) {
+            this._focusListItem(Math.min(this.focusedIndex + 1, listLength - 1));
+            this._cdRef.markForCheck();
+        }
+    }
+
+    onInputEnter() {
+        if (!this.canViewResults) {
+            this._openResultsAndFocusFirstItem();
+            return;
+        }
+    }
+
+    onListFocusOut(event: FocusEvent) {
+        const list = event.currentTarget as HTMLElement;
+        const relatedTarget = event.relatedTarget as HTMLElement;
+        if (!list.contains(relatedTarget)) {
+            this.focusedIndex = -1;
+            this._cdRef.markForCheck();
+        }
+    }
+
+    onContainerFocusOut() {
+        setTimeout(() => {
+            if (!this._elementRef.nativeElement.contains(document.activeElement)) {
+                this.closeResults({ refocusInput: false });
+                this.blur.emit(this.inputEl);
+            }
+        });
     }
 
     onFocus() {
         if (!this.isDisabled) {
-            this.showResults();
             this.focus.emit(this.inputEl);
         }
     }
@@ -540,8 +350,7 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
         if (!this.isDisabled) {
             this.parentId = this.initialParentId;
             this.canViewResults = true;
-
-            this.setDisplayItemsFromParentId(this.parentId);
+            this._setDisplayItemsFromParentId(this.parentId);
         }
     }
 
@@ -549,17 +358,69 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
         this.inputEl.nativeElement.blur();
     }
 
-    closeResults() {
+    closeResults({ refocusInput = true } = {}) {
+        if (!this.canViewResults) {
+            return;
+        }
         this.canViewResults = false;
-        this.searchTerm.setValue('');
+        this.focusedIndex = -1;
+        this.selectionsAreShowing = false;
+        this.searchTerm.setValue('', { emitEvent: false });
         this.closed.emit();
-        this.chRef.detectChanges();
+        this._cdRef.detectChanges();
+        if (refocusInput) {
+            this._focusInput();
+        }
     }
 
-    onReset($event?: KeyboardEvent) {
+    onReset() {
         this.clearSearch.emit();
         this.searchTerm.setValue('');
         this.showResults();
+        this._focusInput();
+    }
+
+    onChevronClick() {
+        this.showResults();
+        this._focusInput();
+    }
+
+    onListItemTab(event: KeyboardEvent, index: number) {
+        const { li, children } = this._focusableChildren(index);
+        const lastFocusableChild = children[children.length - 1] ?? li;
+
+        if (event.target !== lastFocusableChild) return;
+        if (index + 1 >= this.displayItems.length) return;
+        event.preventDefault();
+        this.focusedIndex = index + 1;
+
+        this._cdRef.detectChanges();
+        const next = this._focusableChildren(this.focusedIndex);
+        (next.children[0] ?? next.li).focus();
+    }
+
+    onListItemShiftTab(event: KeyboardEvent, index: number) {
+        const { li, children } = this._focusableChildren(index);
+        const firstFocusableChild = children[0] ?? li;
+
+        if (event.target !== firstFocusableChild) return;
+        event.preventDefault();
+        if (index === 0) {
+            this._focusInput();
+            return;
+        }
+        this.focusedIndex = index - 1;
+
+        this._cdRef.detectChanges();
+        const prev = this._focusableChildren(this.focusedIndex);
+        (prev.children[prev.children.length - 1] ?? prev.li).focus();
+    }
+
+    onDrilldown(item: IPickerItem) {
+        this._setDisplayItemsFromParentId(item.id);
+        this.desc.emit(item);
+        this._cdRef.detectChanges();
+        this._focusListItem(0);
     }
 
     getPlaceholderText() {
@@ -585,6 +446,149 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
             }
         }
         return;
+    }
+
+    private _setDisplayItemsFromParentId(parentId: number | string | null) {
+        if (!this.hasChildren(parentId)) {
+            return;
+        }
+        this._resetSearchTerm();
+        this.parentId = parentId;
+        this.displayItems = this.items.filter(i => i.parentId === parentId);
+        this.focusedIndex = -1;
+    }
+
+    // Returns focus to the search input and clears the focused list item index.
+    private _focusInput() {
+        this.focusedIndex = -1;
+        this.inputEl.nativeElement.focus();
+    }
+
+    // Opens the results dropdown and moves focus to the first list item.
+    // Used when the user triggers a key action (ArrowDown/Enter) while the dropdown is closed.
+    private _openResultsAndFocusFirstItem() {
+        this.showResults();
+        this._cdRef.detectChanges();
+        this._focusListItem(0);
+    }
+
+    private _focusPrevItem(event: Event) {
+        event.preventDefault();
+        if (this.focusedIndex <= 0) {
+            this._focusInput();
+            return;
+        }
+        this._focusListItem(this.focusedIndex - 1);
+        this._cdRef.markForCheck();
+    }
+
+    private _toggleDescendants(item: IPickerItem, add?: boolean, exclude?: boolean) {
+        this.items
+            .filter(ci => ci.parentId === item.id)
+            .forEach(ci => {
+                if (!isUndefined(add)) {
+                    ci.added = add;
+                }
+
+                if (!isUndefined(exclude)) {
+                    ci.excluded = exclude;
+                }
+
+                this._toggleDescendants(ci, add, exclude);
+            });
+    }
+
+    private _toggleAncestors(item: IPickerItem, add?: boolean, exclude?: boolean) {
+        this.items
+            .filter(ci => ci.id === item.parentId)
+            .forEach(ci => {
+                if (!isUndefined(add)) {
+                    ci.added = add;
+                }
+
+                if (!isUndefined(exclude)) {
+                    ci.excluded = exclude;
+                }
+
+                this._toggleAncestors(ci, add, exclude);
+            });
+    }
+
+    private _onListItemEscape(event: Event, index: number) {
+        const li = this._elementRef.nativeElement.querySelector(
+            `#${this.pickerId}-option-${this.displayItems[index].id}`
+        );
+        if (event.target === li) {
+            this.closeResults();
+        } else {
+            event.stopPropagation();
+            li?.focus();
+        }
+    }
+
+    private _getActiveListItems(): QueryList<ElementRef> {
+        return this.selectionsAreShowing ? this.selectionsListItems : this.optionsListItems;
+    }
+
+    private _focusListItem(index: number) {
+        this.focusedIndex = index;
+        const items = this._getActiveListItems().toArray();
+        items?.[index].nativeElement.focus();
+    }
+
+    private _onArrowLeft(event: Event) {
+        if (!this.parentId) {
+            return;
+        }
+        event.preventDefault();
+        event.stopPropagation();
+        const parentItem = this.getParentItem(this.parentId);
+        this._setDisplayItemsFromParentId(parentItem!.parentId);
+        this.asc.emit(parentItem);
+        this._cdRef.detectChanges();
+        const index = this.displayItems.findIndex(i => i.id === parentItem!.id);
+        this._focusListItem(index >= 0 ? index : 0);
+    }
+
+    private _focusableChildren(index: number): { li: HTMLElement; children: HTMLElement[] } {
+        const li = this.optionsListItems.toArray()[index]?.nativeElement as HTMLElement;
+        const children = Array.from(li?.querySelectorAll('input, button') ?? []) as HTMLElement[];
+        return { li, children };
+    }
+
+    private _resetSearchTerm() {
+        this.searchTerm.setValue('', { emitEvent: false });
+    }
+
+    private _subscribeToSearchTermChanges() {
+        const sub = this.searchTerm.valueChanges.subscribe(val => {
+            this.selectionsAreShowing = false;
+            this.focusedIndex = -1;
+            this.canViewResults = true;
+
+            if (val.length) {
+                const displayItems = this.items.filter(item => {
+                    return (
+                        (item.searchValues || []).some(value => {
+                            return value.toLowerCase().includes(val.toLowerCase());
+                        }) || item.displayName.toLowerCase().includes(val.toLowerCase())
+                    );
+                });
+                // remove duplicate items
+                this.displayItems = displayItems.reduce<IPickerItem[]>(
+                    (items, item) => (items.find(x => x.id === item.id) ? items : [...items, item]),
+                    []
+                );
+            } else {
+                this._setDisplayItemsFromParentId(this.parentId);
+            }
+        });
+
+        this._subs.push(sub);
+    }
+
+    private _announce(text: string) {
+        this._liveAnnouncer.announce(text, 'polite');
     }
 
     ngOnDestroy() {
