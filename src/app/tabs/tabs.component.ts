@@ -25,7 +25,6 @@ export class TabsComponent {
         { name: 'Travel', isActive: false, hasDropdown: true }
     ];
 
-
     setSelectedTab(selectedTab: { name: string }) {
         this.tabCollection.forEach(tab => {
             tab.isActive = tab.name === selectedTab.name;

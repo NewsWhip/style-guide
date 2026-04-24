@@ -1,13 +1,16 @@
-<div class="scroll-container"
+<div
+    class="scroll-container"
     #scrollContainer>
-    <ul class="nav nav-tabs"
+    <ul
+        class="nav nav-tabs"
         [ngClass]="tabSizeClass"
         role="tablist"
         (keydown)="onKeydown($event)"
         (focusout)="onFocusOut()">
         <ng-content></ng-content>
     </ul>
-    <div #activeBar
+    <div
+        #activeBar
         class="nav-tabs-active-bar"
         aria-hidden="true"
         [ngStyle]="getActiveStyles()"></div>
@@ -16,14 +19,16 @@
 @if (shouldShowPagination) {
     <div class="pagination-container">
         @if (shouldShowPrev) {
-            <div class="prev-page"
+            <div
+                class="prev-page"
                 (click)="prev()"
                 [ngStyle]="background">
                 <ng-container *ngTemplateOutlet="paginator"></ng-container>
             </div>
         }
         @if (shouldShowNext) {
-            <div class="next-page"
+            <div
+                class="next-page"
                 (click)="next()"
                 [ngStyle]="background">
                 <ng-container *ngTemplateOutlet="paginator"></ng-container>

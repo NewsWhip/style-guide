@@ -1,4 +1,13 @@
-import { AfterContentInit, Directive, ElementRef, HostBinding, Input, OnChanges, SimpleChanges, inject } from '@angular/core';
+import {
+    AfterContentInit,
+    Directive,
+    ElementRef,
+    HostBinding,
+    Input,
+    OnChanges,
+    SimpleChanges,
+    inject
+} from '@angular/core';
 import { TabsService } from './tabs.service';
 
 @Directive({ selector: '[nwTab]' })
@@ -8,7 +17,9 @@ export class TabDirective implements OnChanges, AfterContentInit {
 
     @HostBinding('class.active') @Input() isActive: boolean = false;
     @HostBinding('attr.role') readonly role = 'tab';
-    @HostBinding('attr.aria-selected') get ariaSelected() { return String(this.isActive); }
+    @HostBinding('attr.aria-selected') get ariaSelected() {
+        return String(this.isActive);
+    }
 
     ngAfterContentInit() {
         // <li role="tab"> is the keyboard target; inner tab button is click-only

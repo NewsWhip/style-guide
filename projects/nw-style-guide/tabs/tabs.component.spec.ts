@@ -9,7 +9,9 @@ import { TabDirective } from './tab.directive';
     template: `
         <nw-tabs>
             @for (tab of tabs; track tab) {
-                <li nwTab [isActive]="tab.isActive">
+                <li
+                    nwTab
+                    [isActive]="tab.isActive">
                     <button (click)="activate(tab)">{{ tab.label }}</button>
                 </li>
             }

@@ -4,14 +4,32 @@
     <h3>Nav Pills</h3>
 
     <div>
-        <ul class="nav nav-pills" role="tablist">
+        <ul
+            class="nav nav-pills"
+            role="tablist">
             <li
                 role="presentation"
                 class="active">
-                <a href="#" role="tab">Tab 1 active</a>
+                <a
+                    href="#"
+                    role="tab"
+                    >Tab 1 active</a
+                >
             </li>
-            <li role="presentation"><a href="#" role="tab">Tab 2</a></li>
-            <li role="presentation"><a href="#" role="tab">Tab 3</a></li>
+            <li role="presentation">
+                <a
+                    href="#"
+                    role="tab"
+                    >Tab 2</a
+                >
+            </li>
+            <li role="presentation">
+                <a
+                    href="#"
+                    role="tab"
+                    >Tab 3</a
+                >
+            </li>
             <li
                 role="presentation"
                 class="disabled">
@@ -69,7 +87,7 @@
     <h4>With dropdown buttons</h4>
     <nw-tabs size="md">
         @for (tab of tabCollection; track tab) {
-            <li 
+            <li
                 nwTab
                 [isActive]="tab.isActive">
                 <button (click)="setSelectedTabWithDropdown(tab)">{{ tab.name }}</button>

@@ -93,9 +93,7 @@ export class TabsComponent implements OnInit, AfterContentInit, OnDestroy {
         const tabs = this.tabs.toArray();
         if (!tabs.length) return;
 
-        const focusedIndex = tabs.findIndex(t =>
-            t.elRef.nativeElement.contains(document.activeElement)
-        );
+        const focusedIndex = tabs.findIndex(t => t.elRef.nativeElement.contains(document.activeElement));
         if (focusedIndex === -1) return;
 
         let targetIndex: number | null = null;
