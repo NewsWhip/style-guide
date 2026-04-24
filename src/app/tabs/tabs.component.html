@@ -4,18 +4,18 @@
     <h3>Nav Pills</h3>
 
     <div>
-        <ul class="nav nav-pills">
+        <ul class="nav nav-pills" role="tablist">
             <li
                 role="presentation"
                 class="active">
-                <a href="#">Tab 1 active</a>
+                <a href="#" role="tab">Tab 1 active</a>
             </li>
-            <li role="presentation"><a href="#">Tab2</a></li>
-            <li role="presentation"><a href="#">Tab 3</a></li>
+            <li role="presentation"><a href="#" role="tab">Tab 2</a></li>
+            <li role="presentation"><a href="#" role="tab">Tab 3</a></li>
             <li
                 role="presentation"
                 class="disabled">
-                <a>Tab 4 disabled</a>
+                <a role="tab">Tab 4 disabled</a>
             </li>
         </ul>
     </div>
@@ -38,15 +38,8 @@
         @for (tab of tabCollection; track tab) {
             <li
                 nwTab
-                [isActive]="tab.isActive"
-                (click)="setSelectedTab(tab)"
-                role="presentation">
-                <a
-                    href="javascript:;"
-                    [attr.aria-controls]="tab.name"
-                    role="tab"
-                    >{{ tab.name }}</a
-                >
+                [isActive]="tab.isActive">
+                <button (click)="setSelectedTab(tab)">{{ tab.name }}</button>
             </li>
         }
     </nw-tabs>
@@ -56,15 +49,8 @@
         @for (tab of tabCollection; track tab) {
             <li
                 nwTab
-                [isActive]="tab.isActive"
-                (click)="setSelectedTab(tab)"
-                role="presentation">
-                <a
-                    href="javascript:;"
-                    [attr.aria-controls]="tab.name"
-                    role="tab"
-                    >{{ tab.name }}</a
-                >
+                [isActive]="tab.isActive">
+                <button (click)="setSelectedTab(tab)">{{ tab.name }}</button>
             </li>
         }
     </nw-tabs>
@@ -74,27 +60,27 @@
         @for (tab of tabCollection; track tab) {
             <li
                 nwTab
-                [isActive]="tab.isActive"
-                (click)="setSelectedTab(tab)"
-                role="presentation">
-                <a
-                    href="javascript:;"
-                    [attr.aria-controls]="tab.name"
-                    role="tab"
-                    >{{ tab.name }}</a
-                >
+                [isActive]="tab.isActive">
+                <button (click)="setSelectedTab(tab)">{{ tab.name }}</button>
             </li>
         }
     </nw-tabs>
 
-    <h4>Buttons</h4>
-    <nw-tabs size="lg">
-        <li
-            *ngFor="let tab of tabCollection"
-            nwTab
-            [isActive]="tab.isActive"
-            role="presentation">
-            <button (click)="setSelectedTab(tab)">{{ tab.name }}</button>
-        </li>
+    <h4>With dropdown buttons</h4>
+    <nw-tabs size="md">
+        @for (tab of tabCollection; track tab) {
+            <li 
+                nwTab
+                [isActive]="tab.isActive">
+                <button (click)="setSelectedTabWithDropdown(tab)">{{ tab.name }}</button>
+                @if (tab.hasDropdown) {
+                    <button
+                        class="btn btn-sm btn-ghost"
+                        [attr.aria-label]="'Options for ' + tab.name">
+                        <i class="fas fa-ellipsis-v"></i>
+                    </button>
+                }
+            </li>
+        }
     </nw-tabs>
 </div>
