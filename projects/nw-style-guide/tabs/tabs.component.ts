@@ -75,7 +75,7 @@ export class TabsComponent implements OnInit, AfterContentInit, OnDestroy {
             const btn = tab.elRef.nativeElement.querySelector('button');
             return {
                 width: (btn ?? tab.elRef.nativeElement).getBoundingClientRect().width + 'px',
-                left: tab.elRef.nativeElement.offsetLeft + 'px'
+                transform: `translateX(${tab.elRef.nativeElement.offsetLeft}px)`
             };
         }
         return {};

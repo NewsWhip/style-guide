@@ -97,6 +97,7 @@
         > a,
         > button:not(.btn) {
             width: auto;
+            min-width: 0;
             color: variables.$text-color-secondary;
         }
         &:first-child {
@@ -191,6 +192,7 @@ nw-tabs {
         height: 3px;
         position: absolute;
         bottom: 0;
+        left: 0;
         background-color: variables.get-color('primary', base);
         transition: all ease-in-out 200ms;
     }
