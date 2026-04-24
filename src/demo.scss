@@ -68,3 +68,10 @@ ol.guidelines {
     padding-bottom: 16px;
     max-width: 800px;
 }
+
+.btn {
+    &:focus-visible {
+        outline: 2px solid white;
+        outline-offset: 2px;
+    }
+}
