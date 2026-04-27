@@ -4,7 +4,7 @@ import { TabsService } from './tabs.service';
 @Directive({
     selector: '[nwTab]',
     host: {
-        'role': 'tab',
+        role: 'tab',
         '[class.active]': 'isActive()',
         '[attr.aria-selected]': 'isActive()'
     }
