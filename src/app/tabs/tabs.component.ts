@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { uniqueId } from 'lodash-es';
+import { has, uniqueId } from 'lodash-es';
 import { TABS_DIRECTIVES } from 'nw-style-guide/tabs';
 
 @Component({
@@ -18,29 +18,14 @@ import { TABS_DIRECTIVES } from 'nw-style-guide/tabs';
 })
 export class TabsComponent {
     public tabCollection = [
-        {
-            name: 'Home',
-            isActive: true
-        },
-        {
-            name: 'About',
-            isActive: false
-        },
-        {
-            name: 'Careers',
-            isActive: false
-        },
-        {
-            name: 'Contact',
-            isActive: false
-        },
-        {
-            name: 'Travel',
-            isActive: false
-        }
+        { name: 'Home', isActive: true, hasDropdown: false },
+        { name: 'About', isActive: false, hasDropdown: true },
+        { name: 'Careers', isActive: false, hasDropdown: true },
+        { name: 'Contact', isActive: false, hasDropdown: false },
+        { name: 'Travel', isActive: false, hasDropdown: true }
     ];
 
-    setSelectedTab(selectedTab) {
+    setSelectedTab(selectedTab: { name: string }) {
         this.tabCollection.forEach(tab => {
             tab.isActive = tab.name === selectedTab.name;
         });
@@ -49,7 +34,8 @@ export class TabsComponent {
     addTab(): void {
         this.tabCollection.push({
             name: uniqueId('Added '),
-            isActive: false
+            isActive: false,
+            hasDropdown: false
         });
     }
 

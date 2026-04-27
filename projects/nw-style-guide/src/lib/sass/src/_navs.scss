@@ -22,7 +22,7 @@
         display: inline-block;
 
         > a,
-        > button {
+        > button:not(.btn) {
             position: relative;
             display: block;
             @include nav-size.nav-size(variables.$padding-base-vertical, variables.$padding-base-horizontal, 14px, 1);
@@ -41,7 +41,7 @@
 
         // Disabled state sets text to gray and nukes hover/tab effects
         &.disabled > a,
-        &.disabled > button {
+        &.disabled > button:not(.btn) {
             color: variables.$nav-disabled-link-color;
 
             &:hover,
@@ -56,7 +56,7 @@
 
     // Open dropdowns
     .open > a,
-    .open > button {
+    .open > button:not(.btn) {
         &,
         &:hover,
         &:focus {
@@ -89,11 +89,15 @@
 .nav-tabs {
     > li {
         margin: 0 12px;
+        display: inline-flex;
+        align-items: center;
         vertical-align: middle;
 
         // Actual tabs (as links or buttons)
         > a,
-        > button {
+        > button:not(.btn) {
+            width: auto;
+            min-width: 0;
             color: variables.$text-color-secondary;
         }
         &:first-child {
@@ -105,7 +109,7 @@
 
         // Active state, and its :hover to override normal :hover
         &.active > a,
-        &.active > button {
+        &.active > button:not(.btn) {
             &,
             &:hover,
             &:focus {
@@ -120,7 +124,7 @@
         @extend .nav-tabs-justified;
     }
     &.nav-sm > li > a,
-    &.nav-sm > li > button {
+    &.nav-sm > li > button:not(.btn) {
         @include nav-size.nav-size(
             variables.$padding-small-vertical + 1,
             0,
@@ -129,11 +133,11 @@
         );
     }
     &.nav-md > li > a,
-    &.nav-md > li > button {
+    &.nav-md > li > button:not(.btn) {
         @include nav-size.nav-size(variables.$padding-base-vertical + 1, 0, 14px, variables.$line-height-base);
     }
     &.nav-lg > li > a,
-    &.nav-lg > li > button {
+    &.nav-lg > li > button:not(.btn) {
         @include nav-size.nav-size(
             variables.$padding-large-vertical + 1,
             0,
@@ -187,6 +191,8 @@ nw-tabs {
         display: block;
         height: 3px;
         position: absolute;
+        bottom: 0;
+        left: 0;
         background-color: variables.get-color('primary', base);
         transition: all ease-in-out 200ms;
     }

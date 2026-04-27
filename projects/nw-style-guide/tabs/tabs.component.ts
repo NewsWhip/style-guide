@@ -13,63 +13,21 @@ import {
     inject
 } from '@angular/core';
 import { TabDirective } from './tab.directive';
-import { fromEvent, Subscription, Observable, merge } from 'rxjs';
+import { fromEvent, Subscription, merge } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { TabsService } from './tabs.service';
 import { NgClass, NgStyle, NgTemplateOutlet } from '@angular/common';
 
 @Component({
     selector: 'nw-tabs',
-    template: `
-        <div
-            class="scroll-container"
-            #scrollContainer>
-            <ul
-                class="nav nav-tabs"
-                [ngClass]="tabSizeClass"
-                role="tablist">
-                <ng-content></ng-content>
-
-                <li
-                    #activeBar
-                    class="nav-tabs-active-bar"
-                    [ngStyle]="getActiveStyles()"></li>
-            </ul>
-        </div>
-
-        @if (shouldShowPagination) {
-            <div class="pagination-container">
-                @if (shouldShowPrev) {
-                    <div
-                        class="prev-page"
-                        (click)="prev()"
-                        [ngStyle]="background">
-                        <ng-container *ngTemplateOutlet="paginator"></ng-container>
-                    </div>
-                }
-                @if (shouldShowNext) {
-                    <div
-                        class="next-page"
-                        (click)="next()"
-                        [ngStyle]="background">
-                        <ng-container *ngTemplateOutlet="paginator"></ng-container>
-                    </div>
-                }
-            </div>
-        }
-
-        <ng-template #paginator>
-            <button class="btn btn-md btn-ghost-alt">
-                <i class="fas fa-chevron-left"></i>
-            </button>
-        </ng-template>
-    `,
+    templateUrl: './tabs.component.html',
     providers: [TabsService],
     changeDetection: ChangeDetectionStrategy.OnPush,
     styles: [
         `
             :host,
-            ul {
+            ul,
+            .scroll-container {
                 position: relative;
             }
         `
@@ -95,70 +53,84 @@ export class TabsComponent implements OnInit, AfterContentInit, OnDestroy {
     private _paginationTolerance: number = 100;
 
     ngOnInit() {
-        const scrollStop$: Observable<Event> = fromEvent(this.scrollContainer.nativeElement, 'scroll');
-        const windowResizeStop$: Observable<Event> = fromEvent(window, 'resize');
+        const scrollStop$ = fromEvent(this.scrollContainer.nativeElement, 'scroll');
+        const windowResizeStop$ = fromEvent(window, 'resize');
 
         this._scrollAndResizeSub = merge(scrollStop$, windowResizeStop$)
             .pipe(debounceTime(50))
-            .subscribe(_ => this._cdRef.detectChanges());
+            .subscribe(() => this._cdRef.detectChanges());
 
-        this.subscribeToActiveChange();
-        this.subscribeToActiveBarTransitionEnd();
+        this._subscribeToActiveChange();
+        this._subscribeToActiveBarTransitionEnd();
     }
 
     ngAfterContentInit() {
-        this.subscribeToTabsChange();
-    }
-
-    subscribeToActiveChange() {
-        this._activeChangeSub = this._tabsService.activeChange.subscribe(tab => {
-            this.scrollToTabIfRequired(tab);
-
-            setTimeout(() => {
-                this._cdRef.detectChanges();
-            }, 0);
-        });
-    }
-
-    subscribeToTabsChange() {
-        this._tabsChangeSub = this.tabs.changes.subscribe(tabs => {
-            setTimeout(() => {
-                this._cdRef.detectChanges();
-            }, 0);
-        });
-    }
-
-    subscribeToActiveBarTransitionEnd() {
-        this._transitionEndSub = fromEvent(this.activeBar.nativeElement, 'transitionend')
-            .pipe(debounceTime(50))
-            .subscribe(() => {
-                console.log('transition ended');
-                this._cdRef.detectChanges();
-            });
-    }
-
-    getActiveTab(): TabDirective {
-        return this.tabs.filter(t => t.isActive)[0];
-    }
-
-    get tabSizeClass(): string {
-        return `nav-${this.size}`;
+        this._subscribeToTabsChange();
     }
 
     getActiveStyles(): Record<string, string> {
-        const tab: TabDirective = this.getActiveTab();
+        const tab: TabDirective = this._getActiveTab();
 
         if (tab) {
+            const btn = tab.elRef.nativeElement.querySelector('button');
             return {
-                width: tab.elRef.nativeElement.getBoundingClientRect().width + 'px',
-                left: tab.elRef.nativeElement.offsetLeft + 'px'
+                width: (btn ?? tab.elRef.nativeElement).getBoundingClientRect().width + 'px',
+                transform: `translateX(${tab.elRef.nativeElement.offsetLeft}px)`
             };
         }
         return {};
     }
 
-    getScrollEl(): HTMLElement {
-        return this.scrollContainer.nativeElement;
+    prev(): void {
+        this._getScrollEl().scrollLeft -= this.clientWidth - this._paginationTolerance;
+    }
+
+    next() {
+        this._getScrollEl().scrollLeft += this.clientWidth - this._paginationTolerance;
+    }
+
+    onKeydown(event: KeyboardEvent) {
+        const tabs = this.tabs.toArray();
+        if (!tabs.length) return;
+
+        const focusedIndex = tabs.findIndex(t => t.elRef.nativeElement.contains(document.activeElement));
+        if (focusedIndex === -1) return;
+
+        let targetIndex: number | null = null;
+
+        switch (event.key) {
+            case 'ArrowLeft':
+                targetIndex = focusedIndex === 0 ? tabs.length - 1 : focusedIndex - 1;
+                break;
+            case 'ArrowRight':
+                targetIndex = focusedIndex === tabs.length - 1 ? 0 : focusedIndex + 1;
+                break;
+            case 'Home':
+                targetIndex = 0;
+                break;
+            case 'End':
+                targetIndex = tabs.length - 1;
+                break;
+        }
+
+        if (targetIndex !== null) {
+            event.preventDefault();
+            this.tabs.forEach(t => t.setTabindex('-1'));
+            tabs[targetIndex].setTabindex('0');
+            tabs[targetIndex].focus();
+        }
+    }
+
+    onFocusOut() {
+        setTimeout(() => {
+            if (!this.scrollContainer.nativeElement.contains(document.activeElement)) {
+                this.tabs.forEach(t => t.restoreTabindex());
+            }
+        });
+    }
+
+    get tabSizeClass(): string {
+        return `nav-${this.size}`;
     }
 
     get background() {
@@ -168,43 +140,67 @@ export class TabsComponent implements OnInit, AfterContentInit, OnDestroy {
     }
 
     get clientWidth(): number {
-        return this.getScrollEl().clientWidth;
+        return this._getScrollEl().clientWidth;
     }
 
     get shouldShowPagination(): boolean {
-        return +(this.getScrollEl().scrollWidth / this.clientWidth).toFixed(1) >= 1;
+        return +(this._getScrollEl().scrollWidth / this.clientWidth).toFixed(1) >= 1;
     }
 
     get shouldShowPrev(): boolean {
-        return this.getScrollEl().scrollLeft >= 1;
+        return this._getScrollEl().scrollLeft >= 1;
     }
 
     get shouldShowNext(): boolean {
-        return this.getScrollEl().scrollLeft + this.clientWidth < this.getScrollEl().scrollWidth;
+        return this._getScrollEl().scrollLeft + this.clientWidth < this._getScrollEl().scrollWidth;
     }
 
-    prev(): void {
-        this.getScrollEl().scrollLeft -= this.clientWidth - this._paginationTolerance;
+    private _subscribeToActiveChange() {
+        this._activeChangeSub = this._tabsService.activeChange.subscribe(tab => {
+            this._scrollToTabIfRequired(tab);
+
+            setTimeout(() => {
+                this._cdRef.detectChanges();
+            }, 0);
+        });
     }
 
-    next() {
-        this.getScrollEl().scrollLeft += this.clientWidth - this._paginationTolerance;
+    private _subscribeToTabsChange() {
+        this._tabsChangeSub = this.tabs.changes.subscribe(() => {
+            setTimeout(() => {
+                this._cdRef.detectChanges();
+            }, 0);
+        });
     }
 
-    scrollToTabIfRequired(tab: TabDirective) {
+    private _subscribeToActiveBarTransitionEnd() {
+        this._transitionEndSub = fromEvent(this.activeBar.nativeElement, 'transitionend')
+            .pipe(debounceTime(50))
+            .subscribe(() => this._cdRef.detectChanges());
+    }
+
+    private _getActiveTab(): TabDirective {
+        return this.tabs.filter(t => t.isActive)[0];
+    }
+
+    private _getScrollEl(): HTMLElement {
+        return this.scrollContainer.nativeElement;
+    }
+
+    private _scrollToTabIfRequired(tab: TabDirective) {
         const offsetLeft = tab.elRef.nativeElement.offsetLeft;
         const position = {
             left: offsetLeft,
             right: offsetLeft + tab.elRef.nativeElement.clientWidth
         };
 
-        const shouldScrollLeft: boolean = position.left < this.getScrollEl().scrollLeft;
-        const shouldScrollRight: boolean = position.right > this.getScrollEl().scrollLeft + this.clientWidth;
+        const shouldScrollLeft: boolean = position.left < this._getScrollEl().scrollLeft;
+        const shouldScrollRight: boolean = position.right > this._getScrollEl().scrollLeft + this.clientWidth;
 
         if (shouldScrollLeft) {
-            this.getScrollEl().scrollLeft = position.left - 30;
+            this._getScrollEl().scrollLeft = position.left - 30;
         } else if (shouldScrollRight) {
-            this.getScrollEl().scrollLeft = position.right - this.clientWidth + 12 + 30; // plus 12 for margin
+            this._getScrollEl().scrollLeft = position.right - this.clientWidth + 12 + 30; // plus 12 for margin
         }
     }
 
