@@ -1,7 +1,7 @@
 {
     "name": "nw-style-guide",
     "type": "module",
-    "version": "21.2.0-beta.4",
+    "version": "21.2.0",
     "repository": {
         "type": "git",
         "url": "https://github.com/NewsWhip/style-guide"
