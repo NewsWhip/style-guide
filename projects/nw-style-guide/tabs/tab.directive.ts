@@ -1,41 +1,32 @@
-import {
-    AfterContentInit,
-    Directive,
-    ElementRef,
-    HostBinding,
-    Input,
-    OnChanges,
-    SimpleChanges,
-    inject
-} from '@angular/core';
+import { AfterContentInit, Directive, ElementRef, effect, input, inject } from '@angular/core';
 import { TabsService } from './tabs.service';
 
-@Directive({ selector: '[nwTab]' })
-export class TabDirective implements OnChanges, AfterContentInit {
+@Directive({
+    selector: '[nwTab]',
+    host: {
+        'role': 'tab',
+        '[class.active]': 'isActive()',
+        '[attr.aria-selected]': 'isActive()'
+    }
+})
+export class TabDirective implements AfterContentInit {
     readonly elRef = inject<ElementRef<HTMLElement>>(ElementRef);
     private _tabsService = inject(TabsService);
 
-    @HostBinding('class.active') @Input() isActive: boolean = false;
-    @HostBinding('attr.role') readonly role = 'tab';
-    @HostBinding('attr.aria-selected') get ariaSelected() {
-        return String(this.isActive);
+    isActive = input<boolean>(false);
+
+    constructor() {
+        effect(() => {
+            this._applyTabindex(this.isActive() ? '0' : '-1');
+            if (this.isActive()) {
+                this._tabsService.notifyActiveChange(this);
+            }
+        });
     }
 
     ngAfterContentInit() {
         // <li role="tab"> is the keyboard target; inner tab button is click-only
         this.elRef.nativeElement.querySelector<HTMLButtonElement>('button')?.setAttribute('tabindex', '-1');
-        this._applyTabindex(this.isActive ? '0' : '-1');
-    }
-
-    ngOnChanges(changes: SimpleChanges) {
-        const change = changes.isActive;
-        const hasActiveChanged = change && !change.firstChange && change.previousValue !== change.currentValue;
-        if (!hasActiveChanged) return;
-
-        this._applyTabindex(this.isActive ? '0' : '-1');
-        if (this.isActive) {
-            this._tabsService.notifyActiveChange(this);
-        }
     }
 
     focus() {
@@ -47,7 +38,7 @@ export class TabDirective implements OnChanges, AfterContentInit {
     }
 
     restoreTabindex() {
-        this._applyTabindex(this.isActive ? '0' : '-1');
+        this._applyTabindex(this.isActive() ? '0' : '-1');
     }
 
     private _applyTabindex(value: string) {

@@ -20,7 +20,7 @@ export class TabsComponent {
     public tabCollection = [
         { name: 'Home', isActive: true, hasDropdown: false },
         { name: 'About', isActive: false, hasDropdown: true },
-        { name: 'CareersCareersCareersCareersCareers', isActive: false, hasDropdown: true },
+        { name: 'Careers', isActive: false, hasDropdown: true },
         { name: 'Contact', isActive: false, hasDropdown: false },
         { name: 'Travel', isActive: false, hasDropdown: true }
     ];
