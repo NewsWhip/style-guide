@@ -90,7 +90,7 @@
             <li
                 nwTab
                 [isActive]="tab.isActive">
-                <button (click)="setSelectedTabWithDropdown(tab)">{{ tab.name }}</button>
+                <button (click)="setSelectedTab(tab)">{{ tab.name }}</button>
                 @if (tab.hasDropdown) {
                     <button
                         class="btn btn-sm btn-ghost"
