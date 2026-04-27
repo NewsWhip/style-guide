@@ -103,7 +103,7 @@ export class TabsComponent implements OnInit, AfterContentInit, OnDestroy {
             case ' ':
                 if (tabs[focusedIndex].elRef.nativeElement === document.activeElement) {
                     event.preventDefault();
-                    tabs[focusedIndex].elRef.nativeElement.querySelector<HTMLButtonElement>('button')?.click();
+                    tabs[focusedIndex].activate();
                 }
                 return;
             case 'ArrowLeft':
