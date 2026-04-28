@@ -101,8 +101,7 @@ export class TabsComponent implements OnInit, AfterContentInit, OnDestroy {
         switch (event.key) {
             case 'Enter':
             case ' ':
-                const isTabActive = tabs[focusedIndex].elRef.nativeElement === document.activeElement;
-                if (isTabActive) {
+                if (tabs[focusedIndex].elRef.nativeElement === document.activeElement) {
                     event.preventDefault();
                     tabs[focusedIndex].activate();
                 }
