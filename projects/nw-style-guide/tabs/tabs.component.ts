@@ -99,6 +99,13 @@ export class TabsComponent implements OnInit, AfterContentInit, OnDestroy {
         let targetIndex: number | null = null;
 
         switch (event.key) {
+            case 'Enter':
+            case ' ':
+                if (tabs[focusedIndex].elRef.nativeElement === document.activeElement) {
+                    event.preventDefault();
+                    tabs[focusedIndex].activate();
+                }
+                return;
             case 'ArrowLeft':
                 targetIndex = focusedIndex === 0 ? tabs.length - 1 : focusedIndex - 1;
                 break;

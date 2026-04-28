@@ -29,6 +29,10 @@ export class TabDirective implements AfterContentInit {
         this.elRef.nativeElement.querySelector<HTMLButtonElement>('button')?.setAttribute('tabindex', '-1');
     }
 
+    activate() {
+        this.elRef.nativeElement.querySelector<HTMLButtonElement>('button:not(.btn)')?.click();
+    }
+
     focus() {
         this.elRef.nativeElement.focus();
     }
