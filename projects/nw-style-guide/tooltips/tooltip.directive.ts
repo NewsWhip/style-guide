@@ -237,12 +237,15 @@ export class TooltipDirective implements OnInit, OnChanges, OnDestroy {
             this._createOverlay();
 
             if (this.closeOnOutsideClick) {
-                this._overlayRef.outsidePointerEvents().pipe(
-                    filter(_ => this._overlayRef?.hasAttached()),
-                    filter(event => event.target !== this._elRef.nativeElement),
-                    map(_ => false),
-                    takeUntil(this._destroyed$)
-                ).subscribe(v => this._outsideClick$.next(v));
+                this._overlayRef
+                    .outsidePointerEvents()
+                    .pipe(
+                        filter(_ => this._overlayRef?.hasAttached()),
+                        filter(event => event.target !== this._elRef.nativeElement),
+                        map(_ => false),
+                        takeUntil(this._destroyed$)
+                    )
+                    .subscribe(v => this._outsideClick$.next(v));
             }
         }
 
@@ -312,7 +315,9 @@ export class TooltipDirective implements OnInit, OnChanges, OnDestroy {
             );
         });
 
-        const outsideClick$: Observable<boolean> = this.closeOnOutsideClick ? this._outsideClick$.asObservable() : EMPTY;
+        const outsideClick$: Observable<boolean> = this.closeOnOutsideClick
+            ? this._outsideClick$.asObservable()
+            : EMPTY;
 
         /**
          * Merge all open and close events into a single stream that emits a boolean that indicates whether
