@@ -120,7 +120,7 @@ export class TooltipDirective implements OnInit, OnChanges, OnDestroy {
     @Output() nwHidden: EventEmitter<null> = new EventEmitter();
     @Output() nwClose: EventEmitter<null> = new EventEmitter();
 
-    private _overlayRef: OverlayRef;
+    private _overlayRef: OverlayRef | null = null;
     private _destroyed$: Subject<void> = new Subject();
     private _tooltipArrowSize: number = 5;
     private _manualToggleEvent$: Subject<boolean> = new Subject();
@@ -129,10 +129,10 @@ export class TooltipDirective implements OnInit, OnChanges, OnDestroy {
      * A subject that emits when the TooltipContainerComponent is destroyed
      */
     private _tooltipContainerDestroyed$: Subject<void> = new Subject();
+    private _outsideClick$: Subject<boolean> = new Subject();
 
     ngOnInit() {
         this._setInputDefaults();
-        this._createOverlay();
         this._subscribeToEvents();
 
         if (this.isOpen) {
@@ -142,11 +142,11 @@ export class TooltipDirective implements OnInit, OnChanges, OnDestroy {
         if (this.updatePositionOnAnimationFrame) {
             interval(0, animationFrameScheduler)
                 .pipe(
-                    filter(_ => this.updatePositionOnAnimationFrame && this._overlayRef.hasAttached()),
+                    filter(_ => this.updatePositionOnAnimationFrame && this._overlayRef?.hasAttached()),
                     takeUntil(this._destroyed$)
                 )
                 .subscribe(() => {
-                    this._overlayRef.updatePosition();
+                    this._overlayRef?.updatePosition();
                 });
         }
     }
@@ -159,11 +159,11 @@ export class TooltipDirective implements OnInit, OnChanges, OnDestroy {
         const shouldUpdateScrollStrategy: boolean =
             c.closeOnScroll?.previousValue !== c.closeOnScroll?.currentValue && !c.closeOnScroll.firstChange;
 
-        if (shouldUpdatePositionStrategy) {
+        if (shouldUpdatePositionStrategy && this._overlayRef) {
             this._updatePositionStrategy(this.placement);
         }
 
-        if (shouldUpdateScrollStrategy) {
+        if (shouldUpdateScrollStrategy && this._overlayRef) {
             this._updateScrollStrategy(this.closeOnScroll);
         }
 
@@ -190,7 +190,7 @@ export class TooltipDirective implements OnInit, OnChanges, OnDestroy {
      * Can be called manually from the exported directive to toggle the tooltip
      */
     toggle(): void {
-        const isOpen = this._overlayRef.hasAttached();
+        const isOpen = this._overlayRef?.hasAttached();
         this._manualToggleEvent$.next(!isOpen);
     }
 
@@ -230,6 +230,22 @@ export class TooltipDirective implements OnInit, OnChanges, OnDestroy {
     }
 
     private _open(): ComponentRef<TooltipContainerComponent> {
+        if (!this._overlayRef) {
+            /**
+             * Create the overlay the first time the tooltip is opened
+             */
+            this._createOverlay();
+
+            if (this.closeOnOutsideClick) {
+                this._overlayRef.outsidePointerEvents().pipe(
+                    filter(_ => this._overlayRef?.hasAttached()),
+                    filter(event => event.target !== this._elRef.nativeElement),
+                    map(_ => false),
+                    takeUntil(this._destroyed$)
+                ).subscribe(v => this._outsideClick$.next(v));
+            }
+        }
+
         if (!this._overlayRef.hasAttached()) {
             const portal = new ComponentPortal(TooltipContainerComponent, this._vcRef, this._createInjector());
             const ref = this._overlayRef.attach(portal);
@@ -239,7 +255,7 @@ export class TooltipDirective implements OnInit, OnChanges, OnDestroy {
     }
 
     private _close(): void {
-        if (this._overlayRef.hasAttached()) {
+        if (this._overlayRef?.hasAttached()) {
             this._overlayRef.detach();
             this.nwHidden.emit();
         }
@@ -283,7 +299,7 @@ export class TooltipDirective implements OnInit, OnChanges, OnDestroy {
     private _subscribeToEvents() {
         const openEvents$: Observable<boolean>[] = this.openEvents.map(eventName => {
             return fromEvent(this._elRef.nativeElement, eventName).pipe(
-                filter(_ => !this._overlayRef.hasAttached()),
+                filter(_ => !this._overlayRef?.hasAttached()),
                 map(_ => true)
             );
         });
@@ -291,19 +307,12 @@ export class TooltipDirective implements OnInit, OnChanges, OnDestroy {
         const closeEvents$: Observable<boolean>[] = this.closeEvents.map(eventName => {
             return fromEvent(this._elRef.nativeElement, eventName).pipe(
                 tap(_ => this._cancelDelayedOpen$.next()),
-                filter(_ => this._overlayRef.hasAttached()),
+                filter(_ => this._overlayRef?.hasAttached()),
                 map(_ => false)
             );
         });
 
-        const outsideClick$: Observable<boolean> = this.closeOnOutsideClick
-            ? this._overlayRef.outsidePointerEvents().pipe(
-                  filter(_ => this._overlayRef.hasAttached()),
-                  // The element that this tooltip is attached to should not be included as an outside click
-                  filter(event => event.target !== this._elRef.nativeElement),
-                  map(_ => false)
-              )
-            : EMPTY;
+        const outsideClick$: Observable<boolean> = this.closeOnOutsideClick ? this._outsideClick$.asObservable() : EMPTY;
 
         /**
          * Merge all open and close events into a single stream that emits a boolean that indicates whether
@@ -555,6 +564,6 @@ export class TooltipDirective implements OnInit, OnChanges, OnDestroy {
         this.hide();
         this._destroyed$.next();
         this._destroyed$.complete();
-        this._overlayRef.dispose();
+        this._overlayRef?.dispose();
     }
 }
