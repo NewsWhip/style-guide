@@ -70,7 +70,6 @@ export class TabsComponent implements OnInit, AfterContentInit, OnDestroy {
 
     getActiveStyles(): Record<string, string> {
         const tab: TabDirective = this._getActiveTab();
-
         if (tab) {
             const btn = tab.elRef.nativeElement.querySelector('button');
             return {
@@ -187,7 +186,7 @@ export class TabsComponent implements OnInit, AfterContentInit, OnDestroy {
     }
 
     private _getActiveTab(): TabDirective {
-        return this.tabs.filter(t => t.isActive)[0];
+        return this.tabs.filter(t => t.isActive())[0];
     }
 
     private _getScrollEl(): HTMLElement {
