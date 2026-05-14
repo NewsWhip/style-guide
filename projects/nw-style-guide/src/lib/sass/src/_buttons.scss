@@ -67,7 +67,7 @@ a.btn {
         #ffffff,
         #ffffff,
         variables.get-color('primary', dark),
-        variables.get-color('primary', light)
+        variables.get-color('primary')
     );
 }
 .btn-secondary {
