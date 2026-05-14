@@ -66,7 +66,7 @@ a.btn {
     @include buttons.button-variant(
         #ffffff,
         #ffffff,
-        variables.get-color('primary'),
+        variables.get-color('primary', dark),
         variables.get-color('primary', light)
     );
 }
