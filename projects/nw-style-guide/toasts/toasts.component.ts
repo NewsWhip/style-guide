@@ -1,12 +1,4 @@
-import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    ElementRef,
-    TemplateRef,
-    inject
-} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, TemplateRef, inject } from '@angular/core';
 import { IToast } from './IToast';
 import { Toast } from './Toast';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
@@ -14,7 +6,6 @@ import { NgClass, NgTemplateOutlet } from '@angular/common';
 
 @Component({
     selector: 'nw-toasts',
-    host: { popover: 'manual' },
     template: `
         <div class="toasts-container">
             @for (toast of toasts; track toast) {
@@ -55,16 +46,11 @@ import { NgClass, NgTemplateOutlet } from '@angular/common';
     changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [NgClass, NgTemplateOutlet]
 })
-export class ToastsComponent implements AfterViewInit {
+export class ToastsComponent {
     private _cdRef = inject(ChangeDetectorRef);
     private _domSanitizer = inject(DomSanitizer);
-    private _elRef = inject<ElementRef<HTMLElement>>(ElementRef);
 
     public toasts: Toast[] = [];
-
-    ngAfterViewInit() {
-        this._elRef.nativeElement.showPopover();
-    }
 
     isTemplateRef(value: string | TemplateRef<any>): boolean {
         return typeof value !== 'string';
@@ -97,12 +83,6 @@ export class ToastsComponent implements AfterViewInit {
 
         this.toasts.push(_toast);
         this._cdRef.detectChanges();
-
-        // Re-promote into the top layer so toasts sit above any dialog/popover
-        // opened after the toasts host was first shown.
-        const el = this._elRef.nativeElement;
-        el.hidePopover();
-        el.showPopover();
 
         if (_toast.autoDismiss) {
             setTimeout(() => {

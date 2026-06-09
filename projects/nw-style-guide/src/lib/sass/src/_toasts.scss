@@ -1,13 +1,5 @@
 @use './variables';
 
-nw-toasts {
-    inset: unset;
-    margin: 0;
-    border: 0;
-    background: transparent;
-    padding: 0;
-}
-
 .toasts-container {
     display: flex;
     flex-direction: column;
