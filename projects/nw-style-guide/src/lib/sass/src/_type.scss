@@ -274,6 +274,7 @@ blockquote {
 }
 
 .nw-link-inline {
+    text-decoration: underline;
     &:visited,
     &.visited {
         color: variables.$text-color-secondary;
