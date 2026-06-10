@@ -283,9 +283,11 @@ input[type='search'] {
                 opacity: 0.5;
             }
         }
-        &:focus {
+
+        &:focus-visible {
             ~ label:before {
-                @include forms.form-control-focus(variables.$input-border-focus, 2px);
+                outline: 2px solid variables.get-color('primary', base);
+                outline-offset: 2px;
             }
         }
     }
