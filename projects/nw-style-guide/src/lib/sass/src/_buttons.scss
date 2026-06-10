@@ -175,6 +175,9 @@ a.btn {
     &:hover {
         text-decoration: underline;
     }
+    &:active {
+        border: none;
+    }
 }
 
 // Button Sizes
