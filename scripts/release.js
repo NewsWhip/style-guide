@@ -5,7 +5,7 @@ import * as utils from '../utils.js';
 
 const ALLOWED_PRERELEASE_TAGS = ['alpha', 'beta', 'rc'];
 
-const resolveDistTag = (version) => {
+const resolveDistTag = version => {
     const prerelease = version.split('-')[1];
     if (!prerelease) return null;
 
@@ -22,9 +22,7 @@ const resolveDistTag = (version) => {
 const run = async () => {
     await import('./build.js');
 
-    const { version } = JSON.parse(
-        fs.readFileSync(path.join(utils.distPath, 'package.json'), 'utf8')
-    );
+    const { version } = JSON.parse(fs.readFileSync(path.join(utils.distPath, 'package.json'), 'utf8'));
     const tag = resolveDistTag(version);
     const tagFlag = tag ? `--tag ${tag}` : '';
 
