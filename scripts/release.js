@@ -1,10 +1,32 @@
 import { execSync } from 'child_process';
+import fs from 'fs';
+import path from 'path';
 import * as utils from '../utils.js';
+
+const ALLOWED_PRERELEASE_TAGS = ['alpha', 'beta', 'rc'];
+
+const resolveDistTag = version => {
+    const prerelease = version.split('-')[1];
+    if (!prerelease) return null;
+
+    const identifier = prerelease.split('.')[0];
+    if (!ALLOWED_PRERELEASE_TAGS.includes(identifier)) {
+        throw new Error(
+            `Unrecognised pre-release identifier "${identifier}" in version "${version}". ` +
+                `Expected one of: ${ALLOWED_PRERELEASE_TAGS.join(', ')}.`
+        );
+    }
+    return identifier;
+};
 
 const run = async () => {
     await import('./build.js');
 
-    process.stdout.write('Publishing package \n');
+    const { version } = JSON.parse(fs.readFileSync(path.join(utils.distPath, 'package.json'), 'utf8'));
+    const tag = resolveDistTag(version);
+    const tagFlag = tag ? `--tag ${tag}` : '';
+
+    process.stdout.write(`Publishing ${version} with dist-tag "${tag ?? 'latest'}" \n`);
 
     try {
         /**
@@ -14,7 +36,7 @@ const run = async () => {
          * ref: https://nodejs.org/api/child_process.html#optionsstdio
          * ref: https://stackoverflow.com/a/31104898/1128290
          */
-        execSync(`npm publish ${utils.distPath}`, {
+        execSync(`npm publish ${utils.distPath} ${tagFlag}`, {
             stdio: 'inherit'
         });
     } catch (err) {
