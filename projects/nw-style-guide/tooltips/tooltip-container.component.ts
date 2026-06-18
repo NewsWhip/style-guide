@@ -18,7 +18,7 @@ import { NgClass, NgTemplateOutlet } from '@angular/common';
                         (click)="close.emit()"
                         class="btn btn-ghost-alt btn-sm btn-close close-button"></button>
                 }
-                @if (isTemplateRef) {
+                @if (isTemplateRef(data.tooltip)) {
                     <ng-container *ngTemplateOutlet="data.tooltip; context: data.templateRefContext"></ng-container>
                 } @else {
                     <div [outerHTML]="data.tooltip"></div>
@@ -33,11 +33,8 @@ export class TooltipContainerComponent {
     data = inject<ITooltipData>(TOOLTIP_CONTEXT_TOKEN);
 
     public close: EventEmitter<void> = new EventEmitter();
-    public isTemplateRef: boolean = false;
 
-    constructor() {
-        const data = this.data;
-
-        this.isTemplateRef = data.tooltip instanceof TemplateRef;
+    isTemplateRef(value: unknown): value is TemplateRef<unknown> {
+        return value instanceof TemplateRef;
     }
 }
