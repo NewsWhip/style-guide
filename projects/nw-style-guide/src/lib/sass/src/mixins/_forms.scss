@@ -230,6 +230,47 @@
     }
 }
 
+@mixin input-group {
+    display: flex;
+    align-items: center;
+    border: 1px solid variables.$input-border;
+    border-radius: variables.$input-border-radius;
+    background-color: variables.$input-bg;
+    transition:
+        border-color ease-in-out 0.15s,
+        box-shadow ease-in-out 0.15s;
+
+    &:focus-within {
+        @include form-control-focus;
+    }
+
+    > .form-control {
+        flex: 1;
+        min-width: 0;
+        height: auto;
+        border: none;
+        background: transparent;
+        box-shadow: none;
+
+        &:focus {
+            box-shadow: none;
+        }
+    }
+
+    > .input-group-icon {
+        display: flex;
+        align-items: center;
+        padding: 0 8px 0 variables.$padding-base-horizontal;
+        color: variables.$text-color-secondary;
+        flex-shrink: 0;
+    }
+
+    > .input-group-btn {
+        padding: 3px;
+        flex-shrink: 0;
+    }
+}
+
 @mixin switch($height) {
     $round-button-size: $height - 6;
     $width: ($round-button-size * 2) + 6;
