@@ -192,6 +192,14 @@ input[type='search'] {
 //
 // Note that as of 9.3, iOS doesn't support `week`.
 
+// Input groups
+//
+// Combines a text input with an adjacent button (and an optional leading icon)
+// into a single bordered row. The button appears inside the border at the end.
+.input-group {
+    @include forms.input-group;
+}
+
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
     input[type='date'],
     input[type='time'],
