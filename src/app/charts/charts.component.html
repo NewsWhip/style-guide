@@ -100,8 +100,8 @@
                     <path
                         class="hover-path nw-slot-1"
                         [nw-path]="[
-                            [mainScaleHoverCoordinates[0], yDomain[0]],
-                            [mainScaleHoverCoordinates[0], yDomain[1]]
+                            [mainScaleHoverCoordinates[0].valueOf(), yDomain[0]],
+                            [mainScaleHoverCoordinates[0].valueOf(), yDomain[1]]
                         ]"
                         [xDomain]="xDomain"
                         [yDomain]="yDomain"
@@ -148,7 +148,7 @@
 
                 <path
                     class="random"
-                    [nw-path]="randomData"
+                    [nw-path]="$any(randomData)"
                     [xDomain]="xDomain"
                     [yDomain]="randomYDomain"
                     [curve]="randomLineCurve.curve"></path>
@@ -195,9 +195,9 @@
 
                 @if (!randomAsBars.value) {
                     <ng-container>
-                        @for (point of randomData; track circleTrackIndex($index, point)) {
+                        @for (point of randomData; track circleTrackIndex($index)) {
                             <circle
-                                [nw-circle]="point"
+                                [nw-circle]="$any(point)"
                                 [xDomain]="xDomain"
                                 [yDomain]="randomYDomain"
                                 r="5"
@@ -211,7 +211,7 @@
 
                 @if (randomAsBars.value) {
                     <ng-container>
-                        @for (point of randomData; track circleTrackIndex($index, point)) {
+                        @for (point of randomData; track circleTrackIndex($index)) {
                             <rect
                                 class="nw-bar"
                                 [nw-bar]="point"
@@ -228,7 +228,7 @@
 
                 @if (showForeignObject.value) {
                     <foreignObject
-                        [nw-foreign-object]
+                        nw-foreign-object
                         [point]="[1545095807739, 60000]"
                         [xDomain]="xDomain"
                         [yDomain]="yDomain"
