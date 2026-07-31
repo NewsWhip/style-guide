@@ -135,7 +135,9 @@ export class ChartsComponent implements OnInit {
     ];
 
     public metricNames: string[] = [];
-    public form: FormGroup;
+    public form: FormGroup<{
+        selectedMetrics: FormArray;
+    }>;
     public showBrush: FormControl = new FormControl(false);
     public showTooltip: FormControl = new FormControl(true);
     public brushType: FormControl = new FormControl('');
@@ -228,7 +230,7 @@ export class ChartsComponent implements OnInit {
         return item[0] + item[1];
     }
 
-    circleTrackIndex(index: number, item: [number, number]) {
+    circleTrackIndex(index: number) {
         return index;
     }
 

@@ -385,7 +385,7 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
         this._focusInput();
     }
 
-    onListItemTab(event: KeyboardEvent, index: number) {
+    onListItemTab(event: Event, index: number) {
         const { li, children } = this._focusableChildren(index);
         const lastFocusableChild = children[children.length - 1] ?? li;
 
@@ -399,7 +399,7 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
         (next.children[0] ?? next.li).focus();
     }
 
-    onListItemShiftTab(event: KeyboardEvent, index: number) {
+    onListItemShiftTab(event: Event, index: number) {
         const { li, children } = this._focusableChildren(index);
         const firstFocusableChild = children[0] ?? li;
 
