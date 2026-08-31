@@ -13,9 +13,13 @@ import { NgClass, NgTemplateOutlet } from '@angular/common';
             @if (data.withArrow) {
                 <div class="tooltip-arrow"></div>
             }
-            <!-- Carries an id so that a dialog panel can point aria-describedby at it -->
+            <!--
+                Carries an id so that a dialog panel can point aria-describedby at it, and a class when there is a
+                close button, so that the styles can reserve room for one
+            -->
             <div
                 class="tooltip-inner"
+                [class.with-close]="data.withClose"
                 [id]="data.id + '-content'">
                 @if (isTemplateRef) {
                     <ng-container *ngTemplateOutlet="data.tooltip; context: data.templateRefContext"></ng-container>

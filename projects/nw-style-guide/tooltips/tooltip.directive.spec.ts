@@ -348,6 +348,27 @@ describe('callouts', () => {
         expect(closeBtn).toBeTruthy();
     }));
 
+    /**
+     * The close button is positioned over `.tooltip-inner`, so the styles reserve room for it off this class. Without
+     * it the button lands on top of whatever is in the top right of the content
+     */
+    it('should flag the content as holding a close button, so that room is reserved for it', fakeAsync(() => {
+        comp.withClose = true;
+        fixture.detectChanges();
+        const trigger = de.query(By.directive(NwPopoverDirective)).nativeElement;
+        fireEvent(trigger, 'click');
+        tick(tickWaitMs);
+        expect(getTooltipEl().querySelector('.tooltip-inner').classList).toContain('with-close');
+    }));
+
+    it('should not reserve room for a close button when there is none', fakeAsync(() => {
+        fixture.detectChanges();
+        const trigger = de.query(By.directive(NwPopoverDirective)).nativeElement;
+        fireEvent(trigger, 'click');
+        tick(tickWaitMs);
+        expect(getTooltipEl().querySelector('.tooltip-inner').classList).not.toContain('with-close');
+    }));
+
     it('should emit an event when the close button is clicked', fakeAsync(() => {
         comp.withClose = true;
         fixture.detectChanges();
