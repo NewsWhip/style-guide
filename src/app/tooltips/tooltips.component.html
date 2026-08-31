@@ -370,9 +370,10 @@
         <h4>Directives</h4>
 
         <p>
-            Two directives, each with its own selector, sharing an abstract base. The base holds positioning, events and
-            lifecycle; each subclass decides what the callout <em>means</em> to assistive technology, and neither can
-            reach the other's behaviour. Pick by what the content is - see the FAQ below.
+            Two directives, each with its own selector. They share an abstract base internally - it holds positioning,
+            events and lifecycle, while each subclass decides what the callout <em>means</em> to assistive technology -
+            but the base is not part of the public API, so these two are all you import. Pick by what the content is,
+            per the FAQ below.
         </p>
 
         <h5><code>NwTooltipDirective</code></h5>
@@ -397,12 +398,6 @@
             announces itself by taking focus, which is trapped there until it closes - on Escape, on the close button,
             or on a click outside - and then returns to where it came from</small
         >
-
-        <h5><code>NwCalloutBaseDirective</code></h5>
-        <p>
-            The abstract base both extend. It has no selector and cannot be attached to an element; it is exported so
-            that consumers can type against it where code handles either kind of callout.
-        </p>
 
         <h5>Shared properties</h5>
 
@@ -515,7 +510,6 @@
 
         <h5>Types and interfaces</h5>
         <app-code [snippet]="snippets.placementType"></app-code>
-        <app-code [snippet]="snippets.calloutTriggers"></app-code>
 
         <h4>Troubleshooting</h4>
 
