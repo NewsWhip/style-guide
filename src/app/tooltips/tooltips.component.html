@@ -33,35 +33,64 @@
 
 @if (selectedTab === 'design') {
     <div class="tab-content">
-        <h4>Tooltip variations</h4>
+        <h4>Which one do I use?</h4>
+
+        <p>
+            These are two directives, not one with two names. A <code>nwTooltip</code> is a
+            <strong>description</strong> of the element it sits on - short supplementary text, opened by hover or
+            keyboard focus, never focusable. A <code>nwPopover</code> is a <strong>disclosure</strong> the user opens -
+            a small dialog that can hold formatted content, links and buttons, which takes focus and traps it while
+            open.
+        </p>
+        <p>
+            Pick by what the content <em>is</em>, not by the open event you want: every event and timing on either one
+            can be rebound. A panel with a link in it is a <code>nwPopover</code> even if it looks like a tooltip. See
+            the
+            <a
+                [routerLink]="['.']"
+                [queryParams]="{ section: 'api' }"
+                >API tab</a
+            >
+            for the full reasoning.
+        </p>
+
+        <h4>Appearance</h4>
+
+        <p>Both directives share one container, in a dark default and a light variant.</p>
 
         <div style="padding-bottom: 120px; display: flex">
             <div [style.width.px]="316">
                 <span
-                    [nwPopover]="tooltipText"
+                    [nwTooltip]="tooltipText"
                     [placement]="'bottom-start'"
                     [openEvents]="[]"
                     [closeEvents]="[]"
                     [autoFlip]="false"
                     [isOpen]="true"
+                    [withAriaDescription]="false"
                     >Dark (default)</span
                 >
             </div>
             <div [style.width.px]="316">
                 <span
-                    [nwPopover]="tooltipText"
+                    [nwTooltip]="tooltipText"
                     [placement]="'bottom-start'"
                     [containerClass]="'tooltip-light'"
                     [openEvents]="[]"
                     [closeEvents]="[]"
                     [autoFlip]="false"
                     [isOpen]="true"
+                    [withAriaDescription]="false"
                     >Light</span
                 >
             </div>
         </div>
 
-        <h4>Basic examples</h4>
+        <app-code [snippet]="snippets.variations"></app-code>
+
+        <hr />
+
+        <h4>Tooltips</h4>
 
         <div class="examples">
             <ng-container *ngTemplateOutlet="basicExampleTooltipTmpl; context: { placement: 'top' }"></ng-container>
@@ -82,77 +111,44 @@
             <br />
             <br />
             <p>
-                Tooltips (using the <code>nwTooltip</code> selector) will open on mouseenter and close on mouseleave.
-                There is also a default delay of 500ms.
+                A tooltip opens on <code>mouseenter</code> and closes on <code>mouseleave</code>, after a default delay
+                of 500ms. It also opens when its host is focused from the keyboard, which is the keyboard equivalent of
+                hovering - so the host has to be something that can hold focus. Try tabbing to the buttons above.
+            </p>
+            <p>
+                On a screen narrower than the <code>breakpoint</code> input (767px by default) there is no hover to open
+                it, so it opens on tap instead and is dismissed by tapping elsewhere. It is still a tooltip - only its
+                events change.
             </p>
             <app-code [snippet]="snippets.basicTooltip"></app-code>
         </div>
 
-        <hr />
+        <h5>Customising close events</h5>
 
-        <div
-            class="examples"
-            [style.marginTop.px]="16">
-            <ng-container *ngTemplateOutlet="basicExamplePopoverTmpl; context: { placement: 'top' }"></ng-container>
-            <ng-container *ngTemplateOutlet="basicExamplePopoverTmpl; context: { placement: 'right' }"></ng-container>
-            <ng-container *ngTemplateOutlet="basicExamplePopoverTmpl; context: { placement: 'left' }"></ng-container>
-            <ng-container *ngTemplateOutlet="basicExamplePopoverTmpl; context: { placement: 'bottom' }"></ng-container>
+        <p>
+            Although not common, there are times when we want a tooltip to show on a disabled item but not be dismissed
+            on click (which is the default behaviour). This is largely because of our default delay of 500ms. If the
+            user clicks the element to which the tooltip is attached before the 500ms passes they won't see the tooltip
+            which is, more than likely, explaining why the element is disabled.
+        </p>
+        <p>
+            We can achieve the desired behaviour by specifying the events we want to close the tooltip, using the
+            <code>closeEvents</code> input.
+        </p>
 
-            <ng-template
-                #basicExamplePopoverTmpl
-                let-placement="placement">
-                <button
-                    class="btn btn-md btn-primary"
-                    [nwPopover]="tooltipText"
-                    [placement]="placement">
-                    Popover on {{ placement }}
-                </button>
-            </ng-template>
-            <br />
-            <br />
-            <p>
-                Tooltips (using the <code>nwPopover</code> selector) will open and close on click. There is no default
-                delay.
-            </p>
-            <app-code [snippet]="snippets.basicPopover"></app-code>
-        </div>
-        <hr />
+        <button
+            class="btn btn-md btn-primary disabled"
+            style="margin: 16px 0"
+            nwTooltip="This feature is disabled and this tooltip will not be dismissed on click"
+            placement="right"
+            [delay]="0"
+            [closeEvents]="['mouseleave']">
+            Disabled element
+        </button>
 
-        <h4>Popover with close button</h4>
-        <div
-            class="examples"
-            [style.margin]="'16px 0'">
-            <button
-                class="btn btn-md btn-primary"
-                [nwPopover]="closeBtnTmpl"
-                [closeOnOutsideClick]="true"
-                placement="bottom-start"
-                [withClose]="true">
-                Default popover with close button
-            </button>
+        <app-code [snippet]="snippets.disabledExample"></app-code>
 
-            <button
-                class="btn btn-md btn-primary"
-                [nwPopover]="closeBtnTmpl"
-                [closeOnOutsideClick]="true"
-                placement="bottom-start"
-                containerClass="tooltip-light"
-                [withClose]="true">
-                Light popover with close button
-            </button>
-
-            <ng-template #closeBtnTmpl>
-                <p>
-                    <strong>Popover with close button</strong>
-                </p>
-                <small>The close button is always absolutely positioned in the top right of the popover</small>
-            </ng-template>
-        </div>
-
-        <app-code [snippet]="snippets.withCloseButton"></app-code>
-        <hr />
-
-        <h4>Live example</h4>
+        <h5>Live example</h5>
 
         <div style="display: flex">
             <div class="live-example-form">
@@ -173,8 +169,9 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Content (plaintext or HTML)</label>
+                        <label for="live-example-content">Content (plaintext or HTML)</label>
                         <textarea
+                            id="live-example-content"
                             class="form-control"
                             formControlName="tooltip"
                             placeholder="Tooltip text"
@@ -182,8 +179,9 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Placement</label>
+                        <label for="live-example-placement">Placement</label>
                         <select
+                            id="live-example-placement"
                             formControlName="placement"
                             class="form-control">
                             <option [value]="'top'">top</option>
@@ -236,52 +234,182 @@
         <ng-template #tooltipTmplRef>
             <div [innerHTML]="form.get('tooltip').value"></div>
         </ng-template>
+
+        <p>
+            <small
+                >Content passed as a <code>TemplateRef</code> cannot be described in advance, so it is only exposed
+                while the tooltip is open. Keep anything focusable out of it - that is what a popover is for.</small
+            >
+        </p>
+
         <hr />
 
-        <h4>Example of customising close events</h4>
+        <h4>Popovers</h4>
+
+        <div
+            class="examples"
+            [style.marginTop.px]="16">
+            <ng-container *ngTemplateOutlet="basicExamplePopoverTmpl; context: { placement: 'top' }"></ng-container>
+            <ng-container *ngTemplateOutlet="basicExamplePopoverTmpl; context: { placement: 'right' }"></ng-container>
+            <ng-container *ngTemplateOutlet="basicExamplePopoverTmpl; context: { placement: 'left' }"></ng-container>
+            <ng-container *ngTemplateOutlet="basicExamplePopoverTmpl; context: { placement: 'bottom' }"></ng-container>
+
+            <ng-template
+                #basicExamplePopoverTmpl
+                let-placement="placement">
+                <button
+                    class="btn btn-md btn-primary"
+                    [nwPopover]="tooltipText"
+                    [placement]="placement">
+                    Popover on {{ placement }}
+                </button>
+            </ng-template>
+            <br />
+            <br />
+            <p>
+                A popover opens and closes on click, with no delay. From the keyboard that means Enter or Space, which
+                the browser already turns into a <code>click</code> on a <code>button</code> host - so there is nothing
+                to add. Escape closes it, as does the close button and, when enabled, a click outside.
+            </p>
+            <app-code [snippet]="snippets.basicPopover"></app-code>
+        </div>
+
+        <h5>With a close button</h5>
+        <div
+            class="examples"
+            [style.margin]="'16px 0'">
+            <button
+                class="btn btn-md btn-primary"
+                [nwPopover]="closeBtnTmpl"
+                [closeOnOutsideClick]="true"
+                placement="bottom-start"
+                [withClose]="true">
+                Default popover with close button
+            </button>
+
+            <button
+                class="btn btn-md btn-primary"
+                [nwPopover]="closeBtnTmpl"
+                [closeOnOutsideClick]="true"
+                placement="bottom-start"
+                containerClass="tooltip-light"
+                [withClose]="true">
+                Light popover with close button
+            </button>
+
+            <ng-template #closeBtnTmpl>
+                <p>
+                    <strong>Popover with close button</strong>
+                </p>
+                <small>The close button is always absolutely positioned in the top right of the popover</small>
+            </ng-template>
+        </div>
+
+        <app-code [snippet]="snippets.withCloseButton"></app-code>
+
+        <h5>Keyboard behaviour</h5>
 
         <p>
-            Although not common, there are times when we want a tooltip to show on a disabled item but not be dismissed
-            on click (which is the default behaviour). This is largely because of our default delay of 500ms. If the
-            user clicks the element to which the tooltip is attached before the 500ms passes they won't see the tooltip
-            which is, more than likely, explaining why the element is disabled.
+            Opening a popover from its host moves focus into the panel, which is what announces it and lets long content
+            be read at the user's own pace. Where the panel has something tabbable in it focus is
+            <strong>trapped</strong> there until it closes, and then returns to the trigger. Where it has nothing
+            tabbable there is nothing to trap, so tabbing out simply closes it and carries on from the trigger - a trap
+            around inert content would hold focus on its own hidden anchor, which reads as focus disappearing.
         </p>
         <p>
-            We can achieve the desired behaviour by specifying the events we want to close the tooltip, using the
-            <code>closeEvents</code> input.
+            Open each of these with the keyboard and tab through it. Note that a popover opened programmatically - from
+            the <code>isOpen</code> input or <code>show()</code> - never steals focus, only one the user opened from the
+            host.
         </p>
 
-        <button
-            class="btn btn-md btn-primary disabled"
-            style="margin: 16px 0"
-            nwTooltip="This feature is disabled and this tooltip will not be dismissed on click"
-            placement="right"
-            [delay]="0"
-            [closeEvents]="['mouseleave']">
-            Disabled element
-        </button>
+        <div
+            class="examples"
+            [style.margin]="'16px 0'">
+            <button
+                class="btn btn-md btn-primary"
+                [nwPopover]="keyboardTmpl"
+                [closeOnOutsideClick]="true"
+                placement="bottom-start"
+                [withClose]="true">
+                Popover with focusable content
+            </button>
 
-        <app-code [snippet]="snippets.disabledExample"></app-code>
+            <button
+                class="btn btn-md btn-primary"
+                [nwPopover]="'Nothing in here can hold focus, so tabbing out closes the popover and moves on.'"
+                [closeOnOutsideClick]="true"
+                placement="bottom-start">
+                Popover with no focusable content
+            </button>
+
+            <ng-template #keyboardTmpl>
+                <p>
+                    <strong>Focus is trapped here</strong>
+                </p>
+                <p>
+                    <a
+                        class="nw-link nw-link-tertiary"
+                        href="https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/"
+                        target="_blank"
+                        >The dialog pattern</a
+                    >
+                </p>
+                <button class="btn btn-sm btn-ghost">A button</button>
+            </ng-template>
+        </div>
+
+        <app-code [snippet]="snippets.keyboardPopover"></app-code>
     </div>
 }
 
 @if (selectedTab === 'api') {
     <div class="tab-content">
-        <h3>API reference for tooltips / popover</h3>
+        <h3>API reference for tooltips and popovers</h3>
         <app-code [snippet]="snippets.import"></app-code>
 
         <h4>Directives</h4>
 
-        <h5><code>TooltipDirective</code></h5>
-        <p>Directive that attaches a tooltip / popover to the host element.</p>
-        <p>Selector: <code>[nwTooltip],[nwPopover]</code></p>
-        <p>Exported as: <code>nw-tooltip,nw-popover</code></p>
+        <p>
+            Two directives, each with its own selector, sharing an abstract base. The base holds positioning, events and
+            lifecycle; each subclass decides what the callout <em>means</em> to assistive technology, and neither can
+            reach the other's behaviour. Pick by what the content is - see the FAQ below.
+        </p>
+
+        <h5><code>NwTooltipDirective</code></h5>
+        <p>Attaches a description of the host element to it: short supplementary text, opened by hover or focus.</p>
+        <p>Selector: <code>[nwTooltip]</code></p>
+        <p>Exported as: <code>nw-tooltip</code></p>
         <small
-            >This directive can be invoked by using the <code>nwTooltip</code> or <code>nwPopover</code> attributes. The
-            only differences between using these attributes are the default values of certain properties, e.g. `delay`
-            and open and close events</small
+            >The content reaches assistive technology through the host's <code>aria-describedby</code> whether the
+            tooltip is open or not, which matters because a screen reader user cannot hover to open it. A tooltip never
+            takes focus, so anything in it that could be operated would be unreachable</small
         >
-        <h5>Properties</h5>
+
+        <h5><code>NwPopoverDirective</code></h5>
+        <p>
+            Attaches a disclosure the user opens: a small dialog that can hold formatted content, links and buttons,
+            toggled by clicking the host.
+        </p>
+        <p>Selector: <code>[nwPopover]</code></p>
+        <p>Exported as: <code>nw-popover</code></p>
+        <small
+            >Exposed as <code>role="dialog"</code>, named after its trigger and described by its own content. It
+            announces itself by taking focus, which is trapped there until it closes - on Escape, on the close button,
+            or on a click outside - and then returns to where it came from</small
+        >
+
+        <h5><code>NwCalloutBaseDirective</code></h5>
+        <p>
+            The abstract base both extend. It has no selector and cannot be attached to an element; it is exported so
+            that consumers can type against it where code handles either kind of callout.
+        </p>
+
+        <h5>Shared properties</h5>
+
+        <p>
+            Inherited by both directives. The two default columns are where the choice of selector shows up: the same
+            input, a different starting point.
+        </p>
 
         <table class="table table-bordered">
             <thead>
@@ -297,8 +425,51 @@
             </thead>
 
             <tbody>
-                @for (row of propertiesTable; track row) {
+                @for (row of sharedPropertiesTable; track row) {
                     <ng-container *ngTemplateOutlet="inputTableTowTmpl; context: { values: row }"></ng-container>
+                }
+            </tbody>
+        </table>
+
+        <small
+            >The <code>nwTooltip</code> defaults above are its hover defaults. Below the <code>breakpoint</code> input a
+            tooltip switches to the tap-to-open set instead: <code>delay</code> 0, <code>openEvents</code> and
+            <code>closeEvents</code> <code>["click"]</code>, <code>closeOnScroll</code> false and
+            <code>pointerEvents</code> auto. Anything you bind yourself wins over both.</small
+        >
+
+        <h5><code>nwTooltip</code> only</h5>
+
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Default value</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @for (row of tooltipPropertiesTable; track row) {
+                    <ng-container *ngTemplateOutlet="singleDefaultRowTmpl; context: { values: row }"></ng-container>
+                }
+            </tbody>
+        </table>
+
+        <h5><code>nwPopover</code> only</h5>
+
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Default value</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @for (row of popoverPropertiesTable; track row) {
+                    <ng-container *ngTemplateOutlet="singleDefaultRowTmpl; context: { values: row }"></ng-container>
                 }
             </tbody>
         </table>
@@ -318,27 +489,33 @@
                     <td>
                         <code class="light">{{ 'show(): void' }}</code>
                     </td>
-                    <td>Can be called manually from the exported directive to open the tooltip</td>
+                    <td>Can be called manually from the exported directive to open the callout</td>
                 </tr>
 
                 <tr>
                     <td>
                         <code class="light">{{ 'hide(): void' }}</code>
                     </td>
-                    <td>Can be called manually from the exported directive to close the tooltip</td>
+                    <td>Can be called manually from the exported directive to close the callout</td>
                 </tr>
 
                 <tr>
                     <td>
                         <code class="light">{{ 'toggle(): void' }}</code>
                     </td>
-                    <td>Can be called manually from the exported directive to toggle the tooltip</td>
+                    <td>Can be called manually from the exported directive to toggle the callout</td>
                 </tr>
             </tbody>
         </table>
 
+        <small
+            >All three are inherited from the base, and available on either directive. Note that <code>show()</code> on
+            a popover does not move focus into it - only an open the user triggered from the host does that</small
+        >
+
         <h5>Types and interfaces</h5>
         <app-code [snippet]="snippets.placementType"></app-code>
+        <app-code [snippet]="snippets.calloutTriggers"></app-code>
 
         <h4>Troubleshooting</h4>
 
@@ -361,17 +538,67 @@
         </app-faq>
 
         <app-faq>
-            <p question>Do I use the nwTooltip selector or the nwPopover selector?</p>
+            <p question>How do I tweak the position of the tooltip?</p>
+            <p answer>You can supply a containerClass input which you can apply styles against.</p>
+        </app-faq>
+
+        <app-faq>
+            <p question>Which selector do I use, and what does it change?</p>
             <p answer>
-                The answer depends on your desired behaviour. The only differences between the two selectors are the
-                default values of the inputs. Consult the properties table above to the differences between the default
-                values.
+                <code>nwTooltip</code> is a <strong>description</strong> of the element it sits on: a short piece of
+                supplementary text. It is exposed through the host's <code>aria-describedby</code>, opens on hover or
+                keyboard focus, never takes focus, and must not contain anything focusable.<br /><br />
+                <code>nwPopover</code> is a <strong>disclosure</strong> the user opens: a panel that can hold formatted
+                content, links and buttons. It is exposed as <code>role="dialog"</code>, named after its trigger and
+                described by its own content, and announces itself by taking focus - which is trapped there until it
+                closes, at which point focus returns to the trigger.<br /><br />
+                Both are dismissed with the Escape key. The selector is what decides all of this, so pick it by what the
+                content is, not by the default event you want - every event and timing on either one can be rebound. A
+                panel with a link in it is a <code>nwPopover</code> even if it looks like a tooltip.<br /><br />
+                They are separate directives, so the inputs are not interchangeable:
+                <code>withClose</code> and <code>closeOnOutsideClick</code> exist on <code>nwPopover</code> only, and
+                <code>withAriaDescription</code>, <code>showOnFocus</code> and <code>breakpoint</code> on
+                <code>nwTooltip</code> only. Binding one on the wrong host is a template error rather than a silent
+                no-op.
             </p>
         </app-faq>
 
         <app-faq>
-            <p question>How do I tweak the position of the tooltip?</p>
-            <p answer>You can supply a containerClass input which you can apply styles against.</p>
+            <p question>What do I need to do to make the content available to screen readers?</p>
+            <p answer>
+                Nothing - the directive does it. Do not copy the content into an <code>aria-label</code> on the host
+                element: it would be announced twice, and the two copies drift apart over time. Use
+                <code>aria-label</code> only where it names the control rather than describing it, e.g. an icon button,
+                and set <code>[withAriaDescription]="false"</code> where the host is already labelled with the same
+                text.
+            </p>
+        </app-faq>
+
+        <app-faq>
+            <p question>My tooltip never appears for keyboard users. Why?</p>
+            <p answer>
+                A hover-opened tooltip also opens when its host is focused from the keyboard, but only an element that
+                can hold focus can be focused. A tooltip on a <code>span</code>, <code>div</code>, <code>i</code> or
+                <code>svg</code> element will never open for a keyboard user. If the host is a control, make it a
+                <code>button</code>. If it is not - if the tooltip only repeats text that is already on screen - then
+                the description the directive adds for screen readers is all that is needed.<br /><br />
+                Do not reach for a keydown handler on Enter or Space. Those are the host control's own activation keys,
+                and on a <code>button</code> the browser already turns them into a <code>click</code>, which is what
+                opens a popover.
+            </p>
+        </app-faq>
+
+        <app-faq>
+            <p question>How much content should a tooltip hold?</p>
+            <p answer>
+                A string should be one sentence of supplementary text. It is added to the accessibility tree
+                permanently, so it is announced every time the host is focused - a paragraph there is read out in full
+                to someone who only wanted to know what a button does, and some users switch descriptions off entirely.
+                Never put anything essential in one.<br /><br />
+                Anything longer, or anything with structure, belongs in a <code>nwPopover</code>, so that the user asks
+                for it. A popover is not described in advance: opening it moves focus to the panel, which is what
+                announces it and lets it be read at the user's own pace.
+            </p>
         </app-faq>
     </div>
 }
@@ -386,5 +613,17 @@
         <td [innerHTML]="values[1]"></td>
         <td>{{ values[2] }}</td>
         <td>{{ values[3] }}</td>
+    </tr>
+</ng-template>
+
+<ng-template
+    #singleDefaultRowTmpl
+    let-values="values">
+    <tr>
+        <td>
+            <code class="light">{{ values[0] }}</code>
+        </td>
+        <td [innerHTML]="values[1]"></td>
+        <td>{{ values[2] }}</td>
     </tr>
 </ng-template>

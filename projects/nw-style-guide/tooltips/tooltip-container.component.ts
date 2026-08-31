@@ -8,20 +8,29 @@ import { NgClass, NgTemplateOutlet } from '@angular/common';
     template: `
         <div
             class="tooltip"
+            [id]="data.id"
             [ngClass]="data.containerClass">
             @if (data.withArrow) {
                 <div class="tooltip-arrow"></div>
             }
-            <div class="tooltip-inner">
-                @if (data.withClose) {
-                    <button
-                        (click)="close.emit()"
-                        class="btn btn-ghost-alt btn-sm btn-close close-button"></button>
-                }
+            <!-- Carries an id so that a dialog panel can point aria-describedby at it -->
+            <div
+                class="tooltip-inner"
+                [id]="data.id + '-content'">
                 @if (isTemplateRef) {
                     <ng-container *ngTemplateOutlet="data.tooltip; context: data.templateRefContext"></ng-container>
                 } @else {
                     <div [outerHTML]="data.tooltip"></div>
+                }
+                <!--
+                    Inside .tooltip-inner, which the styles position it against, and last so that a dialog panel's
+                    description ends with "Close" rather than starting with it
+                -->
+                @if (data.withClose) {
+                    <button
+                        (click)="close.emit()"
+                        aria-label="Close"
+                        class="btn btn-ghost-alt btn-sm btn-close close-button"></button>
                 }
             </div>
         </div>

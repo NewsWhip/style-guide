@@ -1,11 +1,11 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ISnippet } from '../code/ISnippet';
 import { TABS_DIRECTIVES } from 'nw-style-guide/tabs';
 import { NgTemplateOutlet } from '@angular/common';
-import { TooltipDirective } from 'nw-style-guide/tooltips';
+import { NwTooltipDirective, NwPopoverDirective } from 'nw-style-guide/tooltips';
 import { AppCodeComponent } from '../code/code.component';
 import { FaqComponent } from '../faq/faq-component';
 
@@ -16,7 +16,8 @@ import { FaqComponent } from '../faq/faq-component';
     imports: [
         TABS_DIRECTIVES,
         RouterLink,
-        TooltipDirective,
+        NwTooltipDirective,
+        NwPopoverDirective,
         NgTemplateOutlet,
         AppCodeComponent,
         FormsModule,
@@ -31,66 +32,57 @@ export class TooltipsComponent implements OnInit, OnDestroy {
 
     public selectedTab: 'design' | 'api' = 'design';
     public form: FormGroup;
-    public propertiesTable: [string, string, string, string][] = [
-        [
-            "@Input('nwTooltip') tooltip: string | TemplateRef<any>; or @Input('nwPopover') popover: string | TemplateRef<any>;",
-            'A string or TemplateRef representing the content of the tooltip',
-            '-',
-            '-'
-        ],
+    /**
+     * Inputs both directives inherit from `NwCalloutBaseDirective`. The two default columns are where the choice of
+     * selector shows up: the same input, a different starting point
+     */
+    public sharedPropertiesTable: [string, string, string, string][] = [
         [
             '@Input() context: any;',
-            'An object that can be passed when the `nwTooltip` or `nwPopover` input is a `TemplateRef`<br><br><a class="nw-link nw-link-tertiary" target="_blank" href="https://angular.io/api/core/ng-template#context">Docs</a>',
+            'An object that can be passed when the content input is a `TemplateRef`<br><br><a class="nw-link nw-link-tertiary" target="_blank" href="https://angular.io/api/core/ng-template#context">Docs</a>',
             '-',
             '-'
         ],
         ['@Input() placement: Placement | Placement[];', 'One or more preferred placement options', '-', '-'],
-        ['@Input() isOpen: boolean', 'Manually control the opening and closing of the tooltip', '-', '-'],
+        ['@Input() isOpen: boolean;', 'Manually control the opening and closing of the callout', '-', '-'],
         [
             '@Input() isDisabled: boolean;',
-            'When true, the tooltip will not not respond to any open or close events. Nor will it respond to changes to the `isOpen` input',
+            'When true, the callout will not respond to any open or close events. Nor will it respond to changes to the `isOpen` input',
             'false',
             'false'
         ],
         ['@Input() delay: number;', 'Number of ms to wait before opening', '500', '0'],
         [
             '@Input() autoFlip: boolean;',
-            'Change the placement of the tooltip to its opposite position when it moves outside the viewport',
+            'Change the placement of the callout to its opposite position when it moves outside the viewport',
             'true',
             'true'
         ],
-        ['@Input() openEvents: string[];', 'A list of events that open the tooltip', `["mouseenter"]`, `["click"]`],
+        ['@Input() openEvents: string[];', 'A list of events that open the callout', `["mouseenter"]`, `["click"]`],
         [
             '@Input() closeEvents: string[];',
-            'A list of events that close the tooltip',
+            'A list of events that close the callout',
             `["click", "mouseleave"]`,
             `["click"]`
         ],
-        ['@Input() containerClass: string;', 'A class to apply to the tooltip container', ``, ``],
+        ['@Input() containerClass: string;', 'A class to apply to the callout container', ``, ``],
         [
             '@Input() withArrow: boolean;',
             'Display an arrow or not. The location of the arrow is dependant on the current `placement`',
             `true`,
             `true`
         ],
-        ['@Input() withClose: boolean;', 'Display a close button or not', `false`, `false`],
-        ['@Input() closeOnScroll: boolean;', 'Whether or not to close the tooltip on scroll', `true`, `false`],
-        [
-            '@Input() closeOnOutsideClick: boolean = false;',
-            'Whether or not to close the tooltip on outside click',
-            `false`,
-            `false`
-        ],
+        ['@Input() closeOnScroll: boolean;', 'Whether or not to close the callout on scroll', `true`, `false`],
         [
             '@Input() updatePositionOnAnimationFrame: boolean;',
             `WARNING: Use with caution - there are potential performance issues with this.<br><br>
-        Update the position of the tooltip before the next browser repaint. An example of where this may be required is if the tooltip is attached (and open) to an element that transitions or animates to a new position`,
+        Update the position of the callout before the next browser repaint. An example of where this may be required is if the callout is attached (and open) to an element that transitions or animates to a new position`,
             `false`,
             `false`
         ],
         [
-            '@Input() connectedTo: ElementRef<HTMLElement>;',
-            `In the case where the tooltip should not be attached to the host element, a reference to another element can be used`,
+            '@Input() connectedTo: ElementRef<HTMLElement> | Element;',
+            `In the case where the callout should not be attached to the host element, a reference to another element can be used`,
             `-`,
             `-`
         ],
@@ -100,9 +92,57 @@ export class TooltipsComponent implements OnInit, OnDestroy {
             `none`,
             `auto`
         ],
-        ['@Output() nwShown: EventEmitter<null>', 'Emits an event when the tooltip is shown', '-', '- '],
-        ['@Output() nwHidden: EventEmitter<null>', 'Emits an event when the tooltip is hidden', '-', '- '],
-        ['@Output() nwClose: EventEmitter<null>', 'Emits an event when the close button is clicked', '-', '- ']
+        [
+            '@Input() hostElementZIndex: number;',
+            `Sets the \`z-index\` of the overlay host element, for the rare case where the callout has to be lifted above something else in the same stacking context`,
+            `-`,
+            `-`
+        ],
+        ['@Output() nwShown: EventEmitter<void>', 'Emits an event when the callout is shown', '-', '-'],
+        ['@Output() nwHidden: EventEmitter<void>', 'Emits an event when the callout is hidden', '-', '-'],
+        [
+            '@Output() nwClose: EventEmitter<void>',
+            'Emits an event when the close button is clicked or the Escape key is pressed',
+            '-',
+            '-'
+        ]
+    ];
+    /** Inputs that exist on `NwTooltipDirective` alone */
+    public tooltipPropertiesTable: [string, string, string][] = [
+        [
+            "@Input('nwTooltip') tooltip: string | TemplateRef<any>;",
+            'A string or TemplateRef representing the content of the tooltip',
+            '-'
+        ],
+        [
+            '@Input() withAriaDescription: boolean;',
+            `Describe the host element with the content, so that screen reader users get it without opening the tooltip - which they cannot do when it opens on hover.<br><br>
+        Left unset, the description is skipped where the host's accessible name is already the same text, so that it is not announced twice. Set it explicitly to force the description on or off.<br><br>
+        Note that a description identical to the host's \`aria-label\` is dropped by the CDK \`AriaDescriber\` itself, so \`true\` cannot force that case`,
+            `undefined - described unless the text duplicates the host's accessible name`
+        ],
+        [
+            '@Input() showOnFocus: boolean;',
+            `Open when the host receives focus from the keyboard, the keyboard equivalent of \`mouseenter\`. Focus from a pointer is ignored, as clicking an element focuses it and the tooltip would fight the \`click\` close event, as is programmatic focus, so that restoring focus after closing a modal does not open a tooltip.<br><br>
+        Note that only an element that can hold focus can be focused. A tooltip on a \`span\`, \`div\` or \`svg\` element is still unreachable by keyboard - make the host a \`button\` if it is a control`,
+            `undefined - follows openEvents, so on for a hover-opened tooltip`
+        ],
+        [
+            '@Input() breakpoint: number;',
+            `The screen width below which the tooltip opens on tap rather than on hover, as touch devices have no hover. It stays a tooltip either way - only its events change.<br><br>
+        Set to 0 to always use the hover events`,
+            `767`
+        ]
+    ];
+    /** Inputs that exist on `NwPopoverDirective` alone */
+    public popoverPropertiesTable: [string, string, string][] = [
+        [
+            "@Input('nwPopover') popover: string | TemplateRef<any>;",
+            'A string or TemplateRef representing the content of the popover',
+            '-'
+        ],
+        ['@Input() withClose: boolean;', 'Display a close button or not', `false`],
+        ['@Input() closeOnOutsideClick: boolean;', 'Whether or not to close the popover on outside click', `false`]
     ];
     public tooltipText: string =
         'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam repellat odio modi facilis expedita laudantium neque numquam enim tenetur totam, sint quia aspernatur maiores reiciendis corporis quae perspiciatis laboriosam perferendis?';
@@ -140,7 +180,8 @@ export class TooltipsComponent implements OnInit, OnDestroy {
         import: {
             lang: 'typescript',
             code: `
-        import { TooltipModule } from 'nw-style-guide/tooltips';
+        // Import whichever of the two you use
+        import { NwTooltipDirective, NwPopoverDirective } from 'nw-style-guide/tooltips';
       `
         },
         basicTooltip: {
@@ -157,6 +198,22 @@ export class TooltipsComponent implements OnInit, OnDestroy {
         <button class="btn btn-md btn-primary"
             [nwPopover]="'Some popover text'"
             [placement]="'right'">Button text</button>
+      `
+        },
+        calloutTriggers: {
+            lang: 'typescript',
+            code: `
+        /**
+         * The events and timings a callout opens and closes with. Each directive supplies these as its
+         * defaults, and the base resolves them against whatever the consumer bound
+         */
+        export interface ICalloutTriggers {
+          delay: number;
+          openEvents: string[];
+          closeEvents: string[];
+          closeOnScroll: boolean;
+          pointerEvents: 'auto' | 'none';
+        }
       `
         },
         placementType: {
@@ -202,6 +259,36 @@ export class TooltipsComponent implements OnInit, OnDestroy {
           </p>
           <small>The close button is always absolutely positioned in the top right of the popover</small>
         </ng-template>
+      `
+        },
+        keyboardPopover: {
+            lang: 'html',
+            code: `
+        <button class="btn btn-md btn-primary"
+          [nwPopover]="keyboardTmpl"
+          [withClose]="true"
+          [closeOnOutsideClick]="true"
+          placement="bottom-start">Popover with focusable content</button>
+
+        <ng-template #keyboardTmpl>
+          <p><strong>Focus is trapped here</strong></p>
+          <a class="nw-link nw-link-tertiary" href="https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/"
+            target="_blank">The dialog pattern</a>
+          <button class="btn btn-sm btn-ghost">A button</button>
+        </ng-template>
+      `
+        },
+        variations: {
+            lang: 'html',
+            code: `
+        <!-- Held open purely to show the two colour variants. withAriaDescription is off because
+             the text is filler: there is nothing here worth describing the host with -->
+        <span [nwTooltip]="tooltipText"
+          [containerClass]="'tooltip-light'"
+          [isOpen]="true"
+          [openEvents]="[]"
+          [closeEvents]="[]"
+          [withAriaDescription]="false">Light</span>
       `
         }
     };
