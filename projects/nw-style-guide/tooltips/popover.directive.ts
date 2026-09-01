@@ -1,6 +1,6 @@
 import { FocusTrap, FocusTrapFactory, InteractivityChecker } from '@angular/cdk/a11y';
 import { Directive, Signal, TemplateRef, inject, input } from '@angular/core';
-import { NwCalloutBaseDirective } from './callout-base.directive';
+import { CalloutBaseDirective } from './callout-base.directive';
 import { ICalloutTriggers } from './models/ICalloutTriggers';
 
 /**
@@ -16,7 +16,7 @@ import { ICalloutTriggers } from './models/ICalloutTriggers';
     selector: '[nwPopover]',
     exportAs: 'nw-popover'
 })
-export class NwPopoverDirective extends NwCalloutBaseDirective {
+export class PopoverDirective extends CalloutBaseDirective {
     private _focusTrapFactory = inject(FocusTrapFactory);
     private _interactivityChecker = inject(InteractivityChecker);
 

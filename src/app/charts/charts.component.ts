@@ -8,7 +8,7 @@ import { curveCardinal, curveBasis, curveLinear, curveStep, curveStepAfter, curv
 import { YAxisDirective, XAxisDirective, CircleDirective, CHARTS_DIRECTIVES } from 'nw-style-guide/charts';
 import { ScaleTime } from 'd3-scale';
 import { TABS_DIRECTIVES } from 'nw-style-guide/tabs';
-import { NwPopoverDirective } from 'nw-style-guide/tooltips';
+import { PopoverDirective } from 'nw-style-guide/tooltips';
 
 @Component({
     selector: 'app-charts',
@@ -21,7 +21,7 @@ import { NwPopoverDirective } from 'nw-style-guide/tooltips';
         FormsModule,
         ReactiveFormsModule,
         CHARTS_DIRECTIVES,
-        NwPopoverDirective,
+        PopoverDirective,
         DecimalPipe,
         DatePipe
     ]

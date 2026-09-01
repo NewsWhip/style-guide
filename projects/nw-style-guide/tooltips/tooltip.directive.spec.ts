@@ -2,8 +2,8 @@ import { Component, DebugElement, ElementRef, OnInit, ViewChild } from '@angular
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { TooltipContainerComponent } from './tooltip-container.component';
-import { NwTooltipDirective } from './tooltip.directive';
-import { NwPopoverDirective } from './popover.directive';
+import { TooltipDirective } from './tooltip.directive';
+import { PopoverDirective } from './popover.directive';
 import { Placement } from './models/Placement.type';
 import { CdkScrollable, CdkScrollableModule } from '@angular/cdk/scrolling';
 import { FocusMonitor } from '@angular/cdk/a11y';
@@ -36,7 +36,7 @@ describe('callouts', () => {
     it('should apply the containerClass to the .tooltip element', fakeAsync(() => {
         comp.openEvents = ['mouseenter'];
         fixture.detectChanges();
-        const trigger = de.query(By.directive(NwTooltipDirective)).nativeElement;
+        const trigger = de.query(By.directive(TooltipDirective)).nativeElement;
         fireEvent(trigger, 'mouseenter');
         // Account for the delay of 500ms
         tick(tickWaitMs);
@@ -47,7 +47,7 @@ describe('callouts', () => {
     it('should display an arrow', fakeAsync(() => {
         comp.openEvents = ['mouseenter'];
         fixture.detectChanges();
-        const trigger = de.query(By.directive(NwTooltipDirective)).nativeElement;
+        const trigger = de.query(By.directive(TooltipDirective)).nativeElement;
         fireEvent(trigger, 'mouseenter');
         tick(tickWaitMs);
         const tooltip = getTooltipEl();
@@ -58,7 +58,7 @@ describe('callouts', () => {
         comp.openEvents = ['mouseenter'];
         comp.withArrow = false;
         fixture.detectChanges();
-        const trigger = de.query(By.directive(NwTooltipDirective)).nativeElement;
+        const trigger = de.query(By.directive(TooltipDirective)).nativeElement;
         fireEvent(trigger, 'mouseenter');
         tick(tickWaitMs);
         const tooltip = getTooltipEl();
@@ -68,7 +68,7 @@ describe('callouts', () => {
     it('should open when an open event is fired', fakeAsync(() => {
         comp.openEvents = ['focus'];
         fixture.detectChanges();
-        const trigger = de.query(By.directive(NwTooltipDirective)).nativeElement;
+        const trigger = de.query(By.directive(TooltipDirective)).nativeElement;
         fireEvent(trigger, 'focus');
         tick(tickWaitMs);
         const tooltip = getTooltipEl();
@@ -79,7 +79,7 @@ describe('callouts', () => {
         comp.openEvents = ['mouseenter'];
         comp.closeEvents = ['dblclick'];
         fixture.detectChanges();
-        const trigger = de.query(By.directive(NwTooltipDirective)).nativeElement;
+        const trigger = de.query(By.directive(TooltipDirective)).nativeElement;
         fireEvent(trigger, 'mouseenter');
         tick(tickWaitMs);
         let tooltip = getTooltipEl();
@@ -93,7 +93,7 @@ describe('callouts', () => {
         comp.openEvents = ['mouseenter'];
         comp.isDisabled = true;
         fixture.detectChanges();
-        const trigger = de.query(By.directive(NwTooltipDirective)).nativeElement;
+        const trigger = de.query(By.directive(TooltipDirective)).nativeElement;
         fireEvent(trigger, 'mouseenter');
         tick(tickWaitMs);
         const tooltip = getTooltipEl();
@@ -105,7 +105,7 @@ describe('callouts', () => {
         comp.useConnectionEl = true;
         comp.autoFlip = false;
         fixture.detectChanges();
-        const trigger = de.query(By.directive(NwTooltipDirective)).nativeElement;
+        const trigger = de.query(By.directive(TooltipDirective)).nativeElement;
         fireEvent(trigger, 'mouseenter');
         tick(tickWaitMs);
 
@@ -122,7 +122,7 @@ describe('callouts', () => {
         comp.openEvents = ['mouseenter'];
         comp.closeOnOutsideClick = true;
         fixture.detectChanges();
-        const trigger = de.query(By.directive(NwPopoverDirective)).nativeElement;
+        const trigger = de.query(By.directive(PopoverDirective)).nativeElement;
         fireEvent(trigger, 'mouseenter');
         tick(tickWaitMs);
         let tooltip = getTooltipEl();
@@ -136,7 +136,7 @@ describe('callouts', () => {
         window.innerWidth = 1000;
         comp.openEvents = ['mouseenter'];
         fixture.detectChanges();
-        const trigger = de.query(By.directive(NwPopoverDirective)).nativeElement;
+        const trigger = de.query(By.directive(PopoverDirective)).nativeElement;
         fireEvent(trigger, 'mouseenter');
         tick(tickWaitMs);
         let tooltip = getTooltipEl();
@@ -151,7 +151,7 @@ describe('callouts', () => {
         comp.delay = 500;
         comp.openEvents = ['mouseenter'];
         fixture.detectChanges();
-        const trigger = de.query(By.directive(NwTooltipDirective)).nativeElement;
+        const trigger = de.query(By.directive(TooltipDirective)).nativeElement;
         fireEvent(trigger, 'mouseenter');
         tick(400);
         let tooltip = getTooltipEl();
@@ -165,7 +165,7 @@ describe('callouts', () => {
         comp.openEvents = ['mouseenter'];
         comp.delay = 0;
         fixture.detectChanges();
-        const trigger = de.query(By.directive(NwTooltipDirective)).nativeElement;
+        const trigger = de.query(By.directive(TooltipDirective)).nativeElement;
         fireEvent(trigger, 'mouseenter');
         const tooltip = getTooltipEl();
         expect(tooltip).toBeTruthy();
@@ -176,7 +176,7 @@ describe('callouts', () => {
         comp.closeEvents = ['click'];
         comp.delay = 1000;
         fixture.detectChanges();
-        const trigger = de.query(By.directive(NwTooltipDirective)).nativeElement;
+        const trigger = de.query(By.directive(TooltipDirective)).nativeElement;
         fireEvent(trigger, 'mouseenter');
         tick(900);
         let tooltip = getTooltipEl();
@@ -189,7 +189,7 @@ describe('callouts', () => {
 
     it('should open even if the open events contains the same close events', fakeAsync(() => {
         fixture.detectChanges();
-        const trigger = de.query(By.directive(NwPopoverDirective)).nativeElement;
+        const trigger = de.query(By.directive(PopoverDirective)).nativeElement;
         fireEvent(trigger, 'click');
         tick(tickWaitMs);
         const tooltip = getTooltipEl();
@@ -199,7 +199,7 @@ describe('callouts', () => {
     it('should apply a placement class to the overlay pane', fakeAsync(() => {
         comp.openEvents = ['mouseenter'];
         fixture.detectChanges();
-        const trigger = de.query(By.directive(NwTooltipDirective)).nativeElement;
+        const trigger = de.query(By.directive(TooltipDirective)).nativeElement;
         fireEvent(trigger, 'mouseenter');
         tick(tickWaitMs);
         fixture.detectChanges();
@@ -211,7 +211,7 @@ describe('callouts', () => {
         comp.openEvents = ['mouseenter'];
         comp.delay = 0;
         fixture.detectChanges();
-        const trigger = de.query(By.directive(NwTooltipDirective)).nativeElement;
+        const trigger = de.query(By.directive(TooltipDirective)).nativeElement;
         fireEvent(trigger, 'mouseenter');
         tick(5);
         fixture.detectChanges();
@@ -227,7 +227,7 @@ describe('callouts', () => {
         comp.openEvents = ['mouseenter'];
         comp.tooltipPlacement = ['left'];
         fixture.detectChanges();
-        const trigger = de.query(By.directive(NwTooltipDirective)).nativeElement;
+        const trigger = de.query(By.directive(TooltipDirective)).nativeElement;
         fireEvent(trigger, 'mouseenter');
         tick(tickWaitMs);
         const overlayPane = document.querySelector('.cdk-overlay-pane.tooltip-overlay');
@@ -239,7 +239,7 @@ describe('callouts', () => {
         comp.tooltipPlacement = ['left'];
         comp.autoFlip = false;
         fixture.detectChanges();
-        const trigger = de.query(By.directive(NwTooltipDirective)).nativeElement;
+        const trigger = de.query(By.directive(TooltipDirective)).nativeElement;
         fireEvent(trigger, 'mouseenter');
         tick(tickWaitMs);
         const overlayPane = document.querySelector('.cdk-overlay-pane.tooltip-overlay');
@@ -251,7 +251,7 @@ describe('callouts', () => {
         comp.tooltipPlacement = ['left', 'top-start'];
         comp.autoFlip = false;
         fixture.detectChanges();
-        const trigger = de.query(By.directive(NwTooltipDirective)).nativeElement;
+        const trigger = de.query(By.directive(TooltipDirective)).nativeElement;
         fireEvent(trigger, 'mouseenter');
         tick(tickWaitMs);
         const overlayPane = document.querySelector('.cdk-overlay-pane.tooltip-overlay');
@@ -286,7 +286,7 @@ describe('callouts', () => {
         comp.openEvents = ['mouseenter'];
         comp.delay = 0;
         fixture.detectChanges();
-        const trigger = de.query(By.directive(NwTooltipDirective)).nativeElement;
+        const trigger = de.query(By.directive(TooltipDirective)).nativeElement;
         fireEvent(trigger, 'mouseenter');
         tick(5);
         let tooltip = getTooltipEl();
@@ -304,7 +304,7 @@ describe('callouts', () => {
         comp.delay = 0;
         comp.closeOnScroll = false;
         fixture.detectChanges();
-        const trigger = de.query(By.directive(NwTooltipDirective)).nativeElement;
+        const trigger = de.query(By.directive(TooltipDirective)).nativeElement;
         fireEvent(trigger, 'mouseenter');
         tick(5);
         comp.scrollEl.nativeElement.dispatchEvent(new Event('scroll'));
@@ -326,7 +326,7 @@ describe('callouts', () => {
         comp.openEvents = ['click'];
         comp.closeEvents = ['click'];
         fixture.detectChanges();
-        const trigger = de.query(By.directive(NwPopoverDirective)).nativeElement;
+        const trigger = de.query(By.directive(PopoverDirective)).nativeElement;
         fireEvent(trigger, 'click');
         tick(10);
         let tooltip = getTooltipEl();
@@ -340,7 +340,7 @@ describe('callouts', () => {
     it('should render a close button', fakeAsync(() => {
         comp.withClose = true;
         fixture.detectChanges();
-        const trigger = de.query(By.directive(NwPopoverDirective)).nativeElement;
+        const trigger = de.query(By.directive(PopoverDirective)).nativeElement;
         fireEvent(trigger, 'click');
         tick(tickWaitMs);
         const tooltip = getTooltipEl();
@@ -355,7 +355,7 @@ describe('callouts', () => {
     it('should flag the content as holding a close button, so that room is reserved for it', fakeAsync(() => {
         comp.withClose = true;
         fixture.detectChanges();
-        const trigger = de.query(By.directive(NwPopoverDirective)).nativeElement;
+        const trigger = de.query(By.directive(PopoverDirective)).nativeElement;
         fireEvent(trigger, 'click');
         tick(tickWaitMs);
         expect(getTooltipEl().querySelector('.tooltip-inner').classList).toContain('with-close');
@@ -363,7 +363,7 @@ describe('callouts', () => {
 
     it('should not reserve room for a close button when there is none', fakeAsync(() => {
         fixture.detectChanges();
-        const trigger = de.query(By.directive(NwPopoverDirective)).nativeElement;
+        const trigger = de.query(By.directive(PopoverDirective)).nativeElement;
         fireEvent(trigger, 'click');
         tick(tickWaitMs);
         expect(getTooltipEl().querySelector('.tooltip-inner').classList).not.toContain('with-close');
@@ -372,7 +372,7 @@ describe('callouts', () => {
     it('should emit an event when the close button is clicked', fakeAsync(() => {
         comp.withClose = true;
         fixture.detectChanges();
-        const trigger = de.query(By.directive(NwPopoverDirective)).nativeElement;
+        const trigger = de.query(By.directive(PopoverDirective)).nativeElement;
         fireEvent(trigger, 'click');
         tick(tickWaitMs);
         const tooltip = getTooltipEl();
@@ -388,8 +388,8 @@ describe('callouts', () => {
      * anything focusable, and it never moves focus
      */
     describe('nwTooltip', () => {
-        const getStringTrigger = (): HTMLElement => de.query(By.directive(NwTooltipDirective)).nativeElement;
-        const getTemplateTrigger = (): HTMLElement => de.queryAll(By.directive(NwTooltipDirective))[1].nativeElement;
+        const getStringTrigger = (): HTMLElement => de.query(By.directive(TooltipDirective)).nativeElement;
+        const getTemplateTrigger = (): HTMLElement => de.queryAll(By.directive(TooltipDirective))[1].nativeElement;
 
         it('should render the panel with a role of tooltip and an id', fakeAsync(() => {
             comp.openEvents = ['mouseenter'];
@@ -581,7 +581,7 @@ describe('callouts', () => {
 
             it('popovers should not open on focus, as the keyboard opens them on click', fakeAsync(() => {
                 fixture.detectChanges();
-                const trigger = de.query(By.directive(NwPopoverDirective)).nativeElement as HTMLElement;
+                const trigger = de.query(By.directive(PopoverDirective)).nativeElement as HTMLElement;
                 focusMonitor.focusVia(trigger, 'keyboard');
                 fixture.detectChanges();
                 tick(10);
@@ -595,8 +595,8 @@ describe('callouts', () => {
      * taking focus
      */
     describe('nwPopover', () => {
-        const getStringTrigger = (): HTMLElement => de.query(By.directive(NwPopoverDirective)).nativeElement;
-        const getTemplateTrigger = (): HTMLElement => de.queryAll(By.directive(NwPopoverDirective))[1].nativeElement;
+        const getStringTrigger = (): HTMLElement => de.query(By.directive(PopoverDirective)).nativeElement;
+        const getTemplateTrigger = (): HTMLElement => de.queryAll(By.directive(PopoverDirective))[1].nativeElement;
 
         beforeEach(() => {
             comp.delay = 0;
@@ -669,7 +669,7 @@ describe('callouts', () => {
 
         it('should not take focus when it was not opened from the host', fakeAsync(() => {
             fixture.detectChanges();
-            const elsewhere = de.query(By.directive(NwTooltipDirective)).nativeElement as HTMLElement;
+            const elsewhere = de.query(By.directive(TooltipDirective)).nativeElement as HTMLElement;
             elsewhere.focus();
 
             fireEvent(getTemplateTrigger(), 'click');
@@ -852,11 +852,11 @@ describe('callouts', () => {
             }
         `
     ],
-    imports: [NwTooltipDirective, NwPopoverDirective, CdkScrollableModule]
+    imports: [TooltipDirective, PopoverDirective, CdkScrollableModule]
 })
 class WrapperComponent implements OnInit {
-    @ViewChild('tooltip') tooltip: NwTooltipDirective;
-    @ViewChild('popover') popover: NwPopoverDirective;
+    @ViewChild('tooltip') tooltip: TooltipDirective;
+    @ViewChild('popover') popover: PopoverDirective;
     @ViewChild('connectionEl', { static: true }) connectionEl: ElementRef<HTMLElement>;
     @ViewChild(CdkScrollable, { read: ElementRef }) scrollEl: ElementRef<HTMLElement>;
 

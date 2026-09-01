@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs';
 import { ISnippet } from '../code/ISnippet';
 import { TABS_DIRECTIVES } from 'nw-style-guide/tabs';
 import { NgTemplateOutlet } from '@angular/common';
-import { NwTooltipDirective, NwPopoverDirective } from 'nw-style-guide/tooltips';
+import { TooltipDirective, PopoverDirective } from 'nw-style-guide/tooltips';
 import { AppCodeComponent } from '../code/code.component';
 import { FaqComponent } from '../faq/faq-component';
 
@@ -16,8 +16,8 @@ import { FaqComponent } from '../faq/faq-component';
     imports: [
         TABS_DIRECTIVES,
         RouterLink,
-        NwTooltipDirective,
-        NwPopoverDirective,
+        TooltipDirective,
+        PopoverDirective,
         NgTemplateOutlet,
         AppCodeComponent,
         FormsModule,
@@ -33,7 +33,7 @@ export class TooltipsComponent implements OnInit, OnDestroy {
     public selectedTab: 'design' | 'api' = 'design';
     public form: FormGroup;
     /**
-     * Inputs both directives inherit from `NwCalloutBaseDirective`. The two default columns are where the choice of
+     * Inputs both directives inherit from `CalloutBaseDirective`. The two default columns are where the choice of
      * selector shows up: the same input, a different starting point
      */
     public sharedPropertiesTable: [string, string, string, string][] = [
@@ -107,7 +107,7 @@ export class TooltipsComponent implements OnInit, OnDestroy {
             '-'
         ]
     ];
-    /** Inputs that exist on `NwTooltipDirective` alone */
+    /** Inputs that exist on `TooltipDirective` alone */
     public tooltipPropertiesTable: [string, string, string][] = [
         [
             "@Input('nwTooltip') tooltip: string | TemplateRef<any>;",
@@ -134,7 +134,7 @@ export class TooltipsComponent implements OnInit, OnDestroy {
             `767`
         ]
     ];
-    /** Inputs that exist on `NwPopoverDirective` alone */
+    /** Inputs that exist on `PopoverDirective` alone */
     public popoverPropertiesTable: [string, string, string][] = [
         [
             "@Input('nwPopover') popover: string | TemplateRef<any>;",
@@ -181,7 +181,7 @@ export class TooltipsComponent implements OnInit, OnDestroy {
             lang: 'typescript',
             code: `
         // Import whichever of the two you use
-        import { NwTooltipDirective, NwPopoverDirective } from 'nw-style-guide/tooltips';
+        import { TooltipDirective, PopoverDirective } from 'nw-style-guide/tooltips';
       `
         },
         basicTooltip: {

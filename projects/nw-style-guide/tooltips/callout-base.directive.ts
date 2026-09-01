@@ -42,7 +42,7 @@ import { toObservable } from '@angular/core/rxjs-interop';
  * subclass can reach the other's behaviour
  */
 @Directive()
-export abstract class NwCalloutBaseDirective implements OnInit, OnDestroy {
+export abstract class CalloutBaseDirective implements OnInit, OnDestroy {
     protected _elRef = inject<ElementRef<HTMLElement>>(ElementRef);
     private _overlay = inject(Overlay);
     private _vcRef = inject(ViewContainerRef);
@@ -50,7 +50,7 @@ export abstract class NwCalloutBaseDirective implements OnInit, OnDestroy {
 
     private static _idCounter = 0;
     /** The id of the callout element, so that it can be referenced by `aria-describedby` */
-    protected readonly calloutId = `nw-callout-${++NwCalloutBaseDirective._idCounter}`;
+    protected readonly calloutId = `nw-callout-${++CalloutBaseDirective._idCounter}`;
 
     /**
      * An object that can be passed when the content is a `TemplateRef`

@@ -2,7 +2,7 @@ import { AriaDescriber, FocusMonitor, addAriaReferencedId, removeAriaReferencedI
 import { Directive, OnDestroy, Signal, TemplateRef, computed, effect, inject, input } from '@angular/core';
 import { Observable } from 'rxjs';
 import { filter, map, tap } from 'rxjs/operators';
-import { NwCalloutBaseDirective } from './callout-base.directive';
+import { CalloutBaseDirective } from './callout-base.directive';
 import { ICalloutTriggers } from './models/ICalloutTriggers';
 
 /**
@@ -17,7 +17,7 @@ import { ICalloutTriggers } from './models/ICalloutTriggers';
     selector: '[nwTooltip]',
     exportAs: 'nw-tooltip'
 })
-export class NwTooltipDirective extends NwCalloutBaseDirective implements OnDestroy {
+export class TooltipDirective extends CalloutBaseDirective implements OnDestroy {
     private _ariaDescriber = inject(AriaDescriber);
     private _focusMonitor = inject(FocusMonitor);
 
