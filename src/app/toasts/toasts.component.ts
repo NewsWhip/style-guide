@@ -1,4 +1,5 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Dialog } from '@angular/cdk/dialog';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, TemplateRef, ViewChild, inject } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -17,6 +18,9 @@ export class ToastsComponent implements OnInit, OnDestroy {
     private _toaster = inject(Toaster);
     private _route = inject(ActivatedRoute);
     private _fb = inject(FormBuilder);
+    private _dialog = inject(Dialog);
+
+    @ViewChild('modalTmpl') modalTmpl: TemplateRef<any>;
 
     public selectedTab: 'design' | 'api' = 'design';
     public form: FormGroup;
@@ -52,6 +56,33 @@ export class ToastsComponent implements OnInit, OnDestroy {
             isDismissable: !this.form.get('autoDismiss').value,
             size: this.form.get('size').value
         });
+    }
+
+    /**
+     * `ariaModal` is set explicitly because the CDK's own default is `false`. Consuming apps do set
+     * it — Spike sets it for every modal in its `ModalService` — and it is the whole point of these
+     * examples, since it is what hides the body-level live region from screen readers.
+     */
+    openModal() {
+        this._dialog.open(this.modalTmpl, { backdropClass: 'modal-backdrop', ariaModal: true });
+    }
+
+    /**
+     * The common case: the toast is shown and its dialog closes straight after. The announcement is
+     * held back until the dialog has gone, since `aria-modal="true"` hides body-level live regions
+     * from screen readers while it is open.
+     */
+    showToastAndCloseModal() {
+        this._toaster.success('Announced once the dialog had closed');
+        this._dialog.closeAll();
+    }
+
+    /**
+     * A dialog that keeps the user in place to correct something. Waiting for it to close would
+     * announce at the wrong moment, so the announcement is made inside the dialog instead.
+     */
+    showToastAndKeepModalOpen() {
+        this._toaster.error('Announced from inside the dialog');
     }
 
     readonly importModule = `import { ToastsModule } from 'nw-style-guide/toasts';

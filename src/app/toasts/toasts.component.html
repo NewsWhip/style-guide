@@ -111,6 +111,21 @@
             </form>
         </div>
 
+        <h4 style="margin: 32px 0 16px">Toasts shown from a modal</h4>
+
+        <p style="margin-bottom: 16px">
+            A dialog with <code>aria-modal="true"</code> hides body-level live regions from screen readers, so the
+            <code>Toaster</code> routes the announcement around it. These two buttons exercise both paths it can take —
+            use them to verify the announcements with a screen reader.
+        </p>
+
+        <button
+            class="btn btn-md btn-secondary"
+            style="margin-bottom: 32px"
+            (click)="openModal()">
+            Open a modal
+        </button>
+
         <h3 style="margin-bottom: 16px">Description</h3>
 
         <ol
@@ -127,6 +142,43 @@
             <li>
                 <h5 style="display: inline-block">Display time</h5>
                 <p>The default time to display the toast is 3 seconds.</p>
+            </li>
+        </ol>
+
+        <h3 style="margin-bottom: 16px">Accessibility</h3>
+
+        <ol
+            style="margin-bottom: 32px"
+            class="guidelines">
+            <li>
+                <h5 style="display: inline-block">Toasts announce themselves</h5>
+                <p>
+                    Do not pair a toast with a <code>LiveAnnouncer.announce</code> call for the same event — screen
+                    reader users will hear the message twice. A <code>success</code> toast is announced politely
+                    (<code>role="status"</code>), an <code>error</code> toast assertively (<code>role="alert"</code>).
+                </p>
+            </li>
+            <li>
+                <h5 style="display: inline-block">Type is conveyed in text</h5>
+                <p>
+                    Each toast carries a visually hidden <code>Success:</code>/<code>Error:</code> prefix, so the type
+                    does not rely on icon colour alone. The prefix is included in the announcement.
+                </p>
+            </li>
+            <li>
+                <h5 style="display: inline-block">Toasts shown from a modal</h5>
+                <p>
+                    A dialog with <code>aria-modal="true"</code> hides body-level live regions from screen readers, so
+                    the announcement waits for an open dialog to close, and is made inside the dialog if it stays open.
+                    Nothing is required of the caller.
+                </p>
+            </li>
+            <li>
+                <h5 style="display: inline-block">Message content</h5>
+                <p>
+                    The announcement is composed from the toast's rendered text, so a <code>TemplateRef</code> message
+                    and a message containing markup both announce correctly. Keep any meaning out of markup alone.
+                </p>
             </li>
         </ol>
     </div>
@@ -292,3 +344,34 @@
         </div>
     </div>
 }
+
+<ng-template #modalTmpl>
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Toasts from a modal</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    The first button is the common case — the toast is shown and the dialog closes straight after, so
+                    the announcement waits for the dialog to go. The second keeps the dialog open, so the announcement
+                    is made inside it.
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button
+                    type="button"
+                    class="btn btn-secondary btn-md"
+                    (click)="showToastAndKeepModalOpen()">
+                    Show toast, stay open
+                </button>
+                <button
+                    type="button"
+                    class="btn btn-primary btn-md"
+                    (click)="showToastAndCloseModal()">
+                    Show toast and close
+                </button>
+            </div>
+        </div>
+    </div>
+</ng-template>
