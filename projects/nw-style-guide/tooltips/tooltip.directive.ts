@@ -21,7 +21,7 @@ export class TooltipDirective extends CalloutBaseDirective implements OnDestroy 
     private _ariaDescriber = inject(AriaDescriber);
     private _focusMonitor = inject(FocusMonitor);
 
-    readonly tooltip = input<string | TemplateRef<any>>(undefined, { alias: 'nwTooltip' });
+    readonly nwTooltip = input<string | TemplateRef<any>>();
     /**
      * Describe the host element with the content, so that screen reader users get it without opening the tooltip.
      * When not set, the description is skipped where the host's accessible name - its `aria-label`, or failing
@@ -48,7 +48,7 @@ export class TooltipDirective extends CalloutBaseDirective implements OnDestroy 
     /** The text currently registered with the `AriaDescriber`, if any */
     private _describedText: string | null = null;
 
-    protected readonly content: Signal<string | TemplateRef<any>> = this.tooltip;
+    protected readonly content: Signal<string | TemplateRef<any>> = this.nwTooltip;
 
     /**
      * Whether focus opens this tooltip: derived, because a manually controlled tooltip - one with no open events -
@@ -60,7 +60,7 @@ export class TooltipDirective extends CalloutBaseDirective implements OnDestroy 
 
     /** The content as plain text, or null when there is nothing describable to register */
     private readonly _describableText = computed(() => {
-        const content = this.tooltip();
+        const content = this.nwTooltip();
 
         if (this.withAriaDescription() === false || typeof content !== 'string') {
             return null;

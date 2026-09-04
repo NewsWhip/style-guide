@@ -38,97 +38,87 @@ export class TooltipsComponent implements OnInit, OnDestroy {
      */
     public sharedPropertiesTable: [string, string, string, string][] = [
         [
-            '@Input() context: any;',
+            'context: any',
             'An object that can be passed when the content input is a `TemplateRef`<br><br><a class="nw-link nw-link-tertiary" target="_blank" href="https://angular.io/api/core/ng-template#context">Docs</a>',
             '-',
             '-'
         ],
-        ['@Input() placement: Placement | Placement[];', 'One or more preferred placement options', '-', '-'],
-        ['@Input() isOpen: boolean;', 'Manually control the opening and closing of the callout', '-', '-'],
+        ['placement: Placement | Placement[]', 'One or more preferred placement options', '-', '-'],
+        ['isOpen: boolean', 'Manually control the opening and closing of the callout', '-', '-'],
         [
-            '@Input() isDisabled: boolean;',
+            'isDisabled: boolean',
             'When true, the callout will not respond to any open or close events. Nor will it respond to changes to the `isOpen` input',
             'false',
             'false'
         ],
-        ['@Input() delay: number;', 'Number of ms to wait before opening', '500', '0'],
+        ['delay: number', 'Number of ms to wait before opening', '500', '0'],
         [
-            '@Input() autoFlip: boolean;',
+            'autoFlip: boolean',
             'Change the placement of the callout to its opposite position when it moves outside the viewport',
             'true',
             'true'
         ],
-        ['@Input() openEvents: string[];', 'A list of events that open the callout', `["mouseenter"]`, `["click"]`],
+        ['openEvents: string[]', 'A list of events that open the callout', `["mouseenter"]`, `["click"]`],
+        ['closeEvents: string[]', 'A list of events that close the callout', `["click", "mouseleave"]`, `["click"]`],
+        ['containerClass: string', 'A class to apply to the callout container', ``, ``],
         [
-            '@Input() closeEvents: string[];',
-            'A list of events that close the callout',
-            `["click", "mouseleave"]`,
-            `["click"]`
-        ],
-        ['@Input() containerClass: string;', 'A class to apply to the callout container', ``, ``],
-        [
-            '@Input() withArrow: boolean;',
+            'withArrow: boolean',
             'Display an arrow or not. The location of the arrow is dependant on the current `placement`',
             `true`,
             `true`
         ],
-        ['@Input() closeOnScroll: boolean;', 'Whether or not to close the callout on scroll', `true`, `false`],
+        ['closeOnScroll: boolean', 'Whether or not to close the callout on scroll', `true`, `false`],
         [
-            '@Input() updatePositionOnAnimationFrame: boolean;',
+            'updatePositionOnAnimationFrame: boolean',
             `WARNING: Use with caution - there are potential performance issues with this.<br><br>
         Update the position of the callout before the next browser repaint. An example of where this may be required is if the callout is attached (and open) to an element that transitions or animates to a new position`,
             `false`,
             `false`
         ],
         [
-            '@Input() connectedTo: ElementRef<HTMLElement> | Element;',
+            'connectedTo: ElementRef<HTMLElement> | Element',
             `In the case where the callout should not be attached to the host element, a reference to another element can be used`,
             `-`,
             `-`
         ],
         [
-            "@Input() pointerEvents: 'auto' | 'none';",
+            "pointerEvents: 'auto' | 'none'",
             `Determines whether pointer events are enabled on the cdk-overlay-pane element`,
             `none`,
             `auto`
         ],
         [
-            '@Input() hostElementZIndex: number;',
+            'hostElementZIndex: number',
             `Sets the \`z-index\` of the overlay host element, for the rare case where the callout has to be lifted above something else in the same stacking context`,
             `-`,
             `-`
         ],
-        ['@Output() nwShown: EventEmitter<void>', 'Emits an event when the callout is shown', '-', '-'],
-        ['@Output() nwHidden: EventEmitter<void>', 'Emits an event when the callout is hidden', '-', '-'],
-        [
-            '@Output() nwClose: EventEmitter<void>',
-            'Emits an event when the close button is clicked or the Escape key is pressed',
-            '-',
-            '-'
-        ]
+        ['(nwShown)', 'Emits an event when the callout is shown', '-', '-'],
+        ['(nwHidden)', 'Emits an event when the callout is hidden', '-', '-'],
+        ['(nwClose)', 'Emits an event when the close button is clicked or the Escape key is pressed', '-', '-']
     ];
     /** Inputs that exist on `TooltipDirective` alone */
     public tooltipPropertiesTable: [string, string, string][] = [
         [
-            "@Input('nwTooltip') tooltip: string | TemplateRef<any>;",
+            'nwTooltip: string | TemplateRef<any>',
             'A string or TemplateRef representing the content of the tooltip',
             '-'
         ],
         [
-            '@Input() withAriaDescription: boolean;',
+            'withAriaDescription: boolean',
             `Describe the host element with the content, so that screen reader users get it without opening the tooltip - which they cannot do when it opens on hover.<br><br>
         Left unset, the description is skipped where the host's accessible name is already the same text, so that it is not announced twice. Set it explicitly to force the description on or off.<br><br>
         Note that a description identical to the host's \`aria-label\` is dropped by the CDK \`AriaDescriber\` itself, so \`true\` cannot force that case`,
             `undefined - described unless the text duplicates the host's accessible name`
         ],
         [
-            '@Input() showOnFocus: boolean;',
+            'showOnFocus: boolean',
             `Open when the host receives focus from the keyboard, the keyboard equivalent of \`mouseenter\`. Focus from a pointer is ignored, as clicking an element focuses it and the tooltip would fight the \`click\` close event, as is programmatic focus, so that restoring focus after closing a modal does not open a tooltip.<br><br>
         Note that only an element that can hold focus can be focused. A tooltip on a \`span\`, \`div\` or \`svg\` element is still unreachable by keyboard - make the host a \`button\` if it is a control`,
             `undefined - follows openEvents, so on for a hover-opened tooltip`
         ],
         [
-            '@Input() breakpoint: number;',
+            'breakpoint: number',
             `The screen width below which the tooltip opens on tap rather than on hover, as touch devices have no hover. It stays a tooltip either way - only its events change.<br><br>
         Set to 0 to always use the hover events`,
             `767`
@@ -137,12 +127,12 @@ export class TooltipsComponent implements OnInit, OnDestroy {
     /** Inputs that exist on `PopoverDirective` alone */
     public popoverPropertiesTable: [string, string, string][] = [
         [
-            "@Input('nwPopover') popover: string | TemplateRef<any>;",
+            'nwPopover: string | TemplateRef<any>',
             'A string or TemplateRef representing the content of the popover',
             '-'
         ],
-        ['@Input() withClose: boolean;', 'Display a close button or not', `false`],
-        ['@Input() closeOnOutsideClick: boolean;', 'Whether or not to close the popover on outside click', `false`]
+        ['withClose: boolean', 'Display a close button or not', `false`],
+        ['closeOnOutsideClick: boolean', 'Whether or not to close the popover on outside click', `false`]
     ];
     public tooltipText: string =
         'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam repellat odio modi facilis expedita laudantium neque numquam enim tenetur totam, sint quia aspernatur maiores reiciendis corporis quae perspiciatis laboriosam perferendis?';

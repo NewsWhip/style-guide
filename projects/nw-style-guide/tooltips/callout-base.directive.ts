@@ -130,18 +130,16 @@ export abstract class CalloutBaseDirective implements OnInit, OnDestroy {
         };
     });
 
-    protected _overlayRef: OverlayRef | null = null;
-    protected _destroyed$: Subject<void> = new Subject();
-    protected _cancelDelayedOpen$: Subject<void> = new Subject();
+    private _overlayRef: OverlayRef | null = null;
+    private _destroyed$: Subject<void> = new Subject();
+    private _cancelDelayedOpen$: Subject<void> = new Subject();
     /** The `.tooltip` element of the open callout */
     protected _calloutEl: HTMLElement | null = null;
-    private _tooltipArrowSize: number = 5;
     private _manualToggleEvent$: Subject<boolean> = new Subject();
-    /**
-     * A subject that emits when the TooltipContainerComponent is destroyed
-     */
-    private _tooltipContainerDestroyed$: Subject<void> = new Subject();
+    /** Emits only where the subclass opted into outside-click dismissal - see `_open` */
     private _outsideClick$: Subject<boolean> = new Subject();
+    /** The arrow size, memoised on first read - see `_getArrowSize` */
+    private _arrowSize: number | null = null;
 
     /** The content, which each subclass declares as its own input under its own selector */
     protected abstract readonly content: Signal<string | TemplateRef<any>>;
@@ -221,53 +219,69 @@ export abstract class CalloutBaseDirective implements OnInit, OnDestroy {
         this._manualToggleEvent$.next(!isOpen);
     }
 
-    private _open(): ComponentRef<TooltipContainerComponent> {
+    /** Attaches the callout, returning its container - or null where it was already open */
+    private _open(): ComponentRef<TooltipContainerComponent> | null {
+        /**
+         * Create the overlay, and subscribe to what it alone can tell us, the first time the callout is opened
+         */
         if (!this._overlayRef) {
-            /**
-             * Create the overlay the first time the callout is opened
-             */
             this._createOverlay();
-
-            this._overlayRef
-                .keydownEvents()
-                .pipe(
-                    filter(_ => this._overlayRef?.hasAttached()),
-                    takeUntil(this._destroyed$)
-                )
-                .subscribe(event => {
-                    /**
-                     * Dismissing on Escape is required of content that appears on hover or focus
-                     * ref: https://www.w3.org/WAI/WCAG21/Understanding/content-on-hover-or-focus.html
-                     */
-                    if (event.key === 'Escape') {
-                        this.nwClose.emit();
-                        this._close();
-
-                        return;
-                    }
-
-                    this.onCalloutKeydown(event);
-                });
+            this._subscribeToCalloutKeydown();
 
             if (this.dismissesOnOutsideClick()) {
-                this._overlayRef
-                    .outsidePointerEvents()
-                    .pipe(
-                        filter(_ => this._overlayRef?.hasAttached()),
-                        filter(event => event.target !== this._elRef.nativeElement),
-                        map(_ => false),
-                        takeUntil(this._destroyed$)
-                    )
-                    .subscribe(v => this._outsideClick$.next(v));
+                this._subscribeToOutsidePointerEvents();
             }
         }
 
-        if (!this._overlayRef.hasAttached()) {
-            const portal = new ComponentPortal(TooltipContainerComponent, this._vcRef, this._createInjector());
-            const ref = this._overlayRef.attach(portal);
-            this.nwShown.emit();
-            return ref;
+        if (this._overlayRef.hasAttached()) {
+            return null;
         }
+
+        const portal = new ComponentPortal(TooltipContainerComponent, this._vcRef, this._createInjector());
+        const ref = this._overlayRef.attach(portal);
+        this.nwShown.emit();
+
+        return ref;
+    }
+
+    /**
+     * Escape closes any callout, which is required of content that appears on hover or focus
+     * ref: https://www.w3.org/WAI/WCAG21/Understanding/content-on-hover-or-focus.html
+     *
+     * Every other key is the subclass's to answer, if it answers any
+     */
+    private _subscribeToCalloutKeydown(): void {
+        this._overlayRef
+            .keydownEvents()
+            .pipe(
+                filter(_ => this._overlayRef?.hasAttached()),
+                takeUntil(this._destroyed$)
+            )
+            .subscribe(event => {
+                if (event.key === 'Escape') {
+                    this.nwClose.emit();
+                    this._close();
+
+                    return;
+                }
+
+                this.onCalloutKeydown(event);
+            });
+    }
+
+    /**
+     * A pointer event anywhere but the callout and its host closes the callout, for the subclasses that ask for it
+     */
+    private _subscribeToOutsidePointerEvents(): void {
+        this._overlayRef
+            .outsidePointerEvents()
+            .pipe(
+                filter(_ => this._overlayRef?.hasAttached()),
+                filter(event => event.target !== this._elRef.nativeElement),
+                map(_ => false),
+                takeUntil(this._destroyed$)
+            )
+            .subscribe(v => this._outsideClick$.next(v));
     }
 
     protected _close(): void {
@@ -315,100 +329,108 @@ export abstract class CalloutBaseDirective implements OnInit, OnDestroy {
         });
     }
 
-    private _subscribeToEvents() {
-        const openEvents$: Observable<boolean>[] = this.triggers().openEvents.map(eventName => {
-            return fromEvent(this._elRef.nativeElement, eventName).pipe(
-                filter(_ => !this._overlayRef?.hasAttached()),
-                map(_ => true)
-            );
-        });
+    /**
+     * The one subscription that opens and closes the callout, from every source that can ask for either
+     */
+    private _subscribeToEvents(): void {
+        this._getToggleEvents$()
+            .pipe(
+                debounce(() => (this._hasOverlappingToggleEvents() ? timer(5) : of(0))),
+                filter(_ => !this.isDisabled()),
+                switchMap(isOpenEvent => this._delayIfOpening(isOpenEvent)),
+                takeUntil(this._destroyed$)
+            )
+            .subscribe(isOpenEvent => (isOpenEvent ? this._openAndExpose() : this._close()));
+    }
 
-        const closeEvents$: Observable<boolean>[] = this.triggers().closeEvents.map(eventName => {
-            return fromEvent(this._elRef.nativeElement, eventName).pipe(
-                tap(_ => this._cancelDelayedOpen$.next()),
-                filter(_ => this._overlayRef?.hasAttached()),
-                map(_ => false)
-            );
-        });
-
-        const outsideClick$: Observable<boolean> = this.dismissesOnOutsideClick()
-            ? this._outsideClick$.asObservable()
-            : EMPTY;
-
-        /**
-         * Merge all open and close events into a single stream that emits a boolean that indicates whether
-         * the callout should be opened or closed
-         */
-        const toggleEvents$ = merge(
-            ...openEvents$.concat(
+    /**
+     * Every source that can open or close the callout, as a single stream of whether it should now be open.
+     * `_outsideClick$` is included unconditionally, as `_open` is what decides whether anything pushes into it
+     */
+    private _getToggleEvents$(): Observable<boolean> {
+        return merge(
+            ...this._getOpenEvents$().concat(
+                this._getCloseEvents$(),
                 this._manualToggleEvent$,
                 this._isOpen$,
-                closeEvents$,
-                outsideClick$,
+                this._outsideClick$,
                 this.getAdditionalToggleEvents()
             )
         );
+    }
 
-        toggleEvents$
-            .pipe(
-                /**
-                 * This debounce prevents instantaneous opening and closing (or vice-versa) in the scenario where `openEvents` contains the
-                 * same event as `closeEvents`. For example, if both contain the "click" event, this will be fired twice in the space of a few ms
-                 */
-                debounce(() => {
-                    if (this.triggers().openEvents.some(e => this.triggers().closeEvents.includes(e))) {
-                        return timer(5);
-                    }
-                    return of(0);
-                }),
-                filter(_ => !this.isDisabled()),
-                /**
-                 * If this is an open event, use the input delay. Don't apply the delay to the close event
-                 */
-                switchMap(isOpenEvent => {
-                    if (isOpenEvent && this.triggers().delay) {
-                        return of(isOpenEvent).pipe(delay(this.triggers().delay), takeUntil(this._cancelDelayedOpen$));
-                    }
-                    return of(isOpenEvent);
-                }),
-                takeUntil(this._destroyed$)
+    /** The host events that open the callout, ignored while it is already open */
+    private _getOpenEvents$(): Observable<boolean>[] {
+        return this.triggers().openEvents.map(eventName =>
+            fromEvent(this._elRef.nativeElement, eventName).pipe(
+                filter(_ => !this._overlayRef?.hasAttached()),
+                map(_ => true)
             )
-            .subscribe(isOpenEvent => {
-                if (isOpenEvent) {
-                    const ref = this._open();
+        );
+    }
 
-                    /**
-                     * No ref will be returned if the overlay is already attached
-                     */
-                    if (ref) {
-                        ref.changeDetectorRef.detectChanges();
-                        this._calloutEl = this._overlayRef.overlayElement.querySelector('.tooltip');
+    /** The host events that close the callout. They also cancel an open that is still waiting out its delay */
+    private _getCloseEvents$(): Observable<boolean>[] {
+        return this.triggers().closeEvents.map(eventName =>
+            fromEvent(this._elRef.nativeElement, eventName).pipe(
+                tap(_ => this._cancelDelayedOpen$.next()),
+                filter(_ => this._overlayRef?.hasAttached()),
+                map(_ => false)
+            )
+        );
+    }
 
-                        /**
-                         * The content has to have rendered before the subclass can expose it
-                         */
-                        if (this._calloutEl) {
-                            this.onCalloutOpened(this._calloutEl);
-                        }
+    /**
+     * Whether the same event both opens and closes the callout - "click" in both lists, say - which fires the
+     * merged stream twice within a few ms. The debounce this feeds keeps that from opening and instantly closing
+     */
+    private _hasOverlappingToggleEvents(): boolean {
+        return this.triggers().openEvents.some(e => this.triggers().closeEvents.includes(e));
+    }
 
-                        ref.instance.close.pipe(takeUntil(this._tooltipContainerDestroyed$)).subscribe(_ => {
-                            this.nwClose.emit();
-                            this._close();
-                        });
+    /** Hold an open event for `delay`, cancellable by a close event in the meantime. Closing is never delayed */
+    private _delayIfOpening(isOpenEvent: boolean): Observable<boolean> {
+        if (!isOpenEvent || !this.triggers().delay) {
+            return of(isOpenEvent);
+        }
 
-                        /**
-                         * When the TooltipContainerComponent is destroyed we fire the _tooltipContainerDestroyed$
-                         * so that our subscription to TooltipContainerComponent.close is unsubscribed from
-                         */
-                        ref.onDestroy(() => {
-                            this._tooltipContainerDestroyed$.next();
-                            this._tooltipContainerDestroyed$.complete();
-                        });
-                    }
-                } else {
-                    this._close();
-                }
-            });
+        return of(isOpenEvent).pipe(delay(this.triggers().delay), takeUntil(this._cancelDelayedOpen$));
+    }
+
+    /**
+     * Open the callout and hand it to the subclass to expose, which can only happen once its content has rendered
+     */
+    private _openAndExpose(): void {
+        const ref = this._open();
+
+        /**
+         * No ref is returned where the overlay is already attached
+         */
+        if (!ref) {
+            return;
+        }
+
+        ref.changeDetectorRef.detectChanges();
+        this._calloutEl = this._overlayRef.overlayElement.querySelector('.tooltip');
+
+        if (this._calloutEl) {
+            this.onCalloutOpened(this._calloutEl);
+        }
+
+        this._subscribeToContainerClose(ref);
+    }
+
+    /**
+     * Close on the container's own close button. Released with the container it belongs to, so that a callout
+     * opened and closed repeatedly does not leave a subscription behind on each destroyed instance
+     */
+    private _subscribeToContainerClose(ref: ComponentRef<TooltipContainerComponent>): void {
+        const closeSub = ref.instance.close.subscribe(_ => {
+            this.nwClose.emit();
+            this._close();
+        });
+
+        ref.onDestroy(() => closeSub.unsubscribe());
     }
 
     /**
@@ -430,9 +452,32 @@ export abstract class CalloutBaseDirective implements OnInit, OnDestroy {
             });
     }
 
+    /**
+     * The size of the arrow the callout has to be offset by, read from the `--tooltip-arrow-size` custom property
+     * that `_tooltip.scss` publishes off `$tooltip-arrow-width`, so that overriding that variable moves the arrow
+     * and the space reserved for it together.
+     *
+     * Read from the host rather than measured off the arrow itself, which is a zero-size CSS triangle that does
+     * not exist yet: the offsets are baked into the position pairs before the callout is ever attached. Memoised,
+     * as a strategy build asks for it once per candidate placement
+     */
+    private _getArrowSize(): number {
+        if (this._arrowSize === null) {
+            const declared = getComputedStyle(this._elRef.nativeElement).getPropertyValue('--tooltip-arrow-size');
+
+            /**
+             * Falls back where the library stylesheet has not been included, as in a test that renders the
+             * directive alone
+             */
+            this._arrowSize = parseFloat(declared) || 5;
+        }
+
+        return this._arrowSize;
+    }
+
     private _getPositionPair(placement: Placement): ConnectionPositionPair {
-        // Include a 3px offset so that the tooltip is not flush with the element
-        const offset = this._tooltipArrowSize + 3;
+        /** Enough to clear the arrow, plus 3px so that the callout is not flush with its host */
+        const offset = this._getArrowSize() + 3;
         const getXOffset = (placement: Placement) => {
             if (!this.withArrow()) {
                 return 0;

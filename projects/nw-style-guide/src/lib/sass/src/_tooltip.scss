@@ -1,5 +1,14 @@
 @use './variables';
 
+// Published so that the callout directive can read the arrow size it has to leave room for. On :root rather than
+// on .tooltip with the other custom properties, as it is read from the host element before any callout exists.
+//
+// $tooltip-arrow-width remains the source of truth for both this and the arrow's own border-width below, so
+// overriding that variable moves the arrow and the space reserved for it together
+:root {
+    --tooltip-arrow-size: #{variables.$tooltip-arrow-width};
+}
+
 .tooltip {
     z-index: variables.$zindex-tooltip;
     display: block;

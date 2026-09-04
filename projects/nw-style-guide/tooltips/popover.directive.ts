@@ -20,7 +20,7 @@ export class PopoverDirective extends CalloutBaseDirective {
     private _focusTrapFactory = inject(FocusTrapFactory);
     private _interactivityChecker = inject(InteractivityChecker);
 
-    readonly popover = input<string | TemplateRef<any>>(undefined, { alias: 'nwPopover' });
+    readonly nwPopover = input<string | TemplateRef<any>>();
     /** Display a close button or not */
     readonly withClose = input(false);
     readonly closeOnOutsideClick = input(false);
@@ -29,7 +29,7 @@ export class PopoverDirective extends CalloutBaseDirective {
     /** The element focused before focus was moved into the callout */
     private _previouslyFocusedEl: HTMLElement | null = null;
 
-    protected readonly content: Signal<string | TemplateRef<any>> = this.popover;
+    protected readonly content: Signal<string | TemplateRef<any>> = this.nwPopover;
 
     protected override hasCloseButton(): boolean {
         return this.withClose();
