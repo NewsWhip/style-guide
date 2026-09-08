@@ -1,14 +1,37 @@
 <h1 class="page-header">Animations</h1>
 
 <p>
-    Currently only two animation properties are exported from the style guide. These two values can be obtained like so:
+    Animations have been moved into the main spike project. There are 5 global animation types:
+    <strong>fade-in, fade-out, grid-collapse, grid-expand and skeleton</strong>. You only need to import the stylesheet.
 </p>
-
-<code>{{ 'import { NW_DURATION, NW_EASING } from "nw-style-guide/animations"' }}</code>
 
 <hr />
 
-<p>The values for these variables are</p>
+<h2>Fade In/Out</h2>
+<p>
+    Attach <strong>animate.enter/leave</strong> to any element
+    <br />
+    <code>{{ 'animate.enter="fade-in"' }}</code>
+    <br />
+    <code>{{ 'animate.leave="fade-out"' }}</code>
+</p>
+
+<hr />
+
+<h2>Grid Expand/Collapse</h2>
+<pre><code>{{ gridSnippet }}</code></pre>
+<p>
+    <strong>collapse-expand-grid-container</strong> class should be the outer wrapper
+    <br />
+    <strong>collapse-expand-grid-item</strong> class should be on the inner wrapper
+    <br />
+    <code>{{ 'animate.enter="grid-expand"' }}</code>
+    <br />
+    <code>{{ 'animate.leave="grid-collapse"' }}</code>
+</p>
+<hr />
+
+<h2>Constants</h2>
 
 <p>
     Default animation duration: <strong>{{ duration }}</strong>
