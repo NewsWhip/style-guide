@@ -1,0 +1,10 @@
+<div
+    class="code-sandbox"
+    [class.horizontal]="layout() === 'horizontal'">
+    <div class="preview">
+        <ng-content></ng-content>
+    </div>
+    <div class="code">
+        <app-code [snippet]="snippet()"></app-code>
+    </div>
+</div>

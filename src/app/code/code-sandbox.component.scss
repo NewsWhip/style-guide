@@ -7,44 +7,12 @@
     margin-bottom: 24px;
     max-width: fit-content;
 
-    &__bg-toggle {
-        position: absolute;
-        top: 8px;
-        right: 8px;
-        border: none;
-        background: variables.get-color('primary', 5x-light);
-        border-radius: 4px;
-        padding: 4px 8px;
-        font-size: 14px;
-        color: variables.get-color('gray', dark);
-        cursor: pointer;
-
-        &:hover {
-            background: variables.get-color('gray', 5x-light);
-        }
-
-        &--active {
-            background: variables.$level1;
-            color: variables.get-color('primary', 5x-light);
-            border-color: variables.$level4;
-
-            &:hover {
-                background: variables.$level5;
-            }
-        }
-    }
-
-    &__preview {
-        position: relative;
+    .preview {
         padding: 24px;
-        background: variables.get-color('primary', 5x-light);
-
-        &--dark {
-            background: variables.$level1;
-        }
+        background: variables.$level1;
     }
 
-    &__code {
+    .code {
         border-top: 1px solid variables.get-color('primary', 5x-light);
 
         pre {
@@ -52,15 +20,15 @@
         }
     }
 
-    &--horizontal {
+    &.horizontal {
         display: flex;
         max-width: none;
 
-        .code-sandbox__preview {
+        .preview {
             flex: 0 0 auto;
         }
 
-        .code-sandbox__code {
+        .code {
             flex: 1 1 auto;
             border-top: none;
             border-left: 1px solid variables.get-color('primary', 5x-light);

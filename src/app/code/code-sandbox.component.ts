@@ -7,31 +7,10 @@ import { ISnippet } from './ISnippet';
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     imports: [AppCodeComponent],
-    template: `
-        <div
-            class="code-sandbox"
-            [class.code-sandbox--horizontal]="layout() === 'horizontal'">
-            <div
-                class="code-sandbox__preview"
-                [class.code-sandbox__preview--dark]="darkBg">
-                <button
-                    class="code-sandbox__bg-toggle"
-                    [class.code-sandbox__bg-toggle--active]="darkBg"
-                    (click)="darkBg = !darkBg">
-                    <i class="fas fa-adjust"></i>
-                </button>
-                <ng-content></ng-content>
-            </div>
-            <div class="code-sandbox__code">
-                <app-code [snippet]="snippet()"></app-code>
-            </div>
-        </div>
-    `,
+    templateUrl: './code-sandbox.component.html',
     styleUrls: ['./code-sandbox.component.scss']
 })
 export class CodeSandboxComponent {
     snippet = input.required<ISnippet>();
     layout = input<'vertical' | 'horizontal'>('vertical');
-
-    darkBg = true;
 }
