@@ -2,7 +2,7 @@
 
 .code-sandbox {
     border: 1px solid variables.get-color('primary', 5x-light);
-    border-radius: 6px;
+    border-radius: 4px;
     overflow: hidden;
     margin-bottom: 24px;
     max-width: fit-content;
@@ -11,24 +11,25 @@
         position: absolute;
         top: 8px;
         right: 8px;
-        border: 1px solid #ccc;
+        border: none;
         background: variables.get-color('primary', 5x-light);
         border-radius: 4px;
         padding: 4px 8px;
         font-size: 14px;
-        color: #555;
+        color: variables.get-color('gray', dark);
+        cursor: pointer;
 
         &:hover {
-            background: #eee;
+            background: variables.get-color('gray', 5x-light);
         }
 
         &--active {
-            background: variables.$level3;
+            background: variables.$level1;
             color: variables.get-color('primary', 5x-light);
-            border-color: #333;
+            border-color: variables.$level4;
 
             &:hover {
-                background: #444;
+                background: variables.$level5;
             }
         }
     }
@@ -37,7 +38,6 @@
         position: relative;
         padding: 24px;
         background: variables.get-color('primary', 5x-light);
-        transition: background-color 0.2s ease;
 
         &--dark {
             background: variables.$level1;
