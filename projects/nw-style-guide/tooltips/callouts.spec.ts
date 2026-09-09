@@ -517,7 +517,7 @@ describe('callouts', () => {
 
         describe('the breakpoint', () => {
             /**
-             * `getTriggerDefaults` is read as the directive initialises, so the width has to be in place before the
+             * `_getTriggerDefaults` is read as the directive initialises, so the width has to be in place before the
              * first change detection rather than set part way through a test
              */
             const renderAt = (width: number): HTMLElement => {

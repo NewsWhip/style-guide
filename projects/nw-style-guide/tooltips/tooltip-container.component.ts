@@ -45,7 +45,7 @@ import { NgClass, NgTemplateOutlet } from '@angular/common';
 export class TooltipContainerComponent {
     data = inject<ITooltipData>(TOOLTIP_CONTEXT_TOKEN);
 
-    public close: EventEmitter<void> = new EventEmitter();
+    public close = new EventEmitter<void>();
     public isTemplateRef: boolean = false;
 
     constructor() {

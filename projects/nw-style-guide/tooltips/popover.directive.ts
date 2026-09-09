@@ -29,17 +29,17 @@ export class PopoverDirective extends CalloutBaseDirective {
     /** The element focused before focus was moved into the callout */
     private _previouslyFocusedEl: HTMLElement | null = null;
 
-    protected readonly content: Signal<string | TemplateRef<any>> = this.nwPopover;
+    protected readonly _content: Signal<string | TemplateRef<any>> = this.nwPopover;
 
-    protected override hasCloseButton(): boolean {
+    protected override _hasCloseButton(): boolean {
         return this.withClose();
     }
 
-    protected override dismissesOnOutsideClick(): boolean {
+    protected override _dismissesOnOutsideClick(): boolean {
         return this.closeOnOutsideClick();
     }
 
-    protected getTriggerDefaults(): ICalloutTriggers {
+    protected _getTriggerDefaults(): ICalloutTriggers {
         return {
             delay: 0,
             openEvents: ['click'],
@@ -65,14 +65,14 @@ export class PopoverDirective extends CalloutBaseDirective {
     /**
      * Name the callout after the host, announce it on the host, and move focus into it
      */
-    protected onCalloutOpened(calloutEl: HTMLElement): void {
+    protected _onCalloutOpened(calloutEl: HTMLElement): void {
         calloutEl.setAttribute('role', 'dialog');
         calloutEl.setAttribute('aria-labelledby', this._getHostId());
         /**
          * A dialog, unlike a tooltip, does not take its name from its contents, so the content has to be pointed
          * at explicitly or focusing the callout announces its name and nothing else
          */
-        calloutEl.setAttribute('aria-describedby', `${this.calloutId}-content`);
+        calloutEl.setAttribute('aria-describedby', `${this._calloutId}-content`);
         this._elRef.nativeElement.setAttribute('aria-expanded', 'true');
 
         if (this._focusCalloutIfOpenedFromHost(calloutEl)) {
@@ -83,7 +83,7 @@ export class PopoverDirective extends CalloutBaseDirective {
     /**
      * Release the focus trap, restoring focus unless the user has already moved it, e.g. by clicking outside
      */
-    protected override onCalloutClosing(): void {
+    protected override _onCalloutClosing(): void {
         /**
          * Restore only focus that is still ours to move. Not where the user has already taken it elsewhere, and not
          * while the directive is being destroyed - the trigger is on its way out of the document, so focusing it
@@ -109,7 +109,7 @@ export class PopoverDirective extends CalloutBaseDirective {
      * Tabbing out of an untrapped callout would land at the end of the document, as the overlay is appended to the
      * body. Close and hand focus back to the host instead, so that tabbing carries on from where it left off
      */
-    protected override onCalloutKeydown(event: KeyboardEvent): void {
+    protected override _onCalloutKeydown(event: KeyboardEvent): void {
         if (event.key !== 'Tab' || !this._calloutEl?.contains(document.activeElement)) {
             return;
         }
@@ -171,7 +171,7 @@ export class PopoverDirective extends CalloutBaseDirective {
         const host = this._elRef.nativeElement;
 
         if (!host.id) {
-            host.id = `${this.calloutId}-trigger`;
+            host.id = `${this._calloutId}-trigger`;
         }
 
         return host.id;

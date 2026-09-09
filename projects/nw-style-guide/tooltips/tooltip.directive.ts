@@ -48,14 +48,14 @@ export class TooltipDirective extends CalloutBaseDirective implements OnDestroy 
     /** The text currently registered with the `AriaDescriber`, if any */
     private _describedText: string | null = null;
 
-    protected readonly content: Signal<string | TemplateRef<any>> = this.nwTooltip;
+    protected readonly _content: Signal<string | TemplateRef<any>> = this.nwTooltip;
 
     /**
      * Whether focus opens this tooltip: derived, because a manually controlled tooltip - one with no open events -
      * is opened by its host component alone
      */
     private readonly _opensOnFocus = computed(
-        () => this.showOnFocus() ?? this.triggers().openEvents.includes('mouseenter')
+        () => this.showOnFocus() ?? this._triggers().openEvents.includes('mouseenter')
     );
 
     /** The content as plain text, or null when there is nothing describable to register */
@@ -94,7 +94,7 @@ export class TooltipDirective extends CalloutBaseDirective implements OnDestroy 
         }
     }
 
-    protected getTriggerDefaults(): ICalloutTriggers {
+    protected _getTriggerDefaults(): ICalloutTriggers {
         /**
          * There are no hover events on touch, so a tooltip on a small screen opens on tap instead
          */
@@ -121,21 +121,21 @@ export class TooltipDirective extends CalloutBaseDirective implements OnDestroy 
      * A tooltip has no outside-click behaviour of its own, but a tap-opened one on touch has no hover to end it,
      * so tapping elsewhere has to dismiss it
      */
-    protected override dismissesOnOutsideClick(): boolean {
+    protected override _dismissesOnOutsideClick(): boolean {
         return window.innerWidth < this.breakpoint();
     }
 
-    protected onCalloutOpened(calloutEl: HTMLElement): void {
+    protected _onCalloutOpened(calloutEl: HTMLElement): void {
         calloutEl.setAttribute('role', 'tooltip');
         this._setDescribedByCallout(true);
     }
 
-    protected override onCalloutClosing(): void {
+    protected override _onCalloutClosing(): void {
         this._setDescribedByCallout(false);
     }
 
-    protected override getAdditionalToggleEvents(): Observable<boolean> {
-        return this._opensOnFocus() ? this._getFocusEvents$() : super.getAdditionalToggleEvents();
+    protected override _getAdditionalToggleEvents(): Observable<boolean> {
+        return this._opensOnFocus() ? this._getFocusEvents$() : super._getAdditionalToggleEvents();
     }
 
     /**
@@ -161,9 +161,9 @@ export class TooltipDirective extends CalloutBaseDirective implements OnDestroy 
         const host = this._elRef.nativeElement;
 
         if (isOpen) {
-            addAriaReferencedId(host, 'aria-describedby', this.calloutId);
+            addAriaReferencedId(host, 'aria-describedby', this._calloutId);
         } else {
-            removeAriaReferencedId(host, 'aria-describedby', this.calloutId);
+            removeAriaReferencedId(host, 'aria-describedby', this._calloutId);
         }
     }
 

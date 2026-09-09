@@ -39,7 +39,7 @@ import { toObservable } from '@angular/core/rxjs-interop';
  * closes it on the configured events, and renders the content into a `TooltipContainerComponent`.
  *
  * It has no selector and is abstract, so it cannot be attached to an element. What a callout *means* - whether it is
- * a description of its host or a dialog the user opens - is decided by the subclass through `onCalloutOpened`. Neither
+ * a description of its host or a dialog the user opens - is decided by the subclass through `_onCalloutOpened`. Neither
  * subclass can reach the other's behaviour
  */
 @Directive()
@@ -54,7 +54,7 @@ export abstract class CalloutBaseDirective implements OnInit, OnDestroy {
      * rather than a module-level counter, so that ids stay unique across two copies of the library on one page and
      * stable between a server render and its hydration
      */
-    protected readonly calloutId = inject(_IdGenerator).getId('nw-callout-');
+    protected readonly _calloutId = inject(_IdGenerator).getId('nw-callout-');
 
     /**
      * An object that can be passed when the content is a `TemplateRef`
@@ -70,7 +70,7 @@ export abstract class CalloutBaseDirective implements OnInit, OnDestroy {
      * `isOpen` input
      */
     readonly isDisabled = input(false);
-    /** Number of ms to wait before opening. Defaults per kind of callout - see `getTriggerDefaults` */
+    /** Number of ms to wait before opening. Defaults per kind of callout - see `_getTriggerDefaults` */
     readonly delay = input<number>();
     /** Change the placement of the callout to its opposite position when it moves outside the viewport */
     readonly autoFlip = input(true);
@@ -108,7 +108,7 @@ export abstract class CalloutBaseDirective implements OnInit, OnDestroy {
      * Undefined is filtered out: an unbound `isOpen` should say nothing rather than assert that it is closed
      */
     private readonly _isOpen$: Observable<boolean> = toObservable(this.isOpen).pipe(
-        filter((isOpen): isOpen is boolean => isOpen !== undefined)
+        filter(isOpen => isOpen !== undefined)
     );
 
     /**
@@ -116,14 +116,14 @@ export abstract class CalloutBaseDirective implements OnInit, OnDestroy {
      * an update that hands it the strategy it already has
      */
     private readonly _positionStrategy = computed(() => this._getPositionStrategy(this.placement()));
-    private readonly _scrollStrategy = computed(() => this._getScrollStrategy(this.triggers().closeOnScroll));
+    private readonly _scrollStrategy = computed(() => this._getScrollStrategy(this._triggers().closeOnScroll));
 
     /**
      * The events and timings this callout actually opens with: what the consumer bound, falling back to the
      * defaults for its kind. Derived rather than assigned, so that a rebound input still wins
      */
-    protected readonly triggers: Signal<ICalloutTriggers> = computed(() => {
-        const defaults = this.getTriggerDefaults();
+    protected readonly _triggers: Signal<ICalloutTriggers> = computed(() => {
+        const defaults = this._getTriggerDefaults();
 
         return {
             delay: this.delay() ?? defaults.delay,
@@ -135,50 +135,50 @@ export abstract class CalloutBaseDirective implements OnInit, OnDestroy {
     });
 
     private _overlayRef: OverlayRef | null = null;
-    private _destroyed$: Subject<void> = new Subject();
-    private _cancelDelayedOpen$: Subject<void> = new Subject();
+    private _destroyed$ = new Subject<void>();
+    private _cancelDelayedOpen$ = new Subject<void>();
     /** The `.tooltip` element of the open callout */
     protected _calloutEl: HTMLElement | null = null;
-    private _manualToggleEvent$: Subject<boolean> = new Subject();
+    private _manualToggleEvent$ = new Subject<boolean>();
     /** Emits only where the subclass opted into outside-click dismissal - see `_open` */
-    private _outsideClick$: Subject<boolean> = new Subject();
+    private _outsideClick$ = new Subject<boolean>();
     /** Set while the directive is being torn down, so that closing does not act on a host that is going away */
     protected _isDestroyed: boolean = false;
 
     /** The content, which each subclass declares as its own input under its own selector */
-    protected abstract readonly content: Signal<string | TemplateRef<any>>;
+    protected abstract readonly _content: Signal<string | TemplateRef<any>>;
 
     /** The events, delay and pointer behaviour this kind of callout opens with */
-    protected abstract getTriggerDefaults(): ICalloutTriggers;
+    protected abstract _getTriggerDefaults(): ICalloutTriggers;
 
     /**
      * Expose the callout to assistive technology, once its content has rendered. This is the whole of the difference
      * between a tooltip and a popover
      */
-    protected abstract onCalloutOpened(calloutEl: HTMLElement): void;
+    protected abstract _onCalloutOpened(calloutEl: HTMLElement): void;
 
     /** Any key other than Escape that this kind of callout responds to, while it is open */
-    protected onCalloutKeydown(_event: KeyboardEvent): void {
+    protected _onCalloutKeydown(_event: KeyboardEvent): void {
         // nothing by default
     }
 
-    /** Undo whatever `onCalloutOpened` did, as the callout closes */
-    protected onCalloutClosing(): void {
+    /** Undo whatever `_onCalloutOpened` did, as the callout closes */
+    protected _onCalloutClosing(): void {
         // nothing by default
     }
 
     /** Whether the callout renders a close button. Only a popover does */
-    protected hasCloseButton(): boolean {
+    protected _hasCloseButton(): boolean {
         return false;
     }
 
     /** Whether a pointer event outside the callout closes it */
-    protected dismissesOnOutsideClick(): boolean {
+    protected _dismissesOnOutsideClick(): boolean {
         return false;
     }
 
     /** Any further open or close events the subclass contributes, e.g. a tooltip opening on keyboard focus */
-    protected getAdditionalToggleEvents(): Observable<boolean> {
+    protected _getAdditionalToggleEvents(): Observable<boolean> {
         return EMPTY;
     }
 
@@ -232,7 +232,7 @@ export abstract class CalloutBaseDirective implements OnInit, OnDestroy {
             this._createOverlay();
             this._subscribeToCalloutKeydown();
 
-            if (this.dismissesOnOutsideClick()) {
+            if (this._dismissesOnOutsideClick()) {
                 this._subscribeToOutsidePointerEvents();
             }
         }
@@ -269,7 +269,7 @@ export abstract class CalloutBaseDirective implements OnInit, OnDestroy {
                     return;
                 }
 
-                this.onCalloutKeydown(event);
+                this._onCalloutKeydown(event);
             });
     }
 
@@ -290,7 +290,7 @@ export abstract class CalloutBaseDirective implements OnInit, OnDestroy {
 
     protected _close(): void {
         if (this._overlayRef?.hasAttached()) {
-            this.onCalloutClosing();
+            this._onCalloutClosing();
             this._overlayRef.detach();
             this._calloutEl = null;
             this.nwHidden.emit();
@@ -301,7 +301,7 @@ export abstract class CalloutBaseDirective implements OnInit, OnDestroy {
         const positionStrategy = this._positionStrategy();
         const scrollStrategy = this._scrollStrategy();
         const disposeOnNavigation = true;
-        const panelClasses: string[] = ['tooltip-overlay', `pointer-events-${this.triggers().pointerEvents}`];
+        const panelClasses: string[] = ['tooltip-overlay', `pointer-events-${this._triggers().pointerEvents}`];
         this._overlayRef = this._overlay.create({
             positionStrategy,
             scrollStrategy,
@@ -319,11 +319,11 @@ export abstract class CalloutBaseDirective implements OnInit, OnDestroy {
      */
     private _createInjector(): Injector {
         const tooltipData: ITooltipData = {
-            tooltip: this.content(),
-            id: this.calloutId,
+            tooltip: this._content(),
+            id: this._calloutId,
             containerClass: this.containerClass(),
             withArrow: this.withArrow(),
-            withClose: this.hasCloseButton(),
+            withClose: this._hasCloseButton(),
             templateRefContext: this.context()
         };
 
@@ -358,14 +358,14 @@ export abstract class CalloutBaseDirective implements OnInit, OnDestroy {
                 this._manualToggleEvent$,
                 this._isOpen$,
                 this._outsideClick$,
-                this.getAdditionalToggleEvents()
+                this._getAdditionalToggleEvents()
             )
         );
     }
 
     /** The host events that open the callout, ignored while it is already open */
     private _getOpenEvents$(): Observable<boolean>[] {
-        return this.triggers().openEvents.map(eventName =>
+        return this._triggers().openEvents.map(eventName =>
             fromEvent(this._elRef.nativeElement, eventName).pipe(
                 filter(_ => !this._overlayRef?.hasAttached()),
                 map(_ => true)
@@ -375,7 +375,7 @@ export abstract class CalloutBaseDirective implements OnInit, OnDestroy {
 
     /** The host events that close the callout. They also cancel an open that is still waiting out its delay */
     private _getCloseEvents$(): Observable<boolean>[] {
-        return this.triggers().closeEvents.map(eventName =>
+        return this._triggers().closeEvents.map(eventName =>
             fromEvent(this._elRef.nativeElement, eventName).pipe(
                 tap(_ => this._cancelDelayedOpen$.next()),
                 filter(_ => this._overlayRef?.hasAttached()),
@@ -389,16 +389,16 @@ export abstract class CalloutBaseDirective implements OnInit, OnDestroy {
      * merged stream twice within a few ms. The debounce this feeds keeps that from opening and instantly closing
      */
     private _hasOverlappingToggleEvents(): boolean {
-        return this.triggers().openEvents.some(e => this.triggers().closeEvents.includes(e));
+        return this._triggers().openEvents.some(e => this._triggers().closeEvents.includes(e));
     }
 
     /** Hold an open event for `delay`, cancellable by a close event in the meantime. Closing is never delayed */
     private _delayIfOpening(isOpenEvent: boolean): Observable<boolean> {
-        if (!isOpenEvent || !this.triggers().delay) {
+        if (!isOpenEvent || !this._triggers().delay) {
             return of(isOpenEvent);
         }
 
-        return of(isOpenEvent).pipe(delay(this.triggers().delay), takeUntil(this._cancelDelayedOpen$));
+        return of(isOpenEvent).pipe(delay(this._triggers().delay), takeUntil(this._cancelDelayedOpen$));
     }
 
     /**
@@ -418,7 +418,7 @@ export abstract class CalloutBaseDirective implements OnInit, OnDestroy {
         this._calloutEl = this._overlayRef.overlayElement.querySelector('.tooltip');
 
         if (this._calloutEl) {
-            this.onCalloutOpened(this._calloutEl);
+            this._onCalloutOpened(this._calloutEl);
         }
 
         this._subscribeToContainerClose(ref);
@@ -638,10 +638,7 @@ export abstract class CalloutBaseDirective implements OnInit, OnDestroy {
          * will have a lower priority than each of the preferred positions generated from the `placement` input
          */
         const positions = this.autoFlip()
-            ? [
-                  ...primaryPositions,
-                  ...placementsList.map(p => this._getPositionPair(placementFlipMap[p], arrowSize))
-              ]
+            ? [...primaryPositions, ...placementsList.map(p => this._getPositionPair(placementFlipMap[p], arrowSize))]
             : [...primaryPositions];
 
         return this._overlay
@@ -661,8 +658,8 @@ export abstract class CalloutBaseDirective implements OnInit, OnDestroy {
 
     /**
      * `_close` rather than `hide`, which only asks the debounced pipeline to close and so would never arrive before
-     * the subscription is torn down below. Going straight there also runs `onCalloutClosing` exactly once, and only
-     * where the callout was actually open - `hide` followed by an unconditional `onCalloutClosing` did neither
+     * the subscription is torn down below. Going straight there also runs `_onCalloutClosing` exactly once, and only
+     * where the callout was actually open - `hide` followed by an unconditional `_onCalloutClosing` did neither
      */
     ngOnDestroy() {
         this._isDestroyed = true;
