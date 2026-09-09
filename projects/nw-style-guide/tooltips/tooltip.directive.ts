@@ -36,7 +36,7 @@ export class TooltipDirective extends CalloutBaseDirective implements OnDestroy 
      */
     readonly breakpoint = input(767);
 
-    /** The text currently registered with the `AriaDescriber`, if any */
+    /** The last text handed to `_registerDescription`. Only registered with the `AriaDescriber` where it is non-empty */
     private _describedText: string | null = null;
 
     protected readonly _content: Signal<string | TemplateRef<any>> = this.nwTooltip;
@@ -48,21 +48,22 @@ export class TooltipDirective extends CalloutBaseDirective implements OnDestroy 
      */
     private readonly _opensOnFocus = computed(() => this._triggers().openEvents.includes('mouseenter'));
 
-    /** The content as plain text, or null when there is nothing describable to register */
+    /** The content as plain text, falsy where there is nothing to describe the host with */
     private readonly _describableText = computed(() => {
         const content = this.nwTooltip();
+        const withDescription = this.withAriaDescription();
 
-        if (this.withAriaDescription() === false || typeof content !== 'string') {
+        if (withDescription === false || typeof content !== 'string') {
             return null;
         }
 
-        const text = this._toPlainText(content) || null;
+        const text = this._toPlainText(content);
 
         /**
          * A description that repeats the host's accessible name verbatim would be announced twice, so it is
          * skipped unless withAriaDescription demands it
          */
-        if (this.withAriaDescription() === undefined && text && this._normalize(text) === this._hostAccessibleName()) {
+        if (withDescription === undefined && text === this._hostAccessibleName()) {
             return null;
         }
 
@@ -181,14 +182,17 @@ export class TooltipDirective extends CalloutBaseDirective implements OnDestroy 
 
     /**
      * String content is rendered as HTML, so parse out its text. `DOMParser` in preference to an element's
-     * `innerHTML`, as it creates an inert document that loads no resources
+     * `innerHTML`, as it creates an inert document that loads no resources.
+     *
+     * Normalised on the way out, so that it is directly comparable with the host's accessible name and so that
+     * the indentation of multi-line content does not reach the description
      */
     private _toPlainText(content: string): string {
         const text = content.includes('<')
             ? new DOMParser().parseFromString(content, 'text/html').body.textContent
             : content;
 
-        return text.trim();
+        return this._normalize(text);
     }
 
     override ngOnDestroy(): void {
