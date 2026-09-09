@@ -1,41 +1,37 @@
-<div
-    class="page-header"
-    style="padding-bottom: 0">
-    <h3>Toasts</h3>
+<h2 class="page-header">Toasts</h2>
 
-    <p>Toasts generally provide application-level feedback & confirmation after the user performs an action.</p>
+<p>Toasts generally provide application-level feedback & confirmation after the user performs an action.</p>
 
-    <div class="tabs-container">
-        <nw-tabs size="md">
-            <li
-                nwTab
-                [isActive]="selectedTab === 'design'"
-                role="presentation">
-                <a
-                    [routerLink]="['.']"
-                    [queryParams]="{ section: 'design' }"
-                    role="tab"
-                    >Design</a
-                >
-            </li>
-            <li
-                nwTab
-                [isActive]="selectedTab === 'api'"
-                role="presentation">
-                <a
-                    [routerLink]="['.']"
-                    [queryParams]="{ section: 'api' }"
-                    role="tab"
-                    >API</a
-                >
-            </li>
-        </nw-tabs>
-    </div>
+<div class="tabs-container">
+    <nw-tabs size="md">
+        <li
+            nwTab
+            [isActive]="selectedTab === 'design'"
+            role="presentation">
+            <a
+                [routerLink]="['.']"
+                [queryParams]="{ section: 'design' }"
+                role="tab"
+                >Design</a
+            >
+        </li>
+        <li
+            nwTab
+            [isActive]="selectedTab === 'api'"
+            role="presentation">
+            <a
+                [routerLink]="['.']"
+                [queryParams]="{ section: 'api' }"
+                role="tab"
+                >API</a
+            >
+        </li>
+    </nw-tabs>
 </div>
 
 @if (selectedTab === 'design') {
     <div class="tab-content">
-        <h4 style="margin-bottom: 16px">Live Example</h4>
+        <h3 style="margin-bottom: 16px">Live Example</h3>
 
         <div class="live-example-form">
             <form [formGroup]="form">
@@ -137,7 +133,7 @@
         <div class="demo-section">
             <div class="row">
                 <div class="col-md-8 col-sm-12">
-                    <h4>Importing</h4>
+                    <h3>Importing</h3>
                     <app-copy-code>{{ importModule }}</app-copy-code>
                 </div>
             </div>
@@ -146,7 +142,7 @@
         <div class="demo-section">
             <div class="row">
                 <div class="col-md-8 col-sm-12">
-                    <h4>Basic example</h4>
+                    <h3>Basic example</h3>
                     <app-copy-code>{{ example }}</app-copy-code>
                 </div>
             </div>
@@ -155,7 +151,7 @@
         <div class="demo-section">
             <div class="row">
                 <div class="col-md-8 col-sm-12">
-                    <h4>Custom configuration</h4>
+                    <h3>Custom configuration</h3>
                     <p>
                         Toasts are displayed using a <code>DomPortalOutlet</code> provided by
                         <code>&#64;angular/cdk</code>. By default, this portal outlet is attached to the document body.
@@ -211,7 +207,7 @@
         <div class="demo-section">
             <div class="row">
                 <div class="col-md-8 col-sm-12">
-                    <h4>Toaster API</h4>
+                    <h3>Toaster API</h3>
                     <table class="table table-bordered">
                         <thead>
                             <tr>
@@ -237,7 +233,7 @@
         <div class="demo-section">
             <div class="row">
                 <div class="col-md-8 col-sm-12">
-                    <h4>IToast interface</h4>
+                    <h3>IToast interface</h3>
                     <table class="table table-bordered">
                         <thead>
                             <tr>
@@ -267,7 +263,7 @@
         <div class="demo-section">
             <div class="row">
                 <div class="col-md-8 col-sm-12">
-                    <h4>IToastConfig interface</h4>
+                    <h3>IToastConfig interface</h3>
                     <table class="table table-bordered">
                         <thead>
                             <tr>

@@ -1,41 +1,37 @@
-<div
-    class="page-header"
-    style="padding-bottom: 0">
-    <h3>Email Input</h3>
+<h2 class="page-header">Email Input</h2>
 
-    <p>This is an input that can be used to enter multiple emails in a form</p>
+<p>This is an input that can be used to enter multiple emails in a form</p>
 
-    <div class="tabs-container">
-        <nw-tabs size="md">
-            <li
-                nwTab
-                [isActive]="selectedTab === 'design'"
-                role="presentation">
-                <a
-                    [routerLink]="['.']"
-                    [queryParams]="{ section: 'design' }"
-                    role="tab"
-                    >Design</a
-                >
-            </li>
-            <li
-                nwTab
-                [isActive]="selectedTab === 'api'"
-                role="presentation">
-                <a
-                    [routerLink]="['.']"
-                    [queryParams]="{ section: 'api' }"
-                    role="tab"
-                    >API</a
-                >
-            </li>
-        </nw-tabs>
-    </div>
+<div class="tabs-container">
+    <nw-tabs size="md">
+        <li
+            nwTab
+            [isActive]="selectedTab === 'design'"
+            role="presentation">
+            <a
+                [routerLink]="['.']"
+                [queryParams]="{ section: 'design' }"
+                role="tab"
+                >Design</a
+            >
+        </li>
+        <li
+            nwTab
+            [isActive]="selectedTab === 'api'"
+            role="presentation">
+            <a
+                [routerLink]="['.']"
+                [queryParams]="{ section: 'api' }"
+                role="tab"
+                >API</a
+            >
+        </li>
+    </nw-tabs>
 </div>
 
 @if (selectedTab === 'design') {
     <div class="tab-content">
-        <h4 style="margin-bottom: 16px">Live example</h4>
+        <h3 style="margin-bottom: 16px">Live example</h3>
 
         <div
             class="form-group"
@@ -63,7 +59,7 @@
 
         <h3 style="margin-bottom: 16px">Description</h3>
 
-        <p style="margin-bottom: 16px">An email input should be</p>
+        <p style="margin-bottom: 16px">An email input should be:</p>
 
         <ol
             style="margin-bottom: 32px"
@@ -92,7 +88,7 @@
 
         <hr />
 
-        <h4 style="margin-bottom: 16px">Usage</h4>
+        <h3 style="margin-bottom: 16px">Usage</h3>
 
         <p style="margin-bottom: 16px">
             When a user wants to add multiple emails at once they will enter text and then either use a
@@ -109,22 +105,22 @@
 @if (selectedTab === 'api') {
     <div class="tab-content">
         <div class="demo-section">
-            <h4>Importing</h4>
+            <h3>Importing</h3>
             <app-code [snippet]="snippets.import"></app-code>
         </div>
         <hr />
         <div class="demo-section">
-            <h4>Basic example</h4>
+            <h3>Basic example</h3>
             <app-code [snippet]="snippets.basicExample"></app-code>
         </div>
         <hr />
         <div class="demo-section">
-            <h4>Validation</h4>
+            <h3>Validation</h3>
             <p>Email validation is handled by Angular's built-in email validator.</p>
         </div>
         <hr />
         <div class="demo-section">
-            <h4>Properties</h4>
+            <h3>Properties</h3>
             <table class="table table-bordered">
                 <thead>
                     <tr>
@@ -155,7 +151,7 @@
         </div>
         <hr />
         <div class="demo-section">
-            <h4>Classes / Interfaces</h4>
+            <h3>Classes / Interfaces</h3>
 
             <table class="table table-bordered">
                 <thead>
