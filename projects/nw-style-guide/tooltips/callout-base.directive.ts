@@ -6,6 +6,7 @@ import {
     OverlayRef,
     RepositionScrollStrategy
 } from '@angular/cdk/overlay';
+import { _IdGenerator } from '@angular/cdk/a11y';
 import { ComponentPortal } from '@angular/cdk/portal';
 import {
     ComponentRef,
@@ -48,9 +49,12 @@ export abstract class CalloutBaseDirective implements OnInit, OnDestroy {
     private _vcRef = inject(ViewContainerRef);
     private _injector = inject(Injector);
 
-    private static _idCounter = 0;
-    /** The id of the callout element, so that it can be referenced by `aria-describedby` */
-    protected readonly calloutId = `nw-callout-${++CalloutBaseDirective._idCounter}`;
+    /**
+     * The id of the callout element, so that it can be referenced by `aria-describedby`. From the CDK generator
+     * rather than a module-level counter, so that ids stay unique across two copies of the library on one page and
+     * stable between a server render and its hydration
+     */
+    protected readonly calloutId = inject(_IdGenerator).getId('nw-callout-');
 
     /**
      * An object that can be passed when the content is a `TemplateRef`
@@ -138,8 +142,8 @@ export abstract class CalloutBaseDirective implements OnInit, OnDestroy {
     private _manualToggleEvent$: Subject<boolean> = new Subject();
     /** Emits only where the subclass opted into outside-click dismissal - see `_open` */
     private _outsideClick$: Subject<boolean> = new Subject();
-    /** The arrow size, memoised on first read - see `_getArrowSize` */
-    private _arrowSize: number | null = null;
+    /** Set while the directive is being torn down, so that closing does not act on a host that is going away */
+    protected _isDestroyed: boolean = false;
 
     /** The content, which each subclass declares as its own input under its own selector */
     protected abstract readonly content: Signal<string | TemplateRef<any>>;
@@ -458,26 +462,25 @@ export abstract class CalloutBaseDirective implements OnInit, OnDestroy {
      * and the space reserved for it together.
      *
      * Read from the host rather than measured off the arrow itself, which is a zero-size CSS triangle that does
-     * not exist yet: the offsets are baked into the position pairs before the callout is ever attached. Memoised,
-     * as a strategy build asks for it once per candidate placement
+     * not exist yet: the offsets are baked into the position pairs before the callout is ever attached.
+     *
+     * Read once per strategy build rather than cached for the directive's life, so that a theme that retunes the
+     * property at runtime is picked up the next time the strategy is rebuilt, while a single build still only asks
+     * the one time for all of its candidate placements
      */
-    private _getArrowSize(): number {
-        if (this._arrowSize === null) {
-            const declared = getComputedStyle(this._elRef.nativeElement).getPropertyValue('--tooltip-arrow-size');
+    private _readArrowSize(): number {
+        const declared = getComputedStyle(this._elRef.nativeElement).getPropertyValue('--tooltip-arrow-size');
 
-            /**
-             * Falls back where the library stylesheet has not been included, as in a test that renders the
-             * directive alone
-             */
-            this._arrowSize = parseFloat(declared) || 5;
-        }
-
-        return this._arrowSize;
+        /**
+         * Falls back where the library stylesheet has not been included, as in a test that renders the directive
+         * alone. Kept in step with `$tooltip-arrow-width` in `_variables.scss`, which is what the property carries
+         */
+        return parseFloat(declared) || 5;
     }
 
-    private _getPositionPair(placement: Placement): ConnectionPositionPair {
+    private _getPositionPair(placement: Placement, arrowSize: number): ConnectionPositionPair {
         /** Enough to clear the arrow, plus 3px so that the callout is not flush with its host */
-        const offset = this._getArrowSize() + 3;
+        const offset = arrowSize + 3;
         const getXOffset = (placement: Placement) => {
             if (!this.withArrow()) {
                 return 0;
@@ -625,16 +628,20 @@ export abstract class CalloutBaseDirective implements OnInit, OnDestroy {
          * Format `placement` into a consistent data type of `Placement[]`
          */
         const placementsList: Placement[] = [placement].flat();
+        const arrowSize = this._readArrowSize();
         /**
          * Get positions from preferred placements
          */
-        const primaryPositions = placementsList.map(p => this._getPositionPair(p));
+        const primaryPositions = placementsList.map(p => this._getPositionPair(p, arrowSize));
         /**
          * If `autoFlip` is enabled, include the inverse position of each `placement` input. Each of this inverse positions
          * will have a lower priority than each of the preferred positions generated from the `placement` input
          */
         const positions = this.autoFlip()
-            ? [...primaryPositions, ...placementsList.map(p => this._getPositionPair(placementFlipMap[p]))]
+            ? [
+                  ...primaryPositions,
+                  ...placementsList.map(p => this._getPositionPair(placementFlipMap[p], arrowSize))
+              ]
             : [...primaryPositions];
 
         return this._overlay
@@ -652,9 +659,14 @@ export abstract class CalloutBaseDirective implements OnInit, OnDestroy {
         return this._overlay.scrollStrategies.reposition();
     }
 
+    /**
+     * `_close` rather than `hide`, which only asks the debounced pipeline to close and so would never arrive before
+     * the subscription is torn down below. Going straight there also runs `onCalloutClosing` exactly once, and only
+     * where the callout was actually open - `hide` followed by an unconditional `onCalloutClosing` did neither
+     */
     ngOnDestroy() {
-        this.hide();
-        this.onCalloutClosing();
+        this._isDestroyed = true;
+        this._close();
         this._destroyed$.next();
         this._destroyed$.complete();
         this._overlayRef?.dispose();

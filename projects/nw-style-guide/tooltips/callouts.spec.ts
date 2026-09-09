@@ -15,8 +15,25 @@ let documentDebugElement: DebugElement;
 
 const tickWaitMs: number = 500;
 
+/** Comfortably above the tooltip's default `breakpoint`, so that it takes its hover defaults */
+const desktopWidth: number = 1000;
+/** Comfortably below it, so that it takes its tap defaults */
+const touchWidth: number = 400;
+
+/**
+ * The Karma browser window is narrower than the tooltip's default `breakpoint`, so a test that wants the desktop
+ * hover defaults has to say so. Defined rather than assigned, so that `afterEach` can delete it again and leave the
+ * real property behind - an assignment would shadow it for the rest of the run and leak into whatever test came
+ * next, which with randomised ordering is a different test each time
+ */
+const setWindowWidth = (width: number): void => {
+    Object.defineProperty(window, 'innerWidth', { value: width, configurable: true, writable: true });
+};
+
 describe('callouts', () => {
     beforeEach(() => {
+        setWindowWidth(desktopWidth);
+
         TestBed.configureTestingModule({
             imports: [CdkScrollableModule, WrapperComponent]
         });
@@ -24,6 +41,10 @@ describe('callouts', () => {
         comp = fixture.componentInstance;
         de = fixture.debugElement;
         documentDebugElement = new DebugElement(document.body);
+    });
+
+    afterEach(() => {
+        delete (window as { innerWidth?: number }).innerWidth;
     });
 
     const fireEvent = (element: HTMLElement, event: string) => {
@@ -133,7 +154,6 @@ describe('callouts', () => {
     }));
 
     it('should not close on outside click', fakeAsync(() => {
-        window.innerWidth = 1000;
         comp.openEvents = ['mouseenter'];
         fixture.detectChanges();
         const trigger = de.query(By.directive(PopoverDirective)).nativeElement;
@@ -282,7 +302,6 @@ describe('callouts', () => {
     }));
 
     it('tooltips should close on scroll by default', fakeAsync(() => {
-        window.innerWidth = 1000;
         comp.openEvents = ['mouseenter'];
         comp.delay = 0;
         fixture.detectChanges();
@@ -299,7 +318,6 @@ describe('callouts', () => {
     }));
 
     it('should apply the new scroll strategy when closeOnScroll changes while open', fakeAsync(() => {
-        window.innerWidth = 1000;
         comp.openEvents = ['mouseenter'];
         comp.delay = 0;
         comp.closeOnScroll = false;
@@ -398,7 +416,8 @@ describe('callouts', () => {
             tick(tickWaitMs);
             const panel = getTooltipEl();
             expect(panel.getAttribute('role')).toBe('tooltip');
-            expect(panel.id).toMatch(/^nw-callout-\d+$/);
+            /** The CDK generator works the app id into the suffix, so only the prefix is ours to assert on */
+            expect(panel.id).toMatch(/^nw-callout-.+/);
         }));
 
         it('should describe the host with string content, without being opened', () => {
@@ -496,6 +515,72 @@ describe('callouts', () => {
             expect(getTooltipEl()).toBeFalsy();
         }));
 
+        describe('the breakpoint', () => {
+            /**
+             * `getTriggerDefaults` is read as the directive initialises, so the width has to be in place before the
+             * first change detection rather than set part way through a test
+             */
+            const renderAt = (width: number): HTMLElement => {
+                setWindowWidth(width);
+                fixture.detectChanges();
+
+                return getStringTrigger();
+            };
+
+            it('should open on hover above the breakpoint', fakeAsync(() => {
+                const trigger = renderAt(desktopWidth);
+
+                fireEvent(trigger, 'mouseenter');
+                tick(tickWaitMs);
+                expect(getTooltipEl()).toBeTruthy();
+            }));
+
+            it('should open on tap below the breakpoint, where there is no hover to open it', fakeAsync(() => {
+                const trigger = renderAt(touchWidth);
+
+                fireEvent(trigger, 'mouseenter');
+                tick(tickWaitMs);
+                expect(getTooltipEl()).toBeFalsy();
+
+                fireEvent(trigger, 'click');
+                tick(10);
+                expect(getTooltipEl()).toBeTruthy();
+            }));
+
+            it('should dismiss on an outside tap below the breakpoint, as there is no hover to end', fakeAsync(() => {
+                const trigger = renderAt(touchWidth);
+
+                fireEvent(trigger, 'click');
+                tick(10);
+                expect(getTooltipEl()).toBeTruthy();
+
+                document.body.click();
+                tick(10);
+                expect(getTooltipEl()).toBeFalsy();
+            }));
+
+            it('should not dismiss on an outside click above the breakpoint', fakeAsync(() => {
+                const trigger = renderAt(desktopWidth);
+
+                fireEvent(trigger, 'mouseenter');
+                tick(tickWaitMs);
+                expect(getTooltipEl()).toBeTruthy();
+
+                document.body.click();
+                tick(10);
+                expect(getTooltipEl()).toBeTruthy();
+            }));
+
+            it('should keep the hover events on a narrow window when the breakpoint is 0', fakeAsync(() => {
+                comp.breakpoint = 0;
+                const trigger = renderAt(touchWidth);
+
+                fireEvent(trigger, 'mouseenter');
+                tick(tickWaitMs);
+                expect(getTooltipEl()).toBeTruthy();
+            }));
+        });
+
         describe('opening on focus', () => {
             let focusMonitor: FocusMonitor;
 
@@ -504,7 +589,6 @@ describe('callouts', () => {
                  * The karma window is narrower than the default `breakpoint`, which would give the tooltip the
                  * tap-to-open events used on touch devices - including not opening on focus
                  */
-                window.innerWidth = 1000;
                 focusMonitor = TestBed.inject(FocusMonitor);
                 comp.delay = 0;
             });
@@ -597,6 +681,7 @@ describe('callouts', () => {
     describe('nwPopover', () => {
         const getStringTrigger = (): HTMLElement => de.query(By.directive(PopoverDirective)).nativeElement;
         const getTemplateTrigger = (): HTMLElement => de.queryAll(By.directive(PopoverDirective))[1].nativeElement;
+        const getLateContentTrigger = (): HTMLElement => de.queryAll(By.directive(PopoverDirective))[2].nativeElement;
 
         beforeEach(() => {
             comp.delay = 0;
@@ -630,6 +715,13 @@ describe('callouts', () => {
         it('should announce the dialog on the trigger', fakeAsync(() => {
             fixture.detectChanges();
             const trigger = getTemplateTrigger();
+
+            /**
+             * Before it has ever been opened: a screen reader user has to be told the control opens something
+             * before they decide whether to operate it, not after
+             */
+            expect(trigger.getAttribute('aria-haspopup')).toBe('dialog');
+            expect(trigger.getAttribute('aria-expanded')).toBe('false');
 
             fireEvent(trigger, 'click');
             tick(10);
@@ -732,6 +824,49 @@ describe('callouts', () => {
             expect(panel.contains(document.activeElement)).toBe(true);
         }));
 
+        it('should trap focus on Tab when its content only turned tabbable after it opened', fakeAsync(() => {
+            fixture.detectChanges();
+            const trigger = getLateContentTrigger();
+            trigger.focus();
+
+            fireEvent(trigger, 'click');
+            tick(10);
+            const panel = getTooltipEl();
+            expect(panel.querySelector('a')).toBeFalsy();
+            expect(document.activeElement).toBe(panel);
+
+            comp.hasLateLink = true;
+            fixture.detectChanges();
+            expect(panel.querySelector('a')).toBeTruthy();
+
+            document.body.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }));
+            fixture.detectChanges();
+            tick(10);
+            /**
+             * Stays open and traps, rather than closing as it would have on the tabbability it was opened with
+             */
+            expect(getTooltipEl()).toBeTruthy();
+            expect(panel.contains(document.activeElement)).toBe(true);
+        }));
+
+        it('should not pull focus back to a trigger that is being destroyed', fakeAsync(() => {
+            fixture.detectChanges();
+            const trigger = getTemplateTrigger();
+            trigger.focus();
+
+            fireEvent(trigger, 'click');
+            tick(10);
+            expect(document.activeElement).toBe(getTooltipEl());
+
+            /**
+             * Focus would otherwise be handed to a trigger that is on its way out of the document, stranding it on
+             * a removed element rather than leaving the browser to move it on
+             */
+            fixture.destroy();
+            tick(10);
+            expect(document.activeElement).not.toBe(trigger);
+        }));
+
         it('should emit a close event when the Escape key is pressed', fakeAsync(() => {
             fixture.detectChanges();
 
@@ -761,6 +896,7 @@ describe('callouts', () => {
                 [withAriaDescription]="withAriaDescription"
                 [attr.aria-label]="hostAriaLabel"
                 [showOnFocus]="showOnFocus"
+                [breakpoint]="breakpoint"
                 [closeOnScroll]="closeOnScroll"
                 [placement]="tooltipPlacement"
                 [isDisabled]="isDisabled"
@@ -814,11 +950,28 @@ describe('callouts', () => {
                 [closeEvents]="closeEvents">
                 Popover with template content
             </button>
+
+            <button
+                class="btn btn-md btn-primary"
+                [nwPopover]="lateContentTemplate"
+                [delay]="delay"
+                [openEvents]="openEvents"
+                [closeEvents]="closeEvents">
+                Popover whose content turns interactive
+            </button>
         </div>
 
         <ng-template #panelTemplate>
             <p>Some template content</p>
             <a href="https://example.com">A link in the panel</a>
+        </ng-template>
+
+        <!-- Content that holds nothing tabbable until it does, as something loading in would -->
+        <ng-template #lateContentTemplate>
+            <p>Some template content</p>
+            @if (hasLateLink) {
+                <a href="https://example.com">A link that arrived later</a>
+            }
         </ng-template>
 
         <div
@@ -862,10 +1015,12 @@ class WrapperComponent implements OnInit {
 
     public withArrow: boolean = true;
     public withClose: boolean = false;
+    public hasLateLink: boolean = false;
     public withAriaDescription: boolean;
     public hostAriaLabel: string;
     public closeOnScroll: boolean;
     public showOnFocus: boolean;
+    public breakpoint: number = 767;
     public tooltipContent: string = 'Some tooltip text';
     public isDisabled: boolean = false;
     public openEvents: string[];

@@ -50,11 +50,22 @@ export class PopoverDirective extends CalloutBaseDirective {
     }
 
     /**
+     * Announce the trigger as one that opens a dialog, and as currently closed. Done up front rather than on the
+     * first open, so that a screen reader user is told the control does something before they operate it
+     */
+    override ngOnInit(): void {
+        super.ngOnInit();
+
+        const host = this._elRef.nativeElement;
+
+        host.setAttribute('aria-haspopup', 'dialog');
+        host.setAttribute('aria-expanded', 'false');
+    }
+
+    /**
      * Name the callout after the host, announce it on the host, and move focus into it
      */
     protected onCalloutOpened(calloutEl: HTMLElement): void {
-        const host = this._elRef.nativeElement;
-
         calloutEl.setAttribute('role', 'dialog');
         calloutEl.setAttribute('aria-labelledby', this._getHostId());
         /**
@@ -62,15 +73,10 @@ export class PopoverDirective extends CalloutBaseDirective {
          * at explicitly or focusing the callout announces its name and nothing else
          */
         calloutEl.setAttribute('aria-describedby', `${this.calloutId}-content`);
-        host.setAttribute('aria-haspopup', 'dialog');
-        host.setAttribute('aria-expanded', 'true');
+        this._elRef.nativeElement.setAttribute('aria-expanded', 'true');
 
-        /**
-         * Only trap focus where there is something to trap it on. A trap around content with nothing tabbable in it
-         * holds focus on its own hidden anchor, which reads as focus disappearing
-         */
-        if (this._focusCalloutIfOpenedFromHost(calloutEl) && this._hasTabbableContent(calloutEl)) {
-            this._focusTrap = this._focusTrapFactory.create(calloutEl);
+        if (this._focusCalloutIfOpenedFromHost(calloutEl)) {
+            this._trapFocusIfThereIsSomethingToTrap(calloutEl);
         }
     }
 
@@ -78,7 +84,15 @@ export class PopoverDirective extends CalloutBaseDirective {
      * Release the focus trap, restoring focus unless the user has already moved it, e.g. by clicking outside
      */
     protected override onCalloutClosing(): void {
-        const shouldRestoreFocus = this._previouslyFocusedEl && this._calloutEl?.contains(document.activeElement);
+        /**
+         * Restore only focus that is still ours to move. Not where the user has already taken it elsewhere, and not
+         * while the directive is being destroyed - the trigger is on its way out of the document, so focusing it
+         * would strand focus on a removed element rather than hand it back
+         */
+        const shouldRestoreFocus =
+            !this._isDestroyed &&
+            this._previouslyFocusedEl?.isConnected &&
+            this._calloutEl?.contains(document.activeElement);
 
         this._focusTrap?.destroy();
         this._focusTrap = null;
@@ -96,21 +110,38 @@ export class PopoverDirective extends CalloutBaseDirective {
      * body. Close and hand focus back to the host instead, so that tabbing carries on from where it left off
      */
     protected override onCalloutKeydown(event: KeyboardEvent): void {
-        const isTabbingOutOfCallout =
-            event.key === 'Tab' && !this._focusTrap && this._calloutEl?.contains(document.activeElement);
-
-        if (isTabbingOutOfCallout) {
-            event.preventDefault();
-            this.nwClose.emit();
-            this._close();
+        if (event.key !== 'Tab' || !this._calloutEl?.contains(document.activeElement)) {
+            return;
         }
+
+        /**
+         * Content can turn interactive after the callout opened - something that loaded in, or an `@if` that
+         * flipped - so the decision not to trap is revisited here rather than left as it was found at open time.
+         * A trap created now still has its anchors in place before the browser acts on this Tab
+         */
+        if (this._focusTrap || this._trapFocusIfThereIsSomethingToTrap(this._calloutEl)) {
+            return;
+        }
+
+        event.preventDefault();
+        this.nwClose.emit();
+        this._close();
     }
 
-    /** Whether focus can be trapped in the callout at all */
-    private _hasTabbableContent(calloutEl: HTMLElement): boolean {
-        return Array.from(calloutEl.querySelectorAll<HTMLElement>('*')).some(el =>
+    /**
+     * Trap focus, but only where there is something to trap it on: a trap around content with nothing tabbable in
+     * it holds focus on its own hidden anchor, which reads as focus disappearing. Returns whether it trapped
+     */
+    private _trapFocusIfThereIsSomethingToTrap(calloutEl: HTMLElement): boolean {
+        const hasTabbableContent = Array.from(calloutEl.querySelectorAll<HTMLElement>('*')).some(el =>
             this._interactivityChecker.isTabbable(el)
         );
+
+        if (hasTabbableContent) {
+            this._focusTrap = this._focusTrapFactory.create(calloutEl);
+        }
+
+        return hasTabbableContent;
     }
 
     /**

@@ -107,7 +107,8 @@ export class TooltipsComponent implements OnInit, OnDestroy {
         [
             'withAriaDescription: boolean',
             `Describe the host element with the content, so that screen reader users get it without opening the tooltip - which they cannot do when it opens on hover.<br><br>
-        Left unset, the description is skipped where the host's accessible name is already the same text, so that it is not announced twice. Set it explicitly to force the description on or off.<br><br>
+        Left unset, the description is skipped where the host's accessible name is already the same text, so that it is not announced twice. Set it explicitly to force the description on or off - <code>false</code> is the way out of the heuristic if it reads your host's name differently than you expected.<br><br>
+        That comparison uses the host's \`aria-label\`, or failing that its text, read whenever the content changes. A label that changes independently of the content is not re-read.<br><br>
         Note that a description identical to the host's \`aria-label\` is dropped by the CDK \`AriaDescriber\` itself, so \`true\` cannot force that case`,
             `undefined - described unless the text duplicates the host's accessible name`
         ],
@@ -172,6 +173,24 @@ export class TooltipsComponent implements OnInit, OnDestroy {
             code: `
         // Import whichever of the two you use
         import { TooltipDirective, PopoverDirective } from 'nw-style-guide/tooltips';
+      `
+        },
+        upgrade: {
+            lang: 'typescript',
+            code: `
+        // Only files using [nwPopover] have to change - [nwTooltip] carries on as it is.
+        // Was: import { TooltipDirective } from 'nw-style-guide/tooltips';
+        import { PopoverDirective } from 'nw-style-guide/tooltips';
+
+        // Was: imports: [TooltipDirective]
+        imports: [PopoverDirective]
+
+        // A template reference on a popover host names the new export.
+        // Was: <button [nwPopover]="content" #panel="nw-tooltip">
+        // Now: <button [nwPopover]="content" #panel="nw-popover">
+
+        // Was: @ViewChild(TooltipDirective) panel: TooltipDirective;
+        @ViewChild(PopoverDirective) panel: PopoverDirective;
       `
         },
         basicTooltip: {
