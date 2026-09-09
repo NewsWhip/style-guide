@@ -1,5 +1,14 @@
 @use './variables';
 
+// Published so that the callout directive can read the arrow size it has to leave room for. On :root rather than
+// on .tooltip with the other custom properties, as it is read from the host element before any callout exists.
+//
+// $tooltip-arrow-width remains the source of truth for both this and the arrow's own border-width below, so
+// overriding that variable moves the arrow and the space reserved for it together
+:root {
+    --tooltip-arrow-size: #{variables.$tooltip-arrow-width};
+}
+
 .tooltip {
     z-index: variables.$zindex-tooltip;
     display: block;
@@ -29,6 +38,11 @@
         background-color: var(--tooltip-bg-color);
         border-radius: variables.$border-radius-base;
         box-shadow: 2px 2px 8px 0 variables.$tooltip-box-shadow-color;
+        // The close button is positioned over this box, so reserve room for it or it lands on the content.
+        // Its offset from the right edge, plus its own 24px width, plus a small gap
+        &.with-close {
+            padding-right: calc(var(--tooltip-padding-horizontal) / 2 + 28px);
+        }
 
         .close-button {
             position: absolute;
