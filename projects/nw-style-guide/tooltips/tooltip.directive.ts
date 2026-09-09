@@ -188,10 +188,11 @@ export class TooltipDirective extends CalloutBaseDirective implements OnDestroy 
      * the indentation of multi-line content does not reach the description
      */
     private _toPlainText(content: string): string {
-        const text = typeof content !== 'string'
-            ? new DOMParser().parseFromString(content, 'text/html').body.textContent
-            : content;
-        
+        const text =
+            typeof content !== 'string'
+                ? new DOMParser().parseFromString(content, 'text/html').body.textContent
+                : content;
+
         return this._normalize(text);
     }
 
