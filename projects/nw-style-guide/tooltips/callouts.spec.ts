@@ -631,15 +631,6 @@ describe('callouts', () => {
                 expect(getTooltipEl()).toBeFalsy();
             }));
 
-            it('should not open on focus when showOnFocus is false', fakeAsync(() => {
-                comp.showOnFocus = false;
-                fixture.detectChanges();
-                focusMonitor.focusVia(getStringTrigger(), 'keyboard');
-                fixture.detectChanges();
-                tick(5);
-                expect(getTooltipEl()).toBeFalsy();
-            }));
-
             it('should not open on focus when it is manually controlled', fakeAsync(() => {
                 comp.openEvents = [];
                 fixture.detectChanges();
@@ -895,7 +886,6 @@ describe('callouts', () => {
                 [nwTooltip]="tooltipContent"
                 [withAriaDescription]="withAriaDescription"
                 [attr.aria-label]="hostAriaLabel"
-                [showOnFocus]="showOnFocus"
                 [breakpoint]="breakpoint"
                 [closeOnScroll]="closeOnScroll"
                 [placement]="tooltipPlacement"
@@ -1019,7 +1009,6 @@ class WrapperComponent implements OnInit {
     public withAriaDescription: boolean;
     public hostAriaLabel: string;
     public closeOnScroll: boolean;
-    public showOnFocus: boolean;
     public breakpoint: number = 767;
     public tooltipContent: string = 'Some tooltip text';
     public isDisabled: boolean = false;

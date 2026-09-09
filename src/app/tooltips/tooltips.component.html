@@ -37,8 +37,8 @@
 
         <p>
             As a rule of thumb: a <code>nwPopover</code> goes on a button and holds interactive content - formatted
-            text, links, buttons - and takes focus when it opens. A <code>nwTooltip</code> holds no interactive
-            content, just short supplementary text, and can go on any interactive element.
+            text, links, buttons - and takes focus when it opens. A <code>nwTooltip</code> holds no interactive content,
+            just short supplementary text, and can go on any interactive element.
         </p>
         <p>
             Pick by what the content <em>is</em>, not by the open event you want: every event and timing on either one
@@ -376,8 +376,8 @@
 
         <h5><code>TooltipDirective</code></h5>
         <p>
-            Attaches short supplementary text about the host, with no interactive content, opened by hover or focus.
-            The host can be any interactive element.
+            Attaches short supplementary text about the host, with no interactive content, opened by hover or focus. The
+            host can be any interactive element.
         </p>
         <p>Selector: <code>[nwTooltip]</code></p>
         <p>Exported as: <code>nw-tooltip</code></p>
@@ -544,19 +544,17 @@
                 supplementary text, and can go on any interactive element. It is exposed through the host's
                 <code>aria-describedby</code>, opens on hover or keyboard focus, never takes focus, and must not contain
                 anything focusable.<br /><br />
-                <code>nwPopover</code> goes on a <strong>button</strong> and holds
-                <strong>interactive content</strong>: formatted text, links and buttons. It is exposed as
-                <code>role="dialog"</code>, named after its trigger and described by its own content, and announces
-                itself by taking focus - which is trapped there until it closes, at which point focus returns to the
-                trigger.<br /><br />
+                <code>nwPopover</code> goes on a <strong>button</strong> and holds <strong>interactive content</strong>:
+                formatted text, links and buttons. It is exposed as <code>role="dialog"</code>, named after its trigger
+                and described by its own content, and announces itself by taking focus - which is trapped there until it
+                closes, at which point focus returns to the trigger.<br /><br />
                 Both are dismissed with the Escape key. The selector is what decides all of this, so pick it by what the
                 content is, not by the default event you want - every event and timing on either one can be rebound. A
                 panel with a link in it is a <code>nwPopover</code> even if it looks like a tooltip.<br /><br />
                 They are separate directives, so the inputs are not interchangeable:
                 <code>withClose</code> and <code>closeOnOutsideClick</code> exist on <code>nwPopover</code> only, and
-                <code>withAriaDescription</code>, <code>showOnFocus</code> and <code>breakpoint</code> on
-                <code>nwTooltip</code> only. Binding one on the wrong host is a template error rather than a silent
-                no-op.
+                <code>withAriaDescription</code> and <code>breakpoint</code> on <code>nwTooltip</code> only. Binding one
+                on the wrong host is a template error rather than a silent no-op.
             </p>
         </app-faq>
 

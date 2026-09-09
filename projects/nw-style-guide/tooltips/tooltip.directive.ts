@@ -31,15 +31,6 @@ export class TooltipDirective extends CalloutBaseDirective implements OnDestroy 
      */
     readonly withAriaDescription = input<boolean | undefined>(undefined);
     /**
-     * Open when the host is focused from the keyboard, the keyboard equivalent of `mouseenter`. Focus from a pointer
-     * is ignored, as clicking an element focuses it and the tooltip would fight the `click` close event, as is
-     * programmatic focus, so that restoring focus after closing a modal does not open a tooltip.
-     *
-     * Note that only an element that can hold focus can be focused: a tooltip on a `span` or `svg` element stays
-     * unreachable by keyboard whatever this is set to
-     */
-    readonly showOnFocus = input<boolean>();
-    /**
      * The screen width below which the tooltip opens on tap rather than on hover, as touch devices have no hover.
      * It stays a tooltip either way - only its events change. Set to 0 to always use the hover events
      */
@@ -51,12 +42,11 @@ export class TooltipDirective extends CalloutBaseDirective implements OnDestroy 
     protected readonly _content: Signal<string | TemplateRef<any>> = this.nwTooltip;
 
     /**
-     * Whether focus opens this tooltip: derived, because a manually controlled tooltip - one with no open events -
-     * is opened by its host component alone
+     * Whether focus opens this tooltip: the keyboard equivalent of `mouseenter`, so it follows the hover events
+     * rather than being bound separately. A manually controlled tooltip - one with no open events - is opened by
+     * its host component alone, and a tap-to-open one below the `breakpoint` is opened by activating the host
      */
-    private readonly _opensOnFocus = computed(
-        () => this.showOnFocus() ?? this._triggers().openEvents.includes('mouseenter')
-    );
+    private readonly _opensOnFocus = computed(() => this._triggers().openEvents.includes('mouseenter'));
 
     /** The content as plain text, or null when there is nothing describable to register */
     private readonly _describableText = computed(() => {

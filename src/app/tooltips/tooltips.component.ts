@@ -113,12 +113,6 @@ export class TooltipsComponent implements OnInit, OnDestroy {
             `undefined - described unless the text duplicates the host's accessible name`
         ],
         [
-            'showOnFocus: boolean',
-            `Open when the host receives focus from the keyboard, the keyboard equivalent of \`mouseenter\`. Focus from a pointer is ignored, as clicking an element focuses it and the tooltip would fight the \`click\` close event, as is programmatic focus, so that restoring focus after closing a modal does not open a tooltip.<br><br>
-        Note that only an element that can hold focus can be focused. A tooltip on a \`span\`, \`div\` or \`svg\` element is still unreachable by keyboard - make the host a \`button\` if it is a control`,
-            `undefined - follows openEvents, so on for a hover-opened tooltip`
-        ],
-        [
             'breakpoint: number',
             `The screen width below which the tooltip opens on tap rather than on hover, as touch devices have no hover. It stays a tooltip either way - only its events change.<br><br>
         Set to 0 to always use the hover events`,
