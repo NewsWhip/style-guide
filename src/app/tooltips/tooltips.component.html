@@ -36,11 +36,9 @@
         <h4>Which one do I use?</h4>
 
         <p>
-            These are two directives, not one with two names. A <code>nwTooltip</code> is a
-            <strong>description</strong> of the element it sits on - short supplementary text, opened by hover or
-            keyboard focus, never focusable. A <code>nwPopover</code> is a <strong>disclosure</strong> the user opens -
-            a small dialog that can hold formatted content, links and buttons, which takes focus and traps it while
-            open.
+            As a rule of thumb: a <code>nwPopover</code> goes on a button and holds interactive content - formatted
+            text, links, buttons - and takes focus when it opens. A <code>nwTooltip</code> holds no interactive
+            content, just short supplementary text, and can go on any interactive element.
         </p>
         <p>
             Pick by what the content <em>is</em>, not by the open event you want: every event and timing on either one
@@ -377,7 +375,10 @@
         </p>
 
         <h5><code>TooltipDirective</code></h5>
-        <p>Attaches a description of the host element to it: short supplementary text, opened by hover or focus.</p>
+        <p>
+            Attaches short supplementary text about the host, with no interactive content, opened by hover or focus.
+            The host can be any interactive element.
+        </p>
         <p>Selector: <code>[nwTooltip]</code></p>
         <p>Exported as: <code>nw-tooltip</code></p>
         <small
@@ -388,8 +389,8 @@
 
         <h5><code>PopoverDirective</code></h5>
         <p>
-            Attaches a disclosure the user opens: a small dialog that can hold formatted content, links and buttons,
-            toggled by clicking the host.
+            Attaches a small dialog that can hold interactive content - formatted text, links and buttons - toggled by
+            clicking the host, which should be a button.
         </p>
         <p>Selector: <code>[nwPopover]</code></p>
         <p>Exported as: <code>nw-popover</code></p>
@@ -539,13 +540,15 @@
         <app-faq>
             <p question>Which selector do I use, and what does it change?</p>
             <p answer>
-                <code>nwTooltip</code> is a <strong>description</strong> of the element it sits on: a short piece of
-                supplementary text. It is exposed through the host's <code>aria-describedby</code>, opens on hover or
-                keyboard focus, never takes focus, and must not contain anything focusable.<br /><br />
-                <code>nwPopover</code> is a <strong>disclosure</strong> the user opens: a panel that can hold formatted
-                content, links and buttons. It is exposed as <code>role="dialog"</code>, named after its trigger and
-                described by its own content, and announces itself by taking focus - which is trapped there until it
-                closes, at which point focus returns to the trigger.<br /><br />
+                <code>nwTooltip</code> holds <strong>no interactive content</strong>, just a short piece of
+                supplementary text, and can go on any interactive element. It is exposed through the host's
+                <code>aria-describedby</code>, opens on hover or keyboard focus, never takes focus, and must not contain
+                anything focusable.<br /><br />
+                <code>nwPopover</code> goes on a <strong>button</strong> and holds
+                <strong>interactive content</strong>: formatted text, links and buttons. It is exposed as
+                <code>role="dialog"</code>, named after its trigger and described by its own content, and announces
+                itself by taking focus - which is trapped there until it closes, at which point focus returns to the
+                trigger.<br /><br />
                 Both are dismissed with the Escape key. The selector is what decides all of this, so pick it by what the
                 content is, not by the default event you want - every event and timing on either one can be rebound. A
                 panel with a link in it is a <code>nwPopover</code> even if it looks like a tooltip.<br /><br />

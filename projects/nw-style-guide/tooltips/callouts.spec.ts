@@ -675,7 +675,7 @@ describe('callouts', () => {
     });
 
     /**
-     * A popover is a disclosure the user opens: it is a named, described dialog, and it announces itself by
+     * A popover holds interactive content: it is a named, described dialog, and it announces itself by
      * taking focus
      */
     describe('nwPopover', () => {

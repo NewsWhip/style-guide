@@ -6,8 +6,8 @@ import { CalloutBaseDirective } from './callout-base.directive';
 import { ICalloutTriggers } from './models/ICalloutTriggers';
 
 /**
- * A description of the element it is attached to: a short piece of supplementary text, opened by hovering the host
- * or focusing it from the keyboard.
+ * A callout holding no interactive content, just a short piece of supplementary text about the element it is
+ * attached to, opened by hovering the host or focusing it from the keyboard.
  *
  * The content reaches assistive technology through the host's `aria-describedby` whether the tooltip is open or not,
  * which matters because a screen reader user cannot hover to open it. A tooltip never takes focus, so anything in it

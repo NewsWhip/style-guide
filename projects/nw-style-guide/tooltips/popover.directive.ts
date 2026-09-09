@@ -4,8 +4,8 @@ import { CalloutBaseDirective } from './callout-base.directive';
 import { ICalloutTriggers } from './models/ICalloutTriggers';
 
 /**
- * A disclosure the user opens: a callout that can hold formatted content, links and buttons, toggled by clicking
- * its host - which the keyboard fires from Enter and Space.
+ * A callout that can hold interactive content - formatted text, links and buttons - toggled by clicking its host,
+ * which should be a button and which the keyboard fires from Enter and Space.
  *
  * It is exposed as a small dialog, named after its trigger and described by its own content, and it announces
  * itself by taking focus. Focus is trapped there until it closes - on Escape, on the close button, or on a click
