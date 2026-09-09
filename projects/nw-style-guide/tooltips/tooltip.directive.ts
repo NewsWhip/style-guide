@@ -1,574 +1,208 @@
-import {
-    CloseScrollStrategy,
-    ConnectionPositionPair,
-    FlexibleConnectedPositionStrategy,
-    Overlay,
-    OverlayRef,
-    RepositionScrollStrategy
-} from '@angular/cdk/overlay';
-import { ComponentPortal } from '@angular/cdk/portal';
-import {
-    ComponentRef,
-    Directive,
-    ElementRef,
-    EventEmitter,
-    Injector,
-    Input,
-    OnChanges,
-    OnDestroy,
-    OnInit,
-    Output,
-    SimpleChanges,
-    TemplateRef,
-    ViewContainerRef,
-    inject
-} from '@angular/core';
-import { Placement } from './models/Placement.type';
-import { Subject, fromEvent, merge, EMPTY, of, Observable, animationFrameScheduler, timer, interval } from 'rxjs';
-import { takeUntil, filter, tap, map, debounce, switchMap, delay } from 'rxjs/operators';
-import { TOOLTIP_CONTEXT_TOKEN } from './config/tooltip-context-token';
-import { TooltipContainerComponent } from './tooltip-container.component';
-import { ITooltipData } from './models/ITooltipData';
-import { placementFlipMap } from './config/placement-flip-map';
+import { AriaDescriber, FocusMonitor, addAriaReferencedId, removeAriaReferencedId } from '@angular/cdk/a11y';
+import { Directive, OnDestroy, Signal, TemplateRef, computed, effect, inject, input } from '@angular/core';
+import { Observable } from 'rxjs';
+import { filter, map, tap } from 'rxjs/operators';
+import { CalloutBaseDirective } from './callout-base.directive';
+import { ICalloutTriggers } from './models/ICalloutTriggers';
 
+/**
+ * A callout holding no interactive content, just a short piece of supplementary text about the element it is
+ * attached to, opened by hovering the host or focusing it from the keyboard.
+ *
+ * The content reaches assistive technology through the host's `aria-describedby` whether the tooltip is open or not,
+ * which matters because a screen reader user cannot hover to open it. A tooltip never takes focus, so anything in it
+ * that could be operated would be unreachable - a callout holding a link or a button is a `nwPopover`
+ */
 @Directive({
-    selector: '[nwTooltip],[nwPopover]',
-    exportAs: 'nw-tooltip,nw-popover'
+    selector: '[nwTooltip]',
+    exportAs: 'nw-tooltip'
 })
-export class TooltipDirective implements OnInit, OnChanges, OnDestroy {
-    private _elRef = inject<ElementRef<HTMLElement>>(ElementRef);
-    private _overlay = inject(Overlay);
-    private _vcRef = inject(ViewContainerRef);
-    private _injector = inject(Injector);
+export class TooltipDirective extends CalloutBaseDirective implements OnDestroy {
+    private _ariaDescriber = inject(AriaDescriber);
+    private _focusMonitor = inject(FocusMonitor);
+
+    readonly nwTooltip = input<string | TemplateRef<any>>();
+    /**
+     * Describe the host element with the content, so that screen reader users get it without opening the tooltip.
+     * When not set, the description is skipped where the host's accessible name - its `aria-label`, or failing
+     * that its visible text - is already the same text, so that it is not announced twice. Set it explicitly to
+     * force the description on or off. Note that a description identical to the host's `aria-label` is dropped
+     * by the CDK `AriaDescriber` itself, so `true` cannot force that case
+     */
+    readonly withAriaDescription = input<boolean | undefined>(undefined);
+    /**
+     * The screen width below which the tooltip opens on tap rather than on hover, as touch devices have no hover.
+     * It stays a tooltip either way - only its events change. Set to 0 to always use the hover events
+     */
+    readonly breakpoint = input(767);
+
+    /** The last text handed to `_registerDescription`. Only registered with the `AriaDescriber` where it is non-empty */
+    private _describedText: string | null = null;
+
+    protected readonly _content: Signal<string | TemplateRef<any>> = this.nwTooltip;
 
     /**
-     * This directive can be invoked by using the `nwTooltip` or `nwPopover` attributes. The only differences between using these
-     * attributes are the default values of certain properties, e.g. `delay` and open and close events
+     * Whether focus opens this tooltip: the keyboard equivalent of `mouseenter`, so it follows the hover events
+     * rather than being bound separately. A manually controlled tooltip - one with no open events - is opened by
+     * its host component alone, and a tap-to-open one below the `breakpoint` is opened by activating the host
      */
-    @Input('nwTooltip') tooltip: string | TemplateRef<any>;
-    @Input('nwPopover') popover: string | TemplateRef<any>;
-    /**
-     * An object that can be passed when the `nwTooltip` or `nwPopover` input is a `TemplateRef`
-     * ref: https://angular.io/api/core/ng-template#context
-     */
-    @Input() context: any;
-    /**
-     * One or more preferred placement options
-     */
-    @Input() placement: Placement | Placement[];
-    /**
-     * Manually control the opening and closing of the tooltip
-     */
-    @Input() isOpen: boolean;
-    /**
-     * When true, the tooltip will not not respond to any open or close events. Nor will it
-     * respond to changes to the `isOpen` input
-     */
-    @Input() isDisabled: boolean = false;
-    /**
-     * Number of ms to wait before opening
-     */
-    @Input() delay: number;
-    /**
-     * Change the placement of the tooltip to its opposite position when it moves outside the viewport
-     */
-    @Input() autoFlip: boolean = true;
-    /**
-     * A list of events that open the tooltip
-     */
-    @Input() openEvents: string[];
-    /**
-     * A list of events that close the tooltip
-     */
-    @Input() closeEvents: string[];
-    /**
-     * A class to apply to the tooltip container
-     */
-    @Input() containerClass: string;
-    /**
-     * Display an arrow or not. The location of the arrow is dependant on the current `placement`
-     */
-    @Input() withArrow: boolean = true;
-    /**
-     * Display a close button or not
-     */
-    @Input() withClose: boolean = false;
-    @Input() closeOnScroll: boolean;
-    @Input() closeOnOutsideClick: boolean = false;
-    /**
-     * WARNING: Use with caution - there are potential performance issues with this
-     *
-     * Update the position of the tooltip before the next browser repaint. An example of where this may be required is if
-     * the tooltip is attached (and open) to an element that transitions or animates to a new position
-     */
-    @Input() updatePositionOnAnimationFrame: boolean = false;
-    /**
-     * In the case where the tooltip should not be attached to the host element, a reference to another element can be used
-     */
-    @Input() connectedTo: ElementRef<HTMLElement> | Element;
-    /**
-     * Determines whether pointer events are enabled on the cdk-overlay-pane element
-     */
-    @Input() pointerEvents: 'auto' | 'none';
-    /**
-     * The screen size at which the tooltip should treated as a popover as there is no hover events on mobile
-     */
-    @Input() breakpoint: number = 767;
-    @Input() hostElementZIndex: number;
+    private readonly _opensOnFocus = computed(() => this._triggers().openEvents.includes('mouseenter'));
 
-    @Output() nwShown: EventEmitter<null> = new EventEmitter();
-    @Output() nwHidden: EventEmitter<null> = new EventEmitter();
-    @Output() nwClose: EventEmitter<null> = new EventEmitter();
+    /** The content as plain text, falsy where there is nothing to describe the host with */
+    private readonly _describableText = computed(() => {
+        const content = this.nwTooltip();
+        const withDescription = this.withAriaDescription();
 
-    private _overlayRef: OverlayRef | null = null;
-    private _destroyed$: Subject<void> = new Subject();
-    private _tooltipArrowSize: number = 5;
-    private _manualToggleEvent$: Subject<boolean> = new Subject();
-    private _cancelDelayedOpen$: Subject<void> = new Subject();
-    /**
-     * A subject that emits when the TooltipContainerComponent is destroyed
-     */
-    private _tooltipContainerDestroyed$: Subject<void> = new Subject();
-    private _outsideClick$: Subject<boolean> = new Subject();
-
-    ngOnInit() {
-        this._setInputDefaults();
-        this._subscribeToEvents();
-
-        if (this.isOpen) {
-            this._manualToggleEvent$.next(this.isOpen);
+        if (withDescription === false || typeof content !== 'string') {
+            return null;
         }
 
-        if (this.updatePositionOnAnimationFrame) {
-            interval(0, animationFrameScheduler)
-                .pipe(
-                    filter(_ => this.updatePositionOnAnimationFrame && this._overlayRef?.hasAttached()),
-                    takeUntil(this._destroyed$)
-                )
-                .subscribe(() => {
-                    this._overlayRef?.updatePosition();
-                });
-        }
-    }
-
-    ngOnChanges(c: SimpleChanges): void {
-        const shouldUpdatePositionStrategy = ['placement', 'withArrow', 'autoFlip'].some(
-            inputProp => c[inputProp]?.previousValue !== c[inputProp]?.currentValue && !c[inputProp]?.firstChange
-        );
-        const isOpenChange: boolean = c.isOpen?.previousValue !== c.isOpen?.currentValue && !c.isOpen.firstChange;
-        const shouldUpdateScrollStrategy: boolean =
-            c.closeOnScroll?.previousValue !== c.closeOnScroll?.currentValue && !c.closeOnScroll.firstChange;
-
-        if (shouldUpdatePositionStrategy && this._overlayRef) {
-            this._updatePositionStrategy(this.placement);
-        }
-
-        if (shouldUpdateScrollStrategy && this._overlayRef) {
-            this._updateScrollStrategy(this.closeOnScroll);
-        }
-
-        if (isOpenChange) {
-            this._manualToggleEvent$.next(this.isOpen);
-        }
-    }
-
-    /**
-     * Can be called manually from the exported directive to open the tooltip
-     */
-    show(): void {
-        this._manualToggleEvent$.next(true);
-    }
-
-    /**
-     * Can be called manually from the exported directive to close the tooltip
-     */
-    hide(): void {
-        this._manualToggleEvent$.next(false);
-    }
-
-    /**
-     * Can be called manually from the exported directive to toggle the tooltip
-     */
-    toggle(): void {
-        const isOpen = this._overlayRef?.hasAttached();
-        this._manualToggleEvent$.next(!isOpen);
-    }
-
-    /**
-     * Based on the selector used, choose different default if inputs are not defined
-     */
-    private _setInputDefaults(): void {
-        const getDefaultValue = <T>(currVal: T, defaultVal: T): T => {
-            return currVal ?? defaultVal;
-        };
-        const isMobileScreenSize = window.innerWidth < this.breakpoint;
+        const text = this._toPlainText(content);
 
         /**
-         * Check for undefined and null, not empty strings. This prevents errors when an empty
-         * string is passed in the popover or tooltip input
+         * A description that repeats the host's accessible name verbatim would be announced twice, so it is
+         * skipped unless withAriaDescription demands it
          */
-        if ((this.popover !== undefined && this.popover !== null) || isMobileScreenSize) {
-            this.delay = getDefaultValue(this.delay, 0);
-            this.openEvents = getDefaultValue(this.openEvents, ['click']);
-            this.closeEvents = getDefaultValue(this.closeEvents, ['click']);
-            this.closeOnScroll = getDefaultValue(this.closeOnScroll, false);
-            this.pointerEvents = getDefaultValue(this.pointerEvents, 'auto');
-            if (isMobileScreenSize) {
-                this.closeOnOutsideClick = true;
-            }
+        if (withDescription === undefined && text === this._hostAccessibleName()) {
+            return null;
+        }
+
+        return text;
+    });
+
+    constructor() {
+        super();
+        effect(() => this._registerDescription(this._describableText()));
+    }
+
+    protected _getTriggerDefaults(): ICalloutTriggers {
+        /**
+         * There are no hover events on touch, so a tooltip on a small screen opens on tap instead
+         */
+        if (window.innerWidth < this.breakpoint()) {
+            return {
+                delay: 0,
+                openEvents: ['click'],
+                closeEvents: ['click'],
+                closeOnScroll: false,
+                pointerEvents: 'auto'
+            };
+        }
+
+        return {
+            delay: 500,
+            openEvents: ['mouseenter'],
+            closeEvents: ['click', 'mouseleave'],
+            closeOnScroll: true,
+            pointerEvents: 'none'
+        };
+    }
+
+    /**
+     * A tooltip has no outside-click behaviour of its own, but a tap-opened one on touch has no hover to end it,
+     * so tapping elsewhere has to dismiss it
+     */
+    protected override _dismissesOnOutsideClick(): boolean {
+        return window.innerWidth < this.breakpoint();
+    }
+
+    protected _onCalloutOpened(calloutEl: HTMLElement): void {
+        calloutEl.setAttribute('role', 'tooltip');
+        this._setDescribedByCallout(true);
+    }
+
+    protected override _onCalloutClosing(): void {
+        this._setDescribedByCallout(false);
+    }
+
+    protected override _getAdditionalToggleEvents(): Observable<boolean> {
+        return this._opensOnFocus() ? this._getFocusEvents$() : super._getAdditionalToggleEvents();
+    }
+
+    /**
+     * Emits true when the host is focused from the keyboard, and false when focus leaves it again
+     */
+    private _getFocusEvents$(): Observable<boolean> {
+        /** Only close on blur what focus opened, so that a hover- or `isOpen`-opened tooltip survives blur */
+        let isOpenedByFocus: boolean = false;
+
+        return this._focusMonitor.monitor(this._elRef).pipe(
+            filter(origin => origin === 'keyboard' || (origin === null && isOpenedByFocus)),
+            tap(origin => (isOpenedByFocus = origin === 'keyboard')),
+            map(origin => origin === 'keyboard')
+        );
+    }
+
+    /** Point `aria-describedby` at the open callout. Only needed for a `TemplateRef`, which cannot be described */
+    private _setDescribedByCallout(isOpen: boolean): void {
+        if (this.withAriaDescription() === false || this._describedText) {
+            return;
+        }
+
+        const host = this._elRef.nativeElement;
+
+        if (isOpen) {
+            addAriaReferencedId(host, 'aria-describedby', this._calloutId);
         } else {
-            this.delay = getDefaultValue(this.delay, 500);
-            this.openEvents = getDefaultValue(this.openEvents, ['mouseenter']);
-            this.closeEvents = getDefaultValue(this.closeEvents, ['click', 'mouseleave']);
-            this.closeOnScroll = getDefaultValue(this.closeOnScroll, true);
-            this.pointerEvents = getDefaultValue(this.pointerEvents, 'none');
+            removeAriaReferencedId(host, 'aria-describedby', this._calloutId);
         }
     }
 
-    private _getTooltipContent(): string | TemplateRef<any> {
-        return this.tooltip || this.popover;
-    }
-
-    private _open(): ComponentRef<TooltipContainerComponent> {
-        if (!this._overlayRef) {
-            /**
-             * Create the overlay the first time the tooltip is opened
-             */
-            this._createOverlay();
-
-            if (this.closeOnOutsideClick) {
-                this._overlayRef
-                    .outsidePointerEvents()
-                    .pipe(
-                        filter(_ => this._overlayRef?.hasAttached()),
-                        filter(event => event.target !== this._elRef.nativeElement),
-                        map(_ => false),
-                        takeUntil(this._destroyed$)
-                    )
-                    .subscribe(v => this._outsideClick$.next(v));
-            }
+    /** Register text with the `AriaDescriber`, which adds it to the accessibility tree as a hidden node */
+    private _registerDescription(text: string | null): void {
+        if (text === this._describedText) {
+            return;
         }
 
-        if (!this._overlayRef.hasAttached()) {
-            const portal = new ComponentPortal(TooltipContainerComponent, this._vcRef, this._createInjector());
-            const ref = this._overlayRef.attach(portal);
-            this.nwShown.emit();
-            return ref;
+        if (this._describedText) {
+            this._ariaDescriber.removeDescription(this._elRef.nativeElement, this._describedText);
         }
-    }
 
-    private _close(): void {
-        if (this._overlayRef?.hasAttached()) {
-            this._overlayRef.detach();
-            this.nwHidden.emit();
+        if (text) {
+            this._ariaDescriber.describe(this._elRef.nativeElement, text);
         }
-    }
 
-    private _createOverlay() {
-        const positionStrategy = this._getPositionStrategy(this.placement);
-        const scrollStrategy = this._getScrollStrategy(this.closeOnScroll);
-        const disposeOnNavigation = true;
-        const panelClasses: string[] = ['tooltip-overlay', `pointer-events-${this.pointerEvents}`];
-        this._overlayRef = this._overlay.create({
-            positionStrategy,
-            scrollStrategy,
-            disposeOnNavigation,
-            panelClass: panelClasses
-        });
-
-        if (this.hostElementZIndex) {
-            this._overlayRef.hostElement.style.zIndex = this.hostElementZIndex.toString();
-        }
+        this._describedText = text;
     }
 
     /**
-     * Create and return a custom injector that provides the tooltip text as an injectable dependency
+     * An approximation of the host's accessible name: its `aria-label`, or failing that its visible text. Read
+     * when the content changes, which covers hosts whose label and tooltip are bound to the same value; a label
+     * that changes independently of the content is not re-read
      */
-    private _createInjector(): Injector {
-        const tooltipData: ITooltipData = {
-            tooltip: this._getTooltipContent(),
-            containerClass: this.containerClass,
-            withArrow: this.withArrow,
-            withClose: this.withClose,
-            templateRefContext: this.context
-        };
+    private _hostAccessibleName(): string | null {
+        const host = this._elRef.nativeElement;
 
-        return Injector.create({
-            parent: this._injector,
-            providers: [{ provide: TOOLTIP_CONTEXT_TOKEN, useValue: tooltipData }]
-        });
+        return this._normalize(host.getAttribute('aria-label') || host.textContent || '') || null;
     }
 
-    private _subscribeToEvents() {
-        const openEvents$: Observable<boolean>[] = this.openEvents.map(eventName => {
-            return fromEvent(this._elRef.nativeElement, eventName).pipe(
-                filter(_ => !this._overlayRef?.hasAttached()),
-                map(_ => true)
-            );
-        });
-
-        const closeEvents$: Observable<boolean>[] = this.closeEvents.map(eventName => {
-            return fromEvent(this._elRef.nativeElement, eventName).pipe(
-                tap(_ => this._cancelDelayedOpen$.next()),
-                filter(_ => this._overlayRef?.hasAttached()),
-                map(_ => false)
-            );
-        });
-
-        const outsideClick$: Observable<boolean> = this.closeOnOutsideClick
-            ? this._outsideClick$.asObservable()
-            : EMPTY;
-
-        /**
-         * Merge all open and close events into a single stream that emits a boolean that indicates whether
-         * the tooltip should be opened or closed
-         */
-        const toggleEvents$ = merge(...openEvents$.concat(this._manualToggleEvent$, closeEvents$, outsideClick$));
-
-        toggleEvents$
-            .pipe(
-                /**
-                 * This debounce prevents instantaneous opening and closing (or vice-versa) in the scenario where `openEvents` contains the
-                 * same event as `closeEvents`. For example, if both contain the "click" event, this will be fired twice in the space of a few ms
-                 */
-                debounce(() => {
-                    if (this.openEvents.some(e => this.closeEvents.includes(e))) {
-                        return timer(5);
-                    }
-                    return of(0);
-                }),
-                filter(_ => !this.isDisabled),
-                /**
-                 * If this is an open event, use the input delay. Don't apply the delay to the close event
-                 */
-                switchMap(isOpenEvent => {
-                    if (isOpenEvent && this.delay) {
-                        return of(isOpenEvent).pipe(delay(this.delay), takeUntil(this._cancelDelayedOpen$));
-                    }
-                    return of(isOpenEvent);
-                }),
-                takeUntil(this._destroyed$)
-            )
-            .subscribe(isOpenEvent => {
-                if (isOpenEvent) {
-                    const ref = this._open();
-
-                    /**
-                     * No ref will be returned if the overlay is already attached
-                     */
-                    if (ref) {
-                        ref.changeDetectorRef.detectChanges();
-                        ref.instance.close.pipe(takeUntil(this._tooltipContainerDestroyed$)).subscribe(_ => {
-                            this.nwClose.emit();
-                            this._close();
-                        });
-
-                        /**
-                         * When the TooltipContainerComponent is destroyed we fire the _tooltipContainerDestroyed$
-                         * so that our subscription to TooltipContainerComponent.close is unsubscribed from
-                         */
-                        ref.onDestroy(() => {
-                            this._tooltipContainerDestroyed$.next();
-                            this._tooltipContainerDestroyed$.complete();
-                        });
-                    }
-                } else {
-                    this._close();
-                }
-            });
+    private _normalize(text: string): string {
+        return text.replace(/\s+/g, ' ').trim();
     }
 
-    private _getPositionPair(placement: Placement): ConnectionPositionPair {
-        // Include a 3px offset so that the tooltip is not flush with the element
-        const offset = this._tooltipArrowSize + 3;
-        const getXOffset = (placement: Placement) => {
-            if (!this.withArrow) {
-                return 0;
-            }
-            if (placement.startsWith('right')) {
-                return offset;
-            }
-            if (placement.startsWith('left')) {
-                return -offset;
-            }
-        };
-        const getYOffset = (placement: Placement) => {
-            if (!this.withArrow) {
-                return 0;
-            }
-            if (placement.startsWith('top')) {
-                return -offset;
-            }
-            if (placement.startsWith('bottom')) {
-                return offset;
-            }
-        };
-        const getPanelClass = (placement: Placement): string => `tooltip-${placement}`;
-        /**
-         * The default position when no placement is specified
-         */
-        const bottom = new ConnectionPositionPair(
-            { originX: 'center', originY: 'bottom' },
-            { overlayX: 'center', overlayY: 'top' },
-            null,
-            getYOffset('bottom'),
-            getPanelClass('bottom')
-        );
+    /**
+     * String content is rendered as HTML, so parse out its text. `DOMParser` in preference to an element's
+     * `innerHTML`, as it creates an inert document that loads no resources.
+     *
+     * Normalised on the way out, so that it is directly comparable with the host's accessible name and so that
+     * the indentation of multi-line content does not reach the description
+     */
+    private _toPlainText(content: string): string {
+        const text =
+            typeof content !== 'string'
+                ? new DOMParser().parseFromString(content, 'text/html').body.textContent
+                : content;
 
-        switch (placement) {
-            case 'top':
-                return new ConnectionPositionPair(
-                    { originX: 'center', originY: 'top' },
-                    { overlayX: 'center', overlayY: 'bottom' },
-                    null,
-                    getYOffset(placement),
-                    getPanelClass(placement)
-                );
+        return this._normalize(text);
+    }
 
-            case 'top-start':
-                return new ConnectionPositionPair(
-                    { originX: 'start', originY: 'top' },
-                    { overlayX: 'start', overlayY: 'bottom' },
-                    null,
-                    getYOffset(placement),
-                    getPanelClass(placement)
-                );
+    override ngOnDestroy(): void {
+        super.ngOnDestroy();
+        this._focusMonitor.stopMonitoring(this._elRef);
 
-            case 'top-end':
-                return new ConnectionPositionPair(
-                    { originX: 'end', originY: 'top' },
-                    { overlayX: 'end', overlayY: 'bottom' },
-                    null,
-                    getYOffset(placement),
-                    getPanelClass(placement)
-                );
-
-            case 'bottom':
-                return bottom;
-
-            case 'bottom-start':
-                return new ConnectionPositionPair(
-                    { originX: 'start', originY: 'bottom' },
-                    { overlayX: 'start', overlayY: 'top' },
-                    null,
-                    getYOffset(placement),
-                    getPanelClass(placement)
-                );
-
-            case 'bottom-end':
-                return new ConnectionPositionPair(
-                    { originX: 'end', originY: 'bottom' },
-                    { overlayX: 'end', overlayY: 'top' },
-                    null,
-                    getYOffset(placement),
-                    getPanelClass(placement)
-                );
-
-            case 'right':
-                return new ConnectionPositionPair(
-                    { originX: 'end', originY: 'center' },
-                    { overlayX: 'start', overlayY: 'center' },
-                    getXOffset(placement),
-                    null,
-                    getPanelClass(placement)
-                );
-
-            case 'right-start':
-                return new ConnectionPositionPair(
-                    { originX: 'end', originY: 'top' },
-                    { overlayX: 'start', overlayY: 'top' },
-                    getXOffset(placement),
-                    null,
-                    getPanelClass(placement)
-                );
-
-            case 'right-end':
-                return new ConnectionPositionPair(
-                    { originX: 'end', originY: 'bottom' },
-                    { overlayX: 'start', overlayY: 'bottom' },
-                    getXOffset(placement),
-                    null,
-                    getPanelClass(placement)
-                );
-
-            case 'left':
-                return new ConnectionPositionPair(
-                    { originX: 'start', originY: 'center' },
-                    { overlayX: 'end', overlayY: 'center' },
-                    getXOffset(placement),
-                    null,
-                    getPanelClass(placement)
-                );
-
-            case 'left-start':
-                return new ConnectionPositionPair(
-                    { originX: 'start', originY: 'top' },
-                    { overlayX: 'end', overlayY: 'top' },
-                    getXOffset(placement),
-                    null,
-                    getPanelClass(placement)
-                );
-
-            case 'left-end':
-                return new ConnectionPositionPair(
-                    { originX: 'start', originY: 'bottom' },
-                    { overlayX: 'end', overlayY: 'bottom' },
-                    getXOffset(placement),
-                    null,
-                    getPanelClass(placement)
-                );
-
-            default:
-                return bottom;
+        if (this._describedText) {
+            this._ariaDescriber.removeDescription(this._elRef.nativeElement, this._describedText);
+            this._describedText = null;
         }
-    }
-
-    private _getPositionStrategy(placement: Placement | Placement[]): FlexibleConnectedPositionStrategy {
-        /**
-         * Format `placement` into a consistent data type of `Placement[]`
-         */
-        const placementsList: Placement[] = [placement].flat();
-        /**
-         * Get positions from preferred placements
-         */
-        const primaryPositions = placementsList.map(p => this._getPositionPair(p));
-        /**
-         * If `autoFlip` is enabled, include the inverse position of each `placement` input. Each of this inverse positions
-         * will have a lower priority than each of the preferred positions generated from the `placement` input
-         */
-        const positions = this.autoFlip
-            ? [...primaryPositions, ...placementsList.map(p => this._getPositionPair(placementFlipMap[p]))]
-            : [...primaryPositions];
-
-        return this._overlay
-            .position()
-            .flexibleConnectedTo(this.connectedTo || this._elRef)
-            .withFlexibleDimensions(false)
-            .withPositions(positions)
-            .withPush(false);
-    }
-
-    private _updatePositionStrategy(placement: Placement | Placement[]): void {
-        const positionStrategy = this._getPositionStrategy(placement);
-        this._overlayRef.updatePositionStrategy(positionStrategy);
-    }
-
-    private _getScrollStrategy(closeOnScroll: boolean): RepositionScrollStrategy | CloseScrollStrategy {
-        if (closeOnScroll) {
-            return this._overlay.scrollStrategies.close();
-        }
-        return this._overlay.scrollStrategies.reposition();
-    }
-
-    private _updateScrollStrategy(closeOnScroll: boolean): void {
-        const scrollStrategy = this._getScrollStrategy(closeOnScroll);
-        this._overlayRef.updateScrollStrategy(scrollStrategy);
-    }
-
-    ngOnDestroy() {
-        this.hide();
-        this._destroyed$.next();
-        this._destroyed$.complete();
-        this._overlayRef?.dispose();
     }
 }
