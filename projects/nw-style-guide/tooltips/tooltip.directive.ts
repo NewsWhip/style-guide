@@ -84,16 +84,6 @@ export class TooltipDirective extends CalloutBaseDirective implements OnDestroy 
         effect(() => this._registerDescription(this._describableText()));
     }
 
-    override ngOnDestroy(): void {
-        super.ngOnDestroy();
-        this._focusMonitor.stopMonitoring(this._elRef);
-
-        if (this._describedText) {
-            this._ariaDescriber.removeDescription(this._elRef.nativeElement, this._describedText);
-            this._describedText = null;
-        }
-    }
-
     protected _getTriggerDefaults(): ICalloutTriggers {
         /**
          * There are no hover events on touch, so a tooltip on a small screen opens on tap instead
@@ -209,5 +199,15 @@ export class TooltipDirective extends CalloutBaseDirective implements OnDestroy 
             : content;
 
         return text.trim();
+    }
+
+    override ngOnDestroy(): void {
+        super.ngOnDestroy();
+        this._focusMonitor.stopMonitoring(this._elRef);
+
+        if (this._describedText) {
+            this._ariaDescriber.removeDescription(this._elRef.nativeElement, this._describedText);
+            this._describedText = null;
+        }
     }
 }
