@@ -98,6 +98,25 @@ describe('ToastsComponent', () => {
             expect(politeRegion().textContent).toBe('Success: Saved');
         }));
 
+        it('states aria-live and aria-atomic rather than relying on the role to imply them', () => {
+            // Support for the implicit `aria-atomic` of `status`/`alert` is patchy, and without it
+            // a reader may report only the changed node — dropping every message after the first
+            expect(politeRegion().getAttribute('aria-live')).toBe('polite');
+            expect(politeRegion().getAttribute('aria-atomic')).toBe('true');
+            expect(assertiveRegion().getAttribute('aria-live')).toBe('assertive');
+            expect(assertiveRegion().getAttribute('aria-atomic')).toBe('true');
+        });
+
+        it('announces a second, different message', fakeAsync(() => {
+            component.success('Your search has been saved');
+            tick(ANNOUNCE_DELAY);
+
+            component.success('Your group has been renamed');
+            tick(ANNOUNCE_DELAY);
+
+            expect(politeRegion().textContent).toBe('Success: Your group has been renamed');
+        }));
+
         it('announces the text of an HTML message, without the markup', fakeAsync(() => {
             component.error('Could not reach <strong>Twitter</strong>');
 

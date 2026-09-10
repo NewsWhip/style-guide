@@ -138,11 +138,16 @@ export class ToastAnnouncer implements OnDestroy {
 
         region.setAttribute('role', role);
         /**
-         * Styled inline rather than with the `sr-only` utility class: these regions are created
-         * imperatively and must stay hidden even if a consumer has not pulled in the stylesheet.
+         * Set explicitly rather than left to the values `role` implies. `status` and `alert` both
+         * carry an implicit `aria-atomic="true"`, but support for the implicit value is patchy —
+         * where it is treated as `false` the reader is free to report only the node that changed,
+         * and `_write` clears the region before every message, so each write after the first has
+         * nothing coherent to diff against and is silently dropped. Stating both is what the CDK's
+         * `LiveAnnouncer` does for the same reason.
          */
-        region.style.cssText =
-            'position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0;';
+        region.setAttribute('aria-live', role === 'alert' ? 'assertive' : 'polite');
+        region.setAttribute('aria-atomic', 'true');
+        region.classList.add('sr-only');
         host.appendChild(region);
 
         return region;

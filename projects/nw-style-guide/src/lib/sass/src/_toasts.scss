@@ -77,15 +77,6 @@
     animation: toast-slide-out 0.8s linear forwards;
 }
 
-// Collapsed rather than removed: `animate.leave` waits for the animation to finish before the
-// toast is taken out of the DOM, so the animation has to still run.
-@media (prefers-reduced-motion: reduce) {
-    .toast-animate-in,
-    .toast-animate-out {
-        animation-duration: 1ms;
-    }
-}
-
 @keyframes toast-slide-in {
     0% {
         opacity: 0;
