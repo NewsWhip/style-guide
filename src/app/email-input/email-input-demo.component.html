@@ -1,59 +1,69 @@
-<h2 class="page-header">Email Input</h2>
+<div
+    class="page-header"
+    style="padding-bottom: 0">
+    <h2>Email Input</h2>
 
-<p>This is an input that can be used to enter multiple emails in a form</p>
+    <p>This is an input that can be used to enter multiple emails in a form</p>
 
-<div class="tabs-container">
-    <nw-tabs size="md">
-        <li
-            nwTab
-            [isActive]="selectedTab === 'design'"
-            role="presentation">
-            <a
-                [routerLink]="['.']"
-                [queryParams]="{ section: 'design' }"
-                role="tab"
-                >Design</a
-            >
-        </li>
-        <li
-            nwTab
-            [isActive]="selectedTab === 'api'"
-            role="presentation">
-            <a
-                [routerLink]="['.']"
-                [queryParams]="{ section: 'api' }"
-                role="tab"
-                >API</a
-            >
-        </li>
-    </nw-tabs>
+    <div class="tabs-container">
+        <nw-tabs size="md">
+            <li
+                nwTab
+                [isActive]="selectedTab === 'design'"
+                role="presentation">
+                <a
+                    [routerLink]="['.']"
+                    [queryParams]="{ section: 'design' }"
+                    role="tab"
+                    >Design</a
+                >
+            </li>
+            <li
+                nwTab
+                [isActive]="selectedTab === 'api'"
+                role="presentation">
+                <a
+                    [routerLink]="['.']"
+                    [queryParams]="{ section: 'api' }"
+                    role="tab"
+                    >API</a
+                >
+            </li>
+        </nw-tabs>
+    </div>
 </div>
 
 @if (selectedTab === 'design') {
     <div class="tab-content">
-        <h3 style="margin-bottom: 16px">Live example</h3>
+        <h3 style="margin-bottom: 16px">Basic Example</h3>
 
-        <div
-            class="form-group"
-            style="margin-bottom: 16px">
-            <label for="email-input">Input Label</label>
-            <nw-email-input
-                [emails]="emails"
-                placeholder="Custom placeholder text"
-                inputId="email-input"
-                (updated)="onChange($event)"></nw-email-input>
-        </div>
+        <app-code-sandbox [snippet]="snippets.basicExample">
+            <div
+                class="form-group"
+                style="margin-bottom: 16px; width: 550px">
+                <label for="email-input">Input Label</label>
+                <nw-email-input
+                    [emails]="emails"
+                    placeholder="Custom placeholder text"
+                    inputId="email-input"
+                    (updated)="onChange($event)"></nw-email-input>
+            </div>
+        </app-code-sandbox>
 
-        <div
-            class="form-group"
-            style="margin-bottom: 0">
-            <label for="email-input">Persistent Placeholder</label>
-            <nw-email-input
-                [emails]="emails"
-                persistentPlaceholder="Enter Email Address"
-                inputId="email-input"
-                (updated)="onChange($event)"></nw-email-input>
-        </div>
+        <h3 style="margin-bottom: 16px">Persistent Placeholder</h3>
+
+        <app-code-sandbox [snippet]="snippets.persistentPlaceholder">
+            <div
+                class="form-group"
+                style="margin-bottom: 0; width: 550px">
+                <label for="email-input">Persistent Placeholder</label>
+                <nw-email-input
+                    [emails]="emails"
+                    persistentPlaceholder="Enter Email Address"
+                    inputId="email-input"
+                    (updated)="onChange($event)"></nw-email-input>
+            </div>
+        </app-code-sandbox>
 
         <hr />
 
@@ -96,8 +106,8 @@
         </p>
 
         <ol style="margin-bottom: 32px">
-            <li>If the text is a valid email then create a blue tag as shown below</li>
-            <li>If the text is an invalid then create a red tag as shown below</li>
+            <li>If the text is a valid email then create a blue tag as shown above</li>
+            <li>If the text is an invalid then create a red tag as shown above</li>
         </ol>
     </div>
 }
@@ -107,11 +117,6 @@
         <div class="demo-section">
             <h3>Importing</h3>
             <app-code [snippet]="snippets.import"></app-code>
-        </div>
-        <hr />
-        <div class="demo-section">
-            <h3>Basic example</h3>
-            <app-code [snippet]="snippets.basicExample"></app-code>
         </div>
         <hr />
         <div class="demo-section">

@@ -1,32 +1,36 @@
-<h2 class="page-header">Toasts</h2>
+<div
+    class="page-header"
+    style="padding-bottom: 0">
+    <h2>Toasts</h2>
 
-<p>Toasts generally provide application-level feedback & confirmation after the user performs an action.</p>
+    <p>Toasts generally provide application-level feedback & confirmation after the user performs an action.</p>
 
-<div class="tabs-container">
-    <nw-tabs size="md">
-        <li
-            nwTab
-            [isActive]="selectedTab === 'design'"
-            role="presentation">
-            <a
-                [routerLink]="['.']"
-                [queryParams]="{ section: 'design' }"
-                role="tab"
-                >Design</a
-            >
-        </li>
-        <li
-            nwTab
-            [isActive]="selectedTab === 'api'"
-            role="presentation">
-            <a
-                [routerLink]="['.']"
-                [queryParams]="{ section: 'api' }"
-                role="tab"
-                >API</a
-            >
-        </li>
-    </nw-tabs>
+    <div class="tabs-container">
+        <nw-tabs size="md">
+            <li
+                nwTab
+                [isActive]="selectedTab === 'design'"
+                role="presentation">
+                <a
+                    [routerLink]="['.']"
+                    [queryParams]="{ section: 'design' }"
+                    role="tab"
+                    >Design</a
+                >
+            </li>
+            <li
+                nwTab
+                [isActive]="selectedTab === 'api'"
+                role="presentation">
+                <a
+                    [routerLink]="['.']"
+                    [queryParams]="{ section: 'api' }"
+                    role="tab"
+                    >API</a
+                >
+            </li>
+        </nw-tabs>
+    </div>
 </div>
 
 @if (selectedTab === 'design') {
@@ -134,7 +138,7 @@
             <div class="row">
                 <div class="col-md-8 col-sm-12">
                     <h3>Importing</h3>
-                    <app-copy-code>{{ importModule }}</app-copy-code>
+                    <app-code [snippet]="importSnippet"></app-code>
                 </div>
             </div>
         </div>

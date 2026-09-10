@@ -1,30 +1,34 @@
-<h2 class="page-header">Word Cloud</h2>
+<div
+    class="page-header"
+    style="padding-bottom: 0">
+    <h2>Word Cloud</h2>
 
-<div class="tabs-container">
-    <nw-tabs size="md">
-        <li
-            nwTab
-            [isActive]="selectedTab === 'design'"
-            role="presentation">
-            <a
-                [routerLink]="['.']"
-                [queryParams]="{ section: 'design' }"
-                role="tab"
-                >Design</a
-            >
-        </li>
-        <li
-            nwTab
-            [isActive]="selectedTab === 'api'"
-            role="presentation">
-            <a
-                [routerLink]="['.']"
-                [queryParams]="{ section: 'api' }"
-                role="tab"
-                >API</a
-            >
-        </li>
-    </nw-tabs>
+    <div class="tabs-container">
+        <nw-tabs size="md">
+            <li
+                nwTab
+                [isActive]="selectedTab === 'design'"
+                role="presentation">
+                <a
+                    [routerLink]="['.']"
+                    [queryParams]="{ section: 'design' }"
+                    role="tab"
+                    >Design</a
+                >
+            </li>
+            <li
+                nwTab
+                [isActive]="selectedTab === 'api'"
+                role="presentation">
+                <a
+                    [routerLink]="['.']"
+                    [queryParams]="{ section: 'api' }"
+                    role="tab"
+                    >API</a
+                >
+            </li>
+        </nw-tabs>
+    </div>
 </div>
 
 @if (selectedTab === 'design') {
