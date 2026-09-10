@@ -1,44 +1,30 @@
 import { DOCUMENT, Injectable, OnDestroy, inject } from '@angular/core';
 
 /**
- * The delay between a live region being cleared and its message being written. A live region only
- * announces when its rendered content changes, so the two writes cannot happen in the same task —
- * they would coalesce into a single change and an identical consecutive message would never
- * register at all. 100ms matches the wait the CDK's own `LiveAnnouncer` uses to accommodate
- * browser and screen reader quirks.
+ * The clear and the write cannot share a task or they coalesce into one change and nothing is
+ * announced. 100ms matches the CDK's own `LiveAnnouncer`
  */
 const ANNOUNCE_DELAY = 100;
 
 /**
- * Any element carrying `aria-modal="true"` hides everything outside itself from screen readers,
- * including the body-level live regions below. Toasts are very often shown immediately before the
- * dialog they were triggered from closes, so a dialog being open is not on its own a reason to
- * announce inside it — it is usually about to go away.
+ * An `aria-modal="true"` element hides everything outside itself from screen readers, including the
+ * body-level regions below
  */
 const OPEN_DIALOG_SELECTOR = '[aria-modal="true"]';
 
 /**
- * How long to wait for an open dialog to close before giving up and announcing inside it instead.
- * Comfortably longer than a dialog teardown, and short enough to land well within the default
- * `dismissTimeout` of the toast being announced.
+ * How long to wait for an open dialog to close before announcing inside it instead. A toast is
+ * usually shown just before its dialog closes, so waiting is the common case
  */
 const DIALOG_WAIT_TIMEOUT = 500;
 
 const DIALOG_POLL_INTERVAL = 50;
 
 /**
- * Announces toast messages to screen readers.
- *
- * The announcement is deliberately decoupled from the visible toast element rather than being
- * driven by a `role="status"`/`role="alert"` attribute on the toast itself. Two reasons:
- *
- * 1. The toast outlet is created lazily, on the first toast shown. A live region and its content
- *    entering the DOM in the same change detection pass is not reliably announced — screen readers
- *    report mutations *inside* a region that is already present. The regions here are created up
- *    front and left empty for exactly that reason.
- * 2. It allows the announcement to be routed around an open `aria-modal` dialog, which the visible
- *    toast cannot be: the toast has to stay at its own outlet to keep its positioning and to
- *    survive the dialog closing.
+ * Announces toast messages from persistent body-level live regions rather than from a role on the
+ * toast itself: the outlet is created lazily, and a region entering the DOM together with its
+ * content is not reliably announced. It also lets an announcement be routed around an open
+ * `aria-modal` dialog, which the visible toast cannot be
  */
 @Injectable({ providedIn: 'root' })
 export class ToastAnnouncer implements OnDestroy {
@@ -75,7 +61,7 @@ export class ToastAnnouncer implements OnDestroy {
         this._cancelPending();
 
         if (!this._getOpenDialog()) {
-            this._write(this._getRegion(typeId), message);
+            this._writeMessageToRegion(message, this._getRegion(typeId));
             return;
         }
         this._announceAfterDialogCloses(message, typeId);
@@ -90,18 +76,18 @@ export class ToastAnnouncer implements OnDestroy {
 
             if (!dialog) {
                 clearInterval(this._dialogPollTimer);
-                this._write(this._getRegion(typeId), message);
+                this._writeMessageToRegion(message, this._getRegion(typeId));
                 return;
             }
 
             if (waited >= DIALOG_WAIT_TIMEOUT) {
                 clearInterval(this._dialogPollTimer);
-                this._write(this._getDialogRegion(dialog, typeId), message);
+                this._writeMessageToRegion(message, this._getDialogRegion(dialog, typeId));
             }
         }, DIALOG_POLL_INTERVAL);
     }
 
-    private _write(region: HTMLElement, message: string): void {
+    private _writeMessageToRegion(message: string, region: HTMLElement): void {
         region.textContent = '';
         this._announceTimer = setTimeout(() => (region.textContent = message), ANNOUNCE_DELAY);
     }
@@ -116,7 +102,6 @@ export class ToastAnnouncer implements OnDestroy {
     /**
      * The region is recreated rather than reused so that its role is correct from the moment it is
      * attached — screen readers do not reliably pick up a role changing on an existing element.
-     * `_write`'s delay leaves the region in the DOM before its content arrives.
      */
     private _getDialogRegion(dialog: Element, typeId: string): HTMLElement {
         this._dialogRegion?.remove();
@@ -137,14 +122,7 @@ export class ToastAnnouncer implements OnDestroy {
         const region = this._document.createElement('div');
 
         region.setAttribute('role', role);
-        /**
-         * Set explicitly rather than left to the values `role` implies. `status` and `alert` both
-         * carry an implicit `aria-atomic="true"`, but support for the implicit value is patchy —
-         * where it is treated as `false` the reader is free to report only the node that changed,
-         * and `_write` clears the region before every message, so each write after the first has
-         * nothing coherent to diff against and is silently dropped. Stating both is what the CDK's
-         * `LiveAnnouncer` does for the same reason.
-         */
+        // An alert interrupts; a status waits until previous announcements have finished
         region.setAttribute('aria-live', role === 'alert' ? 'assertive' : 'polite');
         region.setAttribute('aria-atomic', 'true');
         region.classList.add('sr-only');
