@@ -1,68 +1,27 @@
-<div
-    class="page-header"
-    style="padding-bottom: 0">
-    <h3>Autofocus</h3>
+<h2 class="page-header">Autofocus</h2>
+<p>
+    A directive that automatically focuses a focusable element when it is rendered in the DOM. This is useful for
+    improving user experience by directing focus to the most relevant input when a view loads, such as a search field or
+    the first form input.
+</p>
 
-    <p>This directive auto-focuses on a focusable element when the element is rendered.</p>
+<div class="tab-content">
+    <h3>Importing</h3>
+    <app-code [snippet]="importSnippet"></app-code>
 
-    <div class="tabs-container">
-        <nw-tabs size="md">
-            <li
-                nwTab
-                [isActive]="selectedTab === 'design'"
-                role="presentation">
-                <a
-                    [routerLink]="['.']"
-                    [queryParams]="{ section: 'design' }"
-                    role="tab"
-                    >Design</a
-                >
-            </li>
-            <li
-                nwTab
-                [isActive]="selectedTab === 'api'"
-                role="presentation">
-                <a
-                    [routerLink]="['.']"
-                    [queryParams]="{ section: 'api' }"
-                    role="tab"
-                    >API</a
-                >
-            </li>
-        </nw-tabs>
-    </div>
-</div>
+    <hr />
 
-@if (selectedTab === 'design') {
-    <div class="tab-content">
-        <h4 style="margin-bottom: 16px">Live Example</h4>
+    <h3>Usage</h3>
+    <p>
+        Apply the <code>nwAutofocus</code> directive to any focusable element. When the element is rendered, it will
+        automatically receive focus.
+    </p>
+
+    <app-code-sandbox [snippet]="exampleSnippet">
         <input
-            style="width: 300px"
             type="text"
             nwAutofocus
             placeholder="This input box is autofocused on load"
             class="form-control" />
-    </div>
-}
-
-@if (selectedTab === 'api') {
-    <div class="tab-content">
-        <div class="demo-section">
-            <div class="row">
-                <div class="col-md-8 col-sm-12">
-                    <h4>Importing</h4>
-                    <app-copy-code>{{ importModule }}</app-copy-code>
-                </div>
-            </div>
-        </div>
-
-        <div class="demo-section">
-            <div class="row">
-                <div class="col-md-8 col-sm-12">
-                    <h4>Basic example</h4>
-                    <app-copy-code>{{ example }}</app-copy-code>
-                </div>
-            </div>
-        </div>
-    </div>
-}
+    </app-code-sandbox>
+</div>

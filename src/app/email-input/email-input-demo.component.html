@@ -1,7 +1,7 @@
 <div
     class="page-header"
     style="padding-bottom: 0">
-    <h3>Email Input</h3>
+    <h2>Email Input</h2>
 
     <p>This is an input that can be used to enter multiple emails in a form</p>
 
@@ -35,35 +35,41 @@
 
 @if (selectedTab === 'design') {
     <div class="tab-content">
-        <h4 style="margin-bottom: 16px">Live example</h4>
+        <h3 style="margin-bottom: 16px">Basic Example</h3>
 
-        <div
-            class="form-group"
-            style="margin-bottom: 16px">
-            <label for="email-input">Input Label</label>
-            <nw-email-input
-                [emails]="emails"
-                placeholder="Custom placeholder text"
-                inputId="email-input"
-                (updated)="onChange($event)"></nw-email-input>
-        </div>
+        <app-code-sandbox [snippet]="snippets.basicExample">
+            <div
+                class="form-group"
+                style="margin-bottom: 16px; width: 550px">
+                <label for="email-input">Input Label</label>
+                <nw-email-input
+                    [emails]="emails"
+                    placeholder="Custom placeholder text"
+                    inputId="email-input"
+                    (updated)="onChange($event)"></nw-email-input>
+            </div>
+        </app-code-sandbox>
 
-        <div
-            class="form-group"
-            style="margin-bottom: 0">
-            <label for="email-input">Persistent Placeholder</label>
-            <nw-email-input
-                [emails]="emails"
-                persistentPlaceholder="Enter Email Address"
-                inputId="email-input"
-                (updated)="onChange($event)"></nw-email-input>
-        </div>
+        <h3 style="margin-bottom: 16px">Persistent Placeholder</h3>
+
+        <app-code-sandbox [snippet]="snippets.persistentPlaceholder">
+            <div
+                class="form-group"
+                style="margin-bottom: 0; width: 550px">
+                <label for="email-input">Persistent Placeholder</label>
+                <nw-email-input
+                    [emails]="emails"
+                    persistentPlaceholder="Enter Email Address"
+                    inputId="email-input"
+                    (updated)="onChange($event)"></nw-email-input>
+            </div>
+        </app-code-sandbox>
 
         <hr />
 
         <h3 style="margin-bottom: 16px">Description</h3>
 
-        <p style="margin-bottom: 16px">An email input should be</p>
+        <p style="margin-bottom: 16px">An email input should be:</p>
 
         <ol
             style="margin-bottom: 32px"
@@ -92,7 +98,7 @@
 
         <hr />
 
-        <h4 style="margin-bottom: 16px">Usage</h4>
+        <h3 style="margin-bottom: 16px">Usage</h3>
 
         <p style="margin-bottom: 16px">
             When a user wants to add multiple emails at once they will enter text and then either use a
@@ -100,8 +106,8 @@
         </p>
 
         <ol style="margin-bottom: 32px">
-            <li>If the text is a valid email then create a blue tag as shown below</li>
-            <li>If the text is an invalid then create a red tag as shown below</li>
+            <li>If the text is a valid email then create a blue tag as shown above</li>
+            <li>If the text is an invalid then create a red tag as shown above</li>
         </ol>
     </div>
 }
@@ -109,22 +115,17 @@
 @if (selectedTab === 'api') {
     <div class="tab-content">
         <div class="demo-section">
-            <h4>Importing</h4>
+            <h3>Importing</h3>
             <app-code [snippet]="snippets.import"></app-code>
         </div>
         <hr />
         <div class="demo-section">
-            <h4>Basic example</h4>
-            <app-code [snippet]="snippets.basicExample"></app-code>
-        </div>
-        <hr />
-        <div class="demo-section">
-            <h4>Validation</h4>
+            <h3>Validation</h3>
             <p>Email validation is handled by Angular's built-in email validator.</p>
         </div>
         <hr />
         <div class="demo-section">
-            <h4>Properties</h4>
+            <h3>Properties</h3>
             <table class="table table-bordered">
                 <thead>
                     <tr>
@@ -155,7 +156,7 @@
         </div>
         <hr />
         <div class="demo-section">
-            <h4>Classes / Interfaces</h4>
+            <h3>Classes / Interfaces</h3>
 
             <table class="table table-bordered">
                 <thead>

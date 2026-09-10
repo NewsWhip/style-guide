@@ -65,7 +65,7 @@ export class WordCloudDemoComponent implements OnInit {
         import: {
             lang: 'typescript',
             code: `
-                import { WordCloudModule } from 'nw-style-guide/word-cloud';
+                import { WORD_CLOUD_COMPONENTS } from 'nw-style-guide/word-cloud';
             `
         },
         example: {
@@ -74,8 +74,10 @@ export class WordCloudDemoComponent implements OnInit {
                 <nw-word-cloud
                     [words]="words"
                     (wordsPositioned)="positionedWords = $event">
-            
-                    <nw-word *ngFor="let word of positionedWords" [word]="word"></nw-word>
+
+                    @for (word of positionedWords; track word.value) {
+                        <nw-word [word]="word"></nw-word>
+                    }
                 </nw-word-cloud>
             `
         },
@@ -86,12 +88,14 @@ export class WordCloudDemoComponent implements OnInit {
                     [words]="words"
                     [options]="{ minFontSize: 20, fontWeight: 'bold' }"
                     (wordsPositioned)="positionedWords = $event">
-            
-                    <nw-word *ngFor="let word of positionedWords; trackBy: wordTrack"
-                        [word]="word"
-                        [nwTooltip]="word.value + ' has a weight of ' + word.weight"
-                        [placement]="'top'"
-                        [style.cursor]="'pointer'"></nw-word>
+
+                    @for (word of positionedWords; track word.value) {
+                        <nw-word
+                            [word]="word"
+                            [nwTooltip]="word.value + ' has a weight of ' + word.weight"
+                            placement="top"
+                            [style.cursor]="'pointer'"></nw-word>
+                    }
                 </nw-word-cloud>
             `
         },
@@ -112,7 +116,7 @@ export class WordCloudDemoComponent implements OnInit {
     public wordCloudPropertiesTable: [string, string, string][] = [
         [
             '@Input() words: T[]',
-            'A generic collecion of word objects that must satisfy the <code>IWord</code> interface',
+            'A generic collection of word objects that must satisfy the <code>IWord</code> interface',
             'undefined'
         ],
         [
@@ -140,7 +144,7 @@ export class WordCloudDemoComponent implements OnInit {
     public wordComponentPropertiesTable: [string, string, string][] = [
         [
             '@Input() word: IWordWithPosition<T>',
-            'A single word from the generic collecion of word objects emitted from the <code>WordCloudComponent</code>',
+            'A single word from the generic collection of word objects emitted from the <code>WordCloudComponent</code>',
             'undefined'
         ]
     ];

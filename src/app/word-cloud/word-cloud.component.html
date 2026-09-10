@@ -1,7 +1,7 @@
 <div
     class="page-header"
     style="padding-bottom: 0">
-    <h3>Word Cloud</h3>
+    <h2>Word Cloud</h2>
 
     <div class="tabs-container">
         <nw-tabs size="md">
@@ -33,7 +33,7 @@
 
 @if (selectedTab === 'design') {
     <div class="tab-content">
-        <h4>Demo</h4>
+        <h3>Demo</h3>
         <button
             class="btn btn-md btn-primary"
             (click)="generateWords()">
@@ -61,17 +61,17 @@
             </nw-word-cloud>
         </div>
 
-        <h4>Basic example</h4>
+        <h3>Basic example</h3>
         <app-code [snippet]="snippets.example"></app-code>
 
-        <h4>With tooltip</h4>
+        <h3>With tooltip</h3>
         <app-code [snippet]="snippets.exampleWithAdditions"></app-code>
     </div>
 }
 
 @if (selectedTab === 'api') {
     <div class="tab-content">
-        <h3>API reference for tooltips / popover</h3>
+        <h3>API reference for Word Cloud</h3>
 
         <h4>Importing</h4>
         <app-code [snippet]="snippets.import"></app-code>
@@ -80,8 +80,8 @@
         <p>
             The <code>WordCloudComponent</code> is responsible for taking a collection of word objects and an optional
             config, and determining the size and position of those words in the word cloud. When those sizes and
-            positions are calculated, the are emitted via an output in the form of
-            <code>IWordWithPosition&lt;T&gt;[]</code> where <code>T</code> is a generic word object that satisifes the
+            positions are calculated, they are emitted via an output in the form of
+            <code>IWordWithPosition&lt;T&gt;[]</code> where <code>T</code> is a generic word object that satisfies the
             <code>IWord</code> interface below.
         </p>
         <br />
@@ -92,7 +92,7 @@
             directives like tooltips and popovers, customizing styles and binding custom events.
         </p>
 
-        <h5>Animations</h5>
+        <h4>Animations</h4>
         <p>
             By default, when the position of a word in the cloud changes it animates to its new position over
             <code>600ms</code> with an easing of <code>cubic-bezier(0.49, 0.07, 0.2, 0.99)</code>. The same timing and
@@ -104,12 +104,12 @@
 
         <h4>Components</h4>
 
-        <h5><code>WordCloudComponent</code></h5>
-        <p>The component that take the input words and calculates their size and position in the word cloud.</p>
+        <h4><code>WordCloudComponent</code></h4>
+        <p>The component that takes the input words and calculates their size and position in the word cloud.</p>
         <p>
             Selector: <code>{{ snippets.selector.code }}</code>
         </p>
-        <h5>Properties</h5>
+        <h4>Properties</h4>
 
         <table class="table table-bordered">
             <thead>
@@ -122,12 +122,12 @@
 
             <tbody>
                 @for (row of wordCloudPropertiesTable; track row) {
-                    <ng-container *ngTemplateOutlet="inputTableTowTmpl; context: { values: row }"></ng-container>
+                    <ng-container *ngTemplateOutlet="inputTableRowTmpl; context: { values: row }"></ng-container>
                 }
             </tbody>
         </table>
 
-        <h5>Methods</h5>
+        <h4>Methods</h4>
 
         <table class="table table-bordered">
             <thead>
@@ -149,12 +149,12 @@
             </tbody>
         </table>
 
-        <h5><code>WordComponent</code></h5>
+        <h4><code>WordComponent</code></h4>
         <p>The component responsible for rendering individual words</p>
         <p>
             Selector: <code>{{ snippets.selector.wordComponentSelector }}</code>
         </p>
-        <h5>Properties</h5>
+        <h4>Properties</h4>
 
         <table class="table table-bordered">
             <thead>
@@ -167,14 +167,14 @@
 
             <tbody>
                 @for (row of wordComponentPropertiesTable; track row) {
-                    <ng-container *ngTemplateOutlet="inputTableTowTmpl; context: { values: row }"></ng-container>
+                    <ng-container *ngTemplateOutlet="inputTableRowTmpl; context: { values: row }"></ng-container>
                 }
             </tbody>
         </table>
 
-        <h4>Types and interfaces</h4>
+        <h3>Types and interfaces</h3>
 
-        <h5>IWord interface</h5>
+        <h4>IWord interface</h4>
         <table class="table table-bordered">
             <thead>
                 <tr>
@@ -194,7 +194,7 @@
             </tbody>
         </table>
 
-        <h5>IWordCloudConfig interface</h5>
+        <h4>IWordCloudConfig interface</h4>
         <table class="table table-bordered">
             <thead>
                 <tr>
@@ -214,7 +214,7 @@
             </tbody>
         </table>
 
-        <h5>IWordWithPosition interface</h5>
+        <h4>IWordWithPosition interface</h4>
         <table class="table table-bordered">
             <thead>
                 <tr>
@@ -237,7 +237,7 @@
 }
 
 <ng-template
-    #inputTableTowTmpl
+    #inputTableRowTmpl
     let-values="values">
     <tr>
         <td>

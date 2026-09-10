@@ -1,3 +1,6 @@
+@use 'nw-style-guide/sass/src/variables' as variables;
+
 .rel-weight {
     margin: 16px 0;
+    background-color: rgba(variables.get-color('secondary', light), 0.1);
 }
