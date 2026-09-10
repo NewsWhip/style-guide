@@ -1,0 +1,44 @@
+@use 'nw-style-guide/sass/src/variables';
+
+.code-sandbox {
+    border: 1px solid variables.get-color('primary', 5x-light);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 24px;
+    max-width: fit-content;
+
+    .preview {
+        padding: 24px;
+        background: variables.$level1;
+    }
+
+    .code {
+        border-top: 1px solid variables.get-color('primary', 5x-light);
+
+        pre {
+            margin: 0;
+        }
+    }
+
+    &.horizontal {
+        display: flex;
+        max-width: none;
+
+        .preview {
+            flex: 0 0 auto;
+        }
+
+        .code {
+            flex: 1 1 auto;
+            border-top: none;
+            border-left: 1px solid variables.get-color('primary', 5x-light);
+            position: relative;
+
+            > * {
+                position: absolute;
+                inset: 0;
+                overflow: auto;
+            }
+        }
+    }
+}
