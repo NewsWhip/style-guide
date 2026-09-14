@@ -5,12 +5,14 @@ import { Subscription } from 'rxjs';
 import { Toaster } from 'nw-style-guide/toasts';
 import { TABS_DIRECTIVES } from 'nw-style-guide/tabs';
 import { CopyCodeComponent } from '../code/copy-code.component';
+import { ISnippet } from '../code/ISnippet';
+import { AppCodeComponent } from '../code/code.component';
 
 @Component({
     selector: 'app-toasts',
     templateUrl: './toasts.component.html',
     styleUrls: ['./toasts.component.scss'],
-    imports: [TABS_DIRECTIVES, RouterLink, FormsModule, ReactiveFormsModule, CopyCodeComponent]
+    imports: [TABS_DIRECTIVES, RouterLink, FormsModule, ReactiveFormsModule, CopyCodeComponent, AppCodeComponent]
 })
 export class ToastsComponent implements OnInit, OnDestroy {
     private _cdRef = inject(ChangeDetectorRef);
@@ -54,16 +56,10 @@ export class ToastsComponent implements OnInit, OnDestroy {
         });
     }
 
-    readonly importModule = `import { ToastsModule } from 'nw-style-guide/toasts';
-
-@NgModule({
-  declarations: [...],
-  imports: [
-      ToastsModule.forRoot()
-  ],
-  bootstrap: [AppComponent]
-})
-export class AppModule { }`;
+    readonly importSnippet: ISnippet = {
+        lang: 'typescript',
+        code: `import { ToastsModule } from 'nw-style-guide/toasts';`
+    };
 
     readonly example = `export class TestComponent {
 

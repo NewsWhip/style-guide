@@ -1,51 +1,25 @@
-import { Component, OnInit, ChangeDetectionStrategy, OnDestroy, ChangeDetectorRef, inject } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { TABS_DIRECTIVES } from 'nw-style-guide/tabs';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { AutoFocusDirective } from 'nw-style-guide/autofocus';
-import { CopyCodeComponent } from '../code/copy-code.component';
+import { AppCodeComponent } from '../code/code.component';
+import { CodeSandboxComponent } from '../code/code-sandbox.component';
+import { ISnippet } from '../code/ISnippet';
 
 @Component({
     selector: 'app-autofocus',
     templateUrl: './autofocus.component.html',
     styleUrls: ['./autofocus.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [TABS_DIRECTIVES, RouterLink, AutoFocusDirective, CopyCodeComponent]
+    imports: [AutoFocusDirective, AppCodeComponent, CodeSandboxComponent]
 })
-export class AutofocusComponent implements OnInit, OnDestroy {
-    private _route = inject(ActivatedRoute);
-    private _cdRef = inject(ChangeDetectorRef);
+export class AutofocusComponent {
+    readonly importSnippet: ISnippet = {
+        lang: 'typescript',
+        code: `import { AutoFocusDirective } from 'nw-style-guide/autofocus';`
+    };
 
-    public selectedTab: 'design' | 'api' = 'design';
-
-    private _routeSub: Subscription;
-
-    ngOnInit(): void {
-        this._routeSub = this._route.queryParams.subscribe(params => {
-            this.selectedTab = params.section || 'design';
-            this._cdRef.detectChanges();
-        });
-    }
-
-    readonly importModule = `import { AutoFocusModule } from 'nw-style-guide/autofocus';
-
-    ...........
-    ...........
-
-    @NgModule({
-        declarations: [...],
-        imports: [
-            .....
-            .....
-            AutoFocusModule
-        ],
-        bootstrap: [AppComponent]
-    })
-    export class AppModule { }`;
-
-    readonly example = `<input type="text" nwAutofocus placeholder="This input box is autofocused on load" class="form-control">`;
-
-    ngOnDestroy() {
-        this._routeSub.unsubscribe();
-    }
+    readonly exampleSnippet: ISnippet = {
+        lang: 'html',
+        code: `<input type="text" nwAutofocus class="form-control"
+                placeholder="This input is autofocused on load">`
+    };
 }

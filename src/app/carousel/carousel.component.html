@@ -1,218 +1,172 @@
-<h1 class="page-header">Carousel</h1>
+<h2 class="page-header">Carousel</h2>
 
-<h2>Default Carousel</h2>
-
-<div class="row">
-    <div class="col-sm-6">
-        <pre><code [innerText]="getExample1()"></code></pre>
-    </div>
-</div>
-
-<button
-    class="btn btn-alt"
-    (click)="items.pop()">
-    Remove last slide
-</button>
-
-<div style="width: 1030px; max-width: 100%">
-    <nw-carousel maskColor="#373737">
-        @for (item of items; track item) {
-            <div
-                class="slide"
-                nwCarouselSlide
-                snapAlign="center"
-                [style.background-image]="'url(https://picsum.photos/216/120?image=' + item + ')'">
-                Slide {{ item }}
-            </div>
-        }
-    </nw-carousel>
-</div>
+<h3>Importing</h3>
+<app-code [snippet]="importSnippet"></app-code>
 
 <hr />
 
-<h2>Custom paginators and page indicators</h2>
+<h3>Default Carousel</h3>
 
-<div class="row">
-    <div class="col-sm-6">
-        <pre><code [innerText]="getExample2()"></code></pre>
-    </div>
-</div>
-
-<div style="width: 100%">
-    <nw-carousel
-        maskColor="#373737"
-        #carousel="nw-carousel"
-        [showPageIndicator]="false"
-        [showPagination]="false"
-        noResultsText="Sorry, no data available">
-        @for (item of items; track item) {
-            <div
-                class="slide"
-                nwCarouselSlide
-                [style.background-color]="'grey'">
-                Slide {{ item }}
-            </div>
-        }
-
-        <div class="pagination-left">
-            <button
-                class="btn btn-primary btn-md"
-                (click)="carousel.prev()">
-                Prev
-            </button>
-        </div>
-
-        <div class="pagination-right">
-            <button
-                class="btn btn-primary btn-md"
-                (click)="carousel.next()">
-                Next
-            </button>
-        </div>
-
-        <div
-            class="pagination-indicators"
-            style="width: 100%; text-align: center">
-            @for (page of carousel.getPages(); track page) {
-                <button
-                    class="btn sm btn-primary"
-                    [class.active]="page === carousel.currPage"
-                    (click)="carousel.goToPage(page)">
-                    {{ page + 1 }}
-                </button>
+<app-code-sandbox
+    [snippet]="defaultExampleSnippet"
+    layout="vertical">
+    <button
+        class="btn btn-alt"
+        (click)="items.pop()">
+        Remove last slide
+    </button>
+    <div style="width: 1030px; max-width: 100%">
+        <nw-carousel maskColor="#373737">
+            @for (item of items; track item) {
+                <div
+                    class="slide"
+                    nwCarouselSlide
+                    snapAlign="center"
+                    [style.background-image]="'url(https://picsum.photos/216/120?image=' + item + ')'">
+                    Slide {{ item }}
+                </div>
             }
-        </div>
-    </nw-carousel>
-</div>
-
-<div
-    class="row"
-    style="margin-top: 24px">
-    <div class="col-sm-6">
-        <h4>Importing</h4>
-        <pre><code>{{"// app.module.ts
-import {CarouselModule} from 'nw-style-guide/carousel';
-
-@NgModule({
-    BrowserModule,
-    FormsModule,
-    ....
-    ....
-    CarouselModule
-})"}}</code></pre>
+        </nw-carousel>
     </div>
+</app-code-sandbox>
 
-    <div class="col-sm-6"></div>
-</div>
+<hr />
 
-<div
-    class="row"
-    style="margin-top: 24px">
-    <div class="col-sm-6">
-        <h4>Carousel Component</h4>
-        <table class="table table-bordered">
-            <tbody>
-                <tr>
-                    <td>Selector</td>
-                    <td><code>nw-carousel</code></td>
-                </tr>
-                <tr>
-                    <td>Exported as</td>
-                    <td><code>nw-carousel</code></td>
-                </tr>
-            </tbody>
-        </table>
+<h3>Custom paginators and page indicators</h3>
+
+<app-code-sandbox
+    [snippet]="customPaginationSnippet"
+    layout="vertical">
+    <div style="width: 100%">
+        <nw-carousel
+            maskColor="#373737"
+            #carousel="nw-carousel"
+            [showPageIndicator]="false"
+            [showPagination]="false"
+            noResultsText="Sorry, no data available">
+            @for (item of items; track item) {
+                <div
+                    class="slide"
+                    nwCarouselSlide
+                    [style.background-color]="'grey'">
+                    Slide {{ item }}
+                </div>
+            }
+
+            <div class="pagination-left">
+                <button
+                    class="btn btn-primary btn-md"
+                    (click)="carousel.prev()">
+                    Prev
+                </button>
+            </div>
+
+            <div class="pagination-right">
+                <button
+                    class="btn btn-primary btn-md"
+                    (click)="carousel.next()">
+                    Next
+                </button>
+            </div>
+
+            <div
+                class="pagination-indicators"
+                style="width: 100%; text-align: center">
+                @for (page of carousel.getPages(); track page) {
+                    <button
+                        class="btn sm btn-primary"
+                        [class.active]="page === carousel.currPage"
+                        (click)="carousel.goToPage(page)">
+                        {{ page + 1 }}
+                    </button>
+                }
+            </div>
+        </nw-carousel>
     </div>
+</app-code-sandbox>
 
-    <div class="col-sm-6"></div>
-</div>
+<hr />
 
-<div
-    class="row"
-    style="margin-top: 24px">
-    <div class="col-sm-6">
-        <h5>Inputs</h5>
+<h3>API</h3>
 
-        <table class="table table-bordered">
-            <tbody>
-                <tr>
-                    <td><code>showPageIndicator</code></td>
-                    <td><code>boolean</code></td>
-                    <td>Optional</td>
-                    <td>Show the default page dot indicators or not. Defaults to <code>true</code></td>
-                </tr>
-                <tr>
-                    <td><code>showPagination</code></td>
-                    <td><code>boolean</code></td>
-                    <td>Optional</td>
-                    <td>Show the default previous and next buttons. Defaults to <code>true</code></td>
-                </tr>
-                <tr>
-                    <td><code>showMask</code></td>
-                    <td><code>boolean</code></td>
-                    <td>Optional</td>
-                    <td>
-                        Show a gradient when there are more items before / after the current page. Defaults to
-                        <code>true</code>
-                    </td>
-                </tr>
-                <tr>
-                    <td><code>maskColor</code></td>
-                    <td><code>string</code></td>
-                    <td>Optional</td>
-                    <td>
-                        The color of the mask. Should match the carousel background for correct blending. Defaults to
-                        <code>#ffffff</code>
-                    </td>
-                </tr>
-                <tr>
-                    <td><code>containerClass</code></td>
-                    <td><code>string</code></td>
-                    <td>Optional</td>
-                    <td>A class that is added to the <code>.carousel</code> element. Defaults to <code>null</code></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
+<h4>Carousel Component</h4>
+<table class="table table-bordered">
+    <tbody>
+        <tr>
+            <td>Selector</td>
+            <td><code>nw-carousel</code></td>
+        </tr>
+        <tr>
+            <td>Exported as</td>
+            <td><code>nw-carousel</code></td>
+        </tr>
+    </tbody>
+</table>
 
-<div
-    class="row"
-    style="margin-top: 24px">
-    <div class="col-sm-6">
-        <h4>Carousel Slide Directive</h4>
-        <table class="table table-bordered">
-            <tbody>
-                <tr>
-                    <td>Selector</td>
-                    <td><code>nwCarouselSlide</code></td>
-                </tr>
-                <tr>
-                    <td>Exported as</td>
-                    <td><code>nw-carousel-slide</code></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+<h4>Inputs</h4>
+<table class="table table-bordered">
+    <tbody>
+        <tr>
+            <td><code>showPageIndicator</code></td>
+            <td><code>boolean</code></td>
+            <td>Optional</td>
+            <td>Show the default page dot indicators or not. Defaults to <code>true</code></td>
+        </tr>
+        <tr>
+            <td><code>showPagination</code></td>
+            <td><code>boolean</code></td>
+            <td>Optional</td>
+            <td>Show the default previous and next buttons. Defaults to <code>true</code></td>
+        </tr>
+        <tr>
+            <td><code>showMask</code></td>
+            <td><code>boolean</code></td>
+            <td>Optional</td>
+            <td>
+                Show a gradient when there are more items before / after the current page. Defaults to
+                <code>true</code>
+            </td>
+        </tr>
+        <tr>
+            <td><code>maskColor</code></td>
+            <td><code>string</code></td>
+            <td>Optional</td>
+            <td>
+                The color of the mask. Should match the carousel background for correct blending. Defaults to
+                <code>#ffffff</code>
+            </td>
+        </tr>
+        <tr>
+            <td><code>containerClass</code></td>
+            <td><code>string</code></td>
+            <td>Optional</td>
+            <td>A class that is added to the <code>.carousel</code> element. Defaults to <code>null</code></td>
+        </tr>
+    </tbody>
+</table>
 
-    <div class="col-sm-6"></div>
-</div>
+<h4>Carousel Slide Directive</h4>
+<table class="table table-bordered">
+    <tbody>
+        <tr>
+            <td>Selector</td>
+            <td><code>nwCarouselSlide</code></td>
+        </tr>
+        <tr>
+            <td>Exported as</td>
+            <td><code>nw-carousel-slide</code></td>
+        </tr>
+    </tbody>
+</table>
 
-<div
-    class="row"
-    style="margin-top: 24px">
-    <div class="col-sm-6">
-        <h5>Inputs</h5>
-
-        <table class="table table-bordered">
-            <tbody>
-                <tr>
-                    <td><code>snapAlign</code></td>
-                    <td><code>'none' | 'start' | 'end' | 'center'</code></td>
-                    <td>Optional</td>
-                    <td>On pagintating, the position to snap to. Defaults to <code>start</code></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
+<h4>Inputs</h4>
+<table class="table table-bordered">
+    <tbody>
+        <tr>
+            <td><code>snapAlign</code></td>
+            <td><code>'none' | 'start' | 'end' | 'center'</code></td>
+            <td>Optional</td>
+            <td>On paginating, the position to snap to. Defaults to <code>start</code></td>
+        </tr>
+    </tbody>
+</table>

@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { ISnippet } from '../code/ISnippet';
 import { TABS_DIRECTIVES } from 'nw-style-guide/tabs';
 import { AppCodeComponent } from '../code/code.component';
+import { CodeSandboxComponent } from '../code/code-sandbox.component';
 
 @Component({
     selector: 'app-email-input-demo',
@@ -20,7 +21,7 @@ import { AppCodeComponent } from '../code/code.component';
             }
         `
     ],
-    imports: [TABS_DIRECTIVES, RouterLink, EmailInputComponent, AppCodeComponent]
+    imports: [TABS_DIRECTIVES, RouterLink, EmailInputComponent, AppCodeComponent, CodeSandboxComponent]
 })
 export class EmailInputDemoComponent implements OnInit {
     private _cdRef = inject(ChangeDetectorRef);
@@ -56,13 +57,18 @@ export class EmailInputDemoComponent implements OnInit {
         },
         basicExample: {
             lang: 'html',
-            code: `
-                <nw-email-input
-                    [emails]="['test@example.com']"
-                    [placeholder]="'Custom placeholder text'"
-                    [inputId]="'my-email-input'"
-                    (updated)="onChange($event)"></nw-email-input>
-            `
+            code: `<nw-email-input
+                [emails]="emails"
+                inputId="email-input"
+                (updated)="onChange($event)"></nw-email-input>`
+        },
+        persistentPlaceholder: {
+            lang: 'html',
+            code: `<nw-email-input
+                [emails]="emails"
+                persistentPlaceholder="Enter Email Address"
+                inputId="email-input"
+                (updated)="onChange($event)"></nw-email-input>`
         }
     };
 

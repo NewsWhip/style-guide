@@ -1,282 +1,278 @@
-<div>
-    <h2 class="page-header">Buttons</h2>
+<h2 class="page-header">Buttons</h2>
 
-    <h3>Sizes</h3>
+<h3>Sizes</h3>
 
+<div class="standalone-buttons">
+    @for (size of sizes; track size) {
+        <button class="btn btn-primary btn-{{ size }}">Submit (.{{ size }})</button>
+    }
+    <hr />
+</div>
+
+<h3>Colors</h3>
+
+<div class="standalone-buttons">
+    @for (color of btnNames; track color) {
+        <button class="btn btn-{{ color }} btn-{{ defaultBtnSize }}">.btn-{{ color }}</button>
+    }
+</div>
+
+<h3>Alternatives</h3>
+
+<div class="standalone-buttons">
+    <button class="btn btn-secondary-inverse btn-{{ defaultBtnSize }}">.btn-secondary-inverse</button>
+</div>
+
+<h3>Variations</h3>
+
+<app-code-sandbox [snippet]="variationsSnippet">
     <div class="standalone-buttons">
-        @for (size of sizes; track size) {
-            <button class="btn btn-primary btn-{{ size }}">Submit (.{{ size }})</button>
-        }
-        <hr />
-    </div>
+        <div style="width: 300px">
+            <button class="btn btn-primary btn-{{ defaultBtnSize }} btn-block">.btn-block</button>
+        </div>
 
-    <h3>Colors</h3>
-
-    <div class="standalone-buttons">
-        @for (color of btnNames; track color) {
-            <button class="btn btn-{{ color }} btn-{{ defaultBtnSize }}">.btn-{{ color }}</button>
-        }
-    </div>
-
-    <h3>Alternatives</h3>
-
-    <div class="standalone-buttons">
-        <button class="btn btn-secondary-inverse btn-{{ defaultBtnSize }}">.btn-secondary-inverse</button>
-    </div>
-
-    <h3>Variations</h3>
-
-    <app-code-sandbox [snippet]="variationsSnippet">
-        <div class="standalone-buttons">
-            <div style="width: 300px">
-                <button class="btn btn-primary btn-{{ defaultBtnSize }} btn-block">.btn-block</button>
-            </div>
-
-            <div style="display: flex">
-                <button class="btn btn-primary btn-{{ defaultBtnSize }} btn-round">
-                    <i class="fas fa-plus"></i>
-                </button>
-
-                <button class="btn btn-primary btn-{{ defaultBtnSize }} btn-close"></button>
-            </div>
-
-            <button class="btn btn-primary btn-{{ defaultBtnSize }}">
-                <i class="fab fa-facebook btn-icon"></i> With icon
+        <div style="display: flex">
+            <button class="btn btn-primary btn-{{ defaultBtnSize }} btn-round">
+                <i class="fas fa-plus"></i>
             </button>
 
-            <button class="btn btn-primary btn-{{ defaultBtnSize }} btn-no-padding">
-                No padding (.btn-no-padding)
-            </button>
-
-            <button class="btn btn-carousel btn-carousel-prev"></button>
-            <button class="btn btn-carousel"></button>
-
-            <button class="btn btn-link">.btn-link</button>
+            <button class="btn btn-primary btn-{{ defaultBtnSize }} btn-close"></button>
         </div>
-    </app-code-sandbox>
 
-    <h3>States</h3>
+        <button class="btn btn-primary btn-{{ defaultBtnSize }}">
+            <i class="fab fa-facebook btn-icon"></i> With icon
+        </button>
 
-    <app-code-sandbox [snippet]="statesSnippet">
-        <div class="standalone-buttons">
-            <button
-                class="btn btn-primary btn-{{ defaultBtnSize }} disabled"
-                disabled>
-                .disabled
-            </button>
+        <button class="btn btn-primary btn-{{ defaultBtnSize }} btn-no-padding">No padding (.btn-no-padding)</button>
 
-            <button class="btn btn-primary btn-{{ defaultBtnSize }} active">.active</button>
-        </div>
-    </app-code-sandbox>
+        <button class="btn btn-carousel btn-carousel-prev"></button>
+        <button class="btn btn-carousel"></button>
 
-    <h3>Button groups</h3>
-
-    <app-code-sandbox [snippet]="btnGroupGhostSnippet">
-        <div style="margin-bottom: 20px">
-            <div
-                class="btn-group"
-                role="group">
-                <button
-                    type="button"
-                    class="btn btn-ghost btn-md">
-                    Button 1
-                </button>
-                <button
-                    type="button"
-                    class="btn btn-ghost btn-md"
-                    disabled>
-                    Button 2 disabled
-                </button>
-                <button
-                    type="button"
-                    class="btn btn-ghost btn-md">
-                    Button 3
-                </button>
-                <button
-                    type="button"
-                    class="btn btn-ghost btn-md">
-                    <i class="fas fa-ellipsis-v"></i>
-                </button>
-            </div>
-        </div>
-    </app-code-sandbox>
-
-    <app-code-sandbox [snippet]="btnGroupSecondarySnippet">
-        <div style="margin-bottom: 20px">
-            <div
-                class="btn-group"
-                role="group">
-                <button
-                    type="button"
-                    class="btn btn-secondary btn-{{ defaultBtnSize }}">
-                    Button 1
-                </button>
-                <button
-                    type="button"
-                    class="btn btn-secondary active btn-{{ defaultBtnSize }}">
-                    Button 2 active (optional)
-                </button>
-                <button
-                    type="button"
-                    class="btn btn-secondary btn-{{ defaultBtnSize }}">
-                    Button 3
-                </button>
-                <button
-                    type="button"
-                    class="btn btn-secondary btn-{{ defaultBtnSize }}"
-                    disabled>
-                    Button 4 disabled
-                </button>
-            </div>
-        </div>
-    </app-code-sandbox>
-
-    <app-code-sandbox [snippet]="btnGroupPrimarySnippet">
-        <div style="margin-bottom: 20px">
-            <div
-                class="btn-group"
-                role="group">
-                <button
-                    type="button"
-                    class="btn btn-primary btn-{{ defaultBtnSize }}">
-                    Button 1
-                </button>
-                <button
-                    type="button"
-                    class="btn btn-primary active btn-{{ defaultBtnSize }}">
-                    Button 2 active (optional)
-                </button>
-                <button
-                    type="button"
-                    class="btn btn-primary btn-{{ defaultBtnSize }}">
-                    Button 3
-                </button>
-                <button
-                    type="button"
-                    class="btn btn-primary btn-{{ defaultBtnSize }}"
-                    disabled>
-                    Button 4 disabled
-                </button>
-            </div>
-        </div>
-    </app-code-sandbox>
-
-    <div style="display: flex; flex-direction: row; align-items: center">
-        <h4>Responsive button groups</h4>
-
-        <select
-            class="form-control"
-            [(ngModel)]="btnGroupSize"
-            [ngModelOptions]="{ standalone: true }"
-            style="width: 100px; margin-left: 20px">
-            <option value="10%">10%</option>
-            <option value="25%">25%</option>
-            <option value="50%">50%</option>
-            <option value="75%">75%</option>
-            <option value="100%">100%</option>
-        </select>
+        <button class="btn btn-link">.btn-link</button>
     </div>
+</app-code-sandbox>
 
-    <app-code-sandbox [snippet]="btnGroupResponsiveSnippet">
+<h3>States</h3>
+
+<app-code-sandbox [snippet]="statesSnippet">
+    <div class="standalone-buttons">
+        <button
+            class="btn btn-primary btn-{{ defaultBtnSize }} disabled"
+            disabled>
+            .disabled
+        </button>
+
+        <button class="btn btn-primary btn-{{ defaultBtnSize }} active">.active</button>
+    </div>
+</app-code-sandbox>
+
+<h3>Button groups</h3>
+
+<app-code-sandbox [snippet]="btnGroupGhostSnippet">
+    <div style="margin-bottom: 20px">
         <div
-            class="responsive-container"
-            [style.width]="btnGroupSize">
-            <div
-                class="btn-group btn-group-responsive btn-group-responsive-md"
-                role="group">
-                <button
-                    type="button"
-                    class="btn btn-secondary">
-                    <i class="fas fa-adjust"></i>
-                </button>
-                <button
-                    type="button"
-                    class="btn btn-secondary">
-                    <i class="far fa-bell"></i>
-                </button>
-                <button
-                    type="button"
-                    class="btn btn-secondary">
-                    <i class="fas fa-sliders-h"></i>
-                </button>
-                <button
-                    type="button"
-                    class="btn btn-secondary">
-                    <i class="far fa-star"></i>
-                </button>
-                <button
-                    type="button"
-                    class="btn btn-secondary">
-                    <i class="far fa-bookmark"></i>
-                </button>
-            </div>
+            class="btn-group"
+            role="group">
+            <button
+                type="button"
+                class="btn btn-ghost btn-md">
+                Button 1
+            </button>
+            <button
+                type="button"
+                class="btn btn-ghost btn-md"
+                disabled>
+                Button 2 disabled
+            </button>
+            <button
+                type="button"
+                class="btn btn-ghost btn-md">
+                Button 3
+            </button>
+            <button
+                type="button"
+                class="btn btn-ghost btn-md">
+                <i class="fas fa-ellipsis-v"></i>
+            </button>
         </div>
-    </app-code-sandbox>
+    </div>
+</app-code-sandbox>
 
-    <h4>Ghost alternative with dropdown</h4>
+<app-code-sandbox [snippet]="btnGroupSecondarySnippet">
+    <div style="margin-bottom: 20px">
+        <div
+            class="btn-group"
+            role="group">
+            <button
+                type="button"
+                class="btn btn-secondary btn-{{ defaultBtnSize }}">
+                Button 1
+            </button>
+            <button
+                type="button"
+                class="btn btn-secondary active btn-{{ defaultBtnSize }}">
+                Button 2 active (optional)
+            </button>
+            <button
+                type="button"
+                class="btn btn-secondary btn-{{ defaultBtnSize }}">
+                Button 3
+            </button>
+            <button
+                type="button"
+                class="btn btn-secondary btn-{{ defaultBtnSize }}"
+                disabled>
+                Button 4 disabled
+            </button>
+        </div>
+    </div>
+</app-code-sandbox>
 
-    <app-code-sandbox [snippet]="btnGroupGhostAltSnippet">
-        <div style="margin-bottom: 20px">
+<app-code-sandbox [snippet]="btnGroupPrimarySnippet">
+    <div style="margin-bottom: 20px">
+        <div
+            class="btn-group"
+            role="group">
+            <button
+                type="button"
+                class="btn btn-primary btn-{{ defaultBtnSize }}">
+                Button 1
+            </button>
+            <button
+                type="button"
+                class="btn btn-primary active btn-{{ defaultBtnSize }}">
+                Button 2 active (optional)
+            </button>
+            <button
+                type="button"
+                class="btn btn-primary btn-{{ defaultBtnSize }}">
+                Button 3
+            </button>
+            <button
+                type="button"
+                class="btn btn-primary btn-{{ defaultBtnSize }}"
+                disabled>
+                Button 4 disabled
+            </button>
+        </div>
+    </div>
+</app-code-sandbox>
+
+<div style="display: flex; flex-direction: row; align-items: center">
+    <h4>Responsive button groups</h4>
+
+    <select
+        class="form-control"
+        [(ngModel)]="btnGroupSize"
+        [ngModelOptions]="{ standalone: true }"
+        style="width: 100px; margin-left: 20px">
+        <option value="10%">10%</option>
+        <option value="25%">25%</option>
+        <option value="50%">50%</option>
+        <option value="75%">75%</option>
+        <option value="100%">100%</option>
+    </select>
+</div>
+
+<app-code-sandbox [snippet]="btnGroupResponsiveSnippet">
+    <div
+        class="responsive-container"
+        [style.width]="btnGroupSize">
+        <div
+            class="btn-group btn-group-responsive btn-group-responsive-md"
+            role="group">
+            <button
+                type="button"
+                class="btn btn-secondary">
+                <i class="fas fa-adjust"></i>
+            </button>
+            <button
+                type="button"
+                class="btn btn-secondary">
+                <i class="far fa-bell"></i>
+            </button>
+            <button
+                type="button"
+                class="btn btn-secondary">
+                <i class="fas fa-sliders-h"></i>
+            </button>
+            <button
+                type="button"
+                class="btn btn-secondary">
+                <i class="far fa-star"></i>
+            </button>
+            <button
+                type="button"
+                class="btn btn-secondary">
+                <i class="far fa-bookmark"></i>
+            </button>
+        </div>
+    </div>
+</app-code-sandbox>
+
+<h4>Ghost alternative with dropdown</h4>
+
+<app-code-sandbox [snippet]="btnGroupGhostAltSnippet">
+    <div style="margin-bottom: 20px">
+        <div
+            class="btn-group"
+            role="group">
+            <button
+                type="button"
+                class="btn btn-ghost-alt btn-lg">
+                <i class="fas fa-adjust"></i>
+            </button>
+            <button
+                type="button"
+                class="btn btn-ghost-alt btn-lg">
+                <i class="far fa-bell"></i>
+            </button>
+            <button
+                type="button"
+                class="btn btn-ghost-alt btn-lg">
+                <i class="fas fa-sliders-h"></i>
+            </button>
+            <button
+                type="button"
+                class="btn btn-ghost-alt btn-lg"
+                disabled>
+                <i class="far fa-star"></i>
+            </button>
             <div
                 class="btn-group"
                 role="group">
-                <button
-                    type="button"
-                    class="btn btn-ghost-alt btn-lg">
-                    <i class="fas fa-adjust"></i>
-                </button>
-                <button
-                    type="button"
-                    class="btn btn-ghost-alt btn-lg">
-                    <i class="far fa-bell"></i>
-                </button>
-                <button
-                    type="button"
-                    class="btn btn-ghost-alt btn-lg">
-                    <i class="fas fa-sliders-h"></i>
-                </button>
-                <button
-                    type="button"
-                    class="btn btn-ghost-alt btn-lg"
-                    disabled>
-                    <i class="far fa-star"></i>
-                </button>
-                <div
-                    class="btn-group"
-                    role="group">
-                    <div class="dropdown">
-                        <button
-                            class="btn btn-ghost-alt btn-lg"
-                            type="button"
-                            [cdkMenuTriggerFor]="dropdown">
-                            <i
-                                class="fas fa-ellipsis-v"
-                                aria-hidden="true"></i>
-                        </button>
-                        <ng-template #dropdown>
-                            <div
-                                class="dropdown-menu"
-                                cdkMenu>
-                                <button
-                                    cdkMenuItem
-                                    class="menu-item">
-                                    Action
-                                </button>
-                                <button
-                                    cdkMenuItem
-                                    class="menu-item">
-                                    Another action
-                                </button>
-                                <button
-                                    cdkMenuItem
-                                    class="menu-item">
-                                    Something else here
-                                </button>
-                            </div>
-                        </ng-template>
-                    </div>
+                <div class="dropdown">
+                    <button
+                        class="btn btn-ghost-alt btn-lg"
+                        type="button"
+                        [cdkMenuTriggerFor]="dropdown">
+                        <i
+                            class="fas fa-ellipsis-v"
+                            aria-hidden="true"></i>
+                    </button>
+                    <ng-template #dropdown>
+                        <div
+                            class="dropdown-menu"
+                            cdkMenu>
+                            <button
+                                cdkMenuItem
+                                class="menu-item">
+                                Action
+                            </button>
+                            <button
+                                cdkMenuItem
+                                class="menu-item">
+                                Another action
+                            </button>
+                            <button
+                                cdkMenuItem
+                                class="menu-item">
+                                Something else here
+                            </button>
+                        </div>
+                    </ng-template>
                 </div>
             </div>
         </div>
-    </app-code-sandbox>
-</div>
+    </div>
+</app-code-sandbox>

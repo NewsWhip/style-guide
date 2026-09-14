@@ -48,7 +48,7 @@ export class TooltipsComponent implements OnInit, OnDestroy {
         ['@Input() isOpen: boolean', 'Manually control the opening and closing of the tooltip', '-', '-'],
         [
             '@Input() isDisabled: boolean;',
-            'When true, the tooltip will not not respond to any open or close events. Nor will it respond to changes to the `isOpen` input',
+            'When true, the tooltip will not respond to any open or close events. Nor will it respond to changes to the `isOpen` input',
             'false',
             'false'
         ],
