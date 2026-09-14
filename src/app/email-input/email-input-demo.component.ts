@@ -27,7 +27,7 @@ export class EmailInputDemoComponent implements OnInit {
     private _cdRef = inject(ChangeDetectorRef);
     private _route = inject(ActivatedRoute);
 
-    public emails: string[] = ['valid.email@newswhip.com', 'invalid.email'];
+    public emails: string[] = ['valid.email@sproutsocial.com', 'invalid.email'];
     public validationState: IValidationChange;
     public selectedTab: 'design' | 'api' = 'design';
     public properties: { name: string; defaultValue: string; description: string }[];
@@ -52,7 +52,7 @@ export class EmailInputDemoComponent implements OnInit {
         import: {
             lang: 'typescript',
             code: `
-                import { EmailInputModule } from 'nw-style-guide/email-input';
+                import { EmailInputComponent } from 'nw-style-guide/email-input';
             `
         },
         basicExample: {

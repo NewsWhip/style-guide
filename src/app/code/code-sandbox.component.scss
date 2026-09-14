@@ -3,12 +3,13 @@
 .code-sandbox {
     border: 1px solid variables.get-color('primary', 5x-light);
     border-radius: 4px;
-    overflow: hidden;
+    overflow: visible;
     margin-bottom: 24px;
     max-width: fit-content;
 
     .preview {
         padding: 24px;
+        border-radius: 4px;
         background: variables.$level1;
     }
 

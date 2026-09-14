@@ -1,8 +1,34 @@
 <h2 class="page-header">Picker / Searchable dropdown</h2>
 
+<p>
+    A searchable dropdown component that supports single and multi-select modes with hierarchical data and custom
+    placeholder text.
+</p>
+
+<h3>Importing</h3>
+<app-code [snippet]="importSnippet"></app-code>
+
 <div class="row">
-    <div class="col-md-6 col-sm-12">
-        <div>
+    <div class="col-md-6">
+        <h3>Single Select</h3>
+
+        <app-code-sandbox [snippet]="singleSelectSnippet">
+            <label style="margin-bottom: 8px; display: block">Single select picker</label>
+            <nw-angular-picker
+                #singlePicker
+                [items]="foods"
+                [placeholderText]="getFoodPlaceholder()"
+                [isMultiSelect]="false"
+                [shouldShowSelections]="false"
+                inputPlaceholderText="Single select picker">
+            </nw-angular-picker>
+        </app-code-sandbox>
+    </div>
+
+    <div class="col-md-6">
+        <h3>Multi Select</h3>
+
+        <app-code-sandbox [snippet]="multiSelectSnippet">
             <label style="margin-bottom: 8px; display: block">Multi select picker with custom placeholder text</label>
             <nw-angular-picker
                 #picker
@@ -19,24 +45,6 @@
                     </button>
                 </div>
             </nw-angular-picker>
-        </div>
-    </div>
-</div>
-
-<div
-    class="row"
-    style="margin-top: 32px">
-    <div class="col-md-6 col-sm-12">
-        <div>
-            <label style="margin-bottom: 8px; display: block">Single select picker</label>
-            <nw-angular-picker
-                #picker
-                [items]="foods"
-                [placeholderText]="getFoodPlaceholder()"
-                [isMultiSelect]="false"
-                [shouldShowSelections]="false"
-                inputPlaceholderText="Single select picker">
-            </nw-angular-picker>
-        </div>
+        </app-code-sandbox>
     </div>
 </div>

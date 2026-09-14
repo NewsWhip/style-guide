@@ -21,7 +21,7 @@ export class CarouselComponent implements OnInit {
 
     readonly importSnippet: ISnippet = {
         lang: 'typescript',
-        code: `import { CarouselModule } from 'nw-style-guide/carousel';`
+        code: `import { CAROUSEL_DIRECTIVES } from 'nw-style-guide/carousel';`
     };
 
     readonly defaultExampleSnippet: ISnippet = {
