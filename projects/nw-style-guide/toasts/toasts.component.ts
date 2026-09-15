@@ -166,7 +166,7 @@ export class ToastsComponent {
         if (!messageText) {
             return;
         }
-        this._announcer.announce([this.getTypeLabel(typeId), messageText].filter(Boolean).join(' '), typeId);
+        this._announcer.announce(`${this.getTypeLabel(typeId)} ${messageText}`.trim(), typeId);
     }
 
     /**
