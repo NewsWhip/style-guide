@@ -1,30 +1,23 @@
 import { DOCUMENT, Injectable, OnDestroy, inject } from '@angular/core';
 
-/**
- * The clear and the write cannot share a task or they coalesce into one change and nothing is
- * announced. 100ms matches the CDK's own `LiveAnnouncer`
- */
+// The clear and the write cannot share a task or they coalesce into one change and nothing is
+// announced. 100ms matches the CDK's `LiveAnnouncer`
 const ANNOUNCE_DELAY = 100;
 
-/**
- * An `aria-modal="true"` element hides everything outside itself from screen readers, including the
- * body-level regions below
- */
+// `aria-modal="true"` hides everything outside itself from screen readers, the regions included
 const OPEN_DIALOG_SELECTOR = '[aria-modal="true"]';
 
-/**
- * How long to wait for an open dialog to close before announcing inside it instead. A toast is
- * usually shown just before its dialog closes, so waiting is the common case
- */
-const DIALOG_WAIT_TIMEOUT = 500;
+// Appended to distinguish a message from an identical one before it. A trailing non-breaking space
+// is not spoken, so it changes the text without changing what the user hears
+const PADDING = ' ';
 
-const DIALOG_POLL_INTERVAL = 50;
+let uniqueId = 0;
 
 /**
- * Announces toast messages from persistent body-level live regions rather than from a role on the
- * toast itself: the outlet is created lazily, and a region entering the DOM together with its
- * content is not reliably announced. It also lets an announcement be routed around an open
- * `aria-modal` dialog, which the visible toast cannot be
+ * Announces toasts from persistent body-level live regions rather than from a role on the toast
+ * itself: the outlet is created lazily, and a region entering the DOM together with its content is
+ * not reliably announced. Announcing separately also lets the message reach the user from inside an
+ * open `aria-modal` dialog, which the visible toast cannot do.
  */
 @Injectable({ providedIn: 'root' })
 export class ToastAnnouncer implements OnDestroy {
@@ -32,114 +25,99 @@ export class ToastAnnouncer implements OnDestroy {
 
     private _politeRegion: HTMLElement;
     private _assertiveRegion: HTMLElement;
-    /**
-     * A region injected into a dialog that stayed open, e.g. an error toast shown by a modal that
-     * keeps the user in place to correct something.
-     */
-    private _dialogRegion: HTMLElement;
 
     private _announceTimer: ReturnType<typeof setTimeout>;
-    private _dialogPollTimer: ReturnType<typeof setInterval>;
+    private _lastAnnounced = new WeakMap<HTMLElement, string>();
 
     constructor() {
         this._politeRegion = this._createRegion('status');
         this._assertiveRegion = this._createRegion('alert');
     }
 
-    /**
-     * @param message The text to announce, already including any type prefix
-     * @param typeId The toast's `typeId`. `error` announces assertively, anything else politely
-     */
+    /** `message` already includes any type prefix. `error` announces assertively, anything else politely */
     announce(message: string, typeId: string): void {
         if (!message) {
             return;
         }
-        /**
-         * Only one message can occupy a region at a time, so a new toast supersedes an
-         * announcement that has not landed yet. This matches the CDK `LiveAnnouncer`'s behaviour.
-         */
-        this._cancelPending();
+        // A region holds one message at a time, so a new toast supersedes one that has not landed
+        clearTimeout(this._announceTimer);
 
-        if (!this._getOpenDialog()) {
-            this._writeMessageToRegion(message, this._getRegion(typeId));
-            return;
-        }
-        this._announceAfterDialogCloses(message, typeId);
-    }
+        const region = this._getRegion(typeId);
+        const text = this._distinguishFromLast(message, region);
 
-    private _announceAfterDialogCloses(message: string, typeId: string): void {
-        let waited = 0;
-
-        this._dialogPollTimer = setInterval(() => {
-            waited += DIALOG_POLL_INTERVAL;
-            const dialog = this._getOpenDialog();
-
-            if (!dialog) {
-                clearInterval(this._dialogPollTimer);
-                this._writeMessageToRegion(message, this._getRegion(typeId));
-                return;
-            }
-
-            if (waited >= DIALOG_WAIT_TIMEOUT) {
-                clearInterval(this._dialogPollTimer);
-                this._writeMessageToRegion(message, this._getDialogRegion(dialog, typeId));
-            }
-        }, DIALOG_POLL_INTERVAL);
-    }
-
-    private _writeMessageToRegion(message: string, region: HTMLElement): void {
+        this._exposeToTopmostDialog(region);
         region.textContent = '';
-        this._announceTimer = setTimeout(() => (region.textContent = message), ANNOUNCE_DELAY);
-    }
-
-    private _getOpenDialog(): Element {
-        const dialogs = this._document.querySelectorAll(OPEN_DIALOG_SELECTOR);
-
-        // Overlays stack in DOM order, so the last one is the topmost
-        return dialogs[dialogs.length - 1];
+        this._announceTimer = setTimeout(() => (region.textContent = text), ANNOUNCE_DELAY);
     }
 
     /**
-     * The region is recreated rather than reused so that its role is correct from the moment it is
-     * attached — screen readers do not reliably pick up a role changing on an existing element.
+     * A screen reader drops an update whose text matches what it has just announced, so clicking
+     * the same action twice would be heard once. Padding alternates on and off, which is enough to
+     * make each write a new string; comparing against the padded text keeps it self-correcting.
      */
-    private _getDialogRegion(dialog: Element, typeId: string): HTMLElement {
-        this._dialogRegion?.remove();
-        this._dialogRegion = this._createRegion(this._getRole(typeId), dialog);
+    private _distinguishFromLast(message: string, region: HTMLElement): string {
+        const text = this._lastAnnounced.get(region) === message ? message + PADDING : message;
 
-        return this._dialogRegion;
+        this._lastAnnounced.set(region, text);
+
+        return text;
+    }
+
+    /**
+     * An open dialog hides the body-level regions, so the topmost one is given ownership of the
+     * region in use: an owned element joins the dialog's accessibility subtree and is exposed again.
+     * The region itself stays where it is, so it still announces normally once the dialog closes.
+     */
+    private _exposeToTopmostDialog(region: HTMLElement): void {
+        const dialogs = Array.from(this._document.querySelectorAll(OPEN_DIALOG_SELECTOR));
+
+        // An element may only be owned by one other, so stale references are dropped first
+        dialogs.forEach(dialog => this._setOwnedRegion(dialog, null));
+        this._setOwnedRegion(dialogs[dialogs.length - 1], region);
+    }
+
+    // Only our own ids are added and removed, leaving any the application set alone
+    private _setOwnedRegion(dialog: Element | undefined, region: HTMLElement | null): void {
+        if (!dialog) {
+            return;
+        }
+        const ids = (dialog.getAttribute('aria-owns') || '')
+            .split(/\s+/)
+            .filter(id => id && id !== this._politeRegion.id && id !== this._assertiveRegion.id);
+
+        if (region) {
+            ids.push(region.id);
+        }
+
+        if (ids.length) {
+            dialog.setAttribute('aria-owns', ids.join(' '));
+        } else {
+            dialog.removeAttribute('aria-owns');
+        }
     }
 
     private _getRegion(typeId: string): HTMLElement {
         return typeId === 'error' ? this._assertiveRegion : this._politeRegion;
     }
 
-    private _getRole(typeId: string): string {
-        return typeId === 'error' ? 'alert' : 'status';
-    }
-
-    private _createRegion(role: string, host: Element = this._document.body): HTMLElement {
+    private _createRegion(role: string): HTMLElement {
         const region = this._document.createElement('div');
 
+        region.id = `nw-toast-announcer-${uniqueId++}`;
         region.setAttribute('role', role);
         // An alert interrupts; a status waits until previous announcements have finished
         region.setAttribute('aria-live', role === 'alert' ? 'assertive' : 'polite');
         region.setAttribute('aria-atomic', 'true');
         region.classList.add('sr-only');
-        host.appendChild(region);
+        this._document.body.appendChild(region);
 
         return region;
     }
 
-    private _cancelPending(): void {
-        clearTimeout(this._announceTimer);
-        clearInterval(this._dialogPollTimer);
-    }
-
     ngOnDestroy(): void {
-        this._cancelPending();
+        clearTimeout(this._announceTimer);
+        this._document.querySelectorAll(OPEN_DIALOG_SELECTOR).forEach(dialog => this._setOwnedRegion(dialog, null));
         this._politeRegion.remove();
         this._assertiveRegion.remove();
-        this._dialogRegion?.remove();
     }
 }

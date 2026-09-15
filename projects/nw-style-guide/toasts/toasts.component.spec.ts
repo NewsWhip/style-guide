@@ -7,8 +7,7 @@ import { ToastsComponent } from './toasts.component';
  * Mirrors the constants in `toast-announcer.ts`
  */
 const ANNOUNCE_DELAY = 100;
-const DIALOG_WAIT_TIMEOUT = 500;
-const DIALOG_POLL_INTERVAL = 50;
+const PADDING = ' ';
 
 /**
  * A stand-in for a CDK dialog, which is opened with `aria-modal="true"` and so hides the
@@ -95,7 +94,57 @@ describe('ToastsComponent', () => {
 
             tick(ANNOUNCE_DELAY);
 
+            // Padded, because a reader drops an update matching what it has just announced
+            expect(politeRegion().textContent).toBe(`Success: Saved${PADDING}`);
+        }));
+
+        it('alternates the padding so every repeat differs from the one before it', fakeAsync(() => {
+            const announced: string[] = [];
+
+            for (let i = 0; i < 4; i++) {
+                component.success('Saved');
+                tick(ANNOUNCE_DELAY);
+                announced.push(politeRegion().textContent);
+            }
+
+            expect(announced).toEqual([
+                'Success: Saved',
+                `Success: Saved${PADDING}`,
+                'Success: Saved',
+                `Success: Saved${PADDING}`
+            ]);
+        }));
+
+        it('pads with whitespace only, leaving the spoken message unchanged', fakeAsync(() => {
+            component.success('Saved');
+            tick(ANNOUNCE_DELAY);
+            component.success('Saved');
+            tick(ANNOUNCE_DELAY);
+
+            expect(politeRegion().textContent.trim()).toBe('Success: Saved');
+        }));
+
+        it('does not pad a message that differs from the one before it', fakeAsync(() => {
+            component.success('Saved');
+            tick(ANNOUNCE_DELAY);
+
+            component.success('Renamed');
+            tick(ANNOUNCE_DELAY);
+
+            component.success('Saved');
+            tick(ANNOUNCE_DELAY);
+
             expect(politeRegion().textContent).toBe('Success: Saved');
+        }));
+
+        it('tracks repeats per region, so a success does not pad a following error', fakeAsync(() => {
+            component.success('Saved');
+            tick(ANNOUNCE_DELAY);
+
+            component.error('Saved');
+            tick(ANNOUNCE_DELAY);
+
+            expect(assertiveRegion().textContent).toBe('Error: Saved');
         }));
 
         it('states aria-live and aria-atomic rather than relying on the role to imply them', () => {
@@ -143,46 +192,72 @@ describe('ToastsComponent', () => {
     });
 
     describe('with an open aria-modal dialog', () => {
-        it('holds the announcement back until the dialog closes', fakeAsync(() => {
-            dialog = addOpenDialog();
-
-            component.success('Your group has been deleted');
-            tick(DIALOG_POLL_INTERVAL * 4);
-
-            // Nothing announced yet: a body-level region is hidden while the dialog is open
-            expect(politeRegion().textContent).toBe('');
-
-            dialog.remove();
-            tick(DIALOG_POLL_INTERVAL + ANNOUNCE_DELAY);
-
-            expect(politeRegion().textContent).toBe('Success: Your group has been deleted');
-        }));
-
-        it('announces inside a dialog that stays open', fakeAsync(() => {
+        it('hands the dialog ownership of the region, so it is no longer hidden', fakeAsync(() => {
             dialog = addOpenDialog();
 
             component.error('Sorry, something went wrong saving the alert');
-            tick(DIALOG_WAIT_TIMEOUT + ANNOUNCE_DELAY);
+            tick(ANNOUNCE_DELAY);
 
-            const dialogRegion = dialog.querySelector('div[role="alert"]');
-
-            expect(dialogRegion).toBeTruthy();
-            expect(dialogRegion.textContent).toBe('Error: Sorry, something went wrong saving the alert');
-            // The body-level region would not have been heard
-            expect(assertiveRegion().textContent).toBe('');
+            expect(dialog.getAttribute('aria-owns')).toBe(assertiveRegion().id);
+            expect(assertiveRegion().textContent).toBe('Error: Sorry, something went wrong saving the alert');
         }));
 
-        it('announces inside the topmost of two stacked dialogs', fakeAsync(() => {
+        it('announces without waiting for the dialog to close', fakeAsync(() => {
+            dialog = addOpenDialog();
+
+            component.success('Your group has been deleted');
+            tick(ANNOUNCE_DELAY);
+
+            // The region is reachable either way, so there is nothing to wait for
+            expect(politeRegion().textContent).toBe('Success: Your group has been deleted');
+        }));
+
+        it('announces from the same region once the dialog has closed', fakeAsync(() => {
+            dialog = addOpenDialog();
+
+            component.success('Saved');
+            tick(ANNOUNCE_DELAY);
+
+            dialog.remove();
+            component.success('Saved again');
+            tick(ANNOUNCE_DELAY);
+
+            expect(politeRegion().textContent).toBe('Success: Saved again');
+        }));
+
+        it('gives ownership to the topmost of two stacked dialogs', fakeAsync(() => {
             dialog = addOpenDialog();
             const topmost = addOpenDialog();
 
             component.error('Nope');
-            tick(DIALOG_WAIT_TIMEOUT + ANNOUNCE_DELAY);
+            tick(ANNOUNCE_DELAY);
 
-            expect(dialog.querySelector('div[role="alert"]')).toBeNull();
-            expect(topmost.querySelector('div[role="alert"]').textContent).toBe('Error: Nope');
+            // An element may only be owned by one other, so the lower dialog must not claim it too
+            expect(dialog.hasAttribute('aria-owns')).toBe(false);
+            expect(topmost.getAttribute('aria-owns')).toBe(assertiveRegion().id);
 
             topmost.remove();
+        }));
+
+        it('moves ownership to whichever region the next toast uses', fakeAsync(() => {
+            dialog = addOpenDialog();
+
+            component.error('Nope');
+            tick(ANNOUNCE_DELAY);
+            component.success('Better');
+            tick(ANNOUNCE_DELAY);
+
+            expect(dialog.getAttribute('aria-owns')).toBe(politeRegion().id);
+        }));
+
+        it("leaves the application's own aria-owns in place", fakeAsync(() => {
+            dialog = addOpenDialog();
+            dialog.setAttribute('aria-owns', 'app-owned-thing');
+
+            component.success('Saved');
+            tick(ANNOUNCE_DELAY);
+
+            expect(dialog.getAttribute('aria-owns')).toBe(`app-owned-thing ${politeRegion().id}`);
         }));
     });
 
