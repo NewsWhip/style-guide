@@ -1,109 +1,134 @@
-<div>
-    <h2 class="page-header">Feature Alerts</h2>
+<h2 class="page-header">Feature Alerts</h2>
 
-    <div class="row">
-        <div class="col-md-8 col-sm-12">
-            <h3>Feature Alert Directive</h3>
-            <div style="margin-bottom: 20px">
-                This is a stuctural directive that can show / hide an element and store the state in local storage
-            </div>
+<p>
+    A service for highlighting new or updated features to users. Feature alerts persist their dismissed state in local
+    storage, so they only appear once per user. Includes a structural directive for conditionally showing "New" badges
+    and a hotspot component for drawing attention to specific UI elements.
+</p>
 
-            <div style="margin-bottom: 20px">
-                <a
-                    (click)="dismissFeature(featureAlertIds[0])"
-                    href="javascript:;">
-                    <span
-                        >Click to dismiss badge
-                        <span
-                            *nwFeatureAlert="featureAlertIds[0]"
-                            class="label label-round label-new ml-4"
-                            >New</span
-                        >
-                    </span>
-                </a>
-            </div>
+<h3>Importing</h3>
+<app-code [snippet]="importSnippet"></app-code>
 
-            <div style="margin-bottom: 20px">
+<hr />
+
+<div class="row">
+    <div class="col-md-8 col-sm-12">
+        <h3>Feature Alert Directive</h3>
+        <p style="margin-bottom: 20px">
+            This is a structural directive that can show / hide an element and store the state in local storage
+        </p>
+
+        <div style="margin-bottom: 20px">
+            <a (click)="dismissFeature(featureAlertIds[0])">
                 <span
-                    >Dismiss from button
+                    >Click to dismiss badge
                     <span
-                        *nwFeatureAlert="featureAlertIds[1]"
+                        *nwFeatureAlert="featureAlertIds[0]"
                         class="label label-round label-new ml-4"
                         >New</span
                     >
                 </span>
-                <button
-                    class="ml-4 btn btn-primary"
-                    (click)="dismissFeature(featureAlertIds[1])">
-                    Dismiss New badge
-                </button>
-            </div>
-            @if (showResetButton) {
-                <div style="margin-bottom: 20px">
-                    <button
-                        class="btn btn-primary"
-                        (click)="resetFeatureAlert()">
-                        Reset Feature Alerts
-                    </button>
-                </div>
-            }
+            </a>
         </div>
-    </div>
-    <hr />
-    <div class="row">
-        <div class="col-md-8 col-sm-12">
-            <h3>Hotspots</h3>
 
-            <div style="margin-bottom: 20px">
-                <button
-                    class="btn btn-primary"
-                    style="position: relative"
-                    (mouseenter)="hs1.dismiss()">
-                    Dismiss on hover
-                    <nw-hotspot
-                        #hs1
-                        id="testHotspot"></nw-hotspot>
-                </button>
-            </div>
-
-            <div style="margin-bottom: 20px">
-                <button
-                    class="btn btn-primary"
-                    style="position: relative"
-                    (click)="hs2.dismiss()">
-                    Dismiss on click
-                    <nw-hotspot
-                        #hs2
-                        id="testHotspot2"
-                        position="right"></nw-hotspot>
-                </button>
-            </div>
-
-            <div style="margin-bottom: 20px">
-                <button
-                    class="btn btn-primary"
-                    style="position: relative"
-                    (focus)="hs3.dismiss()">
-                    Dismiss on focus
-                    <nw-hotspot
-                        #hs3
-                        id="testHotspot3"
-                        position="top"></nw-hotspot>
-                </button>
-            </div>
-
-            <div style="margin-bottom: 20px">
-                <button
-                    class="btn btn-primary"
-                    style="position: relative"
-                    (mouseleave)="hs4.dismiss()">
-                    Dismiss on mouseleave
-                    <nw-hotspot
-                        #hs4
-                        id="testHotspot4"
-                        position="bottom"></nw-hotspot>
-                </button>
-            </div>
+        <div style="margin-bottom: 20px">
+            <span
+                >Dismiss from button
+                <span
+                    *nwFeatureAlert="featureAlertIds[1]"
+                    class="label label-round label-new ml-4"
+                    >New</span
+                >
+            </span>
+            <button
+                class="ml-4 btn btn-primary"
+                (click)="dismissFeature(featureAlertIds[1])">
+                Dismiss New badge
+            </button>
         </div>
+        @if (showResetButton) {
+            <div style="margin-bottom: 20px">
+                <button
+                    class="btn btn-primary"
+                    (click)="resetFeatureAlert()">
+                    Reset Feature Alerts
+                </button>
+            </div>
+        }
     </div>
 </div>
+<hr />
+<div class="row">
+    <div class="col-md-8 col-sm-12">
+        <h3>Hotspots</h3>
+
+        <div style="margin-bottom: 20px">
+            <button
+                class="btn btn-primary"
+                style="position: relative"
+                (mouseenter)="hs1.dismiss()">
+                Dismiss on hover
+                <nw-hotspot
+                    #hs1
+                    id="testHotspot"></nw-hotspot>
+            </button>
+        </div>
+
+        <div style="margin-bottom: 20px">
+            <button
+                class="btn btn-primary"
+                style="position: relative"
+                (click)="hs2.dismiss()">
+                Dismiss on click
+                <nw-hotspot
+                    #hs2
+                    id="testHotspot2"
+                    position="right"></nw-hotspot>
+            </button>
+        </div>
+
+        <div style="margin-bottom: 20px">
+            <button
+                class="btn btn-primary"
+                style="position: relative"
+                (focus)="hs3.dismiss()">
+                Dismiss on focus
+                <nw-hotspot
+                    #hs3
+                    id="testHotspot3"
+                    position="top"></nw-hotspot>
+            </button>
+        </div>
+
+        <div style="margin-bottom: 20px">
+            <button
+                class="btn btn-primary"
+                style="position: relative"
+                (mouseleave)="hs4.dismiss()">
+                Dismiss on mouseleave
+                <nw-hotspot
+                    #hs4
+                    id="testHotspot4"
+                    position="bottom"></nw-hotspot>
+            </button>
+        </div>
+
+        <button
+            class="btn btn-md btn-secondary"
+            style="margin-bottom: 16px"
+            (click)="clearLocalStorage()">
+            Clear Local Storage
+        </button>
+    </div>
+</div>
+
+<h3>Directive Usage</h3>
+<p>Use the <code>*nwFeatureAlert</code> structural directive to conditionally show an element until it is dismissed.</p>
+<app-code [snippet]="directiveExampleSnippet"></app-code>
+
+<h3>Hotspot Usage</h3>
+<p>
+    Add a pulsing hotspot indicator to draw attention to a specific element. The parent element must have
+    <code>position: relative</code>.
+</p>
+<app-code [snippet]="hotspotExampleSnippet"></app-code>

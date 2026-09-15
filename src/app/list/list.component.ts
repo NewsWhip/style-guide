@@ -1,39 +1,120 @@
-import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { CdkMenuModule } from '@angular/cdk/menu';
+import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-
-// eslint-disable-next-line @typescript-eslint/naming-convention
-declare const html_beautify: any;
+import { CodeSandboxComponent } from '../code/code-sandbox.component';
+import { ISnippet } from '../code/ISnippet';
 
 @Component({
     selector: 'app-list',
     templateUrl: './list.component.html',
     styleUrls: ['./list.component.scss'],
-    imports: [RouterLink, RouterLinkActive]
+    imports: [RouterLink, RouterLinkActive, CdkMenuModule, CodeSandboxComponent]
 })
-export class ListComponent implements AfterViewInit {
-    @ViewChild('lg', { static: true }) lg: ElementRef;
-    @ViewChild('lgPrimary', { static: true }) lgPrimary: ElementRef;
-    @ViewChild('nestedLg', { static: true }) nestedLg: ElementRef;
+export class ListComponent {
+    public listGroupSnippet: ISnippet = {
+        lang: 'html',
+        code: `<ul class="list-group">
+    <h5 class="list-group-header">Default Menu</h5>
 
-    public listGroupHTML: string;
-    public listGroupPrimaryHTML: string;
-    public nestedLgHTML: string;
+    <a class="list-group-item">Panel 1</a>
+    <a class="list-group-item active">
+        Panel 2 (active)
+        <div class="list-group-item-actions">
+            <a class="nw-link-inline" title="Example item icon">
+                <i class="fas fa-info-circle"></i>
+            </a>
+        </div>
+    </a>
+    <a class="list-group-item">Panel 3</a>
+    <a class="list-group-item">Panel 4 (w/ badge) <span class="label label-danger">New</span></a>
+    <a class="list-group-item">Panel 5</a>
+    <a class="list-group-item disabled">Panel 6 (disabled)</a>
+    <a class="list-group-item">Panel 7</a>
+    <div class="list-group-item-with-actions">
+        <div class="dropdown list-group-item-actions">
+            <button class="btn btn-ghost-alt" type="button">
+                <i aria-hidden="true" class="fas fa-plus-circle"></i>
+            </button>
+        </div>
+        <a class="list-group-item">Panel 8</a>
+    </div>
+</ul>`
+    };
 
-    ngAfterViewInit() {
-        setTimeout(() => {
-            this.listGroupHTML = html_beautify(this.lg.nativeElement.outerHTML);
-            this.listGroupPrimaryHTML = html_beautify(this.lgPrimary.nativeElement.outerHTML);
-            this.nestedLgHTML = html_beautify(this.nestedLg.nativeElement.outerHTML);
-        }, 0);
-    }
+    public listGroupPrimarySnippet: ISnippet = {
+        lang: 'html',
+        code: `<div class="list-group list-group-primary">
+                <h5 class="list-group-header">
+                    Main Menu
+                    <div class="list-group-header-actions">
+                        <a class="nw-link-inline" title="Example header icon">
+                            <i class="fas fa-info-circle"></i>
+                        </a>
+                    </div>
+                </h5>
 
-    escapeHtml(unsafe: string) {
-        return unsafe
-            .trim()
-            .replace(/&/g, '&amp;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;')
-            .replace(/"/g, '&quot;')
-            .replace(/'/g, '&#039;');
-    }
+                <a class="list-group-item" routerLink="/" routerLinkActive="active">Home</a>
+                <a class="list-group-item" routerLink="/buttons" routerLinkActive="active">Buttons</a>
+                <a class="list-group-item" routerLink="/colors" routerLinkActive="active">Colors</a>
+                <a class="list-group-item" routerLink="/interactive-text" routerLinkActive="active">Interactive text</a>
+                <a class="list-group-item" routerLink="/dropdowns" routerLinkActive="active">Dropdowns</a>
+                <a class="list-group-item" routerLink="/tabs" routerLinkActive="active">Tabs</a>
+                <a class="list-group-item disabled">Branding (disabled)</a>
+                <a class="list-group-item" routerLink="/lists" routerLinkActive="active">Lists</a>
+            </div>`
+    };
+
+    public nestedLgSnippet: ISnippet = {
+        lang: 'html',
+        code: `<div class="list-group">
+                <h5 class="list-group-header">
+                    Collapse / expand menu
+                    <div class="list-group-header-actions">
+                        <div class="dropdown">
+                            <button class="btn btn-ghost-alt" type="button">
+                                <i aria-hidden="true" class="fas fa-plus-circle"></i>
+                            </button>
+                        </div>
+                    </div>
+                </h5>
+
+                <a class="list-group-item">Item 1</a>
+
+                <a href="#folder1" class="list-group-item collapsed active"
+                    data-toggle="collapse" aria-expanded="false" aria-controls="folder1">Folder 1</a>
+                <div class="collapse collapsible" id="folder1">
+                    <a class="list-group-item">Item 2</a>
+                </div>
+
+                <div class="list-group-item-with-actions">
+                    <div class="dropdown list-group-item-actions">
+                        <button class="btn btn-ghost-alt" type="button">
+                            <i class="far fa-ellipsis-v"></i>
+                        </button>
+                    </div>
+
+                    <a href="#folder2" class="list-group-item collapsed"
+                        data-toggle="collapse" aria-expanded="false" aria-controls="folder2">Folder 2</a>
+
+                    <div class="collapse collapsible" id="folder2">
+                        <a class="list-group-item">Item 3</a>
+                        <a class="list-group-item">Item 4</a>
+                        <a class="list-group-item">Item 5</a>
+
+                        <a href="#folder3" class="list-group-item collapsed"
+                            data-toggle="collapse" aria-expanded="false" aria-controls="folder3">Folder 3</a>
+
+                        <div class="collapse collapsible" id="folder3">
+                            <a class="list-group-item">Item 6</a>
+                            <a class="list-group-item">Item 7</a>
+                            <a class="list-group-item">Item 8</a>
+                        </div>
+                    </div>
+                </div>
+                <a class="list-group-item">Item 9</a>
+                <a class="list-group-item">Item 10</a>
+                <a class="list-group-item disabled">Item 11 (disabled)</a>
+                <a class="list-group-item">Item 12</a>
+            </div>`
+    };
 }

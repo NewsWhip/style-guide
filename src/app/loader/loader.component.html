@@ -1,8 +1,11 @@
 <h2 class="page-header">Loader Module</h2>
 
+<h3>Importing</h3>
+<app-code [snippet]="importSnippet"></app-code>
+
 <div class="row">
     <div class="col-sm-6">
-        <h2>Overlay loader</h2>
+        <h3>Overlay loader</h3>
 
         <div class="row">
             <div class="col-sm-6">
@@ -46,12 +49,13 @@
     </div>
 
     <div class="col-sm-6">
-        <h2>Inline loaders</h2>
+        <h3>Inline loaders</h3>
 
         <p style="margin-bottom: 24px">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            Size set to small <code>[size]="'sm'"</code>
 
             <nw-loader
+                style="margin-left: 8px"
                 [isLoading]="true"
                 [numOfDots]="3"
                 [isInline]="true"
@@ -59,9 +63,10 @@
         </p>
 
         <p style="margin-bottom: 24px">
-            Esse qui fugit voluptatum pariatur repudiandae officiis
+            Size set to medium <code>[size]="'md'"</code>. Number of dots: 6
 
             <nw-loader
+                style="margin-left: 8px"
                 [isLoading]="true"
                 [numOfDots]="6"
                 [isInline]="true"
@@ -69,9 +74,10 @@
         </p>
 
         <p style="margin-bottom: 24px">
-            Perferendis nulla at cumque tempore voluptatem harum distinctio omnis numquam expedita voluptas
+            isColour set to false <code>[isColor]="false"</code>
 
             <nw-loader
+                style="margin-left: 8px"
                 [isLoading]="true"
                 [numOfDots]="3"
                 [isInline]="true"
@@ -81,47 +87,18 @@
     </div>
 </div>
 
-<div
-    class="row"
-    style="margin-top: 24px">
-    <div class="col-sm-6">
-        <h4>Importing</h4>
-        <pre><code>{{"// app.module.ts
-import {LoaderModule} from 'nw-style-guide/loader';
-
-@NgModule({
-    BrowserModule,
-    FormsModule,
-    ....
-    ....
-    LoaderModule
-})"}}</code></pre>
-    </div>
-
-    <div class="col-sm-6"></div>
+<div class="row">
+    <h3>Example</h3>
+    <app-code
+        class="col-md-6"
+        [snippet]="exampleSnippet"></app-code>
 </div>
 
 <div
     class="row"
     style="margin-top: 24px">
     <div class="col-sm-6">
-        <h4>Example</h4>
-        <pre><code>{{'&lt;nw-loader
-    [isLoading]="true"
-    [numOfDots]="3"
-    [isInline]="true"
-    [isColor]="false"
-    size="sm">&lt;/nw-loader>'}}</code></pre>
-    </div>
-
-    <div class="col-sm-6"></div>
-</div>
-
-<div
-    class="row"
-    style="margin-top: 24px">
-    <div class="col-sm-6">
-        <h4>Component</h4>
+        <h3>Component</h3>
         <table class="table table-bordered">
             <tbody>
                 <tr>
@@ -143,7 +120,7 @@ import {LoaderModule} from 'nw-style-guide/loader';
     class="row"
     style="margin-top: 24px">
     <div class="col-sm-6">
-        <h4>Inputs</h4>
+        <h3>Inputs</h3>
 
         <table class="table table-bordered">
             <tbody>
