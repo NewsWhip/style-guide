@@ -1,40 +1,45 @@
 <h2 class="page-header">Pagination</h2>
 
-<nav aria-label="Page navigation">
-    <ul class="pagination">
-        <li
-            disabled
-            class="disabled">
-            <a aria-label="First">
-                <span aria-hidden="true">&laquo;</span>
-            </a>
-        </li>
-        <li
-            disabled
-            class="disabled">
-            <a aria-label="Previous">
-                <span aria-hidden="true">&lsaquo;</span>
-            </a>
-        </li>
-        <li class="active"><a>1</a></li>
-        <li><a>2</a></li>
-        <li><a>3</a></li>
-        <li><a>4</a></li>
-        <li><a>5</a></li>
-        <li><a>6</a></li>
-        <li><a>7</a></li>
-        <li><a>8</a></li>
-        <li><a>9</a></li>
-        <li><a>10</a></li>
-        <li>
-            <a aria-label="Next">
-                <span aria-hidden="true">&rsaquo;</span>
-            </a>
-        </li>
-        <li>
-            <a aria-label="Last">
-                <span aria-hidden="true">&raquo;</span>
-            </a>
-        </li>
-    </ul>
-</nav>
+<p>This component lives entirely in the Spike project.</p>
+
+<h3>Importing</h3>
+<app-code [snippet]="importSnippet"></app-code>
+
+<hr />
+
+<app-code-sandbox [snippet]="paginationSnippet">
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            <li class="disabled">
+                <a aria-label="First">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li class="disabled">
+                <a aria-label="Previous">
+                    <span aria-hidden="true">&lsaquo;</span>
+                </a>
+            </li>
+            <li class="active"><a>1</a></li>
+            <li><a>2</a></li>
+            <li><a>3</a></li>
+            <li><a>4</a></li>
+            <li><a>5</a></li>
+            <li><a>6</a></li>
+            <li><a>7</a></li>
+            <li><a>8</a></li>
+            <li><a>9</a></li>
+            <li><a>10</a></li>
+            <li>
+                <a aria-label="Next">
+                    <span aria-hidden="true">&rsaquo;</span>
+                </a>
+            </li>
+            <li>
+                <a aria-label="Last">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</app-code-sandbox>

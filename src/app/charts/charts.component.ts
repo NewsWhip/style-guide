@@ -9,6 +9,8 @@ import { YAxisDirective, XAxisDirective, CircleDirective, CHARTS_DIRECTIVES } fr
 import { ScaleTime } from 'd3-scale';
 import { TABS_DIRECTIVES } from 'nw-style-guide/tabs';
 import { PopoverDirective } from 'nw-style-guide/tooltips';
+import { AppCodeComponent } from '../code/code.component';
+import { ISnippet } from '../code/ISnippet';
 
 @Component({
     selector: 'app-charts',
@@ -23,7 +25,8 @@ import { PopoverDirective } from 'nw-style-guide/tooltips';
         CHARTS_DIRECTIVES,
         PopoverDirective,
         DecimalPipe,
-        DatePipe
+        DatePipe,
+        AppCodeComponent
     ]
 })
 export class ChartsComponent implements OnInit {
@@ -31,6 +34,39 @@ export class ChartsComponent implements OnInit {
     private _decimalPipe = inject(DecimalPipe);
 
     public selectedTab: string = 'demo';
+
+    readonly chartWrapperSnippet: ISnippet = {
+        lang: 'html',
+        code: `<svg nw-chart
+            [width]="600"
+            [height]="400"
+            [margins]="chartMargins"
+            (nwMousemove)="onMousemove($event)"
+            (nwMouseout)="onMouseout()">
+            ....
+        </svg>`
+    };
+
+    readonly xAxisSnippet: ISnippet = {
+        lang: 'html',
+        code: `<g class="x axis nw-slot-2" nw-x-axis
+                [domain]="xDomain"
+                [tickFormat]="xAxisTickFormat"
+                [tickCount]="xAxisTickCount"></g>`
+    };
+
+    readonly yAxisSnippet: ISnippet = {
+        lang: 'html',
+        code: `<g class="y axis nw-slot-2" nw-y-axis
+                [domain]="yDomain"
+                [tickFormat]="yAxisTickFormat"
+                [showGuidlines]="true"></g>`
+    };
+
+    readonly importSnippet: ISnippet = {
+        lang: 'typescript',
+        code: `import { CHARTS_DIRECTIVES } from 'nw-style-guide/charts';`
+    };
 
     private _timelineData = {
         fbComments: {

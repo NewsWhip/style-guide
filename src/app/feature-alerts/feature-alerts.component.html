@@ -1,16 +1,25 @@
 <h2 class="page-header">Feature Alerts</h2>
 
+<p>
+    A service for highlighting new or updated features to users. Feature alerts persist their dismissed state in local
+    storage, so they only appear once per user. Includes a structural directive for conditionally showing "New" badges
+    and a hotspot component for drawing attention to specific UI elements.
+</p>
+
+<h3>Importing</h3>
+<app-code [snippet]="importSnippet"></app-code>
+
+<hr />
+
 <div class="row">
     <div class="col-md-8 col-sm-12">
         <h3>Feature Alert Directive</h3>
-        <div style="margin-bottom: 20px">
-            This is a stuctural directive that can show / hide an element and store the state in local storage
-        </div>
+        <p style="margin-bottom: 20px">
+            This is a structural directive that can show / hide an element and store the state in local storage
+        </p>
 
         <div style="margin-bottom: 20px">
-            <a
-                (click)="dismissFeature(featureAlertIds[0])"
-                href="javascript:;">
+            <a (click)="dismissFeature(featureAlertIds[0])">
                 <span
                     >Click to dismiss badge
                     <span
@@ -103,5 +112,23 @@
                     position="bottom"></nw-hotspot>
             </button>
         </div>
+
+        <button
+            class="btn btn-md btn-secondary"
+            style="margin-bottom: 16px"
+            (click)="clearLocalStorage()">
+            Clear Local Storage
+        </button>
     </div>
 </div>
+
+<h3>Directive Usage</h3>
+<p>Use the <code>*nwFeatureAlert</code> structural directive to conditionally show an element until it is dismissed.</p>
+<app-code [snippet]="directiveExampleSnippet"></app-code>
+
+<h3>Hotspot Usage</h3>
+<p>
+    Add a pulsing hotspot indicator to draw attention to a specific element. The parent element must have
+    <code>position: relative</code>.
+</p>
+<app-code [snippet]="hotspotExampleSnippet"></app-code>

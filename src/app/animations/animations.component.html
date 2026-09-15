@@ -7,27 +7,22 @@
 
 <hr />
 
-<h3>Fade In/Out</h3>
-<p>
-    Attach <strong>animate.enter/leave</strong> to any element
-    <br />
-    <code>{{ 'animate.enter="fade-in"' }}</code>
-    <br />
-    <code>{{ 'animate.leave="fade-out"' }}</code>
-</p>
+<h3>Fade In</h3>
+<p>Attach <strong>animate.enter</strong> to any element</p>
+<app-code [snippet]="fadeInSnippet"></app-code>
+
+<h3>Fade Out</h3>
+<p>Attach <strong>animate.leave</strong> to any element</p>
+<app-code [snippet]="fadeOutSnippet"></app-code>
 
 <hr />
 
 <h3>Grid Expand/Collapse</h3>
-<pre><code>{{ gridSnippet }}</code></pre>
+<app-code [snippet]="gridSnippet"></app-code>
 <p>
     <strong>collapse-expand-grid-container</strong> class should be the outer wrapper
     <br />
     <strong>collapse-expand-grid-item</strong> class should be on the inner wrapper
-    <br />
-    <code>{{ 'animate.enter="grid-expand"' }}</code>
-    <br />
-    <code>{{ 'animate.leave="grid-collapse"' }}</code>
 </p>
 <hr />
 

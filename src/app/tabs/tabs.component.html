@@ -1,33 +1,30 @@
 <h2 class="page-header">Tabs</h2>
 
+<p>
+    A tab navigation component available in multiple sizes (small, medium, large) with support for dynamic tabs, active
+    state management, and optional dropdown action buttons.
+</p>
+
+<h3>Importing</h3>
+<app-code [snippet]="importSnippet"></app-code>
+
 <h3>Nav Pills</h3>
 
-<div>
+<app-code-sandbox [snippet]="navPillsSnippet">
     <ul
         class="nav nav-pills"
-        role="tablist">
+        role="tablist"
+        style="width: 400px">
         <li
             role="presentation"
             class="active">
-            <a
-                href="#"
-                role="tab"
-                >Tab 1 active</a
-            >
+            <a role="tab">Tab 1 active</a>
         </li>
         <li role="presentation">
-            <a
-                href="#"
-                role="tab"
-                >Tab 2</a
-            >
+            <a role="tab">Tab 2</a>
         </li>
         <li role="presentation">
-            <a
-                href="#"
-                role="tab"
-                >Tab 3</a
-            >
+            <a role="tab">Tab 3</a>
         </li>
         <li
             role="presentation"
@@ -35,7 +32,7 @@
             <a role="tab">Tab 4 disabled</a>
         </li>
     </ul>
-</div>
+</app-code-sandbox>
 
 <h3>Nav Tabs</h3>
 
@@ -50,53 +47,65 @@
     Remove last tab
 </button>
 
-<h4>Small</h4>
-<nw-tabs size="sm">
-    @for (tab of tabCollection; track tab) {
-        <li
-            nwTab
-            [isActive]="tab.isActive">
-            <button (click)="setSelectedTab(tab)">{{ tab.name }}</button>
-        </li>
-    }
-</nw-tabs>
-
-<h4>Medium / default</h4>
-<nw-tabs size="md">
-    @for (tab of tabCollection; track tab) {
-        <li
-            nwTab
-            [isActive]="tab.isActive">
-            <button (click)="setSelectedTab(tab)">{{ tab.name }}</button>
-        </li>
-    }
-</nw-tabs>
-
-<h4>Large</h4>
-<nw-tabs size="lg">
-    @for (tab of tabCollection; track tab) {
-        <li
-            nwTab
-            [isActive]="tab.isActive">
-            <button (click)="setSelectedTab(tab)">{{ tab.name }}</button>
-        </li>
-    }
-</nw-tabs>
-
-<h4>With dropdown buttons</h4>
-<nw-tabs size="md">
-    @for (tab of tabCollection; track tab) {
-        <li
-            nwTab
-            [isActive]="tab.isActive">
-            <button (click)="setSelectedTab(tab)">{{ tab.name }}</button>
-            @if (tab.hasDropdown) {
-                <button
-                    class="btn btn-sm btn-ghost"
-                    [attr.aria-label]="'Options for ' + tab.name">
-                    <i class="fas fa-ellipsis-v"></i>
-                </button>
+<div class="row">
+    <app-code-sandbox
+        class="col-md-6"
+        [snippet]="navTabsSnippet">
+        <h4>Small</h4>
+        <nw-tabs size="sm">
+            @for (tab of tabCollection; track tab) {
+                <li
+                    nwTab
+                    [isActive]="tab.isActive">
+                    <button (click)="setSelectedTab(tab)">{{ tab.name }}</button>
+                </li>
             }
-        </li>
-    }
-</nw-tabs>
+        </nw-tabs>
+
+        <h4>Medium / default</h4>
+        <nw-tabs
+            size="md"
+            style="width: 400px">
+            @for (tab of tabCollection; track tab) {
+                <li
+                    nwTab
+                    [isActive]="tab.isActive">
+                    <button (click)="setSelectedTab(tab)">{{ tab.name }}</button>
+                </li>
+            }
+        </nw-tabs>
+
+        <h4>Large</h4>
+        <nw-tabs size="lg">
+            @for (tab of tabCollection; track tab) {
+                <li
+                    nwTab
+                    [isActive]="tab.isActive">
+                    <button (click)="setSelectedTab(tab)">{{ tab.name }}</button>
+                </li>
+            }
+        </nw-tabs>
+    </app-code-sandbox>
+
+    <app-code-sandbox
+        class="col-md-6"
+        [snippet]="navTabsDropdownSnippet">
+        <h4>With dropdown buttons</h4>
+        <nw-tabs size="md">
+            @for (tab of tabCollection; track tab) {
+                <li
+                    nwTab
+                    [isActive]="tab.isActive">
+                    <button (click)="setSelectedTab(tab)">{{ tab.name }}</button>
+                    @if (tab.hasDropdown) {
+                        <button
+                            class="btn btn-sm btn-ghost"
+                            [attr.aria-label]="'Options for ' + tab.name">
+                            <i class="fas fa-ellipsis-v"></i>
+                        </button>
+                    }
+                </li>
+            }
+        </nw-tabs>
+    </app-code-sandbox>
+</div>

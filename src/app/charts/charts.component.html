@@ -1,32 +1,39 @@
-<h2 class="page-header">Charts</h2>
+<div
+    class="page-header"
+    style="padding-bottom: 0">
+    <h2>Charts</h2>
 
-<div style="margin-bottom: 16px">
-    <nw-tabs>
-        <li
-            nwTab
-            role="presentation"
-            (click)="setSelectedTab('demo')"
-            [isActive]="selectedTab === 'demo'">
-            <a
-                href="javascript:;"
-                aria-controls="Demo"
-                role="tab"
-                >Demo</a
-            >
-        </li>
-        <li
-            nwTab
-            role="presentation"
-            (click)="setSelectedTab('docs')"
-            [isActive]="selectedTab === 'docs'">
-            <a
-                href="javascript:;"
-                aria-controls="Docs"
-                role="tab"
-                >Docs</a
-            >
-        </li>
-    </nw-tabs>
+    <p>
+        A D3-based charting library for rendering SVG line charts, area charts, bar charts, and scatter plots with
+        support for multiple axes, brushing, tooltips, and animations. Used for all our charts, graphs and timelines
+    </p>
+
+    <div class="tabs-container">
+        <nw-tabs>
+            <li
+                nwTab
+                role="presentation"
+                (click)="setSelectedTab('demo')"
+                [isActive]="selectedTab === 'demo'">
+                <a
+                    aria-controls="Demo"
+                    role="tab"
+                    >Design</a
+                >
+            </li>
+            <li
+                nwTab
+                role="presentation"
+                (click)="setSelectedTab('docs')"
+                [isActive]="selectedTab === 'docs'">
+                <a
+                    aria-controls="Docs"
+                    role="tab"
+                    >API</a
+                >
+            </li>
+        </nw-tabs>
+    </div>
 </div>
 
 @if (selectedTab === 'demo') {
@@ -418,23 +425,7 @@
 @if (selectedTab === 'docs') {
     <h3>Importing</h3>
 
-    <pre><code>
-{{'import { ChartsModule } from "nw-style-guide/charts";
-
-@NgModule({
-    declarations: [
-        ......
-    ],
-    imports: [
-        ......
-        ......
-        ChartsModule
-    ],
-    bootstrap: [AppComponent]
-})
-export class AppModule { }
-'}}
-</code></pre>
+    <app-code [snippet]="importSnippet"></app-code>
 
     <h3>Chart wrapper</h3>
 
@@ -468,17 +459,7 @@ export class AppModule { }
         </div>
 
         <div class="col-sm-6">
-            <pre><code>&lt;svg nw-chart
-    [width]="600"
-    [height]="400"
-    [margins]="chartMargins"
-    (nwMousemove)="onMousemove($event)"
-    (nwMouseout)="onMouseout()"&gt;
-
-    ....
-    ....
-    ....
-&lt;/svg&gt;</code></pre>
+            <app-code [snippet]="chartWrapperSnippet"></app-code>
         </div>
     </div>
 
@@ -527,6 +508,10 @@ export class AppModule { }
                 <td><code>nwMouseout</code></td>
                 <td><code>null</code></td>
             </tr>
+            <tr>
+                <td><code>bgClick</code></td>
+                <td><code>null</code></td>
+            </tr>
         </tbody>
     </table>
 
@@ -551,10 +536,7 @@ export class AppModule { }
         </div>
 
         <div class="col-sm-6">
-            <pre><code>&lt;g class="x axis nw-slot-2" nw-x-axis
-    [domain]="xDomain"
-    [tickFormat]="xAxisTickFormat"
-    [tickCount]="xAxisTickCount">&lt;/g></code></pre>
+            <app-code [snippet]="xAxisSnippet"></app-code>
         </div>
     </div>
 
@@ -656,10 +638,7 @@ export class AppModule { }
         </div>
 
         <div class="col-sm-6">
-            <pre><code>&lt;g class="y axis nw-slot-2" nw-y-axis
-    [domain]="yDomain"
-    [tickFormat]="yAxisTickFormat"
-    [showGuidlines]="true">&lt;/g></code></pre>
+            <app-code [snippet]="yAxisSnippet"></app-code>
         </div>
     </div>
 
