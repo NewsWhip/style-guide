@@ -46,10 +46,6 @@ const TYPE_LABELS: Record<string, string> = {
                             aria-hidden="true"></i>
                     }
 
-                    <!--
-                        Renders ahead of the message so that it reads first both here and in the
-                        announcement, which is composed from this element's rendered text.
-                    -->
                     @if (getTypeLabel(toast.typeId)) {
                         <span class="sr-only">{{ getTypeLabel(toast.typeId) }}</span>
                     }
