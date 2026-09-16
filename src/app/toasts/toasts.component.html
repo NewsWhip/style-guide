@@ -129,6 +129,35 @@
                 <p>The default time to display the toast is 3 seconds.</p>
             </li>
         </ol>
+
+        <h3 style="margin-bottom: 16px">Accessibility</h3>
+
+        <ol
+            style="margin-bottom: 32px"
+            class="guidelines">
+            <li>
+                <h5 style="display: inline-block">Toasts announce themselves</h5>
+                <p>
+                    Do not pair a toast with a <code>LiveAnnouncer.announce</code> call for the same event — screen
+                    reader users will hear the message twice. A <code>success</code> toast is announced politely
+                    (<code>role="status"</code>), an <code>error</code> toast assertively (<code>role="alert"</code>).
+                </p>
+            </li>
+            <li>
+                <h5 style="display: inline-block">Type is conveyed in text</h5>
+                <p>
+                    Each toast carries a visually hidden <code>Success:</code>/<code>Error:</code> prefix, so the type
+                    does not rely on icon colour alone. The prefix is included in the announcement.
+                </p>
+            </li>
+            <li>
+                <h5 style="display: inline-block">Message content</h5>
+                <p>
+                    The announcement is composed from the toast's rendered text, so a <code>TemplateRef</code> message
+                    and a message containing markup both announce correctly. Keep any meaning out of markup alone.
+                </p>
+            </li>
+        </ol>
     </div>
 }
 

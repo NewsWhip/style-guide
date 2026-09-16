@@ -67,3 +67,13 @@ export class MyFeature {
 }
 
 ```
+
+## Accessibility
+
+Toasts announce themselves. **Do not pair a toast with a `LiveAnnouncer.announce` call for the same
+event** — screen reader users will hear the message twice.
+
+Every toast is announced from a live region owned by the package: `role="status"` for a `success`
+toast, `role="alert"` for an `error`. The announcement is composed from the toast's rendered text,
+so `TemplateRef` messages and messages containing markup announce correctly, and it is prefixed
+with `Success:`/`Error:` so that the type is conveyed in text rather than by icon colour alone.
