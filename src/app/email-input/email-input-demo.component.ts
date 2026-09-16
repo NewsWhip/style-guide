@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { ISnippet } from '../code/ISnippet';
 import { TABS_DIRECTIVES } from 'nw-style-guide/tabs';
 import { AppCodeComponent } from '../code/code.component';
+import { CodeSandboxComponent } from '../code/code-sandbox.component';
 
 @Component({
     selector: 'app-email-input-demo',
@@ -20,13 +21,13 @@ import { AppCodeComponent } from '../code/code.component';
             }
         `
     ],
-    imports: [TABS_DIRECTIVES, RouterLink, EmailInputComponent, AppCodeComponent]
+    imports: [TABS_DIRECTIVES, RouterLink, EmailInputComponent, AppCodeComponent, CodeSandboxComponent]
 })
 export class EmailInputDemoComponent implements OnInit {
     private _cdRef = inject(ChangeDetectorRef);
     private _route = inject(ActivatedRoute);
 
-    public emails: string[] = ['valid.email@newswhip.com', 'invalid.email'];
+    public emails: string[] = ['valid.email@sproutsocial.com', 'invalid.email'];
     public validationState: IValidationChange;
     public selectedTab: 'design' | 'api' = 'design';
     public properties: { name: string; defaultValue: string; description: string }[];
@@ -51,18 +52,23 @@ export class EmailInputDemoComponent implements OnInit {
         import: {
             lang: 'typescript',
             code: `
-                import { EmailInputModule } from 'nw-style-guide/email-input';
+                import { EmailInputComponent } from 'nw-style-guide/email-input';
             `
         },
         basicExample: {
             lang: 'html',
-            code: `
-                <nw-email-input
-                    [emails]="['test@example.com']"
-                    [placeholder]="'Custom placeholder text'"
-                    [inputId]="'my-email-input'"
-                    (updated)="onChange($event)"></nw-email-input>
-            `
+            code: `<nw-email-input
+                [emails]="emails"
+                inputId="email-input"
+                (updated)="onChange($event)"></nw-email-input>`
+        },
+        persistentPlaceholder: {
+            lang: 'html',
+            code: `<nw-email-input
+                [emails]="emails"
+                persistentPlaceholder="Enter Email Address"
+                inputId="email-input"
+                (updated)="onChange($event)"></nw-email-input>`
         }
     };
 
