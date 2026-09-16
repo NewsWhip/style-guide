@@ -1,13 +1,52 @@
 import { Component } from '@angular/core';
 import { IPickerItem, NwPickerComponent } from 'nw-style-guide/picker';
+import { CodeSandboxComponent } from '../code/code-sandbox.component';
+import { AppCodeComponent } from '../code/code.component';
+import { ISnippet } from '../code/ISnippet';
 
 @Component({
     selector: 'app-picker',
     templateUrl: './picker.component.html',
     styleUrls: ['./picker.component.scss'],
-    imports: [NwPickerComponent]
+    imports: [NwPickerComponent, CodeSandboxComponent, AppCodeComponent]
 })
 export class PickerComponent {
+    readonly importSnippet: ISnippet = {
+        lang: 'typescript',
+        code: `import { NwPickerComponent } from 'nw-style-guide/picker';`
+    };
+
+    readonly singleSelectSnippet: ISnippet = {
+        lang: 'html',
+        code: `<nw-angular-picker
+            #singlePicker
+            [items]="foods"
+            [placeholderText]="getFoodPlaceholder()"
+            [isMultiSelect]="false"
+            [shouldShowSelections]="false"
+            inputPlaceholderText="Single select picker">
+        </nw-angular-picker>`
+    };
+
+    readonly multiSelectSnippet: ISnippet = {
+        lang: 'html',
+        code: `<nw-angular-picker
+            #picker
+            [items]="countries"
+            [placeholderText]="getCountryPlaceholder()"
+            inputPlaceholderText="Custom input placeholder text">
+            <div class="text-right results-footer">
+                <button
+                    class="btn btn-primary"
+                    (click)="picker.closeResults()"
+                    tabindex="0"
+                    role="button">
+                    Done
+                </button>
+            </div>
+        </nw-angular-picker>`
+    };
+
     public countries: IPickerItem[] = [
         {
             id: 'regionCode-na',
