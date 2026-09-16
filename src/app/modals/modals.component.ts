@@ -48,7 +48,8 @@ export class ModalsComponent implements OnInit {
             : 'modal-backdrop';
 
         this._dialog.open(this.modalTmpl, {
-            backdropClass
+            backdropClass,
+            ariaModal: true
         });
     }
 
