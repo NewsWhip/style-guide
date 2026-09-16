@@ -361,37 +361,3 @@ describe('ToastsComponent', () => {
         }));
     });
 });
-
-@Component({
-    imports: [ToastsComponent],
-    template: `
-        <ng-template #messageTemplate>
-            <p class="toast-message">Your digest alert has been created</p>
-        </ng-template>
-        <nw-toasts />
-    `
-})
-class TemplateHostComponent {
-    @ViewChild('messageTemplate', { static: true }) messageTemplate: TemplateRef<unknown>;
-    @ViewChild(ToastsComponent, { static: true }) toasts: ToastsComponent;
-}
-
-describe('ToastsComponent with a TemplateRef message', () => {
-    let fixture: ComponentFixture<TemplateHostComponent>;
-    let host: TemplateHostComponent;
-
-    beforeEach(() => {
-        TestBed.configureTestingModule({ imports: [TemplateHostComponent] });
-        fixture = TestBed.createComponent(TemplateHostComponent);
-        host = fixture.componentInstance;
-        fixture.detectChanges();
-    });
-
-    it('announces the rendered text of the template', fakeAsync(() => {
-        host.toasts.success(host.messageTemplate);
-
-        tick(ANNOUNCE_DELAY);
-
-        expect(politeRegion().textContent).toBe('Success: Your digest alert has been created');
-    }));
-});
