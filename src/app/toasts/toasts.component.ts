@@ -1,16 +1,17 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Toaster } from 'nw-style-guide/toasts';
 import { TABS_DIRECTIVES } from 'nw-style-guide/tabs';
-import { CopyCodeComponent } from '../code/copy-code.component';
+import { ISnippet } from '../code/ISnippet';
+import { AppCodeComponent } from '../code/code.component';
 
 @Component({
     selector: 'app-toasts',
     templateUrl: './toasts.component.html',
     styleUrls: ['./toasts.component.scss'],
-    imports: [TABS_DIRECTIVES, RouterLink, FormsModule, ReactiveFormsModule, CopyCodeComponent]
+    imports: [TABS_DIRECTIVES, RouterLink, FormsModule, ReactiveFormsModule, AppCodeComponent]
 })
 export class ToastsComponent implements OnInit, OnDestroy {
     private _cdRef = inject(ChangeDetectorRef);
@@ -22,8 +23,6 @@ export class ToastsComponent implements OnInit, OnDestroy {
     public form: FormGroup;
     public toasterMethods: any[];
     public toastInterfaceDetails: any[];
-    public configExample: any;
-
     private _routeSub: Subscription;
 
     ngOnInit() {
@@ -36,8 +35,6 @@ export class ToastsComponent implements OnInit, OnDestroy {
 
         this.toasterMethods = this.getToasterMethods();
         this.toastInterfaceDetails = this.getToastInterfaceDetails();
-        this.configExample = this._getConfigExample();
-
         this._routeSub = this._route.queryParams.subscribe(params => {
             this.selectedTab = params.section || 'design';
             this._cdRef.detectChanges();
@@ -54,18 +51,14 @@ export class ToastsComponent implements OnInit, OnDestroy {
         });
     }
 
-    readonly importModule = `import { ToastsModule } from 'nw-style-guide/toasts';
+    readonly importSnippet: ISnippet = {
+        lang: 'typescript',
+        code: `import { ToastsModule } from 'nw-style-guide/toasts';`
+    };
 
-@NgModule({
-  declarations: [...],
-  imports: [
-      ToastsModule.forRoot()
-  ],
-  bootstrap: [AppComponent]
-})
-export class AppModule { }`;
-
-    readonly example = `export class TestComponent {
+    readonly exampleSnippet: ISnippet = {
+        lang: 'typescript',
+        code: `export class TestComponent {
 
   constructor(private _toaster: Toaster) {}
 
@@ -87,8 +80,8 @@ export class AppModule { }`;
     };
     this._toaster.show(customToast);
   }
-}
-`;
+}`
+    };
 
     getToasterMethods() {
         return [
@@ -150,29 +143,6 @@ export class AppModule { }`;
                 description: 'The number of ms for which the toast should be displayed'
             }
         ];
-    }
-
-    private _getConfigExample() {
-        return `@Component({
-  selector: 'toaster-config-demo',
-  templateUrl: './toaster-config-demo.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [Toaster]
-})
-export class CustomToasterConfigComponent implements OnInit {
-
-  constructor(
-    private _elRef: ElementRef<HTMLElement>,
-    @SkipSelf() private _globalToaster: Toaster,
-    @Host() private _localToaster: Toaster) {}
-
-  ngOnInit() {
-    this._localToaster.setConfig({ outletElement: this._elRef.nativeElement });
-
-    this._globalToaster.success('Global toaster');
-    this._localToaster.success('Local toaster');
-  }
-}`;
     }
 
     ngOnDestroy() {
