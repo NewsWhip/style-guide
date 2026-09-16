@@ -6,7 +6,7 @@ import { DOCUMENT, Injectable, OnDestroy, inject } from '@angular/core';
  */
 @Injectable({ providedIn: 'root' })
 export class ToastAnnouncer implements OnDestroy {
-    private _document = inject<Document>(DOCUMENT);
+    private _document = inject(DOCUMENT);
 
     private _politeRegion: HTMLElement;
     private _assertiveRegion: HTMLElement;
