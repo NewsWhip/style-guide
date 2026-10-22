@@ -58,7 +58,9 @@ export class TabDirective implements AfterContentInit {
         // click-only: a focusable <button> inside role="tab" fails axe's nested-interactive rule even with
         // tabindex="-1", so the legacy <button> label is only kept click-only here rather than made compliant
         if (this.tabElement === this.elRef.nativeElement) {
-            this.elRef.nativeElement.querySelector<HTMLButtonElement>('button:not(.btn)')?.setAttribute('tabindex', '-1');
+            this.elRef.nativeElement
+                .querySelector<HTMLButtonElement>('button:not(.btn)')
+                ?.setAttribute('tabindex', '-1');
         }
     }
 

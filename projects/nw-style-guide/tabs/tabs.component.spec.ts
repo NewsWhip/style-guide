@@ -194,7 +194,11 @@ describe('TabsComponent', () => {
             expect(tablist.tagName).not.toBe('UL');
             expect(tablist.children.length).toBe(0);
             expect(ul.getAttribute('role')).toBe('presentation');
-            expect(tablist.getAttribute('aria-owns')).toBe(labelTabEls().map(t => t.id).join(' '));
+            expect(tablist.getAttribute('aria-owns')).toBe(
+                labelTabEls()
+                    .map(t => t.id)
+                    .join(' ')
+            );
             expect(labelTabEls().every(t => !!t.id)).toBeTrue();
         });
 
