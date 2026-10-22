@@ -1,10 +1,16 @@
 <div
     class="scroll-container"
     #scrollContainer>
+    <!-- A tablist may only own tabs, so with action buttons beside the tabs it owns them by id instead of containing them -->
+    @if (usesLabelTabs) {
+        <div
+            role="tablist"
+            [attr.aria-owns]="ownedTabIds"></div>
+    }
     <ul
         class="nav nav-tabs"
         [ngClass]="tabSizeClass"
-        role="tablist"
+        [attr.role]="usesLabelTabs ? 'presentation' : 'tablist'"
         (keydown)="onKeydown($event)"
         (focusout)="onFocusOut()">
         <ng-content></ng-content>
