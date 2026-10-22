@@ -724,6 +724,23 @@ describe('callouts', () => {
             expect(trigger.getAttribute('aria-expanded')).toBe('false');
         }));
 
+        it('should not put aria-haspopup or aria-expanded on a host that is not a control', fakeAsync(() => {
+            fixture.detectChanges();
+            const host: HTMLElement = de.query(By.css('.generic-host')).nativeElement;
+
+            expect(host.hasAttribute('aria-haspopup')).toBe(false);
+            expect(host.hasAttribute('aria-expanded')).toBe(false);
+
+            fireEvent(host, 'click');
+            tick(10);
+            expect(getTooltipEl().getAttribute('role')).toBe('dialog');
+            expect(host.hasAttribute('aria-expanded')).toBe(false);
+
+            fireEvent(host, 'click');
+            tick(10);
+            expect(host.hasAttribute('aria-expanded')).toBe(false);
+        }));
+
         it('should not describe its host, as the panel is not a description', fakeAsync(() => {
             fixture.detectChanges();
             const trigger = getTemplateTrigger();
@@ -949,6 +966,14 @@ describe('callouts', () => {
                 [closeEvents]="closeEvents">
                 Popover whose content turns interactive
             </button>
+
+            <div
+                class="generic-host"
+                [nwPopover]="'A popover on a wrapper'"
+                [openEvents]="openEvents"
+                [closeEvents]="closeEvents">
+                Popover on a wrapper
+            </div>
         </div>
 
         <ng-template #panelTemplate>

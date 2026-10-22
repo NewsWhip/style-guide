@@ -51,10 +51,18 @@ export class PopoverDirective extends CalloutBaseDirective {
 
     /**
      * Announce the trigger as one that opens a dialog, and as currently closed. Done up front rather than on the
-     * first open, so that a screen reader user is told the control does something before they operate it
+     * first open, so that a screen reader user is told the control does something before they operate it.
+     *
+     * Only where the host is a control. On a generic element, such as a wrapper that holds the real button,
+     * `aria-expanded` is not an allowed attribute, and it would announce something that is not operable as though it
+     * were
      */
     override ngOnInit(): void {
         super.ngOnInit();
+
+        if (!this._hostIsControl()) {
+            return;
+        }
 
         const host = this._elRef.nativeElement;
 
@@ -73,7 +81,10 @@ export class PopoverDirective extends CalloutBaseDirective {
          * at explicitly or focusing the callout announces its name and nothing else
          */
         calloutEl.setAttribute('aria-describedby', `${this._calloutId}-content`);
-        this._elRef.nativeElement.setAttribute('aria-expanded', 'true');
+
+        if (this._hostIsControl()) {
+            this._elRef.nativeElement.setAttribute('aria-expanded', 'true');
+        }
 
         if (this._focusCalloutIfOpenedFromHost(calloutEl)) {
             this._trapFocusIfThereIsSomethingToTrap(calloutEl);
@@ -96,7 +107,10 @@ export class PopoverDirective extends CalloutBaseDirective {
 
         this._focusTrap?.destroy();
         this._focusTrap = null;
-        this._elRef.nativeElement.setAttribute('aria-expanded', 'false');
+
+        if (this._hostIsControl()) {
+            this._elRef.nativeElement.setAttribute('aria-expanded', 'false');
+        }
 
         if (shouldRestoreFocus) {
             this._previouslyFocusedEl.focus();
@@ -164,6 +178,12 @@ export class PopoverDirective extends CalloutBaseDirective {
         calloutEl.focus();
 
         return true;
+    }
+
+    /** Whether the host is a button or has been given a role, which are the hosts `aria-expanded` is valid on */
+    private _hostIsControl(): boolean {
+        const host = this._elRef.nativeElement;
+        return host.tagName === 'BUTTON' || host.hasAttribute('role');
     }
 
     /** An id for the host, so that the dialog can be labelled by it. Only generated if it has none */
