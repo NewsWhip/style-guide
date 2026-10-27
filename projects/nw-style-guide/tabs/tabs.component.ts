@@ -46,6 +46,11 @@ export class TabsComponent implements OnInit, AfterContentInit, OnDestroy {
 
     @ContentChildren(TabDirective) tabs: QueryList<TabDirective> = new QueryList();
 
+    /** Whether the tabs are `nwTabLabel` elements, which a tablist has to own by id rather than contain */
+    usesLabelTabs = false;
+    /** The ids of the tab elements, for the tablist's `aria-owns` */
+    ownedTabIds = '';
+
     private _scrollAndResizeSub: Subscription;
     private _activeChangeSub: Subscription;
     private _transitionEndSub: Subscription;
@@ -65,15 +70,16 @@ export class TabsComponent implements OnInit, AfterContentInit, OnDestroy {
     }
 
     ngAfterContentInit() {
+        this._updateOwnedTabs();
         this._subscribeToTabsChange();
     }
 
     getActiveStyles(): Record<string, string> {
         const tab: TabDirective = this._getActiveTab();
         if (tab) {
-            const btn = tab.elRef.nativeElement.querySelector('button');
+            const label = tab.elRef.nativeElement.querySelector('[nwTabLabel], button');
             return {
-                width: (btn ?? tab.elRef.nativeElement).getBoundingClientRect().width + 'px',
+                width: (label ?? tab.elRef.nativeElement).getBoundingClientRect().width + 'px',
                 transform: `translateX(${tab.elRef.nativeElement.offsetLeft}px)`
             };
         }
@@ -100,7 +106,7 @@ export class TabsComponent implements OnInit, AfterContentInit, OnDestroy {
         switch (event.key) {
             case 'Enter':
             case ' ':
-                if (tabs[focusedIndex].elRef.nativeElement === document.activeElement) {
+                if (tabs[focusedIndex].tabElement === document.activeElement) {
                     event.preventDefault();
                     tabs[focusedIndex].activate();
                 }
@@ -173,10 +179,19 @@ export class TabsComponent implements OnInit, AfterContentInit, OnDestroy {
 
     private _subscribeToTabsChange() {
         this._tabsChangeSub = this.tabs.changes.subscribe(() => {
+            this._updateOwnedTabs();
+
             setTimeout(() => {
                 this._cdRef.detectChanges();
             }, 0);
         });
+    }
+
+    private _updateOwnedTabs() {
+        const tabs = this.tabs.toArray();
+
+        this.usesLabelTabs = tabs.some(t => t.hasLabelTab);
+        this.ownedTabIds = this.usesLabelTabs ? tabs.map(t => t.tabId).join(' ') : '';
     }
 
     private _subscribeToActiveBarTransitionEnd() {
