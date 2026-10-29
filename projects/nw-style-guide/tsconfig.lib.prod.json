@@ -7,12 +7,8 @@
     },
     "angularCompilerOptions": {
         "compilationMode": "partial",
-        "extendedDiagnostics": {
-            "checks": {
-                "nullishCoalescingNotNullable": "suppress",
-                "optionalChainNotNullable": "suppress"
-            }
-        },
+        /* Angular 22 enables strict template type checking by default.
+         * We set it to false to keep the pre-v22 behaviour until the templates are migrated */
         "strictTemplates": false
     }
 }

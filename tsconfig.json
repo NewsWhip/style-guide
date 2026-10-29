@@ -16,6 +16,10 @@
         },
         "module": "es2020",
         "baseUrl": "./",
+        /* TypeScript 6 deprecates `baseUrl` (removed in TS 7). This silences the deprecation error until we stop relying on it */
+        "ignoreDeprecations": "6.0",
+        /* TypeScript 6 enables strict mode by default. We set it to false to keep the pre-TS 6 behaviour until the codebase is migrated */
+        "strict": false,
         "useDefineForClassFields": false
     }
 }
