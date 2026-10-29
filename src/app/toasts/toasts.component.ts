@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -11,6 +11,7 @@ import { AppCodeComponent } from '../code/code.component';
     selector: 'app-toasts',
     templateUrl: './toasts.component.html',
     styleUrls: ['./toasts.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [TABS_DIRECTIVES, RouterLink, FormsModule, ReactiveFormsModule, AppCodeComponent]
 })
 export class ToastsComponent implements OnInit, OnDestroy {

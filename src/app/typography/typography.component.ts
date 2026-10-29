@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgClass } from '@angular/common';
 import { RouterLink } from '@angular/router';
@@ -7,6 +7,7 @@ import { RouterLink } from '@angular/router';
     selector: 'app-typography',
     templateUrl: './typography.component.html',
     styleUrls: ['./typography.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [FormsModule, ReactiveFormsModule, NgClass, RouterLink]
 })
 export class TypographyComponent implements OnInit {

@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild, inject, ChangeDetectionStrategy } from '@angular/core';
 import {
     IWord,
     IWordCloudConfig,
@@ -21,6 +21,7 @@ interface IMyWord extends IWord {
     selector: 'app-home',
     templateUrl: './word-cloud.component.html',
     styleUrls: ['./word-cloud.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [TABS_DIRECTIVES, RouterLink, WORD_CLOUD_COMPONENTS, TooltipDirective, AppCodeComponent, NgTemplateOutlet]
 })
 export class WordCloudDemoComponent implements OnInit {

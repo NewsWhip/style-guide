@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { AppCodeComponent } from '../code/code.component';
 import { CodeSandboxComponent } from '../code/code-sandbox.component';
 import { ISnippet } from '../code/ISnippet';
@@ -7,6 +7,7 @@ import { ISnippet } from '../code/ISnippet';
     selector: 'app-pagination',
     templateUrl: './pagination.component.html',
     styleUrls: ['./pagination.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [CodeSandboxComponent, AppCodeComponent]
 })
 export class PaginationComponent {

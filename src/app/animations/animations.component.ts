@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { NW_DURATION, NW_EASING } from 'nw-style-guide/animations';
 import { AppCodeComponent } from '../code/code.component';
 import { ISnippet } from '../code/ISnippet';
@@ -7,6 +7,7 @@ import { ISnippet } from '../code/ISnippet';
     selector: 'app-animations',
     templateUrl: './animations.component.html',
     styleUrls: ['./animations.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [AppCodeComponent]
 })
 export class AnimationsComponent {

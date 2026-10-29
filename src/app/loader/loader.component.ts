@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { LoaderComponent as NWLoaderComponent } from 'nw-style-guide/loader';
 import { AppCodeComponent } from '../code/code.component';
@@ -8,6 +8,7 @@ import { ISnippet } from '../code/ISnippet';
     selector: 'app-loader',
     templateUrl: './loader.component.html',
     styleUrls: ['./loader.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [FormsModule, NWLoaderComponent, AppCodeComponent]
 })
 export class LoaderComponent {
