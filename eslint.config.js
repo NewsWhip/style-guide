@@ -32,7 +32,9 @@ export default defineConfig([
                 }
             ],
             '@angular-eslint/prefer-inject': 'warn',
-            '@angular-eslint/prefer-standalone': 'warn'
+            '@angular-eslint/prefer-standalone': 'warn',
+            // Warn until the Eager components added by the Angular 22 migration are converted to OnPush
+            '@angular-eslint/prefer-on-push-component-change-detection': 'warn'
         }
     },
     // Demo app files
@@ -46,7 +48,9 @@ export default defineConfig([
         extends: [angular.configs.tsRecommended, nwStyleGuideTsFiles],
         rules: {
             '@angular-eslint/prefer-inject': 'warn',
-            '@angular-eslint/prefer-standalone': 'warn'
+            '@angular-eslint/prefer-standalone': 'warn',
+            // Warn until the Eager components added by the Angular 22 migration are converted to OnPush
+            '@angular-eslint/prefer-on-push-component-change-detection': 'warn'
         }
     },
     {
