@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CdkMenuModule } from '@angular/cdk/menu';
 import { CodeSandboxComponent } from '../code/code-sandbox.component';
@@ -8,6 +8,7 @@ import { ISnippet } from '../code/ISnippet';
     selector: 'app-buttons',
     templateUrl: './buttons.component.html',
     styleUrls: ['./buttons.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [FormsModule, CodeSandboxComponent, CdkMenuModule]
 })
 export class ButtonsComponent {

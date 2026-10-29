@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { TabsComponent } from './tabs.component';
@@ -6,6 +6,7 @@ import { TabDirective } from './tab.directive';
 
 @Component({
     imports: [TabsComponent, TabDirective],
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: `
         <nw-tabs>
             @for (tab of tabs; track tab) {
@@ -32,6 +33,7 @@ class TestHostComponent {
 
 @Component({
     imports: [TabsComponent, TabDirective],
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: `
         <nw-tabs>
             @for (tab of tabs; track tab) {

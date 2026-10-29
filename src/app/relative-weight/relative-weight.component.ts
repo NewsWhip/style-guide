@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { CodeSandboxComponent } from '../code/code-sandbox.component';
 import { ISnippet } from '../code/ISnippet';
 
@@ -6,6 +6,7 @@ import { ISnippet } from '../code/ISnippet';
     selector: 'app-relative-weight',
     templateUrl: './relative-weight.component.html',
     styleUrls: ['./relative-weight.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [CodeSandboxComponent]
 })
 export class RelativeWeightComponent {

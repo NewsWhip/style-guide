@@ -1,4 +1,4 @@
-import { Component, DebugElement, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, DebugElement, ElementRef, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { TooltipContainerComponent } from './tooltip-container.component';
@@ -1020,6 +1020,7 @@ describe('callouts', () => {
             }
         `
     ],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [TooltipDirective, PopoverDirective, CdkScrollableModule]
 })
 class WrapperComponent implements OnInit {
