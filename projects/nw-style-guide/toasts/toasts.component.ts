@@ -53,9 +53,7 @@ const TYPE_LABELS: Record<string, string> = {
                     <!-- If templateRef render via ngTemplateOutlet-->
                     @if (isTemplateRef(toast.message)) {
                         <ng-container *ngTemplateOutlet="toast.message"></ng-container>
-                    }
-
-                    @if (!isTemplateRef(toast.message)) {
+                    } @else {
                         <p
                             class="toast-message"
                             [innerHTML]="getInnerHTML(toast.message)"></p>
@@ -94,7 +92,7 @@ export class ToastsComponent {
      */
     private _triggerElements = new WeakMap<Toast, HTMLElement>();
 
-    isTemplateRef(value: string | TemplateRef<any>): boolean {
+    isTemplateRef(value: string | TemplateRef<any>): value is TemplateRef<any> {
         return typeof value !== 'string';
     }
 

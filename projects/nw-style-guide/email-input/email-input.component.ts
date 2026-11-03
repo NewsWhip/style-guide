@@ -134,7 +134,7 @@ export class EmailInputComponent implements OnInit, OnDestroy {
         }
     }
 
-    onTab(event: KeyboardEvent) {
+    onTab(event: Event) {
         /**
          * If the input has a value, add it as an entry.
          *
