@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -13,6 +13,7 @@ import { FaqComponent } from '../faq/faq-component';
     selector: 'app-tooltips',
     templateUrl: './tooltips.component.html',
     styleUrls: ['./tooltips.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [
         TABS_DIRECTIVES,
         RouterLink,

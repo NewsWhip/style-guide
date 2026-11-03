@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { CodeSandboxComponent } from '../code/code-sandbox.component';
 import { ISnippet } from '../code/ISnippet';
 
 @Component({
     selector: 'app-pills',
     templateUrl: './pills.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [CodeSandboxComponent]
 })
 export class DemoPillsComponent {

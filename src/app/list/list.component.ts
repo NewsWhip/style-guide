@@ -1,5 +1,5 @@
 import { CdkMenuModule } from '@angular/cdk/menu';
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { CodeSandboxComponent } from '../code/code-sandbox.component';
 import { ISnippet } from '../code/ISnippet';
@@ -8,6 +8,7 @@ import { ISnippet } from '../code/ISnippet';
     selector: 'app-list',
     templateUrl: './list.component.html',
     styleUrls: ['./list.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [RouterLink, RouterLinkActive, CdkMenuModule, CodeSandboxComponent]
 })
 export class ListComponent {

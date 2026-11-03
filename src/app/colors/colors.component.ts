@@ -1,8 +1,9 @@
-import { Component, OnInit, ChangeDetectorRef, inject } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, inject, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
     selector: 'app-colors',
     templateUrl: './colors.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrls: ['./colors.component.scss']
 })
 export class ColorsComponent implements OnInit {
