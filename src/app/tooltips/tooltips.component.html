@@ -422,7 +422,7 @@
 
             <tbody>
                 @for (row of sharedPropertiesTable; track row) {
-                    <ng-container *ngTemplateOutlet="inputTableTowTmpl; context: { values: row }"></ng-container>
+                    <ng-container *ngTemplateOutlet="inputTableRowTmpl; context: { values: row }"></ng-container>
                 }
             </tbody>
         </table>

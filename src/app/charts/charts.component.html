@@ -105,10 +105,7 @@
             @if (isHovering) {
                 <path
                     class="hover-path nw-slot-1"
-                    [nw-path]="[
-                        [mainScaleHoverCoordinates[0], yDomain[0]],
-                        [mainScaleHoverCoordinates[0], yDomain[1]]
-                    ]"
+                    [nw-path]="verticalHoverLine"
                     [xDomain]="xDomain"
                     [yDomain]="yDomain"
                     [animDuration]="0"></path>
@@ -154,7 +151,7 @@
 
             <path
                 class="random"
-                [nw-path]="randomData"
+                [nw-path]="randomPoints"
                 [xDomain]="xDomain"
                 [yDomain]="randomYDomain"
                 [curve]="randomLineCurve.curve"></path>
@@ -201,7 +198,7 @@
 
             @if (!randomAsBars.value) {
                 <ng-container>
-                    @for (point of randomData; track circleTrackIndex($index, point)) {
+                    @for (point of randomPoints; track $index) {
                         <circle
                             [nw-circle]="point"
                             [xDomain]="xDomain"
@@ -217,7 +214,7 @@
 
             @if (randomAsBars.value) {
                 <ng-container>
-                    @for (point of randomData; track circleTrackIndex($index, point)) {
+                    @for (point of randomData; track $index) {
                         <rect
                             class="nw-bar"
                             [nw-bar]="point"
@@ -234,7 +231,7 @@
 
             @if (showForeignObject.value) {
                 <foreignObject
-                    [nw-foreign-object]
+                    nw-foreign-object
                     [point]="[1545095807739, 60000]"
                     [xDomain]="xDomain"
                     [yDomain]="yDomain"

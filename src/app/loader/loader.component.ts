@@ -26,13 +26,21 @@ export class LoaderComponent {
     };
 
     private _num: number = 6;
-    public size: string = 'md';
+    private _size: NWLoaderComponent['size'] = 'md';
 
     get num(): number {
         return this._num;
     }
 
-    set num(value: number) {
+    set num(value: number | string) {
         this._num = +value;
+    }
+
+    get size(): NWLoaderComponent['size'] {
+        return this._size;
+    }
+
+    set size(value: string) {
+        this._size = value as NWLoaderComponent['size'];
     }
 }
