@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { TabsComponent } from './tabs.component';
@@ -6,7 +6,7 @@ import { TabDirective } from './tab.directive';
 
 @Component({
     imports: [TabsComponent, TabDirective],
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
         <nw-tabs>
             @for (tab of tabs; track tab) {
@@ -33,7 +33,7 @@ class TestHostComponent {
 
 @Component({
     imports: [TabsComponent, TabDirective],
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
         <nw-tabs>
             @for (tab of tabs; track tab) {
@@ -104,6 +104,8 @@ describe('TabsComponent', () => {
         it('should update aria-selected when isActive changes', fakeAsync(() => {
             host.tabs[0].isActive = false;
             host.tabs[1].isActive = true;
+            // The host is OnPush, so changing its state directly needs it marked for check
+            fixture.debugElement.injector.get(ChangeDetectorRef).markForCheck();
             fixture.detectChanges();
             tick();
             fixture.detectChanges();
