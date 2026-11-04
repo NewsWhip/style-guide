@@ -21,10 +21,10 @@ import { NgClass, NgTemplateOutlet } from '@angular/common';
                 class="tooltip-inner"
                 [class.with-close]="data.withClose"
                 [id]="data.id + '-content'">
-                @if (isTemplateRef) {
-                    <ng-container *ngTemplateOutlet="data.tooltip; context: data.templateRefContext"></ng-container>
+                @if (templateRef) {
+                    <ng-container *ngTemplateOutlet="templateRef; context: data.templateRefContext"></ng-container>
                 } @else {
-                    <div [outerHTML]="data.tooltip"></div>
+                    <div [outerHTML]="html"></div>
                 }
                 <!--
                     Inside .tooltip-inner, which the styles position it against, and last so that a dialog panel's
@@ -46,11 +46,17 @@ export class TooltipContainerComponent {
     data = inject<ITooltipData>(TOOLTIP_CONTEXT_TOKEN);
 
     public close = new EventEmitter<void>();
-    public isTemplateRef: boolean = false;
+    /** The content, split by type so that the template can render each with the right type */
+    public templateRef: TemplateRef<any> | null = null;
+    public html: string = '';
 
     constructor() {
         const data = this.data;
 
-        this.isTemplateRef = data.tooltip instanceof TemplateRef;
+        if (data.tooltip instanceof TemplateRef) {
+            this.templateRef = data.tooltip;
+        } else {
+            this.html = data.tooltip;
+        }
     }
 }

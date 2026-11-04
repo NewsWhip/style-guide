@@ -11,10 +11,5 @@
             "nw-style-guide/*": ["./*/public-api"]
         }
     },
-    "include": ["**/*.spec.ts", "**/*.d.ts"],
-    "angularCompilerOptions": {
-        /* Angular 22 enables strict template type checking by default.
-         * We set it to false to keep the pre-v22 behaviour until the templates are migrated */
-        "strictTemplates": false
-    }
+    "include": ["**/*.spec.ts", "**/*.d.ts"]
 }

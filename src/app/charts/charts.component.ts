@@ -154,9 +154,12 @@ export class ChartsComponent implements OnInit {
     public isHovering: boolean = false;
     public hoverPosition: [number, number] = [0, 0];
     public mainScaleHoverCoordinates: [Date, number];
+    public verticalHoverLine: [number, number][];
     public randomScaleHoverCoordinates: [Date, number];
     public numRandomPoints: number = 10;
     public randomData: ([number, number] | [number, number, number])[];
+    /** `randomData` without the third value, for the inputs that only take two */
+    public randomPoints: [number, number][];
     public randomYDomain: [number, number];
     public randomAsBars: FormControl = new FormControl(false);
     public randomArea: FormControl = new FormControl(false);
@@ -171,7 +174,7 @@ export class ChartsComponent implements OnInit {
     ];
 
     public metricNames: string[] = [];
-    public form: FormGroup;
+    public form: FormGroup<{ selectedMetrics: FormArray<FormControl<boolean>> }>;
     public showBrush: FormControl = new FormControl(false);
     public showTooltip: FormControl = new FormControl(true);
     public brushType: FormControl = new FormControl('');
@@ -195,7 +198,7 @@ export class ChartsComponent implements OnInit {
 
     createForm() {
         this.form = this._fb.group({
-            selectedMetrics: new FormArray(this.metricNames.map(mn => new FormControl(true)))
+            selectedMetrics: new FormArray(this.metricNames.map(mn => new FormControl(true, { nonNullable: true })))
         });
     }
 
@@ -238,7 +241,7 @@ export class ChartsComponent implements OnInit {
         const i = this.metricNames.indexOf(metricName);
 
         if (i > -1) {
-            return (this.form.get('selectedMetrics') as FormArray).controls[i].value;
+            return this.form.controls.selectedMetrics.controls[i].value;
         }
         return false;
     }
@@ -264,14 +267,15 @@ export class ChartsComponent implements OnInit {
         return item[0] + item[1];
     }
 
-    circleTrackIndex(index: number, item: [number, number]) {
-        return index;
-    }
-
     onMousemove(p: [number, number]) {
         this.hoverPosition = p;
 
         this.mainScaleHoverCoordinates = this.positionToCoordinates(this.xDomain, this.yDomain, p);
+        const hoverX = +this.mainScaleHoverCoordinates[0];
+        this.verticalHoverLine = [
+            [hoverX, this.yDomain[0]],
+            [hoverX, this.yDomain[1]]
+        ];
         this.randomScaleHoverCoordinates = this.positionToCoordinates(this.xDomain, this.randomYDomain, p);
 
         this.isHovering = true;
@@ -316,6 +320,7 @@ export class ChartsComponent implements OnInit {
             datapoints.push([this._randomInDomain(xDomain), this._randomInDomain(yDomain)]);
         }
         this.randomData = datapoints.sort();
+        this.randomPoints = this.randomData.map(([x, y]) => [x, y]);
         this.randomYDomain = [0, Math.max(...this.randomData.map(x => x[1]))];
 
         this.randomData.forEach(rd => {
@@ -330,7 +335,9 @@ export class ChartsComponent implements OnInit {
 
         const maxTime = Math.max(...this.randomData.map(rd => rd[0]));
 
-        this.randomData.push([maxTime + 1000 * 60 * 60 * 2, this._randomInDomain([0, 900])]);
+        const point: [number, number] = [maxTime + 1000 * 60 * 60 * 2, this._randomInDomain([0, 900])];
+        this.randomData.push(point);
+        this.randomPoints.push([...point]);
 
         this.randomYDomain = [0, Math.max(...this.randomData.map(x => x[1]))];
 
