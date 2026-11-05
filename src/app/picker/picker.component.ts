@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component } from '@angular/core';
 import { IPickerItem, NwPickerComponent } from 'nw-style-guide/picker';
 import { CodeSandboxComponent } from '../code/code-sandbox.component';
 import { AppCodeComponent } from '../code/code.component';
@@ -8,7 +8,6 @@ import { ISnippet } from '../code/ISnippet';
     selector: 'app-picker',
     templateUrl: './picker.component.html',
     styleUrls: ['./picker.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [NwPickerComponent, CodeSandboxComponent, AppCodeComponent]
 })
 export class PickerComponent {

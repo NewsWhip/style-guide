@@ -1,9 +1,8 @@
-import { Component, OnInit, ChangeDetectionStrategy, signal } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 
 @Component({
     selector: 'app-colors',
     templateUrl: './colors.component.html',
-    changeDetection: ChangeDetectionStrategy.OnPush,
     styleUrls: ['./colors.component.scss']
 })
 export class ColorsComponent implements OnInit {
