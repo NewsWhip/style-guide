@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
     selector: 'app-tables',
     templateUrl: './tables.component.html',
     styleUrls: ['./tables.component.scss'],
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [FormsModule]
 })
 export class TablesComponent {

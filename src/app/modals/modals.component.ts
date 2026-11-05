@@ -6,7 +6,7 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angul
     selector: 'app-modals',
     templateUrl: './modals.component.html',
     styleUrls: ['./modals.component.scss'],
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [FormsModule, ReactiveFormsModule]
 })
 export class ModalsComponent implements OnInit {

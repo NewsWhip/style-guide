@@ -7,7 +7,7 @@ import { ISnippet } from '../code/ISnippet';
     selector: 'app-pagination',
     templateUrl: './pagination.component.html',
     styleUrls: ['./pagination.component.scss'],
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [CodeSandboxComponent, AppCodeComponent]
 })
 export class PaginationComponent {

@@ -8,7 +8,7 @@ import { ISnippet } from '../code/ISnippet';
     selector: 'app-buttons',
     templateUrl: './buttons.component.html',
     styleUrls: ['./buttons.component.scss'],
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [FormsModule, CodeSandboxComponent, CdkMenuModule]
 })
 export class ButtonsComponent {

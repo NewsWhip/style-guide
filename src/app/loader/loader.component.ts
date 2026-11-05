@@ -8,7 +8,7 @@ import { ISnippet } from '../code/ISnippet';
     selector: 'app-loader',
     templateUrl: './loader.component.html',
     styleUrls: ['./loader.component.scss'],
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [FormsModule, NWLoaderComponent, AppCodeComponent]
 })
 export class LoaderComponent {

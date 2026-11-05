@@ -6,7 +6,7 @@ import { ISnippet } from '../code/ISnippet';
     selector: 'app-relative-weight',
     templateUrl: './relative-weight.component.html',
     styleUrls: ['./relative-weight.component.scss'],
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [CodeSandboxComponent]
 })
 export class RelativeWeightComponent {

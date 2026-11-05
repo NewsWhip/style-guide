@@ -5,7 +5,7 @@ import { ISnippet } from '../code/ISnippet';
 @Component({
     selector: 'app-pills',
     templateUrl: './pills.component.html',
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [CodeSandboxComponent]
 })
 export class DemoPillsComponent {

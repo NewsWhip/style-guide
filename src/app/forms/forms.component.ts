@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
     selector: 'app-forms',
     templateUrl: './forms.component.html',
     styleUrls: [`./forms.component.scss`],
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [FormsModule]
 })
 export class FormsComponent {

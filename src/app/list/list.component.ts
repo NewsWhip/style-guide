@@ -8,7 +8,7 @@ import { ISnippet } from '../code/ISnippet';
     selector: 'app-list',
     templateUrl: './list.component.html',
     styleUrls: ['./list.component.scss'],
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [RouterLink, RouterLinkActive, CdkMenuModule, CodeSandboxComponent]
 })
 export class ListComponent {

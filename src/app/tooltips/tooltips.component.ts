@@ -13,7 +13,7 @@ import { FaqComponent } from '../faq/faq-component';
     selector: 'app-tooltips',
     templateUrl: './tooltips.component.html',
     styleUrls: ['./tooltips.component.scss'],
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [
         TABS_DIRECTIVES,
         RouterLink,

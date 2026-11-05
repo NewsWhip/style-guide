@@ -6,7 +6,7 @@ import { ISnippet } from '../code/ISnippet';
     selector: 'app-labels',
     templateUrl: './labels.component.html',
     styleUrls: ['./labels.component.scss'],
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [CodeSandboxComponent]
 })
 export class LabelsComponent {

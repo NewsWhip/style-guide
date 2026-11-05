@@ -7,7 +7,7 @@ import { RouterLink } from '@angular/router';
     selector: 'app-typography',
     templateUrl: './typography.component.html',
     styleUrls: ['./typography.component.scss'],
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [FormsModule, ReactiveFormsModule, NgClass, RouterLink]
 })
 export class TypographyComponent implements OnInit {

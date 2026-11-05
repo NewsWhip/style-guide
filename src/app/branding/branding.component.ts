@@ -6,7 +6,7 @@ import { ISnippet } from '../code/ISnippet';
     selector: 'app-branding',
     templateUrl: './branding.component.html',
     styleUrls: ['./branding.component.scss'],
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [AppCodeComponent]
 })
 export class BrandingComponent {

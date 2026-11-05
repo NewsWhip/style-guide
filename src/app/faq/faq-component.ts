@@ -16,7 +16,7 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
             <ng-content select="[answer]"></ng-content>
         </div>
     `,
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     styleUrls: ['./faq-component.scss']
 })
 export class FaqComponent {

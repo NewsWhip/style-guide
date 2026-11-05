@@ -7,7 +7,7 @@ import { ISnippet } from '../code/ISnippet';
     selector: 'app-animations',
     templateUrl: './animations.component.html',
     styleUrls: ['./animations.component.scss'],
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [AppCodeComponent]
 })
 export class AnimationsComponent {

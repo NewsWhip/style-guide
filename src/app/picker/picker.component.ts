@@ -8,7 +8,7 @@ import { ISnippet } from '../code/ISnippet';
     selector: 'app-picker',
     templateUrl: './picker.component.html',
     styleUrls: ['./picker.component.scss'],
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [NwPickerComponent, CodeSandboxComponent, AppCodeComponent]
 })
 export class PickerComponent {

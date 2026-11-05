@@ -21,7 +21,7 @@ interface IMyWord extends IWord {
     selector: 'app-home',
     templateUrl: './word-cloud.component.html',
     styleUrls: ['./word-cloud.component.scss'],
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [TABS_DIRECTIVES, RouterLink, WORD_CLOUD_COMPONENTS, TooltipDirective, AppCodeComponent, NgTemplateOutlet]
 })
 export class WordCloudDemoComponent implements OnInit {

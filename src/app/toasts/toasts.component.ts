@@ -11,7 +11,7 @@ import { AppCodeComponent } from '../code/code.component';
     selector: 'app-toasts',
     templateUrl: './toasts.component.html',
     styleUrls: ['./toasts.component.scss'],
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [TABS_DIRECTIVES, RouterLink, FormsModule, ReactiveFormsModule, AppCodeComponent]
 })
 export class ToastsComponent implements OnInit, OnDestroy {
