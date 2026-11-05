@@ -3,7 +3,6 @@ import {
     Input,
     Output,
     ChangeDetectorRef,
-    ChangeDetectionStrategy,
     EventEmitter,
     ViewChild,
     ViewChildren,
@@ -24,7 +23,6 @@ import { LiveAnnouncer } from '@angular/cdk/a11y';
 @Component({
     selector: 'nw-angular-picker',
     templateUrl: './picker.component.html',
-    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [ReactiveFormsModule, NgClass]
 })
 export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {

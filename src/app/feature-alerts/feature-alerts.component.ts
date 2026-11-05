@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
     FeatureAlertsDirective,
     FeatureAlertsService,
@@ -25,7 +25,6 @@ import { ISnippet } from '../code/ISnippet';
             }
         `
     ],
-    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [HotspotComponent, FeatureAlertsDirective, AppCodeComponent]
 })
 export class FeatureAlertsComponent {

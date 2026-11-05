@@ -1,6 +1,5 @@
 import {
     Component,
-    ChangeDetectionStrategy,
     Input,
     ElementRef,
     ViewChild,
@@ -99,7 +98,6 @@ import { NgStyle, NgClass } from '@angular/common';
 
         <ng-content select=".pagination-indicators"></ng-content>
     `,
-    changeDetection: ChangeDetectionStrategy.OnPush,
     exportAs: 'nw-carousel',
     imports: [NgStyle, NgClass]
 })

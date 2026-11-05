@@ -1,5 +1,4 @@
 import {
-    ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
     ElementRef,
@@ -25,7 +24,6 @@ import { ResizeObserverDirective } from 'nw-style-guide/resize-observer';
 @Component({
     selector: 'nw-word-cloud',
     templateUrl: './word-cloud.component.html',
-    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [ResizeObserverDirective]
 })
 export class WordCloudComponent<T extends IWord> implements OnChanges {

@@ -3,7 +3,6 @@ import {
     OnInit,
     ViewChild,
     ElementRef,
-    ChangeDetectionStrategy,
     ChangeDetectorRef,
     OnDestroy,
     Input,
@@ -58,7 +57,6 @@ import { Subscription } from 'rxjs';
             </div>
         </div>
     `,
-    changeDetection: ChangeDetectionStrategy.OnPush,
     exportAs: 'nw-email-input',
     imports: [ReactiveFormsModule]
 })

@@ -5,7 +5,6 @@ import {
     OnInit,
     ViewChild,
     AfterViewInit,
-    ChangeDetectionStrategy,
     Output,
     EventEmitter,
     OnDestroy,
@@ -42,7 +41,6 @@ import { ResizeObserverDirective } from 'nw-style-guide/resize-observer';
     `,
     providers: [ChartUtils],
     exportAs: 'nw-chart',
-    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [ResizeObserverDirective]
 })
 export class ChartComponent implements OnInit, AfterViewInit, OnDestroy {

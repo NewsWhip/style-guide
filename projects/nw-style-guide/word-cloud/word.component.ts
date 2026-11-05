@@ -1,11 +1,10 @@
-import { ChangeDetectionStrategy, Component, HostBinding, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, HostBinding, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { IWord } from './models/IWord';
 import { IWordWithPosition } from './models/IWordWithPosition';
 
 @Component({
     selector: 'nw-word',
-    templateUrl: './word.component.html',
-    changeDetection: ChangeDetectionStrategy.OnPush
+    templateUrl: './word.component.html'
 })
 export class WordComponent<T extends IWord> implements OnChanges {
     @Input() word: IWordWithPosition<T>;

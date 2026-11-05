@@ -1,4 +1,4 @@
-import { Component, Input, ChangeDetectionStrategy, ChangeDetectorRef, inject } from '@angular/core';
+import { Component, Input, ChangeDetectorRef, inject } from '@angular/core';
 import { FeatureAlertsService } from './feature-alerts.service';
 
 @Component({
@@ -9,8 +9,7 @@ import { FeatureAlertsService } from './feature-alerts.service';
                 animate.leave="fade-out"
                 class="hotspot hotspot-{{ position }}"></div>
         }
-    `,
-    changeDetection: ChangeDetectionStrategy.OnPush
+    `
 })
 export class HotspotComponent {
     private _featureAlertsService = inject(FeatureAlertsService);
