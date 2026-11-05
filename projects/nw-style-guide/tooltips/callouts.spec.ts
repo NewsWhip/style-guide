@@ -1,4 +1,4 @@
-import { Component, DebugElement, ElementRef, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
+import { Component, DebugElement, ElementRef, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { TooltipContainerComponent } from './tooltip-container.component';
@@ -49,6 +49,14 @@ describe('callouts', () => {
 
     const fireEvent = (element: HTMLElement, event: string) => {
         element.dispatchEvent(new Event(event));
+    };
+
+    /**
+     * The wrapper is OnPush, so a property changed after its first check only renders once the wrapper is marked
+     */
+    const detectHostChanges = (): void => {
+        de.injector.get(ChangeDetectorRef).markForCheck();
+        fixture.detectChanges();
     };
 
     const getTooltipEl = (): HTMLElement =>
@@ -238,7 +246,7 @@ describe('callouts', () => {
         expect(document.querySelector('.cdk-overlay-pane.tooltip-overlay').classList).toContain('tooltip-bottom');
 
         comp.tooltipPlacement = ['top-start'];
-        fixture.detectChanges();
+        detectHostChanges();
         tick(5);
         expect(document.querySelector('.cdk-overlay-pane.tooltip-overlay').classList).toContain('tooltip-top-start');
     }));
@@ -295,7 +303,7 @@ describe('callouts', () => {
         let tooltip = getTooltipEl();
         expect(tooltip).toBeTruthy();
         comp.manualOpen = false;
-        fixture.detectChanges();
+        detectHostChanges();
         tick(5);
         tooltip = getTooltipEl();
         expect(tooltip).toBeFalsy();
@@ -331,7 +339,7 @@ describe('callouts', () => {
         expect(getTooltipEl()).toBeTruthy();
 
         comp.closeOnScroll = true;
-        fixture.detectChanges();
+        detectHostChanges();
         tick(5);
         comp.scrollEl.nativeElement.dispatchEvent(new Event('scroll'));
         fixture.detectChanges();
@@ -462,7 +470,7 @@ describe('callouts', () => {
         it('should update the description when the content changes', () => {
             fixture.detectChanges();
             comp.tooltipContent = 'Some other tooltip text';
-            fixture.detectChanges();
+            detectHostChanges();
             const descriptionId = getStringTrigger().getAttribute('aria-describedby');
             expect(document.getElementById(descriptionId).textContent).toBe('Some other tooltip text');
         });
@@ -844,7 +852,7 @@ describe('callouts', () => {
             expect(document.activeElement).toBe(panel);
 
             comp.hasLateLink = true;
-            fixture.detectChanges();
+            detectHostChanges();
             expect(panel.querySelector('a')).toBeTruthy();
 
             document.body.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }));
@@ -891,7 +899,6 @@ describe('callouts', () => {
     });
 });
 
-// eslint-disable-next-line @angular-eslint/prefer-on-push-component-change-detection
 @Component({
     template: `
         <div
@@ -1020,7 +1027,6 @@ describe('callouts', () => {
             }
         `
     ],
-    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [TooltipDirective, PopoverDirective, CdkScrollableModule]
 })
 class WrapperComponent implements OnInit {

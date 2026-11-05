@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
     selector: 'app-faq',
@@ -16,7 +16,6 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
             <ng-content select="[answer]"></ng-content>
         </div>
     `,
-    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrls: ['./faq-component.scss']
 })
 export class FaqComponent {

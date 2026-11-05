@@ -1,10 +1,9 @@
-import { Component, Input, ChangeDetectionStrategy, ViewEncapsulation, input } from '@angular/core';
+import { Component, Input, ViewEncapsulation, input } from '@angular/core';
 import { AppCodeComponent } from './code.component';
 import { ISnippet } from './ISnippet';
 
 @Component({
     selector: 'app-code-sandbox',
-    changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     imports: [AppCodeComponent],
     templateUrl: './code-sandbox.component.html',

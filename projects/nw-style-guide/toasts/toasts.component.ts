@@ -1,5 +1,4 @@
 import {
-    ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
     DOCUMENT,
@@ -73,7 +72,6 @@ const TYPE_LABELS: Record<string, string> = {
             }
         </div>
     `,
-    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [NgClass, NgTemplateOutlet]
 })
 export class ToastsComponent {

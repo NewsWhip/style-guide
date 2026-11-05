@@ -8,7 +8,6 @@ import {
     OnInit,
     ChangeDetectorRef,
     OnDestroy,
-    ChangeDetectionStrategy,
     AfterContentInit,
     inject
 } from '@angular/core';
@@ -22,7 +21,6 @@ import { NgClass, NgStyle, NgTemplateOutlet } from '@angular/common';
     selector: 'nw-tabs',
     templateUrl: './tabs.component.html',
     providers: [TabsService],
-    changeDetection: ChangeDetectionStrategy.OnPush,
     styles: [
         `
             :host,

@@ -6,7 +6,7 @@
             <div class="color-variants">
                 @for (level of levels; track level) {
                     <div class="color">
-                        @if (showColorCodes) {
+                        @if (showColorCodes()) {
                             <code
                                 [innerHTML]="getColors(splash)"
                                 class="hex text-center">
@@ -32,7 +32,7 @@
             <div class="color-variants">
                 @for (shade of shades; track shade; let sIndex = $index) {
                     <div class="color">
-                        @if (showColorCodes) {
+                        @if (showColorCodes()) {
                             <code
                                 class="hex text-center"
                                 [innerHTML]="getColors(splash)">
@@ -57,7 +57,7 @@
 <div class="color-variants">
     @for (colorName of standaloneColors; track colorName) {
         <div class="color">
-            @if (showColorCodes) {
+            @if (showColorCodes()) {
                 <code
                     class="hex text-center"
                     [innerHTML]="getColors(splash)">

@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, TemplateRef, EventEmitter, inject } from '@angular/core';
+import { Component, TemplateRef, EventEmitter, inject } from '@angular/core';
 import { ITooltipData } from './models/ITooltipData';
 import { TOOLTIP_CONTEXT_TOKEN } from './config/tooltip-context-token';
 import { NgClass, NgTemplateOutlet } from '@angular/common';
@@ -39,7 +39,6 @@ import { NgClass, NgTemplateOutlet } from '@angular/common';
             </div>
         </div>
     `,
-    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [NgClass, NgTemplateOutlet]
 })
 export class TooltipContainerComponent {

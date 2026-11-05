@@ -1,15 +1,12 @@
-import { Component, OnInit, ChangeDetectorRef, inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 
 @Component({
     selector: 'app-colors',
     templateUrl: './colors.component.html',
-    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrls: ['./colors.component.scss']
 })
 export class ColorsComponent implements OnInit {
-    private _chRef = inject(ChangeDetectorRef);
-
-    public showColorCodes: boolean = false;
+    public showColorCodes = signal(false);
     public colorNames = ['levels', 'gray', 'primary', 'secondary', 'tertiary', 'alt', 'coolgray'];
 
     public shades = ['dark', 'base', 'light', 'x-light', '2x-light', '3x-light', '4x-light', '5x-light', '6x-light'];
@@ -20,7 +17,7 @@ export class ColorsComponent implements OnInit {
 
     ngOnInit() {
         setTimeout(() => {
-            this.showColorCodes = true;
+            this.showColorCodes.set(true);
         }, 100);
     }
 

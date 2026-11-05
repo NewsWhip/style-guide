@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, ViewChild, ViewChildren, QueryList, inject } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewChildren, QueryList, inject } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import moment from 'moment';
 import { DecimalPipe, DatePipe } from '@angular/common';
@@ -16,7 +16,6 @@ import { ISnippet } from '../code/ISnippet';
     selector: 'app-charts',
     templateUrl: './charts.component.html',
     styleUrls: ['./charts.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [DecimalPipe],
     imports: [
         TABS_DIRECTIVES,

@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, ChangeDetectorRef, OnInit, inject } from '@angular/core';
+import { Component, ChangeDetectorRef, OnInit, inject } from '@angular/core';
 import { IValidationChange, EmailInputComponent } from 'nw-style-guide/email-input';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -10,7 +10,6 @@ import { CodeSandboxComponent } from '../code/code-sandbox.component';
 @Component({
     selector: 'app-email-input-demo',
     templateUrl: './email-input-demo.component.html',
-    changeDetection: ChangeDetectionStrategy.OnPush,
     styles: [
         `
             li {

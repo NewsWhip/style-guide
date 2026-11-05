@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component } from '@angular/core';
 import { uniqueId } from 'lodash-es';
 import { TABS_DIRECTIVES } from 'nw-style-guide/tabs';
 import { AppCodeComponent } from '../code/code.component';
@@ -8,7 +8,6 @@ import { ISnippet } from '../code/ISnippet';
 @Component({
     selector: 'app-tabs',
     templateUrl: './tabs.component.html',
-    changeDetection: ChangeDetectionStrategy.OnPush,
     styles: [
         `
             nw-tabs {
