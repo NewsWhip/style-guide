@@ -5,7 +5,6 @@
     "compilerOptions": {
         "outDir": "../../out-tsc/spec",
         "types": ["jasmine"],
-        "baseUrl": ".",
         "paths": {
             "nw-style-guide": ["./"],
             "nw-style-guide/*": ["./*/public-api"]
