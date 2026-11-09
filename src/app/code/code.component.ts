@@ -15,9 +15,9 @@ import 'prismjs/plugins/copy-to-clipboard/prism-copy-to-clipboard';
     `
 })
 export class AppCodeComponent implements AfterViewInit {
-    @ViewChild('code', { static: true }) codeEl: ElementRef<HTMLElement>;
+    @ViewChild('code', { static: true }) codeEl!: ElementRef<HTMLElement>;
 
-    @Input() snippet: ISnippet;
+    @Input() snippet!: ISnippet;
 
     ngAfterViewInit() {
         this.codeEl.nativeElement.textContent = this.snippet.code;
