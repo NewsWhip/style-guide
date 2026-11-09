@@ -17,8 +17,6 @@
             "nw-style-guide/*": ["./lib-dist/nw-style-guide/*"]
         },
         "module": "es2020",
-        /* TypeScript 6 enables strict mode by default. We set it to false to keep the pre-TS 6 behaviour until the codebase is migrated */
-        "strict": false,
         "useDefineForClassFields": false
     }
 }
