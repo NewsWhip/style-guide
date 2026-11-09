@@ -32,7 +32,7 @@ export class AreaDirective implements OnInit, OnChanges, OnDestroy {
     @Input() easing: (normalizedTime: number) => number = ChartUtils.ANIMATION_EASING;
     @Input() xScale: NwXAxisScale = scaleTime();
 
-    public areaSelection!: Selection<SVGPathElement, AreaDatum[], SVGElement, any>;
+    public areaSelection!: Selection<SVGPathElement, AreaDatum[], null, undefined>;
     public area!: Area<AreaDatum>;
     public yScale: ScaleLinear<number, number> = scaleLinear();
 

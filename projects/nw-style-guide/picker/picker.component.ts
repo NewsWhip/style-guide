@@ -118,7 +118,7 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
         return this.items.find(i => i.id === parentId);
     }
 
-    hasChildren(id: number | string) {
+    hasChildren(id: number | string | null) {
         return this.items.filter(i => i.parentId === id).length;
     }
 

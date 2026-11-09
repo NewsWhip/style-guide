@@ -29,7 +29,7 @@ export class PopoverDirective extends CalloutBaseDirective {
     /** The element focused before focus was moved into the callout */
     private _previouslyFocusedEl: HTMLElement | null = null;
 
-    protected readonly _content: Signal<string | TemplateRef<any>> = this.nwPopover;
+    protected readonly _content: Signal<string | TemplateRef<any> | undefined> = this.nwPopover;
 
     protected override _hasCloseButton(): boolean {
         return this.withClose();
@@ -113,7 +113,7 @@ export class PopoverDirective extends CalloutBaseDirective {
         }
 
         if (shouldRestoreFocus) {
-            this._previouslyFocusedEl.focus();
+            this._previouslyFocusedEl?.focus();
         }
 
         this._previouslyFocusedEl = null;

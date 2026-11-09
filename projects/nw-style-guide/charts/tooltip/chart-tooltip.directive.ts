@@ -36,14 +36,12 @@ export class ChartTooltipDirective implements OnChanges, AfterViewInit {
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes.position && changes.position.previousValue !== changes.position.currentValue) {
-            const offsetLeft = changes.position.currentValue[0] + this.chartMargins.left;
-            const offsetTop = changes.position.currentValue[1] + this.chartMargins.top;
+            const { top = 0, bottom = 0, left = 0, right = 0 } = this.chartMargins;
+            const offsetLeft = changes.position.currentValue[0] + left;
+            const offsetTop = changes.position.currentValue[1] + top;
 
-            const isFlippedX =
-                offsetLeft >
-                this.chartWidth + this.chartMargins.left + this.chartMargins.right - this.offsetX - this._width;
-            const isFlippedY =
-                offsetTop > this.chartHeight + this.chartMargins.top + this.chartMargins.bottom - this._height;
+            const isFlippedX = offsetLeft > this.chartWidth + left + right - this.offsetX - (this._width ?? 0);
+            const isFlippedY = offsetTop > this.chartHeight + top + bottom - (this._height ?? 0);
 
             const x: string = isFlippedX
                 ? `calc(${offsetLeft - this.offsetX}px - 100%)`

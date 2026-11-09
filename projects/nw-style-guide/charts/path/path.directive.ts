@@ -40,7 +40,7 @@ export class PathDirective implements OnInit, OnChanges, OnDestroy {
     @Output() animEnd: EventEmitter<void> = new EventEmitter();
 
     public line!: Line<[number, number]>;
-    public path!: Selection<SVGPathElement, [number, number][], SVGElement, any>;
+    public path!: Selection<SVGPathElement, [number, number][], null, undefined>;
     public yScale: ScaleLinear<number, number> = scaleLinear();
 
     private _chartResizeSub?: Subscription;

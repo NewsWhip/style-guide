@@ -23,7 +23,7 @@ export class CircleDirective implements OnInit, OnChanges, OnDestroy {
     @Input() easing: (normalizedTime: number) => number = ChartUtils.ANIMATION_EASING;
     @Input() xScale: NwXAxisScale = scaleTime();
 
-    public circle!: Selection<SVGCircleElement, [number, number], SVGElement, any>;
+    public circle!: Selection<SVGCircleElement, [number, number], null, undefined>;
     public yScale: ScaleLinear<number, number> = scaleLinear();
 
     private _chartResizeSub?: Subscription;

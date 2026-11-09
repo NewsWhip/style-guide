@@ -39,7 +39,7 @@ export class TooltipDirective extends CalloutBaseDirective implements OnDestroy 
     /** The last text handed to `_registerDescription`. Only registered with the `AriaDescriber` where it is non-empty */
     private _describedText: string | null = null;
 
-    protected readonly _content: Signal<string | TemplateRef<any>> = this.nwTooltip;
+    protected readonly _content: Signal<string | TemplateRef<any> | undefined> = this.nwTooltip;
 
     /**
      * Whether focus opens this tooltip: the keyboard equivalent of `mouseenter`, so it follows the hover events

@@ -21,8 +21,8 @@ export abstract class AxisBase implements OnInit, OnChanges, OnDestroy {
     @Input() label: string = '';
 
     public axis!: Axis<number | Date | { valueOf(): number }>;
-    public axisSelection!: Selection<SVGGElement, [number, number][], SVGElement, any>;
-    public axisLabelSelection!: Selection<SVGTextElement, any, HTMLElement, any>;
+    public axisSelection!: Selection<SVGGElement, [number, number][], null, undefined>;
+    public axisLabelSelection!: Selection<SVGTextElement, any, null, undefined>;
 
     private _chartResizeSub?: Subscription;
 
@@ -58,11 +58,22 @@ export abstract class AxisBase implements OnInit, OnChanges, OnDestroy {
     }
 
     setTicks() {
-        this.axis
-            .ticks(this.tickCount)
-            .tickFormat(this.tickFormat)
-            .tickSizeOuter(this.tickSizeOuter)
-            .tickValues(this.tickValues);
+        this.axis.ticks(this.tickCount).tickSizeOuter(this.tickSizeOuter);
+
+        /**
+         * The d3 typings have separate overloads for a value and for `null`, so the
+         * optional inputs have to be passed in separate calls
+         */
+        if (this.tickFormat) {
+            this.axis.tickFormat(this.tickFormat);
+        } else {
+            this.axis.tickFormat(null);
+        }
+        if (this.tickValues) {
+            this.axis.tickValues(this.tickValues);
+        } else {
+            this.axis.tickValues(null);
+        }
     }
 
     setDomain() {
@@ -82,11 +93,11 @@ export abstract class AxisBase implements OnInit, OnChanges, OnDestroy {
     }
 
     get fullWidth() {
-        return this.chart.width + this.chart.margins.left + this.chart.margins.right;
+        return this.chart.width + this.chart.resolvedMargins.left + this.chart.resolvedMargins.right;
     }
 
     get fullHeight() {
-        return this.chart.height + this.chart.margins.top + this.chart.margins.bottom;
+        return this.chart.height + this.chart.resolvedMargins.top + this.chart.resolvedMargins.bottom;
     }
 
     private _subscribeToChartResize() {

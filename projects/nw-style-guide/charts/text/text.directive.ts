@@ -23,7 +23,7 @@ export class TextDirective implements OnInit, OnChanges, OnDestroy {
     @Input() easing: (normalizedTime: number) => number = ChartUtils.ANIMATION_EASING;
     @Input() xScale: NwXAxisScale = scaleTime();
 
-    public text!: Selection<SVGTextElement, [number, number], SVGElement, any>;
+    public text!: Selection<SVGTextElement, [number, number], null, undefined>;
     public yScale: ScaleLinear<number, number> = scaleLinear();
 
     private _chartResizeSub?: Subscription;

@@ -29,7 +29,7 @@ export class BarDirective implements OnInit, OnChanges, OnDestroy {
     @Input() barWidth: number = 20;
     @Input() xScale: NwXAxisScale = scaleTime();
 
-    public rect!: Selection<SVGRectElement, [number, number], SVGElement, any>;
+    public rect!: Selection<SVGRectElement, [number, number], null, undefined>;
     public yScale: ScaleLinear<number, number> = scaleLinear();
 
     private _chartResizeSub?: Subscription;

@@ -23,7 +23,7 @@ export class ForeignObjectDirective implements OnInit, OnChanges, OnDestroy {
     @Input() easing: (normalizedTime: number) => number = ChartUtils.ANIMATION_EASING;
     @Input() xScale: NwXAxisScale = scaleTime();
 
-    public foreignObject!: Selection<SVGForeignObjectElement, [number, number], SVGElement, any>;
+    public foreignObject!: Selection<SVGForeignObjectElement, [number, number], null, undefined>;
     public yScale: ScaleLinear<number, number> = scaleLinear();
 
     private _chartResizeSub?: Subscription;

@@ -26,9 +26,9 @@ export class BrushDirective implements OnInit, OnDestroy, OnChanges {
     @Input() extent!: [[number, number], [number, number]];
     @Input() dimension: 'x' | 'y' | '' = '';
 
-    @Output() brushEnd: EventEmitter<[[number, number], [number, number]]> = new EventEmitter();
+    @Output() brushEnd: EventEmitter<[[number, number], [number, number]] | null> = new EventEmitter();
 
-    public brushSelection!: Selection<SVGGElement, any, HTMLElement, any>;
+    public brushSelection!: Selection<SVGGElement, any, null, undefined>;
     public brush!: BrushBehavior<any>;
 
     ngOnInit() {
@@ -47,7 +47,7 @@ export class BrushDirective implements OnInit, OnDestroy, OnChanges {
     }
 
     initialize() {
-        this.brushSelection = select(this._elRef.nativeElement as SVGSVGElement);
+        this.brushSelection = select(this._elRef.nativeElement as SVGGElement);
         this.brushSelection.attr('class', 'nw-brush');
         this._createBrush();
     }
@@ -96,7 +96,8 @@ export class BrushDirective implements OnInit, OnDestroy, OnChanges {
                 +selection.attr('x') + +selection.attr('width'),
                 +selection.attr('y') + +selection.attr('height')
             ];
-            const emission: [[number, number], [number, number]] = nw[0] === se[0] && nw[1] === se[1] ? null : [nw, se];
+            const emission: [[number, number], [number, number]] | null =
+                nw[0] === se[0] && nw[1] === se[1] ? null : [nw, se];
 
             this.brushEnd.emit(emission);
         });

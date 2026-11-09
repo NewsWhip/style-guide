@@ -74,7 +74,7 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
          * and draw them on our `exportCanvas`
          */
         const exportCanvas = this._renderer.createElement('canvas') as HTMLCanvasElement;
-        const exportCtx = exportCanvas.getContext('2d');
+        const exportCtx = this._get2dContext(exportCanvas);
         const ratio = window.devicePixelRatio;
 
         exportCanvas.width = this._canvas.width * ratio;
@@ -102,7 +102,7 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
         );
 
         const canvas = this._renderer.createElement('canvas') as HTMLCanvasElement;
-        const context = canvas.getContext('2d');
+        const context = this._get2dContext(canvas);
 
         canvas.width = exportCanvas.width;
         canvas.height = heightOfWordCloudContent;
@@ -165,11 +165,24 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
             .sort((a, b) => b.weight - a.weight);
     }
 
+    /**
+     * `getContext('2d')` only returns null when the canvas already has a different context type, which never
+     * happens with the canvases created here
+     */
+    private _get2dContext(canvas: HTMLCanvasElement): CanvasRenderingContext2D {
+        const ctx = canvas.getContext('2d');
+
+        if (!ctx) {
+            throw new Error('Could not get a 2d context for the word cloud canvas');
+        }
+        return ctx;
+    }
+
     private _drawCanvas(): void {
         this._canvas = this._canvas || this._renderer.createElement('canvas');
-        this._canvas.width = this._elRef.nativeElement.parentElement.clientWidth;
-        this._canvas.height = this._elRef.nativeElement.parentElement.clientHeight;
-        this._ctx = this._canvas.getContext('2d');
+        this._canvas.width = this._elRef.nativeElement.parentElement?.clientWidth ?? 0;
+        this._canvas.height = this._elRef.nativeElement.parentElement?.clientHeight ?? 0;
+        this._ctx = this._get2dContext(this._canvas);
 
         if (this.config.debugMode) {
             this._renderer.appendChild(this._elRef.nativeElement, this._canvas);

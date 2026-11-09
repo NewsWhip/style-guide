@@ -64,8 +64,8 @@ export class ChartComponent implements OnInit, AfterViewInit, OnDestroy {
     @Output() nwMouseleave: EventEmitter<null> = new EventEmitter();
     @Output() bgClick: EventEmitter<null> = new EventEmitter();
 
-    public svg!: Selection<SVGSVGElement, any, HTMLElement, any>;
-    public parentElement!: HTMLElement;
+    public svg!: Selection<SVGSVGElement, any, null, undefined>;
+    public parentElement: HTMLElement | null = null;
 
     private _destroyed$: Subject<void> = new Subject();
     private _chartDimensionsChange$: Subject<void> = new Subject();
@@ -82,30 +82,40 @@ export class ChartComponent implements OnInit, AfterViewInit, OnDestroy {
         this.appendContainer();
     }
 
+    /**
+     * The `margins` input with any missing side defaulted to 0
+     */
+    get resolvedMargins(): Required<ChartComponent['margins']> {
+        const { top = 0, bottom = 0, left = 0, right = 0 } = this.margins;
+        return { top, bottom, left, right };
+    }
+
     get width(): number {
         return (
-            (this.w || this._elRef.nativeElement.getBoundingClientRect().width) - this.margins.left - this.margins.right
+            (this.w || this._elRef.nativeElement.getBoundingClientRect().width) -
+            this.resolvedMargins.left -
+            this.resolvedMargins.right
         );
     }
 
     get height(): number {
         return (
             (this.h || this._elRef.nativeElement.getBoundingClientRect().height) -
-            this.margins.top -
-            this.margins.bottom
+            this.resolvedMargins.top -
+            this.resolvedMargins.bottom
         );
     }
 
     setSvg(): void {
         this.svg = select(this._elRef.nativeElement)
-            .attr('width', this.width + this.margins.left + this.margins.right)
-            .attr('height', this.height + this.margins.top + this.margins.bottom);
+            .attr('width', this.width + this.resolvedMargins.left + this.resolvedMargins.right)
+            .attr('height', this.height + this.resolvedMargins.top + this.resolvedMargins.bottom);
     }
 
     appendContainer(): void {
         select(this.chartContainer.nativeElement).attr(
             'transform',
-            'translate(' + this.margins.left + ',' + this.margins.top + ')'
+            'translate(' + this.resolvedMargins.left + ',' + this.resolvedMargins.top + ')'
         );
     }
 

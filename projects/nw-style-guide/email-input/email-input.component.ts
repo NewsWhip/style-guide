@@ -81,7 +81,10 @@ export class EmailInputComponent implements OnInit, OnDestroy {
     @ViewChild('inputEl', { static: true }) inputEl!: ElementRef;
     @ViewChild('container', { static: true }) container!: ElementRef;
 
-    public emailInputControl: FormControl<string> = new FormControl('', Validators.email);
+    public emailInputControl: FormControl<string> = new FormControl('', {
+        nonNullable: true,
+        validators: Validators.email
+    });
     public isPillSelected: boolean = false;
 
     private _validationFormControl: FormControl<string> = new FormControl();
@@ -178,8 +181,8 @@ export class EmailInputComponent implements OnInit, OnDestroy {
 
             this.emailInputControl.markAsDirty();
 
-            const selectionStart: number = (this.inputEl.nativeElement as HTMLInputElement).selectionStart;
-            const selectionEnd: number = (this.inputEl.nativeElement as HTMLInputElement).selectionEnd;
+            const selectionStart: number = (this.inputEl.nativeElement as HTMLInputElement).selectionStart ?? 0;
+            const selectionEnd: number = (this.inputEl.nativeElement as HTMLInputElement).selectionEnd ?? 0;
             const controlValue: string = this.emailInputControl.value as string;
 
             let pastedData: string = event.clipboardData.getData('text');
