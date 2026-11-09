@@ -33,16 +33,16 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
     private _document = inject<Document>(DOCUMENT);
     elRef = inject<ElementRef<HTMLElement>>(ElementRef);
 
-    @Input() words: T[];
+    @Input() words!: T[];
     @Input() options: Partial<IWordCloudConfig> = {};
 
     @Output() wordsPositioned: EventEmitter<IWordWithPosition<T>[]> = new EventEmitter();
 
-    private _truncatedWordsWithFontSize: IWordWithFontSize<T>[];
-    private _positionedWords: IWordWithPosition<T>[];
-    private _canvas: HTMLCanvasElement;
-    private _ctx: CanvasRenderingContext2D;
-    private _centerPoint: IPoint;
+    private _truncatedWordsWithFontSize: IWordWithFontSize<T>[] = [];
+    private _positionedWords: IWordWithPosition<T>[] = [];
+    private _canvas!: HTMLCanvasElement;
+    private _ctx!: CanvasRenderingContext2D;
+    private _centerPoint!: IPoint;
     /**
      * Controls how many points are generated on the spiral. Should be kept between 0 and 1. Lower values generate more
      * points on the spiral but it can take a lot longer to position the words. If updating this value to <= 0.3, consider
@@ -51,7 +51,7 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
      */
     private _spiralResolution = 0.3;
 
-    public config: IWordCloudConfig;
+    public config!: IWordCloudConfig;
 
     ngOnChanges(changes: SimpleChanges): void {
         const wordsChange = changes.words?.currentValue !== changes.words?.previousValue;

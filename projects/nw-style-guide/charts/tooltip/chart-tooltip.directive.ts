@@ -14,18 +14,18 @@ export class ChartTooltipDirective implements OnChanges, AfterViewInit {
     private _elRef = inject(ElementRef);
     private _renderer = inject(Renderer2);
 
-    @Input() position: [number, number];
-    @Input() chartWidth: number;
-    @Input() chartHeight: number;
+    @Input() position!: [number, number];
+    @Input() chartWidth!: number;
+    @Input() chartHeight!: number;
     @Input() chartMargins: {
         top?: number;
         bottom?: number;
         left?: number;
         right?: number;
-    };
+    } = { top: 0, bottom: 0, left: 0, right: 0 };
     @Input() offsetX: number = 16;
-    private _width: number;
-    private _height: number;
+    private _width?: number;
+    private _height?: number;
 
     ngAfterViewInit() {
         this._setTooltipSize();

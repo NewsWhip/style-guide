@@ -39,8 +39,8 @@ export class TabsComponent implements OnInit, AfterContentInit, OnDestroy {
     @Input() size: 'sm' | 'md' | 'lg' = 'md';
     @Input() maskColor: string = '#373737';
 
-    @ViewChild('scrollContainer', { static: true }) scrollContainer: ElementRef<HTMLElement>;
-    @ViewChild('activeBar', { static: true }) activeBar: ElementRef<HTMLElement>;
+    @ViewChild('scrollContainer', { static: true }) scrollContainer!: ElementRef<HTMLElement>;
+    @ViewChild('activeBar', { static: true }) activeBar!: ElementRef<HTMLElement>;
 
     @ContentChildren(TabDirective) tabs: QueryList<TabDirective> = new QueryList();
 
@@ -49,10 +49,10 @@ export class TabsComponent implements OnInit, AfterContentInit, OnDestroy {
     /** The ids of the tab elements, for the tablist's `aria-owns` */
     ownedTabIds = '';
 
-    private _scrollAndResizeSub: Subscription;
-    private _activeChangeSub: Subscription;
-    private _transitionEndSub: Subscription;
-    private _tabsChangeSub: Subscription;
+    private _scrollAndResizeSub?: Subscription;
+    private _activeChangeSub?: Subscription;
+    private _transitionEndSub?: Subscription;
+    private _tabsChangeSub?: Subscription;
     private _paginationTolerance: number = 100;
 
     ngOnInit() {
@@ -224,9 +224,9 @@ export class TabsComponent implements OnInit, AfterContentInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        this._scrollAndResizeSub.unsubscribe();
-        this._activeChangeSub.unsubscribe();
-        this._transitionEndSub.unsubscribe();
-        this._tabsChangeSub.unsubscribe();
+        this._scrollAndResizeSub?.unsubscribe();
+        this._activeChangeSub?.unsubscribe();
+        this._transitionEndSub?.unsubscribe();
+        this._tabsChangeSub?.unsubscribe();
     }
 }

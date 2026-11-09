@@ -47,8 +47,8 @@ export class ChartComponent implements OnInit, AfterViewInit, OnDestroy {
     private _elRef = inject<ElementRef<SVGSVGElement>>(ElementRef);
     chartUtils = inject(ChartUtils);
 
-    @Input('width') w: number;
-    @Input('height') h: number;
+    @Input('width') w?: number;
+    @Input('height') h?: number;
     @Input() margins: {
         top?: number;
         bottom?: number;
@@ -56,16 +56,16 @@ export class ChartComponent implements OnInit, AfterViewInit, OnDestroy {
         right?: number;
     } = { top: 0, bottom: 0, left: 0, right: 0 };
 
-    @ViewChild('chartContainer', { static: true }) chartContainer: ElementRef<SVGGElement>;
-    @ViewChild('mouseEventCaptureContainer', { static: true }) mouseEventCaptureContainer: ElementRef<SVGGElement>;
-    @ViewChild('hoverOverlay', { static: true }) hoverOverlay: ElementRef<SVGRectElement>;
+    @ViewChild('chartContainer', { static: true }) chartContainer!: ElementRef<SVGGElement>;
+    @ViewChild('mouseEventCaptureContainer', { static: true }) mouseEventCaptureContainer!: ElementRef<SVGGElement>;
+    @ViewChild('hoverOverlay', { static: true }) hoverOverlay!: ElementRef<SVGRectElement>;
 
     @Output() nwMousemove: EventEmitter<[number, number]> = new EventEmitter();
     @Output() nwMouseleave: EventEmitter<null> = new EventEmitter();
     @Output() bgClick: EventEmitter<null> = new EventEmitter();
 
-    public svg: Selection<SVGSVGElement, any, HTMLElement, any>;
-    public parentElement: HTMLElement;
+    public svg!: Selection<SVGSVGElement, any, HTMLElement, any>;
+    public parentElement!: HTMLElement;
 
     private _destroyed$: Subject<void> = new Subject();
     private _chartDimensionsChange$: Subject<void> = new Subject();

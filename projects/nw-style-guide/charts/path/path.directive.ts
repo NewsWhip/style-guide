@@ -30,8 +30,8 @@ export class PathDirective implements OnInit, OnChanges, OnDestroy {
     private _chartUtils = inject(ChartUtils);
 
     @Input('nw-path') data: [number, number][] = [];
-    @Input() xDomain: [number, number];
-    @Input() yDomain: [number, number];
+    @Input() xDomain!: [number, number];
+    @Input() yDomain!: [number, number];
     @Input() animDuration: number = ChartUtils.ANIMATION_DURATION;
     @Input() curve: CurveFactory = curveLinear;
     @Input() easing: (normalizedTime: number) => number = ChartUtils.ANIMATION_EASING;
@@ -39,11 +39,11 @@ export class PathDirective implements OnInit, OnChanges, OnDestroy {
 
     @Output() animEnd: EventEmitter<void> = new EventEmitter();
 
-    public line: Line<[number, number]>;
-    public path: Selection<SVGPathElement, [number, number][], SVGElement, any>;
+    public line!: Line<[number, number]>;
+    public path!: Selection<SVGPathElement, [number, number][], SVGElement, any>;
     public yScale: ScaleLinear<number, number> = scaleLinear();
 
-    private _chartResizeSub: Subscription;
+    private _chartResizeSub?: Subscription;
 
     ngOnInit() {
         this.path = select(this._elRef.nativeElement as SVGPathElement);
@@ -106,6 +106,6 @@ export class PathDirective implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnDestroy() {
-        this._chartResizeSub.unsubscribe();
+        this._chartResizeSub?.unsubscribe();
     }
 }

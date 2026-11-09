@@ -21,18 +21,18 @@ export class BarDirective implements OnInit, OnChanges, OnDestroy {
      * y-value and y2 is the upper y-value. Where y1 is not provided the bar will span from the
      * provided y-value to 0 (the full chart height)
      */
-    @Input('nw-bar') value: [number, number] | [number, number, number];
-    @Input() xDomain: [number, number];
-    @Input() yDomain: [number, number];
+    @Input('nw-bar') value!: [number, number] | [number, number, number];
+    @Input() xDomain!: [number, number];
+    @Input() yDomain!: [number, number];
     @Input() animDuration: number = ChartUtils.ANIMATION_DURATION;
     @Input() easing: (normalizedTime: number) => number = ChartUtils.ANIMATION_EASING;
     @Input() barWidth: number = 20;
     @Input() xScale: NwXAxisScale = scaleTime();
 
-    public rect: Selection<SVGRectElement, [number, number], SVGElement, any>;
+    public rect!: Selection<SVGRectElement, [number, number], SVGElement, any>;
     public yScale: ScaleLinear<number, number> = scaleLinear();
 
-    private _chartResizeSub: Subscription;
+    private _chartResizeSub?: Subscription;
 
     ngOnInit() {
         this.rect = select(this._elRef.nativeElement as SVGRectElement);
@@ -90,6 +90,6 @@ export class BarDirective implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnDestroy() {
-        this._chartResizeSub.unsubscribe();
+        this._chartResizeSub?.unsubscribe();
     }
 }

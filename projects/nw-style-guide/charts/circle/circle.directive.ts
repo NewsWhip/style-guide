@@ -16,17 +16,17 @@ export class CircleDirective implements OnInit, OnChanges, OnDestroy {
     private _chart = inject(ChartComponent);
     private _chartUtils = inject(ChartUtils);
 
-    @Input('nw-circle') point: [number, number];
-    @Input() xDomain: [number, number];
-    @Input() yDomain: [number, number];
+    @Input('nw-circle') point!: [number, number];
+    @Input() xDomain!: [number, number];
+    @Input() yDomain!: [number, number];
     @Input() animDuration: number = ChartUtils.ANIMATION_DURATION;
     @Input() easing: (normalizedTime: number) => number = ChartUtils.ANIMATION_EASING;
     @Input() xScale: NwXAxisScale = scaleTime();
 
-    public circle: Selection<SVGCircleElement, [number, number], SVGElement, any>;
+    public circle!: Selection<SVGCircleElement, [number, number], SVGElement, any>;
     public yScale: ScaleLinear<number, number> = scaleLinear();
 
-    private _chartResizeSub: Subscription;
+    private _chartResizeSub?: Subscription;
 
     ngOnInit() {
         this.circle = select(this._elRef.nativeElement as SVGCircleElement);
@@ -84,6 +84,6 @@ export class CircleDirective implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnDestroy() {
-        this._chartResizeSub.unsubscribe();
+        this._chartResizeSub?.unsubscribe();
     }
 }

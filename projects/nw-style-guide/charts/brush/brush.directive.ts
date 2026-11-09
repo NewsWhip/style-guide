@@ -23,13 +23,13 @@ export class BrushDirective implements OnInit, OnDestroy, OnChanges {
     private _elRef = inject(ElementRef);
     private _chart = inject(ChartComponent);
 
-    @Input() extent: [[number, number], [number, number]];
+    @Input() extent!: [[number, number], [number, number]];
     @Input() dimension: 'x' | 'y' | '' = '';
 
     @Output() brushEnd: EventEmitter<[[number, number], [number, number]]> = new EventEmitter();
 
-    public brushSelection: Selection<SVGGElement, any, HTMLElement, any>;
-    public brush: BrushBehavior<any>;
+    public brushSelection!: Selection<SVGGElement, any, HTMLElement, any>;
+    public brush!: BrushBehavior<any>;
 
     ngOnInit() {
         this.initialize();

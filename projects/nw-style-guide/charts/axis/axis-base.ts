@@ -11,20 +11,20 @@ export abstract class AxisBase implements OnInit, OnChanges, OnDestroy {
     chart = inject(ChartComponent);
     private _chartUtils = inject(ChartUtils);
 
-    @Input() tickFormat: (value: number | Date | { valueOf(): number }) => string;
-    @Input() tickCount: number | AxisTimeInterval;
+    @Input() tickFormat?: (value: number | Date | { valueOf(): number }) => string;
+    @Input() tickCount?: number | AxisTimeInterval;
     @Input() tickSizeOuter: number = 6;
-    @Input() tickValues: any[];
+    @Input() tickValues?: any[];
     @Input() showGuidlines: boolean = false;
     @Input() animDuration: number = ChartUtils.ANIMATION_DURATION;
     @Input() easing: (normalizedTime: number) => number = ChartUtils.ANIMATION_EASING;
     @Input() label: string = '';
 
-    public axis: Axis<number | Date | { valueOf(): number }>;
-    public axisSelection: Selection<SVGGElement, [number, number][], SVGElement, any>;
-    public axisLabelSelection: Selection<SVGTextElement, any, HTMLElement, any>;
+    public axis!: Axis<number | Date | { valueOf(): number }>;
+    public axisSelection!: Selection<SVGGElement, [number, number][], SVGElement, any>;
+    public axisLabelSelection!: Selection<SVGTextElement, any, HTMLElement, any>;
 
-    private _chartResizeSub: Subscription;
+    private _chartResizeSub?: Subscription;
 
     ngOnInit() {
         this.axisSelection = select(this._elRef.nativeElement as SVGGElement);
@@ -98,6 +98,6 @@ export abstract class AxisBase implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnDestroy() {
-        this._chartResizeSub.unsubscribe();
+        this._chartResizeSub?.unsubscribe();
     }
 }

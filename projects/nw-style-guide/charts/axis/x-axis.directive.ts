@@ -11,7 +11,7 @@ import { NwXAxisScale } from './models/XAxisScale';
 })
 export class XAxisDirective extends AxisBase {
     @Input() align: 'top' | 'bottom' | 'center' = 'bottom';
-    @Input() domain: [number, number];
+    @Input() domain!: [number, number];
     @Input() scale: NwXAxisScale = scaleTime();
 
     @Output() scaleUpdated: EventEmitter<NwXAxisScale> = new EventEmitter();

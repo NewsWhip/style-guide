@@ -78,15 +78,15 @@ export class EmailInputComponent implements OnInit, OnDestroy {
 
     @Output() updated: EventEmitter<IValidationChange> = new EventEmitter();
 
-    @ViewChild('inputEl', { static: true }) inputEl: ElementRef;
-    @ViewChild('container', { static: true }) container: ElementRef;
+    @ViewChild('inputEl', { static: true }) inputEl!: ElementRef;
+    @ViewChild('container', { static: true }) container!: ElementRef;
 
     public emailInputControl: FormControl<string> = new FormControl('', Validators.email);
     public isPillSelected: boolean = false;
 
     private _validationFormControl: FormControl<string> = new FormControl();
     private _submitKeys: string[] = [',', 'Enter', ' ', ';'];
-    private _valueChangesSub: Subscription;
+    private _valueChangesSub?: Subscription;
 
     ngOnInit() {
         this._subscribeToValueChanges();
@@ -261,6 +261,6 @@ export class EmailInputComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        this._valueChangesSub.unsubscribe();
+        this._valueChangesSub?.unsubscribe();
     }
 }

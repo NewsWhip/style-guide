@@ -11,10 +11,10 @@ export class Toaster {
     private _appRef = inject(ApplicationRef);
     private _injector = inject(Injector);
 
-    private _toastPortal: ComponentPortal<ToastsComponent>;
-    private _outlet: DomPortalOutlet;
-    private _toastsComponentRef: ToastsComponent;
-    private _config: IToastConfig;
+    private _toastPortal?: ComponentPortal<ToastsComponent>;
+    private _outlet?: DomPortalOutlet;
+    private _toastsComponentRef?: ToastsComponent;
+    private _config?: IToastConfig;
 
     private _attachOutlet(): ToastsComponent {
         /**
@@ -31,26 +31,23 @@ export class Toaster {
     }
 
     show(toast: IToast): Toast {
-        this._attachOutlet();
-        return this._toastsComponentRef.show(toast);
+        return this._attachOutlet().show(toast);
     }
 
     success(message: string | TemplateRef<any>): Toast {
-        this._attachOutlet();
-        return this._toastsComponentRef.success(message);
+        return this._attachOutlet().success(message);
     }
 
     error(message: string | TemplateRef<any>): Toast {
-        this._attachOutlet();
-        return this._toastsComponentRef.error(message);
+        return this._attachOutlet().error(message);
     }
 
     dismiss(toast: Toast): void {
-        this._toastsComponentRef.dismiss(toast);
+        this._toastsComponentRef?.dismiss(toast);
     }
 
     isToastActive(toast: Toast): boolean {
-        return this._toastsComponentRef.getToastIndex(toast) > -1;
+        return (this._toastsComponentRef?.getToastIndex(toast) ?? -1) > -1;
     }
 
     /**

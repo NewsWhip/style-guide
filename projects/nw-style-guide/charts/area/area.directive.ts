@@ -25,18 +25,18 @@ export class AreaDirective implements OnInit, OnChanges, OnDestroy {
      * If there are 2 the area is drawn to the chart height
      */
     @Input('nw-area') data: AreaDatum[] = [];
-    @Input() xDomain: [number, number];
-    @Input() yDomain: [number, number];
+    @Input() xDomain!: [number, number];
+    @Input() yDomain!: [number, number];
     @Input() animDuration: number = ChartUtils.ANIMATION_DURATION;
     @Input() curve: CurveFactory = curveLinear;
     @Input() easing: (normalizedTime: number) => number = ChartUtils.ANIMATION_EASING;
     @Input() xScale: NwXAxisScale = scaleTime();
 
-    public areaSelection: Selection<SVGPathElement, AreaDatum[], SVGElement, any>;
-    public area: Area<AreaDatum>;
+    public areaSelection!: Selection<SVGPathElement, AreaDatum[], SVGElement, any>;
+    public area!: Area<AreaDatum>;
     public yScale: ScaleLinear<number, number> = scaleLinear();
 
-    private _chartResizeSub: Subscription;
+    private _chartResizeSub?: Subscription;
 
     ngOnInit() {
         this.areaSelection = select(this._elRef.nativeElement as SVGPathElement);
@@ -99,6 +99,6 @@ export class AreaDirective implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnDestroy() {
-        this._chartResizeSub.unsubscribe();
+        this._chartResizeSub?.unsubscribe();
     }
 }

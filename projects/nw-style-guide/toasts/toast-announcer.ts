@@ -8,11 +8,11 @@ import { DOCUMENT, Injectable, OnDestroy, inject } from '@angular/core';
 export class ToastAnnouncer implements OnDestroy {
     private _document = inject(DOCUMENT);
 
-    private _politeRegion: HTMLElement;
-    private _assertiveRegion: HTMLElement;
-    private _dialogRegion: HTMLElement;
-    private _announceTimer: ReturnType<typeof setTimeout>;
-    private _dialogWaitTimer: ReturnType<typeof setTimeout>;
+    private _politeRegion?: HTMLElement;
+    private _assertiveRegion?: HTMLElement;
+    private _dialogRegion?: HTMLElement;
+    private _announceTimer?: ReturnType<typeof setTimeout>;
+    private _dialogWaitTimer?: ReturnType<typeof setTimeout>;
     private _lastAnnounced = '';
 
     announce(message: string, typeId: string): void {

@@ -42,7 +42,7 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
     @Input() initialParentId: any = null;
     @Input() shouldShowSelections: boolean = true;
     @Input() canExclude: boolean = true;
-    @Input() isHeightDynamic: boolean;
+    @Input() isHeightDynamic: boolean = false;
     @Input() isMultiSelect: boolean = true;
     @Input() isMobileDisplay: boolean = false;
     @Input() isDisabled: boolean = false;
@@ -67,9 +67,9 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
     @Output() desc: EventEmitter<IPickerItem> = new EventEmitter<IPickerItem>();
     @Output() asc: EventEmitter<IPickerItem> = new EventEmitter<IPickerItem>();
 
-    @ViewChild('inputEl', { static: true }) inputEl: ElementRef;
-    @ViewChildren('selectionsListItems') selectionsListItems: QueryList<ElementRef>;
-    @ViewChildren('optionsListItems') optionsListItems: QueryList<ElementRef>;
+    @ViewChild('inputEl', { static: true }) inputEl!: ElementRef;
+    @ViewChildren('selectionsListItems') selectionsListItems!: QueryList<ElementRef>;
+    @ViewChildren('optionsListItems') optionsListItems!: QueryList<ElementRef>;
 
     public displayItems: IPickerItem[] = [];
     public searchTerm: FormControl<string> = new FormControl();

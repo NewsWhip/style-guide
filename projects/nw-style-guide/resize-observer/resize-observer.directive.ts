@@ -19,10 +19,10 @@ export class ResizeObserverDirective implements OnInit, OnDestroy {
 
     @Output() nwResize: EventEmitter<null> = new EventEmitter();
 
-    private _observer: ResizeObserver;
+    private _observer?: ResizeObserver;
     private _nwResize: Subject<ResizeObserverEntry> = new Subject();
     private _destroyed$: Subject<void> = new Subject();
-    private _currentElementRect: DOMRectReadOnly;
+    private _currentElementRect?: DOMRectReadOnly;
 
     constructor() {
         const _elRef = inject<ElementRef<HTMLElement>>(ElementRef);
