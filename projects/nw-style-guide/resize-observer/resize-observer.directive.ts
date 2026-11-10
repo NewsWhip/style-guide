@@ -11,7 +11,7 @@ export class ResizeObserverDirective implements OnInit, OnDestroy {
      * Optional element to listen to the resize event for. If not
      * provided defaults to the element the directive is attached to
      */
-    @Input() element?: HTMLElement;
+    @Input() element?: HTMLElement | null;
     /**
      * A pixel value specifying the minimum change in height or width that triggers the resize event
      */
@@ -19,16 +19,11 @@ export class ResizeObserverDirective implements OnInit, OnDestroy {
 
     @Output() nwResize: EventEmitter<null> = new EventEmitter();
 
-    private _observer: ResizeObserver;
+    private _observer?: ResizeObserver;
     private _nwResize: Subject<ResizeObserverEntry> = new Subject();
     private _destroyed$: Subject<void> = new Subject();
-    private _currentElementRect: DOMRectReadOnly;
-
-    constructor() {
-        const _elRef = inject<ElementRef<HTMLElement>>(ElementRef);
-
-        this.element = this.element || _elRef.nativeElement;
-    }
+    private _currentElementRect?: DOMRectReadOnly;
+    private _elRef = inject<ElementRef<HTMLElement>>(ElementRef);
 
     ngOnInit() {
         this.subscribeToResize();
@@ -72,14 +67,18 @@ export class ResizeObserverDirective implements OnInit, OnDestroy {
                 this._nwResize.next(element);
             }
         });
-        this._observer.observe(this.element);
+        this._observer.observe(this._observedElement);
     }
 
     ngOnDestroy() {
         if (ResizeObserver && this._observer) {
-            this._observer.unobserve(this.element);
+            this._observer.unobserve(this._observedElement);
         }
         this._destroyed$.next();
         this._destroyed$.complete();
+    }
+
+    private get _observedElement(): HTMLElement {
+        return this.element || this._elRef.nativeElement;
     }
 }

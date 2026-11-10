@@ -10,7 +10,7 @@ import { ScaleLinear, scaleLinear } from 'd3-scale';
 })
 export class YAxisDirective extends AxisBase {
     @Input() align: 'left' | 'right' | 'center' = 'left';
-    @Input() domain: [number, number];
+    @Input() domain!: [number, number];
 
     @Output() scaleUpdated: EventEmitter<ScaleLinear<number, number>> = new EventEmitter();
 

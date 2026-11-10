@@ -27,10 +27,10 @@ export class WordCloudDemoComponent implements OnInit {
     private _route = inject(ActivatedRoute);
     private _cdRef = inject(ChangeDetectorRef);
 
-    @ViewChild(WordCloudComponent) wordCloud: WordCloudComponent<IMyWord>;
+    @ViewChild(WordCloudComponent) wordCloud!: WordCloudComponent<IMyWord>;
 
     public selectedTab: 'design' | 'api' = 'design';
-    public words: IMyWord[];
+    public words!: IMyWord[];
     public positionedWords: IWordWithPosition<IMyWord>[] = [];
     public config: Partial<IWordCloudConfig> = {
         debugMode: false

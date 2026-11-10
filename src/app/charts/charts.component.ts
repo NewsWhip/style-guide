@@ -67,7 +67,7 @@ export class ChartsComponent implements OnInit {
         code: `import { CHARTS_DIRECTIVES } from 'nw-style-guide/charts';`
     };
 
-    private _timelineData = {
+    private _timelineData: Record<string, Record<string, number>> = {
         fbComments: {
             '1545085287756': 0,
             '1545085587748': 0,
@@ -144,22 +144,23 @@ export class ChartsComponent implements OnInit {
         }
     };
 
-    public xDomain: [number, number];
-    public yDomain: [number, number];
+    public xDomain!: [number, number];
+    public yDomain!: [number, number];
     public chartMargins = { top: 50, bottom: 50, left: 60, right: 60 };
-    public xAxisTickFormat = (d: Date) => moment(d).format('h:mma');
-    public yAxisTickFormat = (d: number) => this._decimalPipe.transform(d, '1.0-0');
+    public xAxisTickFormat = (d: number | Date | { valueOf(): number }) => moment(+d).format('h:mma');
+    public yAxisTickFormat = (d: number | Date | { valueOf(): number }) =>
+        this._decimalPipe.transform(+d, '1.0-0') ?? '';
 
     public isHovering: boolean = false;
     public hoverPosition: [number, number] = [0, 0];
-    public mainScaleHoverCoordinates: [Date, number];
-    public verticalHoverLine: [number, number][];
-    public randomScaleHoverCoordinates: [Date, number];
+    public mainScaleHoverCoordinates!: [Date, number];
+    public verticalHoverLine!: [number, number][];
+    public randomScaleHoverCoordinates!: [Date, number];
     public numRandomPoints: number = 10;
-    public randomData: ([number, number] | [number, number, number])[];
+    public randomData!: ([number, number] | [number, number, number])[];
     /** `randomData` without the third value, for the inputs that only take two */
-    public randomPoints: [number, number][];
-    public randomYDomain: [number, number];
+    public randomPoints!: [number, number][];
+    public randomYDomain!: [number, number];
     public randomAsBars: FormControl = new FormControl(false);
     public randomArea: FormControl = new FormControl(false);
     public randomLineCurve = { label: 'Linear', curve: curveLinear };
@@ -173,18 +174,18 @@ export class ChartsComponent implements OnInit {
     ];
 
     public metricNames: string[] = [];
-    public form: FormGroup<{ selectedMetrics: FormArray<FormControl<boolean>> }>;
+    public form!: FormGroup<{ selectedMetrics: FormArray<FormControl<boolean>> }>;
     public showBrush: FormControl = new FormControl(false);
     public showTooltip: FormControl = new FormControl(true);
     public brushType: FormControl = new FormControl('');
-    public brushBox: [[Date, number], [Date, number]];
+    public brushBox: [[Date, number], [Date, number]] | null = null;
     public barWidth: FormControl = new FormControl(20);
     public xAxisTickCount: number | AxisTimeInterval = 8;
     public showForeignObject: FormControl = new FormControl(false);
 
-    @ViewChild('xAxis') xAxis: XAxisDirective;
-    @ViewChild('yAxis') yAxis: YAxisDirective;
-    @ViewChildren('circle') fbCircles: QueryList<CircleDirective>;
+    @ViewChild('xAxis') xAxis!: XAxisDirective;
+    @ViewChild('yAxis') yAxis!: YAxisDirective;
+    @ViewChildren('circle') fbCircles!: QueryList<CircleDirective>;
 
     ngOnInit() {
         this.metricNames = this.getMetricNames();
@@ -246,12 +247,12 @@ export class ChartsComponent implements OnInit {
     }
 
     getDataByMetric(metric: string): [number, number][] {
-        const data = [];
+        const data: [number, number][] = [];
 
         for (const timestamp in this._timelineData[metric]) {
             if (Object.hasOwn(this._timelineData[metric], timestamp)) {
                 const value = this._timelineData[metric][timestamp];
-                data.push([timestamp, value]);
+                data.push([+timestamp, value]);
             }
         }
 
@@ -285,7 +286,7 @@ export class ChartsComponent implements OnInit {
     }
 
     highlightClosest(data: [number, number][], coordinates: [Date, number]) {
-        const bisectDate = bisector(d => d[0]).left;
+        const bisectDate = bisector((d: [number, number]) => d[0]).left;
         const i = bisectDate(data, coordinates[0]); // returns the index to the current data item
 
         const d0 = data[i - 1];
@@ -352,7 +353,7 @@ export class ChartsComponent implements OnInit {
         return Math.random() * (domain[1] - domain[0]) + domain[0];
     }
 
-    onBrushSelection(corners: [[number, number], [number, number]]) {
+    onBrushSelection(corners: [[number, number], [number, number]] | null) {
         if (!corners) {
             return (this.brushBox = null);
         }

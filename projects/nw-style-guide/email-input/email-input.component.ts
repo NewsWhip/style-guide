@@ -78,15 +78,18 @@ export class EmailInputComponent implements OnInit, OnDestroy {
 
     @Output() updated: EventEmitter<IValidationChange> = new EventEmitter();
 
-    @ViewChild('inputEl', { static: true }) inputEl: ElementRef;
-    @ViewChild('container', { static: true }) container: ElementRef;
+    @ViewChild('inputEl', { static: true }) inputEl!: ElementRef;
+    @ViewChild('container', { static: true }) container!: ElementRef;
 
-    public emailInputControl: FormControl<string> = new FormControl('', Validators.email);
+    public emailInputControl: FormControl<string> = new FormControl('', {
+        nonNullable: true,
+        validators: Validators.email
+    });
     public isPillSelected: boolean = false;
 
     private _validationFormControl: FormControl<string> = new FormControl();
     private _submitKeys: string[] = [',', 'Enter', ' ', ';'];
-    private _valueChangesSub: Subscription;
+    private _valueChangesSub?: Subscription;
 
     ngOnInit() {
         this._subscribeToValueChanges();
@@ -178,8 +181,8 @@ export class EmailInputComponent implements OnInit, OnDestroy {
 
             this.emailInputControl.markAsDirty();
 
-            const selectionStart: number = (this.inputEl.nativeElement as HTMLInputElement).selectionStart;
-            const selectionEnd: number = (this.inputEl.nativeElement as HTMLInputElement).selectionEnd;
+            const selectionStart: number = (this.inputEl.nativeElement as HTMLInputElement).selectionStart ?? 0;
+            const selectionEnd: number = (this.inputEl.nativeElement as HTMLInputElement).selectionEnd ?? 0;
             const controlValue: string = this.emailInputControl.value as string;
 
             let pastedData: string = event.clipboardData.getData('text');
@@ -261,6 +264,6 @@ export class EmailInputComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        this._valueChangesSub.unsubscribe();
+        this._valueChangesSub?.unsubscribe();
     }
 }

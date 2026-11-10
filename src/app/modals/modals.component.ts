@@ -12,9 +12,9 @@ export class ModalsComponent implements OnInit {
     private _fb = inject(FormBuilder);
     private _dialog = inject(Dialog);
 
-    @ViewChild('modalTmpl') modalTmpl: TemplateRef<any>;
+    @ViewChild('modalTmpl') modalTmpl!: TemplateRef<any>;
 
-    public form: FormGroup;
+    public form!: FormGroup;
     public sizes: { name: string; id: 'sm' | 'md' | 'lg' | 'fullscreen' }[] = [
         {
             id: 'sm',
@@ -43,7 +43,7 @@ export class ModalsComponent implements OnInit {
     }
 
     openModal() {
-        const backdropClass = this.form.get('transparentBackdrop').value
+        const backdropClass = this.form.controls.transparentBackdrop.value
             ? ['modal-backdrop', 'transparent']
             : 'modal-backdrop';
 

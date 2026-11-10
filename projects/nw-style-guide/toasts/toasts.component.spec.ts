@@ -31,7 +31,7 @@ const assertiveRegion = (): HTMLElement => assertiveRegions()[0];
 describe('ToastsComponent', () => {
     let fixture: ComponentFixture<ToastsComponent>;
     let component: ToastsComponent;
-    let dialog: HTMLElement;
+    let dialog: HTMLElement | null = null;
 
     const toastEl = (): HTMLElement => fixture.debugElement.query(By.css('.toast'))?.nativeElement;
 
@@ -236,7 +236,7 @@ describe('ToastsComponent', () => {
             const dialogRegion = dialog.querySelector('div[role="alert"]');
 
             expect(dialogRegion).toBeTruthy();
-            expect(dialogRegion.textContent).toBe('Error: Sorry, something went wrong saving the alert');
+            expect(dialogRegion!.textContent).toBe('Error: Sorry, something went wrong saving the alert');
             // Nothing at body level, where it would not have been heard
             expect(assertiveRegions().length).toBe(0);
         }));
@@ -249,7 +249,7 @@ describe('ToastsComponent', () => {
 
             const dialogRegion = dialog.querySelector('div[role="alert"]');
 
-            expect(dialogRegion.textContent).toBe('Success: Your changes have been saved');
+            expect(dialogRegion!.textContent).toBe('Success: Your changes have been saved');
             expect(dialog.querySelector('div[role="status"]')).toBeNull();
         }));
 
@@ -261,7 +261,7 @@ describe('ToastsComponent', () => {
             tick(DIALOG_WAIT_TIMEOUT + ANNOUNCE_DELAY);
 
             expect(dialog.querySelector('div[role="alert"]')).toBeNull();
-            expect(topmost.querySelector('div[role="alert"]').textContent).toBe('Error: Nope');
+            expect(topmost.querySelector('div[role="alert"]')!.textContent).toBe('Error: Nope');
 
             topmost.remove();
         }));
@@ -273,14 +273,14 @@ describe('ToastsComponent', () => {
 
             const prefix = toastEl().querySelector('.sr-only');
 
-            expect(prefix.textContent.trim()).toBe('Success:');
+            expect(prefix!.textContent!.trim()).toBe('Success:');
             tick(ANNOUNCE_DELAY);
         }));
 
         it('hides the decorative type icon from screen readers', fakeAsync(() => {
             component.error('Broken');
 
-            expect(toastEl().querySelector('.toast-icon').getAttribute('aria-hidden')).toBe('true');
+            expect(toastEl().querySelector('.toast-icon')!.getAttribute('aria-hidden')).toBe('true');
             tick(ANNOUNCE_DELAY);
         }));
 
@@ -289,8 +289,8 @@ describe('ToastsComponent', () => {
 
             const dismissButton = toastEl().querySelector('.close-button');
 
-            expect(dismissButton.getAttribute('aria-label')).toBe('Dismiss notification');
-            expect(dismissButton.querySelector('i').getAttribute('aria-hidden')).toBe('true');
+            expect(dismissButton!.getAttribute('aria-label')).toBe('Dismiss notification');
+            expect(dismissButton!.querySelector('i')!.getAttribute('aria-hidden')).toBe('true');
             tick(ANNOUNCE_DELAY);
         }));
 

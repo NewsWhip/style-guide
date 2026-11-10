@@ -80,7 +80,7 @@ export class ToastsComponent {
     private _announcer = inject(ToastAnnouncer);
     private _document = inject<Document>(DOCUMENT);
 
-    @ViewChildren('toastEl') private _toastElements: QueryList<ElementRef<HTMLElement>>;
+    @ViewChildren('toastEl') private _toastElements!: QueryList<ElementRef<HTMLElement>>;
 
     public toasts: Toast[] = [];
 

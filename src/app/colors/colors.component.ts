@@ -21,7 +21,7 @@ export class ColorsComponent implements OnInit {
         }, 100);
     }
 
-    getColors(splash): string {
+    getColors(splash: HTMLElement): string {
         const rgb = getComputedStyle(splash).backgroundColor;
 
         return `
@@ -32,16 +32,16 @@ export class ColorsComponent implements OnInit {
         `;
     }
 
-    getHex(rgbString) {
+    getHex(rgbString: string) {
         return this.rgb2hex(rgbString);
     }
 
-    getRgb(rgbString) {
+    getRgb(rgbString: string) {
         return rgbString;
     }
 
-    getHsb(rgbString) {
-        const rgb = rgbString.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
+    getHsb(rgbString: string) {
+        const rgb = rgbString.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i)!;
         const hsv = this.rGBtoHsb(parseInt(rgb[1], 10), parseInt(rgb[2], 10), parseInt(rgb[3], 10));
         const h = Math.round(hsv.h * 360);
         const s = Math.round(hsv.s * 100);
@@ -50,8 +50,8 @@ export class ColorsComponent implements OnInit {
         return `hsb(${h}, ${s}%, ${b}%)`;
     }
 
-    getHsl(rgbString) {
-        const rgb = rgbString.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
+    getHsl(rgbString: string) {
+        const rgb = rgbString.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i)!;
         const hsl = this.rgbToHsl(parseInt(rgb[1], 10), parseInt(rgb[2], 10), parseInt(rgb[3], 10));
         const hue = Math.round(hsl[0]);
         const sat = Math.round(hsl[1]);
@@ -60,7 +60,7 @@ export class ColorsComponent implements OnInit {
         return `hsl(${hue}, ${sat}%, ${light}%)`;
     }
 
-    rgb2hex(rgbString) {
+    rgb2hex(rgbString: string) {
         const rgb = rgbString.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
         return rgb && rgb.length === 4
             ? '#' +
@@ -70,13 +70,14 @@ export class ColorsComponent implements OnInit {
             : '';
     }
 
-    rgbToHsl(r, g, b) {
+    rgbToHsl(r: number, g: number, b: number) {
         // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         ((r /= 255), (g /= 255), (b /= 255));
 
         const max = Math.max(r, g, b),
             min = Math.min(r, g, b);
-        let h, s;
+        let h = 0,
+            s;
         const l = (max + min) / 2;
 
         if (max == min) {
@@ -103,12 +104,8 @@ export class ColorsComponent implements OnInit {
         return [h, s * 100, l * 100];
     }
 
-    rGBtoHsb(r, g, b) {
-        if (arguments.length === 1) {
-            // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-            ((g = r.g), (b = r.b), (r = r.r));
-        }
-        let h;
+    rGBtoHsb(r: number, g: number, b: number) {
+        let h = 0;
         const max = Math.max(r, g, b),
             min = Math.min(r, g, b),
             d = max - min,

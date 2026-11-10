@@ -37,13 +37,14 @@ export class FeatureAlertsService {
         if (alerts && Object.hasOwn(alerts, id)) {
             return alerts[id].dismissed;
         }
+        return false;
     }
 
-    private _get(): object {
-        return JSON.parse(this._w.nativeWindow.localStorage.getItem(this.LOCAL_STORAGE_KEY));
+    private _get(): Record<string, { dismissed: boolean }> | null {
+        return JSON.parse(this._w.nativeWindow.localStorage.getItem(this.LOCAL_STORAGE_KEY) ?? 'null');
     }
 
-    private _set(alerts: object) {
+    private _set(alerts: Record<string, { dismissed: boolean }>) {
         this._w.nativeWindow.localStorage.setItem(this.LOCAL_STORAGE_KEY, JSON.stringify(alerts));
     }
 }

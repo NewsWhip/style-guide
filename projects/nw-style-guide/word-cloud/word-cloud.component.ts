@@ -33,16 +33,16 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
     private _document = inject<Document>(DOCUMENT);
     elRef = inject<ElementRef<HTMLElement>>(ElementRef);
 
-    @Input() words: T[];
+    @Input() words!: T[];
     @Input() options: Partial<IWordCloudConfig> = {};
 
     @Output() wordsPositioned: EventEmitter<IWordWithPosition<T>[]> = new EventEmitter();
 
-    private _truncatedWordsWithFontSize: IWordWithFontSize<T>[];
-    private _positionedWords: IWordWithPosition<T>[];
-    private _canvas: HTMLCanvasElement;
-    private _ctx: CanvasRenderingContext2D;
-    private _centerPoint: IPoint;
+    private _truncatedWordsWithFontSize: IWordWithFontSize<T>[] = [];
+    private _positionedWords: IWordWithPosition<T>[] = [];
+    private _canvas!: HTMLCanvasElement;
+    private _ctx!: CanvasRenderingContext2D;
+    private _centerPoint!: IPoint;
     /**
      * Controls how many points are generated on the spiral. Should be kept between 0 and 1. Lower values generate more
      * points on the spiral but it can take a lot longer to position the words. If updating this value to <= 0.3, consider
@@ -51,7 +51,7 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
      */
     private _spiralResolution = 0.3;
 
-    public config: IWordCloudConfig;
+    public config!: IWordCloudConfig;
 
     ngOnChanges(changes: SimpleChanges): void {
         const wordsChange = changes.words?.currentValue !== changes.words?.previousValue;
@@ -74,7 +74,7 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
          * and draw them on our `exportCanvas`
          */
         const exportCanvas = this._renderer.createElement('canvas') as HTMLCanvasElement;
-        const exportCtx = exportCanvas.getContext('2d');
+        const exportCtx = this._get2dContext(exportCanvas);
         const ratio = window.devicePixelRatio;
 
         exportCanvas.width = this._canvas.width * ratio;
@@ -102,7 +102,7 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
         );
 
         const canvas = this._renderer.createElement('canvas') as HTMLCanvasElement;
-        const context = canvas.getContext('2d');
+        const context = this._get2dContext(canvas);
 
         canvas.width = exportCanvas.width;
         canvas.height = heightOfWordCloudContent;
@@ -165,11 +165,24 @@ export class WordCloudComponent<T extends IWord> implements OnChanges {
             .sort((a, b) => b.weight - a.weight);
     }
 
+    /**
+     * `getContext('2d')` only returns null when the canvas already has a different context type, which never
+     * happens with the canvases created here
+     */
+    private _get2dContext(canvas: HTMLCanvasElement): CanvasRenderingContext2D {
+        const ctx = canvas.getContext('2d');
+
+        if (!ctx) {
+            throw new Error('Could not get a 2d context for the word cloud canvas');
+        }
+        return ctx;
+    }
+
     private _drawCanvas(): void {
         this._canvas = this._canvas || this._renderer.createElement('canvas');
-        this._canvas.width = this._elRef.nativeElement.parentElement.clientWidth;
-        this._canvas.height = this._elRef.nativeElement.parentElement.clientHeight;
-        this._ctx = this._canvas.getContext('2d');
+        this._canvas.width = this._elRef.nativeElement.parentElement?.clientWidth ?? 0;
+        this._canvas.height = this._elRef.nativeElement.parentElement?.clientHeight ?? 0;
+        this._ctx = this._get2dContext(this._canvas);
 
         if (this.config.debugMode) {
             this._renderer.appendChild(this._elRef.nativeElement, this._canvas);

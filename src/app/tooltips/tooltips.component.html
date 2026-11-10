@@ -218,9 +218,9 @@
                 <button
                     class="btn btn-md btn-primary"
                     [nwTooltip]="tooltipTmplRef"
-                    [placement]="form.get('placement').value"
-                    [isOpen]="form.get('forceOpen').value"
-                    [delay]="form.get('withDelay').value ? 500 : 0"
+                    [placement]="form.controls.placement.value"
+                    [isOpen]="form.controls.forceOpen.value"
+                    [delay]="form.controls.withDelay.value ? 500 : 0"
                     [openEvents]="[]"
                     [closeEvents]="[]"
                     disabled>
@@ -230,7 +230,7 @@
         </div>
 
         <ng-template #tooltipTmplRef>
-            <div [innerHTML]="form.get('tooltip').value"></div>
+            <div [innerHTML]="form.controls.tooltip.value"></div>
         </ng-template>
 
         <p>

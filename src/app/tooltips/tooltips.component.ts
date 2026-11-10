@@ -31,7 +31,7 @@ export class TooltipsComponent implements OnInit, OnDestroy {
     private _route = inject(ActivatedRoute);
 
     public selectedTab: 'design' | 'api' = 'design';
-    public form: FormGroup;
+    public form!: FormGroup;
     /**
      * Inputs both directives inherit from `CalloutBaseDirective`. The two default columns are where the choice of
      * selector shows up: the same input, a different starting point
@@ -132,7 +132,7 @@ export class TooltipsComponent implements OnInit, OnDestroy {
     public tooltipText: string =
         'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam repellat odio modi facilis expedita laudantium neque numquam enim tenetur totam, sint quia aspernatur maiores reiciendis corporis quae perspiciatis laboriosam perferendis?';
 
-    private _routeSub: Subscription;
+    private _routeSub?: Subscription;
 
     ngOnInit(): void {
         this.form = this._fb.group({
@@ -147,11 +147,11 @@ export class TooltipsComponent implements OnInit, OnDestroy {
             closeOnScroll: [false]
         });
 
-        this.form.get('forceOpen').valueChanges.subscribe(val => {
+        this.form.controls.forceOpen.valueChanges.subscribe(val => {
             if (val) {
-                this.form.get('withArrow').disable();
+                this.form.controls.withArrow.disable();
             } else {
-                this.form.get('withArrow').enable();
+                this.form.controls.withArrow.enable();
             }
         });
 
@@ -281,6 +281,6 @@ export class TooltipsComponent implements OnInit, OnDestroy {
     };
 
     ngOnDestroy() {
-        this._routeSub.unsubscribe();
+        this._routeSub?.unsubscribe();
     }
 }

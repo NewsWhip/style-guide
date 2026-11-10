@@ -67,8 +67,8 @@
 </div>
 
 <ng-template #modalTmpl>
-    @if (form.get('modalType').value === 'standard') {
-        <div class="modal-dialog modal-{{ form.get('size').value }}">
+    @if (form.controls.modalType.value === 'standard') {
+        <div class="modal-dialog modal-{{ form.controls.size.value }}">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Modal title</h4>
@@ -98,8 +98,8 @@
         </div>
     }
 
-    @if (form.get('modalType').value === 'media') {
-        <div class="modal-dialog modal-media modal-{{ form.get('size').value }}">
+    @if (form.controls.modalType.value === 'media') {
+        <div class="modal-dialog modal-media modal-{{ form.controls.size.value }}">
             <div class="modal-content">
                 <div class="modal-body">
                     <button
