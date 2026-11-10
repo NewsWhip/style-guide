@@ -7,8 +7,6 @@ import { skip, debounceTime, takeUntil, tap } from 'rxjs/operators';
     exportAs: 'nwResizeObserver'
 })
 export class ResizeObserverDirective implements OnInit, OnDestroy {
-    private _elRef = inject<ElementRef<HTMLElement>>(ElementRef);
-
     /**
      * Optional element to listen to the resize event for. If not
      * provided defaults to the element the directive is attached to
@@ -25,6 +23,7 @@ export class ResizeObserverDirective implements OnInit, OnDestroy {
     private _nwResize: Subject<ResizeObserverEntry> = new Subject();
     private _destroyed$: Subject<void> = new Subject();
     private _currentElementRect?: DOMRectReadOnly;
+    private _elRef = inject<ElementRef<HTMLElement>>(ElementRef);
 
     ngOnInit() {
         this.subscribeToResize();
