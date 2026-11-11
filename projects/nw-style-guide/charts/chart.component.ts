@@ -5,7 +5,6 @@ import {
     OnInit,
     ViewChild,
     AfterViewInit,
-    ChangeDetectionStrategy,
     Output,
     EventEmitter,
     OnDestroy,
@@ -42,15 +41,14 @@ import { ResizeObserverDirective } from 'nw-style-guide/resize-observer';
     `,
     providers: [ChartUtils],
     exportAs: 'nw-chart',
-    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [ResizeObserverDirective]
 })
 export class ChartComponent implements OnInit, AfterViewInit, OnDestroy {
     private _elRef = inject<ElementRef<SVGSVGElement>>(ElementRef);
     chartUtils = inject(ChartUtils);
 
-    @Input('width') w: number;
-    @Input('height') h: number;
+    @Input('width') w?: number;
+    @Input('height') h?: number;
     @Input() margins: {
         top?: number;
         bottom?: number;
@@ -58,16 +56,16 @@ export class ChartComponent implements OnInit, AfterViewInit, OnDestroy {
         right?: number;
     } = { top: 0, bottom: 0, left: 0, right: 0 };
 
-    @ViewChild('chartContainer', { static: true }) chartContainer: ElementRef<SVGGElement>;
-    @ViewChild('mouseEventCaptureContainer', { static: true }) mouseEventCaptureContainer: ElementRef<SVGGElement>;
-    @ViewChild('hoverOverlay', { static: true }) hoverOverlay: ElementRef<SVGRectElement>;
+    @ViewChild('chartContainer', { static: true }) chartContainer!: ElementRef<SVGGElement>;
+    @ViewChild('mouseEventCaptureContainer', { static: true }) mouseEventCaptureContainer!: ElementRef<SVGGElement>;
+    @ViewChild('hoverOverlay', { static: true }) hoverOverlay!: ElementRef<SVGRectElement>;
 
     @Output() nwMousemove: EventEmitter<[number, number]> = new EventEmitter();
     @Output() nwMouseleave: EventEmitter<null> = new EventEmitter();
     @Output() bgClick: EventEmitter<null> = new EventEmitter();
 
-    public svg: Selection<SVGSVGElement, any, HTMLElement, any>;
-    public parentElement: HTMLElement;
+    public svg!: Selection<SVGSVGElement, any, null, undefined>;
+    public parentElement: HTMLElement | null = null;
 
     private _destroyed$: Subject<void> = new Subject();
     private _chartDimensionsChange$: Subject<void> = new Subject();
@@ -84,30 +82,40 @@ export class ChartComponent implements OnInit, AfterViewInit, OnDestroy {
         this.appendContainer();
     }
 
+    /**
+     * The `margins` input with any missing side defaulted to 0
+     */
+    get resolvedMargins(): Required<ChartComponent['margins']> {
+        const { top = 0, bottom = 0, left = 0, right = 0 } = this.margins;
+        return { top, bottom, left, right };
+    }
+
     get width(): number {
         return (
-            (this.w || this._elRef.nativeElement.getBoundingClientRect().width) - this.margins.left - this.margins.right
+            (this.w || this._elRef.nativeElement.getBoundingClientRect().width) -
+            this.resolvedMargins.left -
+            this.resolvedMargins.right
         );
     }
 
     get height(): number {
         return (
             (this.h || this._elRef.nativeElement.getBoundingClientRect().height) -
-            this.margins.top -
-            this.margins.bottom
+            this.resolvedMargins.top -
+            this.resolvedMargins.bottom
         );
     }
 
     setSvg(): void {
         this.svg = select(this._elRef.nativeElement)
-            .attr('width', this.width + this.margins.left + this.margins.right)
-            .attr('height', this.height + this.margins.top + this.margins.bottom);
+            .attr('width', this.width + this.resolvedMargins.left + this.resolvedMargins.right)
+            .attr('height', this.height + this.resolvedMargins.top + this.resolvedMargins.bottom);
     }
 
     appendContainer(): void {
         select(this.chartContainer.nativeElement).attr(
             'transform',
-            'translate(' + this.margins.left + ',' + this.margins.top + ')'
+            'translate(' + this.resolvedMargins.left + ',' + this.resolvedMargins.top + ')'
         );
     }
 

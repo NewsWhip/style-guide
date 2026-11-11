@@ -1,5 +1,4 @@
 import {
-    ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
     Input,
@@ -38,7 +37,6 @@ import { NgClass } from '@angular/common';
         }
     `,
     exportAs: 'nw-loader',
-    changeDetection: ChangeDetectionStrategy.OnPush,
     host: { role: 'status' },
     imports: [NgClass]
 })

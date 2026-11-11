@@ -20,10 +20,10 @@ export class ToastsComponent implements OnInit, OnDestroy {
     private _fb = inject(FormBuilder);
 
     public selectedTab: 'design' | 'api' = 'design';
-    public form: FormGroup;
-    public toasterMethods: any[];
-    public toastInterfaceDetails: any[];
-    private _routeSub: Subscription;
+    public form!: FormGroup;
+    public toasterMethods!: any[];
+    public toastInterfaceDetails!: any[];
+    private _routeSub?: Subscription;
 
     ngOnInit() {
         this.form = this._fb.group({
@@ -43,11 +43,11 @@ export class ToastsComponent implements OnInit, OnDestroy {
 
     showToast() {
         this._toaster.show({
-            typeId: this.form.get('toastType').value,
-            message: this.form.get('text').value,
-            autoDismiss: this.form.get('autoDismiss').value,
-            isDismissable: !this.form.get('autoDismiss').value,
-            size: this.form.get('size').value
+            typeId: this.form.controls.toastType.value,
+            message: this.form.controls.text.value,
+            autoDismiss: this.form.controls.autoDismiss.value,
+            isDismissable: !this.form.controls.autoDismiss.value,
+            size: this.form.controls.size.value
         });
     }
 
@@ -146,6 +146,6 @@ export class ToastsComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        this._routeSub.unsubscribe();
+        this._routeSub?.unsubscribe();
     }
 }

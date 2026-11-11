@@ -3,7 +3,6 @@ import {
     Input,
     Output,
     ChangeDetectorRef,
-    ChangeDetectionStrategy,
     EventEmitter,
     ViewChild,
     ViewChildren,
@@ -24,7 +23,6 @@ import { LiveAnnouncer } from '@angular/cdk/a11y';
 @Component({
     selector: 'nw-angular-picker',
     templateUrl: './picker.component.html',
-    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [ReactiveFormsModule, NgClass]
 })
 export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
@@ -44,7 +42,7 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
     @Input() initialParentId: any = null;
     @Input() shouldShowSelections: boolean = true;
     @Input() canExclude: boolean = true;
-    @Input() isHeightDynamic: boolean;
+    @Input() isHeightDynamic: boolean = false;
     @Input() isMultiSelect: boolean = true;
     @Input() isMobileDisplay: boolean = false;
     @Input() isDisabled: boolean = false;
@@ -69,9 +67,9 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
     @Output() desc: EventEmitter<IPickerItem> = new EventEmitter<IPickerItem>();
     @Output() asc: EventEmitter<IPickerItem> = new EventEmitter<IPickerItem>();
 
-    @ViewChild('inputEl', { static: true }) inputEl: ElementRef;
-    @ViewChildren('selectionsListItems') selectionsListItems: QueryList<ElementRef>;
-    @ViewChildren('optionsListItems') optionsListItems: QueryList<ElementRef>;
+    @ViewChild('inputEl', { static: true }) inputEl!: ElementRef;
+    @ViewChildren('selectionsListItems') selectionsListItems!: QueryList<ElementRef>;
+    @ViewChildren('optionsListItems') optionsListItems!: QueryList<ElementRef>;
 
     public displayItems: IPickerItem[] = [];
     public searchTerm: FormControl<string> = new FormControl();
@@ -120,7 +118,7 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
         return this.items.find(i => i.id === parentId);
     }
 
-    hasChildren(id: number | string) {
+    hasChildren(id: number | string | null) {
         return this.items.filter(i => i.parentId === id).length;
     }
 
@@ -385,7 +383,7 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
         this._focusInput();
     }
 
-    onListItemTab(event: KeyboardEvent, index: number) {
+    onListItemTab(event: Event, index: number) {
         const { li, children } = this._focusableChildren(index);
         const lastFocusableChild = children[children.length - 1] ?? li;
 
@@ -399,7 +397,7 @@ export class NwPickerComponent implements OnInit, OnChanges, OnDestroy {
         (next.children[0] ?? next.li).focus();
     }
 
-    onListItemShiftTab(event: KeyboardEvent, index: number) {
+    onListItemShiftTab(event: Event, index: number) {
         const { li, children } = this._focusableChildren(index);
         const firstFocusableChild = children[0] ?? li;
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CAROUSEL_DIRECTIVES } from 'nw-style-guide/carousel';
 import { AppCodeComponent } from '../code/code.component';
 import { CodeSandboxComponent } from '../code/code-sandbox.component';
@@ -8,7 +8,6 @@ import { ISnippet } from '../code/ISnippet';
     selector: 'app-carousel',
     templateUrl: './carousel.component.html',
     styleUrls: ['./carousel.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [CAROUSEL_DIRECTIVES, AppCodeComponent, CodeSandboxComponent]
 })
 export class CarouselComponent implements OnInit {

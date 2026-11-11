@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild, AfterContentInit, ChangeDetectionStrategy, inject } from '@angular/core';
+import { Component, ElementRef, ViewChild, AfterContentInit, inject } from '@angular/core';
 import Clipboard from 'clipboard';
 import { Toaster } from 'nw-style-guide/toasts';
 
@@ -18,8 +18,7 @@ import { Toaster } from 'nw-style-guide/toasts';
                 cursor: pointer;
             }
         `
-    ],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    ]
 })
 export class CopyCodeComponent implements AfterContentInit {
     private _toaster = inject(Toaster);

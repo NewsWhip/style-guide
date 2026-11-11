@@ -146,7 +146,7 @@ export abstract class CalloutBaseDirective implements OnInit, OnDestroy {
     protected _isDestroyed: boolean = false;
 
     /** The content, which each subclass declares as its own input under its own selector */
-    protected abstract readonly _content: Signal<string | TemplateRef<any>>;
+    protected abstract readonly _content: Signal<string | TemplateRef<any> | undefined>;
 
     /** The events, delay and pointer behaviour this kind of callout opens with */
     protected abstract _getTriggerDefaults(): ICalloutTriggers;
@@ -229,11 +229,11 @@ export abstract class CalloutBaseDirective implements OnInit, OnDestroy {
          * Create the overlay, and subscribe to what it alone can tell us, the first time the callout is opened
          */
         if (!this._overlayRef) {
-            this._createOverlay();
-            this._subscribeToCalloutKeydown();
+            this._overlayRef = this._createOverlay();
+            this._subscribeToCalloutKeydown(this._overlayRef);
 
             if (this._dismissesOnOutsideClick()) {
-                this._subscribeToOutsidePointerEvents();
+                this._subscribeToOutsidePointerEvents(this._overlayRef);
             }
         }
 
@@ -254,11 +254,11 @@ export abstract class CalloutBaseDirective implements OnInit, OnDestroy {
      *
      * Every other key is the subclass's to answer, if it answers any
      */
-    private _subscribeToCalloutKeydown(): void {
-        this._overlayRef
+    private _subscribeToCalloutKeydown(overlayRef: OverlayRef): void {
+        overlayRef
             .keydownEvents()
             .pipe(
-                filter(_ => this._overlayRef?.hasAttached()),
+                filter(_ => overlayRef.hasAttached()),
                 takeUntil(this._destroyed$)
             )
             .subscribe(event => {
@@ -276,11 +276,11 @@ export abstract class CalloutBaseDirective implements OnInit, OnDestroy {
     /**
      * A pointer event anywhere but the callout and its host closes the callout, for the subclasses that ask for it
      */
-    private _subscribeToOutsidePointerEvents(): void {
-        this._overlayRef
+    private _subscribeToOutsidePointerEvents(overlayRef: OverlayRef): void {
+        overlayRef
             .outsidePointerEvents()
             .pipe(
-                filter(_ => this._overlayRef?.hasAttached()),
+                filter(_ => overlayRef.hasAttached()),
                 filter(event => event.target !== this._elRef.nativeElement),
                 map(_ => false),
                 takeUntil(this._destroyed$)
@@ -297,21 +297,24 @@ export abstract class CalloutBaseDirective implements OnInit, OnDestroy {
         }
     }
 
-    private _createOverlay() {
+    private _createOverlay(): OverlayRef {
         const positionStrategy = this._positionStrategy();
         const scrollStrategy = this._scrollStrategy();
         const disposeOnNavigation = true;
         const panelClasses: string[] = ['tooltip-overlay', `pointer-events-${this._triggers().pointerEvents}`];
-        this._overlayRef = this._overlay.create({
+        const overlayRef = this._overlay.create({
             positionStrategy,
             scrollStrategy,
             disposeOnNavigation,
             panelClass: panelClasses
         });
 
-        if (this.hostElementZIndex()) {
-            this._overlayRef.hostElement.style.zIndex = this.hostElementZIndex().toString();
+        const hostElementZIndex = this.hostElementZIndex();
+        if (hostElementZIndex) {
+            overlayRef.hostElement.style.zIndex = hostElementZIndex.toString();
         }
+
+        return overlayRef;
     }
 
     /**
@@ -319,7 +322,7 @@ export abstract class CalloutBaseDirective implements OnInit, OnDestroy {
      */
     private _createInjector(): Injector {
         const tooltipData: ITooltipData = {
-            tooltip: this._content(),
+            tooltip: this._content() ?? '',
             id: this._calloutId,
             containerClass: this.containerClass(),
             withArrow: this.withArrow(),
@@ -378,7 +381,7 @@ export abstract class CalloutBaseDirective implements OnInit, OnDestroy {
         return this._triggers().closeEvents.map(eventName =>
             fromEvent(this._elRef.nativeElement, eventName).pipe(
                 tap(_ => this._cancelDelayedOpen$.next()),
-                filter(_ => this._overlayRef?.hasAttached()),
+                filter(_ => this._overlayRef?.hasAttached() ?? false),
                 map(_ => false)
             )
         );
@@ -415,7 +418,7 @@ export abstract class CalloutBaseDirective implements OnInit, OnDestroy {
         }
 
         ref.changeDetectorRef.detectChanges();
-        this._calloutEl = this._overlayRef.overlayElement.querySelector('.tooltip');
+        this._calloutEl = this._overlayRef?.overlayElement.querySelector('.tooltip') ?? null;
 
         if (this._calloutEl) {
             this._onCalloutOpened(this._calloutEl);
@@ -448,7 +451,7 @@ export abstract class CalloutBaseDirective implements OnInit, OnDestroy {
 
         interval(0, animationFrameScheduler)
             .pipe(
-                filter(_ => this.updatePositionOnAnimationFrame() && this._overlayRef?.hasAttached()),
+                filter(_ => this.updatePositionOnAnimationFrame() && (this._overlayRef?.hasAttached() ?? false)),
                 takeUntil(this._destroyed$)
             )
             .subscribe(() => {
@@ -510,7 +513,7 @@ export abstract class CalloutBaseDirective implements OnInit, OnDestroy {
         const bottom = new ConnectionPositionPair(
             { originX: 'center', originY: 'bottom' },
             { overlayX: 'center', overlayY: 'top' },
-            null,
+            undefined,
             getYOffset('bottom'),
             getCalloutClass('bottom')
         );
@@ -520,7 +523,7 @@ export abstract class CalloutBaseDirective implements OnInit, OnDestroy {
                 return new ConnectionPositionPair(
                     { originX: 'center', originY: 'top' },
                     { overlayX: 'center', overlayY: 'bottom' },
-                    null,
+                    undefined,
                     getYOffset(placement),
                     getCalloutClass(placement)
                 );
@@ -529,7 +532,7 @@ export abstract class CalloutBaseDirective implements OnInit, OnDestroy {
                 return new ConnectionPositionPair(
                     { originX: 'start', originY: 'top' },
                     { overlayX: 'start', overlayY: 'bottom' },
-                    null,
+                    undefined,
                     getYOffset(placement),
                     getCalloutClass(placement)
                 );
@@ -538,7 +541,7 @@ export abstract class CalloutBaseDirective implements OnInit, OnDestroy {
                 return new ConnectionPositionPair(
                     { originX: 'end', originY: 'top' },
                     { overlayX: 'end', overlayY: 'bottom' },
-                    null,
+                    undefined,
                     getYOffset(placement),
                     getCalloutClass(placement)
                 );
@@ -550,7 +553,7 @@ export abstract class CalloutBaseDirective implements OnInit, OnDestroy {
                 return new ConnectionPositionPair(
                     { originX: 'start', originY: 'bottom' },
                     { overlayX: 'start', overlayY: 'top' },
-                    null,
+                    undefined,
                     getYOffset(placement),
                     getCalloutClass(placement)
                 );
@@ -559,7 +562,7 @@ export abstract class CalloutBaseDirective implements OnInit, OnDestroy {
                 return new ConnectionPositionPair(
                     { originX: 'end', originY: 'bottom' },
                     { overlayX: 'end', overlayY: 'top' },
-                    null,
+                    undefined,
                     getYOffset(placement),
                     getCalloutClass(placement)
                 );
@@ -569,7 +572,7 @@ export abstract class CalloutBaseDirective implements OnInit, OnDestroy {
                     { originX: 'end', originY: 'center' },
                     { overlayX: 'start', overlayY: 'center' },
                     getXOffset(placement),
-                    null,
+                    undefined,
                     getCalloutClass(placement)
                 );
 
@@ -578,7 +581,7 @@ export abstract class CalloutBaseDirective implements OnInit, OnDestroy {
                     { originX: 'end', originY: 'top' },
                     { overlayX: 'start', overlayY: 'top' },
                     getXOffset(placement),
-                    null,
+                    undefined,
                     getCalloutClass(placement)
                 );
 
@@ -587,7 +590,7 @@ export abstract class CalloutBaseDirective implements OnInit, OnDestroy {
                     { originX: 'end', originY: 'bottom' },
                     { overlayX: 'start', overlayY: 'bottom' },
                     getXOffset(placement),
-                    null,
+                    undefined,
                     getCalloutClass(placement)
                 );
 
@@ -596,7 +599,7 @@ export abstract class CalloutBaseDirective implements OnInit, OnDestroy {
                     { originX: 'start', originY: 'center' },
                     { overlayX: 'end', overlayY: 'center' },
                     getXOffset(placement),
-                    null,
+                    undefined,
                     getCalloutClass(placement)
                 );
 
@@ -605,7 +608,7 @@ export abstract class CalloutBaseDirective implements OnInit, OnDestroy {
                     { originX: 'start', originY: 'top' },
                     { overlayX: 'end', overlayY: 'top' },
                     getXOffset(placement),
-                    null,
+                    undefined,
                     getCalloutClass(placement)
                 );
 
@@ -614,7 +617,7 @@ export abstract class CalloutBaseDirective implements OnInit, OnDestroy {
                     { originX: 'start', originY: 'bottom' },
                     { overlayX: 'end', overlayY: 'bottom' },
                     getXOffset(placement),
-                    null,
+                    undefined,
                     getCalloutClass(placement)
                 );
 
@@ -623,7 +626,7 @@ export abstract class CalloutBaseDirective implements OnInit, OnDestroy {
         }
     }
 
-    private _getPositionStrategy(placement: Placement | Placement[]): FlexibleConnectedPositionStrategy {
+    private _getPositionStrategy(placement: Placement | Placement[] = 'bottom'): FlexibleConnectedPositionStrategy {
         /**
          * Format `placement` into a consistent data type of `Placement[]`
          */

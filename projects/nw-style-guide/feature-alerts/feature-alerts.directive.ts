@@ -25,7 +25,7 @@ export class FeatureAlertsDirective implements OnInit, OnDestroy {
     /**
      * ID of the new feature to be stored in local storage
      */
-    @Input() nwFeatureAlert: string;
+    @Input() nwFeatureAlert!: string;
 
     private _isInView = false;
     private _templateRef = inject(TemplateRef<any>);

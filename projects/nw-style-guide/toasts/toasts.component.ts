@@ -1,5 +1,4 @@
 import {
-    ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
     DOCUMENT,
@@ -53,9 +52,7 @@ const TYPE_LABELS: Record<string, string> = {
                     <!-- If templateRef render via ngTemplateOutlet-->
                     @if (isTemplateRef(toast.message)) {
                         <ng-container *ngTemplateOutlet="toast.message"></ng-container>
-                    }
-
-                    @if (!isTemplateRef(toast.message)) {
+                    } @else {
                         <p
                             class="toast-message"
                             [innerHTML]="getInnerHTML(toast.message)"></p>
@@ -75,7 +72,6 @@ const TYPE_LABELS: Record<string, string> = {
             }
         </div>
     `,
-    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [NgClass, NgTemplateOutlet]
 })
 export class ToastsComponent {
@@ -84,7 +80,7 @@ export class ToastsComponent {
     private _announcer = inject(ToastAnnouncer);
     private _document = inject<Document>(DOCUMENT);
 
-    @ViewChildren('toastEl') private _toastElements: QueryList<ElementRef<HTMLElement>>;
+    @ViewChildren('toastEl') private _toastElements!: QueryList<ElementRef<HTMLElement>>;
 
     public toasts: Toast[] = [];
 
@@ -94,7 +90,7 @@ export class ToastsComponent {
      */
     private _triggerElements = new WeakMap<Toast, HTMLElement>();
 
-    isTemplateRef(value: string | TemplateRef<any>): boolean {
+    isTemplateRef(value: string | TemplateRef<any>): value is TemplateRef<any> {
         return typeof value !== 'string';
     }
 

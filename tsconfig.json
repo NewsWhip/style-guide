@@ -9,13 +9,14 @@
         "experimentalDecorators": true,
         "target": "ES2022",
         "typeRoots": ["node_modules/@types"],
+        /* TypeScript 6 no longer includes every @types package by default. The editor checks spec files against this config, so it needs the Jasmine globals */
+        "types": ["jasmine"],
         /* We use these paths to reference the built library in the demo app */
         "paths": {
             "nw-style-guide": ["./lib-dist/nw-style-guide"],
             "nw-style-guide/*": ["./lib-dist/nw-style-guide/*"]
         },
         "module": "es2020",
-        "baseUrl": "./",
         "useDefineForClassFields": false
     }
 }

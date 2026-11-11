@@ -1,6 +1,5 @@
 import {
     Component,
-    ChangeDetectionStrategy,
     Input,
     ElementRef,
     ViewChild,
@@ -99,7 +98,6 @@ import { NgStyle, NgClass } from '@angular/common';
 
         <ng-content select=".pagination-indicators"></ng-content>
     `,
-    changeDetection: ChangeDetectionStrategy.OnPush,
     exportAs: 'nw-carousel',
     imports: [NgStyle, NgClass]
 })
@@ -111,20 +109,20 @@ export class CarouselComponent implements OnInit, AfterViewInit, AfterContentIni
     @Input() showPagination: boolean = true;
     @Input() showMask: boolean = true;
     @Input() maskColor: string = '#ffffff';
-    @Input() containerClass: string;
+    @Input() containerClass?: string;
     @Input() currPage: number = 0;
     @Input() noResultsText: string = 'No results';
 
     @Output() currPageChange: EventEmitter<number> = new EventEmitter();
 
-    @ViewChild('carousel', { static: true }) carousel: ElementRef;
+    @ViewChild('carousel', { static: true }) carousel!: ElementRef;
 
-    @ContentChildren(CarouselSlideDirective) slides: QueryList<CarouselSlideDirective>;
+    @ContentChildren(CarouselSlideDirective) slides!: QueryList<CarouselSlideDirective>;
 
     public pages: number[] = [];
 
-    private _windowResizeSub: Subscription;
-    private _slidesSub: Subscription;
+    private _windowResizeSub?: Subscription;
+    private _slidesSub?: Subscription;
 
     ngOnInit() {
         this.subscribeToWindowResize();
@@ -219,7 +217,7 @@ export class CarouselComponent implements OnInit, AfterViewInit, AfterContentIni
     }
 
     ngOnDestroy() {
-        this._windowResizeSub.unsubscribe();
-        this._slidesSub.unsubscribe();
+        this._windowResizeSub?.unsubscribe();
+        this._slidesSub?.unsubscribe();
     }
 }

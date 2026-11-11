@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, ChangeDetectorRef, OnInit, inject } from '@angular/core';
+import { Component, ChangeDetectorRef, OnInit, inject } from '@angular/core';
 import { IValidationChange, EmailInputComponent } from 'nw-style-guide/email-input';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -10,7 +10,6 @@ import { CodeSandboxComponent } from '../code/code-sandbox.component';
 @Component({
     selector: 'app-email-input-demo',
     templateUrl: './email-input-demo.component.html',
-    changeDetection: ChangeDetectionStrategy.OnPush,
     styles: [
         `
             li {
@@ -28,11 +27,11 @@ export class EmailInputDemoComponent implements OnInit {
     private _route = inject(ActivatedRoute);
 
     public emails: string[] = ['valid.email@sproutsocial.com', 'invalid.email'];
-    public validationState: IValidationChange;
+    public validationState?: IValidationChange;
     public selectedTab: 'design' | 'api' = 'design';
-    public properties: { name: string; defaultValue: string; description: string }[];
+    public properties!: { name: string; defaultValue: string | null; description: string }[];
 
-    private _routeSub: Subscription;
+    private _routeSub?: Subscription;
 
     ngOnInit() {
         this.properties = this._getProperties();
@@ -72,7 +71,7 @@ export class EmailInputDemoComponent implements OnInit {
         }
     };
 
-    private _getProperties(): { name: string; defaultValue: string; description: string }[] {
+    private _getProperties(): { name: string; defaultValue: string | null; description: string }[] {
         return [
             {
                 name: '@Input() emails: string[] = []',
@@ -111,6 +110,6 @@ export class EmailInputDemoComponent implements OnInit {
     }
 
     ngOnDestroy() {
-        this._routeSub.unsubscribe();
+        this._routeSub?.unsubscribe();
     }
 }

@@ -1,4 +1,4 @@
-import { Component, DebugElement, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, DebugElement, ElementRef, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { TooltipContainerComponent } from './tooltip-container.component';
@@ -49,6 +49,14 @@ describe('callouts', () => {
 
     const fireEvent = (element: HTMLElement, event: string) => {
         element.dispatchEvent(new Event(event));
+    };
+
+    /**
+     * The wrapper is OnPush, so a property changed after its first check only renders once the wrapper is marked
+     */
+    const detectHostChanges = (): void => {
+        de.injector.get(ChangeDetectorRef).markForCheck();
+        fixture.detectChanges();
     };
 
     const getTooltipEl = (): HTMLElement =>
@@ -224,7 +232,7 @@ describe('callouts', () => {
         tick(tickWaitMs);
         fixture.detectChanges();
         const overlayPane = document.querySelector('.cdk-overlay-pane.tooltip-overlay');
-        expect(overlayPane.classList).toContain('tooltip-bottom');
+        expect(overlayPane!.classList).toContain('tooltip-bottom');
     }));
 
     it('should reposition when the placement changes while open', fakeAsync(() => {
@@ -235,12 +243,12 @@ describe('callouts', () => {
         fireEvent(trigger, 'mouseenter');
         tick(5);
         fixture.detectChanges();
-        expect(document.querySelector('.cdk-overlay-pane.tooltip-overlay').classList).toContain('tooltip-bottom');
+        expect(document.querySelector('.cdk-overlay-pane.tooltip-overlay')!.classList).toContain('tooltip-bottom');
 
         comp.tooltipPlacement = ['top-start'];
-        fixture.detectChanges();
+        detectHostChanges();
         tick(5);
-        expect(document.querySelector('.cdk-overlay-pane.tooltip-overlay').classList).toContain('tooltip-top-start');
+        expect(document.querySelector('.cdk-overlay-pane.tooltip-overlay')!.classList).toContain('tooltip-top-start');
     }));
 
     it('should flip position if it does not fit in the viewport', fakeAsync(() => {
@@ -251,7 +259,7 @@ describe('callouts', () => {
         fireEvent(trigger, 'mouseenter');
         tick(tickWaitMs);
         const overlayPane = document.querySelector('.cdk-overlay-pane.tooltip-overlay');
-        expect(overlayPane.classList).toContain('tooltip-right');
+        expect(overlayPane!.classList).toContain('tooltip-right');
     }));
 
     it('should not flip position if it does not fit in the viewport', fakeAsync(() => {
@@ -263,7 +271,7 @@ describe('callouts', () => {
         fireEvent(trigger, 'mouseenter');
         tick(tickWaitMs);
         const overlayPane = document.querySelector('.cdk-overlay-pane.tooltip-overlay');
-        expect(overlayPane.classList).toContain('tooltip-left');
+        expect(overlayPane!.classList).toContain('tooltip-left');
     }));
 
     it('should try to use the second placement position if the first does not fit', fakeAsync(() => {
@@ -275,7 +283,7 @@ describe('callouts', () => {
         fireEvent(trigger, 'mouseenter');
         tick(tickWaitMs);
         const overlayPane = document.querySelector('.cdk-overlay-pane.tooltip-overlay');
-        expect(overlayPane.classList).toContain('tooltip-top-start');
+        expect(overlayPane!.classList).toContain('tooltip-top-start');
     }));
 
     it('should manually open', fakeAsync(() => {
@@ -295,7 +303,7 @@ describe('callouts', () => {
         let tooltip = getTooltipEl();
         expect(tooltip).toBeTruthy();
         comp.manualOpen = false;
-        fixture.detectChanges();
+        detectHostChanges();
         tick(5);
         tooltip = getTooltipEl();
         expect(tooltip).toBeFalsy();
@@ -331,7 +339,7 @@ describe('callouts', () => {
         expect(getTooltipEl()).toBeTruthy();
 
         comp.closeOnScroll = true;
-        fixture.detectChanges();
+        detectHostChanges();
         tick(5);
         comp.scrollEl.nativeElement.dispatchEvent(new Event('scroll'));
         fixture.detectChanges();
@@ -376,7 +384,7 @@ describe('callouts', () => {
         const trigger = de.query(By.directive(PopoverDirective)).nativeElement;
         fireEvent(trigger, 'click');
         tick(tickWaitMs);
-        expect(getTooltipEl().querySelector('.tooltip-inner').classList).toContain('with-close');
+        expect(getTooltipEl().querySelector('.tooltip-inner')!.classList).toContain('with-close');
     }));
 
     it('should not reserve room for a close button when there is none', fakeAsync(() => {
@@ -384,7 +392,7 @@ describe('callouts', () => {
         const trigger = de.query(By.directive(PopoverDirective)).nativeElement;
         fireEvent(trigger, 'click');
         tick(tickWaitMs);
-        expect(getTooltipEl().querySelector('.tooltip-inner').classList).not.toContain('with-close');
+        expect(getTooltipEl().querySelector('.tooltip-inner')!.classList).not.toContain('with-close');
     }));
 
     it('should emit an event when the close button is clicked', fakeAsync(() => {
@@ -424,7 +432,7 @@ describe('callouts', () => {
             fixture.detectChanges();
             const descriptionId = getStringTrigger().getAttribute('aria-describedby');
             expect(descriptionId).toBeTruthy();
-            expect(document.getElementById(descriptionId).textContent).toBe('Some tooltip text');
+            expect(document.getElementById(descriptionId!)!.textContent).toBe('Some tooltip text');
         });
 
         it('should not describe the host when withAriaDescription is false', () => {
@@ -443,7 +451,7 @@ describe('callouts', () => {
             comp.hostAriaLabel = 'A different label';
             fixture.detectChanges();
             const descriptionId = getStringTrigger().getAttribute('aria-describedby');
-            expect(document.getElementById(descriptionId).textContent).toBe('Some tooltip text');
+            expect(document.getElementById(descriptionId!)!.textContent).toBe('Some tooltip text');
         });
 
         it('should not describe the host when its visible text is the same text', () => {
@@ -462,9 +470,9 @@ describe('callouts', () => {
         it('should update the description when the content changes', () => {
             fixture.detectChanges();
             comp.tooltipContent = 'Some other tooltip text';
-            fixture.detectChanges();
+            detectHostChanges();
             const descriptionId = getStringTrigger().getAttribute('aria-describedby');
-            expect(document.getElementById(descriptionId).textContent).toBe('Some other tooltip text');
+            expect(document.getElementById(descriptionId!)!.textContent).toBe('Some other tooltip text');
         });
 
         it('should describe the host with the open panel when the content is a template', fakeAsync(() => {
@@ -700,7 +708,7 @@ describe('callouts', () => {
             const panel = getTooltipEl();
             const contentId = panel.getAttribute('aria-describedby');
             expect(contentId).toBe(`${panel.id}-content`);
-            expect(document.getElementById(contentId).textContent).toContain('A link in the panel');
+            expect(document.getElementById(contentId!)!.textContent).toContain('A link in the panel');
         }));
 
         it('should announce the dialog on the trigger', fakeAsync(() => {
@@ -722,6 +730,23 @@ describe('callouts', () => {
             fireEvent(trigger, 'click');
             tick(10);
             expect(trigger.getAttribute('aria-expanded')).toBe('false');
+        }));
+
+        it('should not put aria-haspopup or aria-expanded on a host that is not a control', fakeAsync(() => {
+            fixture.detectChanges();
+            const host: HTMLElement = de.query(By.css('.generic-host')).nativeElement;
+
+            expect(host.hasAttribute('aria-haspopup')).toBe(false);
+            expect(host.hasAttribute('aria-expanded')).toBe(false);
+
+            fireEvent(host, 'click');
+            tick(10);
+            expect(getTooltipEl().getAttribute('role')).toBe('dialog');
+            expect(host.hasAttribute('aria-expanded')).toBe(false);
+
+            fireEvent(host, 'click');
+            tick(10);
+            expect(host.hasAttribute('aria-expanded')).toBe(false);
         }));
 
         it('should not describe its host, as the panel is not a description', fakeAsync(() => {
@@ -769,13 +794,13 @@ describe('callouts', () => {
             tick(10);
             const panel = getTooltipEl();
             const closeBtn = panel.querySelector('.btn-close');
-            expect(closeBtn.getAttribute('aria-label')).toBe('Close');
+            expect(closeBtn!.getAttribute('aria-label')).toBe('Close');
             /**
              * The `.tooltip-inner .close-button` style selector depends on this, and it is last so that the
              * description ends with "Close" rather than starting with it
              */
             const content = panel.querySelector('.tooltip-inner');
-            expect(content.lastElementChild.classList).toContain('btn-close');
+            expect(content!.lastElementChild!.classList).toContain('btn-close');
         }));
 
         it('should close on Tab, handing focus back, when it holds nothing to trap', fakeAsync(() => {
@@ -827,7 +852,7 @@ describe('callouts', () => {
             expect(document.activeElement).toBe(panel);
 
             comp.hasLateLink = true;
-            fixture.detectChanges();
+            detectHostChanges();
             expect(panel.querySelector('a')).toBeTruthy();
 
             document.body.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }));
@@ -874,7 +899,6 @@ describe('callouts', () => {
     });
 });
 
-// eslint-disable-next-line @angular-eslint/prefer-on-push-component-change-detection
 @Component({
     template: `
         <div
@@ -949,6 +973,14 @@ describe('callouts', () => {
                 [closeEvents]="closeEvents">
                 Popover whose content turns interactive
             </button>
+
+            <div
+                class="generic-host"
+                [nwPopover]="'A popover on a wrapper'"
+                [openEvents]="openEvents"
+                [closeEvents]="closeEvents">
+                Popover on a wrapper
+            </div>
         </div>
 
         <ng-template #panelTemplate>
@@ -998,30 +1030,30 @@ describe('callouts', () => {
     imports: [TooltipDirective, PopoverDirective, CdkScrollableModule]
 })
 class WrapperComponent implements OnInit {
-    @ViewChild('tooltip') tooltip: TooltipDirective;
-    @ViewChild('popover') popover: PopoverDirective;
-    @ViewChild('connectionEl', { static: true }) connectionEl: ElementRef<HTMLElement>;
-    @ViewChild(CdkScrollable, { read: ElementRef }) scrollEl: ElementRef<HTMLElement>;
+    @ViewChild('tooltip') tooltip!: TooltipDirective;
+    @ViewChild('popover') popover!: PopoverDirective;
+    @ViewChild('connectionEl', { static: true }) connectionEl!: ElementRef<HTMLElement>;
+    @ViewChild(CdkScrollable, { read: ElementRef }) scrollEl!: ElementRef<HTMLElement>;
 
     public withArrow: boolean = true;
     public withClose: boolean = false;
     public hasLateLink: boolean = false;
-    public withAriaDescription: boolean;
-    public hostAriaLabel: string;
-    public closeOnScroll: boolean;
+    public withAriaDescription?: boolean;
+    public hostAriaLabel?: string;
+    public closeOnScroll?: boolean;
     public breakpoint: number = 767;
     public tooltipContent: string = 'Some tooltip text';
     public isDisabled: boolean = false;
-    public openEvents: string[];
-    public closeEvents: string[];
-    public delay: number;
+    public openEvents?: string[];
+    public closeEvents?: string[];
+    public delay?: number;
     public tooltipPlacement: Placement | Placement[] = ['bottom'];
     public autoFlip: boolean = true;
     public closeOnOutsideClick: boolean = false;
     public updatePositionOnAnimationFrame: boolean = false;
-    public connectedTo: ElementRef<HTMLElement>;
+    public connectedTo?: ElementRef<HTMLElement>;
     public useConnectionEl: boolean = false;
-    public manualOpen: boolean;
+    public manualOpen?: boolean;
 
     ngOnInit() {
         if (this.useConnectionEl) {

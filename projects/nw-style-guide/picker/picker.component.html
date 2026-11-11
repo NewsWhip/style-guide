@@ -83,17 +83,18 @@
                 </button>
             </div>
             <!-- Navigate up the tree -->
-            @if (parentId && displayItems.length && !searchTerm.value.length) {
+            @let parentItem = parentId ? getParentItem(parentId) : undefined;
+            @if (parentItem && displayItems.length && !searchTerm.value.length) {
                 <div class="results-actions">
                     <button
                         type="button"
                         class="picker-action btn-link"
-                        [attr.aria-label]="'Go back to ' + getParentItem(parentId).displayName"
-                        (click)="ascend($event, getParentItem(parentId))">
+                        [attr.aria-label]="'Go back to ' + parentItem.displayName"
+                        (click)="ascend($event, parentItem)">
                         <i
                             class="fas fa-long-arrow-alt-left mr-4"
                             aria-hidden="true"></i>
-                        <span>{{ getParentItem(parentId).displayName }}</span>
+                        <span>{{ parentItem.displayName }}</span>
                     </button>
                 </div>
             }

@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
     FeatureAlertsDirective,
     FeatureAlertsService,
@@ -25,7 +25,6 @@ import { ISnippet } from '../code/ISnippet';
             }
         `
     ],
-    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [HotspotComponent, FeatureAlertsDirective, AppCodeComponent]
 })
 export class FeatureAlertsComponent {
@@ -53,10 +52,10 @@ export class FeatureAlertsComponent {
     private _w = inject(WindowRef);
     private _featureAlertService = inject(FeatureAlertsService);
 
-    message: string;
+    message?: string;
 
     featureAlertIds: string[] = ['example-feature-1', 'example-feature-2'];
-    showResetButton: boolean;
+    showResetButton = false;
 
     clearLocalStorage() {
         this._w.nativeWindow.localStorage.clear();

@@ -1,23 +1,22 @@
-import { ChangeDetectionStrategy, Component, HostBinding, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, HostBinding, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { IWord } from './models/IWord';
 import { IWordWithPosition } from './models/IWordWithPosition';
 
 @Component({
     selector: 'nw-word',
-    templateUrl: './word.component.html',
-    changeDetection: ChangeDetectionStrategy.OnPush
+    templateUrl: './word.component.html'
 })
 export class WordComponent<T extends IWord> implements OnChanges {
-    @Input() word: IWordWithPosition<T>;
+    @Input() word!: IWordWithPosition<T>;
 
     @HostBinding('style.translate')
-    public translate: string;
+    public translate?: string;
     @HostBinding('style.fontSize.px')
-    public fontSize: number;
+    public fontSize?: number;
     @HostBinding('style.lineHeight.px')
-    public lineHeight: number;
+    public lineHeight?: number;
     @HostBinding('style.width.px')
-    public width: number;
+    public width?: number;
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes.word?.currentValue !== changes.word?.previousValue) {

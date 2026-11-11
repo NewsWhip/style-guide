@@ -49,7 +49,7 @@ describe('EmailInputComponent', () => {
         fixture.detectChanges();
 
         const [event] = spy.calls.mostRecent().args;
-        expect(event.isValid).toEqual(true);
+        expect(event!.isValid).toEqual(true);
     });
 
     it('isValid should be emitted as false when any entered email is invalid', () => {
@@ -58,7 +58,7 @@ describe('EmailInputComponent', () => {
         fixture.detectChanges();
 
         const [event] = spy.calls.mostRecent().args;
-        expect(event.isValid).toEqual(false);
+        expect(event!.isValid).toEqual(false);
     });
 
     it('should not emit a validation event when the form control changes', () => {
@@ -77,7 +77,7 @@ describe('EmailInputComponent', () => {
         comp['_emitValidationChange']();
         const [event] = spy.calls.mostRecent().args;
         expect(comp.emailInputControl.invalid).toEqual(true);
-        expect(event.isValid).toEqual(true);
+        expect(event!.isValid).toEqual(true);
     });
 
     describe('should show a pill as invalid if', () => {

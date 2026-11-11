@@ -16,17 +16,17 @@ export class TextDirective implements OnInit, OnChanges, OnDestroy {
     private _chart = inject(ChartComponent);
     private _chartUtils = inject(ChartUtils);
 
-    @Input('nw-text') point: [number, number];
-    @Input() xDomain: [number, number];
-    @Input() yDomain: [number, number];
+    @Input('nw-text') point!: [number, number];
+    @Input() xDomain!: [number, number];
+    @Input() yDomain!: [number, number];
     @Input() animDuration: number = ChartUtils.ANIMATION_DURATION;
     @Input() easing: (normalizedTime: number) => number = ChartUtils.ANIMATION_EASING;
     @Input() xScale: NwXAxisScale = scaleTime();
 
-    public text: Selection<SVGTextElement, [number, number], SVGElement, any>;
+    public text!: Selection<SVGTextElement, [number, number], null, undefined>;
     public yScale: ScaleLinear<number, number> = scaleLinear();
 
-    private _chartResizeSub: Subscription;
+    private _chartResizeSub?: Subscription;
 
     ngOnInit() {
         this.text = select(this._elRef.nativeElement);
@@ -80,6 +80,6 @@ export class TextDirective implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnDestroy() {
-        this._chartResizeSub.unsubscribe();
+        this._chartResizeSub?.unsubscribe();
     }
 }

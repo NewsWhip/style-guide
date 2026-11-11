@@ -13,7 +13,8 @@
                 <select
                     class="form-control"
                     style="max-width: 150px"
-                    (input)="num = $event.target.value">
+                    #numSelect
+                    (input)="num = numSelect.value">
                     <option value="3">Three</option>
                     <option
                         value="6"
@@ -28,7 +29,8 @@
                 <select
                     class="form-control"
                     style="max-width: 150px"
-                    (input)="size = $event.target.value">
+                    #sizeSelect
+                    (input)="size = sizeSelect.value">
                     <option value="sm">Small</option>
                     <option
                         value="md"
