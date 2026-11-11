@@ -47,7 +47,7 @@ export class LoaderComponent implements OnChanges, OnDestroy {
     /** Whether the visually hidden text is in the live region, and so has been announced */
     protected isAnnounced: boolean = false;
 
-    private _announceTimer: ReturnType<typeof setTimeout>;
+    private _announceTimer?: ReturnType<typeof setTimeout>;
 
     get dots(): number[] {
         return Array(this.numOfDots)
