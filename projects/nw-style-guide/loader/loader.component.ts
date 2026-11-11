@@ -1,12 +1,4 @@
-import {
-    ChangeDetectorRef,
-    Component,
-    Input,
-    OnChanges,
-    OnDestroy,
-    SimpleChanges,
-    inject
-} from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnChanges, OnDestroy, SimpleChanges, inject } from '@angular/core';
 import { NgClass } from '@angular/common';
 
 @Component({
