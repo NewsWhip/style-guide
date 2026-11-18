@@ -1,5 +1,8 @@
 import { Directive, OnInit, ElementRef, inject } from '@angular/core';
 
+/**
+ * @deprecated
+ */
 @Directive({
     selector: '[nwAutofocus]',
     exportAs: 'nw-autofocus'
