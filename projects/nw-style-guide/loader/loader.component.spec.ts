@@ -41,6 +41,8 @@ describe('LoaderComponent', () => {
     });
 
     describe('announcement', () => {
+        beforeEach(() => setInput('loadingMessage', 'Loading'));
+
         it('is not made before the loader is seen', fakeAsync(() => {
             setInput('isLoading', true);
 
@@ -71,8 +73,8 @@ describe('LoaderComponent', () => {
             expect(announcement().textContent.trim()).toBe('Loading results');
         }));
 
-        it('is opted out of by an empty message, for a region the consumer announces itself', fakeAsync(() => {
-            setInput('loadingMessage', '');
+        it('is not made without a message, for a region the consumer announces itself', fakeAsync(() => {
+            setInput('loadingMessage', undefined);
             setInput('isLoading', true);
             tick(DELAY_MS);
             fixture.detectChanges();
@@ -128,6 +130,85 @@ describe('LoaderComponent', () => {
             fixture.destroy();
 
             expect(() => tick(DELAY_MS)).not.toThrow();
+        }));
+    });
+
+    describe('canDisplayLoadingMessage', () => {
+        const canDisplay = (): boolean => fixture.componentInstance['canDisplayLoadingMessage'];
+
+        it('is false until loading starts', () => {
+            expect(canDisplay()).toBeFalse();
+        });
+
+        it('is still false just before the delay passes', fakeAsync(() => {
+            setInput('isLoading', true);
+            tick(DELAY_MS - 1);
+
+            expect(canDisplay()).toBeFalse();
+
+            tick(1);
+        }));
+
+        it('becomes true once the delay has passed', fakeAsync(() => {
+            setInput('isLoading', true);
+            tick(DELAY_MS);
+
+            expect(canDisplay()).toBeTrue();
+        }));
+
+        it('becomes true whether or not there is a message, as it only tracks the delay', fakeAsync(() => {
+            setInput('loadingMessage', undefined);
+            setInput('isLoading', true);
+            tick(DELAY_MS);
+
+            expect(canDisplay()).toBeTrue();
+        }));
+
+        it('goes back to false as soon as loading finishes', fakeAsync(() => {
+            setInput('isLoading', true);
+            tick(DELAY_MS);
+            setInput('isLoading', false);
+
+            expect(canDisplay()).toBeFalse();
+        }));
+
+        it('stays false when loading finishes before the delay passes', fakeAsync(() => {
+            setInput('isLoading', true);
+            tick(DELAY_MS - 100);
+            setInput('isLoading', false);
+            tick(DELAY_MS);
+
+            expect(canDisplay()).toBeFalse();
+        }));
+
+        it('is not delayed again by changes to other inputs while waiting', fakeAsync(() => {
+            setInput('isLoading', true);
+            tick(DELAY_MS - 100);
+            setInput('size', 'lg');
+            tick(100);
+
+            expect(canDisplay()).toBeTrue();
+        }));
+
+        it('is not reset by changes to other inputs once true', fakeAsync(() => {
+            setInput('isLoading', true);
+            tick(DELAY_MS);
+            setInput('size', 'lg');
+
+            expect(canDisplay()).toBeTrue();
+        }));
+
+        it('waits for the delay again on a second load', fakeAsync(() => {
+            setInput('isLoading', true);
+            tick(DELAY_MS);
+            setInput('isLoading', false);
+            setInput('isLoading', true);
+
+            expect(canDisplay()).toBeFalse();
+
+            tick(DELAY_MS);
+
+            expect(canDisplay()).toBeTrue();
         }));
     });
 
