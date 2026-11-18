@@ -40,7 +40,7 @@ export class LoaderComponent implements OnChanges, OnDestroy {
     @Input() isInline: boolean = false;
     @Input() delayMs: number = 700;
     @Input() fadeInMs: number = 700;
-    @Input() loadingMessage?: string = "Loading";
+    @Input() loadingMessage?: string = 'Loading';
 
     private _cdRef = inject(ChangeDetectorRef);
     private _announceTimer?: ReturnType<typeof setTimeout>;
@@ -50,7 +50,6 @@ export class LoaderComponent implements OnChanges, OnDestroy {
      * is what makes a screen reader read it out
      */
     protected canDisplayLoadingMessage: boolean = false;
-
 
     get dots(): number[] {
         return Array(this.numOfDots)
