@@ -24,7 +24,7 @@ import { NgClass } from '@angular/common';
             </div>
         }
 
-        @if (isAnnounced && loadingMessage) {
+        @if (canDisplayLoadingMessage && loadingMessage) {
             <span class="sr-only">{{ loadingMessage }}</span>
         }
     `,
@@ -43,11 +43,11 @@ export class LoaderComponent implements OnChanges, OnDestroy {
     @Input() loadingMessage: string = 'Loading';
 
     private _cdRef = inject(ChangeDetectorRef);
+    private _announceTimer?: ReturnType<typeof setTimeout>;
 
     /** Whether the visually hidden text is in the live region, and so has been announced */
-    protected isAnnounced: boolean = false;
+    protected canDisplayLoadingMessage: boolean = false;
 
-    private _announceTimer?: ReturnType<typeof setTimeout>;
 
     get dots(): number[] {
         return Array(this.numOfDots)
@@ -60,9 +60,11 @@ export class LoaderComponent implements OnChanges, OnDestroy {
     }
 
     /**
-     * The announcement waits out the same delay the dots fade in on, so a load that finishes before
-     * the loader is ever seen is not heard either. Changes arrive here rather than in a setter on
-     * `isLoading` because `delayMs` may be bound after it
+     * Only announce what the user can see. The message waits the same `delayMs` as the dots, so a
+     * quick load that never shows the loader is never announced.
+     *
+     *   isLoading: true  -> wait delayMs -> add message
+     *   isLoading: false -> cancel wait  -> remove message
      */
     ngOnChanges(changes: SimpleChanges): void {
         if (!changes.isLoading) {
@@ -71,12 +73,12 @@ export class LoaderComponent implements OnChanges, OnDestroy {
         clearTimeout(this._announceTimer);
 
         if (!this.isLoading) {
-            this.isAnnounced = false;
+            this.canDisplayLoadingMessage = false;
             return;
         }
 
         this._announceTimer = setTimeout(() => {
-            this.isAnnounced = true;
+            this.canDisplayLoadingMessage = true;
             this._cdRef.markForCheck();
         }, this.delayMs);
     }
