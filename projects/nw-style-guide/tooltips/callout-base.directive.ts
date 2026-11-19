@@ -25,8 +25,19 @@ import {
     output
 } from '@angular/core';
 import { Placement } from './models/Placement.type';
-import { Subject, fromEvent, merge, EMPTY, of, Observable, animationFrameScheduler, timer, interval } from 'rxjs';
-import { takeUntil, filter, tap, map, debounce, switchMap, delay } from 'rxjs/operators';
+import {
+    Subject,
+    fromEvent,
+    merge,
+    EMPTY,
+    of,
+    Observable,
+    animationFrameScheduler,
+    asapScheduler,
+    timer,
+    interval
+} from 'rxjs';
+import { takeUntil, filter, tap, map, debounce, switchMap, delay, observeOn } from 'rxjs/operators';
 import { TOOLTIP_CONTEXT_TOKEN } from './config/tooltip-context-token';
 import { TooltipContainerComponent } from './tooltip-container.component';
 import { ITooltipData } from './models/ITooltipData';
@@ -345,6 +356,11 @@ export abstract class CalloutBaseDirective implements OnInit, OnDestroy {
                 debounce(() => (this._hasOverlappingToggleEvents() ? timer(5) : of(0))),
                 filter(_ => !this.isDisabled()),
                 switchMap(isOpenEvent => this._delayIfOpening(isOpenEvent)),
+                /**
+                 * Deliver on a microtask so the callout doesn't open mid-render. Opening mid-render can create the
+                 * container in the wrong namespace (e.g. SVG) when the host sits inside an `<svg>`
+                 */
+                observeOn(asapScheduler),
                 takeUntil(this._destroyed$)
             )
             .subscribe(isOpenEvent => (isOpenEvent ? this._openAndExpose() : this._close()));
