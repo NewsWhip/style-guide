@@ -241,7 +241,13 @@ export abstract class CalloutBaseDirective implements OnInit, OnDestroy {
             return null;
         }
 
-        const portal = new ComponentPortal(TooltipContainerComponent, this._vcRef, this._createInjector());
+        /**
+         * Attach through the directive's `ViewContainerRef` so the content stays in the host's view tree (an OnPush
+         * host is marked dirty by clicks inside it). Hosts inside an `<svg>` skip it, as it would create the
+         * container in the SVG namespace, where it can't render
+         */
+        const vcRef = (this._elRef.nativeElement as Element as SVGElement).ownerSVGElement ? null : this._vcRef;
+        const portal = new ComponentPortal(TooltipContainerComponent, vcRef, this._createInjector());
         const ref = this._overlayRef.attach(portal);
         this.nwShown.emit();
 
