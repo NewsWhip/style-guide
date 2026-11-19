@@ -1,5 +1,5 @@
 import { Component, DebugElement, ElementRef, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, flushMicrotasks, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { TooltipContainerComponent } from './tooltip-container.component';
 import { TooltipDirective } from './tooltip.directive';
@@ -114,6 +114,7 @@ describe('callouts', () => {
         let tooltip = getTooltipEl();
         expect(tooltip).toBeTruthy();
         fireEvent(trigger, 'dblclick');
+        flushMicrotasks();
         tooltip = getTooltipEl();
         expect(tooltip).toBeFalsy();
     }));
@@ -157,6 +158,7 @@ describe('callouts', () => {
         let tooltip = getTooltipEl();
         expect(tooltip).toBeTruthy();
         document.body.click();
+        flushMicrotasks();
         tooltip = getTooltipEl();
         expect(tooltip).toBeFalsy();
     }));
@@ -195,6 +197,7 @@ describe('callouts', () => {
         fixture.detectChanges();
         const trigger = de.query(By.directive(TooltipDirective)).nativeElement;
         fireEvent(trigger, 'mouseenter');
+        flushMicrotasks();
         const tooltip = getTooltipEl();
         expect(tooltip).toBeTruthy();
     }));
