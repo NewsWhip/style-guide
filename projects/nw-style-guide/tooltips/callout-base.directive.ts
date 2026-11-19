@@ -25,19 +25,8 @@ import {
     output
 } from '@angular/core';
 import { Placement } from './models/Placement.type';
-import {
-    Subject,
-    fromEvent,
-    merge,
-    EMPTY,
-    of,
-    Observable,
-    animationFrameScheduler,
-    asapScheduler,
-    timer,
-    interval
-} from 'rxjs';
-import { takeUntil, filter, tap, map, debounce, switchMap, delay, observeOn } from 'rxjs/operators';
+import { Subject, fromEvent, merge, EMPTY, of, Observable, animationFrameScheduler, timer, interval } from 'rxjs';
+import { takeUntil, filter, tap, map, debounce, switchMap, delay } from 'rxjs/operators';
 import { TOOLTIP_CONTEXT_TOKEN } from './config/tooltip-context-token';
 import { TooltipContainerComponent } from './tooltip-container.component';
 import { ITooltipData } from './models/ITooltipData';
@@ -252,7 +241,13 @@ export abstract class CalloutBaseDirective implements OnInit, OnDestroy {
             return null;
         }
 
-        const portal = new ComponentPortal(TooltipContainerComponent, this._vcRef, this._createInjector());
+        /**
+         * Attach through the directive's `ViewContainerRef` so the content stays in the host's view tree (an OnPush
+         * host is marked dirty by clicks inside it). Hosts inside an `<svg>` skip it, as it would create the
+         * container in the SVG namespace, where it can't render
+         */
+        const vcRef = (this._elRef.nativeElement as Element as SVGElement).ownerSVGElement ? null : this._vcRef;
+        const portal = new ComponentPortal(TooltipContainerComponent, vcRef, this._createInjector());
         const ref = this._overlayRef.attach(portal);
         this.nwShown.emit();
 
@@ -356,11 +351,6 @@ export abstract class CalloutBaseDirective implements OnInit, OnDestroy {
                 debounce(() => (this._hasOverlappingToggleEvents() ? timer(5) : of(0))),
                 filter(_ => !this.isDisabled()),
                 switchMap(isOpenEvent => this._delayIfOpening(isOpenEvent)),
-                /**
-                 * Deliver on a microtask so the callout doesn't open mid-render. Opening mid-render can create the
-                 * container in the wrong namespace (e.g. SVG) when the host sits inside an `<svg>`
-                 */
-                observeOn(asapScheduler),
                 takeUntil(this._destroyed$)
             )
             .subscribe(isOpenEvent => (isOpenEvent ? this._openAndExpose() : this._close()));

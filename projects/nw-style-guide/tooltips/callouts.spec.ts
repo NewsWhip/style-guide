@@ -1,4 +1,12 @@
-import { Component, DebugElement, ElementRef, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    DebugElement,
+    ElementRef,
+    OnInit,
+    ViewChild
+} from '@angular/core';
 import { ComponentFixture, fakeAsync, flushMicrotasks, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { TooltipContainerComponent } from './tooltip-container.component';
@@ -900,6 +908,51 @@ describe('callouts', () => {
             expect(getTooltipEl()).toBeFalsy();
         }));
     });
+
+    /**
+     * A `ViewContainerRef` creates the container element in the namespace of the anchor's parent node, so a callout
+     * anchored inside an `<svg>` used to get an SVG-namespaced container, which has no HTML layout and rendered
+     * invisible (BUG-6052). Those hosts attach without one
+     */
+    describe('on a host inside an <svg>', () => {
+        it('should create the container in the HTML namespace', fakeAsync(() => {
+            const svgFixture = TestBed.createComponent(SvgHostComponent);
+            svgFixture.detectChanges();
+            const circle: SVGCircleElement = svgFixture.debugElement.query(By.css('circle')).nativeElement;
+
+            fireEvent(circle as unknown as HTMLElement, 'click');
+            tick(10);
+
+            expect(getTooltipEl()).toBeTruthy();
+            const container = document.querySelector('nw-tooltip-container');
+            expect(container!.namespaceURI).toBe('http://www.w3.org/1999/xhtml');
+        }));
+    });
+
+    /**
+     * Outside an `<svg>` the container must keep going through the directive's own `ViewContainerRef`, which holds
+     * it in the host component's logical view tree: a click handler inside the callout content then marks an OnPush
+     * host dirty. Without that, an `isOpen` binding flipped by such a handler is never re-read, and the callout
+     * is stuck open
+     */
+    describe('on an OnPush host', () => {
+        it('should close through an isOpen binding flipped from inside the content', fakeAsync(() => {
+            const onPushFixture = TestBed.createComponent(OnPushHostComponent);
+            onPushFixture.detectChanges();
+            const trigger: HTMLElement = onPushFixture.debugElement.query(By.css('button')).nativeElement;
+
+            trigger.click();
+            onPushFixture.detectChanges();
+            tick(10);
+            expect(getTooltipEl()).toBeTruthy();
+
+            const closeFromContent = document.querySelector<HTMLElement>('.close-from-content');
+            closeFromContent!.click();
+            onPushFixture.detectChanges();
+            tick(10);
+            expect(getTooltipEl()).toBeFalsy();
+        }));
+    });
 });
 
 @Component({
@@ -1066,4 +1119,48 @@ class WrapperComponent implements OnInit {
 
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     onCloseBtnClicked() {}
+}
+
+@Component({
+    template: `
+        <svg
+            width="200"
+            height="100">
+            <circle
+                [nwPopover]="'A popover on an svg anchor'"
+                cx="50"
+                cy="50"
+                r="20" />
+        </svg>
+    `,
+    imports: [PopoverDirective]
+})
+class SvgHostComponent {}
+
+@Component({
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
+        <button
+            type="button"
+            [nwPopover]="panelTemplate"
+            [isOpen]="isPopoverOpen"
+            [openEvents]="[]"
+            [closeEvents]="[]"
+            (click)="isPopoverOpen = !isPopoverOpen">
+            Trigger
+        </button>
+
+        <ng-template #panelTemplate>
+            <button
+                type="button"
+                class="close-from-content"
+                (click)="isPopoverOpen = false">
+                Close
+            </button>
+        </ng-template>
+    `,
+    imports: [PopoverDirective]
+})
+class OnPushHostComponent {
+    public isPopoverOpen: boolean = false;
 }
